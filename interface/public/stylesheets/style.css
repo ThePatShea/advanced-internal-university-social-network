@@ -1,0 +1,426 @@
+/* CSS Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+
+/* Import Fonts */
+@font-face 
+{
+    font-family: 'nevisBold';
+    src: url('fonts/nevis/nevis-webfont.eot');
+    src: url('fonts/nevis/nevis-webfont.eot?#iefix') format('embedded-opentype'),
+	 url('fonts/nevis/nevis-webfont.woff') format('woff'),
+	 url('fonts/nevis/nevis-webfont.ttf') format('truetype'),
+	 url('fonts/nevis/nevis-webfont.svg#nevisBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'museoSans100';
+    src: url('fonts/museoSans100/museosans_100-webfont.eot');
+    src: url('fonts/museoSans100/museosans_100-webfont.eot?#iefix') format('embedded-opentype'),
+	 url('fonts/museoSans100/museosans_100-webfont.woff') format('woff'),
+	 url('fonts/museoSans100/museosans_100-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'museoSans300';
+    src: url('fonts/museoSans300/museosans_300-webfont.eot');
+    src: url('fonts/museoSans300/museosans_300-webfont.eot?#iefix') format('embedded-opentype'),
+	 url('fonts/museoSans300/museosans_300-webfont.woff') format('woff'),
+	 url('fonts/museoSans300/museosans_300-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face
+{
+    font-family: 'museoSans500';
+    src: url('fonts/museoSans500/museosans_500-webfont.eot');
+    src: url('fonts/museoSans500/museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/museoSans500/museosans_500-webfont.woff') format('woff'),
+	 url('fonts/museoSans500/museosans_500-webfont.ttf') format('truetype'),
+	 url('fonts/museoSans500/museosans_500-webfont.svg#MuseoSans500') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: url('../images/bg_main.png');
+  }
+  pre {
+      white-space: pre-wrap;       /* css-3 */
+      white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+      white-space: -pre-wrap;      /* Opera 4-6 */
+      white-space: -o-pre-wrap;    /* Opera 7 */
+      word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    }
+  h1,
+  h2,
+  h3,
+  h4 {
+      text-shadow: 2px 2px 0 black;
+      text-transform: uppercase;
+      font-family: 'nevisBold';
+      text-align: center;
+      color: white;
+
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: default;
+    }
+  h1 {
+      font-size: 30px;
+  }
+  pre,
+  p {
+    font-family: museoSans500;
+  }
+  a,
+  a:hover,
+  a:visited,
+  a h1,
+  a h2,
+  a h3,
+  a h4 {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  .sprite {
+      background: url('../images/sprites.png') no-repeat;
+    }
+  #site_header {
+      background: url('../images/bg_site_header.gif');
+      box-shadow: 0 2px 2px rgba(0,0,0,.5);
+      border-bottom: 1px solid black;
+      position: fixed;
+      padding: 5px 0;
+      width: 100%;
+      z-index: 99;
+      left: 0;
+      top: 0;
+    }
+
+
+
+@media (min-width: 569px) {
+  #post {
+      float: right;
+      width: 75%;
+    }
+    #post h1 {
+        text-align: center;
+        margin: 10px;
+      }
+    #post pre,
+    #post p {
+        margin: 10px 10px 10px 0;
+        font-size: 14px;
+      }
+    #post p {
+        text-transform: capitalize;
+        float: left;
+      }
+    #post ul {
+        float: left;
+      }
+    #post .heading {
+        font-weight: bold;
+        width: 60px;
+      }
+    #post .attributes {
+        float: right;
+        width: 75%;
+      }
+    #post .description {
+
+      }
+    #post .img_container {
+        float: left;
+        width: 25%;
+      }
+      #post .img_container .img_container_inner {
+          margin: 10px 10px 0 0;
+        }
+        #post .img_container .img_container_inner img {
+            width: 100%;
+          }
+
+  #post_stream {
+      float: left;
+      width: 25%;
+    }
+    #post_stream li {
+          box-shadow: 2px 2px 2px rgba(0,0,0,.5);
+          border: 2px solid black;
+          position: relative;
+          overflow: hidden;
+          padding: 10px;
+          height: 80px;
+          margin: 5px 15px 5px 5px;
+        }
+        #post_stream li:hover .overlay_post {
+            opacity: .5;
+          }
+      #post_stream li .overlay_post {
+          background: url('../images/overlay_post.png');
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          z-index: 2;
+          left: 0;
+          top: 0;
+        }
+      #post_stream li img {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          top: 0;
+        }
+      #post_stream li h3,
+      #post_stream li h4 {
+          position: relative;
+          z-index: 3;
+        }
+      #post_stream li h3 {
+          margin: 0 0 2px 0;
+          font-size: 20px;
+        }
+      #post_stream li h4 {
+          color: #DE8072;
+        }
+
+  #site_header {
+      height: 124px;
+    }
+    #site_header #bubble_menu {
+        height: 124px;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      #site_header #bubble_menu #bubble_logo {
+          background-position: 0 0;
+          height: 106px;
+          width: 179px;
+          float: left;
+          margin: 5px 5px;
+        }
+      #site_header #bubble_menu .smallBubble {
+          position: relative;
+          overflow: hidden;
+          margin: 0 2px;
+          height: 124px;
+          width: 124px;
+          float: left;
+        }
+      #site_header #bubble_menu a:hover .overlay_bubble_button {
+          background-position: -1650px 0;
+        }
+        #site_header #bubble_menu a h2 {
+          position: absolute;
+          font-size: 20px;
+          width: 70px;
+          left: 25px;
+          top: 35px;
+        }
+        #site_header #bubble_menu a .bg_bubble_button {
+          border-radius: 62px;
+          position: absolute;
+          height: 114px;
+          width: 114px;
+          z-index: 1;
+          left: 2px;
+          top: 2px;
+        }
+        #site_header #bubble_menu a .overlay_bubble_button {
+            background-position: -1510px 0;
+            position: relative;
+            height: 124px;
+            width: 124px;
+            z-index: 2;
+          }
+  #cover {
+      border-top: 1px solid black;
+      position: relative;
+      height: 100px;
+      margin: 124px 0 0 0;
+    }
+    .cover_night_life {
+      background-position: 0 -250px;
+    }
+    .cover_campus_events {
+      background-position: 0 -800px;
+    }
+    .cover_student_deals {
+      background-position: 0 -1100px;
+    }
+    .cover_concerts {
+      background-position: 0 -1525px;
+    }
+    .cover_arts_music {
+      background-position: 0 -2050px;
+    }
+    .cover_food {
+      background-position: 0 -2725px;
+    }
+    .cover_greek_life {
+      background-position: 0 -3300px;
+    }
+    .cover_sports {
+      background-position: 0 -3750px;
+    }
+    #cover .overlay_cover {
+        background: url('../images/overlay_cover.png') repeat-x;
+        border-top: 1px solid #302E30;
+        background-position: 0 -79px;
+        position: absolute;
+        height: 100px;
+        width: 100%;
+      }
+      #cover .overlay_cover h1 {
+          padding: 25px 0 0 0;
+        }
+}
+
+@media (max-width: 568px) {
+  #post_stream {
+      float: left;
+      width: 100%;
+    }
+    #post_stream li {
+          box-shadow: 2px 2px 2px rgba(0,0,0,.5);
+          border: 2px solid black;
+          position: relative;
+          overflow: hidden;
+          padding: 10px;
+          height: 80px;
+          margin: 5px 15px 5px 5px;
+        }
+        #post_stream li:hover .overlay_post {
+            opacity: .5;
+          }
+      #post_stream li .overlay_post {
+          background: url('../images/overlay_post.png');
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          z-index: 2;
+          left: 0;
+          top: 0;
+        }
+      #post_stream li img {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          top: 0;
+        }
+      #post_stream li h3,
+      #post_stream li h4 {
+          position: relative;
+          z-index: 3;
+        }
+      #post_stream li h3 {
+          margin: 0 0 2px 0;
+          font-size: 20px;
+        }
+      #post_stream li h4 {
+          color: #DE8072;
+        }
+  #site_header {
+      height: 45px;
+    }
+   #site_header #bubble_menu {
+        height: 45px;
+        overflow: hidden;
+      }
+      #site_header #bubble_menu #bubble_logo {
+          background-position: -189px 0;
+          margin: 5px 5px;
+          height: 39px;
+          width: 40px;
+          float: left;
+        }
+      #site_header #bubble_menu .smallBubble {
+          position: relative;
+          overflow: hidden;
+          margin: 0 2px;
+          height: 45px;
+          width: 45px;
+          float: left;
+        }
+      #site_header #bubble_menu a:hover .overlay_bubble_button {
+          background-position: -1650px 0;
+        }
+        #site_header #bubble_menu a h2 {
+          position: absolute;
+          font-size: 12px;
+          width: 45px;
+          left: 0px;
+          top: 10px;
+        }
+        #site_header #bubble_menu a .bg_bubble_button {
+          border: 2px solid grey;
+          border-radius: 23px;
+          position: absolute;
+          height: 39px;
+          width: 39px;
+          z-index: 1;
+          left: 2px;
+          top: 2px;
+        }
+        #site_header #bubble_menu a .overlay_bubble_button {
+            position: relative;
+            background: none;
+            height: 124px;
+            width: 124px;
+            z-index: 2;
+          }
+  #cover {
+      border-top: 1px solid black;
+      position: relative;
+      margin: 45px 0 0 0;
+      height: 100px;
+    }
+    .cover_night_life {
+      background-position: 0 -250px;
+    }
+    .cover_campus_events {
+      background-position: 0 -800px;
+    }
+    .cover_student_deals {
+      background-position: 0 -1100px;
+    }
+    .cover_concerts {
+      background-position: 0 -1525px;
+    }
+    .cover_arts_music {
+      background-position: 0 -2050px;
+    }
+    .cover_food {
+      background-position: 0 -2725px;
+    }
+    .cover_greek_life {
+      background-position: 0 -3300px;
+    }
+    .cover_sports {
+      background-position: 0 -3750px;
+    }
+    #cover .overlay_cover {
+        background: url('../images/overlay_cover.png') repeat-x;
+        border-top: 1px solid #302E30;
+        background-position: 0 -79px;
+        position: absolute;
+        height: 100px;
+        width: 100%;
+      }
+      #cover .overlay_cover h1 {
+          padding: 25px 0 0 0;
+        }
+}

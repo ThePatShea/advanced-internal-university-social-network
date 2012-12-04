@@ -1,0 +1,10 @@
+header#site_header
+  section#bubble_menu
+    a(href='/')
+      div.sprite#bubble_logo
+    each bubble in bubbles_list
+      bgClasses = ['sprite', 'bg_bubble_button', 'cover_'+bubble['slug']]
+      a(class='smallBubble', href='/' + bubble['slug'])
+        div.sprite.overlay_bubble_button
+          h2= bubble['name']
+        div(class = bgClasses)
