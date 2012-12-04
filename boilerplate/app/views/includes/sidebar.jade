@@ -1,0 +1,19 @@
+section.sidebar
+  section.top_container
+    - if (typeof(user) != 'undefined')
+      img.pic_top(src='http://graph.facebook.com/'+user.facebook.id+'/picture?type=large')
+    - else
+      img.pic_top(src='../img/default.jpg')
+    div.pic_top_overlay
+    section.attributes
+      - if (typeof(user) != 'undefined')
+        h1= user.name
+  ul.sidebar_buttons
+    li
+      a(href="/articles/new", title="new article")
+        div.settings
+        h2 settings
+    li
+      a(href="/articles/new", title="new article")
+        div.create
+        h2 create
