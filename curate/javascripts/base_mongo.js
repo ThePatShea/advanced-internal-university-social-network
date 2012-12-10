@@ -1,5 +1,5 @@
 // Base mongoDB functions
-	var mongoose = require('mongoose'), db = mongoose.createConnection('localhost', 'test');
+	var mongoose = require('mongoose'), db = mongoose.createConnection('localhost', 'noobjs_dev');
 	db.on('error', console.error.bind(console, 'connection error:'));
 
 
