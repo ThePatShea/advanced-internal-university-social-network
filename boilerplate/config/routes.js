@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
+  , Event = mongoose.model('Event')
   , User = mongoose.model('User')
   , async = require('async')
 
@@ -43,7 +44,7 @@ module.exports = function (app, passport, auth) {
   app.get('/articles/:id/edit', auth.requiresLogin, auth.article.hasAuthorization, articles.edit)
   app.put('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.update)
   app.del('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy)
-
+/*
   app.param('id', function(req, res, next, id){
     Article
       .findOne({ _id : id })
@@ -74,6 +75,28 @@ module.exports = function (app, passport, auth) {
           next()
       })
   })
+//*/
+
+//*
+  // event routes
+  var events = require('../app/controllers/events')
+  app.get('/events/:id', events.show)
+
+  app.param('id', function(req, res, next, id){
+    Event
+      .findOne({ _id : id })
+      .exec(function (err, event) {
+        if (err) return next(err)
+        if (!event) return next(new Error('Failed to load event ' + id))
+        req.event = event
+
+        console.log(event)
+
+        next()
+
+      })
+  })
+//*/
 
   // home route
   app.get('/', articles.index)

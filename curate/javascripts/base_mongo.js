@@ -57,8 +57,8 @@
                                 pic_square: String,
                                 pic_big: String,
                                 description: String,
-				start_time: Number,
-				end_time: Number,
+				start_time: String,
+				end_time: String,
 				location: String,
 				venue: {
 					id: Number
