@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
+  , Bubble = mongoose.model('Bubble')
   , Event = mongoose.model('Event')
   , User = mongoose.model('User')
   , async = require('async')
@@ -89,6 +90,25 @@ module.exports = function (app, passport, auth) {
         req.event = event
 
         console.log(event)
+
+        next()
+
+      })
+  })
+
+  // bubble routes
+  var bubbles = require('../app/controllers/bubbles')
+  app.get('/bubbles/:bubbleId', bubbles.show)
+
+  app.param('bubbleId', function(req, res, next, id){
+    Bubble
+      .findOne({ _id : id })
+      .exec(function (err, bubble) {
+        if (err) return next(err)
+        if (!bubble) return next(new Error('Failed to load bubble ' + id))
+        req.bubble = bubble
+
+        console.log(bubble)
 
         next()
 

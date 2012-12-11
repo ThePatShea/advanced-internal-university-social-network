@@ -3,7 +3,7 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
-var EventSchema = new mongoose.Schema({
+var EventSchema = new Schema({
 	eid: { type: Number, index: {unique: true}},
 	name: String,
 	pic_square: String,
