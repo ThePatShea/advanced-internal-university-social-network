@@ -6,8 +6,8 @@ section.sidebar
       img.pic_top(src='../img/default.jpg')
     div.pic_top_overlay
     section.attributes
-      - if (typeof(user) != 'undefined')
-        h1= user.name
+      - if (typeof(sidebar_name) != 'undefined')
+        h1= sidebar_name
   ul.sidebar_buttons
     li
       a(href="/articles/new", title="new article")

@@ -50,7 +50,8 @@ exports.create = function (req, res) {
 exports.show = function (req, res) {
   var user = req.profile
   res.render('users/show', {
-      title: user.name
+      sidebar_name: user.name
+    , title: user.name
     , user: user
   })
 }
