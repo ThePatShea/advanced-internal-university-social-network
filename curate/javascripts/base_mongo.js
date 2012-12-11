@@ -180,7 +180,7 @@
 					var current_time = Math.round((new Date()).getTime() / 1000);
 					var yesterday = current_time - 86400;
 
-					mongo_model.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], privacy : "OPEN"}, "eid name pic_big start_time end_time location venue.id creator").where("end_time").gt(current_time).where("start_time").gt(yesterday).exec(function (err, mongo_model) {
+					mongo_model.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], privacy : "OPEN"}, "eid name pic_big start_time end_time location venue.id creator").exec(function (err, mongo_model) {
 						var event_array = mongo_model;
 						console.log(event_array);
 
