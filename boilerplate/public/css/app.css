@@ -88,9 +88,17 @@
 
 body {
   background: url("../img/bg_main.png");
-  padding-top: 63px;
+  padding: 63px 0 0 0;
 }
 
+.main-head {
+  padding: 20px 0 10px 0 !important;
+}
+
+.container {
+  width: auto !important;
+}
+ 
 .date {
   font-size: 11px;
   color: #aaa;
@@ -184,6 +192,23 @@ h3 {
   height: 65px;
   width: 61px;
 }
+
+.post_list {
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  }
+  .post_list li {
+    height: 100px;
+    }
+  .post_list li:nth-child(odd) {
+      -webkit-box-shadow: inset 1px 0 3px rgba(31,23,31,.21);
+      -moz-box-shadow: inset 1px 0 3px rgba(31,23,31,.21);
+      box-shadow: inset 1px 0 3px rgba(31,23,31,.21);
+
+      background: url("../img/bg_main_dark.png");
+      border-bottom: 1px solid rgba(255,255,255,.82);
+    }
+
 
 .sidebar {
   background: #4d5153; /* Old browsers */
@@ -367,13 +392,21 @@ ul.nav.pull-right {
 
 @media (min-width: 1200px) {
   .main-content {
-    margin: 10px 10px 0 270px;
+    margin: 10px 0 0 260px;
+  }
+
+  .bubble_logo {
+    margin: 0 0 0 10px;
   }
 }
 
 @media (max-width: 1199px) and (min-width: 980px) {
   .main-content {
-    margin: 10px 10px 0 270px;
+    margin: 10px 0 0 260px;
+  }
+
+  .bubble_logo {
+    margin: 0 0 0 10px;
   }
 }
 
@@ -382,8 +415,12 @@ ul.nav.pull-right {
     position: fixed;
   }
 
+  .bubble_logo {
+    margin: 0 0 0 5px;
+  }
+
   .main-content {
-    margin: 10px 10px 0 270px;
+    margin: 10px 0 0 260px;
   }
 
   .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
@@ -397,7 +434,7 @@ ul.nav.pull-right {
   }
 
   .main-content {
-    margin: 10px 10px 0 195px;
+    margin: 10px 0 0 185px;
   }
 
   .pull-right {

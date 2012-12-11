@@ -1,5 +1,10 @@
 extends ../layouts/default
 
 block main
-  h1= bubble.name
-  p= bubble
+  ul.post_list
+    each event in bubble.events
+      li
+        a(href='/events/'+event._id)
+          h4= event.name
+          p= event.start_time
+          p= event.location
