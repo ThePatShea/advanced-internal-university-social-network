@@ -276,7 +276,7 @@ h4 {
         position: absolute;
         margin-top: -32px;
         display: table;
-        width: 165px;
+        width: 155px;
         height: 65px;
         right: 0;
         top: 50%;
@@ -320,7 +320,7 @@ h4 {
             font-size: 13px;
             color: #575757;
             max-height: 30px;
-            width: 85px;
+            width: 75px;
             overflow: hidden;
             margin: 0 10px;
             }
