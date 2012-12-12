@@ -208,7 +208,7 @@ h4 {
   border-bottom: 1px solid #BDBFBD;
   }
   .post_list .post_widget {
-    padding: 0 176px 0 127px;
+    padding: 0 176px 0 105px;
     position: relative;
     }
     .post_list .post_widget .post_widget_section {
@@ -248,7 +248,7 @@ h4 {
     .post_list .post_widget .post_widget_main {
       border-right: 1px solid #BDBFBD;
       height: 100px;
-      padding: 0 22px 0 0;
+      padding: 0 22px;
       display: table;
       width: 100%;
       }
@@ -549,13 +549,19 @@ ul.nav.pull-right {
       }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 979px) {
   .post_list .post_widget {
-    padding: 0 0 0 77px;
+    padding-left: 55px;
     }
     .post_list .post_widget .post_widget_left {
       width: 55px;
       }
+}
+
+@media (max-width: 767px) {
+  .post_list .post_widget {
+    padding-right: 0;
+    }
     .post_list .post_widget .post_widget_main {
       border-right: 0;
       }
