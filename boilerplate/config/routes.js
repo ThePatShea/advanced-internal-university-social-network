@@ -115,6 +115,8 @@ module.exports = function (app, passport, auth) {
       })
   })
 
+  
+
   // home route
   app.get('/', articles.index)
 

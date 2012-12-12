@@ -3,8 +3,17 @@ extends ../layouts/default
 block main
   ul.post_list
     each event in bubble.events
-      li
+      li.post_widget
         a(href='/events/'+event._id)
-          h4= event.name
-          p= event.start_time
-          p= event.location
+          section.post_widget_section.post_widget_left
+            p= event.start_time
+          section.post_widget_section.post_widget_main
+            section.post_main_info
+              h4.post_name= event.name
+              section.subtitle.descriptor
+                div.comments_icon
+                div.gray_text.comments_text # comments
+                div.attending_icon
+                div.red_text= event.attending_count
+          section.post_widget_section.post_widget_right
+            p= event.location
