@@ -269,6 +269,61 @@ h4 {
       right: 0;
       top: 0;
       }
+      .post_list .post_widget .post_widget_right .venue_widget {
+        background: url("../img/bg_main_extradark.png");
+        border-top: 2px solid rgba(31, 23, 31, .21);
+        border-bottom: 1px solid white;
+        position: absolute;
+        margin-top: -32px;
+        display: table;
+        width: 165px;
+        height: 65px;
+        right: 0;
+        top: 50%;
+
+        -webkit-border-top-left-radius: 40px;
+        -webkit-border-bottom-left-radius: 40px;
+        -moz-border-radius-topleft: 40px;
+        -moz-border-radius-bottomleft: 40px;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+        }
+        .post_list .post_widget .post_widget_right .venue_widget .pic_venue_container {
+          -webkit-border-radius: 30px;
+          -moz-border-radius: 30px;
+          border-radius: 30px;
+          
+          -webkit-box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
+          -moz-box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
+          box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
+
+          border-top: 2px solid white;
+          border-bottom: 2px solid rgba(31, 23, 31, .21);
+          padding: 2px;
+          }
+          .post_list .post_widget .post_widget_right .venue_widget .pic_venue {
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+  
+            height: 55px;
+            width: 55px;
+            }
+        .post_list .post_widget .post_widget_right .venue_widget .venue_info {
+          display: table-cell;
+          vertical-align: middle;
+          }
+          .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
+            font-family: 'proxima_nova_bold';
+            text-shadow: 1px 1px 0 white;
+            line-height: 14px;
+            font-size: 13px;
+            color: #575757;
+            max-height: 30px;
+            width: 85px;
+            overflow: hidden;
+            margin: 0 10px;
+            }
   .post_list .descriptor {
     font-family: 'proxima_nova_extrabold';
     text-shadow: 1px 1px 0 white; 
@@ -547,6 +602,13 @@ ul.nav.pull-right {
     .post_list .post_widget .post_widget_right {
       width: 125px;
       }
+      .post_list .post_widget .post_widget_right .venue_widget {
+        width: 115px;
+        }
+        .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
+          width: 45px;
+          margin: 0 5px;
+          }
 }
 
 @media (max-width: 979px) {
@@ -618,8 +680,8 @@ ul.nav.pull-right {
     padding: 0;
   }
 
-  .main-content {
-    margin: 100px 0 0 0;
+  .main-head {
+    padding: 10px 0 !important;
   }
 
   .post_list {
@@ -627,10 +689,11 @@ ul.nav.pull-right {
   }
 
   .sidebar {
-      margin: 20px 0;
+      margin: 20px 0 0 0;
       overflow: hidden;
       height: 94px;
       width: 100%;
+      position: relative;
     } 
     .sidebar .top_container {
       position: relative;

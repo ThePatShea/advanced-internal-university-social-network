@@ -16,4 +16,11 @@ block main
                 div.attending_icon
                 div.red_text= event.attending_count
           section.post_widget_section.post_widget_right
-            p= event.location
+            section.venue_widget
+              div.pic_venue_container
+                - if (typeof(event.venue) != 'undefined')
+                  img.pic_venue(src='http://graph.facebook.com/'+event.venue.id+'/picture?type=square')
+                - else
+                  img.pic_venue(src='../img/default_square.png')
+              section.venue_info
+                div.venue_name= event.location
