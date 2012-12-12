@@ -1,0 +1,8 @@
+extends ../layouts/default
+
+block main
+  ul.post_list
+    each bubble in bubbles
+      li.post_widget
+        a(href='/bubbles/'+bubble._id)
+          h1= bubble.name

@@ -205,6 +205,7 @@ h4 {
 .post_list {
   border-top: 1px solid white;
   border-left: 1px solid white;
+  border-bottom: 1px solid #BDBFBD;
   }
   .post_list .post_widget {
     padding: 0 176px 0 127px;

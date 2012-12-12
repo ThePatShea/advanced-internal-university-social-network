@@ -11,3 +11,17 @@ exports.show = function(req, res){
     bubble: req.bubble
   })
 }
+
+// View subscriptions
+exports.subscriptions = function(req, res){
+  Bubble
+    .find({}, "name")
+    .exec(function(err, bubbles) {
+      if (err) return res.render('500')
+      res.render('bubbles/subscriptions', {
+        sidebar_name: 'subscriptions',
+        title: 'subscriptions',
+        bubbles: bubbles
+      })
+    })
+}

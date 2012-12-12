@@ -99,6 +99,7 @@ module.exports = function (app, passport, auth) {
   // bubble routes
   var bubbles = require('../app/controllers/bubbles')
   app.get('/bubbles/:bubbleId', bubbles.show)
+  app.get('/subscriptions', bubbles.subscriptions)
 
   app.param('bubbleId', function(req, res, next, id){
     Bubble
@@ -115,10 +116,8 @@ module.exports = function (app, passport, auth) {
       })
   })
 
-  
-
   // home route
-  app.get('/', articles.index)
+  app.get('/', bubbles.subscriptions)
 
   // comment routes
   var comments = require('../app/controllers/comments')
