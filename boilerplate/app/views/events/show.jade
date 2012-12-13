@@ -1,5 +1,11 @@
 extends ../layouts/default
 
 block main
+  ul.post_list
+    li
+      a(href='/bubbles/'+bubble._id)
+        h4
+          |back to 
+          = bubble.name
   h1= event.name
   p= event

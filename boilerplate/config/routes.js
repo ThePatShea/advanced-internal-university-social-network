@@ -80,10 +80,20 @@ module.exports = function (app, passport, auth) {
   // event routes
   var events = require('../app/controllers/events')
   app.get('/events/:eventId', events.show)
+  app.get('/bubbles/:bubbleId/events/:eventId', events.show)
 
   app.param('eventId', function(req, res, next, id){
+    Bubble
+      .findOne({ _id : req.params.bubbleId })
+      .exec(function (err, bubble) {
+        if (err) return next(err)
+        if (!bubble) return next(new Error('Failed to load bubble ' + id))
+        req.bubble = bubble
+
+        console.log(bubble)
+
     Event
-      .findOne({ _id : id })
+      .findOne({ _id : req.params.eventId })
       .exec(function (err, event) {
         if (err) return next(err)
         if (!event) return next(new Error('Failed to load event ' + id))
@@ -92,6 +102,8 @@ module.exports = function (app, passport, auth) {
         console.log(event)
 
         next()
+
+      })
 
       })
   })
