@@ -1,19 +1,28 @@
 section.sidebar
-  section.top_container
-    - if (typeof(user) != 'undefined')
-      img.pic_top(src='http://graph.facebook.com/'+user.facebook.id+'/picture?type=large')
-    - else
-      img.pic_top(src='../img/default.jpg')
-    div.pic_top_overlay
-    section.attributes
-      - if (typeof(sidebar_name) != 'undefined')
-        h1= sidebar_name
-  ul.sidebar_buttons
-    li
-      a(href="/articles/new", title="new article")
-        div.settings
-        h2 settings
-    li
-      a(href="/articles/new", title="new article")
-        div.create
-        h2 create
+  section.sidebar_main
+    section.top_container
+      div.top_container_inner
+        - if (typeof(user) != 'undefined')
+          img.pic_top(src='http://graph.facebook.com/'+user.facebook.id+'/picture?type=large')
+        - else
+          img.pic_top(src='../img/default.jpg')
+        div.pic_top_overlay
+        section.attributes
+          - if (typeof(sidebar_name) != 'undefined')
+            h1= sidebar_name
+    ul.sidebar_buttons
+      - if (typeof(num_events) != 'undefined' && num_events != 0)
+        li
+          a(href="/articles/new", title="new article")
+            div.sidebar_button_icon.icon_events
+            h2.sidebar_button_label events
+            div.sidebar_counter.sidebar_counter_events
+              h2= num_events
+            div.icon_sidebar_select
+      li
+        a(href="/articles/new", title="new article")
+          div.sidebar_button_icon.icon_deals
+          h2.sidebar_button_label deals
+          div.sidebar_counter.sidebar_counter_deals
+            h2 ##
+  section.sidebar_right_border

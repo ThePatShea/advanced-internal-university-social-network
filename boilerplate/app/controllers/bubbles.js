@@ -8,7 +8,8 @@ exports.show = function(req, res){
   res.render('bubbles/show', {
     sidebar_name: req.bubble.name,
     title: req.bubble.name,
-    bubble: req.bubble
+    bubble: req.bubble,
+    num_events: req.bubble.events.length
   })
 }
 
