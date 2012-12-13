@@ -832,9 +832,13 @@ ul.nav.pull-right {
 
       margin: -63px 0 0 0;
       position: relative;
-      overflow: hidden;
-      height: 252px;
+      overflow: visible;
+      height: 253px;
       width: 100%;
+    }
+    .sidebar .sidebar_main {
+      height: 251px;
+      border-bottom: 1px solid rgba(224,224,224,.25);
     } 
     .sidebar .top_container {
       position: relative;
@@ -851,13 +855,13 @@ ul.nav.pull-right {
         left: 0;
       }    
     .sidebar .sidebar_buttons {
-      border-bottom: 1px solid #ACAEAE;
-      border-top: 1px solid #ACAEAE;
-      height: 94px;
+      border-top: 1px solid rgba(224,224,224,.25);
+      border-bottom: 0;
+      height: 92px;
     }
     .sidebar .sidebar_buttons li {
       border-bottom: 0;
-      height: 93px;
+      height: 95px;
       float: left;
       border-bottom: 0;
       border-top: 0;
@@ -866,7 +870,7 @@ ul.nav.pull-right {
         border-left: 1px solid rgba(224,224,224,.25);
         border-right: 1px solid black;
         display: block;
-        height: 90px;
+        height: 85px;
         width: 80px;
         }
         .sidebar .sidebar_buttons li:last-child {
@@ -891,7 +895,8 @@ ul.nav.pull-right {
   }
 
   .sidebar .sidebar_right_border {
-    display: none;
+    width: 100%;
+    height: 5px;
   }
   .sidebar .top_container .top_container_inner {
     width: 90%;
@@ -906,9 +911,9 @@ ul.nav.pull-right {
       }
     .sidebar .sidebar_buttons li a .sidebar_counter {
       position: relative;
+      margin: 5px 20px;
       right: auto;
       top: auto;
-      margin: 5px 20px;
       }
 
 }
