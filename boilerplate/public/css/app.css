@@ -715,6 +715,10 @@ ul.nav.pull-right {
     .post_list .post_widget .post_widget_left {
       width: 55px;
       }
+
+    .post_list h4 {
+      font-size: 15px;
+      }
 }
 
 @media (max-width: 767px) {
@@ -727,6 +731,7 @@ ul.nav.pull-right {
     .post_list .post_widget .post_widget_right {
       display: none;
       }
+
 }
 
 @media (max-width: 767px) and (min-width: 481px) {
@@ -808,25 +813,34 @@ ul.nav.pull-right {
   }
 
   .main-head {
-    padding: 10px 0 !important;
+    padding: 100px 0 !important;
   }
 
   .post_list {
     border-left: 0;
-  }
+    }
 
   .sidebar {
-      margin: 20px 0 0 0;
-      overflow: hidden;
-      height: 94px;
-      width: 100%;
+      background: #4d5153; /* Old browsers */
+      background: -moz-linear-gradient(top,  #4d5153 0%, #2c2f30 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d5153), color-stop(100%,#2c2f30)); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  #4d5153 0%,#2c2f30 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top,  #4d5153 0%,#2c2f30 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top,  #4d5153 0%,#2c2f30 100%); /* IE10+ */
+      background: linear-gradient(to bottom,  #4d5153 0%,#2c2f30 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', endColorstr='#2c2f30',GradientType=0 ); /* IE6-9 */
+
+      margin: -63px 0 0 0;
       position: relative;
+      overflow: hidden;
+      height: 252px;
+      width: 100%;
     } 
     .sidebar .top_container {
       position: relative;
       overflow: hidden;
-      height: 45px;
       width: 100%;
+      height: 155px;
       }
       .sidebar .top_container .pic_top_overlay,
       .sidebar .top_container .pic_top,
@@ -837,20 +851,33 @@ ul.nav.pull-right {
         left: 0;
       }    
     .sidebar .sidebar_buttons {
-
+      border-bottom: 1px solid #ACAEAE;
+      border-top: 1px solid #ACAEAE;
+      height: 94px;
     }
     .sidebar .sidebar_buttons li {
+      border-bottom: 0;
+      height: 93px;
       float: left;
+      border-bottom: 0;
+      border-top: 0;
       }
       .sidebar .sidebar_buttons li a {
-        border-left: 2px solid rgba(79,81,83,.45);
+        border-left: 1px solid rgba(224,224,224,.25);
         border-right: 1px solid black;
         display: block;
-        height: 45px;
-        width: 45px;
+        height: 90px;
+        width: 80px;
+        }
+        .sidebar .sidebar_buttons li:last-child {
+          border-right: 1px solid rgba(224,224,224,.25);;
+        }
+        .sidebar .sidebar_buttons li a .sidebar_button_icon {
+          display: none;
         }
         .sidebar .sidebar_buttons li a h2 {
-          display: none;
+          width: 100%;
+          text-align: center;
         }
         .sidebar .sidebar_buttons li a div {
           margin: 10px 13px;
@@ -859,6 +886,29 @@ ul.nav.pull-right {
       padding: 5px 0 0 0;
     }
 
+  .sidebar .sidebar_main {
+    width: 100%;
+  }
+
+  .sidebar .sidebar_right_border {
+    display: none;
+  }
+  .sidebar .top_container .top_container_inner {
+    width: 90%;
+  }
+  .sidebar .sidebar_buttons li a {
+      padding: 10px 0 0 0;
+    }
+    .sidebar .sidebar_buttons li a .sidebar_button_icon {
+      }
+    .sidebar .sidebar_buttons li a .icon_sidebar_select {
+      display: none;
+      }
+    .sidebar .sidebar_buttons li a .sidebar_counter {
+      position: relative;
+      right: auto;
+      top: auto;
+      margin: 5px 20px;
+      }
+
 }
-
-
