@@ -8,7 +8,7 @@ var mongoose = require('mongoose')
 // New event
 exports.new = function(req, res){
   Bubble
-    .find({privacy : "OPEN"}, "name")
+    .find({$or : [{creator : req.user._id}, {privacy : "OPEN"}]}, "name creator privacy")
     .exec(function(err, bubbles) {
       if (err) return res.render('500')
 

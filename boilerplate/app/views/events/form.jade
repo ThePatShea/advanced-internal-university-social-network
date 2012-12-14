@@ -38,6 +38,7 @@ block content
         input#end_time.input-medium.input-left-margin(type='text', name="end_time", value=bubble.end_time, readonly="readonly", placeholder='When does it end?')
 
     h4 Select which bubbles to post your event to
+    p= req.user._id
 
     .control-group
       label.control-label(for='location') Public Bubbles:
@@ -45,17 +46,21 @@ block content
         input(type='radio')
         | no public bubble
         each bubble in bubbles
-          input(type='radio')
-          = bubble.name
+          - if(bubble.privacy == 'OPEN')
+            input(type='radio')
+            = bubble.name
 
     .control-group
       label.control-label(for='location') Your Bubbles:
       .controls
         input(type='radio')
-        | no personal bubble
+        | none of your bubbles
         each bubble in bubbles
-          input(type='radio')
-          = bubble.name
+          - if(bubble.creator == req.user._id)
+            input(type='radio')
+            = req.user._id
+            | -- 
+            = bubble.creator
 
     .form-actions
       button.btn.btn-primary(type='submit') Save
