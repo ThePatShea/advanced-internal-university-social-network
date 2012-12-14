@@ -92,6 +92,7 @@
                 } else if (schema == "bubble") {
 			var mongo_schema = new mongoose.Schema({
 				name: String,
+				privacy: String,
 				events: []
 			}, { collection: 'bubbles' });
 		}
@@ -191,7 +192,7 @@
 					*/
 
 						get_schema("bubble", function (mongo_model) {
-							var insert_bubble = new mongo_model({name : bubble_name , events: event_array});
+							var insert_bubble = new mongo_model({name : bubble_name , privacy : "OPEN" , events : event_array});
                         				insert_bubble.save();
 						});
 					});

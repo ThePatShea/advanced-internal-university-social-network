@@ -6,6 +6,7 @@ var mongoose = require('mongoose')
 var BubbleSchema = new Schema({
 	name: String,
         description: String,
+        privacy: String,
         creator: {type : Schema.ObjectId, ref : 'User'},
 	events: []
 })
