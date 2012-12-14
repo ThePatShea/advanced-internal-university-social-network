@@ -8,17 +8,26 @@ var mongoose = require('mongoose')
 // New event
 exports.new = function(req, res){
   Bubble
-    .find({$or : [{creator : req.user._id}, {privacy : "OPEN"}]}, "name creator privacy")
-    .exec(function(err, bubbles) {
+    .find({privacy : "OPEN"}, "name")
+    .exec(function(err, public_bubbles) {
       if (err) return res.render('500')
 
-      res.render('events/new', {
-          title: 'Create an Event'
-        , sidebar_name: 'Create'
-        , bubble: new Event({})
-        , event: new Event({})
-        , bubbles: bubbles
-      })
+
+      Bubble
+        .find({creator : req.user._id}, "name")
+        .exec(function(err, your_bubbles) {
+          if (err) return res.render('500')
+
+
+          res.render('events/new', {
+              title: 'Create an Event'
+            , sidebar_name: 'Create'
+            , bubble: new Event({})
+            , event: new Event({})
+            , public_bubbles: public_bubbles
+            , your_bubbles: your_bubbles
+          })
+        })
     })
 }
 
