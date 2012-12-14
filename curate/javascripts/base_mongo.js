@@ -91,7 +91,7 @@
                         }, { collection: 'users' });
                 } else if (schema == "bubble") {
 			var mongo_schema = new mongoose.Schema({
-				slug: { type: String, index: {unique: true}},
+				slug: String,
 				name: String,
 				events: []
 			}, { collection: 'bubbles' });
