@@ -1,17 +1,25 @@
 
 var mongoose = require('mongoose')
+  , Bubble = mongoose.model('Bubble')
   , Event = mongoose.model('Event')
   , _ = require('underscore')
 
 
 // New event
 exports.new = function(req, res){
-  res.render('events/new', {
-      title: 'Create an Event'
-    , sidebar_name: 'Create'
-    , bubble: new Event({})
-    , event: new Event({})
-  })
+  Bubble
+    .find({privacy : "OPEN"}, "name")
+    .exec(function(err, bubbles) {
+      if (err) return res.render('500')
+
+      res.render('events/new', {
+          title: 'Create an Event'
+        , sidebar_name: 'Create'
+        , bubble: new Event({})
+        , event: new Event({})
+        , bubbles: bubbles
+      })
+    })
 }
 
 

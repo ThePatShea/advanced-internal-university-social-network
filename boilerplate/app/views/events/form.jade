@@ -40,7 +40,10 @@ block content
     .control-group
       label.control-label(for='location') Which Bubble
       .controls
-        input#select_bubble.input-xlarge(type='text', name="location", value=bubble.bubble, placeholder='Select a bubble to post your event in')
+        input#select_private_bubble.input-xxlarge(type='text', name="location", value=bubble.bubble, placeholder='Select which bubbles to post your event in (maximum: 2 bubbles -- 1 private and 1 public)')
+        each bubble in bubbles
+          input(type='radio')
+          = bubble.name
 
     .form-actions
       button.btn.btn-primary(type='submit') Save
