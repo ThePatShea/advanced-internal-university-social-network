@@ -43,21 +43,21 @@ block content
     .control-group
       label.control-label(for='location') Public Bubbles:
       .controls
-        input(type='radio')
+        input(type='radio' , name='group_public' , checked)
         | no public bubble
         each bubble in bubbles
           - if(bubble.privacy == 'OPEN')
-            input(type='radio')
+            input(type='radio' , name='group_public')
             = bubble.name
 
     .control-group
       label.control-label(for='location') Your Bubbles:
       .controls
-        input(type='radio')
+        input(type='radio' , name='group_your' , checked)
         | none of your bubbles
         each bubble in bubbles
           - if(bubble.creator == req.user._id)
-            input(type='radio')
+            input(type='radio' , name='group_your')
             = req.user._id
             | -- 
             = bubble.creator
