@@ -15,6 +15,7 @@ exports.new = function(req, res){
 // Create a bubble
 exports.create = function (req, res) {
   var bubble = new Bubble(req.body)
+  bubble.creator = req.user
 
   bubble.save(function(err){
     if (err) {
