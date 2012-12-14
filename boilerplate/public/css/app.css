@@ -202,6 +202,16 @@ h4 {
   width: 61px;
 }
 
+.input-left-margin {
+  margin: 0 0 0 20px;
+}
+
+input[readonly="readonly"] {
+  cursor: pointer;
+  background: white;
+  border: 1px solid #CCC;
+}
+
 .post_list {
   border-top: 1px solid white;
   border-left: 1px solid white;

@@ -1,0 +1,49 @@
+extends ../layouts/default
+
+block content
+  - var action = '/bubbles'
+  if (!bubble.isNew)
+    - action += '/'+bubble.id
+
+  if (typeof errors !== 'undefined')
+    .fade.in.alert.alert-block.alert-error
+      a.close(data-dismiss="alert", href="javascript:void(0)") x
+      ul
+        each error in errors
+          li= error.type
+
+  form.form-horizontal(method="post", action=action)
+    if (!bubble.isNew)
+      input(type="hidden", name="_method", value="PUT")
+
+    .control-group
+      label.control-label(for='title') Name
+      .controls
+        input#title.input-xlarge(type='text', name="name", value=bubble.name, placeholder='ex: Spring Concert')
+
+    .control-group
+      label.control-label(for='desc') Details
+      .controls
+        textarea#desc.input-xxlarge(type='text', rows="5", name="body", placeholder='Add more info about your event')=bubble.body
+
+    .control-group
+      label.control-label(for='location') Where
+      .controls
+        input#location.input-xlarge(type='text', name="location", value=bubble.location, placeholder='Where is your event?')
+
+    .control-group
+      label.control-label(for='location') When
+      .controls
+        input#start_time.input-medium(type='text', name="start_time", value=bubble.start_time, readonly="readonly", placeholder='When does it start?')
+        input#end_time.input-medium.input-left-margin(type='text', name="end_time", value=bubble.end_time, placeholder='When does it end?')
+
+    .control-group
+      label.control-label(for='location') Which Bubble
+      .controls
+        input#select_bubble.input-xlarge(type='text', name="location", value=bubble.bubble, placeholder='Select a bubble to post your event in')
+
+    .form-actions
+      button.btn.btn-primary(type='submit') Save
+      &nbsp;
+      a.btn(href='/', title="cancel") Cancel
+

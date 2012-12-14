@@ -4,6 +4,17 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
 
 
+// New event
+exports.new = function(req, res){
+  res.render('events/new', {
+      title: 'Create an Event'
+    , sidebar_name: 'Create'
+    , bubble: new Event({})
+    , event: new Event({})
+  })
+}
+
+
 // View an event
 exports.show = function(req, res){
   console.log("req.bubble: "+req.bubble);
@@ -17,6 +28,3 @@ exports.show = function(req, res){
     num_events: req.bubble.events.length
   })
 }
-
-
-
