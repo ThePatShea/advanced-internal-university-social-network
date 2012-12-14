@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
 exports.new = function(req, res){
   res.render('bubbles/new', {
       title: 'New Bubble'
+    , sidebar_name: 'Create'
     , bubble: new Bubble({})
   })
 }
@@ -25,6 +26,7 @@ exports.create = function (req, res) {
       res.render('bubbles/new', {
           title: 'New Bubble'
         , bubble: bubble
+        , sidebar_name: 'Create'
         , errors: err.errors
       })
     }
