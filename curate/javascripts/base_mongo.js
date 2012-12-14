@@ -91,7 +91,6 @@
                         }, { collection: 'users' });
                 } else if (schema == "bubble") {
 			var mongo_schema = new mongoose.Schema({
-				slug: String,
 				name: String,
 				events: []
 			}, { collection: 'bubbles' });
@@ -184,11 +183,15 @@
 						var event_array = mongo_model;
 						console.log(event_array);
 
+					/* USE TO MAKE SLUGS. NOT NEEDED FOR MINIMALLY VIABLE PRODUCT
+
 						var bubble_regex = new RegExp(" ","g");
                                                 var bubble_slug = bubble_name.replace(bubble_regex,"_");
 
+					*/
+
 						get_schema("bubble", function (mongo_model) {
-							var insert_bubble = new mongo_model({slug : bubble_slug , name : bubble_name , events: event_array});
+							var insert_bubble = new mongo_model({name : bubble_name , events: event_array});
                         				insert_bubble.save();
 						});
 					});
