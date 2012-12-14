@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
 // New bubble
 exports.new = function(req, res){
   res.render('bubbles/new', {
-      title: 'New Bubble'
+      title: 'Create a Bubble'
     , sidebar_name: 'Create'
     , bubble: new Bubble({})
   })
@@ -24,7 +24,7 @@ exports.create = function (req, res) {
       console.log("error creating bubble: " + err)
 
       res.render('bubbles/new', {
-          title: 'New Bubble'
+          title: 'Create a Bubble'
         , bubble: bubble
         , sidebar_name: 'Create'
         , errors: err.errors

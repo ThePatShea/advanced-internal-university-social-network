@@ -77,6 +77,10 @@ module.exports = function (app, passport, auth) {
       })
   })
 
+  // create routes
+  var create = require('../app/controllers/create')
+  app.get('/create', create.show)
+
   // event routes
   var events = require('../app/controllers/events')
   app.get('/bubbles/:bubbleId/events/:eventId', events.show)
