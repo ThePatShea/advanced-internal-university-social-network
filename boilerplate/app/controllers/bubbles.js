@@ -3,6 +3,36 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
 
 
+// New bubble
+exports.new = function(req, res){
+  res.render('bubbles/new', {
+      title: 'New Bubble'
+    , bubble: new Bubble({})
+  })
+}
+
+
+// Create a bubble
+exports.create = function (req, res) {
+  var bubble = new Bubble(req.body)
+
+  bubble.save(function(err){
+    if (err) {
+      console.log("error creating bubble: " + err)
+
+      res.render('bubbles/new', {
+          title: 'New Bubble'
+        , bubble: bubble
+        , errors: err.errors
+      })
+    }
+    else {
+      res.redirect('/bubbles/'+bubble._id)
+    }
+  })
+}
+
+
 // View a bubble
 exports.show = function(req, res){
   res.render('bubbles/show', {
@@ -12,6 +42,7 @@ exports.show = function(req, res){
     num_events: req.bubble.events.length
   })
 }
+
 
 // View subscriptions
 exports.subscriptions = function(req, res){

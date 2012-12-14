@@ -1,0 +1,32 @@
+extends ../layouts/default
+
+block content
+  - var action = '/bubbles'
+  if (!bubble.isNew)
+    - action += '/'+bubble.id
+
+  if (typeof errors !== 'undefined')
+    .fade.in.alert.alert-block.alert-error
+      a.close(data-dismiss="alert", href="javascript:void(0)") x
+      ul
+        each error in errors
+          li= error.type
+
+  form.form-horizontal(method="post", action=action)
+    if (!bubble.isNew)
+      input(type="hidden", name="_method", value="PUT")
+
+    .control-group
+      label.control-label(for='title') Name
+      .controls
+        input#title.input-xlarge(type='text', name="name", value=bubble.name, placeholder='ex: Club Soccer')
+
+    .control-group
+      label.control-label(for='desc') Description
+      .controls
+        textarea#desc.input-xxlarge(type='text', rows="5", name="body", placeholder='Describe your group')=bubble.body
+
+    .form-actions
+      button.btn.btn-primary(type='submit') Save changes
+      &nbsp;
+      a.btn(href='/bubbles', title="cancel") Cancel

@@ -4,8 +4,8 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
 var BubbleSchema = new Schema({
-	slug: { type: String, index: {unique: true}},
 	name: String,
+        description: String,
 	events: []
 })
 

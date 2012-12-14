@@ -79,7 +79,6 @@ module.exports = function (app, passport, auth) {
 
   // event routes
   var events = require('../app/controllers/events')
-  app.get('/events/:eventId', events.show)
   app.get('/bubbles/:bubbleId/events/:eventId', events.show)
 
   app.param('eventId', function(req, res, next, id){
@@ -110,6 +109,8 @@ module.exports = function (app, passport, auth) {
 
   // bubble routes
   var bubbles = require('../app/controllers/bubbles')
+  app.get('/bubbles/new', auth.requiresLogin, bubbles.new)
+  app.post('/bubbles', auth.requiresLogin, bubbles.create)
   app.get('/bubbles/:bubbleId', bubbles.show)
   app.get('/subscriptions', bubbles.subscriptions)
 
