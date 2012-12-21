@@ -145,18 +145,16 @@ module.exports = function (app, passport, auth) {
   var tags = require('../app/controllers/tags')
   app.get('/tags/:tag', auth.requiresLogin, tags.index)
 
-
-
   // payment routes
   var stripeApiKey = "sk_live_MEyrnnycBVAD6cL56HqElb7M";
   var stripeApiKeyTesting = "sk_test_BChwgXIdtRK3VbAOU3n4HYLo";
   var stripe = require('stripe')(stripeApiKeyTesting);
 
-  app.post("/plans/browserling_developer", function(req, res) {
+  app.post("/pay/company_bubble", function(req, res) {
     stripe.customers.create({
       card : req.body.stripeToken,
       email : req.user.email, // customer's email (get it from db or session)
-      plan : "browserling_developer"
+      plan : "company_bubble"
     }, function (err, customer) {
       if (err) {
         var msg = customer.error.message || "unknown";
