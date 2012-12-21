@@ -206,6 +206,10 @@ h4 {
   margin: 0 0 0 20px;
 }
 
+.input-xsmall {
+  width: 40px;
+}
+
 input[readonly="readonly"] {
   cursor: pointer;
   background: white;
