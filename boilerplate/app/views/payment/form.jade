@@ -1,3 +1,5 @@
+years_later = current_year + 11
+
 block content
   #stripe-form
     div You will be charged a recurring fee of $20/month
@@ -12,8 +14,13 @@ block content
       .control-group
         label.control-label Expiration
         .controls
-          input.input-small.card-expiry-month(type='text', size='2')
-          input.input-small.card-expiry-year.input-left-margin(type='text', size='4')
+          select.input-xsmall-dropdown.card-expiry-month
+            - for (var i = 1; i <= 12; i++)
+              option(value=i)= i
+          span.input-slash /
+          select.input-small-dropdown.card-expiry-year
+            - for (var i = current_year; i <= years_later; i++)
+              option(value=i)= i
 
       .control-group
         label.control-label Security Code

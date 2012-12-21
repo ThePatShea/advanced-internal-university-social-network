@@ -5,8 +5,12 @@ var mongoose = require('mongoose')
 
 // New bubble
 exports.new = function(req, res){
+
+  var current_year = new Date().getFullYear();
+
   res.render('bubbles/new', {
       title: 'Create a Bubble'
+    , current_year: current_year
     , sidebar_name: 'Create'
     , bubble: new Bubble({})
   })

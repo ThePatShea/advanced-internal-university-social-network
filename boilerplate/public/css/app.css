@@ -202,12 +202,24 @@ h4 {
   width: 61px;
 }
 
+.input-slash {
+  margin: 0 10px;
+}
+
 .input-left-margin {
   margin: 0 0 0 20px;
 }
 
 .input-xsmall {
   width: 40px;
+}
+
+.input-xsmall-dropdown {
+  width: 50px;
+}
+
+.input-small-dropdown {
+  width: 65px;
 }
 
 input[readonly="readonly"] {
