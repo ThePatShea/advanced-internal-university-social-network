@@ -4,6 +4,9 @@ script(type='text/javascript', src='/js/bootbox.js')
 script(type='text/javascript', src='/js/jquery.tagsinput.min.js')
 script(type='text/javascript', src='/js/jquery-ui.custom.min.js')
 script(type='text/javascript', src='/js/jquery-ui-timepicker-addon.js')
+script(type='text/javascript', src='/js/datetimepicker.js')
+script(type='text/javascript', src='https://js.stripe.com/v1/')
+script(type='text/javascript', src='/js/stripe.js')
 script(type='text/javascript', src='/js/app.js')
 script(type="text/javascript")
   var _gaq = _gaq || [];
@@ -15,11 +18,3 @@ script(type="text/javascript")
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
-  $('#start_time').datetimepicker({
-    timeFormat: "hh:mm tt"
-  });
-
-  $('#end_time').datetimepicker({
-    timeFormat: "hh:mm tt"
-  });

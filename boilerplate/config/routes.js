@@ -145,4 +145,33 @@ module.exports = function (app, passport, auth) {
   var tags = require('../app/controllers/tags')
   app.get('/tags/:tag', auth.requiresLogin, tags.index)
 
+
+
+  // payment routes
+  var stripeApiKey = "sk_live_MEyrnnycBVAD6cL56HqElb7M";
+  var stripeApiKeyTesting = "sk_test_BChwgXIdtRK3VbAOU3n4HYLo";
+  var stripe = require('stripe')(stripeApiKeyTesting);
+
+  app.post("/plans/browserling_developer", function(req, res) {
+    console.log("req: " + req);
+
+    stripe.customers.create({
+      card : req.body.stripeToken,
+      email : "example1@gmail.com", // customer's email (get it from db or session)
+      plan : "browserling_developer"
+    }, function (err, customer) {
+      if (err) {
+        var msg = customer.error.message || "unknown";
+        res.send("Error while processing your payment: " + msg);
+      }
+      else {
+        var id = customer.id;
+        console.log('Success! Customer with Stripe ID ' + id + ' just signed up!');
+        // save this customer to your database here!
+        res.send('ok');
+      }
+    });
+  });
+
+
 }
