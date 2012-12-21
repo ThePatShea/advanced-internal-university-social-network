@@ -4,8 +4,6 @@ var publicStripeApiKeyTesting = 'pk_test_tbF9KUhe3bXdwaaEE3qbm1gw';
 Stripe.setPublishableKey(publicStripeApiKeyTesting);
 
 function stripeResponseHandler (status, response) {
-  console.log(response);
-
   if (response.error) {
     $('#error').text(response.error.message);
     $('#error').slideDown(300);

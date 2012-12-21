@@ -153,11 +153,9 @@ module.exports = function (app, passport, auth) {
   var stripe = require('stripe')(stripeApiKeyTesting);
 
   app.post("/plans/browserling_developer", function(req, res) {
-    console.log("req: " + req);
-
     stripe.customers.create({
       card : req.body.stripeToken,
-      email : "example1@gmail.com", // customer's email (get it from db or session)
+      email : req.user.email, // customer's email (get it from db or session)
       plan : "browserling_developer"
     }, function (err, customer) {
       if (err) {
