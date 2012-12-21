@@ -15,7 +15,7 @@ module.exports = function (app, passport, auth) {
   app.get('/logout', users.logout)
   app.post('/users', users.create)
   app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
-  app.get('/users/:userId', users.show)
+  app.get('/users/:userId', auth.requiresLogin, users.show)
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me'], failureRedirect: '/login' }), users.signin)
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
   app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin)
@@ -38,10 +38,10 @@ module.exports = function (app, passport, auth) {
 
   // article routes
   var articles = require('../app/controllers/articles')
-  app.get('/articles', articles.index)
+  app.get('/articles', auth.requiresLogin, articles.index)
   app.get('/articles/new', auth.requiresLogin, articles.new)
   app.post('/articles', auth.requiresLogin, articles.create)
-  app.get('/articles/:id', articles.show)
+  app.get('/articles/:id', auth.requiresLogin, articles.show)
   app.get('/articles/:id/edit', auth.requiresLogin, auth.article.hasAuthorization, articles.edit)
   app.put('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.update)
   app.del('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy)
@@ -79,12 +79,12 @@ module.exports = function (app, passport, auth) {
 
   // create routes
   var create = require('../app/controllers/create')
-  app.get('/create', create.show)
+  app.get('/create', auth.requiresLogin, create.show)
 
   // event routes
   var events = require('../app/controllers/events')
   app.get('/events/new', auth.requiresLogin, events.new)
-  app.get('/bubbles/:bubbleId/events/:eventId', events.show)
+  app.get('/bubbles/:bubbleId/events/:eventId', auth.requiresLogin, events.show)
 
   app.param('eventId', function(req, res, next, id){
     Bubble
@@ -116,8 +116,8 @@ module.exports = function (app, passport, auth) {
   var bubbles = require('../app/controllers/bubbles')
   app.get('/bubbles/new', auth.requiresLogin, bubbles.new)
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
-  app.get('/bubbles/:bubbleId', bubbles.show)
-  app.get('/subscriptions', bubbles.subscriptions)
+  app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.show)
+  app.get('/subscriptions', auth.requiresLogin, bubbles.subscriptions)
 
   app.param('bubbleId', function(req, res, next, id){
     Bubble
@@ -135,7 +135,7 @@ module.exports = function (app, passport, auth) {
   })
 
   // home route
-  app.get('/', bubbles.subscriptions)
+  app.get('/', auth.requiresLogin, bubbles.subscriptions)
 
   // comment routes
   var comments = require('../app/controllers/comments')
@@ -143,6 +143,6 @@ module.exports = function (app, passport, auth) {
 
   // tag routes
   var tags = require('../app/controllers/tags')
-  app.get('/tags/:tag', tags.index)
+  app.get('/tags/:tag', auth.requiresLogin, tags.index)
 
 }
