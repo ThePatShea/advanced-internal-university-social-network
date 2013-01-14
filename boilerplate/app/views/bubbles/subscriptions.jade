@@ -1,8 +1,11 @@
 extends ../layouts/default
 
 block main
-  ul.post_list
+  ul.subscription_list
     each bubble in bubbles
-      li.post_widget
+      li.bubble_widget
         a(href='/bubbles/'+bubble._id)
-          h1= bubble.name
+          section.section_inner
+            div.bubble_name_container
+              div.bubble_name_container_inner
+                h1.bubble_name= bubble.name
