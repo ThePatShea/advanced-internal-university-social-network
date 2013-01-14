@@ -196,6 +196,26 @@ h4 {
   color: #575757;
 }
 
+pre {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+
+  word-break: normal;
+  word-wrap: normal;
+  background: none;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  
+  text-align: left;
+  text-shadow: 1px 1px 0 rgba(255,255,255,.5);
+  font-family: 'museoSans500';
+  line-height: 20px;
+  font-size: 12px;
+  color: #43453E;
+}
+
 .bubble_logo {
   background: url("../img/sprites.png") -10px -10px;
   height: 65px;
@@ -235,6 +255,114 @@ input[readonly="readonly"] {
 #ui-datepicker-div {
   z-index: 1040 !important;
 }
+
+.red_button {
+  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
+
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+
+  border: 0;
+  border-bottom: 1px solid white;
+
+  text-shadow: 1px 1px 0 rgba(0,0,0,.5);
+  font-family: 'proxima_nova_semibold';
+  background: rgba(172,48,26,.8);
+  text-transform: uppercase;
+  padding: 8px 15px 6px 15px;
+  line-height: 12px;
+  font-size: 12px;
+  color: white;
+  }
+
+.post_info {
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  overflow: auto;
+  padding: 20px;
+  }
+  .post_info .left_bar {
+    -webkit-box-shadow: inset 0 0 3px rgba(31, 23, 31, .21);
+    box-shadow: inset 0 0 3px rgba(31, 23, 31, .21);
+
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+
+    background: url("../img/bg_main_dark.png");
+    border: 1px solid rgba(255,255,255,.75);
+    margin: 0 25px 0 0;
+    overflow: hidden;
+    width: 180px;
+    float: left;
+    }
+    .post_info .left_bar .section_top {
+      border-bottom: 1px solid #A2A6A8;
+      padding: 5px;
+      }
+      .post_info .left_bar .section_top .pic_post_container {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        overflow: hidden;
+        height: 140px;
+        width: 170px;
+        }
+        .post_info .left_bar .section_top .pic_post_container .pic_post {
+          min-height: 140px;
+          min-width: 170px;
+          }
+    .post_info .left_bar .section_middle {
+      border-bottom: 1px solid #A2A6A8;
+      border-top: 1px solid white;
+      padding: 10px 5px;
+      }
+      .post_info .left_bar .section_middle .descriptor {
+        text-transform: uppercase;
+        }
+      .post_info .left_bar .section_middle h4 {
+        font-family: 'proxima_nova_semibold';
+        margin: 5px 0;
+        font-size: 14px;
+        }
+    .post_info .left_bar .section_bottom {
+      border-top: 1px solid white;
+      padding: 15px 5px;
+      }
+  .post_info .post_attributes {
+
+    }
+    .post_info .post_attributes .post_description {
+      margin: 5px 0 0 208px;
+      overflow: auto;
+      }
+      .post_info .post_attributes .post_description pre {
+        overflow: hidden;
+        height: 185px;
+        }
+      .post_info .post_attributes .post_description .read_more {
+        margin-top: 5px;
+        float: right;
+        }
+    .post_info .post_attributes .divider {
+      height: 1px;
+      background: #A2A6A8;
+      border-bottom: 1px solid white;
+      margin: 20px 0 20px 205px;
+      }
+    .post_info .post_attributes .students_going {
+      margin: 0 22px 0 220px;
+      text-align: left;
+      }
+      .post_info .post_attributes .students_going .descriptor {
+        text-transform: uppercase;
+        font-size: 10px;
+        }
+      .post_info .post_attributes .students_going .going {
+        text-transform: uppercase;
+        font-size: 22px;
+        }
+
+
 
 .post_list {
   border-top: 1px solid white;
@@ -358,16 +486,16 @@ input[readonly="readonly"] {
             overflow: hidden;
             margin: 0 10px;
             }
-  .post_list .descriptor {
+  .descriptor {
     font-family: 'proxima_nova_extrabold';
     text-shadow: 1px 1px 0 white; 
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-size: 12px;
     }
-  .post_list .gray_text {
+  .gray_text {
     color: #A4A4A4;
     }
-  .post_list .red_text {
+  .red_text {
     color: rgba(172,48,26,.8);
     }
   .post_list li {
@@ -409,9 +537,19 @@ input[readonly="readonly"] {
       top: 1px;
       margin: 0 3px 0 0;
       }
-    .post_list li .comments_text {
+    .post_list li .venue_text {
       margin: 0 15px 0 0;
       }
+    .post_list li .attending_text {
+      margin: 0 15px 0 0;
+      }
+
+.single_post {
+  border-bottom: 0;
+  }
+  .single_post .post_widget {
+    
+    }
 
 .sidebar {
   background: #4d5153; /* Old browsers */
