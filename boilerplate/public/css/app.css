@@ -315,6 +315,9 @@ input[readonly="readonly"] {
 }
 
 .back_to_bubble {
+  -webkit-box-shadow: inset 0px -8px 8px -4px rgba(0, 0, 0, .15);
+  box-shadow: inset 0px -8px 8px -4px rgba(0, 0, 0, .15);
+
   border-left: 1px solid white;
   border-top: 1px solid white;
   position: relative;
@@ -383,12 +386,12 @@ input[readonly="readonly"] {
         }
     .post_info .left_bar .section_bottom {
       border-top: 1px solid white;
-      padding: 15px 5px;
+      padding: 10px 5px;
       overflow: auto;
       }
       .post_info .left_bar .section_bottom .post_action_container {
         float: left;
-        margin: 0 9px;
+        margin: 5px 9px;
         }
       .post_info .left_bar .section_bottom .descriptor {
         text-transform: uppercase;
@@ -973,6 +976,36 @@ ul.nav.pull-right {
       display: none;
       }
 
+  .post_info {
+    padding: 10px;
+    }
+    .post_info .left_bar {
+      margin-right: 15px;
+      width: 120px;
+      }
+      .post_info .left_bar .section_top .pic_post_container {
+        width: 110px;
+        }
+        .post_info .left_bar .section_top .pic_post_container .pic_post {
+          min-width: 110px;
+          }
+      .post_info .left_bar .section_bottom .post_action_container {
+        margin: 5px 22px;
+        }
+
+    .post_info .post_attributes .post_description {
+      margin-left: 138px;
+      }
+    .post_info .post_attributes .divider {
+      margin-left: 135px;
+      }
+    .post_info .post_attributes .students_going {
+      margin-left: 150px;
+      }
+
+  .post_info .post_attributes .post_description pre {
+    max-height: 295px;
+  }
 }
 
 @media (max-width: 767px) and (min-width: 481px) {
