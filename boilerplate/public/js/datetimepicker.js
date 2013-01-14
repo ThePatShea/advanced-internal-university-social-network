@@ -1,3 +1,4 @@
+// Controls the date and time selector in forms
 $(document).ready(function () {
 
   $('#start_time').datetimepicker({

@@ -1,10 +1,10 @@
 extends ../layouts/default
 
 block main
-  a(href='/bubbles/'+bubble._id)
-    h4
-      |back to 
-      = bubble.name
+  section.back_to_bubble
+    a.back_button.gradient_gray(href='/bubbles/'+bubble._id)
+      span.descriptor.gray_text.back_to back to 
+      span.descriptor.red_text.bubble_name= bubble.name
   ul.post_list.single_post
     include ../includes/post_widget
   section.post_info
@@ -16,14 +16,20 @@ block main
         div.descriptor.gray_text venue
         h4= event.location
       section.section_bottom
+        div.post_action_container
+          button.post_action_calendar
+          div.descriptor.gray_text share w/ friends
+        div.post_action_container
+          button.post_action_calendar
+          div.descriptor.gray_text add to calendar
     section.post_attributes
       section.post_description
-        pre= event.description
-        button.red_button.read_more read more
+        pre#post_description= event.description
+        button.red_button.read_more#read_more read more
       div.divider
       section.students_going
         div.descriptor.red_text
           = event.attending_count 
-          |  students
+          |  people
         h4.going going
       div.divider
