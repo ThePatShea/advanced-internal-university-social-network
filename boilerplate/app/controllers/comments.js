@@ -3,16 +3,17 @@ var mongoose = require('mongoose')
 
 exports.create = function (req, res) {
   var comment = new Comment(req.body)
-    , article = req.article
+    , event = req.event
+    , bubble = req.bubble
 
   comment._user = req.user
 
   comment.save(function (err) {
     if (err) throw new Error('Error while saving comment')
-    article.comments.push(comment._id)
-    article.save(function (err) {
+    event.comments.push(comment._id)
+    event.save(function (err) {
       if (err) throw new Error('Error while saving article')
-      res.redirect('/articles/'+article.id+'#comments')
+      res.redirect('/bubbles/'+bubble.id+'/events/'+event.id+'#comments')
     })
   })
 }

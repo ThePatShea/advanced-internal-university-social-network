@@ -94,18 +94,32 @@ module.exports = function (app, passport, auth) {
         if (!bubble) return next(new Error('Failed to load bubble ' + id))
         req.bubble = bubble
 
-        console.log(bubble)
-
     Event
       .findOne({ _id : req.params.eventId })
+      .populate('comments')
       .exec(function (err, event) {
         if (err) return next(err)
         if (!event) return next(new Error('Failed to load event ' + id))
         req.event = event
 
-        console.log(event)
+        var populateComments = function (comment, cb) {
+          User
+            .findOne({ _id: comment._user })
+            .select('name facebook.id')
+            .exec(function (err, user) {
+              if (err) return next(err)
+              comment.user = user
+              cb(null, comment)
+            })
+        }
 
-        next()
+        if (event.comments.length) {
+          async.map(req.event.comments, populateComments, function (err, results) {
+            next(err)
+          })
+        }
+        else
+          next()
 
       })
 
@@ -127,8 +141,6 @@ module.exports = function (app, passport, auth) {
         if (!bubble) return next(new Error('Failed to load bubble ' + id))
         req.bubble = bubble
 
-        console.log(bubble)
-
         next()
 
       })
@@ -140,6 +152,7 @@ module.exports = function (app, passport, auth) {
   // comment routes
   var comments = require('../app/controllers/comments')
   app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
+  app.post('/bubbles/:bubbleId/events/:eventId/comments', auth.requiresLogin, comments.create)
 
   // tag routes
   var tags = require('../app/controllers/tags')

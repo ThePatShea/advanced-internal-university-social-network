@@ -81,7 +81,17 @@
 
 }
 
+@font-face {
+    font-family: 'proxima_nova_regular';
+    src: url('fonts/proximanova-regular/proximanova-regular-webfont.eot');
+    src: url('fonts/proximanova-regular/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/proximanova-regular/proximanova-regular-webfont.woff') format('woff'),
+         url('fonts/proximanova-regular/proximanova-regular-webfont.ttf') format('truetype'),
+         url('fonts/proximanova-regular/proximanova-regular-webfont.svg#proxima_nova_ltbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
+}
 
 
 
@@ -216,9 +226,9 @@ pre {
   
   text-align: left;
   text-shadow: 1px 1px 0 rgba(255,255,255,.5);
-  font-family: 'museoSans500';
+  font-family: 'proxima_nova_regular';
   line-height: 20px;
-  font-size: 12px;
+  font-size: 14px;
   color: #43453E;
 }
 
@@ -236,6 +246,13 @@ pre {
 
 textarea {
    resize: none;
+   padding: 0;
+   margin: 0;
+}
+
+form {
+  padding: 0;
+  margin: 0;
 }
 
 .input-slash {
@@ -389,6 +406,113 @@ input[readonly="readonly"] {
   overflow: auto;
   padding: 20px;
   }
+  .post_info .comment_area {
+    padding: 50px 0 0 0;
+    position: relative;
+    width: 100%;
+    }
+    .post_info .comment_area .leave_a_comment {
+      -webkit-border-radius: 12px;
+      -moz-border-radius: 12px;
+      border-radius: 12px;
+
+      -webkit-box-shadow: 2px 2px 2px rgba(0,0,0,.18);
+      -moz-box-shadow: 2px 2px 2px rgba(0,0,0,.18);
+      box-shadow: 2px 2px 2px rgba(0,0,0,.18);
+
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+
+      font-family: 'proxima_nova_semibold';
+      padding: 22px 90px 12px 71px;
+      position: relative;
+      border-width: 0;
+      font-size: 17px;
+      color: #595959;
+      height: 60px;
+      width: 100%;
+      z-index: 10;
+      }
+      .post_info .comment_area .leave_a_comment::-webkit-input-placeholder {
+        color: #595959;
+        }
+      .post_info .comment_area .leave_a_comment:-moz-placeholder {
+        color: #595959;
+        }
+      .post_info .comment_area .leave_a_comment::-moz-placeholder {
+        color: #595959;
+        }
+      .post_info .comment_area .leave_a_comment:-ms-input-placeholder {
+        color: #595959;
+        }
+      .post_info .comment_area .submit_comment {
+        padding: 20px 12px;
+        position: absolute;
+        z-index: 15;
+        right: 5px;
+        top: 55px;
+        }
+      .post_info .comment_area .pic_current_user {
+        position: absolute;
+        z-index: 15;
+        left: 15px;
+        top: 55px;
+        }
+      .post_info .comment_area .comment_list {
+        position: relative;
+        top: -20px;
+        }
+      .post_info .comment_area .comment {
+        padding: 20px 15px;
+        text-align: left;
+        }
+        .post_info .comment_area .comment .comment_body {
+          margin: 8px 0 0 56px;
+          }
+        .post_info .comment_area .comment .pic_commenter {
+          margin: 0 10px 0 0;
+          float: left;
+          }
+          .post_info .comment_area .face_circle_container {
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+
+            background: url("../img/bg_main_extradark.png");
+            border-bottom: 1px solid rgba(255,255,255,.82);
+            -webkit-box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .82), 0px 1px 1px 0 rgba(255, 255, 255, .82);
+            box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .82), 0px 1px 1px 0 rgba(255, 255, 255, .82);
+            padding: 3px;
+            }
+            .post_info .comment_area .face_circle_container .face_circle {
+              -webkit-border-radius: 20px;
+              border-radius: 20px;
+  
+              height: 40px;
+              width: 40px;
+              }
+        .post_info .comment_area .comment .comment_user_name {
+          text-shadow: 0 1px 0 rgba(255,255,255,.7);
+          font-family: 'proxima_nova_bold';
+          text-transform: capitalize;
+          margin: 0 12px 0 0;
+          font-size: 17px;
+          color: #575757;
+          float: left;
+          }
+      .post_info .comment_area .comment:nth-child(odd) {
+        background: url("../img/bg_main_dark.png");
+        }
+      .post_info .comment_area .comment:nth-child(even) {
+        background: rgba(255,255,255,.2);
+        }
+      .post_info .comment_area .comment:first-child {
+        padding-top: 40px;
+        }
+      .post_info .comment_area .comment:last-child {
+        -webkit-border-radius: 0 0 12px 12px;
+        border-radius: 0 0 12px 12px;
+        }
   .post_info .left_bar {
     -webkit-box-shadow: inset 0 0 3px rgba(31, 23, 31, .21);
     box-shadow: inset 0 0 3px rgba(31, 23, 31, .21);

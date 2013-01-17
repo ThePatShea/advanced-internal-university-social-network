@@ -21,7 +21,8 @@ var EventSchema = new Schema({
 	attending_count: Number,
 	declined_count: Number,
 	unsure_count: Number,
-	not_replied_count: Number
+	not_replied_count: Number,
+        comments: [{type : Schema.ObjectId, ref : 'Comment'}]
 })
 
 

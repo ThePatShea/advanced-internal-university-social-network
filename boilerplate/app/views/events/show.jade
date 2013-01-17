@@ -33,3 +33,8 @@ block main
           |  people
         h4.going going
       div.divider
+    section.comment_area#comments
+      include ../comments/form
+      section.comment_list
+        each comment in event.comments
+          include ../comments/comment
