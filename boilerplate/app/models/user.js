@@ -16,6 +16,7 @@ var UserSchema = new Schema({
   , facebook: {}
   , twitter: {}
   , github: {}
+  , subscriptions: [{type : Schema.ObjectId, ref : 'Bubble', index: {unique: true}}]
 })
 
 // virtual attributes

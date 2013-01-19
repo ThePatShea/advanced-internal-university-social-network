@@ -12,7 +12,7 @@ exports.create = function (req, res) {
     if (err) throw new Error('Error while saving comment')
     event.comments.push(comment._id)
     event.save(function (err) {
-      if (err) throw new Error('Error while saving article')
+      if (err) throw new Error('Error while saving post')
       res.redirect('/bubbles/'+bubble.id+'/events/'+event.id+'#comments')
     })
   })

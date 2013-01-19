@@ -65,3 +65,31 @@ exports.subscriptions = function(req, res){
       })
     })
 }
+
+
+// Subscribe to a bubble
+exports.subscribe = function (req, res) {
+  var user = req.user
+    , bubble = req.bubble
+
+  bubble.subscriptions.addToSet(user._id)
+
+  Bubble
+    .findOne({"_id" : bubble._id}, "name")
+    .exec(function(err, bubbles) {
+      if (err) throw new Error('Error while subscribing to a bubble')
+      bubble.save(function (err) {
+        if (err) throw new Error('Error while subscribing to a bubble')
+        user.subscriptions.addToSet(bubble._id)
+        user.save(function (err) {
+          if (err) throw new Error('Error while saving user subscription')
+          res.redirect('/bubbles/'+bubble.id)
+        })
+  })
+
+    })
+
+
+
+
+}

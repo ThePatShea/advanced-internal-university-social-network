@@ -154,6 +154,9 @@ module.exports = function (app, passport, auth) {
   app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
   app.post('/bubbles/:bubbleId/events/:eventId/comments', auth.requiresLogin, comments.create)
 
+  // subscription routes
+  app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
+
   // tag routes
   var tags = require('../app/controllers/tags')
   app.get('/tags/:tag', auth.requiresLogin, tags.index)
