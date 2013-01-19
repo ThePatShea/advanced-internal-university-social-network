@@ -13,7 +13,7 @@ section.sidebar
           else
             h1= req.user.name
         - if (typeof(bubble) != 'undefined')
-          include subscribe
+          include ../includes/subscribe
     ul.sidebar_buttons
       - if (typeof(num_events) != 'undefined' && num_events != 0)
         li

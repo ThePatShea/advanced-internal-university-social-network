@@ -380,12 +380,16 @@ input[readonly="readonly"] {
 
     border-bottom: 1px solid rgba(255,255,255,.75);
     background: url("../img/bg_main_dark.png");
+    position: relative;
     margin: 9px 12px;
     height: 120px;
     width: 120px;
     float: left;
-
     }
+    .subscription_list .bubble_widget .subscribe {
+      left: 22px;
+      top: 5px;
+      }
     .subscription_list .bubble_widget .section_inner {
       -webkit-border-radius: 22px;
       border-radius: 22px;
@@ -397,8 +401,10 @@ input[readonly="readonly"] {
       margin: 5px;
       }
       .subscription_list .bubble_widget .section_inner .bubble_name_container {
+        position: relative;
         display: table;
         height: 80px;
+        top: 22px;
         }
         .subscription_list .bubble_widget .section_inner .bubble_name_container .bubble_name_container_inner {
           vertical-align: middle;
@@ -893,7 +899,7 @@ input[readonly="readonly"] {
       width: 208px;
       top: 50%;
       }
-      .sidebar .top_container .top_container_inner .subscribe {
+      .subscribe {
           background: #111111; /* Old browsers */
           background: -moz-linear-gradient(top,  #111111 0%, #333333 100%); /* FF3.6+ */
           background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#111111), color-stop(100%,#333333)); /* Chrome,Safari4+ */
@@ -913,26 +919,28 @@ input[readonly="readonly"] {
           position: absolute;
           padding: 0 15px;
           height: 25px;
+        }
+        .sidebar .top_container .top_container_inner .subscribe {
           right: 15px;
           top: 0;
-        }
-        .sidebar .top_container .top_container_inner .subscribe:hover .icon_unsubscribed {
+          }
+        .subscribe:hover .icon_unsubscribed {
           background: url("../img/sprites.png") -215px -38px;
           top: 4px;
           left: 0;
           }
-        .sidebar .top_container .top_container_inner .subscribe:hover .icon_subscribed {
+        .subscribe:hover .icon_subscribed {
           background: url("../img/sprites.png") -236px -37px;
           left: -1px;
           top: 3px;
           }
-        .sidebar .top_container .top_container_inner .subscribe div {
+        .subscribe div {
           float: left;
           }
-        .sidebar .top_container .top_container_inner .subscribe .gray_text {
+        .subscribe .gray_text {
           text-shadow: 2px 2px 0 black;
           }
-        .sidebar .top_container .top_container_inner .subscribe .heart {
+        .subscribe .heart {
           margin: 0 5px 0 0;
           }
     .sidebar .top_container .pic_top_overlay,
