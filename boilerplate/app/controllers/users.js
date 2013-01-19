@@ -55,3 +55,20 @@ exports.show = function (req, res) {
     , user: user
   })
 }
+
+
+// show subscriptions
+exports.subscriptions = function(req, res){
+  User
+    .findOne({_id: req.user._id})
+    .populate('subscriptions', 'name') 
+    .exec(function(err, user) {
+      if (err) return res.render('500')
+      res.render('users/subscriptions', {
+          sidebar_name: user.name
+        , title: "subscriptions"
+        , bubbles: user.subscriptions
+        , user: user
+      })
+    })
+}

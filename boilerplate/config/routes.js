@@ -131,7 +131,6 @@ module.exports = function (app, passport, auth) {
   app.get('/bubbles/new', auth.requiresLogin, bubbles.new)
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
   app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.show)
-  app.get('/subscriptions', auth.requiresLogin, bubbles.subscriptions)
 
   app.param('bubbleId', function(req, res, next, id){
     Bubble
@@ -147,7 +146,7 @@ module.exports = function (app, passport, auth) {
   })
 
   // home route
-  app.get('/', auth.requiresLogin, bubbles.subscriptions)
+  app.get('/', auth.requiresLogin, users.subscriptions)
 
   // comment routes
   var comments = require('../app/controllers/comments')

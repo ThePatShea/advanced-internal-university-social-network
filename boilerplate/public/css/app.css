@@ -331,6 +331,24 @@ input[readonly="readonly"] {
 
 }
 
+.subscriptions {
+
+  }
+  .subscriptions .subscription_section {
+    margin: 30px 0 0 0;
+    }
+    .subscriptions .subscription_section .subscription_section_name {
+      text-align: left;
+      font-size: 35px;
+      padding: 0 0 0 15px;
+      }
+  .subscriptions .divider {
+    height: 1px;
+    background: #A2A6A8;
+    border-bottom: 1px solid white;
+    margin: 20px 0;
+    }
+
 .subscription_list {
 
   }
@@ -347,6 +365,7 @@ input[readonly="readonly"] {
     height: 120px;
     width: 120px;
     float: left;
+
     }
     .subscription_list .bubble_widget .section_inner {
       -webkit-border-radius: 22px;
@@ -787,6 +806,12 @@ input[readonly="readonly"] {
     .post_list li .attending_text {
       margin: 0 15px 0 0;
       }
+
+.page_content {
+  border: 1px solid white;
+  overflow: hidden;
+  border-right: 0;
+}
 
 .single_post {
   border-bottom: 0;

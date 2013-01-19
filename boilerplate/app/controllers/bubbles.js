@@ -52,20 +52,6 @@ exports.show = function(req, res){
 }
 
 
-// View subscriptions
-exports.subscriptions = function(req, res){
-  Bubble
-    .find({}, "name")
-    .exec(function(err, bubbles) {
-      if (err) return res.render('500')
-      res.render('bubbles/subscriptions', {
-        title: 'subscriptions',
-        bubbles: bubbles
-      })
-    })
-}
-
-
 // Subscribe to a bubble
 exports.subscribe = function (req, res) {
   var user = req.user
