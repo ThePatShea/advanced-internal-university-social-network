@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
+  , Bubble = mongoose.model('Bubble')
 
 exports.signin = function (req, res) {}
 
@@ -64,11 +65,21 @@ exports.subscriptions = function(req, res){
     .populate('subscriptions', 'name') 
     .exec(function(err, user) {
       if (err) return res.render('500')
-      res.render('users/subscriptions', {
-          sidebar_name: user.name
-        , title: "subscriptions"
-        , bubbles: user.subscriptions
-        , user: user
-      })
+
+      Bubble
+        .find({},"name")
+        .exec(function(err, bubbles) {
+          if (err) return res.render('500')
+
+
+          res.render('users/subscriptions', {
+              sidebar_name: user.name
+            , title: "subscriptions"
+            , subscribed: user.subscriptions
+            , unsubscribed: bubbles
+            , user: user
+           })
+        })
+
     })
 }

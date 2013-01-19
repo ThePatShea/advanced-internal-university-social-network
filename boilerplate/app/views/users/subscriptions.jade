@@ -6,10 +6,11 @@ block main
       h4.subscription_section_name subscribed
       div.divider
       ul.subscription_list
-        each bubble in bubbles
-          li.bubble_widget
-            a(href='/bubbles/'+bubble._id)
-              section.section_inner
-                div.bubble_name_container
-                  div.bubble_name_container_inner
-                    h1.bubble_name= bubble.name
+        each bubble in subscribed
+          include ../includes/bubble_widget
+    section.subscription_section
+      h4.subscription_section_name not subscribed
+      div.divider
+      ul.subscription_list
+        each bubble in unsubscribed
+          include ../includes/bubble_widget
