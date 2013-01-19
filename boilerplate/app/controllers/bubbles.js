@@ -49,6 +49,9 @@ exports.show = function(req, res){
     } else {
       var user_subscribed = 0
     }
+
+  // Gets the current URL
+    var current_url = '/bubbles/' + req.bubble._id
  
   // Render the view
     res.render('bubbles/show', {
@@ -57,6 +60,7 @@ exports.show = function(req, res){
       , bubble: req.bubble
       , num_events: req.bubble.events.length
       , user_subscribed: user_subscribed
+      , current_url: current_url
     })
 }
 
@@ -65,6 +69,8 @@ exports.show = function(req, res){
 exports.subscribe = function (req, res) {
   var user = req.user
     , bubble = req.bubble
+
+  console.log("current_url: "+req.current_url) //TESTING
 
   bubble.subscriptions.addToSet(user._id)
 

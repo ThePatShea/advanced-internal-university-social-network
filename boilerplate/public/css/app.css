@@ -232,6 +232,10 @@ pre {
   color: #43453E;
 }
 
+.input_hidden {
+  display: none;
+}
+
 .icon_subscribed {
   background: url("../img/sprites.png") -215px -38px;
   position: relative;
@@ -919,6 +923,7 @@ input[readonly="readonly"] {
         .sidebar .top_container .top_container_inner .subscribe:hover .icon_unsubscribed {
           background: url("../img/sprites.png") -215px -38px;
           top: 4px;
+          left: 0;
           }
         .sidebar .top_container .top_container_inner .subscribe:hover .icon_subscribed {
           background: url("../img/sprites.png") -236px -37px;
