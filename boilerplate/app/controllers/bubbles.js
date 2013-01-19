@@ -59,7 +59,6 @@ exports.subscriptions = function(req, res){
     .exec(function(err, bubbles) {
       if (err) return res.render('500')
       res.render('bubbles/subscriptions', {
-        sidebar_name: 'subscriptions',
         title: 'subscriptions',
         bubbles: bubbles
       })

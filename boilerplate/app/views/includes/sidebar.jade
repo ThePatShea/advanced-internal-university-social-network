@@ -11,7 +11,7 @@ section.sidebar
           - if (typeof(sidebar_name) != 'undefined')
             h1= sidebar_name
           else
-            h1= ref.user.name
+            h1= req.user.name
         - if (typeof(bubble) != 'undefined')
           include subscribe
     ul.sidebar_buttons
