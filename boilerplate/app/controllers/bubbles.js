@@ -50,9 +50,6 @@ exports.show = function(req, res){
       var user_subscribed = 0
     }
 
-  // Gets the current URL
-    var current_url = '/bubbles/' + req.bubble._id
- 
   // Render the view
     res.render('bubbles/show', {
         sidebar_name: req.bubble.name
@@ -60,7 +57,6 @@ exports.show = function(req, res){
       , bubble: req.bubble
       , num_events: req.bubble.events.length
       , user_subscribed: user_subscribed
-      , current_url: current_url
     })
 }
 
@@ -69,8 +65,6 @@ exports.show = function(req, res){
 exports.subscribe = function (req, res) {
   var user = req.user
     , bubble = req.bubble
-
-  console.log("current_url: "+req.current_url) //TESTING
 
   bubble.subscriptions.addToSet(user._id)
 
@@ -83,7 +77,7 @@ exports.subscribe = function (req, res) {
         user.subscriptions.addToSet(bubble._id)
         user.save(function (err) {
           if (err) throw new Error('Error while saving user subscription')
-          res.redirect('/bubbles/'+bubble.id)
+          res.redirect(req.body.current_url)
         })
       })
 
@@ -107,7 +101,7 @@ exports.unsubscribe = function (req, res) {
         user.subscriptions.remove(bubble._id)
         user.save(function (err) {
           if (err) throw new Error('Error while saving user subscription')
-          res.redirect('/bubbles/'+bubble.id)
+          res.redirect(req.body.current_url)
         })
       })
 

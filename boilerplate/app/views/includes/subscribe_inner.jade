@@ -1,4 +1,4 @@
-input.input_hidden(type='text', name='current_url', value=current_url)
+input(type='hidden', name='current_url', value=req.url)
 button.subscribe(type='submit')
   - if (user_subscribed == 1)
     div.heart.icon_subscribed

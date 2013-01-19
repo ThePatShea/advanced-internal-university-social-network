@@ -232,10 +232,6 @@ pre {
   color: #43453E;
 }
 
-.input_hidden {
-  display: none;
-}
-
 .icon_subscribed {
   background: url("../img/sprites.png") -215px -38px;
   position: relative;
