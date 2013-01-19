@@ -69,9 +69,10 @@ exports.subscribe = function (req, res) {
   bubble.subscriptions.addToSet(user._id)
 
   Bubble
-    .findOne({"_id" : bubble._id}, "name")
+    .findOne({"_id" : bubble._id}, "name num_subscriptions")
     .exec(function(err, bubbles) {
       if (err) throw new Error('Error while subscribing to a bubble')
+      bubble.num_subscriptions++
       bubble.save(function (err) {
         if (err) throw new Error('Error while subscribing to a bubble')
         user.subscriptions.addToSet(bubble._id)
@@ -93,9 +94,10 @@ exports.unsubscribe = function (req, res) {
   bubble.subscriptions.remove(user._id)
 
   Bubble
-    .findOne({"_id" : bubble._id}, "name")
+    .findOne({"_id" : bubble._id}, "name num_subscriptions")
     .exec(function(err, bubbles) {
       if (err) throw new Error('Error while unsubscribing from a bubble')
+      bubble.num_subscriptions--
       bubble.save(function (err) {
         if (err) throw new Error('Error while unsubscribing from a bubble')
         user.subscriptions.remove(bubble._id)
