@@ -43,12 +43,21 @@ exports.create = function (req, res) {
 
 // View a bubble
 exports.show = function(req, res){
-  res.render('bubbles/show', {
-    sidebar_name: req.bubble.name,
-    title: req.bubble.name,
-    bubble: req.bubble,
-    num_events: req.bubble.events.length
-  })
+  // Check if the user is subscribed to this bubble
+    if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+      var user_subscribed = 1
+    } else {
+      var user_subscribed = 0
+    }
+ 
+  // Render the view
+    res.render('bubbles/show', {
+        sidebar_name: req.bubble.name
+      , title: req.bubble.name
+      , bubble: req.bubble
+      , num_events: req.bubble.events.length
+      , user_subscribed: user_subscribed
+    })
 }
 
 
@@ -70,11 +79,35 @@ exports.subscribe = function (req, res) {
           if (err) throw new Error('Error while saving user subscription')
           res.redirect('/bubbles/'+bubble.id)
         })
-  })
+      })
 
     })
-
-
-
-
 }
+
+
+// Unsubscribe from a bubble
+exports.unsubscribe = function (req, res) {
+  var user = req.user
+    , bubble = req.bubble
+
+  bubble.subscriptions.remove(user._id)
+
+  Bubble
+    .findOne({"_id" : bubble._id}, "name")
+    .exec(function(err, bubbles) {
+      if (err) throw new Error('Error while unsubscribing from a bubble')
+      bubble.save(function (err) {
+        if (err) throw new Error('Error while unsubscribing from a bubble')
+        user.subscriptions.remove(bubble._id)
+        user.save(function (err) {
+          if (err) throw new Error('Error while saving user subscription')
+          res.redirect('/bubbles/'+bubble.id)
+        })
+      })
+
+    })
+}
+
+
+
+

@@ -1,2 +1,10 @@
-form(method="post", action="/bubbles/#{bubble._id}/subscribe")
-  button.subscribe(type='submit')
+- if (user_subscribed == 1)
+  form(method="post", action="/bubbles/#{bubble._id}/unsubscribe")
+    button.subscribe(type='submit')
+      div.heart.icon_subscribed
+      div.descriptor.gray_text ###
+- else
+  form(method="post", action="/bubbles/#{bubble._id}/subscribe")
+    button.subscribe(type='submit')
+      div.heart.icon_unsubscribed
+      div.descriptor.gray_text ###

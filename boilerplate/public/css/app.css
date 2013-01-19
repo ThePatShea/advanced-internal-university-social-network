@@ -232,6 +232,23 @@ pre {
   color: #43453E;
 }
 
+.icon_subscribed {
+  background: url("../img/sprites.png") -215px -38px;
+  position: relative;
+  height: 12px;
+  width: 13px;
+  top: 4px;
+}
+
+.icon_unsubscribed {
+  background: url("../img/sprites.png") -236px -37px;
+  position: relative;
+  height: 12px;
+  width: 13px;
+  left: -1px;
+  top: 3px;
+}
+
 .bubble_logo {
   background: url("../img/sprites.png") -10px -10px;
   height: 65px;
@@ -894,11 +911,29 @@ input[readonly="readonly"] {
           border-top: 0;
 
           position: absolute;
+          padding: 0 15px;
           height: 25px;
-          width: 70px;
           right: 15px;
           top: 0;
         }
+        .sidebar .top_container .top_container_inner .subscribe:hover .icon_unsubscribed {
+          background: url("../img/sprites.png") -215px -38px;
+          top: 4px;
+          }
+        .sidebar .top_container .top_container_inner .subscribe:hover .icon_subscribed {
+          background: url("../img/sprites.png") -236px -37px;
+          left: -1px;
+          top: 3px;
+          }
+        .sidebar .top_container .top_container_inner .subscribe div {
+          float: left;
+          }
+        .sidebar .top_container .top_container_inner .subscribe .gray_text {
+          text-shadow: 2px 2px 0 black;
+          }
+        .sidebar .top_container .top_container_inner .subscribe .heart {
+          margin: 0 5px 0 0;
+          }
     .sidebar .top_container .pic_top_overlay,
     .sidebar .top_container .pic_top,
     .sidebar .top_container .attributes {

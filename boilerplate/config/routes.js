@@ -94,6 +94,15 @@ module.exports = function (app, passport, auth) {
         if (!bubble) return next(new Error('Failed to load bubble ' + id))
         req.bubble = bubble
 
+          // Check if the user is subscribed to this bubble
+            if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+              var user_subscribed = 1
+            } else {
+              var user_subscribed = 0
+            }
+
+            req.user_subscribed = user_subscribed
+
     Event
       .findOne({ _id : req.params.eventId })
       .populate('comments')
@@ -154,6 +163,7 @@ module.exports = function (app, passport, auth) {
   app.post('/bubbles/:bubbleId/events/:eventId/comments', auth.requiresLogin, comments.create)
 
   // subscription routes
+  app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
   app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
 
   // tag routes

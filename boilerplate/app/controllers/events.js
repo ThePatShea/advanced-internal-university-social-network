@@ -41,6 +41,7 @@ exports.show = function(req, res){
     title: req.bubble.name,
     bubble: req.bubble,
     num_events: req.bubble.events.length,
-    comments: req.comments
+    comments: req.comments,
+    user_subscribed: req.user_subscribed
   })
 }
