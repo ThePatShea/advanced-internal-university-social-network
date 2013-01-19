@@ -68,8 +68,6 @@ exports.subscriptions = function(req, res){
 
       var subscriptions = user.subscriptions
 
-      console.log(subscriptions[1]._id)
-
       Bubble
         .find({ subscriptions: { $ne: user._id } },"name")
         .exec(function(err, bubbles) {
