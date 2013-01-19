@@ -66,8 +66,12 @@ exports.subscriptions = function(req, res){
     .exec(function(err, user) {
       if (err) return res.render('500')
 
+      var subscriptions = user.subscriptions
+
+      console.log(subscriptions[1]._id)
+
       Bubble
-        .find({},"name")
+        .find({ subscriptions: { $ne: user._id } },"name")
         .exec(function(err, bubbles) {
           if (err) return res.render('500')
 
@@ -75,7 +79,7 @@ exports.subscriptions = function(req, res){
           res.render('users/subscriptions', {
               sidebar_name: user.name
             , title: "subscriptions"
-            , subscribed: user.subscriptions
+            , subscribed: subscriptions
             , unsubscribed: bubbles
             , user: user
            })
