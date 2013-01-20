@@ -391,7 +391,7 @@ input[readonly="readonly"] {
     position: relative;
     width: 280px;
     }
-  .add_event .warning {
+  .warning {
     -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
     box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
 
@@ -410,7 +410,7 @@ input[readonly="readonly"] {
     left: 10%;
     top: -5px;
     }
-  .add_event .grayed_out:hover .warning {
+  .grayed_out:hover .warning {
     display: block;
     }
 
