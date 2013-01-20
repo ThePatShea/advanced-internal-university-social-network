@@ -1,6 +1,5 @@
 form(method="post", action="/bubbles/#{bubble._id}/events/#{event._id}/comments")
   input.requiredInput.leave_a_comment.gradient_gray#comment(type='text', rows="6", name="body", placeholder='Leave a comment...')
   button#submitBtn.red_button.submit_comment(type='submit') submit
-    p.warning.descriptor.red_text Comment field empty
   div.pic_current_user.face_circle_container
     img.face_circle(src='http://graph.facebook.com/'+req.user.facebook.id+'/picture?type=square')
