@@ -3,26 +3,11 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
 
 
-// New bubble
-exports.new = function(req, res){
-
-  var current_year = new Date().getFullYear();
-
-  res.render('bubbles/new', {
-      title: 'Create a Bubble'
-    , current_year: current_year
-    , sidebar_name: 'Create'
-    , bubble: new Bubble({})
-  })
-}
-
-
 // Create a bubble
 exports.create = function (req, res) {
   var bubble = new Bubble(req.body)
   bubble.creator = req.user
   bubble.privacy = "CLOSED"
-
   bubble.save(function(err){
     if (err) {
       console.log("error creating bubble: " + err)
@@ -33,9 +18,10 @@ exports.create = function (req, res) {
         , sidebar_name: 'Create'
         , errors: err.errors
       })
-    }
-    else {
-      res.redirect('/bubbles/'+bubble._id)
+    } else {
+      req.bubble = bubble
+      req.body.current_url = '/bubbles/'+bubble._id
+      subscribe(req,res)
     }
   })
 }
@@ -62,10 +48,10 @@ exports.show = function(req, res){
 
 
 // Subscribe to a bubble
-exports.subscribe = function (req, res) {
+var subscribe = exports.subscribe = function (req, res) {
   var user = req.user
     , bubble = req.bubble
-
+  
   bubble.subscriptions.addToSet(user._id)
 
   Bubble

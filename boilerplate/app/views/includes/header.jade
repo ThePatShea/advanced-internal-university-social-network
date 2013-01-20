@@ -9,14 +9,14 @@ header#header
           ul.nav
           ul.nav.pull-right
             li
-              a(href='/', title="Subscriptions")
+              a(href='/')
                 div.home
             li
-              a(href="/create", title="Create")
+              a(href="/users/#{req.user.id}/new_bubble")
                 div.create
             if (req.isAuthenticated())
               div.user_widget
-                a(href="/users/"+req.user.id, title="Profile")
+                a(href="/users/"+req.user.id)
                   h3= req.user.name
                   div.nav_pic_square_bg
                     img.nav_pic_square(src='http://graph.facebook.com/'+req.user.facebook.id+'/picture?type=square')

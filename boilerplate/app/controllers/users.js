@@ -85,3 +85,23 @@ exports.subscriptions = function(req, res){
 
     })
 }
+
+
+// New bubble
+exports.new_bubble = function(req, res){
+
+  // Gets the year for the payment form
+    var current_year = new Date().getFullYear();
+
+  User
+    .findOne({_id: req.user._id}, "name facebook")
+    .exec(function(err, user) {
+      if (err) return res.render('500')
+      res.render('users/new_bubble', {
+          title: 'Create a Bubble'
+        , user: user
+        , current_year: current_year
+        , new_bubble: new Bubble({})
+      })
+    })
+}

@@ -24,6 +24,7 @@ module.exports = function (app, passport, auth) {
   app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), users.authCallback)
   app.get('/auth/google', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.signin)
   app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.authCallback)
+  app.get('/users/:userId/new_bubble', auth.requiresLogin, users.new_bubble)
 
   app.param('userId', function (req, res, next, id) {
     User
@@ -137,7 +138,6 @@ module.exports = function (app, passport, auth) {
 
   // bubble routes
   var bubbles = require('../app/controllers/bubbles')
-  app.get('/bubbles/new', auth.requiresLogin, bubbles.new)
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
   app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.show)
 
