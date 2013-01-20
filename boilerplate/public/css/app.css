@@ -306,6 +306,17 @@ input[readonly="readonly"] {
   z-index: 1040 !important;
 }
 
+
+.gray_text {
+  color: #A4A4A4;
+  }
+.red_text {
+  color: rgba(172,48,26,.8);
+  }
+  .page_deals .red_text {
+    color: #366137;
+    }
+
 .red_button {
   -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
   box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
@@ -325,6 +336,9 @@ input[readonly="readonly"] {
   font-size: 12px;
   color: white;
   }
+  .page_deals .red_button {
+    background: #366137;
+    }
 
 .grayed_out {
   background: #828284 !important;
@@ -410,6 +424,9 @@ input[readonly="readonly"] {
     left: 10%;
     top: -5px;
     }
+    .add_event .warning {
+      width: 80%;
+      }
   .grayed_out:hover .warning {
     display: block;
     }
@@ -850,12 +867,6 @@ input[readonly="readonly"] {
     text-shadow: 1px 1px 0 white; 
     text-transform: capitalize;
     font-size: 12px;
-    }
-  .gray_text {
-    color: #A4A4A4;
-    }
-  .red_text {
-    color: rgba(172,48,26,.8);
     }
   .post_list li {
     height: 100px;

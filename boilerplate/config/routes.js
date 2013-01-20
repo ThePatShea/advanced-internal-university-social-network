@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
   , Bubble = mongoose.model('Bubble')
   , Event = mongoose.model('Event')
   , User = mongoose.model('User')
+  , Deal = mongoose.model('Deal')
   , async = require('async')
 
 module.exports = function (app, passport, auth) {
@@ -83,6 +84,9 @@ module.exports = function (app, passport, auth) {
   app.get('/create', auth.requiresLogin, create.show)
 
   // deal routes
+  var deals = require('../app/controllers/deals')
+  app.get('/bubbles/:bubbleId/deals', auth.requiresLogin, deals.list)
+
 
   // event routes
   var events = require('../app/controllers/events')
