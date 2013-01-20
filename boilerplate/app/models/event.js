@@ -18,7 +18,7 @@ var EventSchema = new Schema({
 	privacy: String,
 	creator: Schema.Types.Mixed,
 	update_time: Number,
-	attending_count: Number,
+	attending_count: { type: Number, default: 0},
 	declined_count: Number,
 	unsure_count: Number,
 	not_replied_count: Number,
