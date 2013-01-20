@@ -406,12 +406,15 @@ input[readonly="readonly"] {
     font-size: 14px;
     display: none;
     padding: 5px;
-    width: 80%;
+    width: 200%;
     left: 10%;
     top: -5px;
     }
   .grayed_out:hover .warning {
     display: block;
+    }
+  #submitBtn {
+    position: relative;
     }
 
 .subscriptions {
