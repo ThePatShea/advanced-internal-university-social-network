@@ -272,6 +272,10 @@ form {
   margin: 0;
 }
 
+.input-xxlarge {
+  padding: 4px;
+}
+
 .input-slash {
   margin: 0 10px;
 }
@@ -347,6 +351,40 @@ input[readonly="readonly"] {
   border-top: 1px solid white;
 
 }
+
+.create_an_event {
+  float: right;
+  margin: 10px;
+}
+
+.add_event {
+  background: url("../img/bg_main_dark.png");
+  border-right: 1px solid white;
+  border-left: 1px solid white;
+  overflow: hidden;
+  margin: 0 auto;
+  display: none;
+  width: 580px;
+  }
+  .add_event button,
+  .add_event input {
+    margin: 5px;
+    }
+  .add_event .input_group {
+    float: left;
+    width: 290px;
+    }
+    .add_event .input-medium {
+      width: 125px;
+      }
+  .add_event #description {
+    margin: 5px;
+    padding: 4px;
+    height: 56px;
+    }
+  .add_event .submit_event {
+    width: 280px;
+    }
 
 .subscriptions {
 
@@ -653,9 +691,10 @@ input[readonly="readonly"] {
 
 
 .post_list {
-  border-top: 1px solid white;
-  border-left: 1px solid white;
   border-bottom: 1px solid #BDBFBD;
+  border-left: 1px solid white;
+  border-top: 1px solid white;
+  clear: both;
   }
   .post_list .post_widget {
     padding: 0 176px 0 75px;
@@ -1216,6 +1255,24 @@ ul.nav.pull-right {
           width: 45px;
           margin: 0 5px;
           }
+
+
+.add_event {
+  width: 500px;
+  }
+  .add_event .input_group {
+    width: 245px;
+    }
+    .add_event .input-xlarge {
+      width: 230px;
+      }
+    .add_event .input-medium {
+      width: 100px;
+      }
+  .add_event .submit_event {
+    width: 238px;
+    }
+
 }
 
 @media (max-width: 979px) {
@@ -1272,6 +1329,23 @@ ul.nav.pull-right {
   .post_info .post_attributes .post_description pre {
     max-height: 295px;
   }
+
+.add_event {
+  width: 90%;
+  }
+  .add_event .input_group {
+    width: 100%;
+    }
+    .add_event .input-xlarge {
+      width: 90%;
+      }
+    .add_event .input-medium {
+      width: 90%;
+      }
+  .add_event .submit_event {
+    width: 90%;
+    }
+
 }
 
 @media (max-width: 767px) and (min-width: 481px) {
@@ -1337,6 +1411,8 @@ ul.nav.pull-right {
     .sidebar .sidebar_buttons li a .sidebar_counter {
       right: 24px;
       }
+
+
 }
 
 @media (max-width: 480px) {

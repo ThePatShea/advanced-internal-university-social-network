@@ -1,6 +1,9 @@
 extends ../layouts/default
 
 block main
+  div.page_content
+    // - if (bubble.creator == req.user._id)
+    include ../events/new_event
   ul.post_list
     each event in bubble.events
       include ../includes/post_widget
