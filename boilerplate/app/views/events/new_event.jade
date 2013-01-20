@@ -1,7 +1,3 @@
-- var action = '/events'
-if (!bubble.isNew)
-  - action += '/'+bubble.id
-
 if (typeof errors !== 'undefined')
   .fade.in.alert.alert-block.alert-error
     a.close(data-dismiss="alert", href="javascript:void(0)") x
@@ -11,7 +7,7 @@ if (typeof errors !== 'undefined')
 
 button.toggle_visible.create_an_event.red_button create an event
 
-form.toggle_invisible.add_event.form-horizontal(method="post", action="")
+form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/#{bubble._id}/create_event")
   section.input_group
     input#title.input-xlarge(type='text', maxlength="35", name="name", placeholder='Event Name (ex: Spring Concert)')
     textarea#description.input-xlarge(type='text', rows="5", name="description", placeholder='Describe your event')

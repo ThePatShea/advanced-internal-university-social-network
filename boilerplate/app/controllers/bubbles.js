@@ -11,13 +11,6 @@ exports.create = function (req, res) {
   bubble.save(function(err){
     if (err) {
       console.log("error creating bubble: " + err)
-
-      res.render('bubbles/new', {
-          title: 'Create a Bubble'
-        , bubble: bubble
-        , sidebar_name: 'Create'
-        , errors: err.errors
-      })
     } else {
       req.bubble = bubble
       req.body.current_url = '/bubbles/'+bubble._id

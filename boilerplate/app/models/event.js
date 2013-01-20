@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
 var EventSchema = new Schema({
-	eid: { type: Number, index: {unique: true}},
+	eid: { type: Number, index: {unique: true, sparse: true}},
 	name: String,
 	pic_square: String,
 	pic_big: String,
@@ -16,13 +16,14 @@ var EventSchema = new Schema({
 		id: Number
 	},
 	privacy: String,
-	creator: Number,
+	creator: Schema.Types.Mixed,
 	update_time: Number,
 	attending_count: Number,
 	declined_count: Number,
 	unsure_count: Number,
 	not_replied_count: Number,
-        comments: [{type : Schema.ObjectId, ref : 'Comment'}]
+        comments: [{type : Schema.ObjectId, ref : 'Comment'}],
+        bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
 })
 
 

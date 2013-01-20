@@ -5,30 +5,21 @@ var mongoose = require('mongoose')
   , _ = require('underscore')
 
 
-// New event
-exports.new = function(req, res){
-  Bubble
-    .find({privacy : "OPEN"}, "name")
-    .exec(function(err, public_bubbles) {
-      if (err) return res.render('500')
+// Create an event
+exports.create = function (req, res) {
+  var bubble = req.bubble
 
+  var event = new Event(req.body)
+  event.creator = req.user._id
+  event.bubbles.addToSet(bubble._id)
 
-      Bubble
-        .find({creator : req.user._id}, "name")
-        .exec(function(err, your_bubbles) {
-          if (err) return res.render('500')
-
-
-          res.render('events/new', {
-              title: 'Create an Event'
-            , sidebar_name: 'Create'
-            , bubble: new Event({})
-            , event: new Event({})
-            , public_bubbles: public_bubbles
-            , your_bubbles: your_bubbles
-          })
-        })
-    })
+  event.save(function(err){
+    if (err) {
+      console.log("error creating event: " + err)
+    } else {
+      res.redirect('/bubbles/'+bubble._id+'/events/'+event._id)
+    }
+  })
 }
 
 

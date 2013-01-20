@@ -84,8 +84,9 @@ module.exports = function (app, passport, auth) {
 
   // event routes
   var events = require('../app/controllers/events')
-  app.get('/events/new', auth.requiresLogin, events.new)
   app.get('/bubbles/:bubbleId/events/:eventId', auth.requiresLogin, events.show)
+  app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
+
 
   app.param('eventId', function(req, res, next, id){
     Bubble
