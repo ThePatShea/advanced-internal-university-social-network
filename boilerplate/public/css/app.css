@@ -376,6 +376,7 @@ input[readonly="readonly"] {
   margin: 10px;
 }
 
+
 .add_event {
   background: url("../img/bg_main_dark.png");
   border-right: 1px solid white;
@@ -385,6 +386,23 @@ input[readonly="readonly"] {
   display: none;
   width: 580px;
   }
+  .add_event .deal_slider_container {
+    width: 280px;
+    margin: 5px;
+    }
+  .add_event #slider {
+    position: relative;
+    width: 200px;
+    float: left;
+    top: 7px;
+    }
+  .add_event #discount {
+    text-align: center;
+    margin: 0 0 5px 0;
+    cursor: default;
+    float: right;
+    width: 60px;
+    }
   .add_event button,
   .add_event input {
     margin: 5px;
