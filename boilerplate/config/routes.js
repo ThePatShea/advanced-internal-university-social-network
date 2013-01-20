@@ -86,6 +86,58 @@ module.exports = function (app, passport, auth) {
   // deal routes
   var deals = require('../app/controllers/deals')
   app.get('/bubbles/:bubbleId/deals', auth.requiresLogin, deals.list)
+  app.get('/bubbles/:bubbleId/deals/:dealId', auth.requiresLogin, deals.show)
+  app.post('/bubbles/:bubbleId/create_deal', auth.requiresLogin, deals.create)
+
+  app.param('dealId', function(req, res, next, id){
+    Bubble
+      .findOne({ _id : req.params.bubbleId })
+      .exec(function (err, bubble) {
+        if (err) return next(err)
+        if (!bubble) return next(new Error('Failed to load bubble ' + id))
+        req.bubble = bubble
+
+          // Check if the user is subscribed to this bubble
+            if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+              var user_subscribed = 1
+            } else {
+              var user_subscribed = 0
+            }
+
+            req.user_subscribed = user_subscribed
+
+    Deal
+      .findOne({ _id : req.params.dealId })
+      .populate('comments')
+      .exec(function (err, deal) {
+        if (err) return next(err)
+        if (!deal) return next(new Error('Failed to load deal ' + id))
+        req.deal = deal
+
+        var populateComments = function (comment, cb) {
+          User
+            .findOne({ _id: comment._user })
+            .select('name facebook.id')
+            .exec(function (err, user) {
+              if (err) return next(err)
+              comment.user = user
+              cb(null, comment)
+            })
+        }
+
+        if (deal.comments.length) {
+          async.map(req.deal.comments, populateComments, function (err, results) {
+            next(err)
+          })
+        }
+        else
+          next()
+
+      })
+
+      })
+  })
+
 
 
   // event routes

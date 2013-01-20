@@ -7,7 +7,7 @@ if (typeof errors !== 'undefined')
 
 button.toggle_visible.create_an_event.red_button create a deal
 
-form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/#{bubble._id}/create_event")
+form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/#{bubble._id}/create_deal")
   section.input_group
     input#title.requiredInput.input-xlarge(type='text', maxlength="35", name="name", placeholder='Deal Name (ex: 15% Off Cheese Pizza)')
     textarea#description.requiredInput.input-xlarge(type='text', rows="5", name="description", placeholder='Explain the details of your deal')

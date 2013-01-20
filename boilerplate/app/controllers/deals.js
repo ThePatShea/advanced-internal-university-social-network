@@ -9,15 +9,15 @@ var mongoose = require('mongoose')
 exports.create = function (req, res) {
   var bubble = req.bubble
 
-  var event = new Event(req.body)
-  event.creator = req.user._id
-  event.bubbles.addToSet(bubble._id)
+  var deal = new Deal(req.body)
+  deal.creator = req.user._id
+  deal.bubbles.addToSet(bubble._id)
 
-  event.save(function(err){
+  deal.save(function(err){
     if (err) {
-      console.log("error creating event: " + err)
+      console.log("error creating deal: " + err)
     } else {
-      res.redirect('/bubbles/'+bubble._id+'/events/'+event._id)
+      res.redirect('/bubbles/'+bubble._id+'/deals/'+deal._id)
     }
   })
 }
@@ -25,14 +25,13 @@ exports.create = function (req, res) {
 
 // View a deal
 exports.show = function(req, res){
-  res.render('events/show', {
-    title: req.event.name,
-    event: req.event,
+  res.render('deals/show', {
+    title: req.deal.name,
+    deal: req.deal,
     sidebar_name: req.bubble.name,
-    title: req.bubble.name,
     bubble: req.bubble,
-    num_events: req.bubble.events.length,
     comments: req.comments,
+    num_events: req.bubble.events.length,
     user_subscribed: req.user_subscribed
   })
 }
