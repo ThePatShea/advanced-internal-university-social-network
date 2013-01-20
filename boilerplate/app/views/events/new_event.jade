@@ -9,11 +9,12 @@ button.toggle_visible.create_an_event.red_button create an event
 
 form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/#{bubble._id}/create_event")
   section.input_group
-    input#title.input-xlarge(type='text', maxlength="35", name="name", placeholder='Event Name (ex: Spring Concert)')
-    textarea#description.input-xlarge(type='text', rows="5", name="description", placeholder='Describe your event')
+    input#title.requiredInput.input-xlarge(type='text', maxlength="35", name="name", placeholder='Event Name (ex: Spring Concert)')
+    textarea#description.requiredInput.input-xlarge(type='text', rows="5", name="description", placeholder='Describe your event')
 
   section.input_group
-    input#location.input-xlarge(type='text', maxlength="35", name="location", placeholder='Where is your event?')
-    input#start_time.input-medium(type='text', name="start_time", readonly="readonly", placeholder='Start time?')
-    input#end_time.input-medium(type='text', name="end_time", readonly="readonly", placeholder='End time?')
-    button.submit_event.red_button(type='submit') create
+    input#location.requiredInput.input-xlarge(type='text', maxlength="35", name="location", placeholder='Where is your event?')
+    input#start_time.requiredInput.input-medium(type='text', name="start_time", readonly="readonly", placeholder='Start time?')
+    input#end_time.requiredInput.input-medium(type='text', name="end_time", readonly="readonly", placeholder='End time?')
+    button#submitBtn.submit_event.red_button(type='submit') create
+      p.warning.descriptor.red_text Please fill in every field before creating your event

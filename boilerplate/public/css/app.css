@@ -326,6 +326,11 @@ input[readonly="readonly"] {
   color: white;
   }
 
+.grayed_out {
+  background: #828284 !important;
+}
+
+
 .gradient_gray {
   background: #f4f4f4; /* Old browsers */
   background: -moz-linear-gradient(top,  #f4f4f4 0%, #cdcfce 100%); /* FF3.6+ */
@@ -383,7 +388,30 @@ input[readonly="readonly"] {
     height: 56px;
     }
   .add_event .submit_event {
+    position: relative;
     width: 280px;
+    }
+  .add_event .warning {
+    -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
+    box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
+
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    background: url("../img/bg_main_extradark.png");
+    border: 1px solid white;
+    text-transform: none;
+    text-align: center;
+    position: absolute;
+    font-size: 14px;
+    display: none;
+    padding: 5px;
+    width: 80%;
+    left: 10%;
+    top: -5px;
+    }
+  .add_event .grayed_out:hover .warning {
+    display: block;
     }
 
 .subscriptions {
