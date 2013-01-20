@@ -388,19 +388,27 @@ input[readonly="readonly"] {
   }
   .add_event .deal_slider_container {
     width: 280px;
-    margin: 5px;
+    margin: 5px 5px 20px 5px;
     }
   .add_event #slider {
     position: relative;
     width: 200px;
-    float: left;
+    left: 35px;
     top: 7px;
     }
+    .add_event #slider .ui-slider-handle {
+      font-family: 'proxima_nova_semibold';
+      text-shadow: 1px 1px 0 white;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      width: 65px;
+      margin: 0 0 0 -32px;
+      }
   .add_event #discount {
     text-align: center;
     margin: 0 0 5px 0;
     cursor: default;
-    float: right;
     width: 60px;
     }
   .add_event button,

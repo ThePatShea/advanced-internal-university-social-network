@@ -16,6 +16,6 @@ form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/
     input#location.requiredInput.input-xlarge(type='text', maxlength="35", name="location", placeholder='Where can we redeem it?')
     section.deal_slider_container
       div#slider
-      input#discount.requiredInput(type='text', name='discount', readonly value='15% off')
+      input#discount.requiredInput(type='hidden', name='discount')
     button#submitBtn.submit_event.red_button(type='submit') create
       p.warning.descriptor.red_text Please fill in every field before creating your deal

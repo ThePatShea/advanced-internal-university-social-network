@@ -48,4 +48,24 @@ $('.requiredInput').change(function() {
 });
 
 
+// Controls the slider used to specify the discount % in the deals form
+  $( "#slider" ).slider({
+     min: 1, 
+     max: 100,
+     slide: function (event, ui) {
+        m_val = ui.value;
+        if (m_val < 0) {
+            m_val = 0;
+            $(this).slider({ value: 0 });
+        }
+        $(this).find("a:first").text(m_val + "% off");
+        $("#discount").val(m_val);
+        inspectAllInputFields();
+     },
+     create: function( event, ui ) {
+       $(this).find("a:first").text("0% off");
+     }
+  });
+
+
 });
