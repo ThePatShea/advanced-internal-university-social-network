@@ -25,14 +25,15 @@ exports.create = function (req, res) {
 
 // View a deal
 exports.show = function(req, res){
-  res.render('deals/show', {
+  res.render('bubbles/show_post', {
     title: req.deal.name,
-    deal: req.deal,
+    post: req.deal,
     sidebar_name: req.bubble.name,
     bubble: req.bubble,
     comments: req.comments,
     num_events: req.bubble.events.length,
-    user_subscribed: req.user_subscribed
+    user_subscribed: req.user_subscribed,
+    bubble_section: 'deal'
   })
 }
 

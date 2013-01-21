@@ -25,14 +25,15 @@ exports.create = function (req, res) {
 
 // View an event
 exports.show = function(req, res){
-  res.render('events/show', {
+  res.render('bubbles/show_post', {
     title: req.event.name,
-    event: req.event,
+    post: req.event,
     sidebar_name: req.bubble.name,
     title: req.bubble.name,
     bubble: req.bubble,
     num_events: req.bubble.events.length,
     comments: req.comments,
-    user_subscribed: req.user_subscribed
+    user_subscribed: req.user_subscribed,
+    bubble_section: 'event'
   })
 }

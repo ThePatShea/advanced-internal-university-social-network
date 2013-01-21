@@ -1,22 +1,22 @@
 li.post_widget
-  a(href='/bubbles/'+bubble._id+'/events/'+event._id)
+  a(href='/bubbles/'+bubble._id+'/#{bubble_section}s/'+post._id)
     section.post_widget_section.post_widget_left
-      p= event.start_time
+      p= post.start_time
     section.post_widget_section.post_widget_main
       section.post_main_info
-        h4.post_name= event.name
+        h4.post_name= post.name
         section.subtitle.descriptor
-          div.gray_text.venue_text= event.location
+          div.gray_text.venue_text= post.location
           div.attending_icon
-          div.red_text.attending_text= event.attending_count
+          div.red_text.attending_text= post.attending_count
           div.comments_icon
           div.gray_text.comments_text #
     section.post_widget_section.post_widget_right
       section.venue_widget
         div.pic_venue_container
-          - if (typeof(event.venue) != 'undefined')
-            img.pic_venue(src='http://graph.facebook.com/'+event.venue.id+'/picture?type=square')
+          - if (typeof(post.venue) != 'undefined')
+            img.pic_venue(src='http://graph.facebook.com/'+post.venue.id+'/picture?type=square')
           - else
             img.pic_venue(src='../img/default_square.png')
         section.venue_info
-          div.venue_name= event.location
+          div.venue_name= post.location

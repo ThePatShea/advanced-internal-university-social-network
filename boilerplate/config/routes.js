@@ -199,6 +199,7 @@ module.exports = function (app, passport, auth) {
   var bubbles = require('../app/controllers/bubbles')
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
   app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.list)
+  app.get('/bubbles/:bubbleId/events', auth.requiresLogin, bubbles.list)
 
   app.param('bubbleId', function(req, res, next, id){
     Bubble
@@ -220,6 +221,7 @@ module.exports = function (app, passport, auth) {
   var comments = require('../app/controllers/comments')
   app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
   app.post('/bubbles/:bubbleId/events/:eventId/comments', auth.requiresLogin, comments.create)
+  app.post('/bubbles/:bubbleId/deals/:dealId/comments', auth.requiresLogin, comments.create)
 
   // subscription routes
   app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)

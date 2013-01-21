@@ -5,5 +5,5 @@ block main
     div(class=['page_content', 'page_#{bubble_section}'])
       include ../includes/new_post
   ul.post_list
-    each event in bubble.events
+    each post in bubble.events
       include ../includes/post_widget
