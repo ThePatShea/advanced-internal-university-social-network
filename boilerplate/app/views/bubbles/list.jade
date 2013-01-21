@@ -2,8 +2,8 @@ extends ../layouts/default
 
 block main
   - if (typeof(bubble.creator) != 'undefined' && bubble.creator.equals(req.user._id) )   // Shows form if current user created this bubble
-    div(class=['page_content', 'page_#{bubble_section}'])
+    div(class=['page_content', 'page_#{bubble_section}s'])
       include ../includes/new_post
   ul.post_list
-    each post in bubble.events
+    each post in posts
       include ../includes/post_widget

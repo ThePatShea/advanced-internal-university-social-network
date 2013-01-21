@@ -48,20 +48,27 @@ exports.list = function(req, res){
       var user_subscribed = 0
     }
 
-  // Render the view
-    res.render('deals/new', {bubble: req.bubble },function(err, new_post) {
-      if (err) console.log(err)
+   // Find all the deals the current bubble has
+     Deal
+       .find({ bubbles: req.bubble._id })
+       .exec(function (err, deals) {
 
-      res.render('bubbles/list', {
-          sidebar_name: req.bubble.name
-        , title: req.bubble.name
-        , bubble: req.bubble
-        , num_events: req.bubble.events.length
-        , user_subscribed: user_subscribed
-        , bubble_section: 'deals'
-        , new_post: new_post
-      })
+         // Render the view
+           res.render('deals/new', {bubble: req.bubble },function(err, new_post) {
+             if (err) console.log(err)
+       
+             res.render('bubbles/list', {
+                 sidebar_name: req.bubble.name
+               , title: req.bubble.name
+               , bubble: req.bubble
+               , posts: deals
+               , num_events: req.bubble.events.length
+               , user_subscribed: user_subscribed
+               , bubble_section: 'deal'
+               , new_post: new_post
+             })
 
-    })
- 
+           })
+
+        }) 
 }

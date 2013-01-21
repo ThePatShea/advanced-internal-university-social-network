@@ -20,7 +20,7 @@ exports.create = function (req, res) {
 }
 
 
-// View a bubble (the events section of a bubble)
+// View a bubble (the events list in a bubble)
 exports.list = function(req, res){
   // Check if the user is subscribed to this bubble
     if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
@@ -37,9 +37,10 @@ exports.list = function(req, res){
           sidebar_name: req.bubble.name
         , title: req.bubble.name
         , bubble: req.bubble
+        , posts: req.bubble.events
         , num_events: req.bubble.events.length
         , user_subscribed: user_subscribed
-        , bubble_section: 'events'
+        , bubble_section: 'event'
         , new_post: new_post
       })
     })
