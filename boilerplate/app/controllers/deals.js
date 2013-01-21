@@ -9,16 +9,21 @@ var mongoose = require('mongoose')
 exports.create = function (req, res) {
   var bubble = req.bubble
 
-  var deal = new Deal(req.body)
-  deal.creator = req.user._id
-  deal.bubbles.addToSet(bubble._id)
+  bubble.num_deals++
+    bubble.save(function (err) {
 
-  deal.save(function(err){
-    if (err) {
-      console.log("error creating deal: " + err)
-    } else {
-      res.redirect('/bubbles/'+bubble._id+'/deals/'+deal._id)
-    }
+    var deal = new Deal(req.body)
+    deal.creator = req.user._id
+    deal.bubbles.addToSet(bubble._id)
+
+    deal.save(function(err){
+      if (err) {
+        console.log("error creating deal: " + err)
+      } else {
+        res.redirect('/bubbles/'+bubble._id+'/deals/'+deal._id)
+      }
+    })
+
   })
 }
 
