@@ -198,7 +198,7 @@ module.exports = function (app, passport, auth) {
   // bubble routes
   var bubbles = require('../app/controllers/bubbles')
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
-  app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.show)
+  app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.list)
 
   app.param('bubbleId', function(req, res, next, id){
     Bubble

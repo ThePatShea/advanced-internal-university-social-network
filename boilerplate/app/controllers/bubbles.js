@@ -20,8 +20,8 @@ exports.create = function (req, res) {
 }
 
 
-// View a bubble
-exports.show = function(req, res){
+// View a bubble (the events section of a bubble)
+exports.list = function(req, res){
   // Check if the user is subscribed to this bubble
     if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
       var user_subscribed = 1
@@ -30,12 +30,18 @@ exports.show = function(req, res){
     }
 
   // Render the view
-    res.render('bubbles/show', {
-        sidebar_name: req.bubble.name
-      , title: req.bubble.name
-      , bubble: req.bubble
-      , num_events: req.bubble.events.length
-      , user_subscribed: user_subscribed
+    res.render('events/new', {bubble: req.bubble },function(err, new_post) {
+      if (err) console.log(err)
+
+      res.render('bubbles/list', {
+          sidebar_name: req.bubble.name
+        , title: req.bubble.name
+        , bubble: req.bubble
+        , num_events: req.bubble.events.length
+        , user_subscribed: user_subscribed
+        , bubble_section: 'events'
+        , new_post: new_post
+      })
     })
 }
 

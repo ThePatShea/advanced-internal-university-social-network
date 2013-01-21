@@ -1,9 +1,0 @@
-extends ../layouts/default
-
-block main
-  - if (typeof(bubble.creator) != 'undefined' && bubble.creator.equals(req.user._id) )
-    div.page_content
-      include ../events/new_event
-  ul.post_list
-    each event in bubble.events
-      include ../includes/post_widget

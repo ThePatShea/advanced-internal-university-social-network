@@ -48,12 +48,19 @@ exports.list = function(req, res){
     }
 
   // Render the view
-    res.render('deals/list', {
-        sidebar_name: req.bubble.name
-      , title: req.bubble.name
-      , bubble: req.bubble
-      , num_events: req.bubble.events.length
-      , user_subscribed: user_subscribed
+    res.render('deals/new', {bubble: req.bubble },function(err, new_post) {
+      if (err) console.log(err)
+
+      res.render('bubbles/list', {
+          sidebar_name: req.bubble.name
+        , title: req.bubble.name
+        , bubble: req.bubble
+        , num_events: req.bubble.events.length
+        , user_subscribed: user_subscribed
+        , bubble_section: 'deals'
+        , new_post: new_post
+      })
+
     })
  
 }
