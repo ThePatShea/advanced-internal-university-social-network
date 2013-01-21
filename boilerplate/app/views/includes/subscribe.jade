@@ -1,6 +1,13 @@
 - if (user_subscribed == 1)
-  form(method="post", action="/bubbles/#{bubble._id}/unsubscribe")
-    include ../includes/subscribe_inner.jade
-- else
-  form(method="post", action="/bubbles/#{bubble._id}/subscribe")
-    include ../includes/subscribe_inner.jade
+  subscribe_status = 'unsubscribe'
+else
+  subscribe_status = 'subscribe'
+
+form(method="post", action="/bubbles/#{bubble._id}/#{subscribe_status}")
+  input(type='hidden', name='current_url', value=req.url)
+  button.subscribe(type='submit')
+    - if (user_subscribed == 1)
+      div.heart.icon_subscribed
+    - else
+      div.heart.icon_unsubscribed
+    div.descriptor.gray_text= bubble.num_subscriptions
