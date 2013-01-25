@@ -36,7 +36,6 @@ exports.show = function(req, res){
     sidebar_name: req.bubble.name,
     bubble: req.bubble,
     comments: req.comments,
-    num_events: req.bubble.events.length,
     user_subscribed: req.user_subscribed,
     bubble_section: 'deal'
   })
@@ -67,7 +66,6 @@ exports.list = function(req, res){
                , title: req.bubble.name
                , bubble: req.bubble
                , posts: deals
-               , num_events: req.bubble.events.length
                , user_subscribed: user_subscribed
                , bubble_section: 'deal'
                , new_post: new_post

@@ -38,7 +38,6 @@ exports.list = function(req, res){
         , title: req.bubble.name
         , bubble: req.bubble
         , posts: req.bubble.events
-        , num_events: req.bubble.events.length
         , user_subscribed: user_subscribed
         , bubble_section: 'event'
         , new_post: new_post

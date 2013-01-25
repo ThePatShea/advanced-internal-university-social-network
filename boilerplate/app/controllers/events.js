@@ -31,7 +31,6 @@ exports.show = function(req, res){
     sidebar_name: req.bubble.name,
     title: req.bubble.name,
     bubble: req.bubble,
-    num_events: req.bubble.events.length,
     comments: req.comments,
     user_subscribed: req.user_subscribed,
     bubble_section: 'event'
