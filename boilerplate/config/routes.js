@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
   , Event = mongoose.model('Event')
   , User = mongoose.model('User')
   , Deal = mongoose.model('Deal')
+  , Talk = mongoose.model('Talk')
   , async = require('async')
 
 module.exports = function (app, passport, auth) {
@@ -139,6 +140,61 @@ module.exports = function (app, passport, auth) {
   })
 
 
+  // talk routes
+  var talks = require('../app/controllers/talks')
+  app.get('/bubbles/:bubbleId/talks', auth.requiresLogin, talks.list)
+  app.get('/bubbles/:bubbleId/talks/:talkId', auth.requiresLogin, talks.show)
+  app.post('/bubbles/:bubbleId/create_talk', auth.requiresLogin, talks.create)
+
+  app.param('talkId', function(req, res, next, id){
+    Bubble
+      .findOne({ _id : req.params.bubbleId })
+      .exec(function (err, bubble) {
+        if (err) return next(err)
+        if (!bubble) return next(new Error('Failed to load bubble ' + id))
+        req.bubble = bubble
+
+          // Check if the user is subscribed to this bubble
+            if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+              var user_subscribed = 1
+            } else {
+              var user_subscribed = 0
+            }
+
+            req.user_subscribed = user_subscribed
+
+    Talk
+      .findOne({ _id : req.params.talkId })
+      .populate('comments')
+      .exec(function (err, talk) {
+        if (err) return next(err)
+        if (!talk) return next(new Error('Failed to load talk ' + id))
+        req.talk = talk
+
+        var populateComments = function (comment, cb) {
+          User
+            .findOne({ _id: comment._user })
+            .select('name facebook.id')
+            .exec(function (err, user) {
+              if (err) return next(err)
+              comment.user = user
+              cb(null, comment)
+            })
+        }
+
+        if (talk.comments.length) {
+          async.map(req.talk.comments, populateComments, function (err, results) {
+            next(err)
+          })
+        }
+        else
+          next()
+
+      })
+
+      })
+  })
+
 
   // event routes
   var events = require('../app/controllers/events')
@@ -222,6 +278,7 @@ module.exports = function (app, passport, auth) {
   app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
   app.post('/bubbles/:bubbleId/events/:eventId/comments', auth.requiresLogin, comments.create)
   app.post('/bubbles/:bubbleId/deals/:dealId/comments', auth.requiresLogin, comments.create)
+  app.post('/bubbles/:bubbleId/talks/:talkId/comments', auth.requiresLogin, comments.create)
 
   // subscription routes
   app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)

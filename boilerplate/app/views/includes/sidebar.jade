@@ -29,4 +29,10 @@ section.sidebar
             h2.sidebar_button_label deals
             div.sidebar_counter.sidebar_counter_deals
               h2= bubble.num_deals
+        li
+          a(href="/bubbles/#{bubble._id}/talks")
+            div.sidebar_button_icon.icon_talks
+            h2.sidebar_button_label talk
+            div.sidebar_counter.sidebar_counter_talks
+              h2= bubble.num_talks
   section.sidebar_right_border

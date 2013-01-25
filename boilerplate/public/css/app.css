@@ -316,6 +316,9 @@ input[readonly="readonly"] {
   .page_deals .red_text {
     color: #366137;
     }
+  .page_talks .red_text {
+    color: #C6A02C;
+    }
 
 .red_button {
   -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
@@ -338,6 +341,9 @@ input[readonly="readonly"] {
   }
   .page_deals .red_button {
     background: #366137;
+    }
+  .page_talks .red_button {
+    background: #C6A02C;
     }
 
 .grayed_out {
@@ -381,6 +387,7 @@ input[readonly="readonly"] {
   background: url("../img/bg_main_dark.png");
   border-right: 1px solid white;
   border-left: 1px solid white;
+  position: relative;
   overflow: hidden;
   margin: 0 auto;
   display: none;
@@ -399,11 +406,11 @@ input[readonly="readonly"] {
     .add_event #slider .ui-slider-handle {
       font-family: 'proxima_nova_semibold';
       text-shadow: 1px 1px 0 white;
+      margin: 0 0 0 -32px;
       text-align: center;
       cursor: pointer;
       font-size: 14px;
       width: 65px;
-      margin: 0 0 0 -32px;
       }
   .add_event #discount {
     text-align: center;
@@ -427,10 +434,21 @@ input[readonly="readonly"] {
     padding: 4px;
     height: 56px;
     }
+    .page_talks #description {
+      width: 560px;
+      }
+    .page_talks #title {
+      float: left;
+      }
   .add_event .submit_event {
     position: relative;
     width: 280px;
     }
+    .page_talks .submit_event {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      }
   .warning {
     -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
     box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
@@ -456,7 +474,7 @@ input[readonly="readonly"] {
   .grayed_out:hover .warning {
     display: block;
     }
-  #submitBtn {
+  .submit_event {
     position: relative;
     }
 
@@ -1107,6 +1125,9 @@ input[readonly="readonly"] {
         .sidebar .sidebar_buttons li a .icon_deals {
           background: url("../img/sprites.png") -306px -10px;
         }
+        .sidebar .sidebar_buttons li a .icon_talks {
+          background: url("../img/sprites.png") -328px -9px;
+        }
         .sidebar .sidebar_buttons li a .sidebar_button_label {
           position: relative;
           top: 3px;
@@ -1150,6 +1171,9 @@ input[readonly="readonly"] {
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_deals {
             background: #3D5235;
+            }
+          .sidebar .sidebar_buttons li a .sidebar_counter_talks {
+            background: #C6A02C;
             }
 
 .navbar {
@@ -1341,7 +1365,15 @@ ul.nav.pull-right {
   .add_event .submit_event {
     width: 238px;
     }
-
+  .page_talks #description {
+      width: 479px;
+      }
+  .add_event .deal_slider_container {
+    width: 225px;
+    }
+  .add_event #slider {
+    width: 165px;
+    }
 }
 
 @media (max-width: 979px) {
@@ -1414,7 +1446,24 @@ ul.nav.pull-right {
   .add_event .submit_event {
     width: 90%;
     }
-
+  .add_event .deal_slider_container {
+    width: 85%;
+    }
+  .add_event #slider {
+    width: 80%;
+    left: 15%;
+    }
+  .page_talks #description {
+      width: 90%;
+      }
+  .page_talks #title {
+      float: none;
+      }
+  .page_talks .submit_event {
+      position: relative;
+      left: 0;
+      top: 0;
+      }
 }
 
 @media (max-width: 767px) and (min-width: 481px) {
