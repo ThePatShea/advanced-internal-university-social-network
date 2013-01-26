@@ -83,23 +83,7 @@ module.exports = function (app, passport, auth) {
   app.get('/bubbles/:bubbleId/talks/:talkId', auth.requiresLogin, talks.show)
   app.post('/bubbles/:bubbleId/create_talk', auth.requiresLogin, talks.create)
 
-  app.param('talkId', function(req, res, next, id){
-    Bubble
-      .findOne({ _id : req.params.bubbleId })
-      .exec(function (err, bubble) {
-        if (err) return next(err)
-        if (!bubble) return next(new Error('Failed to load bubble ' + id))
-        req.bubble = bubble
-
-          // Check if the user is subscribed to this bubble
-            if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
-              var user_subscribed = 1
-            } else {
-              var user_subscribed = 0
-            }
-
-            req.user_subscribed = user_subscribed
-
+  app.param('talkId', function(req, res, next, id) {
     Talk
       .findOne({ _id : req.params.talkId })
       .populate('comments')
@@ -128,8 +112,6 @@ module.exports = function (app, passport, auth) {
           next()
         }
       })
-
-      })
   })
 
 
@@ -140,34 +122,32 @@ module.exports = function (app, passport, auth) {
 
 
   app.param('eventId', function(req, res, next, id) {
-    get_bubble(req, res, next, id, function(req, res, next, id) {
-        Event
-          .findOne({ _id : req.params.eventId })
-          .populate('comments')
-          .exec(function (err, event) {
-            if (err) return next(err)
-            if (!event) return next(new Error('Failed to load event ' + id))
-            req.event = event
+    Event
+      .findOne({ _id : req.params.eventId })
+      .populate('comments')
+      .exec(function (err, event) {
+        if (err) return next(err)
+        if (!event) return next(new Error('Failed to load event ' + id))
+        req.event = event
     
-            var populateComments = function (comment, cb) {
-              User
-                .findOne({ _id: comment._user })
-                .select('name facebook.id')
-                .exec(function (err, user) {
-                  if (err) return next(err)
-                  comment.user = user
-                  cb(null, comment)
-                })
-            }
+        var populateComments = function (comment, cb) {
+          User
+            .findOne({ _id: comment._user })
+            .select('name facebook.id')
+            .exec(function (err, user) {
+              if (err) return next(err)
+              comment.user = user
+              cb(null, comment)
+            })
+        }
     
-            if (event.comments.length) {
-              async.map(req.event.comments, populateComments, function (err, results) {
-                next(err)
-              })
-            }
-            else
-              next()
+        if (event.comments.length) {
+          async.map(req.event.comments, populateComments, function (err, results) {
+            next(err)
           })
+        }
+        else
+          next()
       })
   })
 

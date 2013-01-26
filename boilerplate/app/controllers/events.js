@@ -41,7 +41,9 @@ exports.create = function (req, res) {
 // View an event
 exports.show = function(req, res) {
   res.render('bubbles/show_post', {
-      comments: req.comments
+      sidebar_buttons: req.sidebar_buttons
+    , sidebar_top: req.sidebar_top
+    , comments: req.comments
     , title: req.bubble.name
     , bubble_section: 'event'
     , title: req.event.name
