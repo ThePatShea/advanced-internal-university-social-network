@@ -51,7 +51,9 @@ var mongoose = require('mongoose')
 // View a deal
   exports.show = function(req, res) {
     res.render('bubbles/show_post', {
-        comments: req.comments
+        sidebar_buttons: req.sidebar_buttons
+      , sidebar_top: req.sidebar_top
+      , comments: req.comments
       , bubble_section: 'deal'
       , title: req.deal.name
       , bubble: req.bubble
