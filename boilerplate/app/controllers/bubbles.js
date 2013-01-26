@@ -46,6 +46,26 @@ exports.list = function(req, res){
 }
 
 
+// Edit a bubble
+exports.edit = function(req, res){
+  // Check if the user is subscribed to this bubble
+    if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+      var user_subscribed = 1
+    } else {
+      var user_subscribed = 0
+    }
+
+  // Render the view
+      res.render('bubbles/edit', {
+          sidebar_name: req.bubble.name
+        , title: req.bubble.name
+        , bubble: req.bubble
+        , user_subscribed: user_subscribed
+        , bubble_section: 'none'
+      })
+}
+
+
 // Subscribe to a bubble
 var subscribe = exports.subscribe = function (req, res) {
   var user = req.user

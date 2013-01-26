@@ -256,6 +256,7 @@ module.exports = function (app, passport, auth) {
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
   app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.list)
   app.get('/bubbles/:bubbleId/events', auth.requiresLogin, bubbles.list)
+  app.get('/bubbles/:bubbleId/edit', auth.requiresLogin, bubbles.edit)
 
   app.param('bubbleId', function(req, res, next, id){
     Bubble
@@ -264,7 +265,7 @@ module.exports = function (app, passport, auth) {
         if (err) return next(err)
         if (!bubble) return next(new Error('Failed to load bubble ' + id))
         req.bubble = bubble
-
+        
         next()
 
       })
