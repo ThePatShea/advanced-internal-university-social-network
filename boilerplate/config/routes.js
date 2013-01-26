@@ -185,8 +185,8 @@ module.exports = function (app, passport, auth) {
         })
     })
 
-  // home route
-  app.get('/', auth.requiresLogin, users.subscriptions)
+  // Home route
+    app.get('/', auth.requiresLogin, users.subscriptions)
 
   // comment routes
   var comments = require('../app/controllers/comments')
@@ -195,9 +195,9 @@ module.exports = function (app, passport, auth) {
   app.post('/bubbles/:bubbleId/deals/:dealId/comments', auth.requiresLogin, comments.create)
   app.post('/bubbles/:bubbleId/talks/:talkId/comments', auth.requiresLogin, comments.create)
 
-  // subscription routes
-  app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
-  app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
+  // Subscription routes
+    app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
+    app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
 
   // tag routes
   var tags = require('../app/controllers/tags')

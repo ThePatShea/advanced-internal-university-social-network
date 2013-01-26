@@ -72,17 +72,20 @@ exports.subscriptions = function(req, res){
         .find({ subscriptions: { $ne: user._id } },"name num_subscriptions")
         .exec(function(err, bubbles) {
           if (err) return res.render('500')
-
-
-          res.render('users/subscriptions', {
-              sidebar_name: user.name
-            , title: "subscriptions"
-            , subscribed: subscriptions
-            , unsubscribed: bubbles
-            , user: user
-           })
+          res.render('includes/sidebar_top_user', {user: req.user}, function(err, sidebar_top) {
+            req.sidebar_top = sidebar_top
+            res.render('includes/sidebar_buttons_user', {user: req.user}, function(err, sidebar_buttons) {
+              req.sidebar_buttons = sidebar_buttons
+              res.render('users/subscriptions', {
+                  sidebar_buttons: req.sidebar_buttons
+                , sidebar_top: req.sidebar_top
+                , subscribed: subscriptions
+                , title: 'subscriptions'
+                , unsubscribed: bubbles
+              })
+            })
+          })
         })
-
     })
 }
 
@@ -97,11 +100,19 @@ exports.new_bubble = function(req, res){
     .findOne({_id: req.user._id}, "name facebook")
     .exec(function(err, user) {
       if (err) return res.render('500')
-      res.render('users/new_bubble', {
-          title: 'Create a Bubble'
-        , user: user
-        , current_year: current_year
-        , new_bubble: new Bubble({})
+      res.render('includes/sidebar_top_user', {user: req.user}, function(err, sidebar_top) {
+        req.sidebar_top = sidebar_top
+        res.render('includes/sidebar_buttons_user', {user: req.user}, function(err, sidebar_buttons) {
+          req.sidebar_buttons = sidebar_buttons
+          res.render('users/new_bubble', {
+              sidebar_buttons: req.sidebar_buttons
+            , sidebar_top: req.sidebar_top
+            , new_bubble: new Bubble({})
+            , current_year: current_year
+            , title: 'Create a Bubble'
+            , user: user
+          })
+        })
       })
     })
 }
