@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose')
   , Article = mongoose.model('Article')
   , Bubble = mongoose.model('Bubble')
@@ -202,7 +201,7 @@ module.exports = function (app, passport, auth) {
   app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
 
 
-  app.param('eventId', function(req, res, next, id){
+  app.param('eventId', function(req, res, next, id) {
     Bubble
       .findOne({ _id : req.params.bubbleId })
       .exec(function (err, bubble) {
@@ -219,55 +218,81 @@ module.exports = function (app, passport, auth) {
 
             req.user_subscribed = user_subscribed
 
-    Event
-      .findOne({ _id : req.params.eventId })
-      .populate('comments')
-      .exec(function (err, event) {
-        if (err) return next(err)
-        if (!event) return next(new Error('Failed to load event ' + id))
-        req.event = event
-
-        var populateComments = function (comment, cb) {
-          User
-            .findOne({ _id: comment._user })
-            .select('name facebook.id')
-            .exec(function (err, user) {
-              if (err) return next(err)
-              comment.user = user
-              cb(null, comment)
-            })
-        }
-
-        if (event.comments.length) {
-          async.map(req.event.comments, populateComments, function (err, results) {
-            next(err)
+        Event
+          .findOne({ _id : req.params.eventId })
+          .populate('comments')
+          .exec(function (err, event) {
+            if (err) return next(err)
+            if (!event) return next(new Error('Failed to load event ' + id))
+            req.event = event
+    
+            var populateComments = function (comment, cb) {
+              User
+                .findOne({ _id: comment._user })
+                .select('name facebook.id')
+                .exec(function (err, user) {
+                  if (err) return next(err)
+                  comment.user = user
+                  cb(null, comment)
+                })
+            }
+    
+            if (event.comments.length) {
+              async.map(req.event.comments, populateComments, function (err, results) {
+                next(err)
+              })
+            }
+            else
+              next()
           })
-        }
-        else
-          next()
-
-      })
-
       })
   })
 
   // bubble routes
   var bubbles = require('../app/controllers/bubbles')
   app.post('/bubbles', auth.requiresLogin, bubbles.create)
-  app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.list)
-  app.get('/bubbles/:bubbleId/events', auth.requiresLogin, bubbles.list)
+  app.get('/bubbles/:bubbleId', auth.requiresLogin, events.list)
+  app.get('/bubbles/:bubbleId/events', auth.requiresLogin, events.list)
   app.get('/bubbles/:bubbleId/edit', auth.requiresLogin, bubbles.edit)
 
-  app.param('bubbleId', function(req, res, next, id){
+
+
+
+
+
+  var get_bubble = function (callback) {
+
+  }
+
+
+
+
+
+
+  app.param('bubbleId', function(req, res, next, id) {
     Bubble
       .findOne({ _id : id })
       .exec(function (err, bubble) {
         if (err) return next(err)
         if (!bubble) return next(new Error('Failed to load bubble ' + id))
         req.bubble = bubble
-        
-        next()
 
+        if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+          var user_subscribed = 1
+        } else {
+          var user_subscribed = 0
+        }
+
+        res.render('includes/sidebar_top_bubble', {
+            bubble: bubble
+          , user_subscribed: user_subscribed
+        },function(err, sidebar_top) {
+          req.sidebar_top = sidebar_top
+          res.render('includes/sidebar_buttons_bubble', { bubble: bubble }, function(err, sidebar_buttons) {
+            req.sidebar_buttons = sidebar_buttons
+            next()
+          })
+        })
       })
   })
 

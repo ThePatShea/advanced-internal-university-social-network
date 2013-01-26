@@ -1,0 +1,19 @@
+li
+  a(href="/bubbles/#{bubble._id}/events")
+    div.sidebar_button_icon.icon_events
+    h2.sidebar_button_label events
+    div.sidebar_counter.sidebar_counter_events
+      h2 ##
+    div.icon_sidebar_select
+li
+  a(href="/bubbles/#{bubble._id}/deals")
+    div.sidebar_button_icon.icon_deals
+    h2.sidebar_button_label deals
+    div.sidebar_counter.sidebar_counter_deals
+      h2= bubble.num_deals
+li
+  a(href="/bubbles/#{bubble._id}/talks")
+    div.sidebar_button_icon.icon_talks
+    h2.sidebar_button_label talk
+    div.sidebar_counter.sidebar_counter_talks
+      h2= bubble.num_talks
