@@ -78,14 +78,12 @@ var mongoose = require('mongoose')
 
 
 // Update a bubble
-exports.update = function(req, res) {
-  console.log("req.bubble: " + req.bubble)   // TESTING
-  var bubble = req.bubble
-
-  bubble = _.extend(bubble, req.body)
-
-
-  bubble.save(function(err, doc) {
-    res.redirect('/bubbles/'+bubble._id)
-  })
-}
+  exports.update = function(req, res) {
+    var bubble = req.bubble
+  
+    bubble = _.extend(bubble, req.body)
+  
+    bubble.save(function(err, doc) {
+      res.redirect('/bubbles/'+bubble._id)
+    })
+  }
