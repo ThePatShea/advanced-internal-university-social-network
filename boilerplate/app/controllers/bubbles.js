@@ -61,11 +61,31 @@ var mongoose = require('mongoose')
 
 // Edit a bubble
   exports.edit = function(req, res) {
-    res.render('bubbles/edit', {
-        sidebar_buttons: req.sidebar_buttons
-      , sidebar_top: req.sidebar_top
-      , title: req.bubble.name
-      , bubble_section: 'none'
-      , bubble: req.bubble
+    var bubble = req.bubble
+
+    res.render('includes/sidebar_top_bubble_edit', {
+       bubble: bubble
+   },function(err, sidebar_top) {
+      res.render('bubbles/edit', {
+          sidebar_buttons: req.sidebar_buttons
+        , sidebar_top: sidebar_top
+        , bubble_section: 'none'
+        , title: bubble.name
+        , bubble: bubble
+      })
     })
   }
+
+
+// Update a bubble
+exports.update = function(req, res) {
+  console.log("req.bubble: " + req.bubble)   // TESTING
+  var bubble = req.bubble
+
+  bubble = _.extend(bubble, req.body)
+
+
+  bubble.save(function(err, doc) {
+    res.redirect('/bubbles/'+bubble._id)
+  })
+}

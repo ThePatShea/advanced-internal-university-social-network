@@ -186,8 +186,8 @@ h5 {
 
 h1 {
   font-family: 'proxima_nova_extrabold';
-  font-size: 28px;
   line-height: 28px;
+  font-size: 28px;
 }
 
 h2 {
@@ -1093,10 +1093,26 @@ input[readonly="readonly"] {
       display: table;
       height: 100%;
       }
+      .sidebar .top_container .attributes .edit_bubble_name,
       .sidebar .top_container .attributes h1 {
+        font-family: 'proxima_nova_extrabold';
+        text-shadow: 2px 2px 0px black;
+        text-transform: uppercase;
+        line-height: 28px;
+        font-size: 28px;
+        color: white;
+
         vertical-align: middle;
         display: table-cell;
         text-align: center;
+        }
+      .sidebar .top_container .attributes .edit_bubble_name {
+        margin: -18px 0 0 7%;
+        position: absolute;
+        color: #A4A4A4;
+        height: 25px;
+        width: 80%;
+        top: 50%;
         }
   .sidebar .sidebar_buttons {
     border-bottom: 1px solid rgba(224,224,224,.25);
