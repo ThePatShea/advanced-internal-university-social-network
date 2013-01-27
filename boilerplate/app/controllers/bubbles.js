@@ -62,17 +62,22 @@ var mongoose = require('mongoose')
 // Edit a bubble
   exports.edit = function(req, res) {
     var bubble = req.bubble
-
+    
     res.render('includes/sidebar_top_bubble_edit', {
        bubble: bubble
-   },function(err, sidebar_top) {
-      res.render('bubbles/edit', {
-          sidebar_buttons: req.sidebar_buttons
-        , sidebar_top: sidebar_top
-        , bubble_section: 'none'
-        , title: bubble.name
-        , bubble: bubble
-      })
+    }, function(err, sidebar_top) {
+      // Render the view, only if the current user created the bubble
+        if ( req.user._id.equals(bubble.creator) ) {
+          res.render('bubbles/edit', {
+              sidebar_buttons: req.sidebar_buttons
+            , sidebar_top: sidebar_top
+            , bubble_section: 'none'
+            , title: bubble.name
+            , bubble: bubble
+          })
+        } else {
+          res.render('404')
+        }
     })
   }
 
