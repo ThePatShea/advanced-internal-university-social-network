@@ -4,6 +4,6 @@ block main
   - if (typeof(bubble.creator) != 'undefined' && bubble.creator.equals(req.user._id) )   // Shows form if current user created this bubble
     div(class=['page_content', 'page_#{bubble_section}s'])
       include ../includes/new_post
-  ul.post_list
+  ul.post_list.list_view
     each post in posts
       include ../includes/post_widget

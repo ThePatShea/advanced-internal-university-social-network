@@ -382,7 +382,6 @@ input[readonly="readonly"] {
   margin: 10px;
 }
 
-
 .add_event {
   background: url("../img/bg_main_dark.png");
   border-right: 1px solid white;
@@ -753,6 +752,9 @@ input[readonly="readonly"] {
       margin: 5px 0 0 208px;
       overflow: auto;
       }
+    .post_info .post_attributes .edit_description {
+      width: 95%;
+      }
       .post_info .post_attributes .post_description pre {
         overflow: hidden;
         max-height: 185px;
@@ -841,6 +843,12 @@ input[readonly="readonly"] {
       .post_list .post_widget .post_widget_main .post_name {
         max-height: 36px;
         overflow: hidden;
+
+        font-family: 'proxima_nova_bold';
+        text-shadow: 1px 1px 0 white;
+        text-transform: capitalize;
+        font-size: 18px;
+        color: #575757;
         }
     .post_list .post_widget .post_widget_right {
       border-left: 1px solid rgba(255,255,255,.68);
@@ -923,10 +931,10 @@ input[readonly="readonly"] {
     background: url("../img/bg_main_dark.png");
     border-bottom: 1px solid rgba(255,255,255,.82);
     }
-    .post_list li:nth-child(odd):hover {
+    .list_view li:nth-child(odd):hover {
       background: url("../img/bg_main_dark_hover.png");
       }
-    .post_list li:nth-child(even):hover {
+    .list_view li:nth-child(even):hover {
       background: rgba(255,255,255,.2);
       }
     .post_list li .subtitle {

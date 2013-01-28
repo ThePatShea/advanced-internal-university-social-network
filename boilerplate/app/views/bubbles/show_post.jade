@@ -1,41 +1,44 @@
 extends ../layouts/default
 
 block main
-  section(class=['page_#{bubble_section}s'])
-    section.back_to_bubble
-      a.back_button.gradient_gray(href='/bubbles/'+bubble._id+'/#{bubble_section}s')
-        span.descriptor.gray_text.back_to back to
-        span.descriptor.red_text.bubble_name= bubble.name
-    ul.post_list.single_post
-      include ../includes/post_widget
-    section.post_info
-      section.left_bar
-        section.section_top
-          div.pic_post_container
-            img.pic_post(src='http://graph.facebook.com/'+post.eid+'/picture?type=large')
-        section.section_middle
-          div.descriptor.gray_text venue
-          h4= post.location
-        section.section_bottom
-          div.post_action_container
-            button.post_action_calendar
-            div.descriptor.gray_text share w/ friends
-          div.post_action_container
-            button.post_action_calendar
-            div.descriptor.gray_text add to calendar
-      section.post_attributes
-        section.post_description
-          pre#post_description= post.description
-          button.red_button.read_more#read_more read more
-        div.divider
-        section.students_going
-          div.descriptor.red_text
-            = post.attending_count
-            |  people
-          h4.going going
-        div.divider
-      section.comment_area#comments
-        include ../comments/form
-        section.comment_list
-          each comment in post.comments
-            include ../comments/comment
+  form(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/update")
+    section(class=['page_#{bubble_section}s'])
+      section.back_to_bubble
+        a.back_button.gradient_gray(href='/bubbles/'+bubble._id+'/#{bubble_section}s')
+          span.descriptor.gray_text.back_to back to
+          span.descriptor.red_text.bubble_name= bubble.name
+        a(href='/bubbles/'+bubble._id+'/#{bubble_section}s/#{post._id}/edit')
+          button.create_an_event.red_button edit #{bubble_section}
+        button.create_an_event.red_button(type='submit') save
+      ul.post_list.single_post
+        | !{ post_widget }
+      section.post_info
+        section.left_bar
+          section.section_top
+            div.pic_post_container
+              img.pic_post(src='http://graph.facebook.com/'+post.eid+'/picture?type=large')
+          section.section_middle
+            div.descriptor.gray_text venue
+            h4= post.location
+          section.section_bottom
+            div.post_action_container
+              button.post_action_calendar
+              div.descriptor.gray_text share w/ friends
+            div.post_action_container
+              button.post_action_calendar
+              div.descriptor.gray_text add to calendar
+        section.post_attributes
+          section.post_description
+            | !{ post_description }
+          div.divider
+          section.students_going
+            div.descriptor.red_text
+              = post.attending_count
+              |  people
+            h4.going going
+          div.divider
+        section.comment_area#comments
+          include ../comments/form
+          section.comment_list
+            each comment in post.comments
+              include ../comments/comment
