@@ -74,8 +74,8 @@ var mongoose = require('mongoose')
     var event = req.event
      
     res.render('includes/post_description_edit', {
-        post: event
-      }, function(err, post_description) {
+      post: event
+    }, function(err, post_description) {
       res.render('includes/post_widget_edit', {
           bubble_section: 'event'
         , bubble: bubble
