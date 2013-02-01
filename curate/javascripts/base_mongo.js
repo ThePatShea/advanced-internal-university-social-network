@@ -21,7 +21,7 @@
 			}, { collection: 'access_tokens' });
 		} else if (schema == "page") {
 			var mongo_schema = new mongoose.Schema({
-                                page_id: { type: Number, index: {unique: true}},
+                                page_id: { type: Number, index: {unique: true, sparse: true}},
                                 name: String,
 				description: String,
 				categories: [],
@@ -52,7 +52,7 @@
                         }, { collection: 'pages' });
 		} else if (schema == "event") {
                         var mongo_schema = new mongoose.Schema({
-                                eid: { type: Number, index: {unique: true}},
+                                eid: { type: Number, index: {unique: true, sparse: true}},
                                 name: String,
                                 pic_square: String,
                                 pic_big: String,
@@ -73,7 +73,7 @@
                         }, { collection: 'events' });
                 } else if (schema == "user") {
                         var mongo_schema = new mongoose.Schema({
-                                uid: { type: Number, index: {unique: true}},
+                                uid: { type: Number, index: {unique: true, sparse: true}},
                                 name: String,
 				pic_cover: {
 					cover_id: Number,
