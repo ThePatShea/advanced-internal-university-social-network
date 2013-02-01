@@ -1,31 +1,33 @@
 {
-    "name": "noobjs"
-  , "description": "A demo app in nodejs illustrating use of express, jade and mogoose"
-  , "version": "3.0.0"
-  , "private": false
-  , "author": "Madhusudhan Srinivasa <madhums8@gmail.com> (http://madhums.github.com)"
-  , "engines": {
-        "node": "0.6.18"
-      , "npm": "1.1.9"
-    }
-  , "scripts": {
-      "start": "./node_modules/.bin/nodemon server.js"
-    }
-  , "dependencies": {
-      "express": "latest"
-    , "express-namespace": "latest"
-    , "jade": "latest"
-    , "mongoose": "latest"
-    , "connect-mongodb": "latest"
-    , "passport": "latest"
-    , "passport-local": "latest"
-    , "passport-facebook": "latest"
-    , "passport-twitter": "latest"
-    , "passport-github": "latest"
-    , "passport-google-oauth": "latest"
-    , "underscore": "latest"
-    , "gzippo": "latest"
-    , "async": "latest"
-    , "nodemon": "latest"
-  }
+    "name": "campus_bubble",
+    "description": "A platform for college students to share events, deals, and discussions",
+    "version": "3.0.0-12",
+    "private": false,
+    "author": "Campus Bubble",
+    "engines": {
+        "node": "0.8.x",
+        "npm": "1.1.9"
+    },
+    "scripts": {
+        "start": "server.js"
+    },
+    "dependencies": {
+        "express": "latest",
+        "express-namespace": "latest",
+        "jade": "latest",
+        "mongoose": "latest",
+        "connect-mongodb": "latest",
+        "passport": "latest",
+        "passport-local": "latest",
+        "passport-facebook": "latest",
+        "passport-twitter": "latest",
+        "passport-github": "latest",
+        "passport-google-oauth": "latest",
+        "underscore": "latest",
+        "gzippo": "latest",
+        "async": "latest",
+        "nodemon": "latest",
+        "stripe": "1.2.x"
+    },
+    "subdomain": "campusbubble.test"
 }

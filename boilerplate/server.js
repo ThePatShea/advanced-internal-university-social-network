@@ -8,7 +8,7 @@ var express = require('express')
 require('express-namespace')
 
 // Load configurations
-var env = process.env.NODE_ENV || 'development'
+var env = process.env.NODE_ENV || 'production'
   , config = require('./config/config.example.js')[env]
   , auth = require('./authorization')
 

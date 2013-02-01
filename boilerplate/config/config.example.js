@@ -1,7 +1,7 @@
 
 module.exports = {
     development: {
-      db: 'mongodb://localhost/noobjs_dev',
+      db: 'mongodb://nodejitsu_campusbubble:vn94subvihmm5j843t4to71s5g@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb9203155674',
       facebook: {
           clientID: "219781404699497"
         , clientSecret: "11efd0dea9edbb5461a0b74c6227ff42"
@@ -27,6 +27,26 @@ module.exports = {
 
     }
   , production: {
-
+      db: 'mongodb://nodejitsu_campusbubble:vn94subvihmm5j843t4to71s5g@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb9203155674',
+      facebook: {
+          clientID: "219781404699497"
+        , clientSecret: "11efd0dea9edbb5461a0b74c6227ff42"
+        , callbackURL: "http://localhost:3000/auth/facebook/callback"
+      },
+      twitter: {
+          clientID: "CONSUMER_KEY"
+        , clientSecret: "CONSUMER_SECRET"
+        , callbackURL: "http://localhost:3000/auth/twitter/callback"
+      },
+      github: {
+          clientID: 'APP_ID'
+        , clientSecret: 'APP_SECRET'
+        , callbackURL: 'http://localhost:3000/auth/github/callback'
+      },
+      google: {
+          clientID: "APP_ID"
+        , clientSecret: "APP_SECRET"
+        , callbackURL: "http://localhost:3000/auth/google/callback"
+      }
     }
 }
