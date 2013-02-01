@@ -1,15 +1,15 @@
 extends ../layouts/default
 
 block main
-  form(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/update")
+    // form(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/update")
     section(class=['page_#{bubble_section}s'])
       section.back_to_bubble
         a.back_button.gradient_gray(href='/bubbles/'+bubble._id+'/#{bubble_section}s')
           span.descriptor.gray_text.back_to back to
           span.descriptor.red_text.bubble_name= bubble.name
-        a(href='/bubbles/'+bubble._id+'/#{bubble_section}s/#{post._id}/edit')
-          button.create_an_event.red_button edit #{bubble_section}
-        button.create_an_event.red_button(type='submit') save
+      //- a(href='/bubbles/'+bubble._id+'/#{bubble_section}s/#{post._id}/edit')
+        //- button.create_an_event.red_button edit #{bubble_section}
+      //- button.create_an_event.red_button(type='submit') save
       ul.post_list.single_post
         | !{ post_widget }
       section.post_info

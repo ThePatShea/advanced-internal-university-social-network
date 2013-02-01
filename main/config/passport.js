@@ -78,6 +78,9 @@ exports.boot = function (passport, config) {
     function(accessToken, refreshToken, profile, done) {
       User.findOne({ 'facebook.id': profile.id }, function (err, user) {
         if (err) { return done(err) }
+
+        profile._json.access_token = accessToken
+
         if (!user) {
           user = new User({
               name: profile.displayName
@@ -92,7 +95,18 @@ exports.boot = function (passport, config) {
           })
         }
         else {
-          return done(err, user)
+          User
+            .findOne({ "facebook.id": profile._json.id })
+            .exec(function (err, user) {
+              if (err) console.log(err)
+
+              user.facebook = profile._json
+
+              user.save(function (err, user) {
+                if (err) console.log(err)
+                return done(err, user)
+              })
+            })
         }
       })
     }

@@ -1,5 +1,9 @@
 // Base mongoDB functions
-	var mongoose = require('mongoose'), db = mongoose.createConnection('localhost', 'noobjs_dev');
+
+        // var db_connect = 'mongodb://nodejitsu_campusbubble:mm0hjn9lob87vt9eopnpshp13b@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb4086692456';   // Development database
+        var db_connect = 'mongodb://nodejitsu_campusbubble:vn94subvihmm5j843t4to71s5g@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb9203155674'   // Production database
+
+	var mongoose = require('mongoose'), db = mongoose.createConnection(db_connect);
 	db.on('error', console.error.bind(console, 'connection error:'));
 
 
@@ -87,7 +91,8 @@
 				middle_name: String,
 				last_name: String,
 				sex: String,
-				email: String
+				email: String,
+                                facebook: {}
                         }, { collection: 'users' });
                 } else if (schema == "bubble") {
 			var mongo_schema = new mongoose.Schema({
@@ -125,11 +130,10 @@
 	}
 
 	exports.get_default_access_token = function(callback) {
-		get_schema("access_tokens", function (mongo_model) {
-                        mongo_model.findOne({ },"access_token",function (err, mongo_model) {
+		get_schema("user", function (mongo_model) {
+                        mongo_model.findOne({ "facebook.access_token" : { $ne: null } },"facebook.access_token",function (err, mongo_model) {
 				if (err) { } // TODO handle err
-
-				var default_access_token = mongo_model.access_token;
+				var default_access_token = mongo_model.facebook.access_token;
 				callback(default_access_token);
 			 });
                 });
