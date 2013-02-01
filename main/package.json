@@ -1,0 +1,33 @@
+{
+    "name": "campus_bubble",
+    "description": "A platform for college students to share events, deals, and discussions",
+    "version": "3.0.0-22",
+    "private": false,
+    "author": "Campus Bubble",
+    "engines": {
+        "node": "0.8.x",
+        "npm": "1.1.9"
+    },
+    "scripts": {
+        "start": "server.js"
+    },
+    "dependencies": {
+        "express": "latest",
+        "express-namespace": "latest",
+        "jade": "latest",
+        "mongoose": "latest",
+        "connect-mongodb": "latest",
+        "passport": "latest",
+        "passport-local": "latest",
+        "passport-facebook": "latest",
+        "passport-twitter": "latest",
+        "passport-github": "latest",
+        "passport-google-oauth": "latest",
+        "underscore": "latest",
+        "gzippo": "latest",
+        "async": "latest",
+        "nodemon": "latest",
+        "stripe": "1.2.x"
+    },
+    "subdomain": "test.campusbubble"
+}

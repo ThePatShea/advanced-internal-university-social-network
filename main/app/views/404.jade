@@ -1,0 +1,13 @@
+extends layouts/auth
+
+block main
+  h1 This page cannot be found
+  br
+  span 404
+
+block content
+  #error-message-box
+    #error-stack-trace
+      - if(showStack)
+        pre
+          code!= error.stack

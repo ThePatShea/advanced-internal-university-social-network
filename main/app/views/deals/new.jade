@@ -1,0 +1,14 @@
+button.toggle_visible.create_an_event.red_button create a deal
+
+form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/#{bubble._id}/create_deal")
+  section.input_group
+    input#title.requiredInput.input-xlarge(type='text', maxlength="35", name="name", placeholder='Deal Name (ex: 15% Off Cheese Pizza)')
+    textarea#description.requiredInput.input-xlarge(type='text', rows="5", name="description", placeholder='Explain the details of your deal')
+
+  section.input_group
+    input#location.requiredInput.input-xlarge(type='text', maxlength="35", name="location", placeholder='Where can we redeem the deal?')
+    section.deal_slider_container
+      div#slider
+      input#discount.requiredInput(type='hidden', name='discount')
+    button#submitBtn.submit_event.red_button(type='submit') create
+      p.warning.descriptor.red_text Please fill in every field before creating your deal

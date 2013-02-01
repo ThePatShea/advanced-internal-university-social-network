@@ -1,0 +1,7 @@
+img.pic_top(src='/img/default.jpg')
+div.pic_top_overlay
+section.attributes
+  h1= bubble.name
+  include ../includes/subscribe
+  - if (typeof(bubble.creator) != 'undefined' && bubble.creator.equals(req.user._id) )
+    include ../includes/edit_bubble

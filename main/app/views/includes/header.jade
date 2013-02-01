@@ -1,0 +1,28 @@
+
+header#header
+  .navbar.navbar-fixed-top(role='navigation')
+    .navbar-inner
+      .container
+        a.brand(href='/')
+          div.bubble_logo
+        div
+          ul.nav
+          ul.nav.pull-right
+            li
+              a(href='/')
+                div.home
+            li
+              a(href="/users/#{req.user.id}/new_bubble")
+                div.create
+            if (req.isAuthenticated())
+              div.user_widget
+                a(href="/users/"+req.user.id)
+                  h3= req.user.name
+                  div.nav_pic_square_bg
+                    img.nav_pic_square(src='http://graph.facebook.com/'+req.user.facebook.id+'/picture?type=square')
+              li.sign_out_button
+                a(href="/logout", title="logout")
+                  div.sign_out
+            else
+              li
+                a(href="/login", title="Login") Sign In
