@@ -1,9 +1,20 @@
 {
- "name": "hello-world",
- "description": "hello world test app",
- "version": "0.0.1",
- "private": true,
- "dependencies": {
-   "express": "3.x"
- }
+   "name": "campus_bubble_curate"
+ , "description": "Campus Bubble project for aggregating and curating events"
+ , "version": "0.0.1"
+ , "private": false
+ , "author": "Campus Bubble"
+ , "engines": {
+        "node": "0.8.x",
+        "npm": "1.1.9"
+    }
+ , "scripts": {
+        "start": "cron.js"
+    }
+ , "dependencies": {
+     "mongoose": "latest"
+   , "express": "latest"
+   , "cron": "latest"
+   }
+ , "subdomain": "curate.campusbubble"
 }
