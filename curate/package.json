@@ -1,7 +1,7 @@
 {
    "name": "campus_bubble_curate",
    "description": "Campus Bubble project for aggregating and curating events",
-   "version": "3.0.0-6",
+   "version": "3.0.0-8",
    "private": false,
    "author": "Campus Bubble",
    "engines": {
