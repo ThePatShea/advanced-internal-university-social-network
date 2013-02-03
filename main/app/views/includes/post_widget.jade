@@ -2,9 +2,10 @@ li.post_widget
   a(href='/bubbles/'+bubble._id+'/#{bubble_section}s/'+post._id)
     section.post_widget_section.post_widget_left
       - if (typeof(post.start_time) != 'undefined')
-        p= post.start_time
+        div.format_date.format_date_top.gray_text.event_date_top(id='format_date_top_#{format_date_top_count++}')= post.start_time
+        div.format_date.format_date_bottom.descriptor.red_text.event_date_bottom(id='format_date_bottom_#{format_date_bottom_count++}')= post.start_time
       - else if (typeof(post.discount) != 'undefined')
-        p #{post.discount}% off
+        div.gray_text.event_date_top #{post.discount}% off
     section.post_widget_section.post_widget_main
       section.post_main_info
         h4.post_name= post.name

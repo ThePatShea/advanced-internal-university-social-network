@@ -306,6 +306,9 @@ input[readonly="readonly"] {
   z-index: 1040 !important;
 }
 
+.format_date {
+  display: none;
+}
 
 .gray_text {
   color: #A4A4A4;
@@ -829,6 +832,20 @@ input[readonly="readonly"] {
       left: 0;
       top: 0;
       }
+      .post_list .post_widget .post_widget_left .event_date_top {
+        font-family: 'Proxima_Nova_Bold';
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 18px;
+        margin-top: 30px;
+        font-size: 21px;
+        }
+      .post_list .post_widget .post_widget_left .event_date_bottom {
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 15px;
+        font-size: 15px;
+        }
     .post_list .post_widget .post_widget_main {
       border-right: 1px solid #BDBFBD;
       height: 100px;

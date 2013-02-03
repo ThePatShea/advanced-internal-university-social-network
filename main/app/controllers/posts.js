@@ -36,6 +36,8 @@ var mongoose = require('mongoose')
                   sidebar_buttons: req.sidebar_buttons
                 , bubble_section: bubble_section
                 , sidebar_top: req.sidebar_top
+                , format_date_bottom_count: 0
+                , format_date_top_count: 0
                 , title: req.bubble.name
                 , bubble: req.bubble
                 , new_post: new_post

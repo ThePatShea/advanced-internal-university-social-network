@@ -51,7 +51,9 @@ var mongoose = require('mongoose')
       post: event
     }, function(err, post_description) {
       res.render('includes/post_widget', {
-          bubble_section: 'event'
+          format_date_bottom_count: 0
+        , format_date_top_count: 0
+        , bubble_section: 'event'
         , bubble: bubble
         , post: event
       }, function(err, post_widget) {
