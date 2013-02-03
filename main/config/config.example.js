@@ -31,22 +31,22 @@ module.exports = {
       facebook: {
           clientID: "574730455889400"
         , clientSecret: "6df6e97d12948de097b0e31667a8804b"
-        , callbackURL: "http://test.campusbubble.jit.su/auth/facebook/callback"
+        , callbackURL: "http://main.campusbubble.jit.su/auth/facebook/callback"
       },
       twitter: {
           clientID: "CONSUMER_KEY"
         , clientSecret: "CONSUMER_SECRET"
-        , callbackURL: "http://test.campusbubble.jit.su/auth/twitter/callback"
+        , callbackURL: "http://main.campusbubble.jit.su/auth/twitter/callback"
       },
       github: {
           clientID: 'APP_ID'
         , clientSecret: 'APP_SECRET'
-        , callbackURL: 'http://test.campusbubble.jit.su/auth/github/callback'
+        , callbackURL: 'http://main.campusbubble.jit.su/auth/github/callback'
       },
       google: {
           clientID: "APP_ID"
         , clientSecret: "APP_SECRET"
-        , callbackURL: "http://test.campusbubble.jit.su/auth/google/callback"
+        , callbackURL: "http://main.campusbubble.jit.su/auth/google/callback"
       }
     }
 }
