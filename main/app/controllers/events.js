@@ -23,17 +23,21 @@ var mongoose = require('mongoose')
 // Create an event
   exports.create = function (req, res) {
     var bubble = req.bubble
-  
-    var event = new Event(req.body)
-    event.bubbles.addToSet(bubble._id)
-    event.creator = req.user._id
-  
-    event.save(function(err) {
-      if (err) {
-        console.log("error creating event: " + err)
-      } else {
-        res.redirect('/bubbles/'+bubble._id+'/events/'+event._id)
-      }
+    bubble.num_events++
+ 
+    bubble.save(function (err) {
+      var event = new Event(req.body)
+      event.bubbles.addToSet(bubble._id)
+      event.creator = req.user._id
+ 
+      event.save(function(err){
+        if (err) {
+          console.log("error creating event: " + err)
+        } else {
+          res.redirect('/bubbles/'+bubble._id+'/events/'+event._id)
+        }
+      })
+ 
     })
   }
 

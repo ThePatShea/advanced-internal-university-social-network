@@ -11,6 +11,7 @@ var BubbleSchema = new Schema({
 	, events: []
 	, subscriptions: [{type : Schema.ObjectId, ref : 'User', index: {unique: true}}]
         , num_subscriptions: {type: Number, default: 0}
+        , num_events: {type: Number, default: 0}
         , num_deals: {type: Number, default: 0}
         , num_talks: {type: Number, default: 0}
 })
