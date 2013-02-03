@@ -5,12 +5,8 @@
 
 
 // Concatenate the base functions
-	function bubble_curate() {
+	exports.bubble_curate = function() {
 		base_aggregate.bubble_aggregate();
 		base_sync.bubble_sync();
 		base_sort.bubble_sort();
 	}
-
-
-// Run the curate function
-	bubble_curate();
