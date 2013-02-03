@@ -1152,6 +1152,12 @@ input[readonly="readonly"] {
         .sidebar .sidebar_buttons li a .icon_talks {
           background: url("../img/sprites.png") -328px -9px;
         }
+        .sidebar .sidebar_buttons li a .icon_notifications {
+          background: url("../img/sprites.png") -308px -36px;
+        }
+        .sidebar .sidebar_buttons li a .icon_new_bubble {
+          background: url("../img/sprites.png") -281px -56px;
+        }
         .sidebar .sidebar_buttons li a .sidebar_button_label {
           position: relative;
           top: 3px;
@@ -1198,6 +1204,9 @@ input[readonly="readonly"] {
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_talks {
             background: #C6A02C;
+            }
+          .sidebar .sidebar_buttons li a .sidebar_counter_user {
+            background: #919FAC;
             }
 
 .navbar {
