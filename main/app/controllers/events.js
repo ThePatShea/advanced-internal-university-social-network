@@ -18,6 +18,7 @@
   
       posts.list(req,res)
     }
+ 
 
   // Create an event
     exports.create = function (req, res) {
@@ -28,14 +29,39 @@
       posts.create(req,res)
     }
  
+ 
   // View an event
     exports.show = function(req, res) {
-      req.post_type = 'event'
-      req.post = req.event
-
-      posts.show(req,res)
+      var bubble = req.bubble
+      var event = req.event
+      
+      res.render('includes/post_description', {
+        post: event
+      }, function(err, post_description) {
+        res.render('includes/post_widget', {
+            format_date_bottom_count: 0
+          , format_date_top_count: 0
+          , bubble_section: 'event'
+          , bubble: bubble
+          , post: event
+        }, function(err, post_widget) {
+          res.render('bubbles/show_post', {
+              sidebar_buttons: req.sidebar_buttons
+            , post_description: post_description
+            , sidebar_top: req.sidebar_top
+            , post_widget: post_widget
+            , comments: req.comments
+            , bubble_section: 'event'
+            , title: bubble.name
+            , title: event.name
+            , bubble: bubble
+            , post: event
+          })
+        })
+      })
     }
- 
+  
+  
   // Edit an event
     exports.edit = function(req, res) {
       var bubble = req.bubble
@@ -64,6 +90,7 @@
         })
       })
     }
+  
   
   // Update an event
     exports.update = function(req, res) {
