@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     for (i = 0; i < num_widgets; i++) {
       var widget_id = '#format_date_top_'+i;
-      var unformatted_date = $(widget_id).html();
+      var unformatted_date = new Date($(widget_id).html()*1000);
       var formatted_date = moment(unformatted_date).format('ddd');
       $(widget_id).html(formatted_date);
       $(widget_id).css({display: 'inherit'});
@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     for (i = 0; i < num_widgets; i++) {
       var widget_id = '#format_date_bottom_'+i;
-      var unformatted_date = $(widget_id).html();
+      var unformatted_date = new Date($(widget_id).html()*1000);
       var formatted_date = moment(unformatted_date).format('h:mma');
       $(widget_id).html(formatted_date);
       $(widget_id).css({display: 'inherit'});

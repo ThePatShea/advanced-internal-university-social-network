@@ -4,6 +4,9 @@
 	else
 		var db_connect = 'mongodb://nodejitsu_campusbubble:mm0hjn9lob87vt9eopnpshp13b@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb4086692456';   // Development database
 
+
+	var db_connect = 'mongodb://nodejitsu_campusbubble:vn94subvihmm5j843t4to71s5g@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb9203155674';   // For testing the production database
+
 	var mongoose  =  require('mongoose')
           , db        =  mongoose.createConnection(db_connect)
           , Schema    =  mongoose.Schema
