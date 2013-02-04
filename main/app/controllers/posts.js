@@ -88,9 +88,7 @@
         post: post
       }, function(err, post_description) {
         res.render('includes/post_widget', {
-            format_date_bottom_count: 0
-          , bubble_section: post_type
-          , format_date_top_count: 0
+            bubble_section: post_type
           , bubble: bubble
           , post: post
         }, function(err, post_widget) {
@@ -101,6 +99,7 @@
             , bubble_section: post_type
             , post_widget: post_widget
             , comments: req.comments
+            , title: bubble.name
             , title: post.name
             , bubble: bubble
             , post: post
