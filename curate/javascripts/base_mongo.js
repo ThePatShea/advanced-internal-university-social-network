@@ -61,24 +61,26 @@
 
 
                 var EventSchema = new Schema({
-                        eid: { type: Number, index: {unique: true, sparse: true}},
-                        name: String,
-                        pic_square: String,
-                        pic_big: String,
-                        description: String,
+			eid: { type: Number, index: {unique: true, sparse: true}},
+			name: String,
+			pic_square: String,
+			pic_big: String,
+			description: String,
 			start_time: String,
 			end_time: String,
 			location: String,
 			venue: {
-				id: Number
+			        id: Number
 			},
 			privacy: String,
-			creator: Number,
+			creator: Schema.Types.Mixed,
 			update_time: Number,
-			attending_count: Number,
-                        declined_count: Number,
-                        unsure_count: Number,
-                        not_replied_count: Number
+			attending_count: { type: Number, default: 0},
+			declined_count: Number,
+			unsure_count: Number,
+			not_replied_count: Number,
+			comments: [{type : Schema.ObjectId, ref : 'Comment'}],
+			bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
                 });
 
 		var Event = db.model('Event', EventSchema);
@@ -107,12 +109,18 @@
 
 
 		var BubbleSchema = new Schema({
-			creator: {type : Schema.ObjectId, ref : 'User', default: new mongoose.Types.ObjectId},
-			privacy: String,
-			name: String,
-			events: []
+			  creator: {type : Schema.ObjectId, ref : 'User', default: new mongoose.Types.ObjectId}
+			, subscriptions: [{type : Schema.ObjectId, ref : 'User', index: {unique: true}}]
+			, num_subscriptions: {type: Number, default: 0}
+			, privacy: {type: String, default: 'public'}
+			, type: {type: String, default: 'curated'}
+			, num_events: {type: Number, default: 0}
+			, num_deals: {type: Number, default: 0}
+			, num_talks: {type: Number, default: 0}
+			, description: String
+			, name: String
 		});
-
+		
 		var Bubble = db.model('Bubble', BubbleSchema);
 
 
@@ -185,17 +193,21 @@
 			var current_time = Math.round((new Date()).getTime() / 1000);
 			var yesterday = current_time - 86400;
 
-			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], privacy : "OPEN"}, "eid name pic_big start_time end_time location venue.id creator attending_count").exec(function (err, mongo_model) {
-				var event_array = mongo_model;
-				console.log(event_array);
+			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], privacy : "OPEN"}).exec(function (err, events) {
+				console.log(events);
 
-	 			/* USE TO MAKE SLUGS. NOT NEEDED FOR MINIMALLY VIABLE PRODUCT
-	 				var bubble_regex = new RegExp(" ","g");
-         	                        var bubble_slug = bubble_name.replace(bubble_regex,"_");
-	 			*/
-
-				var insert_bubble = new Bubble({name : bubble_name , privacy : "OPEN" , events : event_array});
-                		insert_bubble.save();
+				Bubble
+				  .findOne({name: bubble_name, type: 'curated'})
+				  .exec(function (err, bubble) {
+				  	if (!bubble) bubble = new Bubble({name : bubble_name})
+					
+					events.forEach(function(event) {
+						event.bubbles.addToSet(bubble._id)
+						event.save()
+					})
+					
+					bubble.save()
+				  })
 			});
                 });
 	}
