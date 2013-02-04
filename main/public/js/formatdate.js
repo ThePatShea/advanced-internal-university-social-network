@@ -1,10 +1,10 @@
 // Converts timestamps into readable dates
 $(document).ready(function () {
 
-  function format_date(input_class, date_format) {
-    var num_widgets = $('.' + input_class).length;
+  function format_date(input_class, date_format, skip) {
+    var num_widgets = $('.' + input_class).length + skip;
 
-    for (i = 0; i < num_widgets; i++) {
+    for (i = skip; i < num_widgets; i++) {
       // Get the date from inside the widget
         var widget_id = '#' + input_class + '_'+i;
         var unformatted_date = $(widget_id).html();      
@@ -23,7 +23,10 @@ $(document).ready(function () {
   }
 
 
-  format_date('format_date_bottom', 'h:mma');
-  format_date('format_date_top', 'M/D');
+  if (skip == undefined)
+    var skip = 0
+
+  format_date('format_date_bottom', 'h:mma', skip);
+  format_date('format_date_top', 'M/D', skip);
  
 });
