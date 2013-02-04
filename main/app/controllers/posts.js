@@ -12,18 +12,23 @@ var mongoose = require('mongoose')
       var bubble = req.bubble
 
     // Determine which section of the bubble to send the user to
-      if (bubble.num_events > 0) {
-        var bubble_section = 'event'
-        Post = Event
-      } else if (bubble.num_deals > 0) {
-        var bubble_section = 'deal'
-        Post = Deal
-      } else if (bubble.num_talks > 0) {
-        var bubble_section = 'talk'
-        Post = Talk
+      if (req.bubble_section != undefined) {
+        bubble_section = req.bubble_section
+        Post = req.Post
       } else {
-        var bubble_section = 'event'
-        Post = Event
+        if (bubble.num_events > 0) {
+          var bubble_section = 'event'
+          Post = Event
+        } else if (bubble.num_deals > 0) {
+          var bubble_section = 'deal'
+          Post = Deal
+        } else if (bubble.num_talks > 0) {
+          var bubble_section = 'talk'
+          Post = Talk
+        } else {
+          var bubble_section = 'event'
+          Post = Event
+        }
       }
 
     // Find all the posts the current bubble has

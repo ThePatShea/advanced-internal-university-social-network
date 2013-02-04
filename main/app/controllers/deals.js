@@ -1,28 +1,21 @@
-var mongoose = require('mongoose')
-  , Bubble = mongoose.model('Bubble')
-  , Deal = mongoose.model('Deal')
-  , _ = require('underscore')
+// Include base scripts
+  // Include the models
+    var mongoose  =  require('mongoose')
+      , Bubble    =  mongoose.model('Bubble')
+      , Deal      =  mongoose.model('Deal')
+      , _         =  require('underscore')
+  
+  // Include the posts controller
+    var posts  =  require('./posts')
 
 
+// Define main functions
 // View the list of deals in a bubble
   exports.list = function(req, res) {
-    // Find all the deals the current bubble has
-      Deal
-        .find({ bubbles: req.bubble._id })
-        .exec(function (err, deals) {
-          // Render the view
-            res.render('deals/new', {bubble: req.bubble }, function(err, new_post) {
-              res.render('bubbles/list', {
-                  sidebar_buttons: req.sidebar_buttons
-                , sidebar_top: req.sidebar_top
-                , title: req.bubble.name
-                , bubble_section: 'deal'
-                , bubble: req.bubble
-                , new_post: new_post
-                , posts: deals
-              })
-            })
-         }) 
+    req.bubble_section = 'deal'
+    req.Post = Deal
+
+    posts.list(req,res)
   }
 
 
