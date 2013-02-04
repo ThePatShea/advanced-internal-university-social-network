@@ -9,3 +9,5 @@ block main
       include ../includes/post_widget
   - if (bubble.num_events == 0 && bubble.num_deals == 0 && bubble.num_talks == 0 && !bubble.creator.equals(req.user._id) )
     pre This bubble does not yet have any events, deals, or talks.
+  div.hidden#hidden_bubble_section= bubble_section
+  div.hidden#hidden_bubble_id= bubble._id

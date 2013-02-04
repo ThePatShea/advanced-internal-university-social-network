@@ -310,6 +310,10 @@ input[readonly="readonly"] {
   display: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .gray_text {
   color: #A4A4A4;
   }
