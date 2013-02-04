@@ -19,7 +19,6 @@
       posts.list(req,res)
     }
 
-
   // Create a talk
     exports.create = function (req, res) {
       req.bubble.num_talks++
@@ -28,7 +27,6 @@
 
       posts.create(req,res)
     }
-
  
   // View a talk
     exports.show = function(req, res) {
