@@ -19,6 +19,14 @@
       posts.list(req,res)
     }
 
+  // View a subset of the list of events in a bubble
+    exports.list_pagelet = function(req, res) {
+      req.bubble_section = 'event'
+      req.Post = Event
+       
+      posts.list_pagelet(req,res)
+    }
+
   // Create an event
     exports.create = function (req, res) {
       req.bubble.num_events++

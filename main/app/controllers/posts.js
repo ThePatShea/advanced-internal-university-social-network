@@ -37,6 +37,7 @@
       // Find all the posts the current bubble has
         Post
           .find({ bubbles: req.bubble._id })
+          .limit(20)
           .exec(function (err, posts) {
             // Render the view
               res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
@@ -53,6 +54,32 @@
                 })
               })
            }) 
+    }
+
+
+  // View a subset of a list of posts in a bubble
+    exports.list_pagelet = function(req, res) {
+      // Define the bubble
+        var bubble_section  =  req.bubble_section
+        var bubble          =  req.bubble
+ 
+      // Determine which section of the bubble this is
+        Post = req.Post
+ 
+      // Find some posts the current bubble has
+        Post
+          .find({ bubbles: req.bubble._id })
+          .limit(20)
+          .exec(function (err, posts) {
+            // Render the view
+              res.render('bubbles/list_pagelet', {
+                  bubble_section: bubble_section
+                , format_date_bottom_count: 0
+                , format_date_top_count: 0
+                , bubble: bubble
+                , posts: posts
+              })
+           })
     }
 
 

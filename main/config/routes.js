@@ -59,6 +59,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Event Routes
+    app.get('/bubbles/:bubbleId/events_list_pagelet', auth.requiresLogin, events.list_pagelet)
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
     app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
