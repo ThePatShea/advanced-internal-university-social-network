@@ -59,10 +59,11 @@
 
   // View a subset of a list of posts in a bubble
     exports.list_pagelet = function(req, res) {
-      // Define the bubble
+      // Define the bubble parameters
         var bubble_section  =  req.bubble_section
+        var skip            =  req.params.skip
         var bubble          =  req.bubble
- 
+
       // Determine which section of the bubble this is
         Post = req.Post
  
@@ -70,13 +71,13 @@
         Post
           .find({ bubbles: req.bubble._id })
           .limit(20)
-          .skip(req.params.skip)
+          .skip(skip)
           .exec(function (err, posts) {
             // Render the view
               res.render('bubbles/list_pagelet', {
                   bubble_section: bubble_section
-                , format_date_bottom_count: 0
-                , format_date_top_count: 0
+                , format_date_bottom_count: skip
+                , format_date_top_count: skip
                 , bubble: bubble
                 , posts: posts
               })
