@@ -9,6 +9,7 @@
     var posts  =  require('./posts')
 
 
+
 // Define main functions
   // View the list of talks in a bubble
     exports.list = function(req, res) {
