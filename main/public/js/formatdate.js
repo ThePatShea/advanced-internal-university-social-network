@@ -1,29 +1,29 @@
 // Converts timestamps into readable dates
 $(document).ready(function () {
 
-  function format_date() {
-    var num_widgets = $('.format_date_top').length;
+  function format_date(input_class, date_format) {
+    var num_widgets = $('.' + input_class).length;
 
     for (i = 0; i < num_widgets; i++) {
-      var widget_id = '#format_date_top_'+i;
-      var unformatted_date = new Date($(widget_id).html()*1000);
-      var formatted_date = moment(unformatted_date).format('ddd');
-      $(widget_id).html(formatted_date);
-      $(widget_id).css({display: 'inherit'});
-    }
+      // Get the date from inside the widget
+        var widget_id = '#' + input_class + '_'+i;
+        var unformatted_date = $(widget_id).html();      
 
+      // If the date is a unix timestamp, convert it to a Javascript date
+        if (parseInt(unformatted_date) == unformatted_date)
+          var unformatted_date = new Date($(widget_id).html()*1000);
 
-    var num_widgets = $('.format_date_bottom').length;
+      // Re-format the date
+        var formatted_date = moment(unformatted_date).format(date_format);
 
-    for (i = 0; i < num_widgets; i++) {
-      var widget_id = '#format_date_bottom_'+i;
-      var unformatted_date = new Date($(widget_id).html()*1000);
-      var formatted_date = moment(unformatted_date).format('h:mma');
-      $(widget_id).html(formatted_date);
-      $(widget_id).css({display: 'inherit'});
+      // Display the newly-formatted date
+        $(widget_id).html(formatted_date);
+        $(widget_id).css({display: 'inherit'});
     }
   }
 
-  format_date();
+
+  format_date('format_date_bottom', 'h:mma');
+  format_date('format_date_top', 'M/D');
  
 });
