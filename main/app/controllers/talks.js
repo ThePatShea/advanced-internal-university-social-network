@@ -32,30 +32,8 @@
  
   // View a talk
     exports.show = function(req, res) {
-      var bubble = req.bubble
-      var post = req.talk
-      var post_type = 'talk'
-  
-      res.render('includes/post_description', {
-        post: post
-      }, function(err, post_description) {
-        res.render('includes/post_widget', {
-            bubble_section: post_type
-          , bubble: bubble
-          , post: post
-        }, function(err, post_widget) {
-          res.render('bubbles/show_post', {
-              sidebar_buttons: req.sidebar_buttons
-            , post_description: post_description
-            , sidebar_top: req.sidebar_top
-            , post_widget: post_widget
-            , comments: req.comments
-            , bubble_section: post_type
-            , title: bubble.name
-            , title: post.name
-            , bubble: bubble
-            , post: post
-          })
-        })
-      })
+      req.post_type = 'talk'
+      req.post = req.talk
+
+      posts.show(req,res)
     }
