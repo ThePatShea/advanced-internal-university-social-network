@@ -1,7 +1,8 @@
 // Allows for infinite scrolling in post_list
 $(document).ready(function () {
 
-  var ajax_current = 0;
+  var ajax_current  =  0;
+  var skip          =  20;
   
   $(window).scroll(function() {
       if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() - 1000) ) {
@@ -12,8 +13,9 @@ $(document).ready(function () {
             setTimeout(function() { ajax_current = 0; }, 1000);
     
           // Load the new data
-            $.get('/bubbles/510f16f12898e00238000005/events_list_pagelet', function(data) {
+            $.get('/bubbles/510f16f12898e00238000005/events_list_pagelet/'+skip, function(data) {
               $('#post_list').append(data);
+              skip += 20;
             });
         }
 

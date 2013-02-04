@@ -70,6 +70,7 @@
         Post
           .find({ bubbles: req.bubble._id })
           .limit(20)
+          .skip(req.params.skip)
           .exec(function (err, posts) {
             // Render the view
               res.render('bubbles/list_pagelet', {
