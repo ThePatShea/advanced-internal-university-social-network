@@ -259,7 +259,7 @@
     			}
                     }
             } else if (!resultName) {   // Special case for Facebook Graph API search queries
-                    var insertInfo = returnInfo.data[i];
+                var insertInfo = returnInfo.data[i];
     		var insert_id = insertInfo.id;
 
     		if (insertInfo["start_time"]) {   // If it's an event
