@@ -18,30 +18,18 @@
   
       posts.list(req,res)
     }
-  
-  
+ 
+ 
   // Create a deal
     exports.create = function (req, res) {
-      var bubble = req.bubble
-      bubble.num_deals++
-    
-      bubble.save(function (err) {
-        var deal = new Deal(req.body)
-        deal.bubbles.addToSet(bubble._id)
-        deal.creator = req.user._id
-    
-        deal.save(function(err){
-          if (err) {
-            console.log("error creating deal: " + err)
-          } else {
-            res.redirect('/bubbles/'+bubble._id+'/deals/'+deal._id)
-          }
-        })
-    
-      })
+      req.bubble.num_deals++
+      req.post_type = 'deal'
+      req.Post = Deal
+
+      posts.create(req,res)
     }
-  
-  
+
+
   // View a deal
     exports.show = function(req, res) {
       var bubble = req.bubble

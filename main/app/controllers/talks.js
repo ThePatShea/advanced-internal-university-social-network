@@ -22,26 +22,14 @@
 
   // Create a talk
     exports.create = function (req, res) {
-      var bubble = req.bubble
-      bubble.num_talks++
-  
-      bubble.save(function (err) {
-        var talk = new Talk(req.body)
-        talk.bubbles.addToSet(bubble._id)
-        talk.creator = req.user._id
-    
-        talk.save(function(err){
-          if (err) {
-            console.log("error creating talk: " + err)
-          } else {
-            res.redirect('/bubbles/'+bubble._id+'/talks/'+talk._id)
-          }
-        })
-    
-      })
+      req.bubble.num_talks++
+      req.post_type = 'talk'
+      req.Post = Talk
+
+      posts.create(req,res)
     }
-  
-  
+
+ 
   // View a talk
     exports.show = function(req, res) {
       var bubble = req.bubble

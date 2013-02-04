@@ -18,7 +18,7 @@
   
       posts.list(req,res)
     }
-  
+ 
 
   // Create an event
     exports.create = function (req, res) {
@@ -28,8 +28,8 @@
       
       posts.create(req,res)
     }
-  
-  
+ 
+ 
   // View an event
     exports.show = function(req, res) {
       var bubble = req.bubble
