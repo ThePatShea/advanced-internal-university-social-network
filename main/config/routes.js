@@ -98,6 +98,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Deal Routes
+    app.get('/bubbles/:bubbleId/deals_list_pagelet/:skip', auth.requiresLogin, deals.list_pagelet)
     app.post('/bubbles/:bubbleId/create_deal', auth.requiresLogin, deals.create)
     app.get('/bubbles/:bubbleId/deals/:dealId', auth.requiresLogin, deals.show)
     app.get('/bubbles/:bubbleId/deals', auth.requiresLogin, deals.list)
@@ -135,6 +136,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Talk Routes
+    app.get('/bubbles/:bubbleId/talks_list_pagelet/:skip', auth.requiresLogin, talks.list_pagelet)
     app.post('/bubbles/:bubbleId/create_talk', auth.requiresLogin, talks.create)
     app.get('/bubbles/:bubbleId/talks/:talkId', auth.requiresLogin, talks.show)
     app.get('/bubbles/:bubbleId/talks', auth.requiresLogin, talks.list)

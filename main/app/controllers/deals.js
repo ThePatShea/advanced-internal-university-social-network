@@ -14,13 +14,20 @@
   // View the list of deals in a bubble
     exports.list = function(req, res) {
       req.bubble_section = 'deal'
+      posts.list(req,res)
+    }
+
+  // View a subset of the list of deals in a bubble
+    exports.list_pagelet = function(req, res) {
+      req.bubble_section = 'deal'
       req.Post = Deal
 
       // Initialize query parameters
+        var timestamp_now          =  (new Date()) / 1000
         req.query_parameters_find  =  { }
         req.query_parameters_sort  =  { }
 
-      posts.list(req,res)
+      posts.list_pagelet(req,res)
     }
  
   // Create a deal

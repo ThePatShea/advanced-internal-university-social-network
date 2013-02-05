@@ -14,8 +14,6 @@
   // View the list of events in a bubble
     exports.list = function(req, res) {
       req.bubble_section = 'event'
-      req.Post = Event
-
       posts.list(req,res)
     }
 
@@ -27,7 +25,6 @@
       // Initialize query parameters
         var timestamp_now          =  (new Date()) / 1000
         var timestamp_yesterday    =  timestamp_now - 86400
-
         req.query_parameters_find  =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} }
         req.query_parameters_sort  =  { start_time: 'asc' } 
 
