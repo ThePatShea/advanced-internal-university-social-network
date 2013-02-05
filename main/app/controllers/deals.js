@@ -15,7 +15,11 @@
     exports.list = function(req, res) {
       req.bubble_section = 'deal'
       req.Post = Deal
-  
+
+      // Initialize query parameters
+        req.query_parameters_find  =  { }
+        req.query_parameters_sort  =  { }
+
       posts.list(req,res)
     }
  

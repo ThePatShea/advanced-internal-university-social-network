@@ -9,40 +9,38 @@
 
 
 // Define main functions
+  // Redirect a user to another section of a bubble
+    exports.redirect = function(req, res) {
+      var bubble = req.bubble
+
+      if (bubble.num_events > 0) {
+        res.redirect('/bubbles/'+bubble._id+'/events')
+      } else if (bubble.num_deals > 0) {
+        res.redirect('/bubbles/'+bubble._id+'/deals')
+      } else if (bubble.num_talks > 0) {
+        res.redirect('/bubbles/'+bubble._id+'/talks')
+      } else {
+        res.redirect('/bubbles/'+bubble._id+'/events')
+      }
+    }
+
+
   // View a list of posts in a bubble
     exports.list = function(req, res) {
-      // Define the bubble
-        var bubble = req.bubble
-  
-      // Determine which section of the bubble to send the user to
-        if (req.bubble_section != undefined) {
-          bubble_section = req.bubble_section
-          Post = req.Post
-        } else {
-          if (bubble.num_events > 0) {
-            var bubble_section = 'event'
-            Post = Event
-          } else if (bubble.num_deals > 0) {
-            var bubble_section = 'deal'
-            Post = Deal
-          } else if (bubble.num_talks > 0) {
-            var bubble_section = 'talk'
-            Post = Talk
-          } else {
-            var bubble_section = 'event'
-            Post = Event
-          }
-        }
-
+      // Initialize bubble and post parameters
+        var bubble_section  =  req.bubble_section
+        var bubble          =  req.bubble
+        Post                =  req.Post
+      
       // Initialize query parameters
-        var timestamp_now = (new Date()) / 1000
-        var timestamp_yesterday = timestamp_now - 86400
+        var query_parameters_find      =  req.query_parameters_find
+        var query_parameters_sort      =  req.query_parameters_sort
+        query_parameters_find.bubbles  =  req.bubble._id
 
-  
-      // Find all the posts the current bubble has
+      // Find the posts
         Post
-          .find({ bubbles: req.bubble._id, end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} })
-          .sort({ start_time: 'asc' })
+          .find(query_parameters_find)
+          .sort(query_parameters_sort)
           .limit(20)
           .exec(function (err, posts) {
             // Render the view

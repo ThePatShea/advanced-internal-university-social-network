@@ -27,7 +27,7 @@ module.exports = function (app, passport, auth) {
   // Bubble Routes
     app.post('/bubbles/:bubbleId/update', auth.requiresLogin, bubbles.update)
     app.get('/bubbles/:bubbleId/edit', auth.requiresLogin, bubbles.edit)
-    app.get('/bubbles/:bubbleId', auth.requiresLogin, posts.list)
+    app.get('/bubbles/:bubbleId', auth.requiresLogin, posts.redirect)
     app.post('/bubbles', auth.requiresLogin, bubbles.create)
 
     app.param('bubbleId', function(req, res, next, id) {

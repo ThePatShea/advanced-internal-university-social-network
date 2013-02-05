@@ -16,6 +16,10 @@
       req.bubble_section = 'talk'
       req.Post = Talk
 
+      // Initialize query parameters
+        req.query_parameters_find  =  { }
+        req.query_parameters_sort  =  { }
+
       posts.list(req,res)
     }
 
