@@ -33,10 +33,16 @@
             Post = Event
           }
         }
+
+      // Initialize query parameters
+        var timestamp_now = (new Date()) / 1000
+        var timestamp_yesterday = timestamp_now - 86400
+
   
       // Find all the posts the current bubble has
         Post
-          .find({ bubbles: req.bubble._id })
+          .find({ bubbles: req.bubble._id, end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} })
+          .sort({ start_time: 'asc' })
           .limit(20)
           .exec(function (err, posts) {
             // Render the view
