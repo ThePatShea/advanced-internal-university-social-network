@@ -207,7 +207,16 @@
 						event.save()
 					})
 					
-					bubble.save()
+					// Update num_events for the bubble
+						var timestamp_now        =  (new Date()) / 1000
+						var timestamp_yesterday  =  timestamp_now - 86400
+
+						Event
+						  .find({ bubbles: bubble._id, end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} }, "_id")
+						  .exec(function (err, events) {
+							bubble.num_events = events.length
+							bubble.save()
+						  })
 				  })
 			});
                 });
@@ -251,7 +260,7 @@
     				var insert_agg_facebook = new mongo_model({facebook_id: insert_id, type: insert_type});
     				insert_agg_facebook.save();
     			} else {
-    				// MAKE EDIT: Make this work as an upsert. Find out if the save() function automatically upserts
+    				// TODO: Make this work as an upsert. Find out if the save() function automatically upserts
     				var insert_sync = new mongo_model(insertInfo[j]);
 				
 				// Convert event start_time and end_time to unix timestamp

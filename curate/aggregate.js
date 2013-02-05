@@ -47,13 +47,13 @@
 	exports.bubble_aggregate = function() {
 		base_mongo.db_open(function() {
 			// Aggregate pages
-				agg_from_events_venues_creators();    // Gets pages from events' venues and creators
-				agg_from_search_pages();              // Gets pages from our search queries
+				//agg_from_events_venues_creators();    // Gets pages from events' venues and creators
+				//agg_from_search_pages();              // Gets pages from our search queries
 				agg_from_users_likes();               // Gets pages from users' likes
 
 			// Aggregate events
-				agg_from_search_events();             // Gets events from our search queries
+				//agg_from_search_events();             // Gets events from our search queries
 				agg_from_users_events();              // Gets events users are invited to
-				agg_from_pages_events();              // Gets events posted by pages
+				//agg_from_pages_events();              // Gets events posted by pages
 		});
 	}
