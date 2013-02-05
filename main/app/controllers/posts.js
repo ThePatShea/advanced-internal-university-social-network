@@ -30,34 +30,18 @@
       // Initialize bubble and post parameters
         var bubble_section  =  req.bubble_section
         var bubble          =  req.bubble
-        Post                =  req.Post
       
-      // Initialize query parameters
-        var query_parameters_find      =  req.query_parameters_find
-        var query_parameters_sort      =  req.query_parameters_sort
-        query_parameters_find.bubbles  =  req.bubble._id
-
-      // Find the posts
-        Post
-          .find(query_parameters_find)
-          .sort(query_parameters_sort)
-          .limit(20)
-          .exec(function (err, posts) {
-            // Render the view
-              res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
-                res.render('bubbles/list', {
-                    sidebar_buttons: req.sidebar_buttons
-                  , bubble_section: bubble_section
-                  , sidebar_top: req.sidebar_top
-                  , format_date_bottom_count: 0
-                  , format_date_top_count: 0
-                  , title: req.bubble.name
-                  , bubble: req.bubble
-                  , new_post: new_post
-                  , posts: posts
-                })
-              })
-           }) 
+      // Render the view
+        res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
+          res.render('bubbles/list', {
+              sidebar_buttons: req.sidebar_buttons
+            , bubble_section: bubble_section
+            , sidebar_top: req.sidebar_top
+            , title: req.bubble.name
+            , bubble: req.bubble
+            , new_post: new_post
+          })
+        })
     }
 
 
@@ -68,12 +52,16 @@
         var skip            =  req.params.skip
         var bubble          =  req.bubble
 
-      // Determine which section of the bubble this is
-        Post = req.Post
+      // Initialize query parameters
+        var query_parameters_find      =  req.query_parameters_find
+        var query_parameters_sort      =  req.query_parameters_sort
+        query_parameters_find.bubbles  =  req.bubble._id
+        Post                           =  req.Post
  
       // Find some posts the current bubble has
         Post
-          .find({ bubbles: req.bubble._id })
+          .find(query_parameters_find)
+          .sort(query_parameters_sort)
           .limit(20)
           .skip(skip)
           .exec(function (err, posts) {

@@ -30,30 +30,36 @@ $(document).ready(function () {
 
   
   // Infinite scroll
+    function load_pagelet() {
+      if (ajax_current == 0 && hidden_bubble_id != null) {
+        // Prevent it from loading too much data
+          ajax_current = 1;
+          setTimeout(function() { ajax_current = 0; }, 1000);
+      
+        // Load the new data
+          $.get('/bubbles/'+hidden_bubble_id+'/'+hidden_bubble_section+'s_list_pagelet/'+skip, function(data) {
+            $('#post_list').append(data);
+  
+            format_date('format_date_bottom', 'h:mma', skip);
+            format_date('format_date_top', 'M/D', skip);
+  
+            skip += 20;
+          });
+      }
+    }
+
+
     var hidden_bubble_section  =  $('#hidden_bubble_section').html();
     var hidden_bubble_id       =  $('#hidden_bubble_id').html();
-    var skip                   =  20;
+    var skip                   =  0;
     var ajax_current           =  0;
+
+    load_pagelet()
+
 
     $(window).scroll(function() {
         if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() - 1000) ) {
-  
-          if (ajax_current == 0) {
-            // Prevent it from loading too much data
-              ajax_current = 1;
-              setTimeout(function() { ajax_current = 0; }, 1000);
-      
-            // Load the new data
-              $.get('/bubbles/'+hidden_bubble_id+'/'+hidden_bubble_section+'s_list_pagelet/'+skip, function(data) {
-                $('#post_list').append(data);
-  
-                format_date('format_date_bottom', 'h:mma', skip);
-                format_date('format_date_top', 'M/D', skip);
-  
-                skip += 20;
-              });
-          }
-  
+          load_pagelet()
         }
     });
 
