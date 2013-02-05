@@ -5,8 +5,6 @@
 		var db_connect = 'mongodb://nodejitsu_campusbubble:mm0hjn9lob87vt9eopnpshp13b@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb4086692456';   // Development database
 
 
-	var db_connect = 'mongodb://nodejitsu_campusbubble:vn94subvihmm5j843t4to71s5g@ds049537.mongolab.com:49537/nodejitsu_campusbubble_nodejitsudb9203155674';   // For testing the production database
-
 	var mongoose  =  require('mongoose')
           , db        =  mongoose.createConnection(db_connect)
           , Schema    =  mongoose.Schema
@@ -253,9 +251,19 @@
     				var insert_agg_facebook = new mongo_model({facebook_id: insert_id, type: insert_type});
     				insert_agg_facebook.save();
     			} else {
-    				// Make this work as an upsert. Find out if the save() function automatically upserts
+    				// MAKE EDIT: Make this work as an upsert. Find out if the save() function automatically upserts
     				var insert_sync = new mongo_model(insertInfo[j]);
-                                    insert_sync.save();
+				
+				// Convert event start_time and end_time to unix timestamp
+                        	        if (resultName == "event") {
+						if (parseInt(insert_sync.start_time) != insert_sync.start_time)
+							insert_sync.start_time  =  ( Date.parse(insert_sync.start_time) ) / 1000
+						
+						if (parseInt(insert_sync.end_time) != insert_sync.end_time)
+							insert_sync.end_time    =  ( Date.parse(insert_sync.end_time)   ) / 1000
+					}
+				
+                                insert_sync.save();
     			}
                     }
             } else if (!resultName) {   // Special case for Facebook Graph API search queries

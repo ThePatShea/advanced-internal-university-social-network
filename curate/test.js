@@ -5,4 +5,4 @@
 
 
 // Run the test script
-  base_sync.bubble_sync()
+  base_sort.bubble_sort()
