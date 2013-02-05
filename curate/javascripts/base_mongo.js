@@ -233,7 +233,11 @@
 
     console.log(returnInfo);
 
-    var returnInfo_length  =  returnInfo.data.length;
+    // Prevents a facebook error from crashing the script
+	if (returnInfo.data != undefined)
+	    var returnInfo_length  =  returnInfo.data.length;
+	else
+	    var returnInfo_length  =  0;
 
     for (i = 0; i < returnInfo_length; i++)
     {
@@ -245,7 +249,7 @@
                     var insertInfo_length  =  insertInfo.length - 1;
 
                     for (j = 0; j < insertInfo_length; j++) {
-    			if (input_schema == "agg_facebook") {
+    			if (input_schema == "Agg_facebook") {
     				if (resultName == "user") {
     					var insert_id = insertInfo[j].uid;
     					var insert_type = "user";

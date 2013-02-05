@@ -8,5 +8,5 @@
 // Run the test script
   // base_aggregate.bubble_aggregate()
   // base_curate.bubble_curate()
-   base_sync.bubble_sync()
-  // base_sort.bubble_sort()
+  // base_sync.bubble_sync()
+   base_sort.bubble_sort()
