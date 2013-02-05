@@ -9,6 +9,3 @@
 		base_mongo.sort_bubble("arts and music" , {$or : [{"type": /art/i} , {"categories.name": /art/i}] , "location.state" : "GA"});
 		base_mongo.sort_bubble("campus life" , {$or : [{"type": /Emory/} , {"description": /Emory/}] , "location.state" : "GA"});
 	}
-
-// TEST
-  // bubble_sort();

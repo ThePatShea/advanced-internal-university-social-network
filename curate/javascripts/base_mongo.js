@@ -166,12 +166,12 @@
 			var a = 0;
 
 			for (i = 0; i < page_object_length; i++) {
-				if (i != 0  &&  i%1000 == 0) {
+				if (i != 0  &&  i%250 == 0) {
 					a++;
 					page_list[a] = "";
 				}
 
-				if (i%1000 != 0)
+				if (i%250 != 0)
 					page_list[a] += ",";
 
 				page_list[a] += "\\'"+page_object[i].facebook_id+"\\'";
@@ -242,7 +242,7 @@
             if (resultName == "user" || resultName == "event" || resultName == "page")
             {
                     var insertInfo         =  returnInfo.data[i].fql_result_set;
-                    var insertInfo_length  =  insertInfo.length;
+                    var insertInfo_length  =  insertInfo.length - 1;
 
                     for (j = 0; j < insertInfo_length; j++) {
     			if (input_schema == "agg_facebook") {
@@ -260,9 +260,8 @@
     				var insert_agg_facebook = new mongo_model({facebook_id: insert_id, type: insert_type});
     				insert_agg_facebook.save();
     			} else {
-    				// TODO: Make this work as an upsert. Find out if the save() function automatically upserts
-    				var insert_sync = new mongo_model(insertInfo[j]);
-				
+				var insert_sync = new mongo_model(insertInfo[j]);
+
 				// Convert event start_time and end_time to unix timestamp
                         	        if (resultName == "event") {
 						if (parseInt(insert_sync.start_time) != insert_sync.start_time)
@@ -272,7 +271,7 @@
 							insert_sync.end_time    =  ( Date.parse(insert_sync.end_time)   ) / 1000
 					}
 				
-                                insert_sync.save();
+                        	insert_sync.save();
     			}
                     }
             } else if (!resultName) {   // Special case for Facebook Graph API search queries

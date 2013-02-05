@@ -47,6 +47,7 @@
 		if(typeof(end_parens) === 'undefined') end_parens = "";
                  base_mongo.get_id_list(type_input, function(page_list){
                         var page_list_length = page_list.length;
+			console.log("page_list_length: " + page_list_length); // TESTING
                         for (i = 0; i < page_list_length; i++) {
 				get_from_facebook("fql?q={'"+type_output+"':'"+query+" ("+page_list[i]+end_parens+")'}", "default_access_token", input_schema);
                         }
