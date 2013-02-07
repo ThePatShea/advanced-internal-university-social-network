@@ -195,7 +195,7 @@
 			var yesterday = current_time - 86400;
 
 			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], privacy : "OPEN"}).exec(function (err, events) {
-				console.log(events);
+				//console.log(events);
 
 				Bubble
 				  .findOne({name: bubble_name, type: 'curated'})
@@ -203,6 +203,15 @@
 				  	if (!bubble) bubble = new Bubble({name : bubble_name})
 					
 					events.forEach(function(event) {
+					    // Prevent duplicate events
+						Event
+						  .findOne({name: event.name, start_time: event.start_time, bubbles: bubble._id, eid: {$ne : event.eid} })
+						  .exec(function (err, duplicate_event) {
+							if (duplicate_event) {
+								console.log("found duplicate event: " + duplicate_event.name)
+							}
+						  })
+
 						event.bubbles.addToSet(bubble._id)
 						event.save()
 					})
