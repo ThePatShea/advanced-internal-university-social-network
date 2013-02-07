@@ -191,11 +191,11 @@
 				page_array[i] = page_object[i].page_id;
 			}
 
-			var current_time = Math.round((new Date()).getTime() / 1000);
-			var yesterday = current_time - 86400;
+			var timestamp_now        =  (new Date()) / 1000
+			var timestamp_yesterday  =  timestamp_now - 86400
 
-			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], privacy : "OPEN"}).exec(function (err, events) {
-				//console.log(events);
+			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday}, privacy : "OPEN"}).exec(function (err, events) {
+				console.log(events);
 
 				Bubble
 				  .findOne({name: bubble_name, type: 'curated'})
@@ -205,21 +205,30 @@
 					events.forEach(function(event) {
 					    // Prevent duplicate events
 						Event
-						  .findOne({name: event.name, start_time: event.start_time, bubbles: bubble._id, eid: {$ne : event.eid} })
-						  .exec(function (err, duplicate_event) {
-							if (duplicate_event) {
-								console.log("found duplicate event: " + duplicate_event.name)
+						  .find({location: event.location, start_time: event.start_time, bubbles: bubble._id, eid: {$ne : event.eid} })
+						  .exec(function (err, duplicate_events) {
+							if (duplicate_events != "") {
+								duplicate_events.forEach(function(duplicate_event) {
+									
+									if (event.attending_count > duplicate_event.attending_count) {
+										duplicate_event.bubbles.remove(bubble._id)
+										event.bubbles.addToSet(bubble._id)
+										
+										duplicate_event.save()
+										event.save()
+									} else {
+										event.bubbles.remove(bubble._id)
+										event.save()
+									}
+								})
+							} else {
+								event.bubbles.addToSet(bubble._id)
+								event.save()
 							}
 						  })
-
-						event.bubbles.addToSet(bubble._id)
-						event.save()
 					})
 					
 					// Update num_events for the bubble
-						var timestamp_now        =  (new Date()) / 1000
-						var timestamp_yesterday  =  timestamp_now - 86400
-
 						Event
 						  .find({ bubbles: bubble._id, end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} }, "_id")
 						  .exec(function (err, events) {
