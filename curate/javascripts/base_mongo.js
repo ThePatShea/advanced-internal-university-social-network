@@ -296,17 +296,34 @@
 							insert_sync.end_time    =  ( Date.parse(insert_sync.end_time)   ) / 1000
 					}
 				
-				// Testing upsert
+				// If the event already exists, update its info
 					if (resultName == "event") {
 						Event
 						  .findOne({eid: insert_sync.eid})
 						  .exec(function(err, event) {
-							if (event) {
-								console.log('testing upsert: ' + event.name)   // TESTING
+							if (event.eid == insert_sync.eid) {
+				console.log('insert_sync: ' + insert_sync.eid + ' -- ' + event.eid + ' -- ' + insert_sync.name)   // TESTING
+								event.not_replied_count  =  insert_sync.not_replied_count
+								event.attending_count    =  insert_sync.attending_count
+								event.declined_count     =  insert_sync.declined_count
+								event.unsure_count       =  insert_sync.unsure_count
+								event.description        =  insert_sync.description
+								event.update_time        =  insert_sync.update_time
+								event.start_time         =  insert_sync.start_time
+								event.pic_square         =  insert_sync.pic_square
+								event.end_time           =  insert_sync.end_time
+								event.location           =  insert_sync.location
+								event.pic_big            =  insert_sync.pic_big
+								event.creator            =  insert_sync.creator
+								event.privacy            =  insert_sync.privacy
+								event.venue              =  insert_sync.venue
+								event.name               =  insert_sync.name
+
+								//console.log('Updating existing event: ' + event.eid + ' -- ' + event.name)
+								event.save()
 							}
 						  })
 					}
-
                         	insert_sync.save();
     			}
                     }
