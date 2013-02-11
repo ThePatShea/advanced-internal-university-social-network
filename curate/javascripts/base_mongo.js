@@ -21,6 +21,15 @@
 	}	
 
 
+	// Helper functions
+		// Find search for event object inside array
+			function findEventById(source, eid) {
+			    return source.filter(function( obj ) {
+			        return +obj.eid === +eid;
+			    })[ 0 ];
+			}
+
+
 	// Initialize the models
 		var Agg_facebookSchema = new Schema({
 			facebook_id: { type: Number, index: {unique: true}},
@@ -298,30 +307,29 @@
 				
 				// If the event already exists, update its info
 					if (resultName == "event") {
-						console.log('insert_sync outer: ' + insert_sync.eid + ' -- ' + insert_sync.name) // TESTING
 						Event
-						  .findOne({eid: insert_sync.eid})
+						  .findOne({eid: insert_sync.eid, update_time: {$ne: insert_sync.update_time} })
 						  .exec(function(err, event) {
 							if (event) {
-								console.log('insert_sync inner: ' + insert_sync.eid + ' -- ' + insert_sync.name) //TESTING
+								var updated_event        =  findEventById(insertInfo, event.eid)
 
-								event.not_replied_count  =  insert_sync.not_replied_count
-								event.attending_count    =  insert_sync.attending_count
-								event.declined_count     =  insert_sync.declined_count
-								event.unsure_count       =  insert_sync.unsure_count
-								event.description        =  insert_sync.description
-								event.update_time        =  insert_sync.update_time
-								event.start_time         =  insert_sync.start_time
-								event.pic_square         =  insert_sync.pic_square
-								event.end_time           =  insert_sync.end_time
-								event.location           =  insert_sync.location
-								event.pic_big            =  insert_sync.pic_big
-								event.creator            =  insert_sync.creator
-								event.privacy            =  insert_sync.privacy
-								event.venue              =  insert_sync.venue
-								event.name               =  insert_sync.name
+								event.not_replied_count  =  updated_event.not_replied_count
+								event.attending_count    =  updated_event.attending_count
+								event.declined_count     =  updated_event.declined_count
+								event.unsure_count       =  updated_event.unsure_count
+								event.description        =  updated_event.description
+								event.update_time        =  updated_event.update_time
+								event.start_time         =  updated_event.start_time
+								event.pic_square         =  updated_event.pic_square
+								event.end_time           =  updated_event.end_time
+								event.location           =  updated_event.location
+								event.pic_big            =  updated_event.pic_big
+								event.creator            =  updated_event.creator
+								event.privacy            =  updated_event.privacy
+								event.venue              =  updated_event.venue
+								event.name               =  updated_event.name
 
-								//console.log('Updating existing event: ' + event.eid + ' -- ' + event.name)
+								console.log('Updating existing event: ' + event.eid + ' -- ' + event.name)
 								event.save()
 							}
 						  })
