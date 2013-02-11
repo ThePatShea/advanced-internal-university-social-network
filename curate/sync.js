@@ -12,5 +12,5 @@
 // Concatenate the sync functions
 	exports.bubble_sync = function() {
 		sync_events();
-		sync_pages();
+		// sync_pages();
 	}

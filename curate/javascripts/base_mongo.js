@@ -296,6 +296,17 @@
 							insert_sync.end_time    =  ( Date.parse(insert_sync.end_time)   ) / 1000
 					}
 				
+				// Testing upsert
+					if (resultName == "event") {
+						Event
+						  .findOne({eid: insert_sync.eid})
+						  .exec(function(err, event) {
+							if (event) {
+								console.log('testing upsert: ' + event.name)   // TESTING
+							}
+						  })
+					}
+
                         	insert_sync.save();
     			}
                     }
