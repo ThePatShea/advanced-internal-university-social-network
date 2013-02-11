@@ -298,11 +298,13 @@
 				
 				// If the event already exists, update its info
 					if (resultName == "event") {
+						console.log('insert_sync outer: ' + insert_sync.eid + ' -- ' + insert_sync.name) // TESTING
 						Event
 						  .findOne({eid: insert_sync.eid})
 						  .exec(function(err, event) {
-							if (event.eid == insert_sync.eid) {
-				console.log('insert_sync: ' + insert_sync.eid + ' -- ' + event.eid + ' -- ' + insert_sync.name)   // TESTING
+							if (event) {
+								console.log('insert_sync inner: ' + insert_sync.eid + ' -- ' + insert_sync.name) //TESTING
+
 								event.not_replied_count  =  insert_sync.not_replied_count
 								event.attending_count    =  insert_sync.attending_count
 								event.declined_count     =  insert_sync.declined_count
