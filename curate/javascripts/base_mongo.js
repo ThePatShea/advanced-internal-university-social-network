@@ -194,10 +194,10 @@
 				page_array[i] = page_object[i].page_id;
 			}
 
-			var timestamp_now        =  (new Date()) / 1000
-			var timestamp_yesterday  =  timestamp_now - 86400
+			var timestamp_now            =  (new Date()) / 1000
+			var timestamp_six_hours_ago  =  timestamp_now - 21600
 
-			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday}, privacy : "OPEN"}).exec(function (err, events) {
+			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago}, privacy : "OPEN"}).exec(function (err, events) {
 				console.log(events);
 
 				Bubble
@@ -233,7 +233,7 @@
 					
 					// Update num_events for the bubble
 						Event
-						  .find({ bubbles: bubble._id, end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} }, "_id")
+						  .find({ bubbles: bubble._id, end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }, "_id")
 						  .exec(function (err, events) {
 							bubble.num_events = events.length
 							bubble.save()

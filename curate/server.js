@@ -4,7 +4,7 @@
     , express     = require('express')
 
 // Run the cron job
-  new cronJob('0 0 11 * * *', function() {
+  new cronJob('0 0 6 * * *', function() {
     base_curate.bubble_curate()
   }, null, true)
 

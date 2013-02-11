@@ -49,7 +49,6 @@
                         var page_list_length = page_list.length;
 			console.log("Number of entries to make: " + page_list_length);
                         for (i = 0; i < page_list_length; i++) {
-				console.log("Entry number: " + i)
 				get_from_facebook("fql?q={'"+type_output+"':'"+query+" ("+page_list[i]+end_parens+")'}", "default_access_token", input_schema);
                         }
                 });

@@ -23,10 +23,10 @@
       req.Post = Event
        
       // Initialize query parameters
-        var timestamp_now          =  (new Date()) / 1000
-        var timestamp_yesterday    =  timestamp_now - 86400
-        req.query_parameters_find  =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_yesterday} }
-        req.query_parameters_sort  =  { start_time: 'asc' } 
+        var timestamp_now            =  (new Date()) / 1000
+        var timestamp_six_hours_ago  =  timestamp_now - 21600
+        req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
+        req.query_parameters_sort    =  { start_time: 'asc' } 
 
       posts.list_pagelet(req,res)
     }
