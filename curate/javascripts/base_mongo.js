@@ -198,7 +198,7 @@
 			var timestamp_six_hours_ago  =  timestamp_now - 21600
 
 			Event.find({$or : [{creator : {$in : page_array}}, {"venue.id" : {$in : page_array}}], end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago}, privacy : "OPEN"}).exec(function (err, events) {
-				console.log(events);
+				//console.log(events);
 
 				Bubble
 				  .findOne({name: bubble_name, type: 'curated'})
@@ -212,7 +212,7 @@
 						  .exec(function (err, duplicate_events) {
 							if (duplicate_events != "") {
 								duplicate_events.forEach(function(duplicate_event) {
-									
+									console.log('Found duplicate event: ' + duplicate_event.name)
 									if (event.attending_count > duplicate_event.attending_count) {
 										duplicate_event.bubbles.remove(bubble._id)
 										event.bubbles.addToSet(bubble._id)
