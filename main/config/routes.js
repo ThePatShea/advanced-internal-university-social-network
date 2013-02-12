@@ -188,8 +188,8 @@ module.exports = function (app, passport, auth) {
 
 
   // Post Routes
+    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.post.authorized_widgets, posts.show)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
-    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, posts.show)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
 
 

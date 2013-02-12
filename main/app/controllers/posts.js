@@ -102,36 +102,30 @@
   // View a post
     exports.show = function(req, res) {
       var post_type = req.bubble_section
-      var bubble = req.bubble
-      var post = req.post
-
-      res.render('posts/change_post_image', {
-          bubble_section: post_type
-        , bubble: bubble
-        , post: post
-      }, function(err, change_post_image) {
-        res.render('includes/post_description', {
-          post: post
-        }, function(err, post_description) {
-          res.render('includes/post_widget', {
-              format_date_bottom_count: 0
+      var bubble    = req.bubble
+      var post      = req.post
+       
+      res.render('includes/post_description', {
+        post: post
+      }, function(err, post_description) {
+        res.render('includes/post_widget', {
+            format_date_bottom_count: 0
+          , bubble_section: post_type
+          , format_date_top_count: 0
+          , bubble: bubble
+          , post: post
+        }, function(err, post_widget) {
+          res.render('bubbles/show_post', {
+              change_post_image: req.change_post_image
+            , sidebar_buttons: req.sidebar_buttons
+            , post_description: post_description
+            , sidebar_top: req.sidebar_top
             , bubble_section: post_type
-            , format_date_top_count: 0
+            , post_widget: post_widget
+            , comments: req.comments
+            , title: post.name
             , bubble: bubble
             , post: post
-          }, function(err, post_widget) {
-            res.render('bubbles/show_post', {
-                change_post_image: change_post_image
-              , sidebar_buttons: req.sidebar_buttons
-              , post_description: post_description
-              , sidebar_top: req.sidebar_top
-              , bubble_section: post_type
-              , post_widget: post_widget
-              , comments: req.comments
-              , title: post.name
-              , bubble: bubble
-              , post: post
-            })
           })
         })
       })
