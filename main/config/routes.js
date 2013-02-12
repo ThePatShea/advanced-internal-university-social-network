@@ -52,99 +52,38 @@ module.exports = function (app, passport, auth) {
 
   // Single post parameters
     app.param('postId', function(req, res, next, id) {
-      if        (req.bubble_section == 'event') {
-        Event
-          .findOne({ _id : req.params.postId })
-          .populate('comments')
-          .exec(function (err, event) {
-            if (err) return next(err)
-            if (!event) return next(new Error('Failed to load event ' + id))
+      var Post  =  req.Post
+      
+      Post
+        .findOne({ _id : req.params.postId })
+        .populate('comments')
+        .exec(function (err, post) {
+          if (err) return next(err)
+          if (!post) return next(new Error('Failed to load post ' + id))
 
-            req.object          =  event
-            req.post            =  event
+          req.object  =  post
+          req.post    =  post
         
-            var populateComments = function (comment, cb) {
-              User
-                .findOne({ _id: comment._user })
-                .select('name facebook.id')
-                .exec(function (err, user) {
-                  if (err) return next(err)
-                  comment.user = user
-                  cb(null, comment)
-                })
-            }
+          var populateComments = function (comment, cb) {
+            User
+              .findOne({ _id: comment._user })
+              .select('name facebook.id')
+              .exec(function (err, user) {
+                if (err) return next(err)
+                comment.user = user
+                cb(null, comment)
+              })
+          }
         
-            if (event.comments.length) {
-              async.map(req.post.comments, populateComments, function (err, results) {
-                next(err)
-              })
-            }
-            else
-              next()
-          })
-      } else if (req.bubble_section == 'deal') {
-        Deal
-          .findOne({ _id : req.params.postId })
-          .populate('comments')
-          .exec(function (err, deal) {
-            if (err) return next(err)
-            if (!deal) return next(new Error('Failed to load deal ' + id))
+          if (post.comments.length) {
+            async.map(req.post.comments, populateComments, function (err, results) {
+              next(err)
+            })
+          }
+          else
+            next()
+        })
 
-            req.object        =  deal
-            req.post          =  deal
-  
-            var populateComments = function (comment, cb) {
-              User
-                .findOne({ _id: comment._user })
-                .select('name facebook.id')
-                .exec(function (err, user) {
-                  if (err) return next(err)
-                  comment.user = user
-                  cb(null, comment)
-                })
-            }
-  
-            if (deal.comments.length) {
-              async.map(req.post.comments, populateComments, function (err, results) {
-                next(err)
-              })
-            }
-            else {
-              next()
-            }
-          })
-      } else if (req.bubble_section == 'talk') {
-        Talk
-          .findOne({ _id : req.params.postId })
-          .populate('comments')
-          .exec(function (err, talk) {
-            if (err) return next(err)
-            if (!talk) return next(new Error('Failed to load talk ' + id))
-
-            req.object        =  talk
-            req.post          =  talk
-    
-            var populateComments = function (comment, cb) {
-              User
-                .findOne({ _id: comment._user })
-                .select('name facebook.id')
-                .exec(function (err, user) {
-                  if (err) return next(err)
-                  comment.user = user
-                  cb(null, comment)
-                })
-            }
-    
-            if (talk.comments.length) {
-              async.map(req.post.comments, populateComments, function (err, results) {
-                next(err)
-              })
-            }
-            else {
-              next()
-            }
-          })
-      }
     })
 
 
