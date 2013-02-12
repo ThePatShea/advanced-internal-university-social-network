@@ -4,7 +4,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
   body
     .wrapper
       include ../includes/header
-      include ../includes/sidebar
+      | !{ rendered_sidebar }
       .container
         .main-content
           .main-head

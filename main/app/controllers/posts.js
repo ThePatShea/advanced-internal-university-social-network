@@ -1,15 +1,14 @@
 // Include the models
-  var mongoose = require('mongoose')
-    , Bubble = mongoose.model('Bubble')
-    , Event = mongoose.model('Event')
-    , Deal = mongoose.model('Deal')
-    , Talk = mongoose.model('Talk')
-    , _ = require('underscore')
-
+  var mongoose  =  require('mongoose')
+    , Bubble    =  mongoose.model('Bubble')
+    , Event     =  mongoose.model('Event')
+    , Deal      =  mongoose.model('Deal')
+    , Talk      =  mongoose.model('Talk')
+    , _         =  require('underscore')
 
 
 // Define main functions
-  // Redirect a user to another section of a bubble
+  // Redirect a user to another section of a bubble  --  TODO move this function to the bubbles.js controller
     exports.redirect = function(req, res) {
       var bubble = req.bubble
 
@@ -117,9 +116,9 @@
         }, function(err, post_widget) {
           res.render('bubbles/show_post', {
               change_post_image: req.change_post_image
+            , rendered_sidebar: req.rendered_sidebar
             , sidebar_buttons: req.sidebar_buttons
             , post_description: post_description
-            , sidebar_top: req.sidebar_top
             , bubble_section: post_type
             , post_widget: post_widget
             , comments: req.comments
