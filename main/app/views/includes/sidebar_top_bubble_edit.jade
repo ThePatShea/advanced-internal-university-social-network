@@ -1,7 +1,7 @@
-img.pic_top(src='../../../img/default.jpg')
+img.pic_top(src=bubble.pic_big)
 div.pic_top_overlay
 section.attributes
-  form(method="post", action="/bubbles/#{bubble._id}/update")
+  form(method="post", action="/edit/bubbles/#{bubble._id}/update")
     input.edit_bubble_name.requiredInput(type='text', maxlength='35', name='name', value=bubble.name)
     button.subscribe(type='submit', style='left: 10px; width: 60px;')
       div.descriptor.gray_text save
