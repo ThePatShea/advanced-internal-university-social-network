@@ -33,9 +33,8 @@
       // Render the view
         res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
           res.render('bubbles/list', {
-              sidebar_buttons: req.sidebar_buttons
+              rendered_sidebar: req.rendered_sidebar
             , bubble_section: bubble_section
-            , sidebar_top: req.sidebar_top
             , title: req.bubble.name
             , bubble: req.bubble
             , new_post: new_post
@@ -117,7 +116,6 @@
           res.render('bubbles/show_post', {
               change_post_image: req.change_post_image
             , rendered_sidebar: req.rendered_sidebar
-            , sidebar_buttons: req.sidebar_buttons
             , post_description: post_description
             , bubble_section: post_type
             , post_widget: post_widget
