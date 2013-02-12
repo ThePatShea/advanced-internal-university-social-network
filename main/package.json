@@ -27,7 +27,8 @@
         "gzippo": "latest",
         "async": "latest",
         "nodemon": "latest",
-        "stripe": "1.2.x"
+        "stripe": "1.2.x",
+	"rackit": "latest"
     },
     "subdomain": "main.campusbubble"
 }

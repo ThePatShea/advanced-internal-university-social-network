@@ -13,6 +13,7 @@ module.exports = function (app, passport, auth) {
   // Include the controllers
     var comments  =  require('../app/controllers/comments')
     var bubbles   =  require('../app/controllers/bubbles')
+    var uploads   =  require('../app/controllers/uploads')
     var events    =  require('../app/controllers/events')
     var deals     =  require('../app/controllers/deals')
     var talks     =  require('../app/controllers/talks')
@@ -22,6 +23,10 @@ module.exports = function (app, passport, auth) {
 
   // Home Route
     app.get('/', auth.requiresLogin, users.subscriptions)
+
+
+  // Upload Routes
+    app.post('/uploads', auth.requiresLogin, uploads.upload)
 
 
   // Bubble Routes
