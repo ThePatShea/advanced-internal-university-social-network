@@ -14,13 +14,13 @@
       var bubble = req.bubble
 
       if (bubble.num_events > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/events')
+        res.redirect('/bubbles/'+bubble._id+'/event')
       } else if (bubble.num_deals > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/deals')
+        res.redirect('/bubbles/'+bubble._id+'/deal')
       } else if (bubble.num_talks > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/talks')
+        res.redirect('/bubbles/'+bubble._id+'/talk')
       } else {
-        res.redirect('/bubbles/'+bubble._id+'/events')
+        res.redirect('/bubbles/'+bubble._id+'/event')
       }
     }
 
@@ -30,7 +30,7 @@
       // Initialize bubble and post parameters
         var bubble_section  =  req.bubble_section
         var bubble          =  req.bubble
-      console.log('trying to list posts') // TESTING
+
       // Render the view
         res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
           res.render('bubbles/list', {

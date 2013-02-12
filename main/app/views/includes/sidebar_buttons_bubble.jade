@@ -1,6 +1,6 @@
 - if (bubble.num_events != 0 || bubble.creator.equals(req.user._id))
   li
-    a(href="/bubbles/#{bubble._id}/events")
+    a(href="/bubbles/#{bubble._id}/event")
       div.sidebar_button_icon.icon_events
       h2.sidebar_button_label events
       div.sidebar_counter.sidebar_counter_events
@@ -8,14 +8,14 @@
       div.icon_sidebar_select
 - if (bubble.num_deals != 0 || bubble.creator.equals(req.user._id))
   li
-    a(href="/bubbles/#{bubble._id}/deals")
+    a(href="/bubbles/#{bubble._id}/deal")
       div.sidebar_button_icon.icon_deals
       h2.sidebar_button_label deals
       div.sidebar_counter.sidebar_counter_deals
         h2= bubble.num_deals
 - if (bubble.num_talks != 0 || bubble.creator.equals(req.user._id))
   li
-    a(href="/bubbles/#{bubble._id}/talks")
+    a(href="/bubbles/#{bubble._id}/talk")
       div.sidebar_button_icon.icon_talks
       h2.sidebar_button_label talk
       div.sidebar_counter.sidebar_counter_talks
