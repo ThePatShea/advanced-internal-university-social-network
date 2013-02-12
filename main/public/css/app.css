@@ -334,9 +334,7 @@ input[readonly="readonly"] {
       top: 0;
       }
     .upload_post_image .submit_upload {
-      /* TEMPORARY */
-      position: absolute;
-      left: 50px;
+      display: none;
       }
 
 .gray_text {
