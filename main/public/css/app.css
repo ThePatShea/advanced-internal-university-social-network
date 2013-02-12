@@ -314,6 +314,19 @@ input[readonly="readonly"] {
   display: none;
 }
 
+.loader {
+  background: url('/img/loader.gif');
+  height: 32px;
+  width: 32px;
+  }
+  .pic_post_container .loader {
+    margin: -16px 0 0 -16px;
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    }
+
 .upload_post_image {
   position: absolute;
   display: none;
@@ -742,6 +755,7 @@ input[readonly="readonly"] {
       .post_info .left_bar .section_top .pic_post_container {
         -webkit-border-radius: 10px;
         border-radius: 10px;
+        position: relative;
         overflow: hidden;
         height: 140px;
         width: 170px;
