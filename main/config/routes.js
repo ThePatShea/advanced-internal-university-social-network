@@ -80,10 +80,11 @@ module.exports = function (app, passport, auth) {
           if (err) return next(err)
           if (!event) return next(new Error('Failed to load event ' + id))
 
-          req.redirect_url  =  '/bubbles/'+req.bubble._id+'/events/'+event._id
-          req.object        =  event
-          req.event         =  event
-          req.post          =  event
+          req.redirect_url    =  '/bubbles/'+req.bubble._id+'/events/'+event._id
+          req.bubble_section  =  'event'
+          req.object          =  event
+          req.event           =  event
+          req.post            =  event
       
           var populateComments = function (comment, cb) {
             User

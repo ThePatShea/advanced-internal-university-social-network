@@ -6,18 +6,10 @@
       , _         =  require('underscore')
 
   // Include the base controllers
-    var uploads   =  require('./uploads')
     var posts     =  require('./posts')
 
 
-
 // Define main functions
-  // View the list of events in a bubble
-    exports.list = function(req, res) {
-      req.bubble_section = 'event'
-      posts.list(req,res)
-    }
-
   // View a subset of the list of events in a bubble
     exports.list_pagelet = function(req, res) {
       req.bubble_section = 'event'
