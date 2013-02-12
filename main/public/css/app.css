@@ -314,14 +314,14 @@ input[readonly="readonly"] {
   display: none;
 }
 
-.upload_image {
-  
+.upload_post_image {
+  position: absolute;
   }
-  .upload_image .change_photo_container {
+  .upload_post_image .change_photo_container {
     overflow: hidden;
     width: 80px;
     }
-    .upload_image .change_photo_container .input_file {
+    .upload_post_image .change_photo_container .input_file {
       filter: alpha(opacity=0); /* For IE8 and earlier */
       opacity: 0;
 
@@ -332,6 +332,11 @@ input[readonly="readonly"] {
       width: 100%;
       right: 0;
       top: 0;
+      }
+    .upload_post_image .submit_upload {
+      /* TEMPORARY */
+      position: absolute;
+      left: 50px;
       }
 
 .gray_text {
