@@ -323,7 +323,7 @@ input[readonly="readonly"] {
     }
   .upload_post_image .change_photo_container {
     overflow: hidden;
-    width: 80px;
+    width: 110px;
     }
     .upload_post_image .change_photo_container .input_file {
       filter: alpha(opacity=0); /* For IE8 and earlier */

@@ -1,0 +1,9 @@
+form#upload_post_image.upload_post_image(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/upload', enctype='multipart/form-data')
+  section.change_photo_container.subscribe
+    div.descriptor.gray_text
+      if (post.pic_big != '/img/default.jpg')
+        | change #{bubble_section} photo
+      else
+        | add #{bubble_section} photo
+    input#input_post_image.input_file(type='file', name='input_file')
+  button.submit_upload(type='submit') upload
