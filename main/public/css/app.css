@@ -316,7 +316,11 @@ input[readonly="readonly"] {
 
 .upload_post_image {
   position: absolute;
+  display: none;
   }
+  .pic_post_container:hover .upload_post_image {
+    display: block;
+    }
   .upload_post_image .change_photo_container {
     overflow: hidden;
     width: 80px;
