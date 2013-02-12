@@ -50,7 +50,6 @@ exports.post = {
         }
 
         next()
-
       }
     , authorized_widgets : function (req, res, next) {
         if (req.post.creator == req.user.id) {
