@@ -14,14 +14,15 @@ block main
         | !{ post_widget }
       section.post_info
         section.left_bar
-          section.section_top
-            div.pic_post_container
-              section.upload_post_image_form_container
-                | !{ change_post_image }
-              img.pic_post(src=post.pic_big)
-          section.section_middle
-            div.descriptor.gray_text venue
-            h4= post.location
+          if (bubble_section != 'talk')
+            section.section_top
+              div.pic_post_container
+                section.upload_post_image_form_container
+                  | !{ change_post_image }
+                img.pic_post(src=post.pic_big)
+            section.section_middle
+              div.descriptor.gray_text venue
+              h4= post.location
           section.section_bottom
             div.post_action_container
               button.post_action_calendar
