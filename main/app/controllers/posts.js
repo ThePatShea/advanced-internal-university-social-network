@@ -32,7 +32,7 @@
 
       // Render the view
         res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
-          res.render('bubbles/list', {
+          res.render('posts/'+req.view_list, {
               rendered_sidebar: req.rendered_sidebar
             , bubble_section: bubble_section
             , title: req.bubble.name
@@ -64,7 +64,7 @@
           .skip(skip)
           .exec(function (err, posts) {
             // Render the view
-              res.render('bubbles/list_pagelet', {
+              res.render('posts/list_pagelet', {
                   bubble_section: bubble_section
                 , format_date_bottom_count: skip
                 , format_date_top_count: skip
@@ -113,7 +113,7 @@
           , bubble: bubble
           , post: post
         }, function(err, post_widget) {
-          res.render('bubbles/show_post', {
+          res.render('posts/show_post', {
               change_post_image: req.change_post_image
             , rendered_sidebar: req.rendered_sidebar
             , post_description: post_description

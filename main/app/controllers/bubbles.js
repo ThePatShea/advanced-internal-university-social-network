@@ -62,17 +62,12 @@ var mongoose = require('mongoose')
 // Edit a bubble
   exports.edit = function(req, res) {
     var bubble = req.bubble
-    
-    res.render('includes/sidebar_top_bubble_edit', {
-      bubble: bubble
-    }, function(err, sidebar_top) {
-      res.render('bubbles/edit', {
-          sidebar_buttons: req.sidebar_buttons
-        , sidebar_top: sidebar_top
-        , bubble_section: 'none'
-        , title: bubble.name
-        , bubble: bubble
-      })
+     
+    res.render('bubbles/edit', {
+        rendered_sidebar: req.rendered_sidebar
+      , bubble_section: 'none'
+      , title: bubble.name
+      , bubble: bubble
     })
   }
 
