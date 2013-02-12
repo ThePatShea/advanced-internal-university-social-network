@@ -98,7 +98,7 @@ exports.bubble = {
 
           
         // Render the sidebar, then run the next function
-          res.render('includes/' + req.view_sidebar, {
+          res.render('sidebar/' + req.view_sidebar, {
               user_subscribed: req.user_subscribed
             , bubble: req.bubble
           }, function(err, rendered_sidebar) { 
