@@ -314,6 +314,21 @@ input[readonly="readonly"] {
   display: none;
 }
 
+.upload_image {
+  
+  }
+  .upload_image .change_photo_container {
+    overflow: hidden;
+    background: blue;
+    width: 100px;
+    height: 30px;
+    }
+    .upload_image .change_photo_container .input_file {
+      background: red;
+      height: 100%;
+      width: 100%;
+      }
+
 .gray_text {
   color: #A4A4A4;
   }
