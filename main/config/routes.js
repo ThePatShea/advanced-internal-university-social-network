@@ -30,17 +30,19 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/bubbles/:bubbleId/:bubble_section/view/:eventId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)  // TODO This one still says :eventId. Fix it.
+    app.post('/bubbles/:bubbleId/:bubble_section/view/:postId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
     app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, deals.upload)
 
 
   // Post Routes
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
-    app.get('/bubbles/:bubbleId/:bubble_section/view/:eventId', auth.requiresLogin, posts.show)   // TODO This one still says :eventId. Fix it.
+    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, posts.show)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
 
+
+  // Bubble section parameters
     app.param('bubble_section', function(req, res, next, id) {
-      req.bubble_section = id
+      req.bubble_section  =  id
 
       if        (id == 'event') {
         var timestamp_now            =  (new Date()) / 1000
@@ -49,17 +51,117 @@ module.exports = function (app, passport, auth) {
         req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
         req.query_parameters_sort    =  { start_time: 'asc' }
 
-        req.Post                     =  Event
+        Post                         =  Event
       } else if (id == 'deal') {
         var timestamp_now            =  (new Date()) / 1000
         req.query_parameters_find    =  { } 
         req.query_parameters_sort    =  { } 
 
-        req.Post                     =  Deal
+        Post                         =  Deal
+      } else if (id == 'talk') {
+        Post                         =  Talk
       }
 
+      req.Post  =  Post
       next()
     })
+
+
+  // Single post parameters
+    app.param('postId', function(req, res, next, id) {
+      if        (req.bubble_section == 'event') {
+        Event
+          .findOne({ _id : req.params.postId })
+          .populate('comments')
+          .exec(function (err, event) {
+            if (err) return next(err)
+            if (!event) return next(new Error('Failed to load event ' + id))
+
+            req.object          =  event
+            req.post            =  event
+        
+            var populateComments = function (comment, cb) {
+              User
+                .findOne({ _id: comment._user })
+                .select('name facebook.id')
+                .exec(function (err, user) {
+                  if (err) return next(err)
+                  comment.user = user
+                  cb(null, comment)
+                })
+            }
+        
+            if (event.comments.length) {
+              async.map(req.event.comments, populateComments, function (err, results) {
+                next(err)
+              })
+            }
+            else
+              next()
+          })
+      } else if (req.bubble_section == 'deal') {
+        Deal
+          .findOne({ _id : req.params.postId })
+          .populate('comments')
+          .exec(function (err, deal) {
+            if (err) return next(err)
+            if (!deal) return next(new Error('Failed to load deal ' + id))
+
+            req.object        =  deal
+            req.post          =  deal
+  
+            var populateComments = function (comment, cb) {
+              User
+                .findOne({ _id: comment._user })
+                .select('name facebook.id')
+                .exec(function (err, user) {
+                  if (err) return next(err)
+                  comment.user = user
+                  cb(null, comment)
+                })
+            }
+  
+            if (deal.comments.length) {
+              async.map(req.deal.comments, populateComments, function (err, results) {
+                next(err)
+              })
+            }
+            else {
+              next()
+            }
+          })
+      } else if (req.bubble_section == 'talk') {
+        Talk
+          .findOne({ _id : req.params.postId })
+          .populate('comments')
+          .exec(function (err, talk) {
+            if (err) return next(err)
+            if (!talk) return next(new Error('Failed to load talk ' + id))
+            req.talk = talk
+    
+            var populateComments = function (comment, cb) {
+              User
+                .findOne({ _id: comment._user })
+                .select('name facebook.id')
+                .exec(function (err, user) {
+                  if (err) return next(err)
+                  comment.user = user
+                  cb(null, comment)
+                })
+            }
+    
+            if (talk.comments.length) {
+              async.map(req.talk.comments, populateComments, function (err, results) {
+                next(err)
+              })
+            }
+            else {
+              next()
+            }
+          })
+      }
+    })
+
 
 
 
@@ -106,110 +208,14 @@ module.exports = function (app, passport, auth) {
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
     app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
 
-    app.param('eventId', function(req, res, next, id) {
-      Event
-        .findOne({ _id : req.params.eventId })
-        .populate('comments')
-        .exec(function (err, event) {
-          if (err) return next(err)
-          if (!event) return next(new Error('Failed to load event ' + id))
-
-          req.object          =  event
-          req.post            =  event
-      
-          var populateComments = function (comment, cb) {
-            User
-              .findOne({ _id: comment._user })
-              .select('name facebook.id')
-              .exec(function (err, user) {
-                if (err) return next(err)
-                comment.user = user
-                cb(null, comment)
-              })
-          }
-      
-          if (event.comments.length) {
-            async.map(req.event.comments, populateComments, function (err, results) {
-              next(err)
-            })
-          }
-          else
-            next()
-        })
-    })
-
 
   // Deal Routes
     app.post('/bubbles/:bubbleId/create_deal', auth.requiresLogin, deals.create)
   
-    app.param('dealId', function(req, res, next, id) {
-      Deal
-        .findOne({ _id : req.params.dealId })
-        .populate('comments')
-        .exec(function (err, deal) {
-          if (err) return next(err)
-          if (!deal) return next(new Error('Failed to load deal ' + id))
-
-          req.object        =  deal
-          req.post          =  deal
-  
-          var populateComments = function (comment, cb) {
-            User
-              .findOne({ _id: comment._user })
-              .select('name facebook.id')
-              .exec(function (err, user) {
-                if (err) return next(err)
-                comment.user = user
-                cb(null, comment)
-              })
-          }
-  
-          if (deal.comments.length) {
-            async.map(req.deal.comments, populateComments, function (err, results) {
-              next(err)
-            })
-          }
-          else {
-            next()
-          }
-        })
-    })
-
 
   // Talk Routes
     app.post('/bubbles/:bubbleId/create_talk', auth.requiresLogin, talks.create)
   
-    app.param('talkId', function(req, res, next, id) {
-      Talk
-        .findOne({ _id : req.params.talkId })
-        .populate('comments')
-        .exec(function (err, talk) {
-          if (err) return next(err)
-          if (!talk) return next(new Error('Failed to load talk ' + id))
-          req.talk = talk
-  
-          var populateComments = function (comment, cb) {
-            User
-              .findOne({ _id: comment._user })
-              .select('name facebook.id')
-              .exec(function (err, user) {
-                if (err) return next(err)
-                comment.user = user
-                cb(null, comment)
-              })
-          }
-  
-          if (talk.comments.length) {
-            async.map(req.talk.comments, populateComments, function (err, results) {
-              next(err)
-            })
-          }
-          else {
-            next()
-          }
-        })
-    })
-
 
   // User Routes
     app.get('/login', users.login)
