@@ -46,15 +46,8 @@ exports.article = {
 exports.post = {
       hasAuthorization : function (req, res, next) {
         if (req.post.creator != req.user.id) {
-          return res.redirect('/bubbles/'+req.bubble._id+'/'+bubble_section+'/view/'+post._id)
+          return res.redirect('/bubbles/'+req.bubble._id+'/'+req.bubble_section+'/view/'+req.post._id)
         }
         next()
-      }
-    , hasAuthorization_upload : function (req, res, next) {
-        if (req.event.creator === req.user.id) {
-          return res.redirect('/bubbles/'+req.bubble.id+'/events/'+req.event.id)
-        } else {
-          next()
-        }
       }
 }
