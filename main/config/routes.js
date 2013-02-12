@@ -95,23 +95,8 @@ module.exports = function (app, passport, auth) {
           if (err) return next(err)
           if (!bubble) return next(new Error('Failed to load bubble ' + id))
           req.bubble = bubble
-  
-          if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
-            var user_subscribed = 1
-          } else {
-            var user_subscribed = 0
-          }
  
-          res.render('includes/sidebar_top_bubble', {
-              bubble: bubble
-            , user_subscribed: user_subscribed
-          },function(err, sidebar_top) {
-            req.sidebar_top = sidebar_top
-            res.render('includes/sidebar_buttons_bubble', { bubble: bubble }, function(err, sidebar_buttons) {
-              req.sidebar_buttons = sidebar_buttons
-              next()
-            })
-          })
+          next()
         })
     })
 

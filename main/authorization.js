@@ -69,8 +69,35 @@ exports.bubble = {
         next()
       }
     , authorized_widgets : function (req, res, next) {
-        if (req.bubble.creator == req.user.id) {
-          req.view_sidebar = 'sidebar_authorized'
-        }
+        // Detect whether the user created the current bubble
+          if (req.bubble.creator == req.user.id) {
+            req.view.sidebar  =  'sidebar_bubble_authorized'
+            req.view.list     =  'list_authorized'
+          } else {
+            req.view.sidebar  =  'sidebar_bubble_unauthorized'
+            req.view.list     =  'list_unauthorized'
+          }
+        
+ 
+        // Detect whether the user created the current post
+          if (req.post != undefined) {
+            if (req.post.creator == req.user.id) {
+              req.view.post     =  'post_unauthorized'
+            } else {
+              req.view.post     =  'post_unauthorized'
+            }
+          }
+
+         
+        // Detect whether the user is subscribed to the current bubble
+          if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+            req.user_subscribed  =  1
+          } else {
+            req.user_subscribed  =  0
+          }
+
+          
+        // Run the next function
+          next()
       }
 }
