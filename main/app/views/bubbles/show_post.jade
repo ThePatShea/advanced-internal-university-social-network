@@ -19,7 +19,7 @@ block main
               form(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/upload', enctype='multipart/form-data')
                 input(type='file', name='input_file')
                 button.red_button(type='submit') upload
-              img.pic_post(src='http://graph.facebook.com/'+post.eid+'/picture?type=large')
+              img.pic_post(src=post.pic_big)
           section.section_middle
             div.descriptor.gray_text venue
             h4= post.location

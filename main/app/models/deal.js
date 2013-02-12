@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
 var DealSchema = new Schema({
 	name: String,
 	pic_square: String,
-	pic_big: String,
+	pic_big: {type: String, default: '/img/default.jpg'},
 	description: String,
         discount: { type: Number, min: 1, max: 100 },
 	location: String,
