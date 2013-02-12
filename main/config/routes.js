@@ -21,25 +21,6 @@ module.exports = function (app, passport, auth) {
     var users     =  require('../app/controllers/users')
 
 
-  // Home Route
-    app.get('/', auth.requiresLogin, users.subscriptions)
-
-
-
-
-
-
-  // Upload Routes
-    app.post('/bubbles/:bubbleId/:bubble_section/view/:postId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
-    app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, deals.upload)
-
-
-  // Post Routes
-    app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
-    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, posts.show)
-    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
-
-
   // Bubble section parameters
     app.param('bubble_section', function(req, res, next, id) {
       req.bubble_section  =  id
@@ -163,18 +144,7 @@ module.exports = function (app, passport, auth) {
     })
 
 
-
-
-
-
-
-
-  // Bubble Routes
-    app.post('/bubbles/:bubbleId/update', auth.requiresLogin, bubbles.update)
-    app.get('/bubbles/:bubbleId/edit', auth.requiresLogin, bubbles.edit)
-    app.get('/bubbles/:bubbleId', auth.requiresLogin, posts.redirect)
-    app.post('/bubbles', auth.requiresLogin, bubbles.create)
-
+  // Bubble parameters
     app.param('bubbleId', function(req, res, next, id) {
       Bubble
         .findOne({ _id : id })
@@ -203,6 +173,28 @@ module.exports = function (app, passport, auth) {
     })
 
 
+  // Home Route
+    app.get('/', auth.requiresLogin, users.subscriptions)
+
+
+  // Upload Routes
+    app.post('/bubbles/:bubbleId/:bubble_section/view/:postId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
+    app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, deals.upload)
+
+
+  // Post Routes
+    app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
+    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, posts.show)
+    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
+
+
+  // Bubble Routes
+    app.post('/bubbles/:bubbleId/update', auth.requiresLogin, bubbles.update)
+    app.get('/bubbles/:bubbleId/edit', auth.requiresLogin, bubbles.edit)
+    app.get('/bubbles/:bubbleId', auth.requiresLogin, posts.redirect)
+    app.post('/bubbles', auth.requiresLogin, bubbles.create)
+
+
   // Event Routes
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
@@ -226,24 +218,7 @@ module.exports = function (app, passport, auth) {
     app.get('/users/:userId', auth.requiresLogin, users.subscriptions)
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me', 'user_education_history', 'friends_education_history', 'user_events', 'friends_events', 'user_likes', 'friends_likes'], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/auth/github', passport.authenticate('github', { failureRedirect: '/login' }), users.signin)
-    app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/auth/twitter', passport.authenticate('twitter', { failureRedirect: '/login' }), users.signin)
-    app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/auth/google', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.signin)
-    app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login', scope: 'https://www.google.com/m8/feeds' }), users.authCallback)
     app.get('/users/:userId/new_bubble', auth.requiresLogin, users.new_bubble)
-
-    app.param('userId', function (req, res, next, id) {
-      User
-        .findOne({ _id : id })
-        .exec(function (err, user) {
-          if (err) return next(err)
-          if (!user) return next(new Error('Failed to load User ' + id))
-          req.profile = user
-          next()
-        })
-    })
 
 
   // Comment Routes
@@ -283,55 +258,4 @@ module.exports = function (app, passport, auth) {
     });
 
 
-  // Unused Boilerplate Routes
-    /*
-      // Unused Controllers
-        var articles = require('../app/controllers/articles')
-        var tags = require('../app/controllers/tags')
-
-
-      // Article Routes
-        app.get('/articles/:id/edit', auth.requiresLogin, auth.article.hasAuthorization, articles.edit)
-        app.del('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy)
-        app.put('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.update)
-        app.get('/articles/:id', auth.requiresLogin, articles.show)
-        app.post('/articles', auth.requiresLogin, articles.create)
-        app.get('/articles/new', auth.requiresLogin, articles.new)
-        app.get('/articles', auth.requiresLogin, articles.index)
-      
-        app.param('id', function(req, res, next, id) {
-          Article
-            .findOne({ _id : id })
-            .populate('user', 'name')
-            .populate('comments')
-            .exec(function (err, article) {
-              if (err) return next(err)
-              if (!article) return next(new Error('Failed to load article ' + id))
-              req.article = article
-      
-              var populateComments = function (comment, cb) {
-                User
-                  .findOne({ _id: comment._user })
-                  .select('name')
-                  .exec(function (err, user) {
-                    if (err) return next(err)
-                    comment.user = user
-                    cb(null, comment)
-                  })
-              }
-      
-              if (article.comments.length) {
-                async.map(req.article.comments, populateComments, function (err, results) {
-                  next(err)
-                })
-              }
-              else
-                next()
-            })
-        })
-    
-    
-      // Tag Routes
-        app.get('/tags/:tag', auth.requiresLogin, tags.index)
-    */
 }
