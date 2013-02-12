@@ -7,10 +7,6 @@
       , _         =  require('underscore')
       , rackit    =  require('rackit')
 
-  // Include the posts controller
-    var posts  =  require('./posts')
-
-
 
 // Define main functions
   // Upload a file
