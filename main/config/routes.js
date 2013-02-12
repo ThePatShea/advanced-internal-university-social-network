@@ -70,7 +70,13 @@ module.exports = function (app, passport, auth) {
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
     app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
     app.get('/bubbles/:bubbleId/events/:eventId', auth.requiresLogin, events.show)
-    app.get('/bubbles/:bubbleId/events', auth.requiresLogin, posts.list)
+    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
+
+    app.param('bubble_section', function(req, res, next, id) {
+      req.bubble_section = id
+      next()
+    })
+
 
     app.param('eventId', function(req, res, next, id) {
       Event

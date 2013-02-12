@@ -30,7 +30,7 @@
       // Initialize bubble and post parameters
         var bubble_section  =  req.bubble_section
         var bubble          =  req.bubble
-      
+      console.log('trying to list posts') // TESTING
       // Render the view
         res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
           res.render('bubbles/list', {
