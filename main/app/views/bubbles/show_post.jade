@@ -16,7 +16,7 @@ block main
         section.left_bar
           section.section_top
             div.pic_post_container
-              form(method='post', action='/uploads', enctype='multipart/form-data')
+              form(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/upload', enctype='multipart/form-data')
                 input(type='file', name='input_file')
                 button.red_button(type='submit') upload
               img.pic_post(src='http://graph.facebook.com/'+post.eid+'/picture?type=large')

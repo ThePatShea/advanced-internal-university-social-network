@@ -26,7 +26,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/uploads', auth.requiresLogin, uploads.upload)
+    app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, uploads.upload)
 
 
   // Bubble Routes

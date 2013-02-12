@@ -17,14 +17,16 @@
     exports.upload = function(req, res) {
       var input_file  =  req.files.input_file
       var file_path   =  input_file.path
-      console.log('file_path: ' + file_path )
 
       rackit.init({
           'user' : 'campusbubble',
           'key' : 'f12ab1992b6f9252fcce6be07091afd5'
       }, function(err) {
           rackit.add(file_path, function(err, cloudpath) {
-              console.log(rackit.getURI(cloudpath));
+              var pic_big = rackit.getURI(cloudpath)
+
+              console.log(pic_big)
+              
           })
       })
     }
