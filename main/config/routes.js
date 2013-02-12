@@ -26,7 +26,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/bubbles/:bubbleId/events/:eventId/upload', auth.requiresLogin, events.upload)
+    app.post('/bubbles/:bubbleId/events/:eventId/upload', auth.requiresLogin, auth.event.hasAuthorization, uploads.upload)
     app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, deals.upload)
 
 
@@ -79,7 +79,11 @@ module.exports = function (app, passport, auth) {
         .exec(function (err, event) {
           if (err) return next(err)
           if (!event) return next(new Error('Failed to load event ' + id))
-          req.event = event
+
+          req.redirect_url  =  '/bubbles/'+req.bubble._id+'/events/'+event._id
+          req.object        =  event
+          req.event         =  event
+          req.post          =  event
       
           var populateComments = function (comment, cb) {
             User

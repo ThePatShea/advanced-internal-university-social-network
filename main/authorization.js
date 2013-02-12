@@ -37,3 +37,24 @@ exports.article = {
       next()
     }
 }
+
+
+/*
+ *  Event authorizations routing middleware
+ */
+
+exports.event = {
+      hasAuthorization : function (req, res, next) {
+        if (req.event.creator != req.user.id) {
+          return res.redirect('/bubbles/'+req.bubble.id+'/events/'+req.event.id)
+        }
+        next()
+      }
+    , hasAuthorization_upload : function (req, res, next) {
+        if (req.event.creator === req.user.id) {
+          return res.redirect('/bubbles/'+req.bubble.id+'/events/'+req.event.id)
+        } else {
+          next()
+        }
+      }
+}

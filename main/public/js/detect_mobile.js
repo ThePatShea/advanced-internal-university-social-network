@@ -1,6 +1,5 @@
 // Implements features specific to mobile devices (not just specific to the screen size)
 $(document).ready(function () {
-
   // Establish detection tests for all popular mobile devices
     var isMobile = {
       Android: function() {
@@ -23,7 +22,7 @@ $(document).ready(function () {
       }
     };
 
-  
+
   // Implement mobile-specific features
     if( isMobile.any() ) {
       $('.mobile_visible').css({display: 'block'});

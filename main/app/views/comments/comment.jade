@@ -1,7 +1,7 @@
 
 if (comment && comment.user)
   .comment
-    a(href="/users/"+comment.user._id)
+    a
       div.pic_commenter.face_circle_container
         img.face_circle(src='http://graph.facebook.com/'+comment.user.facebook.id+'/picture?type=square')
     a(href="/users/"+comment.user._id)

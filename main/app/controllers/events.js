@@ -12,14 +12,6 @@
 
 
 // Define main functions
-  // Upload a photo for an event
-    exports.upload = function(req,res) {
-      req.redirect_url  =  '/bubbles/'+req.bubble._id+'/events/'+req.event._id
-      req.object        =  req.event
-
-      uploads.upload(req,res)
-    }
-
   // View the list of events in a bubble
     exports.list = function(req, res) {
       req.bubble_section = 'event'
