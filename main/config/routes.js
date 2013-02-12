@@ -40,6 +40,9 @@ module.exports = function (app, passport, auth) {
 
         Post                         =  Deal
       } else if (id == 'talk') {
+        req.query_parameters_find    =  { } 
+        req.query_parameters_sort    =  { } 
+
         Post                         =  Talk
       }
 
@@ -118,7 +121,9 @@ module.exports = function (app, passport, auth) {
           .exec(function (err, talk) {
             if (err) return next(err)
             if (!talk) return next(new Error('Failed to load talk ' + id))
-            req.talk = talk
+
+            req.object        =  talk
+            req.post          =  talk
     
             var populateComments = function (comment, cb) {
               User
