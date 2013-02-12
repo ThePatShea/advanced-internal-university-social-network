@@ -69,18 +69,8 @@ exports.bubble = {
         next()
       }
     , authorized_widgets : function (req, res, next) {
-        if (req.post.creator == req.user.id) {
-          res.render('posts/change_post_image', {
-              bubble_section: req.bubble_section
-            , bubble: req.bubble
-            , post: req.post
-          }, function(err, change_post_image) {
-            req.change_post_image = change_post_image
-            next()
-          })
-        } else {
-            req.change_post_image = ''
-            next()
+        if (req.bubble.creator == req.user.id) {
+          req.view_sidebar = 'sidebar_authorized'
         }
       }
 }
