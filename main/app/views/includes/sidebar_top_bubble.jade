@@ -1,6 +1,6 @@
-img.pic_top(src=bubble.pic_big)
-div.pic_top_overlay
-section.attributes
+extends ./sidebar_top_bubble_template
+
+block bubble_attributes
   h1= bubble.name
   include ../includes/subscribe
   - if (typeof(bubble.creator) != 'undefined' && bubble.creator.equals(req.user._id) )
