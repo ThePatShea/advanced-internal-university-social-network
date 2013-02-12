@@ -1,4 +1,4 @@
-form(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/comments")
+form(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}/comment/#{post._id}")
   input(type='hidden', name='bubble_section', value='#{bubble_section}')
   input.requiredInput.leave_a_comment.gradient_gray#comment(type='text', rows="6", name="body", placeholder='Leave a comment...')
   button#submitBtn.red_button.submit_comment(type='submit') submit

@@ -1,6 +1,5 @@
 // Include the models
   var mongoose  =  require('mongoose')
-    , Article   =  mongoose.model('Article')
     , Bubble    =  mongoose.model('Bubble')
     , Event     =  mongoose.model('Event')
     , Deal      =  mongoose.model('Deal')
@@ -25,7 +24,7 @@ module.exports = function (app, passport, auth) {
     app.param('bubble_section', function(req, res, next, id) {
       req.bubble_section  =  id
 
-      if        (id == 'event') {
+      if       (id == 'event') {
         var timestamp_now            =  (new Date()) / 1000
         var timestamp_six_hours_ago  =  timestamp_now - 21600
 
@@ -76,7 +75,7 @@ module.exports = function (app, passport, auth) {
             }
         
             if (event.comments.length) {
-              async.map(req.event.comments, populateComments, function (err, results) {
+              async.map(req.post.comments, populateComments, function (err, results) {
                 next(err)
               })
             }
@@ -106,7 +105,7 @@ module.exports = function (app, passport, auth) {
             }
   
             if (deal.comments.length) {
-              async.map(req.deal.comments, populateComments, function (err, results) {
+              async.map(req.post.comments, populateComments, function (err, results) {
                 next(err)
               })
             }
@@ -137,7 +136,7 @@ module.exports = function (app, passport, auth) {
             }
     
             if (talk.comments.length) {
-              async.map(req.talk.comments, populateComments, function (err, results) {
+              async.map(req.post.comments, populateComments, function (err, results) {
                 next(err)
               })
             }
@@ -190,6 +189,7 @@ module.exports = function (app, passport, auth) {
   // Post Routes
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.post.authorized_widgets, posts.show)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
+    app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
 
 
@@ -224,13 +224,6 @@ module.exports = function (app, passport, auth) {
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me', 'user_education_history', 'friends_education_history', 'user_events', 'friends_events', 'user_likes', 'friends_likes'], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
     app.get('/users/:userId/new_bubble', auth.requiresLogin, users.new_bubble)
-
-
-  // Comment Routes
-    app.post('/bubbles/:bubbleId/events/:eventId/comments', auth.requiresLogin, comments.create)
-    app.post('/bubbles/:bubbleId/deals/:dealId/comments', auth.requiresLogin, comments.create)
-    app.post('/bubbles/:bubbleId/talks/:talkId/comments', auth.requiresLogin, comments.create)
-    app.post('/articles/:id/comments', auth.requiresLogin, comments.create)
 
 
   // Subscription Routes
