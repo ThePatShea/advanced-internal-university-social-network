@@ -23,13 +23,12 @@
           'key' : 'f12ab1992b6f9252fcce6be07091afd5'
       }, function(err) {
           rackit.add(file_path, function(err, cloudpath) {
-              var redirect_url  =  '/bubbles/'+req.bubble._id+'/deals/'+req.deal._id   // TEMPORARY
-              var object        =  req.deal
+              var object        =  req.object
 
               object.pic_big    =  rackit.getURI(cloudpath)
 
               object.save(function(err, doc) {
-                res.redirect(redirect_url)
+                res.redirect(req.redirect_url)
               })
           })
       })

@@ -5,12 +5,21 @@
       , Deal      =  mongoose.model('Deal')
       , _         =  require('underscore')
   
-  // Include the posts controller
-    var posts  =  require('./posts')
+  // Include the base controllers
+    var uploads   =  require('./uploads')
+    var posts     =  require('./posts')
 
 
 
 // Define main functions
+  // Upload a photo for an deal
+    exports.upload = function(req,res) {
+      req.redirect_url  =  '/bubbles/'+req.bubble._id+'/deals/'+req.deal._id
+      req.object        =  req.deal
+
+      uploads.upload(req,res)
+    }
+
   // View the list of deals in a bubble
     exports.list = function(req, res) {
       req.bubble_section = 'deal'
