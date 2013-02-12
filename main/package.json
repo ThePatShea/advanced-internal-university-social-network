@@ -1,7 +1,7 @@
 {
     "name": "campus_bubble",
     "description": "A platform for college students to share events, deals, and discussions",
-    "version": "3.0.0-58",
+    "version": "3.0.0-59",
     "private": false,
     "author": "Campus Bubble",
     "engines": {
@@ -28,7 +28,7 @@
         "async": "latest",
         "nodemon": "latest",
         "stripe": "1.2.x",
-	"rackit": "latest"
+        "rackit": "latest"
     },
     "subdomain": "main.campusbubble"
 }
