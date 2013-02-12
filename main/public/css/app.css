@@ -319,14 +319,19 @@ input[readonly="readonly"] {
   }
   .upload_image .change_photo_container {
     overflow: hidden;
-    background: blue;
-    width: 100px;
-    height: 30px;
+    width: 80px;
     }
     .upload_image .change_photo_container .input_file {
-      background: red;
+      filter: alpha(opacity=0); /* For IE8 and earlier */
+      opacity: 0;
+
+      padding: 0 100% 0 0;
+      position: absolute;
+      cursor: pointer;
       height: 100%;
       width: 100%;
+      right: 0;
+      top: 0;
       }
 
 .gray_text {

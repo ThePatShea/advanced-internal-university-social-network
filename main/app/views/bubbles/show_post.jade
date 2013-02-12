@@ -17,7 +17,8 @@ block main
           section.section_top
             div.pic_post_container
               form.upload_image(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/upload', enctype='multipart/form-data')
-                section.change_photo_container
+                section.change_photo_container.subscribe
+                  div.descriptor.gray_text change photo
                   input.input_file(type='file', name='input_file')
                 button.red_button(type='submit') upload
               img.pic_post(src=post.pic_big)
