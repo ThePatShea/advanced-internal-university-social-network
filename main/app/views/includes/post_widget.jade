@@ -1,5 +1,5 @@
 li.post_widget
-  a(href='/bubbles/'+bubble._id+'/#{bubble_section}s/'+post._id)
+  a(href='/bubbles/'+bubble._id+'/#{bubble_section}/view/'+post._id)
     section.post_widget_section.post_widget_left
       - if (typeof(post.start_time) != 'undefined')
         div.format_date.format_date_top.gray_text.event_date_top(id='format_date_top_#{format_date_top_count++}')= post.start_time

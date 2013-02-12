@@ -91,7 +91,7 @@
           if (err) {
             console.log("error creating post: " + err)
           } else {
-            res.redirect('/bubbles/'+bubble._id+'/'+req.post_type+'s/'+post._id)
+            res.redirect('/bubbles/'+bubble._id+'/'+req.post_type+'/view/'+post._id)
           }
         })
 
@@ -101,7 +101,7 @@
 
   // View a post
     exports.show = function(req, res) {
-      var post_type = req.post_type
+      var post_type = req.bubble_section
       var bubble = req.bubble
       var post = req.post
 

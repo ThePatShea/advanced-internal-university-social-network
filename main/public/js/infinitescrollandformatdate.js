@@ -37,7 +37,7 @@ $(document).ready(function () {
           setTimeout(function() { ajax_current = 0; }, 1000);
       
         // Load the new data
-          $.get('/bubbles/'+hidden_bubble_id+'/'+hidden_bubble_section+'s_list_pagelet/'+skip, function(data) {
+          $.get('/bubbles/'+hidden_bubble_id+'/'+hidden_bubble_section+'/list_pagelet/'+skip, function(data) {
             $('#post_list').append(data);
   
             format_date('format_date_bottom', 'h:mma', skip);

@@ -10,20 +10,6 @@
 
 
 // Define main functions
-  // View a subset of the list of events in a bubble
-    exports.list_pagelet = function(req, res) {
-      req.bubble_section = 'event'
-      req.Post = Event
-       
-      // Initialize query parameters
-        var timestamp_now            =  (new Date()) / 1000
-        var timestamp_six_hours_ago  =  timestamp_now - 21600
-        req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
-        req.query_parameters_sort    =  { start_time: 'asc' } 
-
-      posts.list_pagelet(req,res)
-    }
-
   // Create an event
     exports.create = function (req, res) {
       req.bubble.num_events++
@@ -35,14 +21,6 @@
         req.body.end_time    =  ( Date.parse(req.body.end_time)   ) / 1000
 
       posts.create(req,res)
-    }
- 
-  // View an event
-    exports.show = function(req, res) {
-      req.post_type = 'event'
-      req.post = req.event
-
-      posts.show(req,res)
     }
  
   // Edit an event

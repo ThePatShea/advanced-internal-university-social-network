@@ -25,9 +25,46 @@ module.exports = function (app, passport, auth) {
     app.get('/', auth.requiresLogin, users.subscriptions)
 
 
+
+
+
+
   // Upload Routes
-    app.post('/bubbles/:bubbleId/events/:eventId/upload', auth.requiresLogin, auth.event.hasAuthorization, uploads.upload)
+    app.post('/bubbles/:bubbleId/:bubble_section/view/:eventId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)  // TODO This one still says :eventId. Fix it.
     app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, deals.upload)
+
+
+  // Post Routes
+    app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
+    app.get('/bubbles/:bubbleId/:bubble_section/view/:eventId', auth.requiresLogin, posts.show)   // TODO This one still says :eventId. Fix it.
+    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
+
+    app.param('bubble_section', function(req, res, next, id) {
+      req.bubble_section = id
+
+      if        (id == 'event') {
+        var timestamp_now            =  (new Date()) / 1000
+        var timestamp_six_hours_ago  =  timestamp_now - 21600
+
+        req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
+        req.query_parameters_sort    =  { start_time: 'asc' }
+
+        req.Post                     =  Event
+      } else if (id == 'deal') {
+        var timestamp_now            =  (new Date()) / 1000
+        req.query_parameters_find    =  { } 
+        req.query_parameters_sort    =  { } 
+
+        req.Post                     =  Deal
+      }
+
+      next()
+    })
+
+
+
+
+
 
 
   // Bubble Routes
@@ -65,18 +102,9 @@ module.exports = function (app, passport, auth) {
 
 
   // Event Routes
-    app.get('/bubbles/:bubbleId/events_list_pagelet/:skip', auth.requiresLogin, events.list_pagelet)
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
     app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
-    app.get('/bubbles/:bubbleId/events/:eventId', auth.requiresLogin, events.show)
-    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, posts.list)
-
-    app.param('bubble_section', function(req, res, next, id) {
-      req.bubble_section = id
-      next()
-    })
-
 
     app.param('eventId', function(req, res, next, id) {
       Event
@@ -86,10 +114,7 @@ module.exports = function (app, passport, auth) {
           if (err) return next(err)
           if (!event) return next(new Error('Failed to load event ' + id))
 
-          req.redirect_url    =  '/bubbles/'+req.bubble._id+'/events/'+event._id
-          req.bubble_section  =  'event'
           req.object          =  event
-          req.event           =  event
           req.post            =  event
       
           var populateComments = function (comment, cb) {
@@ -115,9 +140,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Deal Routes
-    app.get('/bubbles/:bubbleId/deals_list_pagelet/:skip', auth.requiresLogin, deals.list_pagelet)
     app.post('/bubbles/:bubbleId/create_deal', auth.requiresLogin, deals.create)
-    app.get('/bubbles/:bubbleId/deals/:dealId', auth.requiresLogin, deals.show)
   
     app.param('dealId', function(req, res, next, id) {
       Deal
@@ -126,7 +149,9 @@ module.exports = function (app, passport, auth) {
         .exec(function (err, deal) {
           if (err) return next(err)
           if (!deal) return next(new Error('Failed to load deal ' + id))
-          req.deal = deal
+
+          req.object        =  deal
+          req.post          =  deal
   
           var populateComments = function (comment, cb) {
             User
@@ -152,9 +177,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Talk Routes
-    app.get('/bubbles/:bubbleId/talks_list_pagelet/:skip', auth.requiresLogin, talks.list_pagelet)
     app.post('/bubbles/:bubbleId/create_talk', auth.requiresLogin, talks.create)
-    app.get('/bubbles/:bubbleId/talks/:talkId', auth.requiresLogin, talks.show)
   
     app.param('talkId', function(req, res, next, id) {
       Talk
@@ -255,52 +278,54 @@ module.exports = function (app, passport, auth) {
 
 
   // Unused Boilerplate Routes
-    // Unused Controllers
-      var articles = require('../app/controllers/articles')
-      var tags = require('../app/controllers/tags')
+    /*
+      // Unused Controllers
+        var articles = require('../app/controllers/articles')
+        var tags = require('../app/controllers/tags')
 
 
-    // Article Routes
-      app.get('/articles/:id/edit', auth.requiresLogin, auth.article.hasAuthorization, articles.edit)
-      app.del('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy)
-      app.put('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.update)
-      app.get('/articles/:id', auth.requiresLogin, articles.show)
-      app.post('/articles', auth.requiresLogin, articles.create)
-      app.get('/articles/new', auth.requiresLogin, articles.new)
-      app.get('/articles', auth.requiresLogin, articles.index)
-    
-      app.param('id', function(req, res, next, id) {
-        Article
-          .findOne({ _id : id })
-          .populate('user', 'name')
-          .populate('comments')
-          .exec(function (err, article) {
-            if (err) return next(err)
-            if (!article) return next(new Error('Failed to load article ' + id))
-            req.article = article
-    
-            var populateComments = function (comment, cb) {
-              User
-                .findOne({ _id: comment._user })
-                .select('name')
-                .exec(function (err, user) {
-                  if (err) return next(err)
-                  comment.user = user
-                  cb(null, comment)
+      // Article Routes
+        app.get('/articles/:id/edit', auth.requiresLogin, auth.article.hasAuthorization, articles.edit)
+        app.del('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy)
+        app.put('/articles/:id', auth.requiresLogin, auth.article.hasAuthorization, articles.update)
+        app.get('/articles/:id', auth.requiresLogin, articles.show)
+        app.post('/articles', auth.requiresLogin, articles.create)
+        app.get('/articles/new', auth.requiresLogin, articles.new)
+        app.get('/articles', auth.requiresLogin, articles.index)
+      
+        app.param('id', function(req, res, next, id) {
+          Article
+            .findOne({ _id : id })
+            .populate('user', 'name')
+            .populate('comments')
+            .exec(function (err, article) {
+              if (err) return next(err)
+              if (!article) return next(new Error('Failed to load article ' + id))
+              req.article = article
+      
+              var populateComments = function (comment, cb) {
+                User
+                  .findOne({ _id: comment._user })
+                  .select('name')
+                  .exec(function (err, user) {
+                    if (err) return next(err)
+                    comment.user = user
+                    cb(null, comment)
+                  })
+              }
+      
+              if (article.comments.length) {
+                async.map(req.article.comments, populateComments, function (err, results) {
+                  next(err)
                 })
-            }
+              }
+              else
+                next()
+            })
+        })
     
-            if (article.comments.length) {
-              async.map(req.article.comments, populateComments, function (err, results) {
-                next(err)
-              })
-            }
-            else
-              next()
-          })
-      })
-  
-  
-    // Tag Routes
-      app.get('/tags/:tag', auth.requiresLogin, tags.index)
+    
+      // Tag Routes
+        app.get('/tags/:tag', auth.requiresLogin, tags.index)
+    */
 }

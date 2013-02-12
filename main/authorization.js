@@ -43,10 +43,10 @@ exports.article = {
  *  Event authorizations routing middleware
  */
 
-exports.event = {
+exports.post = {
       hasAuthorization : function (req, res, next) {
-        if (req.event.creator != req.user.id) {
-          return res.redirect('/bubbles/'+req.bubble.id+'/events/'+req.event.id)
+        if (req.post.creator != req.user.id) {
+          return res.redirect('/bubbles/'+req.bubble._id+'/'+bubble_section+'/view/'+post._id)
         }
         next()
       }

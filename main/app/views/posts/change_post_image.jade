@@ -1,4 +1,4 @@
-form#upload_post_image.upload_post_image.mobile_visible(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}s/#{post._id}/upload', enctype='multipart/form-data')
+form#upload_post_image.upload_post_image.mobile_visible(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}/view/#{post._id}/upload', enctype='multipart/form-data')
   section.change_photo_container.subscribe
     div.descriptor.gray_text
       if (post.pic_big != '/img/default.jpg')

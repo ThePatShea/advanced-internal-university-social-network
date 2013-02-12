@@ -11,8 +11,8 @@
 // Define main functions
   // Upload a file
     exports.upload = function(req, res) {
-      var input_file  =  req.files.input_file
-      var file_path   =  input_file.path
+      var input_file    =  req.files.input_file
+      var file_path     =  input_file.path
 
       rackit.init({
           'user' : 'campusbubble',
@@ -24,7 +24,7 @@
               object.pic_big    =  rackit.getURI(cloudpath)
 
               object.save(function(err, doc) {
-                res.redirect(req.redirect_url)
+                res.redirect('/bubbles/'+req.bubble._id+'/'+req.bubble_section+'/view/'+req.post._id)
               })
           })
       })
