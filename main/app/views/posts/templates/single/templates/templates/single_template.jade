@@ -1,10 +1,10 @@
-extends ../layouts/default
+extends /layouts/default
 
 block main
     section(class=['page_#{bubble_section}s'])
       section.back_to_bubble
         a.back_button.gradient_gray(href='/bubbles/'+bubble._id+'/#{bubble_section}')
-          span.descriptor.gray_text.back_to back to
+          span.descriptor.gray_text.back_to back to 
           span.descriptor.red_text.bubble_name= bubble.name
       ul.post_list.single_post
         block post_widget
