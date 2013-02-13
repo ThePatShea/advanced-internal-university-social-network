@@ -10,16 +10,17 @@ block main
         block post_widget
 
       section.post_info
+        block left_bar
+
         section.left_bar
-          if (bubble_section != 'talk')
-            section.section_top
-              div.pic_post_container
-                section.upload_post_image_form_container
-                  | !{ change_post_image }
-                img.pic_post(src=post.pic_big)
-            section.section_middle
-              div.descriptor.gray_text venue
-              h4= post.location
+          section.section_top
+            div.pic_post_container
+              section.upload_post_image_form_container
+                | !{ change_post_image }
+              img.pic_post(src=post.pic_big)
+          section.section_middle
+            div.descriptor.gray_text venue
+            h4= post.location
           section.section_bottom
             div.post_action_container
               button.post_action_calendar
@@ -27,16 +28,22 @@ block main
             div.post_action_container
               button.post_action_calendar
               div.descriptor.gray_text add to calendar
+
         section.post_attributes
+          block post_description
+
           section.post_description
-            | !{ post_description }
+
           div.divider
+          block students_going
+
           section.students_going
             div.descriptor.red_text
               = post.attending_count
               |  people
             h4.going going
           div.divider
+
         section.comment_area#comments
           include ../comments/form
           section.comment_list
