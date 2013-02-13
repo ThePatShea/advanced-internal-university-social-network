@@ -8,22 +8,6 @@
 
 
 // Define main functions
-  // Redirect a user to another section of a bubble  --  TODO move this function to the bubbles.js controller
-    exports.redirect = function(req, res) {
-      var bubble = req.bubble
-
-      if (bubble.num_events > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/event')
-      } else if (bubble.num_deals > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/deal')
-      } else if (bubble.num_talks > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/talk')
-      } else {
-        res.redirect('/bubbles/'+bubble._id+'/event')
-      }
-    }
-
-
   // View a list of posts in a bubble
     exports.list = function(req, res) {
       // Initialize bubble and post parameters
@@ -113,7 +97,7 @@
           , bubble: bubble
           , post: post
         }, function(err, post_widget) {
-          res.render('posts/show_post', {
+          res.render('posts/show', {
               change_post_image: req.change_post_image
             , rendered_sidebar: req.rendered_sidebar
             , post_description: post_description

@@ -83,9 +83,9 @@ exports.bubble = {
         // Detect whether the user created the current post
           if (req.post != undefined) {
             if (req.post.creator == req.user.id) {
-              req.view_post     =  'post_authorized'
+              req.view_post     =  'single_post_authorized'
             } else {
-              req.view_post     =  'post_unauthorized'
+              req.view_post     =  'single_post_unauthorized'
             }
           }
 
