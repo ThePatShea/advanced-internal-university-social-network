@@ -16,12 +16,21 @@ exports.requiresLogin = function (req, res, next) {
  */
 
 exports.user = {
-    hasAuthorization : function (req, res, next) {
-      if (req.profile.id != req.user.id) {
-        return res.redirect('/users/'+req.profile.id)
+      hasAuthorization : function (req, res, next) {
+        if (req.profile.id != req.user.id) {
+          return res.redirect('/users/'+req.profile.id)
+        }
+        next()
       }
-      next()
-    }
+    , render_sidebar : function (req, res, next) {
+        // Render the sidebar, then run the next function
+          res.render('sidebar/sidebar_user', function(err, rendered_sidebar) {
+            if(err) console.log(err)
+
+            req.rendered_sidebar  =  rendered_sidebar
+            next()
+          })
+      }
 }
 
 
@@ -68,11 +77,18 @@ exports.bubble = {
 
         next()
       }
+    , edit_bubble : function (req, res, next) {
+        req.edit_bubble  =  'true'
+        next()
+      }
     , detect_authorization : function (req, res, next) {
         // Detect whether the user created the current bubble
           if (req.bubble.creator == req.user.id) {
             req.view_sidebar  =  'sidebar_bubble_authorized'
             req.view_list     =  'list_authorized'
+            
+            if (req.edit_bubble == 'true')
+              req.view_sidebar  +=  '_edit'
           } else {
             req.view_sidebar  =  'sidebar_bubble_unauthorized'
             req.view_list     =  'list_unauthorized'
