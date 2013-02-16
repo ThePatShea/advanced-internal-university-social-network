@@ -83,31 +83,15 @@
 
   // View a post
     exports.show = function(req, res) {
-      var post_type = req.bubble_section
-      var bubble    = req.bubble
-      var post      = req.post
-       
-      res.render('includes/post_description', {
-        post: post
-      }, function(err, post_description) {
-        res.render('includes/post_widget', {
-            format_date_bottom_count: 0
-          , bubble_section: post_type
-          , format_date_top_count: 0
-          , bubble: bubble
-          , post: post
-        }, function(err, post_widget) {
-          res.render('posts/show', {
-              change_post_image: req.change_post_image
-            , rendered_sidebar: req.rendered_sidebar
-            , post_description: post_description
-            , bubble_section: post_type
-            , post_widget: post_widget
-            , comments: req.comments
-            , title: post.name
-            , bubble: bubble
-            , post: post
-          })
-        })
+      res.render('posts/' + req.view_post, {
+          change_post_image: req.change_post_image
+        , rendered_sidebar: req.rendered_sidebar
+        , bubble_section: req.bubble_section
+        , format_date_bottom_count: 0
+        , format_date_top_count: 0
+        , comments: req.comments
+        , title: req.post.name
+        , bubble: req.bubble
+        , post: req.post
       })
     }

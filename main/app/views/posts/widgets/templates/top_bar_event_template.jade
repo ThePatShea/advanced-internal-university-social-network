@@ -1,0 +1,14 @@
+extends templates/top_bar_template
+
+block top_bar_left
+  block top_bar_left_start_time
+
+block top_bar_main
+  h4.post_name= post.name
+  section.subtitle.descriptor
+    block top_bar_main_location
+
+    div.attending_icon
+    div.red_text.attending_text= post.attending_count
+    div.comments_icon
+    div.gray_text.comments_text #

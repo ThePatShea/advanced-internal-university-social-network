@@ -1,4 +1,4 @@
-extends /layouts/default
+extends ../../../../../layouts/default
 
 block main
     section(class=['page_#{bubble_section}s'])
@@ -7,7 +7,7 @@ block main
           span.descriptor.gray_text.back_to back to 
           span.descriptor.red_text.bubble_name= bubble.name
       ul.post_list.single_post
-        block post_widget
+        block top_bar
 
       section.post_info
         block left_bar
@@ -18,7 +18,7 @@ block main
               block change_post_image
 
               section.upload_post_image_form_container
-                | !{ change_post_image }
+                //- | !{ change_post_image }
 
               img.pic_post(src=post.pic_big)
           section.section_middle
@@ -48,9 +48,9 @@ block main
           div.divider
 
         block comments
-
-        section.comment_area#comments
-          include ../comments/form
-          section.comment_list
-            each comment in post.comments
-              include ../comments/comment
+      
+   //     section.comment_area#comments
+   //       include ../comments/form
+   //       section.comment_list
+   //         each comment in post.comments
+   //           include ../comments/comment

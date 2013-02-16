@@ -84,13 +84,16 @@ exports.bubble = {
           if (req.post != undefined) {
             // Set whether the user is authorized
               if (req.post.creator == req.user.id) {
-                req.view_post     =  'single_post_authorized_'
+                req.view_post     =  'single_authorized'
               } else {
-                req.view_post     =  'single_post_unauthorized_'
+                req.view_post     =  'single_unauthorized'
               }
 
             // Set the bubble section
-              req.view_post  +=  req.bubble_section
+              req.view_post  +=  '_' + req.bubble_section
+
+            // Set edit or show
+              req.view_post  +=  '_show'
           }
 
          
