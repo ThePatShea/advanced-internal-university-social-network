@@ -1,0 +1,13 @@
+extends templates/left_bar_template
+
+block section_top
+  section.section_top
+    div.pic_post_container
+      block change_post_image
+
+      img.pic_post(src=post.pic_big)
+
+block section_middle
+  section.section_middle
+    div.descriptor.gray_text venue
+    h4= post.location

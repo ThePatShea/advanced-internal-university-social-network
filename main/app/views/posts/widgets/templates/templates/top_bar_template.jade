@@ -1,15 +1,16 @@
-li.post_widget
-  a(href='/bubbles/'+bubble._id+'/#{bubble_section}/view/'+post._id)
-    section.post_widget_section.post_widget_left
-      block top_bar_left
-
-    section.post_widget_section.post_widget_main
-      section.post_main_info
-        block top_bar_main
-
-    section.post_widget_section.post_widget_right
-      section.venue_widget
-        div.pic_venue_container
-          img.pic_venue(src='/img/default_square.png')
-        section.venue_info
-          div.venue_name= post.location
+ul.post_list.single_post
+  li.post_widget
+    a(href='/bubbles/'+bubble._id+'/#{bubble_section}/view/'+post._id)
+      section.post_widget_section.post_widget_left
+        block top_bar_left
+  
+      section.post_widget_section.post_widget_main
+        section.post_main_info
+          block top_bar_main
+  
+      section.post_widget_section.post_widget_right
+        section.venue_widget
+          div.pic_venue_container
+            img.pic_venue(src='/img/default_square.png')
+          section.venue_info
+            div.venue_name= post.location
