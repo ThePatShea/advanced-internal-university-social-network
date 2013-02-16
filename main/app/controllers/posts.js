@@ -48,7 +48,7 @@
           .skip(skip)
           .exec(function (err, posts) {
             // Render the view
-              res.render('posts/list_pagelet', {
+              res.render('posts/list_pagelet_'+bubble_section, {
                   bubble_section: bubble_section
                 , format_date_bottom_count: skip
                 , format_date_top_count: skip

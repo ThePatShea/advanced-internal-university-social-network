@@ -1,0 +1,8 @@
+extends templates/list/list_template
+
+block new_post
+
+
+block no_posts
+  if (bubble.num_events == 0 && bubble.num_talks == 0)
+    pre This bubble does not yet have any talks or events
