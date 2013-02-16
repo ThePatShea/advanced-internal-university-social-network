@@ -72,6 +72,8 @@ exports.bubble = {
             req.view_sidebar  =  'sidebar_bubble_authorized'
             req.view_list     =  'list_authorized'
             
+            req.view_list    +=  '_' + req.bubble_section
+
             if (req.edit_bubble == 'true')
               req.view_sidebar  +=  '_edit'
           } else {

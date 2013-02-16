@@ -10,20 +10,12 @@
 // Define main functions
   // View a list of posts in a bubble
     exports.list = function(req, res) {
-      // Initialize bubble and post parameters
-        var bubble_section  =  req.bubble_section
-        var bubble          =  req.bubble
-
-      // Render the view
-        res.render(bubble_section+'s/new', {bubble: req.bubble }, function(err, new_post) {
-          res.render('posts/'+req.view_list, {
-              rendered_sidebar: req.rendered_sidebar
-            , bubble_section: bubble_section
-            , title: req.bubble.name
-            , bubble: req.bubble
-            , new_post: new_post
-          })
-        })
+      res.render('posts/'+req.view_list, {
+          rendered_sidebar: req.rendered_sidebar
+        , bubble_section: req.bubble_section
+        , title: req.bubble.name
+        , bubble: req.bubble
+      })
     }
 
 

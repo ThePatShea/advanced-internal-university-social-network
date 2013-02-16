@@ -1,6 +1,9 @@
-button.toggle_visible.create_an_event.red_button create an event
+extends templates/create/create_template
 
-form.toggle_invisible.add_event.form-horizontal(method="post", action="/bubbles/#{bubble._id}/create_event")
+block button_text
+  | create an event
+
+block form
   section.input_group
     input#title.requiredInput.input-xlarge(type='text', maxlength="35", name="name", placeholder='Event Name (ex: Spring Concert)')
     textarea#description.requiredInput.input-xlarge(type='text', rows="5", name="description", placeholder='Describe your event')
