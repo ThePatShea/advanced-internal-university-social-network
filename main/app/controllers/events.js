@@ -16,10 +16,6 @@
       req.post_type = 'event'
       req.Post = Event
 
-      // Convert start_time and end_time to unix timestamp
-        req.body.start_time  =  ( Date.parse(req.body.start_time) ) / 1000
-        req.body.end_time    =  ( Date.parse(req.body.end_time)   ) / 1000
-
       posts.create(req,res)
     }
  

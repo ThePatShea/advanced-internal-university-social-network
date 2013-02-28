@@ -23,43 +23,35 @@
   
   // Subscribe to a bubble
     var subscribe = exports.subscribe = function (req, res) {
-      var user = req.user
-        , bubble = req.bubble
+      var bubble  =  req.bubble
+        , user    =  req.user
       
       bubble.subscriptions.addToSet(user._id)
-    
-      Bubble
-        .findOne({"_id" : bubble._id}, "name num_subscriptions")
-        .exec(function(err, bubbles) {
-          bubble.num_subscriptions++
-          bubble.save(function (err) {
-            user.subscriptions.addToSet(bubble._id)
-            user.save(function (err) {
-              res.redirect(req.body.current_url)
-            })
-          })
+      bubble.num_subscriptions++
+
+      bubble.save(function (err) {
+        user.subscriptions.addToSet(bubble._id)
+        user.save(function (err) {
+          res.redirect(req.body.current_url)
         })
+      })
     }
   
   
   // Unsubscribe from a bubble
     exports.unsubscribe = function (req, res) {
-      var user = req.user
-        , bubble = req.bubble
-    
+      var bubble  =  req.bubble
+        , user    =  req.user
+       
       bubble.subscriptions.remove(user._id)
-    
-      Bubble
-        .findOne({"_id" : bubble._id}, "name num_subscriptions")
-        .exec(function(err, bubbles) {
-          bubble.num_subscriptions--
-          bubble.save(function (err) {
-            user.subscriptions.remove(bubble._id)
-            user.save(function (err) {
-              res.redirect(req.body.current_url)
-            })
-          })
+      bubble.num_subscriptions--
+
+      bubble.save(function (err) {
+        user.subscriptions.remove(bubble._id)
+        user.save(function (err) {
+          res.redirect(req.body.current_url)
         })
+      })
     }
   
   

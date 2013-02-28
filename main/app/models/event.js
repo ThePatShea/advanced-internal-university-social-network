@@ -9,8 +9,8 @@ var EventSchema = new Schema({
 	pic_square: String,
 	pic_big: {type: String, default: '/img/default.jpg'},
 	description: String,
-	start_time: String,
-	end_time: String,
+	start_time: Date,
+	end_time: Date,
 	location: String,
 	venue: {
 		id: Number

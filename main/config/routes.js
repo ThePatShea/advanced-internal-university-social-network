@@ -1,10 +1,11 @@
 // Include the models
-  var mongoose  =  require('mongoose')
-    , Bubble    =  mongoose.model('Bubble')
-    , Event     =  mongoose.model('Event')
-    , Talk      =  mongoose.model('Talk')
-    , User      =  mongoose.model('User')
-    , async     =  require('async')
+  var mongoose      =  require('mongoose')
+    , Notification  =  mongoose.model('Bubble')
+    , Bubble        =  mongoose.model('Bubble')
+    , Event         =  mongoose.model('Event')
+    , Talk          =  mongoose.model('Talk')
+    , User          =  mongoose.model('User')
+    , async         =  require('async')
 
 
 module.exports = function (app, passport, auth) {
@@ -24,20 +25,19 @@ module.exports = function (app, passport, auth) {
 
       if       (id == 'event') {
         var timestamp_now            =  (new Date()) / 1000
-        var timestamp_six_hours_ago  =  timestamp_now - 21600
+          , timestamp_six_hours_ago  =  timestamp_now - 21600
 
         req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
         req.query_parameters_sort    =  { start_time: 'asc' }
 
-        Post                         =  Event
+        req.Post                         =  Event
       } else if (id == 'talk') {
         req.query_parameters_find    =  { } 
         req.query_parameters_sort    =  { } 
 
-        Post                         =  Talk
+        req.Post                         =  Talk
       }
 
-      req.Post  =  Post
       next()
     })
 

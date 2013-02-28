@@ -5,8 +5,6 @@ var mongoose = require('mongoose')
 
 var TalkSchema = new Schema({
 	name: String,
-	pic_square: String,
-	pic_big: String,
 	description: String,
 	creator: [{type : Schema.ObjectId, ref : 'User'}],
         comments: [{type : Schema.ObjectId, ref : 'Comment'}],

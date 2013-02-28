@@ -11,7 +11,6 @@ var BubbleSchema = new Schema({
         , privacy: {type: String, default: 'public'}
         , type: {type: String, default: 'manual'}
         , num_events: {type: Number, default: 0}
-        , num_deals: {type: Number, default: 0}
         , num_talks: {type: Number, default: 0}
         , description: String
 	, name: String
