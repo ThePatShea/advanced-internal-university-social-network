@@ -11,8 +11,6 @@
 
       if (bubble.num_events > 0) {
         res.redirect('/bubbles/'+bubble._id+'/event')
-      } else if (bubble.num_deals > 0) {
-        res.redirect('/bubbles/'+bubble._id+'/deal')
       } else if (bubble.num_talks > 0) {
         res.redirect('/bubbles/'+bubble._id+'/talk')
       } else {
