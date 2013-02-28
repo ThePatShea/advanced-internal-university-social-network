@@ -2,7 +2,6 @@
   var mongoose  =  require('mongoose')
     , Bubble    =  mongoose.model('Bubble')
     , Event     =  mongoose.model('Event')
-    , Deal      =  mongoose.model('Deal')
     , Talk      =  mongoose.model('Talk')
     , User      =  mongoose.model('User')
     , async     =  require('async')
@@ -14,7 +13,6 @@ module.exports = function (app, passport, auth) {
     var bubbles   =  require('../app/controllers/bubbles')
     var uploads   =  require('../app/controllers/uploads')
     var events    =  require('../app/controllers/events')
-    var deals     =  require('../app/controllers/deals')
     var talks     =  require('../app/controllers/talks')
     var posts     =  require('../app/controllers/posts')
     var users     =  require('../app/controllers/users')
@@ -32,12 +30,6 @@ module.exports = function (app, passport, auth) {
         req.query_parameters_sort    =  { start_time: 'asc' }
 
         Post                         =  Event
-      } else if (id == 'deal') {
-        var timestamp_now            =  (new Date()) / 1000
-        req.query_parameters_find    =  { } 
-        req.query_parameters_sort    =  { } 
-
-        Post                         =  Deal
       } else if (id == 'talk') {
         req.query_parameters_find    =  { } 
         req.query_parameters_sort    =  { } 
@@ -107,7 +99,6 @@ module.exports = function (app, passport, auth) {
 
   // Upload Routes
     app.post('/bubbles/:bubbleId/:bubble_section/view/:postId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
-    app.post('/bubbles/:bubbleId/deals/:dealId/upload', auth.requiresLogin, deals.upload)
 
 
   // Post Routes
@@ -128,10 +119,6 @@ module.exports = function (app, passport, auth) {
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
     app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
-
-
-  // Deal Routes
-    app.post('/bubbles/:bubbleId/create_deal', auth.requiresLogin, deals.create)
   
 
   // Talk Routes

@@ -2,7 +2,6 @@
   var mongoose  =  require('mongoose')
     , Bubble    =  mongoose.model('Bubble')
     , Event     =  mongoose.model('Event')
-    , Deal      =  mongoose.model('Deal')
     , Talk      =  mongoose.model('Talk')
     , _         =  require('underscore')
 

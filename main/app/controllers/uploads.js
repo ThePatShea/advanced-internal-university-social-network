@@ -3,7 +3,6 @@
     var mongoose  =  require('mongoose')
       , Bubble    =  mongoose.model('Bubble')
       , Event     =  mongoose.model('Event')
-      , Deal      =  mongoose.model('Deal')
       , _         =  require('underscore')
       , rackit    =  require('rackit')
 
