@@ -8,7 +8,6 @@ var BubbleSchema = new Schema({
 	, subscriptions: [{type : Schema.ObjectId, ref : 'User', index: {unique: true}}]
         , pic_big: {type: String, default: '/img/default.jpg'}
         , num_subscriptions: {type: Number, default: 0}
-        , privacy: {type: String, default: 'public'}
         , type: {type: String, default: 'manual'}
         , num_events: {type: Number, default: 0}
         , num_talks: {type: Number, default: 0}
