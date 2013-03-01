@@ -10,10 +10,12 @@
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions
-        , description: req.description //TODO: assemble the descriptions for the notifications somewhere
+        , description: 'testing, testing' //req.description //TODO: assemble the descriptions for the notifications somewhere
         , creator: req.user.id
         , bubble: bubble.id
       })
+
+      console.log(bubble.subscriptions)  // TESTING
 
       notification.save(function(err){
         if (err) {

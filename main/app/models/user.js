@@ -1,4 +1,4 @@
-// user schema
+// User schema
 
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
@@ -16,13 +16,13 @@ var UserSchema = new Schema({
   , facebook: {}
   , twitter: {}
   , github: {}
-  , subscriptions: [ 
-      id {type : Schema.ObjectId, ref : 'Bubble', index: {unique: true}}
+  , subscriptions: [{ 
+      id: {type : Schema.ObjectId, ref : 'Bubble'}
     , unseen_notifications: {
         num_events: {type: Number, default: 0}
       , num_talks: {type: Number, default: 0}
     }
-  ]
+  }]
   , total_unseen_notifications: {type: Number, default: 0}
 })
 
