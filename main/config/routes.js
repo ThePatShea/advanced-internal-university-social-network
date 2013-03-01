@@ -1,22 +1,26 @@
-// Include the models
-  var mongoose      =  require('mongoose')
-    , Notification  =  mongoose.model('Bubble')
-    , Bubble        =  mongoose.model('Bubble')
-    , Event         =  mongoose.model('Event')
-    , Talk          =  mongoose.model('Talk')
-    , User          =  mongoose.model('User')
-    , async         =  require('async')
-
-
+// Instantiate the base classes
+  // Instantiate the node modules
+    var mongoose       =  require('mongoose')
+      , async          =  require('async')
+       
+  // Instantiate the models
+    var Notification   =  mongoose.model('Notification')
+      , Bubble         =  mongoose.model('Bubble')
+      , Event          =  mongoose.model('Event')
+      , Talk           =  mongoose.model('Talk')
+      , User           =  mongoose.model('User')
+       
+       
 module.exports = function (app, passport, auth) {
-  // Include the controllers
-    var comments  =  require('../app/controllers/comments')
-    var bubbles   =  require('../app/controllers/bubbles')
-    var uploads   =  require('../app/controllers/uploads')
-    var events    =  require('../app/controllers/events')
-    var talks     =  require('../app/controllers/talks')
-    var posts     =  require('../app/controllers/posts')
-    var users     =  require('../app/controllers/users')
+  // Instantiate the controllers
+    var notifications  =  require('../app/controllers/notifications')
+      , comments       =  require('../app/controllers/comments')
+      , bubbles        =  require('../app/controllers/bubbles')
+      , uploads        =  require('../app/controllers/uploads')
+      , events         =  require('../app/controllers/events')
+      , talks          =  require('../app/controllers/talks')
+      , posts          =  require('../app/controllers/posts')
+      , users          =  require('../app/controllers/users')
 
 
   // Bubble section parameters
@@ -30,12 +34,12 @@ module.exports = function (app, passport, auth) {
         req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
         req.query_parameters_sort    =  { start_time: 'asc' }
 
-        req.Post                         =  Event
+        req.Post                     =  Event
       } else if (id == 'talk') {
         req.query_parameters_find    =  { } 
         req.query_parameters_sort    =  { } 
 
-        req.Post                         =  Talk
+        req.Post                     =  Talk
       }
 
       next()
@@ -140,31 +144,5 @@ module.exports = function (app, passport, auth) {
   // Subscription Routes
     app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
     app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
-
-
-  // Payment Routes
-    var stripeApiKeyTesting = "sk_test_BChwgXIdtRK3VbAOU3n4HYLo";
-    var stripeApiKey = "sk_live_MEyrnnycBVAD6cL56HqElb7M";
-    var stripe = require('stripe')(stripeApiKeyTesting);
-  
-    app.post("/pay/company_bubble", function(req, res) {
-      stripe.customers.create({
-        card : req.body.stripeToken,
-        email : req.user.email, // customer's email (get it from db or session)
-        plan : "company_bubble"
-      }, function (err, customer) {
-        if (err) {
-          var msg = customer.error.message || "unknown";
-          res.send("Error while processing your payment: " + msg);
-        }
-        else {
-          var id = customer.id;
-          console.log('Success! Customer with Stripe ID ' + id + ' just signed up!');
-          // save this customer to your database here!
-          res.send('ok');
-        }
-      });
-    });
-
 
 }

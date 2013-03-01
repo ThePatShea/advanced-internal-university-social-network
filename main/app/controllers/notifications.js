@@ -1,7 +1,6 @@
 // Include the models
   var mongoose      =  require('mongoose')
     , Notification  =  mongoose.model('Notification')
-    , _             =  require('underscore')
 
 
 // Define main functions

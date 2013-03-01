@@ -55,9 +55,8 @@
   
   // Create a bubble
     exports.create = function (req, res) {
-      var bubble = new Bubble(req.body)
-      bubble.creator = req.user
-      bubble.privacy = "CLOSED"
+      var bubble      =  new Bubble(req.body)
+      bubble.creator  =  req.user
   
       bubble.save(function(err) {
         req.body.current_url = '/bubbles/' + bubble._id

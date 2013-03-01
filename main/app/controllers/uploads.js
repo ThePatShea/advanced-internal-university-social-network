@@ -1,17 +1,13 @@
 // Include base scripts
-  // Include the models
-    var mongoose  =  require('mongoose')
-      , Bubble    =  mongoose.model('Bubble')
-      , Event     =  mongoose.model('Event')
-      , _         =  require('underscore')
-      , rackit    =  require('rackit')
+  var mongoose  =  require('mongoose')
+    , rackit    =  require('rackit')
 
 
 // Define main functions
   // Upload a file
     exports.upload = function(req, res) {
-      var input_file    =  req.files.input_file
-      var file_path     =  input_file.path
+      var input_file  =  req.files.input_file
+      var file_path   =  input_file.path
 
       rackit.init({
           'user' : 'campusbubble',
