@@ -4,24 +4,13 @@
 
 
 // Define main functions
-  // View a list of posts in a bubble
-    exports.list = function(req, res) {
-      res.render('posts/'+req.view_list, {
-          rendered_sidebar: req.rendered_sidebar
-        , bubble_section: req.bubble_section
-        , title: req.bubble.name
-        , bubble: req.bubble
-      })
-    }
-
-
   // Create a notification
     exports.create = function (req, res) {
       var bubble = req.bubble
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions
-        , description: req.description
+        , description: req.description //TODO: assemble the descriptions for the notifications somewhere
         , creator: req.user.id
         , bubble: bubble.id
       })
@@ -32,6 +21,25 @@
         } else {
           next()
         }
+      })
+    }
+
+
+
+
+
+
+
+
+
+// Old posts.js functions. TODO: Delete these when finished writing notifications controller
+  // View a list of posts in a bubble
+    exports.list = function(req, res) {
+      res.render('posts/'+req.view_list, {
+          rendered_sidebar: req.rendered_sidebar
+        , bubble_section: req.bubble_section
+        , title: req.bubble.name
+        , bubble: req.bubble
       })
     }
 

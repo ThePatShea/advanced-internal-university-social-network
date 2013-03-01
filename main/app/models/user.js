@@ -16,7 +16,14 @@ var UserSchema = new Schema({
   , facebook: {}
   , twitter: {}
   , github: {}
-  , subscriptions: [{type : Schema.ObjectId, ref : 'Bubble', index: {unique: true}}]
+  , subscriptions: [ 
+      id {type : Schema.ObjectId, ref : 'Bubble', index: {unique: true}}
+    , unseen_notifications: {
+        num_events: {type: Number, default: 0}
+      , num_talks: {type: Number, default: 0}
+    }
+  ]
+  , total_unseen_notifications: {type: Number, default: 0}
 })
 
 // virtual attributes
