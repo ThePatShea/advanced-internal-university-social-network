@@ -122,7 +122,7 @@ module.exports = function (app, passport, auth) {
   // Event Routes
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
-    app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, notifications.create, events.create)
+    app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, events.create)
   
 
   // Talk Routes
