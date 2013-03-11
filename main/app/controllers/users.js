@@ -62,11 +62,9 @@ exports.show = function (req, res) {
 exports.subscriptions = function(req, res){
   User
     .findOne({_id: req.user._id})
-    .populate('subscriptions', 'name num_subscriptions') 
+    .populate('subscriptions._id', 'name num_subscriptions') 
     .exec(function(err, user) {
       if (err) return res.render('500')
-
-      var subscriptions = user.subscriptions
 
       Bubble
         .find({ subscriptions: { $ne: user._id } },"name num_subscriptions")
@@ -75,7 +73,7 @@ exports.subscriptions = function(req, res){
              
             res.render('users/subscriptions', {
                 rendered_sidebar: req.rendered_sidebar
-              , subscribed: subscriptions
+              , subscribed: user.subscriptions
               , title: 'subscriptions'
               , unsubscribed: bubbles
             })
