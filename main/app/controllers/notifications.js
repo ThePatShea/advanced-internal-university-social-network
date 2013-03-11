@@ -11,7 +11,7 @@
 
       // Assemble the description
         var description  =  user.name
-        description     +=  ' posted a ' + req.bubble_section + ' in ' + bubble.name   // TODO: Differentiate 'a' and 'an'
+        description     +=  ' posted ' + req.a_or_an +' ' + req.bubble_section + ' in ' + bubble.name
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions

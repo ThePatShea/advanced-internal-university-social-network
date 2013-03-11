@@ -18,7 +18,6 @@ module.exports = function (app, passport, auth) {
       , bubbles        =  require('../app/controllers/bubbles')
       , uploads        =  require('../app/controllers/uploads')
       , events         =  require('../app/controllers/events')
-      , talks          =  require('../app/controllers/talks')
       , posts          =  require('../app/controllers/posts')
       , users          =  require('../app/controllers/users')
 
@@ -35,11 +34,13 @@ module.exports = function (app, passport, auth) {
         req.query_parameters_sort    =  { start_time: 'asc' }
 
         req.Post                     =  Event
+        req.a_or_an                  =  'an'
       } else if (id == 'talk') {
         req.query_parameters_find    =  { } 
         req.query_parameters_sort    =  { } 
 
         req.Post                     =  Talk
+        req.a_or_an                  =  'a'
       }
 
       next()
@@ -123,10 +124,6 @@ module.exports = function (app, passport, auth) {
   // Event Routes
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
-  
-
-  // Talk Routes
-    app.post('/bubbles/:bubbleId/create_talk', auth.requiresLogin, talks.create)
   
 
   // User Routes
