@@ -8,11 +8,7 @@ var NotificationSchema = new Schema({
   , creator: {type : Schema.ObjectId, ref : 'User'}
   , createdAt: {type : Date, default : Date.now}
   , description: {type : String}
-  , subscriptions: [{
-      id: {type : Schema.ObjectId, ref : 'User'}
-    , clicked: {type: Boolean, default: false}
-    , seen: {type: Boolean, default: false}
-  }]
+  , subscriptions: [{type : Schema.ObjectId, ref : 'User'}]
 })
 
 mongoose.model('Notification', NotificationSchema)
