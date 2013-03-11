@@ -9,9 +9,7 @@
       var bubble  =  req.bubble
         , user    =  req.user
 
-      // Assemble the description
-        var description  =  user.name
-        description     +=  ' posted ' + req.a_or_an +' ' + req.bubble_section + ' in ' + bubble.name
+      var description  =  user.name + ' posted ' + req.a_or_an +' ' + req.bubble_section + ' in ' + bubble.name
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions
