@@ -17,7 +17,7 @@ var UserSchema = new Schema({
   , twitter: {}
   , github: {}
   , subscriptions: [{ 
-      id: {type : Schema.ObjectId, ref : 'Bubble'}
+      _id: {type : Schema.ObjectId, ref : 'Bubble'}
     , unseen_notifications: {
         num_events: {type: Number, default: 0}
       , num_talks: {type: Number, default: 0}

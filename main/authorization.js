@@ -1,4 +1,3 @@
-
 /*
  *  Generic require login routing middleware
  */
@@ -103,7 +102,7 @@ exports.bubble = {
 
          
         // Detect whether the user is subscribed to the current bubble
-          if (req.user.subscriptions.indexOf(req.bubble._id) >= 0) {
+          if (req.bubble.subscriptions.indexOf(req.user._id) >= 0) {
             req.user_subscribed  =  1
           } else {
             req.user_subscribed  =  0

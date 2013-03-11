@@ -28,7 +28,7 @@
       bubble.num_subscriptions++
 
       bubble.save(function (err) {
-        user.subscriptions.addToSet(bubble._id)
+        user.subscriptions.addToSet({_id: bubble._id})
         user.save(function (err) {
           res.redirect(req.body.current_url)
         })
@@ -45,7 +45,7 @@
       bubble.num_subscriptions--
 
       bubble.save(function (err) {
-        user.subscriptions.remove(bubble._id)
+        user.subscriptions.remove({_id: bubble._id})
         user.save(function (err) {
           res.redirect(req.body.current_url)
         })

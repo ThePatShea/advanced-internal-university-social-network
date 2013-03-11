@@ -5,12 +5,12 @@
 
 // Define main functions
   // Create a notification
-    exports.create = function (req, res) {
+    exports.create = function (req, res, next) {
       var bubble = req.bubble
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions
-        , description: 'testing, testing' //req.description //TODO: assemble the descriptions for the notifications somewhere
+        , description: 'testing notifications again' //req.description //TODO: assemble the descriptions for the notifications somewhere
         , creator: req.user.id
         , bubble: bubble.id
       })
