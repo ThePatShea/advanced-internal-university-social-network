@@ -6,13 +6,18 @@
 // Define main functions
   // Create a notification
     exports.create = function (req, res, next) {
-      var bubble = req.bubble
+      var bubble  =  req.bubble
+        , user    =  req.user
+
+      // Assemble the description
+        var description  =  user.name
+        description     +=  ' posted a ' + req.bubble_section + ' in ' + bubble.name   // TODO: Differentiate 'a' and 'an'
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions
-        , description: 'testing notifications again' //req.description //TODO: assemble the descriptions for the notifications somewhere
-        , creator: req.user.id
+        , description: description
         , bubble: bubble.id
+        , creator: user.id
       })
 
       console.log(bubble.subscriptions)  // TESTING
