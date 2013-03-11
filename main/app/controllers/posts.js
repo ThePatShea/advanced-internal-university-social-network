@@ -55,6 +55,8 @@
       var bubble = req.bubble
       Post = req.Post
 
+      // TODO: Handle num_events++ and num_talks++
+
       bubble.save(function (err) {
         var post = new Post(req.body)
         post.bubbles.addToSet(bubble._id)
@@ -64,7 +66,7 @@
           if (err) {
             console.log("error creating post: " + err)
           } else {
-            res.redirect('/bubbles/'+bubble._id+'/'+req.post_type+'/view/'+post._id)
+            res.redirect('/bubbles/'+bubble._id+'/'+req.bubble_section+'/view/'+post._id)
           }
         })
 

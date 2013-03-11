@@ -20,8 +20,6 @@
         , creator: user.id
       })
 
-      console.log(bubble.subscriptions)  // TESTING
-
       notification.save(function(err){
         if (err) {
           console.log("error creating notification: " + err)

@@ -106,6 +106,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Post Routes
+    app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, notifications.create, posts.create)
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
     app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
@@ -122,7 +123,6 @@ module.exports = function (app, passport, auth) {
   // Event Routes
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
     app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
-    app.post('/bubbles/:bubbleId/create_event', auth.requiresLogin, notifications.create, events.create)
   
 
   // Talk Routes

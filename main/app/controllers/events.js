@@ -10,15 +10,6 @@
 
 
 // Define main functions
-  // Create an event
-    exports.create = function (req, res) {
-      req.bubble.num_events++
-      req.post_type = 'event'
-      req.Post = Event
-
-      posts.create(req,res)
-    }
- 
   // Edit an event
     exports.edit = function(req, res) {
       var bubble = req.bubble
