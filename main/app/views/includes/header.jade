@@ -10,10 +10,13 @@ header#header
           ul.nav.pull-right
             li
               a(href='/')
-                div.home
+                div.icon_header_home
             li
               a(href="/users/#{req.user.id}/new_bubble")
-                div.create
+                div.icon_header_create
+            li
+              a(href="/notifications")
+                div.icon_header_notifications
             if (req.isAuthenticated())
               div.user_widget
                 a(href="/users/"+req.user.id)
@@ -22,7 +25,7 @@ header#header
                     img.nav_pic_square(src='http://graph.facebook.com/'+req.user.facebook.id+'/picture?type=square')
               li.sign_out_button
                 a(href="/logout", title="logout")
-                  div.sign_out
+                  div.icon_header_sign_out
             else
               li
                 a(href="/login", title="Login") Sign In

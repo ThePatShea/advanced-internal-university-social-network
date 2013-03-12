@@ -1323,7 +1323,7 @@ ul.nav.pull-right {
       height: 100%;
       width: 100%;
     }
-    ul.nav.pull-right li .home {
+    ul.nav.pull-right li .icon_header_home {
       background: url("../img/sprites.png") -136px -12px;
       height: 21px;
       width: 25px;
@@ -1331,7 +1331,7 @@ ul.nav.pull-right {
       left: 1px;
       top: 3px;
     }
-    ul.nav.pull-right li .create {
+    ul.nav.pull-right li .icon_header_create {
       background: url("../img/sprites.png") -170px -12px;
       height: 21px;
       width: 21px;
@@ -1339,7 +1339,15 @@ ul.nav.pull-right {
       left: 3px;
       top: 3px;
     }
-    ul.nav.pull-right li .sign_out {
+    ul.nav.pull-right li .icon_header_notifications {
+      background: url("../img/sprites.png") -198px -11px;
+      height: 21px;
+      width: 21px;
+      position: relative;
+      left: 3px;
+      top: 3px;
+    }
+    ul.nav.pull-right li .icon_header_sign_out {
       background: url("../img/sprites.png") -254px -12px;
       height: 21px;
       width: 21px;
