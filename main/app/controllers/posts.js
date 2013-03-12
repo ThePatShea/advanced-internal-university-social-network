@@ -8,11 +8,15 @@
 // Define main functions
   // View a list of posts in a bubble
     exports.list = function(req, res) {
+      var bubble_section  =  req.bubble_section
+        , bubble          =  req.bubble
+
       res.render('posts/'+req.view_list, {
-          rendered_sidebar: req.rendered_sidebar
-        , bubble_section: req.bubble_section
-        , title: req.bubble.name
-        , bubble: req.bubble
+          list_pagelet_url: '/bubbles/' + bubble._id + '/' + bubble_section + '/list_pagelet/'
+        , rendered_sidebar: req.rendered_sidebar
+        , bubble_section: bubble_section
+        , title: bubble.name
+        , bubble: bubble
       })
     }
 
@@ -21,8 +25,8 @@
     exports.list_pagelet = function(req, res) {
       // Define the bubble parameters
         var bubble_section  =  req.bubble_section
-        var skip            =  req.params.skip
-        var bubble          =  req.bubble
+          , skip            =  req.params.skip
+          , bubble          =  req.bubble
 
       // Initialize query parameters
         var query_parameters_find      =  req.query_parameters_find
@@ -38,7 +42,7 @@
           .skip(skip)
           .exec(function (err, posts) {
             // Render the view
-              res.render('posts/list_pagelet_'+bubble_section, {
+              res.render('posts/list_pagelet_' + bubble_section, {
                   bubble_section: bubble_section
                 , format_date_bottom_count: skip
                 , format_date_top_count: skip

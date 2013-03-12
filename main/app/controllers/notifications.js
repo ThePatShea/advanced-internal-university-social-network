@@ -31,7 +31,8 @@
   // View a list of notifications for a user
     exports.list = function(req, res) {
       res.render('notifications/list', {
-          rendered_sidebar: req.rendered_sidebar
+          list_pagelet_url: '/notifications/list_pagelet/'
+        , rendered_sidebar: req.rendered_sidebar
         , title: 'notifications'
       })
     }
@@ -39,20 +40,17 @@
 
   // View a subset of a list of posts in a bubble
     exports.list_pagelet = function(req, res) {
-      // Define the bubble parameters
-        var skip  =  req.params.skip
-
-      // Find some posts the current bubble has
-        Notification
-          .find({ subscriptions: req.user._id })
-          .sort({ createdAt: 'desc' })
-          .limit(20)
-          .skip(skip)
-          .exec(function (err, notifications) {
-            // Render the view
-              res.render('notifications/list_pagelet', {
-                  notifications: notifications
-                , skip: skip
-              })
-           })
+      var skip  =  req.params.skip
+      console.log('req.user._id: ' + req.user._id) // TESTING
+      Notification
+        .find({ subscriptions: req.user._id })
+        .sort({ createdAt: 'desc' })
+        .limit(20)
+        .skip(skip)
+        .exec(function (err, notifications) {
+            res.render('notifications/list_pagelet', {
+                notifications: notifications
+              , skip: skip
+            })
+         })
     }

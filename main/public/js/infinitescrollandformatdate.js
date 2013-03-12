@@ -31,13 +31,13 @@ $(document).ready(function () {
   
   // Infinite scroll
     function load_pagelet() {
-      if (ajax_current == 0 && hidden_bubble_id != null) {
+      if (ajax_current == 0 && list_pagelet_url != null) {
         // Prevent it from loading too much data
           ajax_current = 1;
           setTimeout(function() { ajax_current = 0; }, 1000);
       
         // Load the new data
-          $.get('/bubbles/'+hidden_bubble_id+'/'+hidden_bubble_section+'/list_pagelet/'+skip, function(data) {
+          $.get(list_pagelet_url+skip, function(data) {
             $('#post_list').append(data);
   
             format_date('format_date_bottom', 'h:mma', skip);
@@ -48,11 +48,9 @@ $(document).ready(function () {
       }
     }
 
-
-    var hidden_bubble_section  =  $('#hidden_bubble_section').html();
-    var hidden_bubble_id       =  $('#hidden_bubble_id').html();
-    var skip                   =  0;
-    var ajax_current           =  0;
+    var list_pagelet_url  =  $('#list_pagelet_url').html();
+    var skip              =  0;
+    var ajax_current      =  0;
 
     load_pagelet()
 

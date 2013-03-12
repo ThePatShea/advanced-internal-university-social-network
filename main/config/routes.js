@@ -144,5 +144,6 @@ module.exports = function (app, passport, auth) {
 
 
   // Notification Routes
+    app.get('/notifications/list_pagelet/:skip', auth.requiresLogin, notifications.list_pagelet)
     app.get('/notifications', auth.requiresLogin, auth.user.render_sidebar, notifications.list)
 }
