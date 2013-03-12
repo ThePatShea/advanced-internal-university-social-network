@@ -107,11 +107,11 @@ module.exports = function (app, passport, auth) {
 
 
   // Post Routes
-    app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, notifications.create, posts.create)
+    app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, notifications.create, posts.create)
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
+    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
     app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
-    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
 
 
   // Bubble Routes
@@ -133,13 +133,16 @@ module.exports = function (app, passport, auth) {
     app.post('/users', users.create)
     app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
     app.get('/users/:userId', auth.requiresLogin, auth.user.render_sidebar, users.subscriptions)
-    app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me', 'user_education_history', 'friends_education_history', 'user_events', 'friends_events', 'user_likes', 'friends_likes'], failureRedirect: '/login' }), users.signin)
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble)
+    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble) // TODO: Change this to the bubble route and change users.new_bubble to bubbles.create
 
 
   // Subscription Routes
     app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
     app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
 
+
+  // Notification Routes
+    app.get('/notifications', auth.requiresLogin, auth.user.render_sidebar, notifications.list)
 }

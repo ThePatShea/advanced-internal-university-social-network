@@ -28,36 +28,31 @@
     }
 
 
-
-
-
-
-
-
-
-// Old posts.js functions. TODO: Delete these when finished writing notifications controller
-  // View a list of posts in a bubble
+  // View a list of notifications for a user
     exports.list = function(req, res) {
-      res.render('posts/'+req.view_list, {
+      res.render('notifications/list', {
           rendered_sidebar: req.rendered_sidebar
-        , bubble_section: req.bubble_section
-        , title: req.bubble.name
-        , bubble: req.bubble
+        , title: 'notifications'
       })
     }
 
 
-  // View a post
-    exports.show = function(req, res) {
-      res.render('posts/' + req.view_post, {
-          change_post_image: req.change_post_image
-        , rendered_sidebar: req.rendered_sidebar
-        , bubble_section: req.bubble_section
-        , format_date_bottom_count: 0
-        , format_date_top_count: 0
-        , comments: req.comments
-        , title: req.post.name
-        , bubble: req.bubble
-        , post: req.post
-      })
+  // View a subset of a list of posts in a bubble
+    exports.list_pagelet = function(req, res) {
+      // Define the bubble parameters
+        var skip  =  req.params.skip
+
+      // Find some posts the current bubble has
+        Notification
+          .find({ subscriptions: req.user._id })
+          .sort({ createdAt: 'desc' })
+          .limit(20)
+          .skip(skip)
+          .exec(function (err, notifications) {
+            // Render the view
+              res.render('notifications/list_pagelet', {
+                  notifications: notifications
+                , skip: skip
+              })
+           })
     }
