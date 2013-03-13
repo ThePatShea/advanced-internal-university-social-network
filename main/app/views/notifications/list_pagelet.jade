@@ -1,2 +1,4 @@
 each notification in notifications
- li.post_widget= notification.description
+  li.post_widget
+    img(src='http://graph.facebook.com/' + notification.creator.facebook.id + '/picture?type=square')
+    p= notification.description

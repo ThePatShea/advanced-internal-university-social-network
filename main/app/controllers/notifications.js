@@ -47,6 +47,7 @@
         .sort({ createdAt: 'desc' })
         .limit(20)
         .skip(skip)
+        .populate('creator')
         .exec(function (err, notifications) {
             res.render('notifications/list_pagelet', {
                 notifications: notifications
