@@ -6,9 +6,9 @@ li
   a(href='/notifications')
     div.sidebar_button_icon.icon_notifications
     h2.sidebar_button_label notifications
-    if (req.user.total_unseen_notifications > 0)
+    if (req.user.total_unviewed_notifications > 0)
       div.sidebar_counter.sidebar_counter_user
-        h2 #{req.user.total_unseen_notifications}
+        h2 #{req.user.total_unviewed_notifications}
     div.icon_sidebar_select
 li
   a(href='/users/#{req.user._id}/new_bubble')

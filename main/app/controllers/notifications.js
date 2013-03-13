@@ -31,7 +31,7 @@
 
       notification.save(function(err) {
         User
-         .update({_id: {$in: notification.connections.users.subscribers} },{ $inc: {total_unseen_notifications: 1} })
+         .update({ _id: {$in: notification.connections.users.subscribers}, 'subscriptions._id': bubble._id },{ $inc: {total_unviewed_notifications: 1} })
          .exec(function(err, user) {
            res.redirect('/bubbles/'+bubble._id+'/'+bubble_section+'/view/'+post._id)
          })
@@ -41,6 +41,7 @@
 
   // View a list of notifications for a user
     exports.list = function(req, res) {
+
       res.render('notifications/list', {
           list_pagelet_url: '/notifications/list_pagelet/'
         , rendered_sidebar: req.rendered_sidebar
@@ -60,9 +61,19 @@
         .skip(skip)
         .populate('connections.users.creator')
         .exec(function (err, notifications) {
-            res.render('notifications/list_pagelet', {
-                notifications: notifications
-              , skip: skip
-            })
-         })
+          res.render('notifications/list_pagelet', {
+              notifications: notifications
+            , skip: skip
+          })
+        })
     }
+
+
+  // Reset a user's count of unseen notifications
+    exports.reset_unviewed = function(req, res, next) {
+      req.user.total_unviewed_notifications = 0
+
+      req.user.save(function(err) {
+        next()
+      })
+  }
