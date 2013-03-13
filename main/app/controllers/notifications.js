@@ -12,26 +12,26 @@
         , post            =  req.post
         , user            =  req.user
 
-      var description  =  user.name + ' posted ' + req.a_or_an +' ' + bubble_section + ' in ' + bubble.name
-
-      // Remove the post creator from the list of people who get the notification
-        var subscriptions = bubble.subscriptions
-        subscriptions.remove(user.id)
-
       var notification = new Notification({
-          subscriptions: subscriptions
-        , description: description
-        , bubble: bubble.id
-        , creator: user.id
-        , post: {
-              post_type: bubble_section
-            , _id: post._id
+          description: user.name + ' posted ' + req.a_or_an +' ' + bubble_section + ' in ' + bubble.name
+        , connections: {
+              users: {
+                  subscribers: bubble.subscriptions
+                , creator:     user.id
+              }
+            , bubble: bubble.id
+            , post: {
+                  post_type: bubble_section
+                , _id: post._id
+              }
           }
       })
 
+      notification.connections.users.subscribers.remove(user.id)  // Makes it so the creator doesn't get a notification
+
       notification.save(function(err) {
         User
-         .update({_id: {$in: subscriptions} },{ $inc: {total_unseen_notifications: 1} })
+         .update({_id: {$in: notification.connections.users.subscribers} },{ $inc: {total_unseen_notifications: 1} })
          .exec(function(err, user) {
            res.redirect('/bubbles/'+bubble._id+'/'+bubble_section+'/view/'+post._id)
          })
@@ -52,13 +52,13 @@
   // View a subset of a list of posts in a bubble
     exports.list_pagelet = function(req, res) {
       var skip  =  req.params.skip
-      console.log('req.user._id: ' + req.user._id) // TESTING
+
       Notification
-        .find({ subscriptions: req.user._id })
-        .sort({ createdAt: 'desc' })
+        .find({ 'connections.users.subscribers': req.user._id })
+        .sort({ 'createdAt': 'desc' })
         .limit(20)
         .skip(skip)
-        .populate('creator')
+        .populate('connections.users.creator')
         .exec(function (err, notifications) {
             res.render('notifications/list_pagelet', {
                 notifications: notifications
