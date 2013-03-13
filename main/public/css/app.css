@@ -1215,10 +1215,13 @@ input[readonly="readonly"] {
           background: url("../img/sprites.png") -328px -9px;
         }
         .sidebar .sidebar_buttons li a .icon_notifications {
-          background: url("../img/sprites.png") -308px -36px;
+          background: url("../img/sprites.png") -307px -36px;
         }
         .sidebar .sidebar_buttons li a .icon_new_bubble {
           background: url("../img/sprites.png") -281px -56px;
+        }
+        .sidebar .sidebar_buttons li a .icon_home {
+          background: url("../img/sprites.png") -280px -34px;
         }
         .sidebar .sidebar_buttons li a .sidebar_button_label {
           position: relative;

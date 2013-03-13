@@ -1,11 +1,15 @@
 li
-  a(href="/")
+  a(href='/')
+    div.sidebar_button_icon.icon_home
+    h2.sidebar_button_label my bubbles
+li
+  a(href='/notifications')
     div.sidebar_button_icon.icon_notifications
     h2.sidebar_button_label notifications
     div.sidebar_counter.sidebar_counter_user
       h2 ##
     div.icon_sidebar_select
 li
-  a(href="/users/#{req.user._id}/new_bubble")
+  a(href='/users/#{req.user._id}/new_bubble')
     div.sidebar_button_icon.icon_new_bubble
     h2.sidebar_button_label create a bubble
