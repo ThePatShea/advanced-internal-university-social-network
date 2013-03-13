@@ -7,8 +7,6 @@ var NotificationSchema = new Schema({
   , connections: {
         users: {
             subscribers: [{type: Schema.ObjectId, ref: 'User'}]
-          , clicked:     [{type: Schema.ObjectId, ref: 'User'}]
-          , viewed:      [{type: Schema.ObjectId, ref: 'User'}]
           , creator:      {type: Schema.ObjectId, ref: 'User'}
         }
       , bubble: {type: Schema.ObjectId, ref: 'Bubble'}

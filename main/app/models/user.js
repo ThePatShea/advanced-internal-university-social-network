@@ -18,10 +18,6 @@ var UserSchema = new Schema({
   , github: {}
   , subscriptions: [{ 
       _id: {type : Schema.ObjectId, ref : 'Bubble'}
-    , unviewed_notifications: {
-        num_events: {type: Number, default: 0}
-      , num_talks: {type: Number, default: 0}
-    }
   }]
   , total_unviewed_notifications: {type: Number, default: 0}
   , createdAt: {type : Date, default : Date.now}
