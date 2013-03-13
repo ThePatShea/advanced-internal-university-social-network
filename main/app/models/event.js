@@ -4,28 +4,17 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
 var EventSchema = new Schema({
-	eid: { type: Number, index: {unique: true, sparse: true}},
-	name: String,
-	pic_square: String,
-	pic_big: {type: String, default: '/img/default.jpg'},
-	description: String,
-	start_time: Date,
-	end_time: Date,
-	location: String,
-	venue: {
-		id: Number
-	},
-	privacy: String,
-	creator: Schema.Types.Mixed,
-	update_time: Number,
-	attending_count: { type: Number, default: 0},
-	declined_count: Number,
-	unsure_count: Number,
-	not_replied_count: Number,
-        comments: [{type : Schema.ObjectId, ref : 'Comment'}],
-        bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
+    comments: [{type : Schema.ObjectId, ref : 'Comment'}]
+  , pic_big: {type: String, default: '/img/default.jpg'}
+  , bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
+  , creator: {type : Schema.ObjectId, ref : 'User'}
+  , createdAt: {type : Date, default : Date.now}
+  , attending_count: {type: Number, default: 0}
+  , description: String
+  , location: String
+  , start_time: Date
+  , end_time: Date
+  , name: String
 })
-
-
 
 mongoose.model('Event', EventSchema)

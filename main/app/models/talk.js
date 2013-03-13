@@ -4,13 +4,12 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
 var TalkSchema = new Schema({
-	name: String,
-	description: String,
-	creator: [{type : Schema.ObjectId, ref : 'User'}],
-        comments: [{type : Schema.ObjectId, ref : 'Comment'}],
-        bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
+    comments: [{type : Schema.ObjectId, ref : 'Comment'}]
+  , bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
+  , creator: {type : Schema.ObjectId, ref : 'User'}
+  , createdAt: {type : Date, default : Date.now}
+  , description: String
+  , name: String
 })
-
-
 
 mongoose.model('Talk', TalkSchema)

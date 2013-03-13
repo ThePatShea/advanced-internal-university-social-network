@@ -6,24 +6,26 @@
 // Define main functions
   // Create a notification
     exports.create = function (req, res, next) {
-      var bubble  =  req.bubble
-        , user    =  req.user
+      var bubble_section  =  req.bubble_section
+        , bubble          =  req.bubble
+        , post            =  req.post
+        , user            =  req.user
 
-      var description  =  user.name + ' posted ' + req.a_or_an +' ' + req.bubble_section + ' in ' + bubble.name
+      var description  =  user.name + ' posted ' + req.a_or_an +' ' + bubble_section + ' in ' + bubble.name
 
       var notification = new Notification({
           subscriptions: bubble.subscriptions
         , description: description
         , bubble: bubble.id
         , creator: user.id
+        , post: {
+              post_type: bubble_section
+            , _id: post._id
+          }
       })
 
-      notification.save(function(err){
-        if (err) {
-          console.log("error creating notification: " + err)
-        } else {
-          next()
-        }
+      notification.save(function(err) {
+        res.redirect('/bubbles/'+bubble._id+'/'+bubble_section+'/view/'+post._id)
       })
     }
 

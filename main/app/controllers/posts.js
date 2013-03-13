@@ -54,7 +54,7 @@
 
 
   // Create a post
-    exports.create = function (req, res) {
+    exports.create = function (req, res, next) {
       var bubble = req.bubble
       Post = req.Post
 
@@ -65,12 +65,9 @@
         post.bubbles.addToSet(bubble._id)
         post.creator = req.user._id
 
-        post.save(function(err){
-          if (err) {
-            console.log("error creating post: " + err)
-          } else {
-            res.redirect('/bubbles/'+bubble._id+'/'+req.bubble_section+'/view/'+post._id)
-          }
+        post.save(function(err) {
+          req.post = post
+          next()
         })
 
       })

@@ -1,4 +1,5 @@
 each notification in notifications
-  li.post_widget
-    img(src='http://graph.facebook.com/' + notification.creator.facebook.id + '/picture?type=square')
-    p= notification.description
+  a(href='/bubbles/#{notification.bubble}/#{notification.post.post_type}/view/#{notification.post._id}')
+    li.post_widget
+      img(src='http://graph.facebook.com/' + notification.creator.facebook.id + '/picture?type=square')
+      p= notification.description

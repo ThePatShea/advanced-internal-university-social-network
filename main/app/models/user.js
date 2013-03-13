@@ -24,6 +24,7 @@ var UserSchema = new Schema({
     }
   }]
   , total_unseen_notifications: {type: Number, default: 0}
+  , createdAt: {type : Date, default : Date.now}
 })
 
 // virtual attributes
