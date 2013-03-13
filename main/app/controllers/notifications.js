@@ -1,6 +1,7 @@
 // Include the models
   var mongoose      =  require('mongoose')
     , Notification  =  mongoose.model('Notification')
+    , User          =  mongoose.model('User')
 
 
 // Define main functions
@@ -18,7 +19,7 @@
         subscriptions.remove(user.id)
 
       var notification = new Notification({
-          subscriptions: bubble.subscriptions
+          subscriptions: subscriptions
         , description: description
         , bubble: bubble.id
         , creator: user.id
@@ -29,7 +30,11 @@
       })
 
       notification.save(function(err) {
-        res.redirect('/bubbles/'+bubble._id+'/'+bubble_section+'/view/'+post._id)
+        User
+         .update({_id: {$in: subscriptions} },{ $inc: {total_unseen_notifications: 1} })
+         .exec(function(err, user) {
+           res.redirect('/bubbles/'+bubble._id+'/'+bubble_section+'/view/'+post._id)
+         })
       })
     }
 

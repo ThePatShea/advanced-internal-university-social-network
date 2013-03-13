@@ -16,6 +16,9 @@ header#header
             li
               a(href="/notifications")
                 div.icon_header_notifications
+                if (req.user.total_unseen_notifications > 0)
+                  div.header_counter
+                    h2 #{req.user.total_unseen_notifications}
             if (req.isAuthenticated())
               div.user_widget
                 a(href="/users/"+req.user.id)
