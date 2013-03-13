@@ -28,7 +28,8 @@
         "async": "latest",
         "nodemon": "latest",
         "stripe": "1.2.x",
-        "rackit": "latest"
+        "rackit": "latest",
+        "mailchimp": "latest"
     },
     "subdomain": "main.campusbubble"
 }
