@@ -135,7 +135,7 @@ module.exports = function (app, passport, auth) {
     app.get('/users/:userId', auth.requiresLogin, auth.user.render_sidebar, users.subscriptions)
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble) // TODO: Change this to the bubble route and change users.new_bubble to bubbles.create
+    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble) // TODO: Change this to the bubble route and move users.new_bubble to bubbles.create
 
 
   // Subscription Routes

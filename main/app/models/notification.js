@@ -9,6 +9,12 @@ var NotificationSchema = new Schema({
   , creator: {type : Schema.ObjectId, ref : 'User'}
   , createdAt: {type : Date, default : Date.now}
   , description: {type : String}
+  , connections: {
+        users: {
+            clicked: [{type : Schema.ObjectId, ref : 'User'}]
+          , seen: [{type : Schema.ObjectId, ref : 'User'}]
+        }
+    }
   , post: {
         _id: Schema.Types.ObjectId
       , post_type: String
