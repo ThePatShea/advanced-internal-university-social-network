@@ -13,6 +13,10 @@
 
       var description  =  user.name + ' posted ' + req.a_or_an +' ' + bubble_section + ' in ' + bubble.name
 
+      // Remove the post creator from the list of people who get the notification
+        var subscriptions = bubble.subscriptions
+        subscriptions.remove(user.id)
+
       var notification = new Notification({
           subscriptions: bubble.subscriptions
         , description: description
