@@ -2,9 +2,13 @@ extends ../../../../../layouts/default
 
 block main
     section(class=['page_#{bubble_section}s'])
-      include ../../../../widgets/back_to_bubble
+      section.back_to_bubble
+        include ../../../../widgets/back_to_bubble
 
-      block top_bar
+        block edit_post
+
+      ul.post_list.single_post
+        block top_bar
 
       block map_canvas
 

@@ -3,6 +3,9 @@ extends templates/top_bar/top_bar_event_template
 block top_bar_left_start_time
   input#start_time.requiredInput.input-medium(type='text', name="start_time", readonly="readonly", value=post.start_time)
 
+block top_bar_main_name
+  input.post_name(value=post.name)
+
 block top_bar_main_location
   div
     input.gray_text.venue_text.descriptor.requiredInput(style='width: 105px', type='text', maxlength='35', name='location', value=post.location)

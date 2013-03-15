@@ -109,6 +109,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Post Routes
+    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.detect_authorization, posts.edit)
     app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create)
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
@@ -125,7 +126,6 @@ module.exports = function (app, passport, auth) {
 
   // Event Routes
     app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
-    app.get('/bubbles/:bubbleId/events/:eventId/edit', auth.requiresLogin, events.edit)
   
 
   // User Routes
@@ -137,7 +137,7 @@ module.exports = function (app, passport, auth) {
     app.get('/users/:userId', auth.requiresLogin, auth.user.render_sidebar, users.subscriptions)
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble) // TODO: Change this to the bubble route and move users.new_bubble to bubbles.create
+    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble)
 
 
   // Subscription Routes

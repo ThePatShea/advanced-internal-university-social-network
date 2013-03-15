@@ -74,9 +74,9 @@
     }
 
 
-  // View a post
+  // Show a post
     exports.show = function(req, res) {
-      res.render('posts/' + req.view_post, {
+      res.render('posts/' + req.view_post + 'show', {
           change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
@@ -87,4 +87,20 @@
         , bubble: req.bubble
         , post: req.post
       })
+    }
+
+
+  // Edit a post
+    exports.edit = function(req, res) {
+     res.render('posts/' + req.view_post + 'edit', {
+          change_post_image: req.change_post_image
+        , rendered_sidebar: req.rendered_sidebar
+        , bubble_section: req.bubble_section
+        , format_date_bottom_count: 0
+        , format_date_top_count: 0
+        , comments: req.comments
+        , title: req.post.name
+        , bubble: req.bubble
+        , post: req.post
+      }) 
     }
