@@ -17,7 +17,6 @@ module.exports = function (app, passport, auth) {
       , comments       =  require('../app/controllers/comments')
       , bubbles        =  require('../app/controllers/bubbles')
       , uploads        =  require('../app/controllers/uploads')
-      , events         =  require('../app/controllers/events')
       , posts          =  require('../app/controllers/posts')
       , users          =  require('../app/controllers/users')
 
@@ -112,6 +111,7 @@ module.exports = function (app, passport, auth) {
     app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.detect_authorization, posts.edit)
     app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create)
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
+    app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
     app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
@@ -123,10 +123,6 @@ module.exports = function (app, passport, auth) {
     app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.redirect)
     app.post('/bubbles', auth.requiresLogin, bubbles.create)
 
-
-  // Event Routes
-    app.post('/bubbles/:bubbleId/events/:eventId/update', auth.requiresLogin, events.update)
-  
 
   // User Routes
     app.get('/login', users.login)

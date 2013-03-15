@@ -1,7 +1,5 @@
 // Include the models
   var mongoose  =  require('mongoose')
-    , Bubble    =  mongoose.model('Bubble')
-    , Event     =  mongoose.model('Event')
     , _         =  require('underscore')
 
 
@@ -103,4 +101,16 @@
         , bubble: req.bubble
         , post: req.post
       }) 
+    }
+
+
+  // Save edits to a post
+    exports.save = function(req, res) {
+      var post = req.post
+
+      post = _.extend(post, req.body)
+    
+      post.save(function(err, doc) {
+        res.redirect('/bubbles/'+req.bubble._id+'/'+req.bubble_section+'/'+post._id)
+      })
     }
