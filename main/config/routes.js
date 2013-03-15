@@ -52,7 +52,7 @@ module.exports = function (app, passport, auth) {
       var Post  =  req.Post
       
       Post
-        .findOne({ _id : req.params.postId })
+        .findOne({ _id : id })
         .populate('comments')
         .exec(function (err, post) {
           if (err) return next(err)
@@ -92,6 +92,7 @@ module.exports = function (app, passport, auth) {
           if (err) return next(err)
           if (!bubble) return next(new Error('Failed to load bubble ' + id))
           req.bubble = bubble
+          req.object = bubble
  
           next()
         })
@@ -103,7 +104,8 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/bubbles/:bubbleId/:bubble_section/view/:postId/upload', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
+    app.post('/uploads/:bubble_section/bubble/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, uploads.upload)
+    app.post('/uploads/:bubble_section/event/:postId', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
 
 
   // Post Routes

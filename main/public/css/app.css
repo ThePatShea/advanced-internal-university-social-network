@@ -319,7 +319,7 @@ input[readonly="readonly"] {
   height: 32px;
   width: 32px;
   }
-  .pic_post_container .loader {
+  .loader  {
     margin: -16px 0 0 -16px;
     position: absolute;
     display: none;
@@ -331,6 +331,7 @@ input[readonly="readonly"] {
   position: absolute;
   display: none;
   }
+  .sidebar .attributes .upload_post_image,
   .pic_post_container:hover .upload_post_image {
     display: block;
     }
@@ -338,6 +339,10 @@ input[readonly="readonly"] {
     overflow: hidden;
     width: 120px;
     }
+    .sidebar .change_photo_container {
+      position: absolute;
+      left: 80px;
+      }
     .upload_post_image .change_photo_container .input_file {
       filter: alpha(opacity=0); /* For IE8 and earlier */
       opacity: 0;

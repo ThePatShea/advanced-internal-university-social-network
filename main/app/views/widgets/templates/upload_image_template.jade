@@ -1,10 +1,11 @@
-block set_object_type
+block set_parameters
 
 section(class=['upload_post_image_form_container','upload_image_form_'+object_type])
-  form#upload_post_image.upload_post_image.mobile_visible(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}/view/#{post._id}/upload', enctype='multipart/form-data')
+  form#upload_post_image.upload_post_image.mobile_visible(method='post', action='/uploads/#{object_type}/#{object_type}/#{object._id}', enctype='multipart/form-data')
+    input(type='hidden', name='current_url', value=req.url)
     section.change_photo_container.subscribe
       div.descriptor.gray_text
-        if (post.pic_big != '/img/default.jpg')
+        if (object.pic_big != '/img/default.jpg')
           | change #{object_type} photo
         else
           | add #{object_type} photo
