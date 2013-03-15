@@ -567,20 +567,33 @@ input[readonly="readonly"] {
     width: 120px;
     float: left;
     }
+    .subscription_list .bubble_widget .pic_big {
+      }
     .subscription_list .bubble_widget .subscribe {
-      left: 32px;
-      top: 5px;
+      position: absolute;
+      left: 28px;
+      top: 0;
       }
     .subscription_list .bubble_widget .section_inner {
       -webkit-border-radius: 22px;
       border-radius: 22px;
 
-      background: url("../img/overlay_sidebar_pic_top.png");
+      position: relative;
       overflow: hidden;
       height: 110px;
       width: 110px;
       margin: 5px;
       }
+      .subscription_list .bubble_widget .section_inner .pic {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        }
+      .subscription_list .bubble_widget .section_inner .pic_overlay {
+        background: url("../img/overlay_sidebar_pic_top.png");
+        }
       .subscription_list .bubble_widget .section_inner .bubble_name_container {
         position: relative;
         display: table;

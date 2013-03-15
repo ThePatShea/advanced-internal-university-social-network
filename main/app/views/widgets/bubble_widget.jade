@@ -1,6 +1,8 @@
 li.bubble_widget
   a(href='/bubbles/'+bubble._id)
     section.section_inner
+      img.pic.pic_big(src=bubble.pic_big)
+      div.pic.pic_overlay
       include subscribe
       div.bubble_name_container
         div.bubble_name_container_inner
