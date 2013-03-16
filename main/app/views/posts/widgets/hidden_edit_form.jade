@@ -1,0 +1,6 @@
+form(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}/save/#{post._id}')
+  input#hidden_edit_start_time.required_input(type='hidden', name='start_time', value=post.start_time)
+  input#hidden_edit_location.required_input(type='hidden', name='location', value=post.location)
+  textarea#hidden_edit_description.hidden.required_input(name='description')= post.description
+  input#hidden_edit_name.required_input(type='hidden', name='name', value=post.name)
+  button#submitBtn.red_button(type='submit') save #{bubble_section}

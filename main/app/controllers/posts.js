@@ -111,6 +111,6 @@
       post = _.extend(post, req.body)
     
       post.save(function(err, doc) {
-        res.redirect('/bubbles/'+req.bubble._id+'/'+req.bubble_section+'/'+post._id)
+        res.redirect('/bubbles/'+req.bubble._id+'/'+req.bubble_section+'/view/'+post._id)
       })
     }
