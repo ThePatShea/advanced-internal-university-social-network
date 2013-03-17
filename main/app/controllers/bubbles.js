@@ -53,15 +53,32 @@
     }
   
   
+  // Add an admin
+    exports.add_admin = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.admin.addToSet(bubble._id)
+      bubble.connections.users.admins.addToSet(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+
+    }
+
+  
   // Create a bubble
-    exports.create = function (req, res) {
+    exports.create = function (req, res, next) {
       var bubble      =  new Bubble(req.body)
       bubble.creator  =  req.user
   
       bubble.save(function(err) {
         req.body.current_url = '/bubbles/' + bubble._id
         req.bubble = bubble
-        subscribe(req,res)
+        next()
       })
     }
   

@@ -120,8 +120,10 @@ module.exports = function (app, passport, auth) {
   // Bubble Routes
     app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.detect_authorization, bubbles.edit)
     app.post('/edit/bubbles/:bubbleId/update', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.update)
+    app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
+    app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
+    app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin)
     app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.redirect)
-    app.post('/bubbles', auth.requiresLogin, bubbles.create)
 
 
   // User Routes
@@ -134,11 +136,6 @@ module.exports = function (app, passport, auth) {
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
     app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble)
-
-
-  // Subscription Routes
-    app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
-    app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
 
 
   // Notification Routes

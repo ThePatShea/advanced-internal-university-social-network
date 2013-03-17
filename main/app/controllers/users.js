@@ -73,9 +73,9 @@ exports.home = function(req, res){
              
             res.render('users/home', {
                 rendered_sidebar: req.rendered_sidebar
-              , subscribed: user.subscriptions
-              , title: 'home'
               , unsubscribed: bubbles
+              , user: req.user
+              , title: 'home'
             })
         })
     })

@@ -7,7 +7,7 @@ block main
       h4.subscription_section_name subscribed
       div.divider
       ul.subscription_list
-        each subscription in subscribed
+        each subscription in user.connections.bubbles.fan
           bubble = subscription._id
           include ../widgets/bubble_widget
     section.subscription_section
