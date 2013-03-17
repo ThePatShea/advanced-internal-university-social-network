@@ -99,7 +99,7 @@ exports.bubble = {
 
          
         // Detect whether the user is subscribed to the current bubble
-          if (req.bubble.subscriptions.indexOf(req.user._id) >= 0) {
+          if (req.bubble.connections.users.fans.indexOf(req.user._id) > -1) {
             req.user_subscribed  =  1
           } else {
             req.user_subscribed  =  0

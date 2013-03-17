@@ -16,7 +16,7 @@
           description: user.name + ' posted ' + req.a_or_an +' ' + bubble_section + ' in ' + bubble.name
         , connections: {
               users: {
-                  subscribers: bubble.subscriptions
+                  subscribers: bubble.connections.users.fans
                 , creator:     user.id
               }
             , bubble: bubble.id

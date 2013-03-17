@@ -5,8 +5,6 @@ var mongoose = require('mongoose')
 
 var BubbleSchema = new Schema({
     pic_big:       {type: String, default: '/img/default.jpg'}
-  , subscriptions: [{type: Schema.ObjectId, ref: 'User'}]
-  , creator:       {type: Schema.ObjectId, ref: 'User'}
   , createdAt:     {type: Date, default: Date.now}
   , description:   {type: String, default: ''}
   , name:          {type: String, default: ''}
