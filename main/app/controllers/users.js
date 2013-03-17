@@ -59,7 +59,7 @@ exports.show = function (req, res) {
 
 
 // show subscriptions
-exports.subscriptions = function(req, res){
+exports.home = function(req, res){
   User
     .findOne({_id: req.user._id})
     .populate('subscriptions._id', 'name num_subscriptions pic_big') 
@@ -71,10 +71,10 @@ exports.subscriptions = function(req, res){
         .exec(function(err, bubbles) {
           if (err) return res.render('500')
              
-            res.render('users/subscriptions', {
+            res.render('users/home', {
                 rendered_sidebar: req.rendered_sidebar
               , subscribed: user.subscriptions
-              , title: 'subscriptions'
+              , title: 'home'
               , unsubscribed: bubbles
             })
         })

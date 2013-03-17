@@ -99,7 +99,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Home Route
-    app.get('/', auth.requiresLogin, auth.user.render_sidebar, users.subscriptions)
+    app.get('/', auth.requiresLogin, auth.user.render_sidebar, users.home)
 
 
   // Upload Routes
@@ -130,7 +130,7 @@ module.exports = function (app, passport, auth) {
     app.get('/logout', users.logout)
     app.post('/users', users.create)
     app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
-    app.get('/users/:userId', auth.requiresLogin, auth.user.render_sidebar, users.subscriptions)
+    app.get('/users/:userId', auth.requiresLogin, auth.user.render_sidebar, users.home)
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
     app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble)

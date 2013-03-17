@@ -89,3 +89,23 @@
         res.redirect('/bubbles/'+bubble._id)
       })
     }
+
+
+  // Update the number of each connection a bubble has
+    exports.count_connections = function(req, res) {
+      var bubble = req.bubble
+
+      bubble.num_connections = {
+          num_posts: {
+              num_total:   bubble.connections.posts.events.length + bubble.connections.talks.length
+            , num_events:  bubble.connections.posts.events.length
+            , num_talks:   bubble.connections.posts.talks.length
+          }
+        , num_users: {
+              num_total:   bubble.connections.users.members.length + bubble.connections.users.admins.length + bubble.connections.users.fans.length
+            , num_members: bubble.connections.users.members.length
+            , num_admins:  bubble.connections.users.admins.length
+            , num_fans:    bubble.connections.users.fans.length
+          }
+      }
+    }

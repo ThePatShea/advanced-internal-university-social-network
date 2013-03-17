@@ -4,15 +4,36 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
 var BubbleSchema = new Schema({
-    subscriptions: [{type : Schema.ObjectId, ref : 'User'}]
-  , pic_big: {type: String, default: '/img/default.jpg'}
-  , creator: {type : Schema.ObjectId, ref : 'User'}
-  , num_subscriptions: {type: Number, default: 0}
-  , createdAt: {type : Date, default : Date.now}
-  , num_events: {type: Number, default: 0}
-  , num_talks: {type: Number, default: 0}
-  , description: String
-  , name: String
+    pic_big:       {type: String, default: '/img/default.jpg'}
+  , subscriptions: [{type: Schema.ObjectId, ref: 'User'}]
+  , creator:       {type: Schema.ObjectId, ref: 'User'}
+  , createdAt:     {type: Date, default: Date.now}
+  , description:   {type: String, default: ''}
+  , name:          {type: String, default: ''}
+  , connections: {
+        posts: {
+            events:  [{type: Schema.ObjectId, ref: 'Event'}]
+          , talks:   [{type: Schema.ObjectId, ref: 'Talk'}]
+        }
+      , users: {
+            members: [{type: Schema.ObjectId, ref: 'User'}]
+          , admins:  [{type: Schema.ObjectId, ref: 'User'}]
+          , fans:    [{type: Schema.ObjectId, ref: 'User'}]
+        }
+    }
+  , num_connections: {
+        num_posts: {
+            num_events:  {type: Number, default: 0}
+          , num_talks:   {type: Number, default: 0}
+          , num_total:   {type: Number, default: 0}
+        }
+      , num_users: {
+            num_members: {type: Number, default: 0}
+          , num_admins:  {type: Number, default: 0}
+          , num_total:   {type: Number, default: 0}
+          , num_fans:    {type: Number, default: 0}
+        }
+    }
 })
 
 mongoose.model('Bubble', BubbleSchema)

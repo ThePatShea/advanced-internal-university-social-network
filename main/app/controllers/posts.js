@@ -53,10 +53,8 @@
 
   // Create a post
     exports.create = function (req, res, next) {
-      var bubble = req.bubble
-      Post = req.Post
-
-      // TODO: Handle num_events++ and num_talks++
+      var bubble  =  req.bubble
+        , Post    =  req.Post
 
       bubble.save(function (err) {
         var post = new Post(req.body)
