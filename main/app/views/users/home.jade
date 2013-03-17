@@ -7,14 +7,12 @@ block main
       h4.subscription_section_name subscribed
       div.divider
       ul.subscription_list
-        each subscription in user.connections.bubbles.fan
-          bubble = subscription._id
+        each bubble in user.connections.bubbles.fan
           include ../widgets/bubble_widget
     section.subscription_section
       user_subscribed = 0
       h4.subscription_section_name not subscribed
       div.divider
       ul.subscription_list
-        each subscription in unsubscribed
-          bubble = subscription
+        each bubble in unsubscribed
           include ../widgets/bubble_widget

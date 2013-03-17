@@ -10,4 +10,4 @@ form(method="post", action="/bubbles/#{bubble._id}/#{subscribe_status}")
       div.heart.icon_subscribed
     - else
       div.heart.icon_unsubscribed
-    div.descriptor.gray_text= bubble.num_connections.num_users.num_fans
+    div.descriptor.gray_text #{bubble.num_connections.num_users.num_members}
