@@ -53,19 +53,24 @@
 
   // Create a post
     exports.create = function (req, res, next) {
-      var bubble  =  req.bubble
-        , Post    =  req.Post
+      var bubble_section  =  req.bubble_section
+        , bubble          =  req.bubble
+        , Post            =  req.Post
 
-      bubble.save(function (err) {
-        var post = new Post(req.body)
-        post.bubbles.addToSet(bubble._id)
-        post.creator = req.user._id
+      var post = new Post(req.body)
+      post.bubbles.addToSet(bubble._id)
+      post.creator = req.user._id
 
-        post.save(function(err) {
+      post.save(function(err) {
+        if (bubble_section == 'event')
+          bubble.connections.posts.events.addToSet(post._id)
+        if (bubble_section == 'talk')
+          bubble.connections.posts.talks.addToSet(post._id)
+
+        bubble.save(function (err) {
           req.post = post
           next()
         })
-
       })
     }
 

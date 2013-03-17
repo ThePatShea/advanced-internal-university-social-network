@@ -63,7 +63,7 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-          res.redirect(req.current_url)
+          res.redirect(req.redirect_url)
         })
       })
 
@@ -75,7 +75,7 @@
       var bubble = new Bubble(req.body)
   
       bubble.save(function(err) {
-        req.current_url    =  '/bubbles/' + bubble._id
+        req.redirect_url   =  '/bubbles/' + bubble._id
         req.user_selected  =  req.user
         req.bubble         =  bubble
 
@@ -103,19 +103,19 @@
     
       bubble = _.extend(bubble, req.body)
     
-      bubble.save(function(err, doc) {
+      bubble.save(function(err) {
         res.redirect('/bubbles/'+bubble._id)
       })
     }
 
 
   // Update the number of each connection a bubble has
-    exports.count_connections = function(req, res) {
+    exports.count_connections = function(req, res, next) {
       var bubble = req.bubble
-
+      console.log(JSON.stringify(bubble)) //TESTING
       bubble.num_connections = {
           num_posts: {
-              num_total:   bubble.connections.posts.events.length + bubble.connections.talks.length
+              num_total:   bubble.connections.posts.events.length + bubble.connections.posts.talks.length
             , num_events:  bubble.connections.posts.events.length
             , num_talks:   bubble.connections.posts.talks.length
           }
@@ -126,4 +126,8 @@
             , num_fans:    bubble.connections.users.fans.length
           }
       }
+      
+      bubble.save(function(err) {
+        next()
+      })
     }
