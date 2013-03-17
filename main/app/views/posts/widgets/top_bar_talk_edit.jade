@@ -1,0 +1,4 @@
+extends templates/top_bar/top_bar_event_template
+
+block top_bar_main_name
+  input#edit_name.required_input.connect_hidden.post_name(value=post.name)
