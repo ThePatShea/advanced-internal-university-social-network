@@ -63,7 +63,7 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-          next()
+          res.redirect(req.current_url)
         })
       })
 
@@ -72,12 +72,13 @@
   
   // Create a bubble
     exports.create = function (req, res, next) {
-      var bubble      =  new Bubble(req.body)
-      bubble.creator  =  req.user
+      var bubble = new Bubble(req.body)
   
       bubble.save(function(err) {
-        req.body.current_url = '/bubbles/' + bubble._id
-        req.bubble = bubble
+        req.current_url    =  '/bubbles/' + bubble._id
+        req.user_selected  =  req.user
+        req.bubble         =  bubble
+
         next()
       })
     }

@@ -55,19 +55,19 @@ exports.post = {
 
 exports.bubble = {
       hasAuthorization : function (req, res, next) {
-        if (req.bubble.creator != req.user.id) {
+        if (req.bubble.connections.users.admins.indexOf(req.user.id) > -1) {
+          next()
+        } else {
           return res.redirect('/bubbles/'+req.bubble._id)
         }
-
-        next()
       }
     , edit_bubble : function (req, res, next) {
         req.edit_bubble  =  'true'
         next()
       }
     , detect_authorization : function (req, res, next) {
-        // Detect whether the user created the current bubble
-          if (req.bubble.creator == req.user.id) {
+        // Detect whether the user is an admin of the current bubble
+          if (req.bubble.connections.users.admins.indexOf(req.user.id) > -1) {
             req.view_sidebar  =  'sidebar_bubble_authorized'
             req.view_list     =  'list_authorized'
             
