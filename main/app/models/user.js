@@ -16,11 +16,33 @@ var UserSchema = new Schema({
   , facebook: {}
   , twitter: {}
   , github: {}
-  , subscriptions: [{ 
-      _id: {type : Schema.ObjectId, ref : 'Bubble'}
-  }]
   , total_unviewed_notifications: {type: Number, default: 0}
   , createdAt: {type : Date, default : Date.now}
+  , connections: {
+        notifications: {
+            unclicked: [{type: Schema.ObjectId, ref: 'Notification'}]
+          , unseen:    [{type: Schema.ObjectId, ref: 'Notification'}]
+          , total:     [{type: Schema.ObjectId, ref: 'Notification'}]
+        }
+      , bubbles: {
+            member: [{type: Schema.ObjectId, ref: 'Bubble'}]
+          , admin:  [{type: Schema.ObjectId, ref: 'Bubble'}]
+          , fan:    [{type: Schema.ObjectId, ref: 'Bubble'}]
+        }
+    }
+  , num_connections: {
+        num_notifications: {
+            num_unclicked: {type: Number, default: 0}
+          , num_unseen:    {type: Number, default: 0}
+          , num_total:     {type: Number, default: 0}
+        }
+      , num_bubbles: {
+            num_member: {type: Number, default: 0}
+          , num_admin:  {type: Number, default: 0}
+          , num_total:  {type: Number, default: 0}
+          , num_fan:    {type: Number, default: 0}
+        } 
+    }
 })
 
 // virtual attributes
