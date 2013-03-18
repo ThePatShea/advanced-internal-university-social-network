@@ -42,6 +42,7 @@ $('.requiredInput').each(function() {
 
 $('#submitBtn').prop('disabled', true);
 $('#submitBtn').addClass('grayed_out');
+inspectAllInputFields();
 
 $('.requiredInput').change(function() {
    inspectAllInputFields();

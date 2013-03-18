@@ -500,6 +500,15 @@ input[readonly="readonly"] {
       right: 1px;
       top: 1px;
       }
+  .edit_post {
+    position: absolute;
+    left: 250px;
+    }
+  .hidden_edit_form {
+    position: absolute;
+    width: 200px;
+    left: 250px;
+    }
   .warning {
     -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
     box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, .5);
@@ -520,6 +529,9 @@ input[readonly="readonly"] {
     top: -5px;
     }
     .add_event .warning {
+      width: 80%;
+      }
+    .hidden_edit_form .warning {
       width: 80%;
       }
   .grayed_out:hover .warning {
