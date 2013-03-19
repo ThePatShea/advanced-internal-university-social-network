@@ -1,3 +1,4 @@
 form.delete_post_form(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}/delete/#{post._id}')
+  button.activate_are_you_sure.red_button delete #{bubble_section}
   input(type="hidden", name="_method", value="DELETE")
-  button#submitBtn.red_button(type='submit') delete #{bubble_section}
+  include are_you_sure_delete_post
