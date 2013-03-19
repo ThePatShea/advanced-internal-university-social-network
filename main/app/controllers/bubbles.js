@@ -97,7 +97,7 @@
     }
   
   
-  // Update a bubble
+  // Save edits to a bubble
     exports.update = function(req, res) {
       var bubble = req.bubble
     
@@ -105,6 +105,16 @@
     
       bubble.save(function(err) {
         res.redirect('/bubbles/'+bubble._id)
+      })
+    }
+
+
+  // Delete a bubble
+    exports.delete = function(req, res) {
+      var bubble = req.bubble
+
+      bubble.remove(function(err) {
+        res.redirect('/')
       })
     }
 
