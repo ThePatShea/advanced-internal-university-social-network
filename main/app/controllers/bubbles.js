@@ -112,7 +112,7 @@
   // Update the number of each connection a bubble has
     exports.count_connections = function(req, res, next) {
       var bubble = req.bubble
-      console.log(JSON.stringify(bubble)) //TESTING
+
       bubble.num_connections = {
           num_posts: {
               num_total:   bubble.connections.posts.events.length + bubble.connections.posts.talks.length

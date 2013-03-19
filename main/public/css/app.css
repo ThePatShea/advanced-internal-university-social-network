@@ -504,6 +504,10 @@ input[readonly="readonly"] {
     position: absolute;
     left: 250px;
     }
+  .delete_post_form {
+    position: absolute;
+    right: 50px;
+    }
   .hidden_edit_form {
     position: absolute;
     width: 200px;

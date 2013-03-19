@@ -4,6 +4,11 @@
 
 
 // Define main functions
+  // Redirect to another page
+    exports.redirect = function(req, res) {
+      res.redirect(req.redirect_url)
+    }
+
   // View a list of posts in a bubble
     exports.list = function(req, res) {
       var bubble_section  =  req.bubble_section
@@ -115,5 +120,28 @@
     
       post.save(function(err, doc) {
         res.redirect('/bubbles/'+req.bubble._id+'/'+req.bubble_section+'/view/'+post._id)
+      })
+    }
+
+
+  // Delete a post
+    exports.delete = function(req, res, next) {
+      var bubble_section  =  req.bubble_section
+        , bubble          =  req.bubble
+        , post            =  req.post
+
+      post.remove(function(err) {
+        console.log('REMOVED THE POST') // TESTING
+
+        if (bubble_section == 'event')
+          bubble.connections.posts.events.remove(post._id)
+        if (bubble_section == 'talk')
+          bubble.connections.posts.talks.remove(post._id)
+       
+        bubble.save(function(err) {
+          var redirect_url = '/bubbles/'+bubble._id
+
+          next()
+        })
       })
     }
