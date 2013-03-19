@@ -1,7 +1,11 @@
 // Include the models
-  var mongoose  =  require('mongoose')
-    , Bubble    =  mongoose.model('Bubble')
-    , _         =  require('underscore')
+  var mongoose       =  require('mongoose')
+    , Bubble         =  mongoose.model('Bubble')
+    , _              =  require('underscore')
+
+// Include other controllers
+  var notifications  =  require('./notifications')
+
 
 
 // Define main functions
@@ -114,7 +118,11 @@
       var bubble = req.bubble
 
       bubble.remove(function(err) {
-        res.redirect('/')
+        req.notification_delete_parameters = {'connections.bubble': bubble._id}
+   
+        notifications.delete(req, res, function() {
+          res.redirect('/')
+        })
       })
     }
 

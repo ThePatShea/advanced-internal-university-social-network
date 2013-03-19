@@ -138,7 +138,6 @@
       bubble.save(function(err) {
         post.remove(function(err) {
           req.redirect_url = '/bubbles/'+bubble._id
-          next = function() { res.redirect(req.redirect_url) }
 
           bubbles.count_connections(req, res, function() {
             req.notification_delete_parameters = {'connections.post._id': post._id}
