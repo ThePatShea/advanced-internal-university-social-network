@@ -77,3 +77,12 @@
         next()
       })
   }
+
+
+  // Delete notifications
+    exports.delete = function(req, res, next) {
+      Notification
+        .remove(req.notification_delete_parameters, function(err) {
+          next()
+        })
+    }

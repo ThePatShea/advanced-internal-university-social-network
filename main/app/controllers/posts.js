@@ -1,9 +1,10 @@
 // Include the models
-  var mongoose  =  require('mongoose')
-    , _         =  require('underscore')
+  var mongoose       =  require('mongoose')
+    , _              =  require('underscore')
 
 // Include other controllers
-  var bubbles   =  require('./bubbles')
+  var notifications  =  require('./notifications')
+    , bubbles        =  require('./bubbles')
 
 
 
@@ -139,7 +140,13 @@
           req.redirect_url = '/bubbles/'+bubble._id
           next = function() { res.redirect(req.redirect_url) }
 
-          bubbles.count_connections(req, res, next)
+          bubbles.count_connections(req, res, function() {
+            req.notification_delete_parameters = {'connections.post._id': post._id}
+
+            notifications.delete(req, res, function() {
+              res.redirect(req.redirect_url)
+            })
+          })
         })
       })
     }
