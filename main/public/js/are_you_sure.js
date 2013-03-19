@@ -5,7 +5,6 @@ $(document).ready(function () {
 
     $('.are_you_sure').css({display: 'block'});
     $(this).css({display: 'none'});
-
   });
 
   
@@ -14,7 +13,5 @@ $(document).ready(function () {
 
     $('.activate_are_you_sure').css({display: 'block'});
     $('.are_you_sure').css({display: 'none'});
-
   });
-
 });

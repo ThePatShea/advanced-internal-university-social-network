@@ -1,0 +1,9 @@
+block set_parameters
+
+form.delete_post_form(method='post', action=url_delete)
+  button.activate_are_you_sure.red_button delete #{object_type}
+  input(type="hidden", name="_method", value="DELETE")
+  section.are_you_sure
+    p Are you sure you want to delete this #{object_type}?
+    button.red_button.are_you_sure_yes(type='submit') yes
+    button.red_button.are_you_sure_no no
