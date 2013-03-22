@@ -9,3 +9,17 @@ block main
     section.subscription_section
       h4.subscription_section_name members
       div.divider
+
+  section(style='width: 50%')
+    h4 pending members
+    ul.post_list
+      each user in bubble.connections.users.applicants
+        li.post_widget
+          img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+          form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
+            button#connect_bubble_apply.red_button(type='submit') confirm
+            input(type='hidden', name='redirect_url', value=req.url)
+          form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
+            button#connect_bubble_apply.red_button(type='submit') deny
+            input(type='hidden', name='redirect_url', value=req.url)
+          h4= user.name

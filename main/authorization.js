@@ -81,7 +81,9 @@ exports.bubble = {
           } else if (req.bubble.connections.users.members.indexOf(req.user.id) > -1) {
             req.bubble_connect_status = 'member'
 
-
+            req.view_sidebar    =  'sidebar_bubble_unauthorized'
+            req.view_dashboard  =  'dashboard_unauthorized'
+            req.view_list       =  'list_unauthorized'
           } else if (req.bubble.connections.users.fans.indexOf(req.user.id) > -1) {
             req.bubble_connect_status = 'fan'
 

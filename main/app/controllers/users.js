@@ -74,7 +74,8 @@ exports.home = function(req, res){
           if (err) return res.render('500')
              
             res.render('users/home', {
-                rendered_sidebar: req.rendered_sidebar
+                bubble_connect_status: req.bubble_connect_status
+              , rendered_sidebar: req.rendered_sidebar
               , unsubscribed: bubbles
               , title: 'home'
               , user: user

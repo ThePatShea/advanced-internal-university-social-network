@@ -73,6 +73,38 @@
     }
   
 
+  // Add a member
+    exports.add_member = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.member.addToSet(bubble._id)
+      bubble.connections.users.members.addToSet(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+
+  
+  // Remove a member
+    exports.remove_member = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.member.remove(bubble._id)
+      bubble.connections.users.members.remove(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+
+
   // Add an admin
     exports.add_admin = function (req, res, next) {
       var user_selected  =  req.user_selected
