@@ -55,7 +55,7 @@ exports.post = {
 
 exports.bubble = {
       hasAuthorization : function (req, res, next) {
-        if (req.bubble.connections.users.admins.indexOf(req.user.id) > -1) {
+        if (req.user.connections.bubbles.admin.indexOf(req.bubble.id) > -1) {
           next()
         } else {
           return res.redirect('/bubbles/'+req.bubble._id)
