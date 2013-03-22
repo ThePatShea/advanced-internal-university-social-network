@@ -139,7 +139,7 @@ module.exports = function (app, passport, auth) {
     app.post('/bubbles/:bubbleId/remove_applicant/:userId', auth.requiresLogin, bubbles.remove_applicant, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_applicant/:userId', auth.requiresLogin, bubbles.add_applicant, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/remove_member/:userId', auth.requiresLogin, bubbles.remove_member, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_member/:userId', auth.requiresLogin, bubbles.add_member, bubbles.remove_applicant, bubbles.count_connections)
+    app.post('/bubbles/:bubbleId/add_member/:userId', auth.requiresLogin, bubbles.add_member, bubbles.remove_applicant, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/remove_fan/:userId', auth.requiresLogin, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_fan/:userId', auth.requiresLogin, bubbles.add_fan, bubbles.count_connections)
     app.post('/edit/bubbles/:bubbleId/update', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.update)
