@@ -30,7 +30,7 @@ block main
         li.post_widget
           img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
           form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
-            button#connect_bubble_apply.red_button(type='submit') make admin
+            button#connect_bubble_apply.red_button(type='submit') promote to admin
             input(type='hidden', name='redirect_url', value=req.url)
           form(method='post', action='/bubbles/' + bubble._id + '/remove_member/' + user._id)
             button#connect_bubble_apply.red_button(type='submit') remove
