@@ -10,7 +10,7 @@ block main
       h4.subscription_section_name members
       div.divider
 
-  section(style='width: 50%')
+  section(style='width: 50%; float: left')
     h4 pending members
     ul.post_list
       each user in bubble.connections.users.applicants
@@ -21,5 +21,18 @@ block main
             input(type='hidden', name='redirect_url', value=req.url)
           form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
             button#connect_bubble_apply.red_button(type='submit') deny
+            input(type='hidden', name='redirect_url', value=req.url)
+          h4= user.name
+  section(style='width: 50%; float: left')
+    h4 existing members
+    ul.post_list
+      each user in bubble.connections.users.members
+        li.post_widget
+          img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+          form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
+            button#connect_bubble_apply.red_button(type='submit') make admin
+            input(type='hidden', name='redirect_url', value=req.url)
+          form(method='post', action='/bubbles/' + bubble._id + '/remove_member/' + user._id)
+            button#connect_bubble_apply.red_button(type='submit') remove
             input(type='hidden', name='redirect_url', value=req.url)
           h4= user.name

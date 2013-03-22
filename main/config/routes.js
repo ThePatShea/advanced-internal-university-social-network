@@ -101,6 +101,7 @@ module.exports = function (app, passport, auth) {
       Bubble
         .findOne({ _id : id })
         .populate('connections.users.applicants')
+        .populate('connections.users.members')
         .exec(function (err, bubble) {
           if (err) return next(err)
           if (!bubble) return next(new Error('Failed to load bubble ' + id))
