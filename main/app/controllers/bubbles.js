@@ -27,22 +27,37 @@
   
   
   // Add a fan
-    exports.unsubscribe = function (req, res) {
-      var bubble  =  req.bubble
-        , user    =  req.user
-       
-      bubble.subscriptions.remove(user._id)
-      bubble.num_subscriptions--
+    exports.add_fan = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
 
-      bubble.save(function (err) {
-        user.subscriptions.remove({_id: bubble._id})
-        user.save(function (err) {
-          res.redirect(req.body.current_url)
+      user_selected.connections.bubbles.fan.addToSet(bubble._id)
+      bubble.connections.users.fans.addToSet(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          res.redirect(req.body.redirect_url)
         })
       })
     }
   
   
+  // Remove a fan
+    exports.remove_fan = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.fan.remove(bubble._id)
+      bubble.connections.users.fans.remove(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          res.redirect(req.body.redirect_url)
+        })
+      })
+    }
+  
+
   // Add an admin
     exports.add_admin = function (req, res, next) {
       var user_selected  =  req.user_selected
@@ -56,7 +71,6 @@
           res.redirect(req.redirect_url)
         })
       })
-
     }
 
   
@@ -119,15 +133,16 @@
 
       bubble.num_connections = {
           num_posts: {
-              num_total:   bubble.connections.posts.events.length + bubble.connections.posts.talks.length
-            , num_events:  bubble.connections.posts.events.length
-            , num_talks:   bubble.connections.posts.talks.length
+              num_total:       bubble.connections.posts.events.length + bubble.connections.posts.talks.length
+            , num_events:      bubble.connections.posts.events.length
+            , num_talks:       bubble.connections.posts.talks.length
           }
         , num_users: {
-              num_total:   bubble.connections.users.members.length + bubble.connections.users.admins.length + bubble.connections.users.fans.length
-            , num_members: bubble.connections.users.members.length
-            , num_admins:  bubble.connections.users.admins.length
-            , num_fans:    bubble.connections.users.fans.length
+              num_total:       bubble.connections.users.applicants.length + bubble.connections.users.members.length + bubble.connections.users.admins.length + bubble.connections.users.fans.length
+            , num_applicants:  bubble.connections.users.applicants.length
+            , num_members:     bubble.connections.users.members.length
+            , num_admins:      bubble.connections.users.admins.length
+            , num_fans:        bubble.connections.users.fans.length
           }
       }
       

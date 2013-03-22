@@ -134,10 +134,10 @@ module.exports = function (app, passport, auth) {
 
   // Bubble Routes
     app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.detect_authorization, bubbles.edit)
+    app.post('/bubbles/:bubbleId/remove_fan/:userId', auth.requiresLogin, bubbles.remove_fan, bubbles.count_connections)
+    app.post('/bubbles/:bubbleId/add_fan/:userId', auth.requiresLogin, bubbles.add_fan, bubbles.count_connections)
     app.post('/edit/bubbles/:bubbleId/update', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.update)
     app.del('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.delete)
-    app.post('/bubbles/:bubbleId/remove_fan/:userId', auth.requiresLogin, bubbles.remove_fan)
-    app.post('/bubbles/:bubbleId/add_fan/:userId', auth.requiresLogin, bubbles.add_fan)
     app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin)
 
 
