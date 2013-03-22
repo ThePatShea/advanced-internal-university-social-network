@@ -68,16 +68,18 @@ exports.bubble = {
     , detect_authorization : function (req, res, next) {
         // Detect whether the user is an admin of the current bubble
           if (req.bubble.connections.users.admins.indexOf(req.user.id) > -1) {
-            req.view_sidebar  =  'sidebar_bubble_authorized'
-            req.view_list     =  'list_authorized'
+            req.view_sidebar    =  'sidebar_bubble_authorized'
+            req.view_dashboard  =  'dashboard_authorized'
+            req.view_list       =  'list_authorized'
             
             req.view_list    +=  '_' + req.bubble_section
 
             if (req.edit_bubble == 'true')
               req.view_sidebar  +=  '_edit'
           } else {
-            req.view_sidebar  =  'sidebar_bubble_unauthorized'
-            req.view_list     =  'list_unauthorized'
+            req.view_sidebar    =  'sidebar_bubble_unauthorized'
+            req.view_dashboard  =  'dashboard_unauthorized'
+            req.view_list       =  'list_unauthorized'
           }
         
  

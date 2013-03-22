@@ -115,6 +115,7 @@ module.exports = function (app, passport, auth) {
     app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
+    app.get('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.detect_authorization, posts.dashboard)
     app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
 
 
@@ -125,7 +126,6 @@ module.exports = function (app, passport, auth) {
     app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
     app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
     app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin)
-    app.get('/bubbles/:bubbleId', auth.requiresLogin, bubbles.redirect)
 
 
   // User Routes

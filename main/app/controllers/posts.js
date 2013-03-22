@@ -96,6 +96,22 @@
     }
 
 
+  // Show a bubble's dashboard
+    exports.dashboard = function(req, res) {
+      res.render('posts/' + req.view_dashboard, {
+          change_post_image: req.change_post_image
+        , rendered_sidebar: req.rendered_sidebar
+        , bubble_section: req.bubble_section
+        , format_date_bottom_count: 0
+        , format_date_top_count: 0
+        , comments: req.comments
+        , title: req.bubble.name
+        , bubble: req.bubble
+        , post: req.post
+      })
+    }
+
+
   // Edit a post
     exports.edit = function(req, res) {
      res.render('posts/' + req.view_post + 'edit', {

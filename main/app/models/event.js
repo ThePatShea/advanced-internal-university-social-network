@@ -10,6 +10,7 @@ var EventSchema = new Schema({
   , creator: {type : Schema.ObjectId, ref : 'User'}
   , createdAt: {type : Date, default : Date.now}
   , attending_count: {type: Number, default: 0}
+  , privacy: {type: String, default: 'members'}
   , description: String
   , location: String
   , start_time: Date
