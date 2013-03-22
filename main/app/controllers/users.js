@@ -58,17 +58,18 @@ exports.show = function (req, res) {
 }
 
 
-// show subscriptions
+// Show the home page
 exports.home = function(req, res){
   User
     .findOne({_id: req.user._id})
     .populate('connections.bubbles.member', 'name num_connections pic_big') 
     .populate('connections.bubbles.admin', 'name num_connections pic_big') 
+    .populate('connections.bubbles.fan', 'name num_connections pic_big') 
     .exec(function(err, user) {
       if (err) return res.render('500')
 
       Bubble
-        .find({ subscriptions: { $ne: user._id } },"name num_connections pic_big")
+        .find({ 'connections.users.fans': { $ne: user._id } },"name num_connections pic_big")
         .exec(function(err, bubbles) {
           if (err) return res.render('500')
              

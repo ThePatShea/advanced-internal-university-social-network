@@ -122,7 +122,7 @@ module.exports = function (app, passport, auth) {
 
   // Post Routes
     app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.detect_authorization, posts.edit)
-    app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, bubbles.count_connections, notifications.create)
+    app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create, bubbles.count_connections)
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
     app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.delete)
     app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
@@ -137,8 +137,8 @@ module.exports = function (app, passport, auth) {
     app.post('/bubbles/:bubbleId/remove_fan/:userId', auth.requiresLogin, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_fan/:userId', auth.requiresLogin, bubbles.add_fan, bubbles.count_connections)
     app.post('/edit/bubbles/:bubbleId/update', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.update)
+    app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin, bubbles.count_connections)
     app.del('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.delete)
-    app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin)
 
 
   // User Routes

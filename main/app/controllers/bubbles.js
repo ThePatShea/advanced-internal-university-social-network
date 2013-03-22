@@ -9,23 +9,6 @@
 
 
 // Define main functions
-  // Subscribe to a bubble
-    var subscribe = exports.subscribe = function (req, res) {
-      var bubble  =  req.bubble
-        , user    =  req.user
-      
-      bubble.subscriptions.addToSet(user._id)
-      bubble.num_subscriptions++
-
-      bubble.save(function (err) {
-        user.subscriptions.addToSet({_id: bubble._id})
-        user.save(function (err) {
-          res.redirect(req.body.current_url)
-        })
-      })
-    }
-  
-  
   // Add a fan
     exports.add_fan = function (req, res, next) {
       var user_selected  =  req.user_selected
@@ -36,7 +19,7 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-          res.redirect(req.body.redirect_url)
+          next()
         })
       })
     }
@@ -52,7 +35,7 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-          res.redirect(req.body.redirect_url)
+          next()
         })
       })
     }
@@ -68,7 +51,7 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-          res.redirect(req.redirect_url)
+          next()
         })
       })
     }
@@ -131,6 +114,8 @@
     exports.count_connections = function(req, res, next) {
       var bubble = req.bubble
 
+      console.log('counting connections') // TEST
+
       bubble.num_connections = {
           num_posts: {
               num_total:       bubble.connections.posts.events.length + bubble.connections.posts.talks.length
@@ -147,6 +132,6 @@
       }
       
       bubble.save(function(err) {
-        next()
+        res.redirect(req.body.redirect_url)
       })
     }
