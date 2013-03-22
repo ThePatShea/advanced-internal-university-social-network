@@ -1,0 +1,14 @@
+if (bubble_connect_status == 'admin' || bubble_connect_status == 'member')
+  connect_bubble_action  =  '/bubble_connect/' + bubble._id + '/remove/' + req.user._id
+  connect_bubble_phrase  =  'leave bubble'
+else if (bubble_connect_status == 'fan' || bubble_connect_status == 'none')
+  connect_bubble_action  =  '/bubble_connect/' + bubble._id + '/apply/' + req.user._id
+  connect_bubble_phrase  =  'apply to be a member'
+else if (bubble_connect_status == 'applicant')
+  connect_bubble_action  =  '/bubble_connect/' + bubble._id + '/reject/' + req.user._id
+  connect_bubble_phrase  =  'cancel application'
+
+
+form.hidden_edit_form(method='post', action=connect_bubble_action)
+  button#connect_bubble_apply.red_button(type='submit') #{connect_bubble_phrase}
+  input(type='hidden', name='current_url', value=req.url)

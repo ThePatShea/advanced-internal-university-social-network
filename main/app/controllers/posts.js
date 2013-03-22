@@ -99,7 +99,8 @@
   // Show a bubble's dashboard
     exports.dashboard = function(req, res) {
       res.render('posts/' + req.view_dashboard, {
-          change_post_image: req.change_post_image
+          bubble_connect_status: req.bubble_connect_status
+        , change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
         , format_date_bottom_count: 0
