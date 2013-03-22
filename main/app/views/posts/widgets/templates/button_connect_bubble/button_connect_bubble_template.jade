@@ -13,6 +13,6 @@ else if (bubble_connect_status == 'applicant')
   block if_applicant
 
 if (connect_bubble_hide != 'true')
-  form(method='post', action='/bubble_connect/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
+  form(method='post', action='/bubbles/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
     button#connect_bubble_apply.red_button(type='submit') #{connect_bubble_phrase}
     input(type='hidden', name='current_url', value=req.url)

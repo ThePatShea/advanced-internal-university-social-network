@@ -46,6 +46,19 @@ module.exports = function (app, passport, auth) {
     })
 
 
+  // User parameters
+    app.param('userId', function(req, res, next, id) {
+      User
+        .findOne({ _id : id })
+        .exec(function (err, user) {
+          if (err) return next(err)
+          if (!user) return next(new Error('Failed to load user ' + id))
+
+          req.user_selected = user
+          next()
+        })
+    })
+
   // Single post parameters
     app.param('postId', function(req, res, next, id) {
       var Post  =  req.Post
@@ -123,8 +136,8 @@ module.exports = function (app, passport, auth) {
     app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.detect_authorization, bubbles.edit)
     app.post('/edit/bubbles/:bubbleId/update', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.update)
     app.del('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.delete)
-    app.post('/bubbles/:bubbleId/unsubscribe', auth.requiresLogin, bubbles.unsubscribe)
-    app.post('/bubbles/:bubbleId/subscribe', auth.requiresLogin, bubbles.subscribe)
+    app.post('/bubbles/:bubbleId/remove_fan/:userId', auth.requiresLogin, bubbles.remove_fan)
+    app.post('/bubbles/:bubbleId/add_fan/:userId', auth.requiresLogin, bubbles.add_fan)
     app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin)
 
 

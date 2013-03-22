@@ -26,7 +26,7 @@
     }
   
   
-  // Unsubscribe from a bubble
+  // Add a fan
     exports.unsubscribe = function (req, res) {
       var bubble  =  req.bubble
         , user    =  req.user
