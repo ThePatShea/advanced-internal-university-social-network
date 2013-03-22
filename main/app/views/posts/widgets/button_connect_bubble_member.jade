@@ -1,13 +1,17 @@
 extends templates/button_connect_bubble/button_connect_bubble_template
 
 block if_admin_or_member
-  connect_bubble_action  =  'remove'
   connect_bubble_phrase  =  'leave bubble'
+  connect_bubble_action  =  'remove'
 
-block if_fan_or_none
-  connect_bubble_action  =  'apply'
+block if_fan
   connect_bubble_phrase  =  'apply to be a member'
+  connect_bubble_action  =  'apply'
+
+block if_none
+  connect_bubble_phrase  =  'apply to be a member'
+  connect_bubble_action  =  'apply'
 
 block if_applicant
-  connect_bubble_action  =  'reject'
   connect_bubble_phrase  =  'cancel application'
+  connect_bubble_action  =  'reject'

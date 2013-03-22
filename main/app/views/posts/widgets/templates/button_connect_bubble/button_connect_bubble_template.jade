@@ -1,13 +1,18 @@
+connect_bubble_hide = 'false'
+
 if (bubble_connect_status == 'admin' || bubble_connect_status == 'member') 
   block if_admin_or_member
 
-else if (bubble_connect_status == 'fan' || bubble_connect_status == 'none') 
-  block if_fan_or_none
+else if (bubble_connect_status == 'fan') 
+  block if_fan
+
+else if (bubble_connect_status == 'none') 
+  block if_none
 
 else if (bubble_connect_status == 'applicant') 
   block if_applicant
 
-
-form.hidden_edit_form(method='post', action='/bubble_connect/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
-  button#connect_bubble_apply.red_button(type='submit') #{connect_bubble_phrase}
-  input(type='hidden', name='current_url', value=req.url)
+if (connect_bubble_hide != 'true')
+  form(method='post', action='/bubble_connect/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
+    button#connect_bubble_apply.red_button(type='submit') #{connect_bubble_phrase}
+    input(type='hidden', name='current_url', value=req.url)
