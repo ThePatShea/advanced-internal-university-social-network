@@ -41,6 +41,38 @@
     }
   
 
+  // Add an applicant
+    exports.add_applicant = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.applicant.addToSet(bubble._id)
+      bubble.connections.users.applicants.addToSet(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+  
+  
+  // Remove an applicant
+    exports.remove_applicant = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.applicant.remove(bubble._id)
+      bubble.connections.users.applicants.remove(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+  
+
   // Add an admin
     exports.add_admin = function (req, res, next) {
       var user_selected  =  req.user_selected
@@ -57,6 +89,22 @@
     }
 
   
+  // Remove an admin
+    exports.remove_admin = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.admin.remove(bubble._id)
+      bubble.connections.users.admins.remove(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+
+
   // Create a bubble
     exports.create = function (req, res, next) {
       var bubble = new Bubble(req.body)
