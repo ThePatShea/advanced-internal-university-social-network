@@ -25,9 +25,10 @@ var UserSchema = new Schema({
           , total:     [{type: Schema.ObjectId, ref: 'Notification'}]
         }
       , bubbles: {
-            member: [{type: Schema.ObjectId, ref: 'Bubble'}]
-          , admin:  [{type: Schema.ObjectId, ref: 'Bubble'}]
-          , fan:    [{type: Schema.ObjectId, ref: 'Bubble'}]
+            applicant: [{type: Schema.ObjectId, ref: 'Bubble'}]
+          , member:    [{type: Schema.ObjectId, ref: 'Bubble'}]
+          , admin:     [{type: Schema.ObjectId, ref: 'Bubble'}]
+          , fan:       [{type: Schema.ObjectId, ref: 'Bubble'}]
         }
     }
   , num_connections: {
@@ -37,10 +38,11 @@ var UserSchema = new Schema({
           , num_total:     {type: Number, default: 0}
         }
       , num_bubbles: {
-            num_member: {type: Number, default: 0}
-          , num_admin:  {type: Number, default: 0}
-          , num_total:  {type: Number, default: 0}
-          , num_fan:    {type: Number, default: 0}
+            num_applicant: {type: Number, default: 0}
+          , num_member:    {type: Number, default: 0}
+          , num_admin:     {type: Number, default: 0}
+          , num_total:     {type: Number, default: 0}
+          , num_fan:       {type: Number, default: 0}
         } 
     }
 })

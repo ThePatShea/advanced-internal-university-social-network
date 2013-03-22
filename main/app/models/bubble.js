@@ -10,26 +10,28 @@ var BubbleSchema = new Schema({
   , name:          {type: String, default: ''}
   , connections: {
         posts: {
-            events:  [{type: Schema.ObjectId, ref: 'Event'}]
-          , talks:   [{type: Schema.ObjectId, ref: 'Talk'}]
+            events:     [{type: Schema.ObjectId, ref: 'Event'}]
+          , talks:      [{type: Schema.ObjectId, ref: 'Talk'}]
         }
       , users: {
-            members: [{type: Schema.ObjectId, ref: 'User'}]
-          , admins:  [{type: Schema.ObjectId, ref: 'User'}]
-          , fans:    [{type: Schema.ObjectId, ref: 'User'}]
+            applicants: [{type: Schema.ObjectId, ref: 'User'}]
+          , members:    [{type: Schema.ObjectId, ref: 'User'}]
+          , admins:     [{type: Schema.ObjectId, ref: 'User'}]
+          , fans:       [{type: Schema.ObjectId, ref: 'User'}]
         }
     }
   , num_connections: {
         num_posts: {
-            num_events:  {type: Number, default: 0}
-          , num_talks:   {type: Number, default: 0}
-          , num_total:   {type: Number, default: 0}
+            num_events:     {type: Number, default: 0}
+          , num_talks:      {type: Number, default: 0}
+          , num_total:      {type: Number, default: 0}
         }
       , num_users: {
-            num_members: {type: Number, default: 0}
-          , num_admins:  {type: Number, default: 0}
-          , num_total:   {type: Number, default: 0}
-          , num_fans:    {type: Number, default: 0}
+            num_applicants: {type: Number, default: 0}
+          , num_members:    {type: Number, default: 0}
+          , num_admins:     {type: Number, default: 0}
+          , num_total:      {type: Number, default: 0}
+          , num_fans:       {type: Number, default: 0}
         }
     }
 })

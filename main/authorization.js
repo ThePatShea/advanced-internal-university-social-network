@@ -86,6 +86,10 @@ exports.bubble = {
             req.bubble_connect_status = 'fan'
 
 
+          } else if (req.bubble.connections.users.applicants.indexOf(req.user.id) > -1) {
+            req.bubble_connect_status = 'fan'
+
+
           } else {
             req.bubble_connect_status = 'none'
 
