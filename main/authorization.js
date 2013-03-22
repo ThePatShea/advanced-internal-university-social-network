@@ -67,7 +67,7 @@ exports.bubble = {
       }
     , detect_authorization : function (req, res, next) {
         // Detect whether the user is an admin of the current bubble
-          if (req.bubble.connections.users.admins.indexOf(req.user.id) > -1) {
+          if (req.user.connections.bubbles.admin.indexOf(req.bubble.id) > -1) {
             req.bubble_connect_status = 'admin'
 
             req.view_sidebar    =  'sidebar_bubble_authorized'
@@ -78,19 +78,19 @@ exports.bubble = {
 
             if (req.edit_bubble == 'true')
               req.view_sidebar  +=  '_edit'
-          } else if (req.bubble.connections.users.members.indexOf(req.user.id) > -1) {
+          } else if (req.user.connections.bubbles.member.indexOf(req.bubble.id) > -1) {
             req.bubble_connect_status = 'member'
 
             req.view_sidebar    =  'sidebar_bubble_unauthorized'
             req.view_dashboard  =  'dashboard_unauthorized'
             req.view_list       =  'list_unauthorized'
-          } else if (req.bubble.connections.users.fans.indexOf(req.user.id) > -1) {
+          } else if (req.user.connections.bubbles.fan.indexOf(req.bubble.id) > -1) {
             req.bubble_connect_status = 'fan'
 
             req.view_sidebar    =  'sidebar_bubble_unauthorized'
             req.view_dashboard  =  'dashboard_unauthorized'
             req.view_list       =  'list_unauthorized'
-          } else if (req.bubble.connections.users.applicants.indexOf(req.user.id) > -1) {
+          } else if (req.user.connections.bubbles.applicant.indexOf(req.bubble.id) > -1) {
             req.bubble_connect_status = 'applicant'
 
             req.view_sidebar    =  'sidebar_bubble_unauthorized'
