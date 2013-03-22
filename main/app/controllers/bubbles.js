@@ -162,8 +162,6 @@
     exports.count_connections = function(req, res, next) {
       var bubble = req.bubble
 
-      console.log('counting connections') // TEST
-
       bubble.num_connections = {
           num_posts: {
               num_total:       bubble.connections.posts.events.length + bubble.connections.posts.talks.length

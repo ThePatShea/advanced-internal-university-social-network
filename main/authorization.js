@@ -130,7 +130,8 @@ exports.bubble = {
           
         // Render the sidebar, then run the next function
           res.render('sidebar/' + req.view_sidebar, {
-              user_subscribed: req.user_subscribed
+              bubble_connect_status: req.bubble_connect_status
+            , user_subscribed: req.user_subscribed
             , bubble: req.bubble
           }, function(err, rendered_sidebar) { 
             if(err) console.log(err)
