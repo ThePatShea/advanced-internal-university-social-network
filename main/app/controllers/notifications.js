@@ -15,8 +15,8 @@
       // Determine which users get the notification
         var notification_subscribers = bubble.connections.users.admins.concat(bubble.connections.users.members)
 
-        // if (post.privacy == 'public')
-          // notification_subscribers = notification_subscribers.concat(bubble.connections.users.fans)
+        if (post.privacy == 'public')
+          notification_subscribers = notification_subscribers.concat(bubble.connections.users.fans)
 
 
       var notification = new Notification({
