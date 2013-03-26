@@ -131,7 +131,19 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-          next()
+
+          // If the last admin is leaving, assign a new admin or delete the bubble
+          if (bubble.num_connections.num_users.num_admins == 1) { // 1 instead of 0 because bubble.count_connections hasn't run yet
+            if (bubble.num_connections.num_users.num_members > 0) {
+              // Make the bubble.connections.users.members[0] an admin
+              next()
+            } else {
+              // Delete the bubble
+              next()
+            }
+          } else {
+            next()
+          }
         })
       })
     }
