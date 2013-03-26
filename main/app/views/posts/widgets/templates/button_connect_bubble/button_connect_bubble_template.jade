@@ -1,7 +1,11 @@
-connect_bubble_hide = 'false'
+extra_class          =  'no_extra_class'
+connect_bubble_hide  =  'false'
 
-if (bubble_connect_status == 'admin' || bubble_connect_status == 'member') 
-  block if_admin_or_member
+if (bubble_connect_status == 'admin')
+  block if_admin
+
+else if (bubble_connect_status == 'member') 
+  block if_member
 
 else if (bubble_connect_status == 'applicant') 
   block if_applicant
@@ -14,5 +18,10 @@ else if (bubble_connect_status == 'none')
 
 if (connect_bubble_hide != 'true')
   form(method='post', action='/bubbles/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
-    button#connect_bubble_apply.red_button(type='submit') #{connect_bubble_phrase}
+    button#connect_bubble_apply.red_button(type='submit', class=extra_class) #{connect_bubble_phrase}
     input(type='hidden', name='redirect_url', value=req.url)
+    if (extra_class == 'activate_are_you_sure')
+      section.are_you_sure
+        p Are you sure you want to leave this bubble?
+        button.red_button.are_you_sure_yes(type='submit') yes
+        button.red_button.are_you_sure_no no

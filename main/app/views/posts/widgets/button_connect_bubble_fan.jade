@@ -1,6 +1,9 @@
 extends templates/button_connect_bubble/button_connect_bubble_template
 
-block if_admin_or_member
+block if_admin
+  connect_bubble_hide    =  'true'
+
+block if_member
   connect_bubble_hide    =  'true'
 
 block if_applicant
