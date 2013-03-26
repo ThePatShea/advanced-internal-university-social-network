@@ -90,7 +90,7 @@
 
   
   // Remove a member
-    exports.remove_member = function (req, res, next) {
+    var bubble_remove_member = exports.remove_member = function (req, res, next) {
       var user_selected  =  req.user_selected
         , bubble         =  req.bubble
 
@@ -106,7 +106,7 @@
 
 
   // Add an admin
-    exports.add_admin = function (req, res, next) {
+    var bubble_add_admin = exports.add_admin = function (req, res, next) {
       var user_selected  =  req.user_selected
         , bubble         =  req.bubble
 
@@ -120,7 +120,7 @@
       })
     }
 
-  
+ 
   // Remove an admin
     exports.remove_admin = function (req, res, next) {
       var user_selected  =  req.user_selected
@@ -134,8 +134,12 @@
           // If the last admin is leaving, assign a new admin or delete the bubble
             if (bubble.num_connections.num_users.num_admins == 1) { // 1 instead of 0 because bubble.count_connections hasn't run yet
               if (bubble.num_connections.num_users.num_members > 0) {
-                // Make the bubble.connections.users.members[0] an admin
-                next()
+                req.user_selected      =  bubble.connections.users.members[0]
+                req.body.redirect_url  =  '/bubbles/' + bubble._id
+                
+                bubble_add_admin(req, res, function() {
+                  bubble_remove_member(req, res, next)
+                })
               } else {
                 bubble_delete(req,res)
               }
