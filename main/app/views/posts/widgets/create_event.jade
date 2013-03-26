@@ -7,6 +7,10 @@ block form
   section.input_group
     input#title.requiredInput.input-xlarge(type='text', maxlength="35", name="name", placeholder='Event Name (ex: Spring Concert)')
     textarea#description.requiredInput.input-xlarge(type='text', rows="5", name="description", placeholder='Describe your event')
+    input#privacy_private(type='radio', name='privacy', value='private', checked='checked')
+    | private
+    input#privacy_public(type='radio', name='privacy', value='public')
+    | public
 
   section.input_group
     input#location.requiredInput.input-xlarge(type='text', maxlength="35", name="location", placeholder='Where is your event?')

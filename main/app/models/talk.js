@@ -8,7 +8,7 @@ var TalkSchema = new Schema({
   , bubbles: [{type : Schema.ObjectId, ref : 'Bubble'}]
   , creator: {type : Schema.ObjectId, ref : 'User'}
   , createdAt: {type : Date, default : Date.now}
-  , privacy: {type: String, default: 'members'}
+  , privacy: {type: String, default: 'private'}
   , description: String
   , name: String
 })
