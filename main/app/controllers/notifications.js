@@ -31,9 +31,9 @@
 
       notification.save(function(err) {
         User
-         .update({ _id: {$in: notification.connections.users.subscribers}, 'subscriptions._id': bubble._id },{ $inc: {total_unviewed_notifications: 1} })
+         .update({ _id: {$in: notification.connections.users.subscribers} },{ $inc: {total_unviewed_notifications: 1} })
          .exec(function(err, user) {
-           req.body.redirect_url = '/bubbles/'+bubble._id+'/'+bubble_section+'/view/'+post._id
+           req.body.redirect_url = '/bubbles/' + bubble._id + '/' + bubble_section + '/view/' + post._id
            next()
          })
       })
