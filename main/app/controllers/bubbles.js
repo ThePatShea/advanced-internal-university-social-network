@@ -131,19 +131,17 @@
 
       user_selected.save(function (err) {
         bubble.save(function (err) {
-
           // If the last admin is leaving, assign a new admin or delete the bubble
-          if (bubble.num_connections.num_users.num_admins == 1) { // 1 instead of 0 because bubble.count_connections hasn't run yet
-            if (bubble.num_connections.num_users.num_members > 0) {
-              // Make the bubble.connections.users.members[0] an admin
-              next()
+            if (bubble.num_connections.num_users.num_admins == 1) { // 1 instead of 0 because bubble.count_connections hasn't run yet
+              if (bubble.num_connections.num_users.num_members > 0) {
+                // Make the bubble.connections.users.members[0] an admin
+                next()
+              } else {
+                bubble_delete(req,res)
+              }
             } else {
-              // Delete the bubble
               next()
             }
-          } else {
-            next()
-          }
         })
       })
     }
@@ -189,12 +187,12 @@
 
 
   // Delete a bubble
-    exports.delete = function(req, res) {
+    var bubble_delete = exports.delete = function(req, res) {
       var bubble = req.bubble
 
       bubble.remove(function(err) {
         req.notification_delete_parameters = {'connections.bubble': bubble._id}
-   
+
         notifications.delete(req, res, function() {
           res.redirect('/')
         })
