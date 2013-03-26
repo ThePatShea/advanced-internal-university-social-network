@@ -142,9 +142,9 @@
       var bubble = new Bubble(req.body)
   
       bubble.save(function(err) {
-        req.redirect_url   =  '/bubbles/' + bubble._id
-        req.user_selected  =  req.user
-        req.bubble         =  bubble
+        req.body.redirect_url   =  '/bubbles/' + bubble._id
+        req.user_selected       =  req.user
+        req.bubble              =  bubble
 
         next()
       })
