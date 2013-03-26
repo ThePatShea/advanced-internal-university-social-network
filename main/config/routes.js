@@ -124,10 +124,10 @@ module.exports = function (app, passport, auth) {
 
 
   // Post Routes
-    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.detect_authorization, posts.edit)
+    app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.delete, notifications.delete, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create, bubbles.count_connections)
+    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.detect_authorization, posts.edit)
     app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
-    app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.delete)
     app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
     app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)

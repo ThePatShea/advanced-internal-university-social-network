@@ -154,15 +154,10 @@
       
       bubble.save(function(err) {
         post.remove(function(err) {
-          req.redirect_url = '/bubbles/'+bubble._id
+          req.notification_delete_parameters  =  {'connections.post._id': post._id}
+          req.body.redirect_url               =  '/bubbles/'+bubble._id
 
-          bubbles.count_connections(req, res, function() {
-            req.notification_delete_parameters = {'connections.post._id': post._id}
-
-            notifications.delete(req, res, function() {
-              res.redirect(req.redirect_url)
-            })
-          })
+          next()
         })
       })
     }
