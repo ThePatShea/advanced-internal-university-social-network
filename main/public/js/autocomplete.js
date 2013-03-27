@@ -13,8 +13,9 @@ $(document).ready(function () {
         source: '/search/users'
       , autoFocus: true
       , minLength: 2
+      , html: true
       , select: function( event, ui ) {
-          $('#pending_members').prepend('<div>' + ui.item.value + '</div>')
+          $('#pending_members').prepend('<div>' + ui.item.label + '</div>')
         }
     })
 

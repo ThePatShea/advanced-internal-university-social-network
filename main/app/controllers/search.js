@@ -8,13 +8,16 @@
       var search_query = new RegExp(req.query.term,'i')
 
       User
-        .find({name: search_query}, 'name')
+        .find({name: search_query}, 'name facebook')
         .limit(20)
         .exec(function(err, users) {
           var name_array = new Array()
           
           for (var i=0; i < users.length; i++) { 
-            name_array[i] = users[i].name
+            name_array[i] = { 
+                label: '<b>' + users[i].name + '</b>'
+              , value: users[i].name
+            }
           }
 
           res.send(name_array)
