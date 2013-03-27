@@ -36,7 +36,7 @@ module.exports = function (app, passport, auth) {
         req.a_or_an                  =  'an'
       } else if (id == 'talk') {
         req.query_parameters_find    =  { } 
-        req.query_parameters_sort    =  { } 
+        req.query_parameters_sort    =  { createdAt: 'desc' } 
 
         req.Post                     =  Talk
         req.a_or_an                  =  'a'
