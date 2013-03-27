@@ -62,6 +62,8 @@ exports.show = function (req, res) {
 exports.home = function(req, res){
   User
     .findOne({_id: req.user._id})
+    .populate('connections.bubbles.applicant', 'name num_connections pic_big') 
+    .populate('connections.bubbles.invitee', 'name num_connections pic_big') 
     .populate('connections.bubbles.member', 'name num_connections pic_big') 
     .populate('connections.bubbles.admin', 'name num_connections pic_big') 
     .populate('connections.bubbles.fan', 'name num_connections pic_big') 

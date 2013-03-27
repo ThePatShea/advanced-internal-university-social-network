@@ -3,6 +3,19 @@ extends ../layouts/default
 block main
   div.page_content.subscriptions
     section.subscription_section
+      user_subscribed = 0
+      h4.subscription_section_name pending bubbles
+      div.divider
+      ul.subscription_list
+        each bubble in user.connections.bubbles.invitee
+          bubble_connect_status = 'invitee'
+          include ../posts/widgets/button_connect_bubble_member
+          include ../widgets/bubble_widget
+        each bubble in user.connections.bubbles.applicant
+          bubble_connect_status = 'applicant'
+          include ../posts/widgets/button_connect_bubble_member
+          include ../widgets/bubble_widget
+    section.subscription_section
       user_subscribed = 1
       h4.subscription_section_name subscribed
       div.divider
