@@ -170,5 +170,5 @@ module.exports = function (app, passport, auth) {
 
 
   // Search Routes
-    app.get('/search/users', search.users)
+    app.get('/search/bubbles/:bubbleId/users', search.users)
 }
