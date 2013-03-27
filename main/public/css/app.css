@@ -327,6 +327,10 @@ input[readonly="readonly"] {
     top: 50%;
     }
 
+.invite_member_search {
+  display: none;
+}
+
 .upload_post_image {
   position: absolute;
   display: none;

@@ -26,6 +26,10 @@ block main
   section(style='width: 50%; float: left')
     h4 existing members
     ul.post_list
+      li#invite_member.post_widget
+        h4#invite_member_start invite new member
+        section#invite_member_search.invite_member_search
+          input#invite_member_input(placeholder="type someone's name")
       each user in bubble.connections.users.admins
         li.post_widget
           img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
