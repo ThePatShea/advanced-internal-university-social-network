@@ -16,8 +16,8 @@ $(document).ready(function () {
       , minLength: 2
       , html: true
       , select: function( event, ui ) {
-          var user_id       =  $('.user_id').html()
-
+          var user_id = $('.user_id').html()
+           
           $('<form action="/bubbles/' + bubble_id + '/add_applicant/' + user_id + '" method="POST">' + 
             '<input type="hidden" name="redirect_url" value="/edit/bubbles/' + bubble_id + '">' +
             '</form>').submit();
