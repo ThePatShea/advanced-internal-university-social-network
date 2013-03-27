@@ -96,6 +96,12 @@ exports.bubble = {
             req.view_sidebar    =  'sidebar_bubble_unauthorized'
             req.view_dashboard  =  'dashboard_unauthorized'
             req.view_list       =  'list_unauthorized'
+          } else if (req.user.connections.bubbles.invitee.indexOf(req.bubble.id) > -1) {
+            req.bubble_connect_status = 'invitee'
+
+            req.view_sidebar    =  'sidebar_bubble_unauthorized'
+            req.view_dashboard  =  'dashboard_unauthorized'
+            req.view_list       =  'list_unauthorized'
           } else {
             req.bubble_connect_status = 'none'
 
