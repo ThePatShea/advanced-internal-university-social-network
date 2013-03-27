@@ -15,7 +15,7 @@ $(document).ready(function () {
       , minLength: 2
       , html: true
       , select: function( event, ui ) {
-          $('#pending_members').prepend('<div>' + ui.item.label + '</div>')
+          $('#pending_members').prepend(ui.item.label)
         }
     })
 

@@ -15,7 +15,7 @@
           
           for (var i=0; i < users.length; i++) { 
             name_array[i] = { 
-                label: '<b>' + users[i].name + '</b>'
+                label: '<section>' + '<img src="https://graph.facebook.com/' + users[i].facebook.id + '/picture?type=square"/>'  + users[i].name + '</section>'
               , value: users[i].name
             }
           }
