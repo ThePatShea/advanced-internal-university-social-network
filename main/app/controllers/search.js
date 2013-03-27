@@ -11,6 +11,12 @@
         .find({name: search_query}, 'name')
         .limit(20)
         .exec(function(err, users) {
-          console.log(users)
+          var name_array = new Array()
+          
+          for (var i=0; i < users.length; i++) { 
+            name_array[i] = users[i].name
+          }
+
+          res.send(name_array)
         })
     }
