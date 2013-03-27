@@ -27,6 +27,7 @@ block main
     h4 existing members
     ul.post_list
       li#invite_member.post_widget
+        div#autocomplete_hidden_bubble_id.hidden= bubble._id
         h4#invite_member_start invite new member
         section#invite_member_search.invite_member_search
           input#invite_member_input(placeholder="type someone's name")

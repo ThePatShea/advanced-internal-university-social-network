@@ -16,6 +16,13 @@ $(document).ready(function () {
       , html: true
       , select: function( event, ui ) {
           $('#pending_members').prepend(ui.item.label)
+
+          var bubble_id  =  $('#autocomplete_hidden_bubble_id').html()
+          var user_id    =  $('.user_id').html() // TODO: Make this line dynamic
+
+          $.post('/bubbles/' + bubble_id + '/add_applicant/' + user_id, function(data) { // TODO: Change this to add invitee
+            
+          });
         }
     })
 
