@@ -26,6 +26,7 @@ var UserSchema = new Schema({
         }
       , bubbles: {
             applicant: [{type: Schema.ObjectId, ref: 'Bubble'}]
+          , invitee:   [{type: Schema.ObjectId, ref: 'Bubble'}]
           , member:    [{type: Schema.ObjectId, ref: 'Bubble'}]
           , admin:     [{type: Schema.ObjectId, ref: 'Bubble'}]
           , fan:       [{type: Schema.ObjectId, ref: 'Bubble'}]
@@ -39,6 +40,7 @@ var UserSchema = new Schema({
         }
       , num_bubbles: {
             num_applicant: {type: Number, default: 0}
+          , num_invitee:   {type: Number, default: 0}
           , num_member:    {type: Number, default: 0}
           , num_admin:     {type: Number, default: 0}
           , num_total:     {type: Number, default: 0}

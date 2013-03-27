@@ -18,7 +18,7 @@ $(document).ready(function () {
       , select: function( event, ui ) {
           var user_id = $('.user_id').html()
            
-          $('<form action="/bubbles/' + bubble_id + '/add_applicant/' + user_id + '" method="POST">' + 
+          $('<form action="/bubbles/' + bubble_id + '/add_invitee/' + user_id + '" method="POST">' + 
             '<input type="hidden" name="redirect_url" value="/edit/bubbles/' + bubble_id + '">' +
             '</form>').submit();
         }

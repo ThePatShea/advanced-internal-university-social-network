@@ -9,10 +9,10 @@
       Bubble
         .findOne({_id: req.bubble._id}, 'connections.users')
         .exec(function(err, bubble) {
-          var connected_users  =  bubble.connections.users.admins.concat(bubble.connections.users.members, bubble.connections.users.applicants)
+          var connected_users  =  bubble.connections.users.admins.concat(bubble.connections.users.members, bubble.connections.users.applicants, bubble.connections.users.invitees)
           var search_name      =  new RegExp(req.query.term,'i')
           var search_query     =  {name: search_name, _id: {$nin: connected_users} }
-
+          
           User
             .find(search_query, 'name facebook')
             .limit(20)

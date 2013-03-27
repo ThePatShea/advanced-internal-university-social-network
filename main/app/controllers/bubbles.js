@@ -42,6 +42,38 @@
   
 
   // Add an applicant
+    exports.add_invitee = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.invitee.addToSet(bubble._id)
+      bubble.connections.users.invitees.addToSet(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+  
+  
+  // Remove an applicant
+    exports.remove_invitee = function (req, res, next) {
+      var user_selected  =  req.user_selected
+        , bubble         =  req.bubble
+
+      user_selected.connections.bubbles.invitee.remove(bubble._id)
+      bubble.connections.users.invitees.remove(user_selected._id)
+
+      user_selected.save(function (err) {
+        bubble.save(function (err) {
+          next()
+        })
+      })
+    }
+  
+
+  // Add an applicant
     exports.add_applicant = function (req, res, next) {
       var user_selected  =  req.user_selected
         , bubble         =  req.bubble
@@ -215,8 +247,9 @@
             , num_talks:       bubble.connections.posts.talks.length
           }
         , num_users: {
-              num_total:       bubble.connections.users.applicants.length + bubble.connections.users.members.length + bubble.connections.users.admins.length + bubble.connections.users.fans.length
+              num_total:       bubble.connections.users.applicants.length + bubble.connections.users.members.length + bubble.connections.users.admins.length + bubble.connections.users.fans.length + bubble.connections.users.invitees.length
             , num_applicants:  bubble.connections.users.applicants.length
+            , num_invitees:    bubble.connections.users.invitees.length
             , num_members:     bubble.connections.users.members.length
             , num_admins:      bubble.connections.users.admins.length
             , num_fans:        bubble.connections.users.fans.length

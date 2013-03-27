@@ -102,6 +102,7 @@ module.exports = function (app, passport, auth) {
       Bubble
         .findOne({ _id : id })
         .populate('connections.users.applicants')
+        .populate('connections.users.invitees')
         .populate('connections.users.members')
         .populate('connections.users.admins')
         .exec(function (err, bubble) {
@@ -140,8 +141,10 @@ module.exports = function (app, passport, auth) {
     app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.detect_authorization, bubbles.edit)
     app.post('/bubbles/:bubbleId/remove_applicant/:userId', auth.requiresLogin, bubbles.remove_applicant, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_applicant/:userId', auth.requiresLogin, bubbles.add_applicant, bubbles.remove_fan, bubbles.count_connections)
+    app.post('/bubbles/:bubbleId/remove_invitee/:userId', auth.requiresLogin, bubbles.remove_invitee, bubbles.count_connections)
+    app.post('/bubbles/:bubbleId/add_invitee/:userId', auth.requiresLogin, bubbles.add_invitee, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/remove_member/:userId', auth.requiresLogin, bubbles.remove_member, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_member/:userId', auth.requiresLogin, bubbles.add_member, bubbles.remove_applicant, bubbles.remove_fan, bubbles.count_connections)
+    app.post('/bubbles/:bubbleId/add_member/:userId', auth.requiresLogin, bubbles.add_member, bubbles.remove_applicant, bubbles.remove_invitee, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/demote_to_member/:userId', auth.requiresLogin, bubbles.remove_admin, bubbles.add_member, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/remove_admin/:userId', auth.requiresLogin, bubbles.remove_admin, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_admin/:userId', auth.requiresLogin, bubbles.add_admin, bubbles.remove_member, bubbles.count_connections)
