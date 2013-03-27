@@ -17,6 +17,7 @@ module.exports = function (app, passport, auth) {
       , comments       =  require('../app/controllers/comments')
       , bubbles        =  require('../app/controllers/bubbles')
       , uploads        =  require('../app/controllers/uploads')
+      , search         =  require('../app/controllers/search')
       , posts          =  require('../app/controllers/posts')
       , users          =  require('../app/controllers/users')
 
@@ -166,4 +167,8 @@ module.exports = function (app, passport, auth) {
   // Notification Routes
     app.get('/notifications/list_pagelet/:skip', auth.requiresLogin, notifications.list_pagelet)
     app.get('/notifications', auth.requiresLogin, notifications.reset_unviewed, auth.user.render_sidebar, notifications.list)
+
+
+  // Search Routes
+    app.get('/search/users', search.users)
 }

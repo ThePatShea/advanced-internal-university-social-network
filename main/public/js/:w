@@ -10,12 +10,13 @@ $(document).ready(function () {
 
   // Attach autocomplete to the #invite_member_input input box
     $('#invite_member_input').autocomplete({
-        source: '/search/users'
-      , autoFocus: true
-      , minLength: 2
-      , select: function( event, ui ) {
-          $('#pending_members').prepend('<div>' + ui.item.value + '</div>')
-        }
+      source: availableTags,
+      autoFocus: true,
+      minLength: 2,
+      select: function( event, ui ) {
+        $('#pending_members').prepend('<div>' + ui.item.value + '</div>')
+      }
     })
+})
 
 })

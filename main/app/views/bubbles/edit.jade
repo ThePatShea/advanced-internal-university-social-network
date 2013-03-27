@@ -12,7 +12,7 @@ block main
 
   section(style='width: 50%; float: left')
     h4 pending members
-    ul.post_list
+    ul#pending_members.post_list
       each user in bubble.connections.users.applicants
         li.post_widget
           img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
