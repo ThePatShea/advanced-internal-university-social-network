@@ -11,10 +11,16 @@
 // Define main functions
   // View a list of posts in a bubble
     exports.list = function(req, res) {
-      var bubble_section  =  req.bubble_section
-        , bubble          =  req.bubble
+      var bubble_connect_status  =  req.bubble_connect_status
+        , bubble_section         =  req.bubble_section
+        , bubble                 =  req.bubble
 
-      res.render('posts/'+req.view_list, {
+      if (bubble_connect_status == 'admin' || bubble_connect_status == 'member')
+        view_params = 'authorized_' + req.bubble_section
+      else
+        view_params = 'unauthorized'
+ 
+      res.render('posts/list_' + view_params, {
           list_pagelet_url: '/bubbles/' + bubble._id + '/' + bubble_section + '/list_pagelet/'
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: bubble_section
@@ -80,9 +86,19 @@
     }
 
 
-  // Show a post
-    exports.show = function(req, res) {
-      res.render('posts/' + req.view_post + 'show', {
+  // View a single post
+    exports.single = function(req, res) {
+      var post_connect_status = req.post_connect_status
+
+      view_params = req.bubble_section
+
+      if (post_connect_status == 'admin' || post_connect_status == 'creator') {
+        view_params  +=  '_authorized_'
+      } else {
+        view_params  +=  '_unauthorized_'
+      }
+
+      res.render('posts/single_' + view_params + 'show', {
           change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
@@ -98,7 +114,14 @@
 
   // Show a bubble's dashboard
     exports.dashboard = function(req, res) {
-      res.render('posts/' + req.view_dashboard, {
+      var bubble_connect_status = req.bubble_connect_status
+  
+      if (bubble_connect_status == 'admin' || bubble_connect_status == 'member')
+        view_params = 'authorized'
+      else
+        view_params = 'unauthorized'
+
+      res.render('posts/dashboard_' + view_params, {
           bubble_connect_status: req.bubble_connect_status
         , change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
@@ -113,9 +136,19 @@
     }
 
 
-  // Edit a post
+  // Edit a single post
     exports.edit = function(req, res) {
-     res.render('posts/' + req.view_post + 'edit', {
+      var post_connect_status = req.post_connect_status
+
+      view_params = req.bubble_section
+
+      if (post_connect_status == 'admin' || post_connect_status == 'creator') {
+        view_params  +=  '_authorized_'
+      } else {
+        view_params  +=  '_unauthorized_'
+      }
+
+     res.render('posts/single_' + view_params + 'edit', {
           change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section

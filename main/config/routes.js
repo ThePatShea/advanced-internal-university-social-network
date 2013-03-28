@@ -15,6 +15,7 @@ module.exports = function (app, passport, auth) {
   // Instantiate the controllers
     var notifications  =  require('../app/controllers/notifications')
       , comments       =  require('../app/controllers/comments')
+      , sidebar        =  require('../app/controllers/sidebar')
       , bubbles        =  require('../app/controllers/bubbles')
       , uploads        =  require('../app/controllers/uploads')
       , search         =  require('../app/controllers/search')
@@ -117,7 +118,7 @@ module.exports = function (app, passport, auth) {
 
 
   // Home Route
-    app.get('/', auth.requiresLogin, auth.user.render_sidebar, users.home)
+    app.get('/', auth.requiresLogin, sidebar.user, users.home)
 
 
   // Upload Routes
@@ -128,17 +129,17 @@ module.exports = function (app, passport, auth) {
   // Post Routes
     app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.delete, notifications.delete, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create, bubbles.count_connections)
-    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.get_connect_status, auth.bubble.assemble_view, auth.post.get_connect_status, auth.post.assemble_view, posts.edit)
-    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.get_connect_status, auth.bubble.assemble_view, auth.post.get_connect_status, auth.post.assemble_view, posts.show)
+    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.get_connect_status, auth.post.get_connect_status, sidebar.bubble, posts.edit)
+    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.get_connect_status, auth.post.get_connect_status, sidebar.bubble, posts.single)
     app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
-    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.get_connect_status, auth.bubble.assemble_view, posts.list)
+    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.get_connect_status, sidebar.bubble, posts.list)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
-    app.get('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.get_connect_status, auth.bubble.assemble_view, posts.dashboard)
+    app.get('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.get_connect_status, sidebar.bubble, posts.dashboard)
     app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
 
 
   // Bubble Routes
-    app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.get_connect_status, auth.bubble.assemble_view, bubbles.edit)
+    app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.get_connect_status, sidebar.bubble, bubbles.edit)
     app.post('/bubbles/:bubbleId/remove_applicant/:userId', auth.requiresLogin, bubbles.remove_applicant, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_applicant/:userId', auth.requiresLogin, bubbles.add_applicant, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/remove_invitee/:userId', auth.requiresLogin, bubbles.remove_invitee, bubbles.count_connections)
@@ -161,15 +162,15 @@ module.exports = function (app, passport, auth) {
     app.get('/logout', users.logout)
     app.post('/users', users.create)
     app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
-    app.get('/users/:userId', auth.requiresLogin, auth.user.render_sidebar, users.home)
+    app.get('/users/:userId', auth.requiresLogin, sidebar.user, users.home)
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
     app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/users/:userId/new_bubble', auth.requiresLogin, auth.user.render_sidebar, users.new_bubble)
+    app.get('/users/:userId/new_bubble', auth.requiresLogin, sidebar.user, users.new_bubble)
 
 
   // Notification Routes
     app.get('/notifications/list_pagelet/:skip', auth.requiresLogin, notifications.list_pagelet)
-    app.get('/notifications', auth.requiresLogin, notifications.reset_unviewed, auth.user.render_sidebar, notifications.list)
+    app.get('/notifications', auth.requiresLogin, notifications.reset_unviewed, sidebar.user, notifications.list)
 
 
   // Search Routes
