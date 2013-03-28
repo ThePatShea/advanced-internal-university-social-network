@@ -1,9 +1,0 @@
-extends sidebar_top_bubble_template
-
-block bubble_attributes
-  form(method="post", action="/edit/bubbles/#{bubble._id}/update")
-    input.edit_bubble_name.requiredInput(type='text', maxlength='35', name='name', value=bubble.name)
-    button#submitBtn.subscribe(type='submit', style='left: 10px; width: 60px;')
-      div.descriptor.gray_text save
-      p.warning.descriptor.red_text Please fill in every field before saving your bubble
-  include ../widgets/upload_image_bubble
