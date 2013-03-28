@@ -117,62 +117,71 @@ module.exports = function (app, passport, auth) {
     })
 
 
-  // Home Route
-    app.get('/', auth.requiresLogin, sidebar.user, users.home)
-
-
-  // Upload Routes
-    app.post('/uploads/:bubble_section/bubble/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, uploads.upload)
-    app.post('/uploads/:bubble_section/event/:postId', auth.requiresLogin, auth.post.hasAuthorization, uploads.upload)
-
-
   // Post Routes
-    app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.delete, notifications.delete, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create, bubbles.count_connections)
-    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.get_connect_status, auth.post.get_connect_status, sidebar.bubble, posts.edit)
-    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.get_connect_status, auth.post.get_connect_status, sidebar.bubble, posts.single)
-    app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
-    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.get_connect_status, sidebar.bubble, posts.list)
-    app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
-    app.get('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.get_connect_status, sidebar.bubble, posts.dashboard)
-    app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
+    // Get Requests
+      app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  auth.post.hasAuthorization  ,  sidebar.bubble, posts.edit)
+      app.get('/bubbles/:bubbleId/:bubble_section/view/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  sidebar.bubble  ,  posts.single)
+      app.get('/bubbles/:bubbleId'                                     ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  sidebar.bubble                ,  posts.dashboard)
+      app.get('/bubbles/:bubbleId/:bubble_section'                     ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  sidebar.bubble                ,  posts.list)
+      app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  posts.list_pagelet)
+
+    // Post Requests
+      app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId'      ,  auth.requiresLogin  ,  auth.post.hasAuthorization    ,  posts.delete  ,  notifications.delete  ,  bubbles.count_connections)
+      app.post('/bubbles/:bubbleId/:bubble_section/create'             ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  posts.create  ,  notifications.create  ,  bubbles.count_connections)
+      app.post('/bubbles/:bubbleId/:bubble_section/save/:postId'       ,  auth.requiresLogin  ,  auth.post.hasAuthorization    ,  posts.save)
+      app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId'    ,  auth.requiresLogin  ,  comments.create)
 
 
   // Bubble Routes
-    app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.get_connect_status, sidebar.bubble, bubbles.edit)
-    app.post('/bubbles/:bubbleId/remove_applicant/:userId', auth.requiresLogin, bubbles.remove_applicant, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_applicant/:userId', auth.requiresLogin, bubbles.add_applicant, bubbles.remove_fan, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/remove_invitee/:userId', auth.requiresLogin, bubbles.remove_invitee, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_invitee/:userId', auth.requiresLogin, bubbles.add_invitee, bubbles.remove_fan, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/remove_member/:userId', auth.requiresLogin, bubbles.remove_member, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_member/:userId', auth.requiresLogin, bubbles.add_member, bubbles.remove_applicant, bubbles.remove_invitee, bubbles.remove_fan, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/demote_to_member/:userId', auth.requiresLogin, bubbles.remove_admin, bubbles.add_member, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/remove_admin/:userId', auth.requiresLogin, bubbles.remove_admin, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_admin/:userId', auth.requiresLogin, bubbles.add_admin, bubbles.remove_member, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/remove_fan/:userId', auth.requiresLogin, bubbles.remove_fan, bubbles.count_connections)
-    app.post('/bubbles/:bubbleId/add_fan/:userId', auth.requiresLogin, bubbles.add_fan, bubbles.count_connections)
-    app.post('/edit/bubbles/:bubbleId/update', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.update)
-    app.post('/bubbles', auth.requiresLogin, bubbles.create, bubbles.add_admin, bubbles.count_connections)
-    app.del('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, bubbles.delete)
+    // Get Requests
+      // Edit Bubble
+        app.get('/edit/bubbles/:bubbleId'                       ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  auth.bubble.get_connect_status  ,  sidebar.bubble  ,  bubbles.edit)
+
+    // Post Requests
+      // Add User Connection
+        app.post('/bubbles/:bubbleId/add_member/:userId'        ,  auth.requiresLogin  ,  bubbles.add_member            ,  bubbles.remove_fan        ,  bubbles.remove_applicant  ,  bubbles.remove_invitee  ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_applicant/:userId'     ,  auth.requiresLogin  ,  bubbles.add_applicant         ,  bubbles.remove_fan        ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_invitee/:userId'       ,  auth.requiresLogin  ,  bubbles.add_invitee           ,  bubbles.remove_fan        ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_admin/:userId'         ,  auth.requiresLogin  ,  bubbles.add_admin             ,  bubbles.remove_member     ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_fan/:userId'           ,  auth.requiresLogin  ,  bubbles.add_fan               ,                               bubbles.count_connections)
+
+      // Remove User Connection
+        app.post('/bubbles/:bubbleId/remove_applicant/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_applicant      ,                               bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_invitee/:userId'    ,  auth.requiresLogin  ,  bubbles.remove_invitee        ,                               bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_member/:userId'     ,  auth.requiresLogin  ,  bubbles.remove_member         ,                               bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_admin/:userId'      ,  auth.requiresLogin  ,  bubbles.remove_admin          ,                               bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_fan/:userId'        ,  auth.requiresLogin  ,  bubbles.remove_fan            ,                               bubbles.count_connections)
+
+      // Other
+        app.post('/bubbles/:bubbleId/demote_to_member/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_admin          ,  bubbles.add_member        ,  bubbles.count_connections)
+        app.post('/bubbles'                                     ,  auth.requiresLogin  ,  bubbles.create                ,  bubbles.add_admin         ,  bubbles.count_connections)
+        app.post('/edit/bubbles/:bubbleId/update'               ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  bubbles.update)
+        app.del('/bubbles/:bubbleId'                            ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  bubbles.delete)
 
 
   // User Routes
-    app.get('/login', users.login)
-    app.get('/signup', users.signup)
-    app.get('/logout', users.logout)
-    app.post('/users', users.create)
-    app.post('/users/session', passport.authenticate('local', {failureRedirect: '/login'}), users.session)
-    app.get('/users/:userId', auth.requiresLogin, sidebar.user, users.home)
-    app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ], failureRedirect: '/login' }), users.signin)
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), users.authCallback)
-    app.get('/users/:userId/new_bubble', auth.requiresLogin, sidebar.user, users.new_bubble)
+    app.get('/auth/facebook'             ,  passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ]  ,  failureRedirect: '/login' })  ,  users.signin)
+    app.get('/auth/facebook/callback'    ,  passport.authenticate('facebook', { failureRedirect: '/login' })         ,  users.authCallback)
+    app.post('/users/session'            ,  passport.authenticate('local', {failureRedirect: '/login'})              ,  users.session)
+    app.get('/users/:userId/new_bubble'  ,  auth.requiresLogin  ,  sidebar.user  ,  users.new_bubble)
+    app.get('/users/:userId'             ,  auth.requiresLogin  ,  sidebar.user  ,  users.home)
+    app.get('/'                          ,  auth.requiresLogin  ,  sidebar.user  ,  users.home)
+    app.get('/signup'                    ,  users.signup)
+    app.get('/logout'                    ,  users.logout)
+    app.post('/users'                    ,  users.create)
+    app.get('/login'                     ,  users.login)
+
+
+  // Upload Routes
+    app.post('/uploads/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  uploads.upload)
+    app.post('/uploads/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.hasAuthorization    ,  uploads.upload)
 
 
   // Notification Routes
-    app.get('/notifications/list_pagelet/:skip', auth.requiresLogin, notifications.list_pagelet)
-    app.get('/notifications', auth.requiresLogin, notifications.reset_unviewed, sidebar.user, notifications.list)
+    app.get('/notifications'                     ,  auth.requiresLogin  ,  notifications.reset_unviewed  ,  sidebar.user  ,  notifications.list)
+    app.get('/notifications/list_pagelet/:skip'  ,  auth.requiresLogin  ,  notifications.list_pagelet)
 
 
   // Search Routes
-    app.get('/search/bubbles/:bubbleId/users', search.users)
+    app.get('/search/bubbles/:bubbleId/users'  ,  search.users)
 }
