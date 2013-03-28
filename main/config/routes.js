@@ -27,10 +27,10 @@ module.exports = function (app, passport, auth) {
     app.param('bubble_section', function(req, res, next, id) {
       req.bubble_section  =  id
 
-      if       (id == 'event') {
         var timestamp_now            =  (new Date()) / 1000
           , timestamp_six_hours_ago  =  timestamp_now - 21600
 
+             if (id == 'event') {
         req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} }
         req.query_parameters_sort    =  { start_time: 'asc' }
 
@@ -42,6 +42,11 @@ module.exports = function (app, passport, auth) {
 
         req.Post                     =  Talk
         req.a_or_an                  =  'a'
+      } else if (id == 'dashboard') { 
+        req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} } 
+        req.query_parameters_sort    =  { createdAt: 'desc' } 
+
+        req.Post                     =  Event
       }
 
       next()

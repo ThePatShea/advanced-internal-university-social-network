@@ -33,9 +33,10 @@
   // View a subset of a list of posts in a bubble
     exports.list_pagelet = function(req, res) {
       // Define the bubble parameters
-        var bubble_section  =  req.bubble_section
-          , skip            =  req.params.skip
-          , bubble          =  req.bubble
+        var bubble_connect_status  =  req.bubble_connect_status
+          , bubble_section         =  req.bubble_section
+          , skip                   =  req.params.skip
+          , bubble                 =  req.bubble
 
       // Initialize query parameters
         var query_parameters_find      =  req.query_parameters_find
@@ -43,6 +44,10 @@
         query_parameters_find.bubbles  =  req.bubble._id
         Post                           =  req.Post
  
+      // Show only public posts to users who aren't an admin or member or this bubble
+        if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
+          query_parameters_find.privacy = 'public'
+
       // Find some posts the current bubble has
         Post
           .find(query_parameters_find)
@@ -122,7 +127,8 @@
         view_params = 'unauthorized'
 
       res.render('posts/dashboard_' + view_params, {
-          bubble_connect_status: req.bubble_connect_status
+          list_pagelet_url: '/bubbles/' + req.bubble._id + '/dashboard/list_pagelet/'
+        , bubble_connect_status: req.bubble_connect_status
         , change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
