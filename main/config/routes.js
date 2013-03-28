@@ -144,24 +144,24 @@ module.exports = function (app, passport, auth) {
 
     // Post Requests
       // Add User Connection
-        app.post('/bubbles/:bubbleId/add_member/:userId'        ,  auth.requiresLogin  ,  bubbles.add_member            ,  bubbles.remove_fan        ,  bubbles.remove_applicant  ,  bubbles.remove_invitee  ,  bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/add_applicant/:userId'     ,  auth.requiresLogin  ,  bubbles.add_applicant         ,  bubbles.remove_fan        ,  bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/add_invitee/:userId'       ,  auth.requiresLogin  ,  bubbles.add_invitee           ,  bubbles.remove_fan        ,  bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/add_admin/:userId'         ,  auth.requiresLogin  ,  bubbles.add_admin             ,  bubbles.remove_member     ,  bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/add_fan/:userId'           ,  auth.requiresLogin  ,  bubbles.add_fan               ,                               bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_member/:userId'        ,  auth.requiresLogin  ,  bubbles.add_member              ,  bubbles.remove_fan          ,  bubbles.remove_applicant  ,  bubbles.remove_invitee  ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_applicant/:userId'     ,  auth.requiresLogin  ,  bubbles.add_applicant           ,  bubbles.remove_fan          ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_invitee/:userId'       ,  auth.requiresLogin  ,  bubbles.add_invitee             ,  bubbles.remove_fan          ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_admin/:userId'         ,  auth.requiresLogin  ,  bubbles.add_admin               ,  bubbles.remove_member       ,  bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/add_fan/:userId'           ,  auth.requiresLogin  ,  bubbles.add_fan                 ,                                 bubbles.count_connections)
 
       // Remove User Connection
-        app.post('/bubbles/:bubbleId/remove_applicant/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_applicant      ,                               bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/remove_invitee/:userId'    ,  auth.requiresLogin  ,  bubbles.remove_invitee        ,                               bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/remove_member/:userId'     ,  auth.requiresLogin  ,  bubbles.remove_member         ,                               bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/remove_admin/:userId'      ,  auth.requiresLogin  ,  bubbles.remove_admin          ,                               bubbles.count_connections)
-        app.post('/bubbles/:bubbleId/remove_fan/:userId'        ,  auth.requiresLogin  ,  bubbles.remove_fan            ,                               bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_applicant/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_applicant        ,                                 bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_invitee/:userId'    ,  auth.requiresLogin  ,  bubbles.remove_invitee          ,                                 bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_member/:userId'     ,  auth.requiresLogin  ,  bubbles.remove_member           ,                                 bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_admin/:userId'      ,  auth.requiresLogin  ,  bubbles.remove_admin            ,                                 bubbles.count_connections)
+        app.post('/bubbles/:bubbleId/remove_fan/:userId'        ,  auth.requiresLogin  ,  bubbles.remove_fan              ,                                 bubbles.count_connections)
 
       // Other
-        app.post('/bubbles/:bubbleId/demote_to_member/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_admin          ,  bubbles.add_member        ,  bubbles.count_connections)
-        app.post('/bubbles'                                     ,  auth.requiresLogin  ,  bubbles.create                ,  bubbles.add_admin         ,  bubbles.count_connections)
-        app.post('/edit/bubbles/:bubbleId/update'               ,  auth.requiresLogin  ,  auth.bubble.redirect_admin    ,  bubbles.update)
-        app.del('/bubbles/:bubbleId'                            ,  auth.requiresLogin  ,  auth.bubble.redirect_admin    ,  bubbles.delete)
+        app.post('/bubbles/:bubbleId/demote_to_member/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_admin            ,  bubbles.add_member          ,  bubbles.count_connections)
+        app.post('/bubbles'                                     ,  auth.requiresLogin  ,  bubbles.create                  ,  bubbles.add_admin           ,  bubbles.count_connections)
+        app.post('/edit/bubbles/:bubbleId/update'               ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_admin  ,  bubbles.update)
+        app.del('/bubbles/:bubbleId'                            ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_admin  ,  bubbles.delete)
 
 
   // User Routes
