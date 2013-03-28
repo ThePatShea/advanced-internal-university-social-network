@@ -61,6 +61,21 @@ exports.bubble = {
           return res.redirect('/bubbles/'+req.bubble._id)
         }
       }
+    , detect_bubble_connect {
+        if (req.user.connections.bubbles.admin.indexOf(req.bubble.id) > -1) {
+          req.bubble_connect_status = 'admin'
+        } else if (req.user.connections.bubbles.member.indexOf(req.bubble.id) > -1) {
+          req.bubble_connect_status = 'member'
+        } else if (req.user.connections.bubbles.fan.indexOf(req.bubble.id) > -1) {
+          req.bubble_connect_status = 'fan'
+        } else if (req.user.connections.bubbles.applicant.indexOf(req.bubble.id) > -1) {
+          req.bubble_connect_status = 'applicant'
+        } else if (req.user.connections.bubbles.invitee.indexOf(req.bubble.id) > -1) {
+          req.bubble_connect_status = 'invitee'
+        } else {
+          req.bubble_connect_status = 'none'
+        }
+      }
     , edit_bubble : function (req, res, next) {
         req.edit_bubble  =  'true'
         next()
