@@ -124,8 +124,8 @@ module.exports = function (app, passport, auth) {
 
   // Post Routes
     // Get Requests
-      app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  auth.post.redirect_creator_or_admin  ,  sidebar.bubble, posts.edit)
-      app.get('/bubbles/:bubbleId/:bubble_section/view/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  sidebar.bubble  ,  posts.single)
+      app.get('/bubbles/:bubbleId/:bubble_section/view/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  auth.bubble.redirect_member          ,  sidebar.bubble  ,  posts.single)
+      app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  auth.post.redirect_creator_or_admin  ,  sidebar.bubble  ,  posts.edit)
       app.get('/bubbles/:bubbleId'                                     ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  sidebar.bubble                ,  posts.dashboard)
       app.get('/bubbles/:bubbleId/:bubble_section'                     ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  sidebar.bubble                ,  posts.list)
       app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  posts.list_pagelet)
