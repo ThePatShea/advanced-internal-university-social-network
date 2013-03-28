@@ -128,17 +128,17 @@ module.exports = function (app, passport, auth) {
   // Post Routes
     app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.delete, notifications.delete, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/:bubble_section/create', auth.requiresLogin, auth.bubble.hasAuthorization, posts.create, notifications.create, bubbles.count_connections)
-    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.detect_authorization, posts.edit)
-    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.detect_authorization, posts.show)
+    app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId', auth.requiresLogin, auth.post.hasAuthorization, auth.bubble.get_connect_status, auth.bubble.assemble_view, auth.post.get_connect_status, auth.post.assemble_view, posts.edit)
+    app.get('/bubbles/:bubbleId/:bubble_section/view/:postId', auth.requiresLogin, auth.bubble.get_connect_status, auth.bubble.assemble_view, auth.post.get_connect_status, auth.post.assemble_view, posts.show)
     app.post('/bubbles/:bubbleId/:bubble_section/save/:postId', auth.requiresLogin, auth.post.hasAuthorization, posts.save)
-    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.detect_authorization, posts.list)
+    app.get('/bubbles/:bubbleId/:bubble_section', auth.requiresLogin, auth.bubble.get_connect_status, auth.bubble.assemble_view, posts.list)
     app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip', auth.requiresLogin, posts.list_pagelet)
-    app.get('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.detect_authorization, posts.dashboard)
+    app.get('/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.get_connect_status, auth.bubble.assemble_view, posts.dashboard)
     app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId', auth.requiresLogin, comments.create)
 
 
   // Bubble Routes
-    app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.detect_authorization, bubbles.edit)
+    app.get('/edit/bubbles/:bubbleId', auth.requiresLogin, auth.bubble.hasAuthorization, auth.bubble.edit_bubble, auth.bubble.get_connect_status, auth.bubble.assemble_view, bubbles.edit)
     app.post('/bubbles/:bubbleId/remove_applicant/:userId', auth.requiresLogin, bubbles.remove_applicant, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/add_applicant/:userId', auth.requiresLogin, bubbles.add_applicant, bubbles.remove_fan, bubbles.count_connections)
     app.post('/bubbles/:bubbleId/remove_invitee/:userId', auth.requiresLogin, bubbles.remove_invitee, bubbles.count_connections)
