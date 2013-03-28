@@ -124,23 +124,23 @@ module.exports = function (app, passport, auth) {
 
   // Post Routes
     // Get Requests
-      app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  auth.post.hasAuthorization  ,  sidebar.bubble, posts.edit)
+      app.get('/bubbles/:bubbleId/:bubble_section/edit/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  auth.post.redirect_creator_or_admin  ,  sidebar.bubble, posts.edit)
       app.get('/bubbles/:bubbleId/:bubble_section/view/:postId'        ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.post.get_connect_status  ,  sidebar.bubble  ,  posts.single)
       app.get('/bubbles/:bubbleId'                                     ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  sidebar.bubble                ,  posts.dashboard)
       app.get('/bubbles/:bubbleId/:bubble_section'                     ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  sidebar.bubble                ,  posts.list)
       app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  posts.list_pagelet)
 
     // Post Requests
-      app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId'      ,  auth.requiresLogin  ,  auth.post.hasAuthorization    ,  posts.delete  ,  notifications.delete  ,  bubbles.count_connections)
-      app.post('/bubbles/:bubbleId/:bubble_section/create'             ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  posts.create  ,  notifications.create  ,  bubbles.count_connections)
-      app.post('/bubbles/:bubbleId/:bubble_section/save/:postId'       ,  auth.requiresLogin  ,  auth.post.hasAuthorization    ,  posts.save)
+      app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId'      ,  auth.requiresLogin  ,  auth.post.redirect_creator_or_admin  ,  posts.delete  ,  notifications.delete  ,  bubbles.count_connections)
+      app.post('/bubbles/:bubbleId/:bubble_section/create'             ,  auth.requiresLogin  ,  auth.post.redirect_creator_or_admin  ,  posts.create  ,  notifications.create  ,  bubbles.count_connections)
+      app.post('/bubbles/:bubbleId/:bubble_section/save/:postId'       ,  auth.requiresLogin  ,  auth.post.redirect_creator_or_admin  ,  posts.save)
       app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId'    ,  auth.requiresLogin  ,  comments.create)
 
 
   // Bubble Routes
     // Get Requests
       // Edit Bubble
-        app.get('/edit/bubbles/:bubbleId'                       ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  auth.bubble.get_connect_status  ,  sidebar.bubble  ,  bubbles.edit)
+        app.get('/edit/bubbles/:bubbleId'                       ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_admin  ,  sidebar.bubble  ,  bubbles.edit)
 
     // Post Requests
       // Add User Connection
@@ -160,8 +160,8 @@ module.exports = function (app, passport, auth) {
       // Other
         app.post('/bubbles/:bubbleId/demote_to_member/:userId'  ,  auth.requiresLogin  ,  bubbles.remove_admin          ,  bubbles.add_member        ,  bubbles.count_connections)
         app.post('/bubbles'                                     ,  auth.requiresLogin  ,  bubbles.create                ,  bubbles.add_admin         ,  bubbles.count_connections)
-        app.post('/edit/bubbles/:bubbleId/update'               ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  bubbles.update)
-        app.del('/bubbles/:bubbleId'                            ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  bubbles.delete)
+        app.post('/edit/bubbles/:bubbleId/update'               ,  auth.requiresLogin  ,  auth.bubble.redirect_admin    ,  bubbles.update)
+        app.del('/bubbles/:bubbleId'                            ,  auth.requiresLogin  ,  auth.bubble.redirect_admin    ,  bubbles.delete)
 
 
   // User Routes
@@ -178,8 +178,8 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/uploads/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.hasAuthorization  ,  uploads.upload)
-    app.post('/uploads/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.hasAuthorization    ,  uploads.upload)
+    app.post('/uploads/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.redirect_creator_admin  ,  uploads.upload)
+    app.post('/uploads/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.redirect_admin        ,  uploads.upload)
 
 
   // Notification Routes
