@@ -188,7 +188,7 @@
       var bubble = new Bubble(req.body)
   
       bubble.save(function(err) {
-        req.body.redirect_url   =  '/bubbles/' + bubble._id
+        req.body.redirect_url   =  '/edit/bubbles/' + bubble._id
         req.user_selected       =  req.user
         req.bubble              =  bubble
 
