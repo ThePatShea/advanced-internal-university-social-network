@@ -78,10 +78,17 @@
       post.creator = req.user._id
 
       post.save(function(err) {
-        if (bubble_section == 'event')
+        if (bubble_section == 'event') {
           bubble.connections.posts.events.addToSet(post._id)
-        if (bubble_section == 'talk')
+
+          if (post.privacy == 'public')
+            bubble.connections.posts.events_public.addToSet(post._id)
+        } else if (bubble_section == 'talk') {
           bubble.connections.posts.talks.addToSet(post._id)
+
+          if (post.privacy == 'public')
+            bubble.connections.posts.talks_public.addToSet(post._id)
+        }
 
         bubble.save(function (err) {
           req.post = post

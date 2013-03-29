@@ -242,17 +242,17 @@
 
       bubble.num_connections = {
           num_posts: {
-              num_total:       bubble.connections.posts.events.length + bubble.connections.posts.talks.length
-            , num_events:      bubble.connections.posts.events.length
-            , num_talks:       bubble.connections.posts.talks.length
+              num_events_public:  bubble.connections.posts.events_public.length
+            , num_talks_public:   bubble.connections.posts.talks_public.length
+            , num_events:         bubble.connections.posts.events.length
+            , num_talks:          bubble.connections.posts.talks.length
           }
         , num_users: {
-              num_total:       bubble.connections.users.applicants.length + bubble.connections.users.members.length + bubble.connections.users.admins.length + bubble.connections.users.fans.length + bubble.connections.users.invitees.length
-            , num_applicants:  bubble.connections.users.applicants.length
-            , num_invitees:    bubble.connections.users.invitees.length
-            , num_members:     bubble.connections.users.members.length
-            , num_admins:      bubble.connections.users.admins.length
-            , num_fans:        bubble.connections.users.fans.length
+              num_applicants:     bubble.connections.users.applicants.length
+            , num_invitees:       bubble.connections.users.invitees.length
+            , num_members:        bubble.connections.users.members.length
+            , num_admins:         bubble.connections.users.admins.length
+            , num_fans:           bubble.connections.users.fans.length
           }
       }
       
