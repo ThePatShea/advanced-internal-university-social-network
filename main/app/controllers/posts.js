@@ -85,6 +85,10 @@
 
                 var posts = talks.concat(events)
 
+                posts = posts.sort(function(a,b) {
+                  return b.createdAt - a.createdAt
+                })
+
                 res.render('posts/list_pagelet_' + bubble_section, {
                     bubble_section: bubble_section
                   , format_date_bottom_count: skip
