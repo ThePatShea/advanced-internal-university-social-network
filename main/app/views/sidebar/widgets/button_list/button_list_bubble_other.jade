@@ -1,7 +1,7 @@
 include widgets/button_dashboard
 
-if (bubble.num_connections.num_posts.num_talks > 0)
-  include widgets/button_talks
+if (bubble.num_connections.num_posts.num_talks_public > 0)
+  include widgets/button_talks_public
 
-if (bubble.num_connections.num_posts.num_events > 0)
-  include widgets/button_events
+if (bubble.num_connections.num_posts.num_events_public > 0)
+  include widgets/button_events_public
