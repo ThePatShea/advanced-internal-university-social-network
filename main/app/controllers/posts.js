@@ -41,29 +41,60 @@
       // Initialize query parameters
         var query_parameters_find      =  req.query_parameters_find
         var query_parameters_sort      =  req.query_parameters_sort
-        query_parameters_find.bubbles  =  req.bubble._id
-        Post                           =  req.Post
+        query_parameters_find.bubbles  =  bubble._id
  
       // Show only public posts to users who aren't an admin or member or this bubble
         if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
           query_parameters_find.privacy = 'public'
 
-      // Find some posts the current bubble has
-        Post
-          .find(query_parameters_find)
+      if (bubble_section != 'dashboard') {
+        Post = req.Post
+
+        // Find some posts the current bubble has
+          Post
+            .find(query_parameters_find)
+            .sort(query_parameters_sort)
+            .limit(20)
+            .skip(skip)
+            .exec(function (err, posts) {
+              // Render the view
+                res.render('posts/list_pagelet_' + bubble_section, {
+                    bubble_section: bubble_section
+                  , format_date_bottom_count: skip
+                  , format_date_top_count: skip
+                  , bubble: bubble
+                  , posts: posts
+                })
+             })
+      } else {
+        query_parameters_find_talk          =  { }
+        query_parameters_find_talk.bubbles  =  bubble._id
+
+        req.Talk
+          .find(query_parameters_find_talk)
           .sort(query_parameters_sort)
-          .limit(20)
+          .limit(15)
           .skip(skip)
-          .exec(function (err, posts) {
-            // Render the view
-              res.render('posts/list_pagelet_' + bubble_section, {
-                  bubble_section: bubble_section
-                , format_date_bottom_count: skip
-                , format_date_top_count: skip
-                , bubble: bubble
-                , posts: posts
+          .exec(function (err, talks) {
+            req.Event
+              .find(query_parameters_find)
+              .sort(query_parameters_sort)
+              .limit(15)
+              .skip(skip)
+              .exec(function (err, events) {
+
+                var posts = talks.concat(events)
+
+                res.render('posts/list_pagelet_' + bubble_section, {
+                    bubble_section: bubble_section
+                  , format_date_bottom_count: skip
+                  , format_date_top_count: skip
+                  , bubble: bubble
+                  , posts: posts
+                })
               })
-           })
+          })
+      }
     }
 
 

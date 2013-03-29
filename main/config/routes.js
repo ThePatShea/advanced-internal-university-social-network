@@ -46,7 +46,8 @@ module.exports = function (app, passport, auth) {
         req.query_parameters_find    =  { end_time: {$gt: timestamp_now}, start_time: {$gt: timestamp_six_hours_ago} } 
         req.query_parameters_sort    =  { createdAt: 'desc' } 
 
-        req.Post                     =  Event
+        req.Event                    =  Event
+        req.Talk                     =  Talk
       }
 
       next()

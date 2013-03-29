@@ -15,7 +15,8 @@ $(document).ready(function () {
             var unformatted_date = new Date($(widget_id).html()*1000);
   
         // Re-format the date
-          var formatted_date = moment(unformatted_date).format(date_format);
+          if (unformatted_date)
+            var formatted_date = moment(unformatted_date).format(date_format);
   
         // Display the newly-formatted date
           $(widget_id).html(formatted_date);
