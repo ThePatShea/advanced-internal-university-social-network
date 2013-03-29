@@ -82,7 +82,6 @@
               .limit(15)
               .skip(skip)
               .exec(function (err, events) {
-
                 var posts = talks.concat(events)
 
                 posts = posts.sort(function(a,b) {

@@ -9,6 +9,7 @@ var TalkSchema = new Schema({
   , creator: {type : Schema.ObjectId, ref : 'User'}
   , createdAt: {type : Date, default : Date.now}
   , privacy: {type: String, default: 'private'}
+  , post_type: {type: String, default: 'talk'}
   , description: String
   , name: String
 })

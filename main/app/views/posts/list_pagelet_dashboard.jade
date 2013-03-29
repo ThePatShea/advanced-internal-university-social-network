@@ -1,3 +1,3 @@
 each post in posts
-  a(href='/bubbles/'+bubble._id+'/#{bubble_section}/view/'+post._id)
+  a(href='/bubbles/'+bubble._id+'/#{post.post_type}/view/#{post._id}')
     include widgets/top_bar_event_show
