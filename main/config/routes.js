@@ -70,13 +70,13 @@ module.exports = function (app, passport, auth) {
   // Single post parameters
     app.param('postId', function(req, res, next, id) {
       var Post  =  req.Post
-      
+
       Post
         .findOne({ _id : id })
         .populate('comments')
         .exec(function (err, post) {
           if (err) return next(err)
-          if (!post) return next(new Error('Failed to load post ' + id))
+          if (!post) return next( )
 
           req.object  =  post
           req.post    =  post
