@@ -132,9 +132,9 @@ module.exports = function (app, passport, auth) {
       app.get('/bubbles/:bubbleId/:bubble_section/list_pagelet/:skip'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  posts.list_pagelet)
 
     // Post Requests
-      app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId'      ,  auth.requiresLogin  ,  auth.post.redirect_creator_or_admin  ,  posts.delete  ,  notifications.delete  ,  bubbles.count_connections)
-      app.post('/bubbles/:bubbleId/:bubble_section/create'             ,  auth.requiresLogin  ,  auth.post.redirect_creator_or_admin  ,  posts.create  ,  notifications.create  ,  bubbles.count_connections)
-      app.post('/bubbles/:bubbleId/:bubble_section/save/:postId'       ,  auth.requiresLogin  ,  auth.post.redirect_creator_or_admin  ,  posts.save)
+      app.del('/bubbles/:bubbleId/:bubble_section/delete/:postId'      ,  auth.requiresLogin  ,  auth.post.get_connect_status    ,  auth.post.redirect_creator_or_admin  ,  posts.delete  ,  notifications.delete  ,  bubbles.count_connections)
+      app.post('/bubbles/:bubbleId/:bubble_section/create'             ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_member  ,  posts.create  ,  notifications.create  ,  bubbles.count_connections)
+      app.post('/bubbles/:bubbleId/:bubble_section/save/:postId'       ,  auth.requiresLogin  ,  auth.post.get_connect_status    ,  auth.post.redirect_creator_or_admin  ,  posts.save)
       app.post('/bubbles/:bubbleId/:bubble_section/comment/:postId'    ,  auth.requiresLogin  ,  comments.create)
 
 
@@ -179,8 +179,8 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/uploads/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.redirect_creator_admin  ,  uploads.upload)
-    app.post('/uploads/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.redirect_admin        ,  uploads.upload)
+    app.post('/uploads/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.get_connect_status    ,  auth.post.redirect_creator_or_admin  ,  uploads.upload)
+    app.post('/uploads/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_admin           ,  uploads.upload)
 
 
   // Notification Routes

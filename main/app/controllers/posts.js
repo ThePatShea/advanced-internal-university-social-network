@@ -189,15 +189,8 @@
 
   // Edit a single post
     exports.edit = function(req, res) {
-      var post_connect_status = req.post_connect_status
-
-      view_params = req.bubble_section
-
-      if (post_connect_status == 'admin' || post_connect_status == 'creator') {
-        view_params  +=  '_authorized_'
-      } else {
-        view_params  +=  '_unauthorized_'
-      }
+     var post_connect_status  =  req.post_connect_status
+       , view_params          =  req.bubble_section + '_authorized_'
 
      res.render('posts/single_' + view_params + 'edit', {
           change_post_image: req.change_post_image
