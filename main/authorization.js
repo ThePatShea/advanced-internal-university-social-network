@@ -11,10 +11,9 @@
         next()
       }
     , redirect_creator_or_admin: function (req, res, next) {
-        var bubble_connect_status  =  req.bubble_connect_status
-          , post_connect_status    =  req.post_connect_status
+        var post_connect_status    =  req.post_connect_status
 
-        if (post_connect_status != 'creator' && bubble_connect_status != 'admin')
+        if (post_connect_status != 'creator' && post_connect_status != 'admin')
           return res.redirect('/bubbles/' + req.bubble._id + '/' + req.bubble_section + '/view/' + req.post._id)
         
         next()
