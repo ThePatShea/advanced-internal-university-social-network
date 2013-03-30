@@ -179,8 +179,8 @@ module.exports = function (app, passport, auth) {
 
 
   // Upload Routes
-    app.post('/uploads/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.get_connect_status    ,  auth.post.redirect_creator_or_admin  ,  uploads.upload)
-    app.post('/uploads/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_admin           ,  uploads.upload)
+    app.post('/uploads/bubbles/:bubbleId/:bubble_section/event/:postId'     ,  auth.requiresLogin  ,  auth.post.get_connect_status    ,  auth.post.redirect_creator_or_admin  ,  uploads.upload)
+    app.post('/uploads/bubbles/:bubbleId/:bubble_section/bubble/:bubbleId'  ,  auth.requiresLogin  ,  auth.bubble.get_connect_status  ,  auth.bubble.redirect_admin           ,  uploads.upload)
 
 
   // Notification Routes
