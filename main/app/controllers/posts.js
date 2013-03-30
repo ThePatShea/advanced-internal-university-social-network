@@ -70,6 +70,10 @@
         query_parameters_find_talk          =  { }
         query_parameters_find_talk.bubbles  =  bubble._id
 
+        // Show only public posts to users who aren't an admin or member or this bubble
+          if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
+            query_parameters_find_talk.privacy = 'public'
+
         req.Talk
           .find(query_parameters_find_talk)
           .sort(query_parameters_sort)
@@ -227,10 +231,17 @@
         , bubble          =  req.bubble
         , post            =  req.post
 
-      if (bubble_section == 'event')
+      if (bubble_section == 'event') {
         bubble.connections.posts.events.remove(post._id)
-      if (bubble_section == 'talk')
+
+        if (post.privacy == 'public')
+            bubble.connections.posts.events_public.remove(post._id)
+      } else if (bubble_section == 'talk') {
         bubble.connections.posts.talks.remove(post._id)
+
+        if (post.privacy == 'public')
+            bubble.connections.posts.talks_public.remove(post._id)
+      }
       
       bubble.save(function(err) {
         post.remove(function(err) {
