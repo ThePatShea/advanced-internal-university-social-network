@@ -1461,7 +1461,7 @@ ul.nav.pull-right {
 
 @media (min-width: 1200px) {
   .main-content {
-    margin: 10px 0 0 260px;
+    margin: 0 0 0 260px;
   }
 
   .bubble_logo {
