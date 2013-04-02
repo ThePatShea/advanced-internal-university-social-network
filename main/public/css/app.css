@@ -1426,6 +1426,11 @@ ul.nav.pull-right {
       width: 26px;
       left: -2px;
       }
+      ul.nav.pull-right li a:hover .icon_header_notifications,
+      .current_page_notifications ul.nav.pull-right li .icon_header_notifications {
+        background: url("../img/sprites.png") -339px -86px;
+        left: -3;
+        }
     ul.nav.pull-right li .icon_header_sign_out {
       background: url("../img/sprites.png") -254px -12px;
       position: relative;
