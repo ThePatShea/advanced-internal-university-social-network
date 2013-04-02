@@ -194,7 +194,7 @@ h2 {
   font-family: 'proxima_nova_bold';
   text-shadow: 1px 1px 0 black;
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 12px;
   color: #F2F2F2;
 }
 
@@ -1244,7 +1244,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', end
         height: 43px;
         }
         .sidebar .sidebar_buttons li a .sidebar_button_icon {
-          margin: 10px 15px 0 25px;
+          margin: 10px 10px 0 24px;
           position: relative;
           height: 20px;
           width: 24px;
@@ -1272,7 +1272,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', end
         }
         .sidebar .sidebar_buttons li a .sidebar_button_label {
           position: relative;
-          top: 3px;
+          top: 4px;
         }
         .sidebar .sidebar_buttons li a .icon_sidebar_select {
           background: url("../img/sprites.png") -186px -39px;
@@ -1298,7 +1298,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', end
           }
           .sidebar .sidebar_buttons li a .sidebar_counter h2 {
             text-align: center;
-            line-height: 13px;
+            line-height: 12px;
             min-width: 30px;
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_events {
