@@ -203,6 +203,7 @@
        
       res.render('bubbles/edit', {
           rendered_sidebar: req.rendered_sidebar
+        , current_page: 'edit_bubble'
         , bubble_section: 'none'
         , title: bubble.name
         , bubble: bubble

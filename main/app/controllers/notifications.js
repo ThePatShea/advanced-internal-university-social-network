@@ -53,6 +53,7 @@
       res.render('notifications/list', {
           list_pagelet_url: '/notifications/list_pagelet/'
         , rendered_sidebar: req.rendered_sidebar
+        , current_page: 'notifications'
         , title: 'notifications'
       })
     }

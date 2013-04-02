@@ -24,6 +24,7 @@
           list_pagelet_url: '/bubbles/' + bubble._id + '/' + bubble_section + '/list_pagelet/'
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: bubble_section
+        , current_page: 'list_' + bubble_section
         , title: bubble.name
         , bubble: bubble
       })
@@ -149,7 +150,8 @@
       }
 
       res.render('posts/single_' + view_params + 'show', {
-          change_post_image: req.change_post_image
+          current_page: 'single_' + req.bubble_section
+        , change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
         , format_date_bottom_count: 0
@@ -178,6 +180,7 @@
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
         , format_date_bottom_count: 0
+        , current_page: 'dashboard'
         , format_date_top_count: 0
         , comments: req.comments
         , title: req.bubble.name
@@ -193,7 +196,8 @@
        , view_params          =  req.bubble_section + '_authorized_'
 
      res.render('posts/single_' + view_params + 'edit', {
-          change_post_image: req.change_post_image
+          current_page: 'edit_' + req.bubble_section
+        , change_post_image: req.change_post_image
         , rendered_sidebar: req.rendered_sidebar
         , bubble_section: req.bubble_section
         , format_date_bottom_count: 0

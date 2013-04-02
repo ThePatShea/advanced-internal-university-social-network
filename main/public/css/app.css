@@ -1244,6 +1244,7 @@ input[readonly="readonly"] {
           height: 100%;
           width: 2px;
           left: 1px;
+          top: 0;
         }
         .sidebar .sidebar_buttons li a .sidebar_button_icon {
           margin: 10px 10px 0 24px;
@@ -1400,7 +1401,12 @@ ul.nav.pull-right {
       height: 21px;
       width: 25px;
       left: -1px;
-    }
+      }
+      ul.nav.pull-right li:hover .icon_header_home,
+      .current_page_home ul.nav.pull-right li .icon_header_home {
+        background: url("../img/sprites.png") -281px -86px;
+        left: 0;
+        }
     ul.nav.pull-right li .icon_header_create {
       background: url("../img/sprites.png") -170px -12px;
       position: relative;
@@ -1818,7 +1824,6 @@ ul.nav.pull-right {
           text-align: center;
         }
         .sidebar .sidebar_buttons li a div {
-          margin: 10px 13px;
         }
     .sidebar .top_container .attributes {
       padding: 5px 0 0 0;

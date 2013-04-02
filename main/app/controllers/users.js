@@ -79,6 +79,7 @@ exports.home = function(req, res){
                 bubble_connect_status: req.bubble_connect_status
               , rendered_sidebar: req.rendered_sidebar
               , unsubscribed: bubbles
+              , current_page: 'home'
               , title: 'home'
               , user: user
             })
@@ -100,6 +101,7 @@ exports.new_bubble = function(req, res){
 
         res.render('users/new_bubble', {
             rendered_sidebar: req.rendered_sidebar
+          , current_page: 'new_bubble'
           , new_bubble: new Bubble({})
           , current_year: current_year
           , title: 'Create a Bubble'
