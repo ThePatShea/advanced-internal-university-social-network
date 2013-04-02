@@ -1245,8 +1245,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', end
         }
         .sidebar .sidebar_buttons li a .sidebar_button_icon {
           margin: 10px 15px 0 25px;
+          position: relative;
           height: 20px;
-          width: 20px;
+          width: 24px;
           float: left;
         }
         .sidebar .sidebar_buttons li a .icon_events {
@@ -1260,9 +1261,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', end
         }
         .sidebar .sidebar_buttons li a .icon_notifications {
           background: url("../img/sprites.png") -307px -36px;
+          left: -3px
         }
         .sidebar .sidebar_buttons li a .icon_new_bubble {
           background: url("../img/sprites.png") -281px -56px;
+          left: 1px;
         }
         .sidebar .sidebar_buttons li a .icon_home {
           background: url("../img/sprites.png") -280px -34px;
