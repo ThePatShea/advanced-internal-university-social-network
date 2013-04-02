@@ -1238,6 +1238,13 @@ input[readonly="readonly"] {
 	width: 242px;
         height: 43px;
         }
+        .sidebar .sidebar_buttons li a .left_line {
+          background: #BDC5CE;
+          position: absolute;
+          height: 100%;
+          width: 2px;
+          left: 1px;
+        }
         .sidebar .sidebar_buttons li a .sidebar_button_icon {
           margin: 10px 10px 0 24px;
           position: relative;

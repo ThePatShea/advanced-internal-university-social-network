@@ -1,13 +1,16 @@
 li
   a(href='/')
+    div.left_line
     div.sidebar_button_icon.icon_home
     h2.sidebar_button_label home
 li
   a(href='/users/#{req.user._id}/new_bubble')
+    div.left_line
     div.sidebar_button_icon.icon_new_bubble
     h2.sidebar_button_label create a bubble
 li
   a(href='/notifications')
+    div.left_line
     div.sidebar_button_icon.icon_notifications
     h2.sidebar_button_label notifications
     if (req.user.total_unviewed_notifications > 0)
