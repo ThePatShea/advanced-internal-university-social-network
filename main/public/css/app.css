@@ -1403,7 +1403,8 @@ ul.nav.pull-right {
       background: url("../img/sprites.png") -198px -11px;
       position: relative;
       height: 21px;
-      width: 21px;
+      width: 26px;
+      left: -2px;
     }
     ul.nav.pull-right li .icon_header_sign_out {
       background: url("../img/sprites.png") -254px -12px;
