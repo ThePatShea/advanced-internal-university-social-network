@@ -1120,23 +1120,21 @@ input[readonly="readonly"] {
     width: 100%;
     }
     .sidebar .top_container .pic_border {
-      background: url("../img/sprites.png") -10px -70px;
-      margin: -60px auto 0 auto;
-      position: absolute;
-      height: 120px;
+      background: url("../img/sprites.png") -10px -69px;
+      margin: 17px auto 0 auto;
+      height: 122px;
       width: 210px;
-      top: 50%;
       }
     .sidebar .top_container .top_container_inner {
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       border-radius: 20px;
 
-      border-bottom: 2px solid rgba(190,193,194,.85);
-      margin: -50px 0 0 -94px;
+      border-bottom: 1px solid rgba(190,193,194,.95);
+      margin: -49px 0 0 -94px;
       position: absolute;
       overflow: hidden;
-      height: 96px;
+      height: 98px;
       width: 189px;
       left: 50%;
       top: 50%;
@@ -1188,9 +1186,6 @@ input[readonly="readonly"] {
     .sidebar .top_container .pic_top_overlay,
     .sidebar .top_container .pic_top,
     .sidebar .top_container .attributes {
-      -webkit-box-shadow: inset 0px 14px 0px 0px rgba(0, 0, 0, .5);
-      box-shadow: inset 0px 14px 0px 0px rgba(0, 0, 0, .5);
-
       position: absolute;
       min-height: 100%;
       min-width: 100%;
