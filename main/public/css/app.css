@@ -1232,6 +1232,12 @@ input[readonly="readonly"] {
       border-bottom: 1px solid black;
       height: 43px;
       }
+      .sidebar .sidebar_buttons li:hover,
+      .current_page_home .sidebar_button_home,
+      .current_page_new_bubble .sidebar_button_new_bubble,
+      .current_page_notifications .sidebar_button_notifications {
+        background: url("../img/bg_sidebar_button_selected.png");
+        }
       .sidebar .sidebar_buttons li a { 
         position: relative;
         display: block;
