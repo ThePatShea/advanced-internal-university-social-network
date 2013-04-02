@@ -1122,6 +1122,7 @@ input[readonly="readonly"] {
     .sidebar .top_container .pic_border {
       background: url("../img/sprites.png") -10px -69px;
       margin: 17px auto 0 auto;
+      position: relative;
       height: 122px;
       width: 210px;
       }
@@ -1131,13 +1132,12 @@ input[readonly="readonly"] {
       border-radius: 20px;
 
       border-bottom: 1px solid rgba(190,193,194,.95);
-      margin: -49px 0 0 -94px;
       position: absolute;
       overflow: hidden;
       height: 98px;
       width: 189px;
-      left: 50%;
-      top: 50%;
+      left: 11px;
+      top: 11px;
       }
       .subscribe {
           background: #111111; /* Old browsers */
@@ -1666,11 +1666,25 @@ ul.nav.pull-right {
     height: 100%;
     float: left;
   }
-  .sidebar .top_container .top_container_inner {
+  .sidebar .top_container .pic_border {
+    background: url("../img/sprites.png") -10px -199px;
     width: 145px;
-    height: 82px;
-    margin-top: -41px;
-  }
+    height: 85px;
+    }
+  .sidebar .top_container .top_container_inner {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+
+    width: 129px;
+    height: 66px;
+    left: 8px;
+    top: 8px;
+    }
+  .sidebar .top_container .attributes h1 {
+    line-height: 20px;
+    font-size: 20px;
+    }
   .sidebar .sidebar_buttons li a {
     width: 175px;
     }
