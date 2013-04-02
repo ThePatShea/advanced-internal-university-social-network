@@ -1462,13 +1462,13 @@ ul.nav.pull-right {
 
 @media (min-width: 1200px) {
   .bubble_logo {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 15px !important;
   }
 }
 
 @media (max-width: 1199px) and (min-width: 980px) {
   .bubble_logo {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 15px !important;
   }
 }
 
@@ -1478,7 +1478,7 @@ ul.nav.pull-right {
   }
 
   .bubble_logo {
-    margin: 0 0 0 5px;
+    margin: 0 0 0 10px !important;
   }
 
   .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
@@ -1639,7 +1639,7 @@ ul.nav.pull-right {
   }
 
   .bubble_logo {
-    margin: 0 0 0 25px;
+    margin: 0 0 0 30px !important;
   }
 
   .sidebar {
@@ -1720,8 +1720,8 @@ ul.nav.pull-right {
   }
 
   .bubble_logo {
+    margin: 0 0 0 -23px !important;
     position: absolute;
-    margin-left: -23px;
     left: 50%;
   }
 
