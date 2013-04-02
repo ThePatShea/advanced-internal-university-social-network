@@ -1402,7 +1402,7 @@ ul.nav.pull-right {
       width: 25px;
       left: -1px;
       }
-      ul.nav.pull-right li:hover .icon_header_home,
+      ul.nav.pull-right li a:hover .icon_header_home,
       .current_page_home ul.nav.pull-right li .icon_header_home {
         background: url("../img/sprites.png") -281px -86px;
         left: 0;
@@ -1413,14 +1413,19 @@ ul.nav.pull-right {
       height: 21px;
       width: 21px;
       left: 1px;
-    }
+      }
+      ul.nav.pull-right li a:hover .icon_header_create,
+      .current_page_new_bubble ul.nav.pull-right li .icon_header_create {
+        background: url("../img/sprites.png") -311px -86px;
+        left: 0;
+        }
     ul.nav.pull-right li .icon_header_notifications {
       background: url("../img/sprites.png") -198px -11px;
       position: relative;
       height: 21px;
       width: 26px;
       left: -2px;
-    }
+      }
     ul.nav.pull-right li .icon_header_sign_out {
       background: url("../img/sprites.png") -254px -12px;
       position: relative;
