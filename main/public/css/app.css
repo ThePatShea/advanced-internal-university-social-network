@@ -180,12 +180,12 @@ h3,
 h4,
 h5 {
   text-shadow: 2px 2px 0px black;
-  text-transform: uppercase;
   color: white;
 }
 
 h1 {
   font-family: 'proxima_nova_extrabold';
+  text-transform: capitalize;
   line-height: 28px;
   font-size: 28px;
 }
@@ -193,6 +193,7 @@ h1 {
 h2 {
   font-family: 'proxima_nova_bold';
   text-shadow: 1px 1px 0 black;
+  text-transform: uppercase;
   font-size: 13px;
   color: #F2F2F2;
 }
@@ -1083,14 +1084,18 @@ input[readonly="readonly"] {
     }
 
 .sidebar {
-  background: #4d5153; /* Old browsers */
-  background: -moz-linear-gradient(top,  #4d5153 0%, #000000 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d5153), color-stop(100%,#000000)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #4d5153 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #4d5153 0%,#000000 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #4d5153 0%,#000000 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #4d5153 0%,#000000 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+
+background: #4d5153; /* Old browsers */
+background: -moz-linear-gradient(top,  #4d5153 0%, #2c2f30 22%, #000000 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4d5153), color-stop(22%,#2c2f30), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #4d5153 0%,#2c2f30 22%,#000000 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #4d5153 0%,#2c2f30 22%,#000000 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #4d5153 0%,#2c2f30 22%,#000000 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #4d5153 0%,#2c2f30 22%,#000000 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d5153', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+
 
   position: fixed;
   height: 2000px;
@@ -1207,7 +1212,6 @@ input[readonly="readonly"] {
       .sidebar .top_container .attributes h1 {
         font-family: 'proxima_nova_extrabold';
         text-shadow: 2px 2px 0px black;
-        text-transform: uppercase;
         line-height: 28px;
         font-size: 28px;
         color: white;
@@ -1231,13 +1235,13 @@ input[readonly="readonly"] {
     .sidebar .sidebar_buttons li {
       border-top: 1px solid rgba(224,224,224,.25);
       border-bottom: 1px solid black;
-      height: 45px;
+      height: 43px;
       }
       .sidebar .sidebar_buttons li a { 
         position: relative;
         display: block;
 	width: 242px;
-        height: 45px;
+        height: 43px;
         }
         .sidebar .sidebar_buttons li a .sidebar_button_icon {
           margin: 10px 15px 0 25px;
