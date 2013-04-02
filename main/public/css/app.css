@@ -1128,9 +1128,6 @@ input[readonly="readonly"] {
       top: 50%;
       }
     .sidebar .top_container .top_container_inner {
-      -webkit-box-shadow: inset 0px 14px 0px 0px rgba(0, 0, 0, .5);
-      box-shadow: inset 0px 14px 0px 0px rgba(0, 0, 0, .5);
-
       -webkit-border-radius: 20px;
       -moz-border-radius: 20px;
       border-radius: 20px;
@@ -1191,6 +1188,9 @@ input[readonly="readonly"] {
     .sidebar .top_container .pic_top_overlay,
     .sidebar .top_container .pic_top,
     .sidebar .top_container .attributes {
+      -webkit-box-shadow: inset 0px 14px 0px 0px rgba(0, 0, 0, .5);
+      box-shadow: inset 0px 14px 0px 0px rgba(0, 0, 0, .5);
+
       position: absolute;
       min-height: 100%;
       min-width: 100%;
