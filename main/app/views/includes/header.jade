@@ -7,13 +7,13 @@ header#header
         div
           ul.nav
           ul.nav.pull-right
-            li
+            li.header_button_home
               a(href='/')
                 div.icon_header_home
-            li
+            li.header_button_create
               a(href="/users/#{req.user.id}/new_bubble")
                 div.icon_header_create
-            li
+            li.header_button_notifications
               a(href="/notifications")
                 div.icon_header_notifications
                 if (req.user.total_unviewed_notifications > 0)
@@ -25,7 +25,7 @@ header#header
                   h3= req.user.name
                   div.nav_pic_square_bg
                     img.nav_pic_square(src='http://graph.facebook.com/'+req.user.facebook.id+'/picture?type=square')
-              li.sign_out_button
+              li.sign_out_button.header_button_sign_out
                 a(href="/logout", title="logout")
                   div.icon_header_sign_out
             else

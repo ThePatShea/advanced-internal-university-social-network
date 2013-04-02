@@ -102,7 +102,7 @@ body {
 }
 
 .main-head {
-  padding: 20px 0 10px 0 !important;
+  padding: 2px 0 10px 0 !important;
 }
 
 .container {
@@ -1070,7 +1070,7 @@ input[readonly="readonly"] {
       }
 
 .page_content {
-  border: 1px solid white;
+  border-left: 1px solid white;
   overflow: hidden;
   border-right: 0;
 }
@@ -1095,8 +1095,7 @@ input[readonly="readonly"] {
   position: fixed;
   height: 2000px;
   width: 248px;
-  top: 85px;
-  left: 0;
+  top: 65px;
   }
   .sidebar .sidebar_main {
     border-right: 1px solid rgba(255,255,255,.25);
@@ -1452,7 +1451,9 @@ ul.nav.pull-right {
         overflow: hidden;
         width: 50px;
       }
-
+.main-content {
+  margin: 0 0 0 255px;
+}
 
 
 
@@ -1460,20 +1461,12 @@ ul.nav.pull-right {
 
 
 @media (min-width: 1200px) {
-  .main-content {
-    margin: 0 0 0 260px;
-  }
-
   .bubble_logo {
     margin: 0 0 0 10px;
   }
 }
 
 @media (max-width: 1199px) and (min-width: 980px) {
-  .main-content {
-    margin: 10px 0 0 260px;
-  }
-
   .bubble_logo {
     margin: 0 0 0 10px;
   }
@@ -1486,10 +1479,6 @@ ul.nav.pull-right {
 
   .bubble_logo {
     margin: 0 0 0 5px;
-  }
-
-  .main-content {
-    margin: 10px 0 0 260px;
   }
 
   .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
@@ -1633,11 +1622,11 @@ ul.nav.pull-right {
   }
 
   .main-content {
-    margin: 10px 0 0 185px;
+    margin: 0 0 0 180px;
   }
 
   .pull-right {
-    margin: 8px 20px 0 0 !important;
+    margin: 0 20px 0 0 !important;
   }
 
   .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
@@ -1650,7 +1639,7 @@ ul.nav.pull-right {
   }
 
   .bubble_logo {
-    margin: 0 0 0 20px;
+    margin: 0 0 0 25px;
   }
 
   .sidebar {
@@ -1695,6 +1684,10 @@ ul.nav.pull-right {
 }
 
 @media (max-width: 480px) {
+  .main-content {
+    margin: 0;
+  }
+
   .navbar-fixed-top, .navbar-fixed-bottom {
     position: fixed;
   }
@@ -1707,12 +1700,29 @@ ul.nav.pull-right {
     padding: 0;
   }
 
-  .pull-right .user_widget {
-    display: none;
-  }
+  .pull-right {
+      position: absolute !important;
+      float: left !important;
+      left: -10px !important;
+      width: 100% !important;
+    }
+    .pull-right .header_button_create,
+    .pull-right .user_widget {
+        display: none !important;
+      }
+    .pull-right .header_button_notifications {
+        position: absolute !important;
+        right: 0 !important;
+      }
 
   .main-head {
     padding: 100px 0 !important;
+  }
+
+  .bubble_logo {
+    position: absolute;
+    margin-left: -23px;
+    left: 50%;
   }
 
   .post_list {
