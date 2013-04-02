@@ -1291,7 +1291,14 @@ input[readonly="readonly"] {
           right: -10px;
           top: 50%;
           margin: -13px 0 0 0;
+          display: none;
           }
+         .sidebar .sidebar_buttons li:hover .icon_sidebar_select,
+         .current_page_home .sidebar_button_home .icon_sidebar_select,
+         .current_page_new_bubble .sidebar_button_new_bubble .icon_sidebar_select,
+         .current_page_notifications .sidebar_button_notifications .icon_sidebar_select {
+           display: block !important;
+           }
         .sidebar .sidebar_buttons li a .sidebar_counter {
           -webkit-border-radius: 12px;
           -moz-border-radius: 12px;
@@ -1717,8 +1724,11 @@ ul.nav.pull-right {
   .sidebar .sidebar_buttons li a {
     width: 175px;
     }
+    .sidebar .sidebar_buttons li a .sidebar_button_label {
+      font-size: 11px;
+      }
     .sidebar .sidebar_buttons li a .sidebar_button_icon {
-      margin: 10px 10px 0 10px;
+      margin: 10px 3px 0 10px;
       }
     .sidebar .sidebar_buttons li a .icon_sidebar_select {
       right: -4px;
