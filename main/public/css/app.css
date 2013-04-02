@@ -1327,7 +1327,8 @@ input[readonly="readonly"] {
 
 
 ul.nav.pull-right {
-  
+    position: relative;
+    left: 6px;
   }
   ul.nav.pull-right li {
     background: #4d5153; /* Old browsers */
