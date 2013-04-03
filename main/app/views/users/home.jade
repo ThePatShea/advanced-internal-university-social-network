@@ -15,14 +15,14 @@ block main
     section.subscription_section
       ul.subscription_list
         each bubble in user.connections.bubbles.invitee
+          include ../widgets/bubble_widget
           bubble_connect_status = 'invitee'
           include ../posts/widgets/button_connect_bubble_member
-          include ../widgets/bubble_widget
         each bubble in user.connections.bubbles.admin
           include ../widgets/bubble_widget
         each bubble in user.connections.bubbles.member
           include ../widgets/bubble_widget
         each bubble in user.connections.bubbles.applicant
+          include ../widgets/bubble_widget
           bubble_connect_status = 'applicant'
           include ../posts/widgets/button_connect_bubble_member
-          include ../widgets/bubble_widget
