@@ -683,7 +683,7 @@ input[readonly="readonly"] {
       .subscription_list .bubble_widget .section_inner .bubble_name_container {
         position: relative;
         display: table;
-        height: 57px;
+        height: 59px;
         }
         .subscription_list .bubble_widget .section_inner .bubble_name_container .bubble_name_container_inner {
           vertical-align: middle;
@@ -699,7 +699,7 @@ input[readonly="readonly"] {
           font-size: 20px;
           margin: 0 10px;
           display: block;
-          width: 168px;
+          width: 170px;
           }
 
 .back_to_bubble {
