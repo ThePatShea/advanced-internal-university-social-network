@@ -648,6 +648,11 @@ input[readonly="readonly"] {
     width: 200px;
     float: left;
     }
+    .subscription_list .bubble_widget_add_bubble {
+      background: url("../img/sprites.png") -10px -366px;
+      height: 66px;
+      width: 200px;
+      }
     .subscription_list .bubble_widget .pic_big {
       }
     .subscription_list .bubble_widget .subscribe {

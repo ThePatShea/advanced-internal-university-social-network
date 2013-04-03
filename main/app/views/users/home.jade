@@ -26,6 +26,8 @@ block main
         each bubble in user.connections.bubbles.applicant
           bubble_connect_status = 'applicant'
           include ../widgets/bubble_widget
+        a(href='/users/#{req.user._id}/new_bubble')
+          button.bubble_widget_add_bubble
     section.subscription_section
       h4.subscription_section_name explore
     div.divider
