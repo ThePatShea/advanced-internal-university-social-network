@@ -641,8 +641,6 @@ input[readonly="readonly"] {
     float: left;
     }
     .subscription_list .bubble_widget_container .button_connect_bubble_container {
-      position: relative;
-      height: 35px;
       width: 200px;
       }
   .subscription_list .bubble_widget {
