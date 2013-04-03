@@ -1342,34 +1342,25 @@ input[readonly="readonly"] {
           -moz-border-radius: 12px;
           border-radius: 12px;
 
-          box-shadow: 0 1px 0 0 #4D4F51, inset 0 1px 0 0 rgba(255,255,255,.34), inset 0 -1px 0 0 black, 0 -1px 0 0 black;
+          box-shadow: 0 1px 0 0 rgba(157,159,162,.6), inset 0 1px 0 0 rgba(255,255,255,.34), inset 0 -1px 0 0 black, 0 -1px 0 0 black;
 
           margin: -13px 0 0 0;
           position: absolute;
-          padding: 5px;
-          right: 28px;
+          padding: 6px;
+          right: 30px;
           top: 50%;
           }
           .sidebar .sidebar_buttons li a .sidebar_counter h2 {
             text-align: center;
             line-height: 12px;
-            min-width: 30px;
+            min-width: 20px;
+            font-size: 14px;
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_events {
-            background: #a6311f; /* Old browsers */
-            background: -moz-linear-gradient(top,  #a6311f 0%, #762216 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a6311f), color-stop(100%,#762216)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top,  #a6311f 0%,#762216 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top,  #a6311f 0%,#762216 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top,  #a6311f 0%,#762216 100%); /* IE10+ */
-            background: linear-gradient(to bottom,  #a6311f 0%,#762216 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6311f', endColorstr='#762216',GradientType=0 ); /* IE6-9 */
-            }
-          .sidebar .sidebar_buttons li a .sidebar_counter_deals {
-            background: #3D5235;
+            background: url("../img/bg_theme_events.png");
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_talks {
-            background: #C6A02C;
+            background: url("../img/bg_theme_talks.png");
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_user {
             background: #919FAC;
