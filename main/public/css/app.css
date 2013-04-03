@@ -405,6 +405,18 @@ input[readonly="readonly"] {
   margin: 0 0 0 22px;
   }
 
+.box_center_outer {
+    position: relative;
+    margin: 0 auto;
+    float: left;
+    left: 50%;
+  }
+.box_center_inner {
+    position: relative;
+    float: left;
+    right: 50%;
+  }
+
 .gray_text {
   color: #A4A4A4;
   }
@@ -619,11 +631,14 @@ input[readonly="readonly"] {
   }
   .subscription_list .bubble_widget_container {
     margin: 0 0 10px 0;
+    position: relative;
     height: 105px;
     float: left;
     }
     .subscription_list .bubble_widget_container .button_connect_bubble_container {
-      display: block;
+      position: relative;
+      height: 35px;
+      width: 200px;
       }
   .subscription_list .bubble_widget {
     background: url("../img/sprites.png") -10px -293px;
