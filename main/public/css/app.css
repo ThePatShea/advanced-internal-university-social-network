@@ -378,6 +378,13 @@ input[readonly="readonly"] {
 .colorize_blue_texture {
     background: url("../img/bg_colorize_blue_texture.png");
   }
+.colorize_white_texture {
+    background: url("../img/bg_colorize_white_texture.png");
+  }
+.colorize_text_gray {
+    text-shadow: 1px 1px 0 white !important;
+    color: #B0B0B0 !important;
+  }
 .action_button {
     -webkit-box-shadow:  0 2px 1px rgba(0, 0, 0, .15);
     box-shadow:          0 2px 1px rgba(0, 0, 0, .15), inset 0 -1px rgba(0, 0, 0, .21), inset 0 1px rgba(255, 255, 255, .81);
@@ -388,11 +395,15 @@ input[readonly="readonly"] {
     font-family: 'proxima_nova_extrabold';
     text-shadow: 1px 1px 0 rgba(0,0,0,.5);
     text-transform: uppercase;
-    padding: 5px 22px 2px 22px;
+    padding: 5px 14px 2px 14px;
     font-size: 12px;
+    margin: 0 3px;
     color: white;
+    float: left;
   }
-
+.center_cancel_application {
+  margin: 0 0 0 22px;
+  }
 
 .gray_text {
   color: #A4A4A4;
@@ -600,16 +611,25 @@ input[readonly="readonly"] {
     height: 1px;
     background: #BEC1C2;
     border-bottom: 1px solid white;
-    margin: 10px 0 10px 1px;
+    margin: 10px 0 0 1px;
     }
 
 .subscription_list {
 
   }
+  .subscription_list .bubble_widget_container {
+    margin: 0 0 10px 0;
+    height: 105px;
+    float: left;
+    }
+    .subscription_list .bubble_widget_container .button_connect_bubble_container {
+      margin: 0 0 0 9px;
+      display: block;
+      }
   .subscription_list .bubble_widget {
     background: url("../img/sprites.png") -10px -293px;
     position: relative;
-    margin: 9px 12px;
+    margin: 2px 12px;
     height: 66px;
     width: 200px;
     float: left;
