@@ -11,7 +11,8 @@ block main
           |  | admin of #{req.user.connections.bubbles.admin.length}
         if (req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length > 0)
           |  | pending #{req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length}
-      div.divider
+    div.divider
+    section.subscription_section
       ul.subscription_list
         each bubble in user.connections.bubbles.invitee
           bubble_connect_status = 'invitee'
