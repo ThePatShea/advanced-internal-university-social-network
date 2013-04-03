@@ -1888,13 +1888,31 @@ ul.nav.pull-right {
     .sidebar .sidebar_buttons li a .sidebar_button_icon {
       }
     .sidebar .sidebar_buttons li a .icon_sidebar_select {
-      display: none;
+        background: url("../img/sprites.png") -230px -70px;
+        position: absolute;
+        margin: 0 0 0 -9px;
+        top: 83px;
+        left: 50%;
       }
     .sidebar .sidebar_buttons li a .sidebar_counter {
       position: relative;
       margin: 5px 20px;
       right: auto;
       top: auto;
+      }
+    .sidebar .sidebar_buttons li:hover,
+    .current_page_home .sidebar_button_home,
+    .current_page_new_bubble .sidebar_button_new_bubble,
+    .current_page_edit_bubble .sidebar_button_edit_bubble,
+    .current_page_dashboard .sidebar_button_dashboard,
+    .current_page_list_talk .sidebar_button_talk,
+    .current_page_single_talk .sidebar_button_talk,
+    .current_page_edit_talk .sidebar_button_talk,
+    .current_page_list_event .sidebar_button_event,
+    .current_page_single_event .sidebar_button_event,
+    .current_page_edit_event .sidebar_button_event,
+    .current_page_notifications .sidebar_button_notifications {
+      background: url("../img/bg_sidebar_button_selected_mobile.png");
       }
 
 }
