@@ -368,6 +368,7 @@ input[readonly="readonly"] {
     font-family: 'proxima_nova_extrabold';
     text-shadow: 1px 1px 0 white;
     text-transform: uppercase;
+    margin: 5px 0;
     font-size: 15px;
   }
 .colorize_blue {
@@ -568,19 +569,19 @@ input[readonly="readonly"] {
 
   }
   .subscriptions .subscription_section {
+    padding: 30px 0 30px 15px;
+    text-align: left;
     overflow: hidden;
-    padding: 30px 0;
     clear: both;
     }
     .subscriptions .subscription_section .subscription_section_name {
-      padding: 0 0 0 15px;
       text-align: left;
       }
   .subscriptions .divider {
     height: 1px;
     background: #A2A6A8;
     border-bottom: 1px solid white;
-    margin: 20px 0;
+    margin: 10px 0 20px 0;
     }
 
 .subscription_list {

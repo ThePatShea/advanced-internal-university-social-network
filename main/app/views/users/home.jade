@@ -4,29 +4,24 @@ block main
   div.page_content.subscriptions
     section.subscription_section
       user_subscribed = 0
-      h4.subscription_section_name pending bubbles
-      div.subtitle.colorize_blue member of #{req.user.connections.bubbles.member.length} | admin of #{req.user.connections.bubbles.admin.length}
+      h4.subscription_section_name my bubbles
+      div.subtitle.colorize_blue
+        | member of #{req.user.connections.bubbles.member.length}
+        if (req.user.connections.bubbles.admin.length > 0)
+          |  | admin of #{req.user.connections.bubbles.admin.length}
+        if (req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length > 0)
+          |  | pending #{req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length}
       div.divider
       ul.subscription_list
         each bubble in user.connections.bubbles.invitee
           bubble_connect_status = 'invitee'
           include ../posts/widgets/button_connect_bubble_member
           include ../widgets/bubble_widget
+        each bubble in user.connections.bubbles.admin
+          include ../widgets/bubble_widget
+        each bubble in user.connections.bubbles.member
+          include ../widgets/bubble_widget
         each bubble in user.connections.bubbles.applicant
           bubble_connect_status = 'applicant'
           include ../posts/widgets/button_connect_bubble_member
-          include ../widgets/bubble_widget
-    section.subscription_section
-      user_subscribed = 1
-      h4.subscription_section_name subscribed
-      div.divider
-      ul.subscription_list
-        each bubble in user.connections.bubbles.fan
-          include ../widgets/bubble_widget
-    section.subscription_section
-      user_subscribed = 0
-      h4.subscription_section_name not subscribed
-      div.divider
-      ul.subscription_list
-        each bubble in unsubscribed
           include ../widgets/bubble_widget
