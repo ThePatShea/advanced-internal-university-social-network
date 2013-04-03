@@ -1915,7 +1915,7 @@ ul.nav.pull-right {
       }
     .sidebar .sidebar_buttons li a .sidebar_counter {
       position: relative;
-      margin: 5px 20px;
+      margin: 5px 16px 5px 24px;
       right: auto;
       top: auto;
       }
