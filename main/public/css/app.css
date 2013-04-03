@@ -375,6 +375,23 @@ input[readonly="readonly"] {
 .colorize_blue {
     color: #92A5B6;
   }
+.colorize_blue_texture {
+    background: url("../img/bg_colorize_blue_texture.png");
+  }
+.action_button {
+    -webkit-box-shadow:  0 2px 1px rgba(0, 0, 0, .15);
+    box-shadow:          0 2px 1px rgba(0, 0, 0, .15), inset 0 -1px rgba(0, 0, 0, .21), inset 0 1px rgba(255, 255, 255, .81);
+ 
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+    
+    font-family: 'proxima_nova_extrabold';
+    text-shadow: 1px 1px 0 rgba(0,0,0,.5);
+    text-transform: uppercase;
+    padding: 5px 22px 2px 22px;
+    font-size: 12px;
+    color: white;
+  }
 
 
 .gray_text {
@@ -403,8 +420,8 @@ input[readonly="readonly"] {
   text-shadow: 1px 1px 0 rgba(0,0,0,.5);
   font-family: 'proxima_nova_semibold';
   background: rgba(172,48,26,.8);
-  text-transform: uppercase;
   padding: 8px 15px 6px 15px;
+  text-transform: uppercase;
   line-height: 12px;
   font-size: 12px;
   color: white;
