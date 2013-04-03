@@ -206,11 +206,11 @@ h3 {
 }
 
 h4 {
-  font-family: 'proxima_nova_bold';
+  font-family: 'proxima_nova_extrabold';
   text-shadow: 1px 1px 0 white;
-  text-transform: capitalize;
-  font-size: 18px;
-  color: #575757;
+  text-transform: uppercase;
+  font-size: 30px;
+  color: #8A8A8C;
 }
 
 pre {
@@ -363,6 +363,14 @@ input[readonly="readonly"] {
     .upload_post_image .submit_upload {
       display: none;
       }
+
+.subtitle {
+    font-family: 'proxima_nova_extrabold';
+    text-shadow: 1px 1px 0 white;
+    text-transform: uppercase;
+    font-size: 15px;
+    
+  }
 
 .gray_text {
   color: #A4A4A4;
@@ -562,9 +570,8 @@ input[readonly="readonly"] {
     clear: both;
     }
     .subscriptions .subscription_section .subscription_section_name {
-      text-align: left;
-      font-size: 35px;
       padding: 0 0 0 15px;
+      text-align: left;
       }
   .subscriptions .divider {
     height: 1px;
