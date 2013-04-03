@@ -626,6 +626,11 @@ input[readonly="readonly"] {
     margin: 10px 0 0 1px;
     }
 
+.list_heading_buttons_container {
+  padding: 10px 30px;
+  text-align: left;
+  }
+
 .subscription_list {
 
   }
