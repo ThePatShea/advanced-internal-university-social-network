@@ -369,8 +369,11 @@ input[readonly="readonly"] {
     text-shadow: 1px 1px 0 white;
     text-transform: uppercase;
     font-size: 15px;
-    
   }
+.colorize_blue {
+    color: #92A5B6;
+  }
+
 
 .gray_text {
   color: #A4A4A4;
