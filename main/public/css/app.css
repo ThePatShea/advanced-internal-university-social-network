@@ -1279,7 +1279,7 @@ input[readonly="readonly"] {
         .sidebar .sidebar_buttons li a .sidebar_button_icon {
           margin: 10px 10px 0 24px;
           position: relative;
-          height: 20px;
+          height: 24px;
           width: 24px;
           float: left;
         }
@@ -1289,8 +1289,14 @@ input[readonly="readonly"] {
         .sidebar .sidebar_buttons li a .icon_deals {
           background: url("../img/sprites.png") -306px -10px;
         }
+        .sidebar .sidebar_buttons li a .icon_dashboard {
+          background: url("../img/sprites.png") -327px -9px;
+        }
         .sidebar .sidebar_buttons li a .icon_talks {
-          background: url("../img/sprites.png") -328px -9px;
+          background: url("../img/sprites.png") -256px -35px;
+        }
+        .sidebar .sidebar_buttons li a .icon_edit_bubble {
+          background: url("../img/sprites.png") -331px -59px;
         }
         .sidebar .sidebar_buttons li a .icon_notifications {
           background: url("../img/sprites.png") -307px -36px;
