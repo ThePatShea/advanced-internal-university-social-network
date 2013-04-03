@@ -1363,7 +1363,7 @@ input[readonly="readonly"] {
             background: url("../img/bg_theme_talks.png");
             }
           .sidebar .sidebar_buttons li a .sidebar_counter_user {
-            background: #919FAC;
+            background: url("../img/bg_theme_user.png");
             }
 
 .navbar {
@@ -1426,9 +1426,10 @@ ul.nav.pull-right {
 
       box-shadow: 0 1px 0 0 #4D4F51, inset 0 1px 0 0 rgba(255,255,255,.34), inset 0 -1px 0 0 black, 0 -1px 0 0 black;
 
-      background: #919FAC;
+      background: url("../img/bg_theme_user.png");
       position: absolute;
       padding: 3px 5px;
+      min-width: 9px;
       left: -5px;
       top: -5px;
       }
