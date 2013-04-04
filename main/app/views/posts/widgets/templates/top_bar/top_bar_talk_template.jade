@@ -9,7 +9,11 @@ block top_bar_main
   section.subtitle.descriptor
     div.icon_views
     div.views_text.colorize_text_green #{post.connections.users.viewed.length}
-    div.gray_text.last_reply_text Last reply #{moment(post.comments[post.comments.length - 1].createdAt).fromNow()}
+    div.gray_text.last_reply_text
+      if (post.comments.length > 0)
+        | Last reply #{moment(post.comments[post.comments.length - 1].createdAt).fromNow()}
+      else
+        | No replies yet
 
 block connect_post
   button.button_connect_post.button_reply

@@ -1084,6 +1084,9 @@ input[readonly="readonly"] {
       .post_list .post_widget .post_widget_main .views_text {
         padding: 0 0 0 4px;
         }
+      .post_list .post_widget .post_widget_main .icon_views {
+        margin: 0 0 0 5px;
+        }
     .post_list .post_widget .post_widget_mid_right {
         padding: 0 0 0 20px;
         width: 100px;
