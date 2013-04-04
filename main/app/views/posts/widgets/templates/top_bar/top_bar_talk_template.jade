@@ -3,8 +3,7 @@ extends templates/top_bar_template
 block top_bar_main
   h4.post_name= post.name
   section.subtitle.descriptor
-    div.comments_icon
-    div.gray_text.comments_text #
+    div.gray_text.last_reply_text Last reply [# hours ago]
 
 block connect_post
   button.button_connect_post.button_reply

@@ -1042,6 +1042,9 @@ input[readonly="readonly"] {
         font-size: 18px;
         color: #575757;
         }
+      .post_list .post_widget .post_widget_main .last_reply_text {
+        text-transform: none;
+        }
     .post_list .post_widget .post_widget_mid_right {
         padding: 0 0 0 20px;
         width: 100px;
