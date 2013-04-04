@@ -991,6 +991,10 @@ input[readonly="readonly"] {
         font-size: 15px;
         }
     .post_list .post_widget .post_widget_main {
+       -webkit-box-sizing: border-box;
+       -moz-box-sizing:    border-box;
+       box-sizing:         border-box;
+
       border-right: 1px solid #BDBFBD;
       height: 100px;
       padding: 0 22px;
@@ -1104,13 +1108,19 @@ input[readonly="readonly"] {
       .post_list li .subtitle div {
         float: left;
         }
+    .post_list li .location_icon {
+      background: url("../img/sprites.png") -230px -97px;
+      margin: 0 5px 0 3px;
+      height: 15px;
+      width: 11px;
+      }
     .post_list li .attending_icon {
       background: url("../img/sprites.png") -134px -39px;
+      position: relative;
+      margin: 0 5px 0 0;
       height: 12px;
       width: 18px;
-      position: relative;
       top: 1px;
-      margin: 0 5px 0 0;
       }
     .post_list li .comments_icon {
       background: url("../img/sprites.png") -159px -37px;

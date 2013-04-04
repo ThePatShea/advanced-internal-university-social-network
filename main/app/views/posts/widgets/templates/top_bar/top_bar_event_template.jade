@@ -7,9 +7,10 @@ block top_bar_main
   block top_bar_main_name
 
   section.subtitle.descriptor
+    div.location_icon
     block top_bar_main_location
 
     div.attending_icon
     div.red_text.attending_text= post.attending_count
     div.comments_icon
-    div.gray_text.comments_text #
+    div.gray_text.comments_text #{post.comments.length}
