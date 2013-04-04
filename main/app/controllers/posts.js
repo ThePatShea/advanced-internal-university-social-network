@@ -57,6 +57,7 @@
             .sort(query_parameters_sort)
             .limit(20)
             .skip(skip)
+            .populate('creator')
             .exec(function (err, posts) {
               // Render the view
                 res.render('posts/list_pagelet_' + bubble_section, {

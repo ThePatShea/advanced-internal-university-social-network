@@ -16,6 +16,6 @@ li.post_widget
         div.icon_privacy.icon_privacy_public
     section.venue_widget
       div.pic_venue_container
-        img.pic_venue(src='/img/default_square.png')
+        img.pic_venue(src='http://graph.facebook.com/#{post.creator.facebook.id}/picture?type=square')
       section.venue_info
-        div.venue_name= post.location
+        div.venue_name= post.creator.name

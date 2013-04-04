@@ -74,6 +74,7 @@ module.exports = function (app, passport, auth) {
       Post
         .findOne({ _id : id })
         .populate('comments')
+        .populate('creator')
         .exec(function (err, post) {
           if (err) return next(err)
           if (!post) return next( )

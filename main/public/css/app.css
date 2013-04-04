@@ -1106,13 +1106,14 @@ input[readonly="readonly"] {
           .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
             font-family: 'proxima_nova_bold';
             text-shadow: 1px 1px 0 white;
+            text-transform: capitalize;
             line-height: 14px;
+            max-height: 30px;
+            overflow: hidden;
             font-size: 13px;
             color: #575757;
-            max-height: 30px;
-            width: 75px;
-            overflow: hidden;
             margin: 0 10px;
+            width: 75px;
             }
   .descriptor {
     font-family: 'proxima_nova_extrabold';
