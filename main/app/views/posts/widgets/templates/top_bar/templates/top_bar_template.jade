@@ -9,6 +9,11 @@ li.post_widget
 
   section.post_widget_section.post_widget_right
     section.post_widget_mid_right
+      button.button_im_going
+      if (post.privacy == 'private')
+        div.icon_privacy.icon_privacy_private
+      else if (post.privacy == 'public')
+        div.icon_privacy.icon_privacy_public
     section.venue_widget
       div.pic_venue_container
         img.pic_venue(src='/img/default_square.png')

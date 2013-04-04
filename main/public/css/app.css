@@ -417,6 +417,27 @@ input[readonly="readonly"] {
     right: 50%;
   }
 
+.button_im_going {
+    background: url("../img/sprites.png") -354px -10px;
+    height: 48px;
+    width: 48px;
+    float: left;
+  }
+
+.icon_privacy_private {
+    background: url("../img/sprites.png") -380px -62px;
+    height: 18px;
+    width: 18px;
+    float: left;
+  }
+
+.icon_privacy_public {
+    background: url("../img/sprites.png") -354px -62px;
+    height: 18px;
+    width: 18px;
+    float: left;
+  }
+
 .gray_text {
   color: #A4A4A4;
   }
@@ -1016,9 +1037,21 @@ input[readonly="readonly"] {
         color: #575757;
         }
     .post_list .post_widget .post_widget_mid_right {
+        padding: 0 0 0 20px;
         width: 100px;
         height: 100%;
       }
+      .post_list .post_widget .post_widget_mid_right .icon_privacy {
+          position: relative;
+          margin-top: -8px;
+          left: 15px;
+          top: 50%;
+        }
+      .post_list .post_widget .post_widget_mid_right .button_im_going {
+          position: relative;
+          margin-top: -22px;
+          top: 50%;
+        }
     .post_list .post_widget .post_widget_right {
       border-left: 1px solid rgba(255,255,255,.68);
       height: 100px;
@@ -1630,8 +1663,12 @@ ul.nav.pull-right {
     padding-right: 201px;
     }
     .post_list .post_widget .post_widget_mid_right {
+      padding: 0;
       width: 75px;
       }
+      .post_list .post_widget .post_widget_mid_right .icon_privacy {
+        left: 8px;
+        }
     .post_list .post_widget .post_widget_right {
       width: 200px;
       }
