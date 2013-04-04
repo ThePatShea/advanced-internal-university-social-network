@@ -1112,6 +1112,7 @@ input[readonly="readonly"] {
             font-size: 10px;
             color: #B75341;
             margin: 0 10px;
+            width: 75px;
             }
           .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
             font-family: 'proxima_nova_bold';
@@ -1688,6 +1689,9 @@ ul.nav.pull-right {
         }
         .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
           width: 45px;
+          margin: 0 5px;
+          }
+        .post_list .post_widget .post_widget_right .venue_widget .venue_info .name_heading {
           margin: 0 5px;
           }
 
