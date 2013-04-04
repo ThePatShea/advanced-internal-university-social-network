@@ -7,7 +7,8 @@ block top_bar_left
 block top_bar_main
   h4.post_name= post.name
   section.subtitle.descriptor
-    div.colorize_text_green #{post.connections.users.viewed.length}
+    div.icon_views
+    div.views_text.colorize_text_green #{post.connections.users.viewed.length}
     div.gray_text.last_reply_text Last reply #{moment(post.comments[post.comments.length - 1].createdAt).fromNow()}
 
 block connect_post

@@ -454,6 +454,13 @@ input[readonly="readonly"] {
     float: left;
   }
 
+.icon_views {
+    background: url("../img/sprites.png") -382px -88px;
+    height: 15px;
+    width: 21px;
+    float: left;
+  }
+
 .gray_text {
   color: #A4A4A4;
   }
@@ -1073,6 +1080,9 @@ input[readonly="readonly"] {
       .post_list .post_widget .post_widget_main .last_reply_text {
         text-transform: none;
         padding: 0 0 0 15px;
+        }
+      .post_list .post_widget .post_widget_main .views_text {
+        padding: 0 0 0 4px;
         }
     .post_list .post_widget .post_widget_mid_right {
         padding: 0 0 0 20px;
