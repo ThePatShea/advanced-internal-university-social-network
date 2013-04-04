@@ -1,5 +1,9 @@
 extends templates/top_bar_template
 
+block top_bar_left
+  div.big_comment_bubble_green
+    div.big_comment_number #{post.comments.length}
+
 block top_bar_main
   h4.post_name= post.name
   section.subtitle.descriptor
