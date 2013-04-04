@@ -1079,25 +1079,27 @@ input[readonly="readonly"] {
         border-top-left-radius: 40px;
         }
         .post_list .post_widget .post_widget_right .venue_widget .pic_venue_container {
-          -webkit-box-shadow:  0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
-          -moz-box-shadow:     0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
-          box-shadow:          0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
-
-          -webkit-border-radius: 30px;
-          -moz-border-radius: 30px;
-          border-radius: 30px;
-
-          border-bottom: 2px solid rgba(31, 23, 31, .21);
-          border-top: 2px solid white;
-          padding: 2px;
+          background: url("../img/sprites.png") -166px -198px;
+          position: relative;
+          height: 65px;
+          width: 68px;
+          left: 2px;
           }
           .post_list .post_widget .post_widget_right .venue_widget .pic_venue {
+            -webkit-box-shadow:  0 1px white;
+            -moz-box-shadow:     0 1px white;
+            box-shadow:          0 1px white;
+
             -webkit-border-radius: 30px;
             -moz-border-radius: 30px;
             border-radius: 30px;
   
+            border-top: 1px solid rgba(0, 0, 0, .5);
+            position: relative;
             height: 55px;
             width: 55px;
+            left: 3px;
+            top: 4px;
             }
         .post_list .post_widget .post_widget_right .venue_widget .venue_info {
           display: table-cell;
