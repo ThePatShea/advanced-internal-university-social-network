@@ -3,8 +3,9 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , mongoStore = require('connect-mongodb')
+var express     =  require('express')
+  , mongoStore  =  require('connect-mongodb')
+  , moment      =  require('moment')
 
 exports.boot = function(app, config, passport){
   bootApplication(app, config, passport)
@@ -30,6 +31,7 @@ function bootApplication(app, config, passport) {
       res.locals.appName = 'Emory Bubble'
       res.locals.title = 'Emory Bubble'
       res.locals.showStack = app.showStackError
+      res.locals.moment = moment
       res.locals.req = req
       res.locals.formatDate = function (date) {
         var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" ]

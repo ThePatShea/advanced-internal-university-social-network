@@ -829,6 +829,9 @@ input[readonly="readonly"] {
         padding: 20px 15px;
         text-align: left;
         }
+        .post_info .comment_area .comment .comment_date_posted {
+          text-transform: uppercase;
+          }
         .post_info .comment_area .comment .comment_body {
           margin: 8px 0 0 56px;
           }

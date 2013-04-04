@@ -6,5 +6,5 @@ if (comment && comment.user)
         img.face_circle(src='http://graph.facebook.com/'+comment.user.facebook.id+'/picture?type=square')
     a(href="/users/"+comment.user._id)
       h6.comment_user_name= comment.user.name
-    div.comment_date_posted.descriptor.red_text #{formatDate(comment.createdAt, "%b %d, %Y at %I:%M %p")}
+    div.comment_date_posted.descriptor.red_text #{moment(comment.createdAt).fromNow()}
     pre.comment_body= comment.body
