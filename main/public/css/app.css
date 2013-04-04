@@ -947,7 +947,7 @@ input[readonly="readonly"] {
   clear: both;
   }
   .post_list .post_widget {
-    padding: 0 176px 0 75px;
+    padding: 0 276px 0 75px;
     position: relative;
     }
     .post_list .post_widget .post_widget_section {
@@ -996,9 +996,9 @@ input[readonly="readonly"] {
        box-sizing:         border-box;
 
       border-right: 1px solid #BDBFBD;
-      height: 100px;
       padding: 0 22px;
       display: table;
+      height: 100%;
       width: 100%;
       }
       .post_list .post_widget .post_widget_main .post_main_info {
@@ -1015,10 +1015,14 @@ input[readonly="readonly"] {
         font-size: 18px;
         color: #575757;
         }
+    .post_list .post_widget .post_widget_mid_right {
+        width: 100px;
+        height: 100%;
+      }
     .post_list .post_widget .post_widget_right {
       border-left: 1px solid rgba(255,255,255,.68);
       height: 100px;
-      width: 175px;
+      width: 275px;
       
       position: absolute;
       right: 0;
@@ -1036,24 +1040,24 @@ input[readonly="readonly"] {
         right: 0;
         top: 50%;
 
-        -webkit-border-top-left-radius: 40px;
         -webkit-border-bottom-left-radius: 40px;
-        -moz-border-radius-topleft: 40px;
+        -webkit-border-top-left-radius: 40px;
         -moz-border-radius-bottomleft: 40px;
-        border-top-left-radius: 40px;
+        -moz-border-radius-topleft: 40px;
         border-bottom-left-radius: 40px;
+        border-top-left-radius: 40px;
         }
         .post_list .post_widget .post_widget_right .venue_widget .pic_venue_container {
-          -webkit-border-radius: 30px;
-          -moz-border-radius: 30px;
-          border-radius: 30px;
-          
           -webkit-box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
           -moz-box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
           box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
 
-          border-top: 2px solid white;
+          -webkit-border-radius: 30px;
+          -moz-border-radius: 30px;
+          border-radius: 30px;
+
           border-bottom: 2px solid rgba(31, 23, 31, .21);
+          border-top: 2px solid white;
           padding: 2px;
           }
           .post_list .post_widget .post_widget_right .venue_widget .pic_venue {
@@ -1623,10 +1627,13 @@ ul.nav.pull-right {
   }  
 
   .post_list .post_widget {
-    padding-right: 126px;
+    padding-right: 201px;
     }
+    .post_list .post_widget .post_widget_mid_right {
+      width: 75px;
+      }
     .post_list .post_widget .post_widget_right {
-      width: 125px;
+      width: 200px;
       }
       .post_list .post_widget .post_widget_right .venue_widget {
         width: 115px;
