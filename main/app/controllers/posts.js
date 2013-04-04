@@ -81,12 +81,14 @@
           .sort(query_parameters_sort)
           .limit(15)
           .skip(skip)
+          .populate('creator')
           .exec(function (err, talks) {
             req.Event
               .find(query_parameters_find)
               .sort(query_parameters_sort)
               .limit(15)
               .skip(skip)
+              .populate('creator')
               .exec(function (err, events) {
                 var posts = talks.concat(events)
 

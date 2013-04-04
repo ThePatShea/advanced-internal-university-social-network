@@ -1061,7 +1061,7 @@ input[readonly="readonly"] {
       }
       .post_list .post_widget .post_widget_right .venue_widget {
         background: url("../img/bg_main_extradark.png");
-        border-top: 2px solid rgba(31, 23, 31, .21);
+        border-top: 1px solid rgba(31, 23, 31, .21);
         border-bottom: 1px solid white;
         position: absolute;
         margin-top: -32px;
@@ -1079,9 +1079,9 @@ input[readonly="readonly"] {
         border-top-left-radius: 40px;
         }
         .post_list .post_widget .post_widget_right .venue_widget .pic_venue_container {
-          -webkit-box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
-          -moz-box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
-          box-shadow: 0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
+          -webkit-box-shadow:  0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
+          -moz-box-shadow:     0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
+          box-shadow:          0 1px 0 1px white, 0px -1px 0px 1px rgba(31, 23, 31, .21);
 
           -webkit-border-radius: 30px;
           -moz-border-radius: 30px;
@@ -1103,17 +1103,27 @@ input[readonly="readonly"] {
           display: table-cell;
           vertical-align: middle;
           }
+          .post_list .post_widget .post_widget_right .venue_widget .venue_info .name_heading {
+            font-family: 'proxima_nova_bold';
+            text-transform: uppercase;
+            text-shadow: 0 1px white;
+            font-size: 10px;
+            color: #B75341;
+            margin: 0 10px;
+            }
           .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
             font-family: 'proxima_nova_bold';
             text-shadow: 1px 1px 0 white;
             text-transform: capitalize;
+            position: relative;
             line-height: 14px;
             max-height: 30px;
             overflow: hidden;
-            font-size: 13px;
+            font-size: 14px;
             color: #575757;
             margin: 0 10px;
             width: 75px;
+            top: -1px;
             }
   .descriptor {
     font-family: 'proxima_nova_extrabold';
