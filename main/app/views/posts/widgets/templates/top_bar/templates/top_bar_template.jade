@@ -9,7 +9,8 @@ li.post_widget
 
   section.post_widget_section.post_widget_right
     section.post_widget_mid_right
-      button.button_im_going
+      block connect_post
+
       if (post.privacy == 'private')
         div.icon_privacy.icon_privacy_private
       else if (post.privacy == 'public')

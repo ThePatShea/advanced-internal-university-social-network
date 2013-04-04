@@ -424,6 +424,13 @@ input[readonly="readonly"] {
     float: left;
   }
 
+.button_reply {
+    background: url("../img/sprites.png") -410px -10px;
+    height: 48px;
+    width: 48px;
+    float: left;
+  }
+
 .icon_privacy_private {
     background: url("../img/sprites.png") -380px -62px;
     height: 18px;
@@ -1046,7 +1053,7 @@ input[readonly="readonly"] {
           left: 15px;
           top: 50%;
         }
-      .post_list .post_widget .post_widget_mid_right .button_im_going {
+      .post_list .post_widget .post_widget_mid_right .button_connect_post {
           position: relative;
           margin-top: -22px;
           top: 50%;
