@@ -1016,7 +1016,6 @@ input[readonly="readonly"] {
        -moz-box-sizing:    border-box;
        box-sizing:         border-box;
 
-      border-right: 1px solid #BDBFBD;
       padding: 0 22px;
       display: table;
       height: 100%;
@@ -1053,7 +1052,6 @@ input[readonly="readonly"] {
           top: 50%;
         }
     .post_list .post_widget .post_widget_right {
-      border-left: 1px solid rgba(255,255,255,.68);
       height: 100px;
       width: 275px;
       
