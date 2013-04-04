@@ -143,27 +143,33 @@
 
   // View a single post
     exports.single = function(req, res) {
-      var post_connect_status = req.post_connect_status
+      var post_connect_status  =  req.post_connect_status
+        , post                 =  req.post
 
-      view_params = req.bubble_section
+      
+      post.connections.users.viewed.addToSet(req.user._id)
 
-      if (post_connect_status == 'admin' || post_connect_status == 'creator') {
-        view_params  +=  '_authorized_'
-      } else {
-        view_params  +=  '_unauthorized_'
-      }
+      post.save(function(err) {
+        var view_params = req.bubble_section
 
-      res.render('posts/single_' + view_params + 'show', {
-          current_page: 'single_' + req.bubble_section
-        , change_post_image: req.change_post_image
-        , rendered_sidebar: req.rendered_sidebar
-        , bubble_section: req.bubble_section
-        , format_date_bottom_count: 0
-        , format_date_top_count: 0
-        , comments: req.comments
-        , title: req.post.name
-        , bubble: req.bubble
-        , post: req.post
+        if (post_connect_status == 'admin' || post_connect_status == 'creator') {
+          view_params  +=  '_authorized_'
+        } else {
+          view_params  +=  '_unauthorized_'
+        }
+
+        res.render('posts/single_' + view_params + 'show', {
+            current_page: 'single_' + req.bubble_section
+          , change_post_image: req.change_post_image
+          , rendered_sidebar: req.rendered_sidebar
+          , bubble_section: req.bubble_section
+          , format_date_bottom_count: 0
+          , format_date_top_count: 0
+          , comments: req.comments
+          , title: req.post.name
+          , bubble: req.bubble
+          , post: post
+        })
       })
     }
 

@@ -385,6 +385,9 @@ input[readonly="readonly"] {
     text-shadow: 1px 1px 0 white !important;
     color: #B0B0B0 !important;
   }
+.colorize_text_green {
+    color: #4C8A4A !important;
+  }
 .action_button {
     -webkit-box-shadow:  0 2px 1px rgba(0, 0, 0, .15);
     box-shadow:          0 2px 1px rgba(0, 0, 0, .15), inset 0 -1px rgba(0, 0, 0, .21), inset 0 1px rgba(255, 255, 255, .81);
@@ -1069,6 +1072,7 @@ input[readonly="readonly"] {
         }
       .post_list .post_widget .post_widget_main .last_reply_text {
         text-transform: none;
+        padding: 0 0 0 15px;
         }
     .post_list .post_widget .post_widget_mid_right {
         padding: 0 0 0 20px;

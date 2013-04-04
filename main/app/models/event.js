@@ -17,6 +17,11 @@ var EventSchema = new Schema({
   , start_time: Date
   , end_time: Date
   , name: String
+  , connections: {
+        users: {
+            viewed:  [{type: Schema.ObjectId, ref: 'User'}]
+        }
+    }
 })
 
 mongoose.model('Event', EventSchema)

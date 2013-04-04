@@ -12,6 +12,11 @@ var TalkSchema = new Schema({
   , post_type: {type: String, default: 'talk'}
   , description: String
   , name: String
+  , connections: {
+        users: {
+            viewed:  [{type: Schema.ObjectId, ref: 'User'}]
+        }
+    }
 })
 
 mongoose.model('Talk', TalkSchema)
