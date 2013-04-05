@@ -10,3 +10,7 @@ block top_bar_left
 
 block post_name
   h4.post_name= post.name
+
+block post_attributes_preview
+  div.comments_icon
+  div.gray_text.comments_text #{post.comments.length} 
