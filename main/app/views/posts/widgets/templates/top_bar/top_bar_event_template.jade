@@ -7,10 +7,7 @@ block post_attributes_preview
   div.location_icon
   block top_bar_main_location
 
-  div.attending_icon
-  div.red_text.attending_text= post.attending_count
-  div.comments_icon
-  div.gray_text.comments_text #{post.comments.length}
+  block other_attributes_preview
 
 block connect_post
   button.button_connect_post.button_im_going

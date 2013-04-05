@@ -474,6 +474,20 @@ input[readonly="readonly"] {
     float: left;
   }
 
+.icon_attending_gray {
+    background: url("../img/sprites.png") -281px -115px;
+    height: 13px;
+    width: 18px;
+    float: left;
+  }
+
+.icon_start_time {
+    background: url("../img/sprites.png") -307px -115px;
+    height: 16px;
+    width: 16px;
+    float: left;
+  }
+
 .gray_text {
   color: #A4A4A4;
   }
@@ -1117,6 +1131,12 @@ input[readonly="readonly"] {
         }
       .post_list .post_widget .post_widget_main .icon_views_gray {
         margin: 0 3px 0 15px;
+        }
+      .post_list .post_widget .post_widget_main .icon_attending_gray {
+        margin: 0 3px 0 15px;
+        }
+      .post_list .post_widget .post_widget_main .icon_start_time {
+        margin: 0 3px 0 0;
         }
     .post_list .post_widget .post_widget_mid_right {
         padding: 0 0 0 20px;

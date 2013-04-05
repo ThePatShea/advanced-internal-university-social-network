@@ -1,0 +1,16 @@
+extends templates/top_bar/top_bar_event_template
+
+block top_bar_left_start_time
+
+
+block post_name
+  h4.post_name= post.name
+
+block top_bar_main_location
+  div.gray_text.venue_text= post.location
+
+block other_attributes_preview
+  div.icon_start_time
+  div.gray_text #{moment(post.start_time).calendar()}
+  div.icon_attending_gray
+  div.gray_text.attending_text #{post.connections.users.going.length}

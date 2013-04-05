@@ -9,3 +9,6 @@ block post_name
 block top_bar_main_location
   div
     input#edit_location.required_input.connect_hidden.gray_text.venue_text.descriptor.requiredInput(style='width: 105px', type='text', maxlength='35', name='location', value=post.location)
+
+block other_attributes_preview
+  include post_attributes_preview_event_main

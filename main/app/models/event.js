@@ -20,6 +20,7 @@ var EventSchema = new Schema({
   , connections: {
         users: {
             viewed:  [{type: Schema.ObjectId, ref: 'User'}]
+          , going:   [{type: Schema.ObjectId, ref: 'User'}]
         }
     }
 })
