@@ -1029,6 +1029,16 @@ input[readonly="readonly"] {
       left: 0;
       top: 0;
       }
+      .post_list .post_widget .post_widget_left .posted_time {
+        font-family: 'Proxima_Nova_Extrabold';
+        text-shadow: 1px 1px 0 white;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 10px;
+        font-size: 10px;
+        color: #999999;
+        margin: 4px;
+        }
       .post_list .post_widget .post_widget_left .big_comment_bubble_green {
         position: relative;
         margin: -15px 0 0 -20px;
