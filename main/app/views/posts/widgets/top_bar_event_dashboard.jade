@@ -1,7 +1,8 @@
 extends templates/top_bar/top_bar_event_template
 
-block top_bar_left_start_time
-
+block top_bar_left
+  div.icon_post_type_event
+  div.posted_time posted #{moment(post.createdAt).fromNow()}
 
 block post_name
   h4.post_name= post.name

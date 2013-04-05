@@ -1,6 +1,6 @@
 extends templates/top_bar/top_bar_event_template
 
-block top_bar_left_start_time
+block top_bar_left
   div.format_date.format_date_top.gray_text.event_date_top(id='format_date_top_#{format_date_top_count++}')= post.start_time
   div.format_date.format_date_bottom.descriptor.red_text.event_date_bottom(id='format_date_bottom_#{format_date_bottom_count++}')= post.start_time
 
