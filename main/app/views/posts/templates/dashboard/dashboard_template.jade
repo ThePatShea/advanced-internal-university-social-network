@@ -1,10 +1,12 @@
 extends ../../../layouts/default
 
 block main
-  div(class=['page_#{bubble_section}s'])
-    include ../../widgets/button_connect_bubble_member
-    include ../../widgets/button_connect_bubble_fan
-  div.page_content
+  div.page_content.subscriptions
+    section.subscription_section
+      include ../../widgets/button_connect_bubble_member
+    div.divider
+    section.list_heading_buttons_container
+      div.subtitle.colorize_blue latest activity
     ul#post_list.post_list.list_view
 
   section.hidden#list_pagelet_url= list_pagelet_url
