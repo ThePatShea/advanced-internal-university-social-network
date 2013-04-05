@@ -1,4 +1,7 @@
-extends templates/top_bar/top_bar_event_template
+extends templates/top_bar/top_bar_talk_template
 
-block top_bar_main_name
+block top_bar_left
+  include big_comment_bubble
+
+block post_name
   input#edit_name.required_input.connect_hidden.post_name(value=post.name)

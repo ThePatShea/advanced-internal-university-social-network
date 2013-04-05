@@ -1,0 +1,11 @@
+extends templates/top_bar/top_bar_talk_template
+
+block top_bar_left
+  div.icon_post_type_talk
+  if (post.comments.length > 0)
+    | replied #{moment(post.comments[post.comments.length - 1].createdAt).fromNow()}
+  else
+    | posted #{moment(post.createdAt).fromNow()}
+
+block post_name
+  h4.post_name= post.name

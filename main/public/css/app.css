@@ -440,6 +440,12 @@ input[readonly="readonly"] {
     width: 38px;
   }
 
+.icon_post_type_talk {
+    background: url("../img/sprites.png") -280px -139px;
+    height: 21px;
+    width: 26px;
+  }
+
 .icon_privacy_private {
     background: url("../img/sprites.png") -380px -62px;
     height: 18px;
