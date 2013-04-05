@@ -14,3 +14,5 @@ block post_name
 block post_attributes_preview
   div.comments_icon
   div.gray_text.comments_text #{post.comments.length} 
+  div.icon_views_gray
+  div.gray_text.comments_text #{post.connections.users.viewed.length} 
