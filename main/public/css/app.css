@@ -723,9 +723,9 @@ input[readonly="readonly"] {
   .subscription_list .bubble_widget {
     background: url("../img/sprites.png") -10px -291px;
     position: relative;
-    margin: 0 24px 2px 0;
+    margin: 0 20px 2px 0;
     height: 66px;
-    width: 200px;
+    width: 204px;
     float: left;
     }
   .subscription_list .bubble_widget_add_bubble {
