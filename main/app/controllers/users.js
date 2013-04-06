@@ -76,7 +76,8 @@ exports.home = function(req, res){
           if (err) return res.render('500')
              
             res.render('users/home', {
-                bubble_connect_status: req.bubble_connect_status
+                list_pagelet_url: '/bubbles/51565018939ba3d471000002/dashboard/list_pagelet/'
+              , bubble_connect_status: req.bubble_connect_status
               , rendered_sidebar: req.rendered_sidebar
               , unsubscribed: bubbles
               , current_page: 'home'
