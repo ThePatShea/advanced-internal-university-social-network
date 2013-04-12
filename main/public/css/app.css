@@ -1288,7 +1288,7 @@ input[readonly="readonly"] {
       .post_list li .subtitle div {
         float: left;
         }
-    .post_list li .location_icon {
+    .location_icon {
       background: url("../img/sprites.png") -230px -97px;
       margin: 0 5px 0 3px;
       height: 15px;
@@ -1768,11 +1768,51 @@ ul.nav.pull-right {
         overflow: hidden;
         width: 50px;
       }
+
 .main-content {
   margin: 0 0 0 253px;
 }
 
-
+.bubble_dashboard_attributes {
+    height: 110px;
+  }
+  .bubble_dashboard_attributes .attributes_section {
+      float: left;
+    }
+  .bubble_dashboard_attributes .attributes_medium {
+      width: 175px;
+    }
+  .bubble_dashboard_attributes .subscription_section_name {
+      font-size: 35px;
+    }
+  .bubble_dashboard_attributes .descriptor {
+      font-size: 13px;
+    }
+  .bubble_dashboard_attributes .location_icon {
+      position: relative;
+      float: left;
+      top: 2px;
+    }
+  .bubble_dashboard_attributes .subtitle_bubble_type {
+      font-family: 'Proxima_Nova_Bold';
+      text-transform: capitalize;
+      text-shadow: 1px 1px white;
+      margin: 8px 0 2px 0;
+      font-size: 16px;
+      color: #6A7C91;
+    }
+  .bubble_dashboard_attributes .membership_type {
+      text-transform: uppercase;
+      margin: 8px 0 4px;
+    }
+  .bubble_dashboard_attributes .divider_vertical {
+      border-right: 1px solid white;
+      background: #BEC1C2;
+      margin: 0 30px 0 0;
+      height: 96px;
+      float: left;
+      width: 1px;
+    }
 
 
 

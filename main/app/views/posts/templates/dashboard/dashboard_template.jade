@@ -2,8 +2,20 @@ extends ../../../layouts/default
 
 block main
   div.page_content.subscriptions
-    section.subscription_section
-      include ../../widgets/button_connect_bubble_member
+    section.subscription_section.bubble_dashboard_attributes
+      section.attributes_section.attributes_medium
+        h4.subscription_section_name info
+        div.subtitle_bubble_type.colorize_blue [bubble type]
+        div.location_icon
+        div.descriptor.gray_text [bubble location]
+      div.divider_vertical
+      section.attributes_section.attributes_medium
+        h4.subscription_section_name join
+        div.descriptor.gray_text.membership_type [membership type]
+        include ../../widgets/button_connect_bubble_member
+      div.divider_vertical
+      section.attributes_section.attributes_medium
+        h4.subscription_section_name people
     div.divider
     section.list_heading_buttons_container
       div.subtitle.colorize_blue latest activity
