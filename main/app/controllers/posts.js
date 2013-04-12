@@ -42,7 +42,9 @@
       // Initialize query parameters
         var query_parameters_find      =  req.query_parameters_find
         var query_parameters_sort      =  req.query_parameters_sort
-        query_parameters_find.bubbles  =  bubble._id
+
+        if (bubble)
+          query_parameters_find.bubbles  =  bubble._id
  
       // Show only public posts to users who aren't an admin or member or this bubble
         if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
@@ -59,6 +61,7 @@
             .skip(skip)
             .populate('comments', 'createdAt')
             .populate('creator')
+            .populate('bubbles')
             .exec(function (err, posts) {
               // Render the view
                 res.render('posts/list_pagelet_' + bubble_section, {
@@ -71,7 +74,9 @@
              })
       } else {
         query_parameters_find_talk          =  { }
-        query_parameters_find_talk.bubbles  =  bubble._id
+
+        if (bubble)
+          query_parameters_find_talk.bubbles  =  bubble._id
 
         // Show only public posts to users who aren't an admin or member or this bubble
           if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
@@ -83,6 +88,7 @@
           .limit(15)
           .skip(skip)
           .populate('creator')
+          .populate('bubbles')
           .exec(function (err, talks) {
             req.Event
               .find(query_parameters_find)
@@ -90,6 +96,7 @@
               .limit(15)
               .skip(skip)
               .populate('creator')
+              .populate('bubbles')
               .exec(function (err, events) {
                 var posts = talks.concat(events)
 
@@ -97,7 +104,12 @@
                   return b.createdAt - a.createdAt
                 })
 
-                res.render('posts/list_pagelet_' + bubble_section, {
+                if (bubble)
+                  var pagelet_type = bubble_section
+                else
+                  var pagelet_type = 'home'
+
+                res.render('posts/list_pagelet_' + pagelet_type, {
                     bubble_section: bubble_section
                   , format_date_bottom_count: skip
                   , format_date_top_count: skip

@@ -1,0 +1,18 @@
+extends templates/top_bar/top_bar_talk_template
+
+block top_bar_left
+  div.icon_post_type_talk
+  div.posted_time
+    if (post.comments.length > 0)
+      | replied #{moment(post.comments[post.comments.length - 1].createdAt).fromNow()}
+    else
+      | posted #{moment(post.createdAt).fromNow()}
+
+block post_name
+  h4.post_name= post.name
+
+block post_attributes_preview
+  div.comments_icon
+  div.gray_text.comments_text #{post.comments.length} 
+  div.icon_views_gray
+  div.gray_text.comments_text #{post.connections.users.viewed.length} 

@@ -173,6 +173,7 @@ module.exports = function (app, passport, auth) {
     app.get('/users/:userId/new_bubble'  ,  auth.requiresLogin  ,  sidebar.user  ,  users.new_bubble)
     app.get('/users/:userId'             ,  auth.requiresLogin  ,  sidebar.user  ,  users.home)
     app.get('/'                          ,  auth.requiresLogin  ,  sidebar.user  ,  users.home)
+    app.get('/:bubble_section/list_pagelet/:skip'  ,  auth.requiresLogin  ,  posts.list_pagelet)
     app.get('/signup'                    ,  users.signup)
     app.get('/logout'                    ,  users.logout)
     app.post('/users'                    ,  users.create)

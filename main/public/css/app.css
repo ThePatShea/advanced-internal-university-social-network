@@ -381,6 +381,12 @@ input[readonly="readonly"] {
 .colorize_white_texture {
     background: url("../img/bg_colorize_white_texture.png");
   }
+.colorize_texture_talk {
+    background: url("../img/bg_colorize_texture_talk.png");
+  }
+.colorize_texture_event {
+    background: url("../img/bg_colorize_texture_event.png");
+  }
 .colorize_text_gray {
     text-shadow: 1px 1px 0 white !important;
     color: #B0B0B0 !important;
@@ -564,9 +570,17 @@ input[readonly="readonly"] {
 
 }
 
-.create_an_event {
-  float: right;
-  margin: 10px;
+.create_post {
+  -webkit-box-shadow:  inset 0px 1px rgba(255, 255, 255, .29), inset 0 -1px rgba(0, 0, 0, .21), 0 2px rgba(0, 0, 0, .25);
+  box-shadow:          inset 0px 1px rgba(255, 255, 255, .29), inset 0 -1px rgba(0, 0, 0, .21), 0 2px rgba(0, 0, 0, .25);
+
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .35);
+  font-family: 'proxima_nova_extrabold';
+  text-transform: uppercase;
+  padding: 13px 10px;
+  font-size: 20px;
+  color: white;
+  width: 100%;
 }
 
 .add_event {
@@ -1228,13 +1242,16 @@ input[readonly="readonly"] {
             margin: 0 10px;
             width: 75px;
             }
+            .post_source_bubble .name_heading {
+              color: #99A6B7 !important;
+              }
           .post_list .post_widget .post_widget_right .venue_widget .venue_info .venue_name {
             font-family: 'proxima_nova_bold';
             text-shadow: 1px 1px 0 white;
             text-transform: capitalize;
             position: relative;
             line-height: 14px;
-            max-height: 30px;
+            max-height: 28px;
             overflow: hidden;
             font-size: 14px;
             color: #575757;
