@@ -3,10 +3,12 @@ var mongoose  =  require('mongoose')
   , Schema    =  mongoose.Schema
 
 var BubbleSchema = new Schema({
-    pic_big:       {type: String, default: '/img/default.jpg'}
+    bubble_type:   {type: String, default: 'student organization'}
+  , pic_big:       {type: String, default: '/img/default.jpg'}
+  , exclusivity:   {type: String, default: 'closed'}
   , createdAt:     {type: Date,   default: Date.now}
-  , description:   {type: String, default: ''}
   , name:          {type: String, default: ''}
+  , location:      {type: String}
   , connections: {
         posts: {
             events_public: [{type: Schema.ObjectId, ref: 'Event'}]

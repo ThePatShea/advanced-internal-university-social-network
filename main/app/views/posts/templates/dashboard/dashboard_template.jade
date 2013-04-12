@@ -5,13 +5,14 @@ block main
     section.subscription_section.bubble_dashboard_attributes
       section.attributes_section.attributes_medium
         h4.subscription_section_name info
-        div.subtitle_bubble_type.colorize_blue [bubble type]
-        div.location_icon
-        div.descriptor.gray_text [bubble location]
+        div.subtitle_bubble_type.colorize_blue #{bubble.bubble_type}
+        if (bubble.location != undefined)
+          div.location_icon
+          div.descriptor.gray_text #{bubble.location}
       div.divider_vertical
       section.attributes_section.attributes_medium
         h4.subscription_section_name join
-        div.descriptor.gray_text.membership_type [membership type]
+        div.descriptor.gray_text.membership_type #{bubble.exclusivity} membership
         include ../../widgets/button_connect_bubble_member
       div.divider_vertical
       section.attributes_section.attributes_medium
