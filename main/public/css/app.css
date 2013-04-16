@@ -645,7 +645,7 @@ input[readonly="readonly"] {
     }
   .bubble_form .input_event_location,
   .bubble_form .input_event_name {
-      width: 48%;
+      width: 49%;
     }
   .bubble_form .input_event_name {
       margin-right: 2%;

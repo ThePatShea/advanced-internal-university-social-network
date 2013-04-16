@@ -16,7 +16,8 @@ block form
     | public
 
   textarea.requiredInput.input_event_description(type='text', rows="5", name="description", placeholder='Describe your event')
-  button#submitBtn.submit_post.colorize_texture_event.initialize_event_submit(type='submit') create
-    p.warning.descriptor.red_text Please fill in every field before creating your event
+  section.privacy_and_submit
+    button#submitBtn.submit_post.colorize_texture_event.initialize_event_submit(type='submit') create
+      p.warning.descriptor.red_text Please fill in every field before creating your event
 
   div.icon_arrow_up_event.hide_form.toggle_visible_reverse
