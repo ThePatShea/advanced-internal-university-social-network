@@ -2391,4 +2391,8 @@ ul.nav.pull-right {
       background: url("../img/bg_sidebar_button_selected_mobile.png");
       }
 
+.page_content {
+    border-left: 0;
+  }
+
 }
