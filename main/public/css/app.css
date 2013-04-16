@@ -233,6 +233,12 @@ pre {
   color: #43453E;
 }
 
+.icon_arrow_up_talk {
+  background: url("../img/sprites.png") -411px -105px;
+  height: 20px;
+  width: 36px;
+}
+
 .icon_subscribed {
   background: url("../img/sprites.png") -215px -38px;
   position: relative;
@@ -540,8 +546,8 @@ input[readonly="readonly"] {
     }
 
 .grayed_out {
-  background: #828284 !important;
-}
+    background: url("../img/bg_colorize_texture_gray.png");
+  }
 
 
 .gradient_gray {
@@ -583,6 +589,9 @@ input[readonly="readonly"] {
   width: 100%;
 }
 
+.bubble_form_container {
+    margin: 0 0 50px 0;
+  }
 .bubble_form {
     background: #f4f4f4; /* Old browsers */
     background: -moz-linear-gradient(top,  #f4f4f4 0%, #cdcfce 100%); /* FF3.6+ */
@@ -593,7 +602,16 @@ input[readonly="readonly"] {
     background: linear-gradient(to bottom,  #f4f4f4 0%,#cdcfce 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#cdcfce',GradientType=0 ); /* IE6-9 */
 
+    -webkit-border-radius: 0px 0px 12px 12px;
+    border-radius: 0px 0px 12px 12px;
+
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, .2);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .2);
+
+    position: relative;
+    overflow: hidden;
     padding: 22px;
+    display: none;
   }
   .bubble_form textarea,
   .bubble_form input {
@@ -609,16 +627,42 @@ input[readonly="readonly"] {
       padding: 17px 15px 15px 15px;
       text-shadow: 1px 1px white;
       background: #DFDFDF;
+      margin: 0 0 10px 0;
       font-size: 16px;
       color: #8A8A8C;
+      float: left;
     }
   .bubble_form .input_talk_name {
-      margin: 0 0 10px 0;
       width: 65%;
     }
   .bubble_form .input_talk_description {
       width: 100% !important;
     }
+  .bubble_form .privacy_and_submit {
+      float: right;
+    }
+  .bubble_form .submit_post {
+      -webkit-box-shadow: 0 2px 1px rgba(0, 0, 0, .25), inset 0 1px rgba(255, 255, 255, .29);
+      box-shadow: 0 2px 1px rgba(0, 0, 0, .25), inset 0 1px rgba(255, 255, 255, .29);
+
+      -webkit-border-radius: 20px;
+      border-radius: 20px;
+
+      text-shadow: 2px 2px rgba(0, 0, 0, .35);
+      font-family: 'Proxima_Nova_Extrabold';
+      text-transform: uppercase;
+      padding: 11px 32px;
+      font-size: 15px;
+      color: white;
+    }
+  .bubble_form .hide_form {
+      position: absolute;
+      margin-left: -16px;
+      cursor: pointer;
+      bottom: -4px;
+      left: 50%;
+    }
+
 
 .add_event {
   position: relative;
@@ -1949,6 +1993,10 @@ ul.nav.pull-right {
 }
 
 @media (max-width: 767px) {
+  .bubble_form .input_talk_name {
+      width: 100%;
+    }
+
   .post_list .post_widget {
     padding-right: 0;
     }
@@ -2142,7 +2190,7 @@ ul.nav.pull-right {
       }
 
   .main-head {
-    padding: 100px 0 !important;
+    padding: 65px 0 !important;
   }
 
   .bubble_logo {

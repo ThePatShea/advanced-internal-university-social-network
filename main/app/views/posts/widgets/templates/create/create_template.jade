@@ -1,5 +1,6 @@
 button(class='toggle_visible create_post colorize_texture_#{bubble_section}')
   block button_text
 
-form.bubble_form.toggle_invisible.form-horizontal(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}/create")
-  block form
+section.bubble_form_container
+  form.bubble_form.toggle_invisible.form-horizontal(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}/create")
+    block form
