@@ -239,6 +239,12 @@ pre {
   width: 36px;
 }
 
+.icon_arrow_up_event {
+  background: url("../img/sprites.png") -411px -131px;
+  height: 20px;
+  width: 36px;
+}
+
 .icon_subscribed {
   background: url("../img/sprites.png") -215px -38px;
   position: relative;
@@ -584,9 +590,11 @@ input[readonly="readonly"] {
   font-family: 'proxima_nova_extrabold';
   text-transform: uppercase;
   padding: 13px 10px;
+  position: relative;
   font-size: 20px;
   color: white;
   width: 100%;
+  z-index: 10;
 }
 
 .bubble_form_container {
@@ -635,10 +643,30 @@ input[readonly="readonly"] {
   .bubble_form .input_talk_name {
       width: 65%;
     }
+  .bubble_form .input_event_location,
+  .bubble_form .input_event_name {
+      width: 48%;
+    }
+  .bubble_form .input_event_name {
+      margin-right: 2%;
+    }
+  .bubble_form .input_event_start_time,
+  .bubble_form .input_event_end_time {
+      width: 31%;
+      margin-right: 2%;
+    }
+  .bubble_form .input_event_description {
+      width: 70%;
+      margin-right: 2%;
+    }
+  .bubble_form .initialize_event_submit {
+      float: left;
+    }
   .bubble_form .input_talk_description {
       width: 100% !important;
     }
   .bubble_form .privacy_and_submit {
+      position: relative;
       float: right;
     }
   .bubble_form .submit_post {
@@ -757,7 +785,7 @@ input[readonly="readonly"] {
     font-size: 14px;
     display: none;
     padding: 5px;
-    width: 200%;
+    width: 150px;
     left: 10%;
     top: -5px;
     }
