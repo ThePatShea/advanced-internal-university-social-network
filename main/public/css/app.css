@@ -583,15 +583,44 @@ input[readonly="readonly"] {
   width: 100%;
 }
 
+.bubble_form {
+    background: #f4f4f4; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f4f4f4 0%, #cdcfce 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(100%,#cdcfce)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f4f4f4 0%,#cdcfce 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f4f4f4 0%,#cdcfce 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f4f4f4 0%,#cdcfce 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f4f4f4 0%,#cdcfce 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#cdcfce',GradientType=0 ); /* IE6-9 */
+
+    padding: 22px;
+  }
+  .bubble_form textarea,
+  .bubble_form input {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius: 20px;
+
+      background: #DFDFDF;
+      padding: 15px;
+    }
+  .bubble_form .input_talk_name {
+      margin: 0 0 10px 0;
+      width: 65%;
+    }
+  .bubble_form .input_talk_description {
+      width: 100% !important;
+    }
+
 .add_event {
-  background: url("../img/bg_main_dark.png");
-  border-right: 1px solid white;
-  border-left: 1px solid white;
   position: relative;
   overflow: hidden;
-  margin: 0 auto;
   display: none;
-  width: 580px;
+  width: 100%;
   }
   .add_event .deal_slider_container {
     width: 280px;

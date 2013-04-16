@@ -4,9 +4,9 @@ block button_text
   | start a discussion
 
 block form
-  input#title.requiredInput.input-xlarge(type='text', maxlength="35", name="name", placeholder='Subject')
+  input#title.requiredInput.input_talk_name(type='text', maxlength="35", name="name", placeholder="Discussion title (ex: Ideas for Dooley's Week)")
 
-  textarea#description.requiredInput.input-xlarge(type='text', rows="5", name="description", placeholder='Start your discussion')
+  textarea#description.requiredInput.input_talk_description(type='text', rows="5", name="description", placeholder='Start your discussion')
 
   input#privacy_private(type='radio', name='privacy', value='private', checked='checked')
   | private
