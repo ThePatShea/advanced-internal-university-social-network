@@ -656,8 +656,23 @@ input[readonly="readonly"] {
       margin-right: 2%;
     }
   .bubble_form .input_event_description {
-      width: 70%;
+      width: 80%;
       margin-right: 2%;
+    }
+  .bubble_form .submit_post_event {
+      padding: 11px 0 !important;
+      float: left;
+      width: 18%;
+    }
+  .bubble_form .initialize_event_privacy {
+    /* TEMPORARY CSS */
+      border: 1px solid rgba(0, 0, 0, .21);
+      background: #DFDFDF;
+      height: 31px;
+    /* TEMPORARY CSS */
+
+      float: left;
+      width: 33%;
     }
   .bubble_form .initialize_event_submit {
       float: left;
@@ -2023,6 +2038,14 @@ ul.nav.pull-right {
 @media (max-width: 767px) {
   .bubble_form .input_talk_name {
       width: 100%;
+    }
+  .bubble_form .input_event_description {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+  .bubble_form .submit_post_event {
+      width: 100%;
+      margin: 0;
     }
 
   .post_list .post_widget {
