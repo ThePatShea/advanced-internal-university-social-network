@@ -233,6 +233,18 @@ pre {
   color: #43453E;
 }
 
+.icon_arrow_down_talk {
+  background: url("../img/sprites.png") -453px -105px;
+  height: 20px;
+  width: 36px;
+}
+
+.icon_arrow_down_event {
+  background: url("../img/sprites.png") -453px -131px;
+  height: 20px;
+  width: 36px;
+}
+
 .icon_arrow_up_talk {
   background: url("../img/sprites.png") -411px -105px;
   height: 20px;
@@ -583,19 +595,25 @@ input[readonly="readonly"] {
 }
 
 .create_post {
-  -webkit-box-shadow:  inset 0px 1px rgba(255, 255, 255, .29), inset 0 -1px rgba(0, 0, 0, .21), 0 2px rgba(0, 0, 0, .25);
-  box-shadow:          inset 0px 1px rgba(255, 255, 255, .29), inset 0 -1px rgba(0, 0, 0, .21), 0 2px rgba(0, 0, 0, .25);
-
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, .35);
-  font-family: 'proxima_nova_extrabold';
-  text-transform: uppercase;
-  padding: 13px 10px;
-  position: relative;
-  font-size: 20px;
-  color: white;
-  width: 100%;
-  z-index: 10;
-}
+    -webkit-box-shadow:  inset 0px 1px rgba(255, 255, 255, .29), inset 0 -1px rgba(0, 0, 0, .21), 0 2px rgba(0, 0, 0, .25);
+    box-shadow:          inset 0px 1px rgba(255, 255, 255, .29), inset 0 -1px rgba(0, 0, 0, .21), 0 2px rgba(0, 0, 0, .25);
+  
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, .35);
+    font-family: 'proxima_nova_extrabold';
+    text-transform: uppercase;
+    padding: 13px 10px;
+    position: relative;
+    font-size: 20px;
+    color: white;
+    width: 100%;
+    z-index: 10;
+  }
+  .create_post .icon_arrow_down {
+      position: absolute;
+      margin-left: -16px;
+      bottom: -20px;
+      left: 50%;
+    }
 
 .bubble_form_container {
     margin: 0 0 50px 0;
