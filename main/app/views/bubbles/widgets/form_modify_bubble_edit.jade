@@ -9,6 +9,7 @@ section.bubble_form_container
    
     select.requiredInput.input_bubble_type(name='bubble_type')
       option(value='student organization') Student Organization
+      option(value='administration') Administration
       option(value='study group') Study Group
       option(value='greek life') Greek Life
       option(value='athletics') Athletics
@@ -18,3 +19,12 @@ section.bubble_form_container
       p.warning.descriptor.red_text Please fill in every field before saving your bubble
 
     div.icon_arrow_up_none.hide_form.toggle_visible_reverse
+
+
+
+  form#upload_post_image.upload_bubble_image(method='post', action='/uploads/bubbles/#{bubble._id}/bubble/bubble/#{bubble._id}', enctype='multipart/form-data')
+    input(type='hidden', name='current_url', value=req.url)
+    div.upload_text upload picture
+    input#input_post_image.input_file(type='file', name='input_file')
+    button.submit_upload(type='submit') upload
+  div#loader_post_image.loader

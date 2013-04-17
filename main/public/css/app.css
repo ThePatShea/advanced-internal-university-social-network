@@ -633,6 +633,39 @@ input[readonly="readonly"] {
 .bubble_form_container {
     margin: 0 0 50px 0;
   }
+.upload_bubble_image {
+    background: #DFDFDF;
+    position: relative;
+    height: 34px; 
+    width: 200px;
+
+    background: red;
+  }
+  .upload_bubble_image .submit_upload,
+  .upload_bubble_image .upload_text,
+  .upload_bubble_image .input_file {
+      position: absolute;
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+    }
+  .upload_bubble_image .upload_text {
+      font-family: 'Proxima_Nova_Bold';
+      text-shadow: 1px 1px white;
+      text-transform: capitalize;
+      font-size: 16px;
+      color: #8A8A8C; 
+    }
+  .upload_bubble_image .submit_upload {
+      display: none;
+    }
+  .upload_bubble_image .input_file {
+      filter: alpha(opacity=0); /* For IE8 and earlier */
+      opacity: 0;
+    }
+
 .bubble_form {
     background: #f4f4f4; /* Old browsers */
     background: -moz-linear-gradient(top,  #f4f4f4 0%, #cdcfce 100%); /* FF3.6+ */
@@ -682,6 +715,9 @@ input[readonly="readonly"] {
     }
   .bubble_form input {
       text-transform: capitalize;
+    }
+  .bubble_form select {
+      cursor: pointer;
     }
   .bubble_form .input_bubble_location,
   .bubble_form .input_bubble_name {
