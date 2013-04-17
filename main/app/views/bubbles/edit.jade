@@ -10,9 +10,9 @@ block main
 
     section.edit_members
       div.subtitle.colorize_blue.edit_members_heading pending members
-      ul#pending_members.post_list
+      ul#pending_members.member_list
         each user in bubble.connections.users.invitees
-          li.post_widget
+          li.member_widget
             img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') cancel invite
@@ -20,7 +20,7 @@ block main
             h4= user.name
             p invited to be a member
         each user in bubble.connections.users.applicants
-          li.post_widget
+          li.member_widget
             img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') confirm
@@ -32,14 +32,14 @@ block main
             p applied to be a member
     section.edit_members
       div.subtitle.colorize_blue.edit_members_heading existing members
-      ul.post_list
-        li#invite_member.post_widget
+      ul.member_list
+        li#invite_member.member_widget
           div#autocomplete_hidden_bubble_id.hidden= bubble._id
           h4#invite_member_start invite new member
           section#invite_member_search.invite_member_search
             input#invite_member_input(placeholder="type someone's name")
         each user in bubble.connections.users.admins
-          li.post_widget
+          li.member_widget
             img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             if (user._id != req.user.id)
               form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
@@ -50,7 +50,7 @@ block main
                 input(type='hidden', name='redirect_url', value=req.url)
             h4= user.name
         each user in bubble.connections.users.members
-          li.post_widget
+          li.member_widget
             img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') promote to admin
