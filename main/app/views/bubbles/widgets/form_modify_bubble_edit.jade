@@ -23,7 +23,7 @@ section.bubble_form_container
   form#upload_post_image.upload_bubble_image(method='post', action='/uploads/bubbles/#{bubble._id}/bubble/bubble/#{bubble._id}', enctype='multipart/form-data')
     input(type='hidden', name='current_url', value=req.url)
     div.upload_text upload picture
+    div.icon_upload_image
     input#input_post_image.input_file(type='file', name='input_file')
     button.submit_upload(type='submit') upload
-    div.icon_upload_image
   div#loader_post_image.loader
