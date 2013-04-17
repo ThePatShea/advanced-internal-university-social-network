@@ -940,6 +940,15 @@ input[readonly="readonly"] {
     position: relative;
     }
 
+.edit_members {
+    float: left;
+    width: 50%;
+  }
+  .edit_members .edit_members_heading {
+      padding: 20px 0;
+    }
+  
+
 .subscriptions {
 
   }

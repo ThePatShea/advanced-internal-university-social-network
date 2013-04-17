@@ -6,8 +6,10 @@ block main
 
     include widgets/form_modify_bubble_edit
   
-    section(style='width: 50%; float: left')
-      h4 pending members
+    div.divider
+
+    section.edit_members
+      div.subtitle.colorize_blue.edit_members_heading pending members
       ul#pending_members.post_list
         each user in bubble.connections.users.invitees
           li.post_widget
@@ -28,8 +30,8 @@ block main
               input(type='hidden', name='redirect_url', value=req.url)
             h4= user.name
             p applied to be a member
-    section(style='width: 50%; float: left')
-      h4 existing members
+    section.edit_members
+      div.subtitle.colorize_blue.edit_members_heading existing members
       ul.post_list
         li#invite_member.post_widget
           div#autocomplete_hidden_bubble_id.hidden= bubble._id
