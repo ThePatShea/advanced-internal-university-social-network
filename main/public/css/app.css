@@ -245,6 +245,12 @@ pre {
   width: 36px;
 }
 
+.icon_arrow_down_none {
+  background: url("../img/sprites.png") -453px -157px;
+  height: 20px;
+  width: 36px;
+}
+
 .icon_arrow_up_talk {
   background: url("../img/sprites.png") -411px -105px;
   height: 20px;
@@ -253,6 +259,12 @@ pre {
 
 .icon_arrow_up_event {
   background: url("../img/sprites.png") -411px -131px;
+  height: 20px;
+  width: 36px;
+}
+
+.icon_arrow_up_none {
+  background: url("../img/sprites.png") -411px -157px;
   height: 20px;
   width: 36px;
 }
@@ -398,6 +410,9 @@ input[readonly="readonly"] {
   }
 .colorize_blue {
     color: #92A5B6;
+  }
+.colorize_texture_none {
+    background: url("../img/bg_colorize_texture_none.png");
   }
 .colorize_blue_texture {
     background: url("../img/bg_colorize_blue_texture.png");

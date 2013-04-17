@@ -3,61 +3,57 @@ extends ../layouts/default
 block main
   div.page_content.subscriptions
     include ../widgets/form_delete_bubble
-    section.subscription_section
-      h4.subscription_section_name exec board
-      div.divider
-    section.subscription_section
-      h4.subscription_section_name members
-      div.divider
 
-  section(style='width: 50%; float: left')
-    h4 pending members
-    ul#pending_members.post_list
-      each user in bubble.connections.users.invitees
-        li.post_widget
-          img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-          form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
-            button#connect_bubble_apply.red_button(type='submit') cancel invite
-            input(type='hidden', name='redirect_url', value=req.url)
-          h4= user.name
-          p invited to be a member
-      each user in bubble.connections.users.applicants
-        li.post_widget
-          img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-          form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
-            button#connect_bubble_apply.red_button(type='submit') confirm
-            input(type='hidden', name='redirect_url', value=req.url)
-          form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
-            button#connect_bubble_apply.red_button(type='submit') deny
-            input(type='hidden', name='redirect_url', value=req.url)
-          h4= user.name
-          p applied to be a member
-  section(style='width: 50%; float: left')
-    h4 existing members
-    ul.post_list
-      li#invite_member.post_widget
-        div#autocomplete_hidden_bubble_id.hidden= bubble._id
-        h4#invite_member_start invite new member
-        section#invite_member_search.invite_member_search
-          input#invite_member_input(placeholder="type someone's name")
-      each user in bubble.connections.users.admins
-        li.post_widget
-          img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-          if (user._id != req.user.id)
-            form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
-              button#connect_bubble_apply.red_button(type='submit') demote to member
+    include widgets/form_modify_bubble_edit
+  
+    section(style='width: 50%; float: left')
+      h4 pending members
+      ul#pending_members.post_list
+        each user in bubble.connections.users.invitees
+          li.post_widget
+            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
+              button#connect_bubble_apply.red_button(type='submit') cancel invite
               input(type='hidden', name='redirect_url', value=req.url)
-            form(method='post', action='/bubbles/' + bubble._id + '/remove_admin/' + user._id)
+            h4= user.name
+            p invited to be a member
+        each user in bubble.connections.users.applicants
+          li.post_widget
+            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
+              button#connect_bubble_apply.red_button(type='submit') confirm
+              input(type='hidden', name='redirect_url', value=req.url)
+            form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
+              button#connect_bubble_apply.red_button(type='submit') deny
+              input(type='hidden', name='redirect_url', value=req.url)
+            h4= user.name
+            p applied to be a member
+    section(style='width: 50%; float: left')
+      h4 existing members
+      ul.post_list
+        li#invite_member.post_widget
+          div#autocomplete_hidden_bubble_id.hidden= bubble._id
+          h4#invite_member_start invite new member
+          section#invite_member_search.invite_member_search
+            input#invite_member_input(placeholder="type someone's name")
+        each user in bubble.connections.users.admins
+          li.post_widget
+            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            if (user._id != req.user.id)
+              form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
+                button#connect_bubble_apply.red_button(type='submit') demote to member
+                input(type='hidden', name='redirect_url', value=req.url)
+              form(method='post', action='/bubbles/' + bubble._id + '/remove_admin/' + user._id)
+                button#connect_bubble_apply.red_button(type='submit') remove from bubble
+                input(type='hidden', name='redirect_url', value=req.url)
+            h4= user.name
+        each user in bubble.connections.users.members
+          li.post_widget
+            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
+              button#connect_bubble_apply.red_button(type='submit') promote to admin
+              input(type='hidden', name='redirect_url', value=req.url)
+            form(method='post', action='/bubbles/' + bubble._id + '/remove_member/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') remove from bubble
               input(type='hidden', name='redirect_url', value=req.url)
-          h4= user.name
-      each user in bubble.connections.users.members
-        li.post_widget
-          img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-          form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
-            button#connect_bubble_apply.red_button(type='submit') promote to admin
-            input(type='hidden', name='redirect_url', value=req.url)
-          form(method='post', action='/bubbles/' + bubble._id + '/remove_member/' + user._id)
-            button#connect_bubble_apply.red_button(type='submit') remove from bubble
-            input(type='hidden', name='redirect_url', value=req.url)
-          h4= user.name
+            h4= user.name

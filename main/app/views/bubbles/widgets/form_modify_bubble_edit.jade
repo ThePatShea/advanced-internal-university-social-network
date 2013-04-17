@@ -1,0 +1,7 @@
+button(class='toggle_visible create_post colorize_texture_#{bubble_section}')
+  | edit bubble
+  div(class='toggle_make_invisible icon_arrow_down icon_arrow_down_#{bubble_section}')
+
+section.bubble_form_container
+  form.bubble_form.toggle_invisible.form-horizontal(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}/create")
+    div.icon_arrow_up_none.hide_form.toggle_visible_reverse
