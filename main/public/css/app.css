@@ -233,6 +233,12 @@ pre {
   color: #43453E;
 }
 
+.icon_upload_image {
+  background: url("../img/sprites.png") -280px -171px;
+  height: 38px;
+  width: 38px;
+}
+
 .icon_arrow_down_talk {
   background: url("../img/sprites.png") -453px -105px;
   height: 20px;
@@ -660,12 +666,17 @@ input[readonly="readonly"] {
       font-family: 'Proxima_Nova_Bold';
       text-shadow: 1px 1px white;
       text-transform: capitalize;
-      padding: 9px 0 0 17px;
+      padding: 12px 0 0 17px;
       background: #DFDFDF;
       text-align: left;
       overflow: hidden;
       font-size: 16px;
       color: #8A8A8C; 
+    }
+  .upload_bubble_image .icon_upload_image {
+      position: absolute;
+      right: 0;
+      top: 2px;
     }
   .upload_bubble_image .submit_upload {
       display: none;
@@ -741,12 +752,10 @@ input[readonly="readonly"] {
     }
   .upload_bubble_image {
       position: absolute;
-      height: 32px; 
-      bottom: 30px;
-      left: 40%;
-      
-
+      height: 40px; 
+      bottom: 22px;
       width: 38%;
+      left: 40%;
     }
   .bubble_form .submit_post_bubble {
       padding: 11px 0 !important;
