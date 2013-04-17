@@ -15,12 +15,10 @@ section.bubble_form_container
       option(value='athletics') Athletics
       option(value='class') Class 
 
-    button#submitBtn.submit_post.colorize_texture_none(type='submit') save
+    button#submitBtn.submit_post.submit_post_bubble.colorize_texture_none(type='submit') save
       p.warning.descriptor.red_text Please fill in every field before saving your bubble
 
     div.icon_arrow_up_none.hide_form.toggle_visible_reverse
-
-
 
   form#upload_post_image.upload_bubble_image(method='post', action='/uploads/bubbles/#{bubble._id}/bubble/bubble/#{bubble._id}', enctype='multipart/form-data')
     input(type='hidden', name='current_url', value=req.url)

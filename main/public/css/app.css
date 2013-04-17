@@ -632,14 +632,7 @@ input[readonly="readonly"] {
 
 .bubble_form_container {
     margin: 0 0 50px 0;
-  }
-.upload_bubble_image {
-    background: #DFDFDF;
     position: relative;
-    height: 34px; 
-    width: 200px;
-
-    background: red;
   }
   .upload_bubble_image .submit_upload,
   .upload_bubble_image .upload_text,
@@ -652,6 +645,10 @@ input[readonly="readonly"] {
       top: 0;
     }
   .upload_bubble_image .upload_text {
+      -webkit-box-shadow: inset 0 2px rgba(31, 23, 31, .21), 0 1px white;
+      -moz-box-shadow: inset 0 2px rgba(31, 23, 31, .21), 0 1px white;
+      box-shadow: inset 0 2px rgba(31, 23, 31, .21), 0 1px white;
+
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
@@ -661,10 +658,12 @@ input[readonly="readonly"] {
       border-radius: 20px;
 
       font-family: 'Proxima_Nova_Bold';
-      padding: 17px 15px 15px 15px;
       text-shadow: 1px 1px white;
       text-transform: capitalize;
+      padding: 9px 0 0 17px;
       background: #DFDFDF;
+      text-align: left;
+      overflow: hidden;
       font-size: 16px;
       color: #8A8A8C; 
     }
@@ -738,7 +737,21 @@ input[readonly="readonly"] {
     }
   .bubble_form .input_bubble_type {
       margin-right: 2%;
-      width: 36%;
+      width: 38%;
+    }
+  .upload_bubble_image {
+      position: absolute;
+      height: 32px; 
+      bottom: 30px;
+      left: 40%;
+      
+
+      width: 38%;
+    }
+  .bubble_form .submit_post_bubble {
+      padding: 11px 0 !important;
+      width: 18%;
+      float: right;
     }
   .bubble_form .input_talk_name {
       width: 65%;
