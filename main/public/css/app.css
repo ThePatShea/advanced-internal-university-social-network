@@ -654,7 +654,14 @@ input[readonly="readonly"] {
     padding: 22px;
     display: none;
   }
+  .start_open {
+      display: block;
+    }
+  .start_invisible {
+      display: none;
+    }
   .bubble_form textarea,
+  .bubble_form select,
   .bubble_form input {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -673,12 +680,19 @@ input[readonly="readonly"] {
       color: #8A8A8C;
       float: left;
     }
+  .bubble_form input {
+      text-transform: capitalize;
+    }
+  .bubble_form .input_bubble_location,
+  .bubble_form .input_bubble_name {
+      width: 49%;
+    }
   .bubble_form .input_bubble_name {
       margin-right: 2%;
-      width: 48%;
     }
-  .bubble_form .input_bubble_location {
-      width: 48%;
+  .bubble_form .input_bubble_type {
+      margin-right: 2%;
+      width: 36%;
     }
   .bubble_form .input_talk_name {
       width: 65%;
