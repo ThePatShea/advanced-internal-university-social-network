@@ -652,9 +652,19 @@ input[readonly="readonly"] {
       top: 0;
     }
   .upload_bubble_image .upload_text {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;
+      border-radius: 20px;
+
       font-family: 'Proxima_Nova_Bold';
+      padding: 17px 15px 15px 15px;
       text-shadow: 1px 1px white;
       text-transform: capitalize;
+      background: #DFDFDF;
       font-size: 16px;
       color: #8A8A8C; 
     }
