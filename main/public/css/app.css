@@ -677,6 +677,9 @@ input[readonly="readonly"] {
       margin-right: 2%;
       width: 48%;
     }
+  .bubble_form .input_bubble_location {
+      width: 48%;
+    }
   .bubble_form .input_talk_name {
       width: 65%;
     }
