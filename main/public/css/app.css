@@ -673,6 +673,10 @@ input[readonly="readonly"] {
       color: #8A8A8C;
       float: left;
     }
+  .bubble_form .input_bubble_name {
+      margin-right: 2%;
+      width: 48%;
+    }
   .bubble_form .input_talk_name {
       width: 65%;
     }

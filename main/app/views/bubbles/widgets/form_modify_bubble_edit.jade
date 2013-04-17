@@ -4,4 +4,6 @@ button(class='toggle_visible create_post colorize_texture_#{bubble_section}')
 
 section.bubble_form_container
   form.bubble_form.toggle_invisible.form-horizontal(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}/create")
+    input.requiredInput.input_bubble_name(type='text', value=bubble.name, maxlength="30", name="name", placeholder='Bubble Name')
+
     div.icon_arrow_up_none.hide_form.toggle_visible_reverse
