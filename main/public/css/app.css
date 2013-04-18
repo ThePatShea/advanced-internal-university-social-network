@@ -962,9 +962,9 @@ input[readonly="readonly"] {
         height: 75px;
       }
       .edit_members .member_list .member_widget:nth-child(even) {
-        -webkit-box-shadow: inset 1px 0 3px rgba(31,23,31,.21);
-        -moz-box-shadow: inset 1px 0 3px rgba(31,23,31,.21);
-        box-shadow: inset 1px 0 3px rgba(31,23,31,.21);
+        -webkit-box-shadow: inset 1px 0 1px rgba(31,23,31,.21);
+        -moz-box-shadow: inset 1px 0 1px rgba(31,23,31,.21);
+        box-shadow: inset 1px 0 1px rgba(31,23,31,.21);
 
         border-bottom: 1px solid rgba(255,255,255,.82);
         background: url("../img/bg_main_dark.png");
