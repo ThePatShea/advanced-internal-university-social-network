@@ -2088,11 +2088,13 @@ ul.nav.pull-right {
       float: left;
       width: 1px;
     }
-  .bubble_dashboard_attributes .face_circle_container {
+  .bubble_dashboard_attributes .face_circle_container,
+  .edit_members .face_circle_container {
       margin: 8px 10px 0 0;
       float: left;
     }
-    .bubble_dashboard_attributes .face_circle {
+    .bubble_dashboard_attributes .face_circle,
+    .edit_members .face_circle {
         height: 36px;
         width: 36px;
       }

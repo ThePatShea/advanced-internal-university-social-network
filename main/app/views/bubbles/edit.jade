@@ -13,7 +13,8 @@ block main
       ul#pending_members.member_list
         each user in bubble.connections.users.invitees
           li.member_widget
-            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            div.face_circle_container
+              img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') cancel invite
               input(type='hidden', name='redirect_url', value=req.url)
