@@ -22,9 +22,10 @@ block main
             p invited to be a member
         each user in bubble.connections.users.applicants
           li.member_widget
-            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            div.face_circle_container
+              img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
-              button#connect_bubble_apply.red_button(type='submit') confirm
+              button#connect_bubble_apply.red_button(type='submit') accept
               input(type='hidden', name='redirect_url', value=req.url)
             form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') deny
@@ -41,7 +42,8 @@ block main
             input#invite_member_input(placeholder="type someone's name")
         each user in bubble.connections.users.admins
           li.member_widget
-            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            div.face_circle_container
+              img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             if (user._id != req.user.id)
               form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
                 button#connect_bubble_apply.red_button(type='submit') demote to member
@@ -52,7 +54,8 @@ block main
             h4= user.name
         each user in bubble.connections.users.members
           li.member_widget
-            img(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
+            div.face_circle_container
+              img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
               button#connect_bubble_apply.red_button(type='submit') promote to admin
               input(type='hidden', name='redirect_url', value=req.url)
