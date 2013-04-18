@@ -50,6 +50,7 @@ block main
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             section.user_info_container
               h4= user.name
+              div.member_subtitle admin
             section.action_button_container
               if (user._id != req.user.id)
                 form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
@@ -64,6 +65,7 @@ block main
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             section.user_info_container
               h4= user.name
+              div.member_subtitle member
             section.action_button_container
               form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
                 button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') promote to admin
