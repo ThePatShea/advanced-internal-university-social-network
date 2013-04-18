@@ -31,10 +31,10 @@ block main
               p applied to be a member
             section.action_button_container
               form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
-                button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') accept
+                button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') accept application
                 input(type='hidden', name='redirect_url', value=req.url)
               form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
-                button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') deny
+                button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') deny application
                 input(type='hidden', name='redirect_url', value=req.url)
     section.edit_members
       div.subtitle.colorize_blue.edit_members_heading existing members
