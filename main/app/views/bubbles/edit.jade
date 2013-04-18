@@ -17,7 +17,7 @@ block main
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             section.user_info_container
               h4= user.name
-              p invited to be a member
+              div.member_subtitle invited to be a member
             section.action_button_container
               form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
                 button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') cancel invite
@@ -28,7 +28,7 @@ block main
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
             section.user_info_container
               h4= user.name
-              p applied to be a member
+              div.member_subtitle applied to be a member
             section.action_button_container
               form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
                 button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') accept application

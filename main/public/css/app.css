@@ -982,11 +982,20 @@ input[readonly="readonly"] {
           font-family: 'Proxima_Nova_Bold';
           text-shadow: 1px 1px white;
           text-transform: capitalize;
+          margin: 6px 0 0 0;
           overflow: hidden;
           max-height: 16px;
           font-size: 15px;
           color: #575757;
           width: 180px;
+        }
+      .edit_members .member_list .member_subtitle {
+          font-family: 'Proxima_Nova_Extrabold';
+          text-shadow: 1px 1px white;
+          text-transform: uppercase;
+          line-height: 12px;
+          font-size: 12px;
+          color: #9F9F9F;
         }
       .edit_members .member_list .action_button {
           margin: 0 0 5px 0;
