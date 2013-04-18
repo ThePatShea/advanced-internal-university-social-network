@@ -2221,6 +2221,10 @@ ul.nav.pull-right {
 }
 
 @media (max-width: 979px) {
+  .edit_members {
+      width: 100%;
+    }
+
   .post_list .post_widget {
     padding-left: 55px;
     }
