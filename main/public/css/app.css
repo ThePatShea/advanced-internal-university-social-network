@@ -955,7 +955,9 @@ input[readonly="readonly"] {
         -moz-box-sizing: border-box;
         box-sizing: border-box;         
 
-        border-right: 1px solid rgba(255,255,255,.82);
+        border-left: 1px solid rgba(255,255,255,.82);
+        position: relative;
+        overflow: hidden;
         padding: 15px;
         height: 75px;
       }
@@ -975,6 +977,25 @@ input[readonly="readonly"] {
         }
       .edit_members .member_list .face_circle_container {
           margin: 0 10px 0 0;
+        }
+      .edit_members .member_list h4 {
+          font-family: 'Proxima_Nova_Bold';
+          text-shadow: 1px 1px white;
+          font-size: 15px;
+          color: #575757;
+        }
+      .edit_members .member_list .action_button {
+          float: right;
+        }
+      .edit_members .member_list .action_button_container {
+          position: absolute;
+          width: 180px;
+          right: 15px;
+          top: 15px;
+        }
+      .edit_members .member_list .user_info_container {
+          max-width: 250px;
+          overflow: hidden;
         }
   
 

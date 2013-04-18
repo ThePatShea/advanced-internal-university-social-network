@@ -15,23 +15,27 @@ block main
           li.member_widget
             div.face_circle_container
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-            h4= user.name
-            p invited to be a member
-            form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
-              button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') cancel invite
-              input(type='hidden', name='redirect_url', value=req.url)
+            section.user_info_container
+              h4= user.name
+              p invited to be a member
+            section.action_button_container
+              form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + user._id)
+                button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') cancel invite
+                input(type='hidden', name='redirect_url', value=req.url)
         each user in bubble.connections.users.applicants
           li.member_widget
             div.face_circle_container
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-            h4= user.name
-            p applied to be a member
-            form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
-              button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') accept
-              input(type='hidden', name='redirect_url', value=req.url)
-            form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
-              button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') deny
-              input(type='hidden', name='redirect_url', value=req.url)
+            section.user_info_container
+              h4= user.name
+              p applied to be a member
+            section.action_button_container
+              form(method='post', action='/bubbles/' + bubble._id + '/add_member/' + user._id)
+                button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') accept
+                input(type='hidden', name='redirect_url', value=req.url)
+              form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
+                button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') deny
+                input(type='hidden', name='redirect_url', value=req.url)
     section.edit_members
       div.subtitle.colorize_blue.edit_members_heading existing members
       ul.member_list
@@ -44,22 +48,26 @@ block main
           li.member_widget
             div.face_circle_container
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-            if (user._id != req.user.id)
-              form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
-                button#connect_bubble_apply.red_button(type='submit') demote to member
-                input(type='hidden', name='redirect_url', value=req.url)
-              form(method='post', action='/bubbles/' + bubble._id + '/remove_admin/' + user._id)
-                button#connect_bubble_apply.red_button(type='submit') remove from bubble
-                input(type='hidden', name='redirect_url', value=req.url)
-            h4= user.name
+            section.user_info_container
+              h4= user.name
+            section.action_button_container
+              if (user._id != req.user.id)
+                form(method='post', action='/bubbles/' + bubble._id + '/demote_to_member/' + user._id)
+                  button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') demote to member
+                  input(type='hidden', name='redirect_url', value=req.url)
+                form(method='post', action='/bubbles/' + bubble._id + '/remove_admin/' + user._id)
+                  button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') remove from bubble
+                  input(type='hidden', name='redirect_url', value=req.url)
         each user in bubble.connections.users.members
           li.member_widget
             div.face_circle_container
               img.face_circle(src='http://graph.facebook.com/' + user.facebook.id + '/picture?type=square', style='float: left')
-            form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
-              button#connect_bubble_apply.red_button(type='submit') promote to admin
-              input(type='hidden', name='redirect_url', value=req.url)
-            form(method='post', action='/bubbles/' + bubble._id + '/remove_member/' + user._id)
-              button#connect_bubble_apply.red_button(type='submit') remove from bubble
-              input(type='hidden', name='redirect_url', value=req.url)
-            h4= user.name
+            section.user_info_container
+              h4= user.name
+            section.action_button_container
+              form(method='post', action='/bubbles/' + bubble._id + '/add_admin/' + user._id)
+                button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit') promote to admin
+                input(type='hidden', name='redirect_url', value=req.url)
+              form(method='post', action='/bubbles/' + bubble._id + '/remove_member/' + user._id)
+                button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') remove from bubble
+                input(type='hidden', name='redirect_url', value=req.url)
