@@ -961,7 +961,8 @@ input[readonly="readonly"] {
         padding: 15px;
         height: 75px;
       }
-      .edit_members .member_list .member_widget:nth-child(even) {
+      .edit_members_right .member_list .member_widget:nth-child(odd),
+      .edit_members_left .member_list .member_widget:nth-child(even) {
         -webkit-box-shadow: inset 1px 0 1px rgba(31,23,31,.21);
         -moz-box-shadow: inset 1px 0 1px rgba(31,23,31,.21);
         box-shadow: inset 1px 0 1px rgba(31,23,31,.21);

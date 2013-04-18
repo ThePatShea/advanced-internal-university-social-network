@@ -8,7 +8,7 @@ block main
   
     div.divider
 
-    section.edit_members
+    section.edit_members.edit_members_left
       div.subtitle.colorize_blue.edit_members_heading pending members
       ul#pending_members.member_list
         each user in bubble.connections.users.invitees
@@ -36,7 +36,7 @@ block main
               form(method='post', action='/bubbles/' + bubble._id + '/remove_applicant/' + user._id)
                 button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit') deny application
                 input(type='hidden', name='redirect_url', value=req.url)
-    section.edit_members
+    section.edit_members.edit_members_right
       div.subtitle.colorize_blue.edit_members_heading existing members
       ul.member_list
         li#invite_member.member_widget
