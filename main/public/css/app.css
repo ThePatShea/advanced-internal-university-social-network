@@ -981,8 +981,12 @@ input[readonly="readonly"] {
       .edit_members .member_list h4 {
           font-family: 'Proxima_Nova_Bold';
           text-shadow: 1px 1px white;
+          text-transform: capitalize;
+          overflow: hidden;
+          max-height: 16px;
           font-size: 15px;
           color: #575757;
+          width: 180px;
         }
       .edit_members .member_list .action_button {
           margin: 0 0 5px 0;
@@ -995,8 +999,8 @@ input[readonly="readonly"] {
           top: 10px;
         }
       .edit_members .member_list .user_info_container {
-          max-width: 250px;
           overflow: hidden;
+          width: 180px;
         }
   
 
