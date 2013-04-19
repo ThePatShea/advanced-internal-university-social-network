@@ -6,7 +6,7 @@ block main
       section.attributes_section.attributes_medium
         h4.subscription_section_name info
         div.subtitle_bubble_type.colorize_blue #{bubble.bubble_type}
-        if (bubble.location != undefined)
+        if (bubble.location != undefined && bubble.location != '')
           div.location_icon
           div.descriptor.gray_text #{bubble.location}
       div.divider_vertical
