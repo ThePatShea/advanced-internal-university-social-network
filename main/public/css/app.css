@@ -1212,18 +1212,24 @@ input[readonly="readonly"] {
           min-width: 170px;
           }
     .post_info .left_bar .section_middle {
-      border-bottom: 1px solid #A2A6A8;
       border-top: 1px solid white;
       padding: 10px 5px;
+      position: relative;
       }
       .post_info .left_bar .section_middle .descriptor {
         text-transform: uppercase;
+        text-align: left;
         }
       .post_info .left_bar .section_middle h4 {
         font-family: 'proxima_nova_semibold';
+        text-transform: capitalize;
         line-height: 16px;
         font-size: 14px;
         margin: 5px 0;
+        }
+      .post_info .left_bar .section_middle .location_icon {
+          margin-left: 47px;
+          float: left;
         }
     .post_info .left_bar .section_bottom {
       border-top: 1px solid white;
