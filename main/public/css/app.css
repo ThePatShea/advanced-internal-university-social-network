@@ -644,6 +644,9 @@ input[readonly="readonly"] {
       left: 50%;
     }
 
+.bubble_input {
+    float: none !important;
+  }
 .bubble_form_container {
     margin: 0 0 50px 0;
     position: relative;
@@ -718,7 +721,8 @@ input[readonly="readonly"] {
     }
   .bubble_form textarea,
   .bubble_form select,
-  .bubble_form input {
+  .bubble_form input,
+  .bubble_input {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
