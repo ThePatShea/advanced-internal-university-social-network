@@ -3,5 +3,5 @@ form.hidden_edit_form(method='post', action='/bubbles/#{bubble._id}/#{bubble_sec
   input#hidden_edit_location(type='hidden', name='location', value=post.location)
   textarea#hidden_edit_description.hidden(name='description')= post.description
   input#hidden_edit_name(type='hidden', name='name', value=post.name)
-  button#submitBtn.red_button(type='submit') save #{bubble_section}
+  button#submitBtn(class='back_button gradient_gray colorize_texture_#{bubble_section}_2 edit_post_button', type='submit') save #{bubble_section}
     p.warning.descriptor.red_text Please fill in every field before saving your #{bubble_section}

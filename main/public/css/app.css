@@ -414,6 +414,9 @@ input[readonly="readonly"] {
 .colorize_texture_none {
     background: url("../img/bg_colorize_texture_none.png");
   }
+.colorize_texture_none_2 {
+    background: url("../img/bg_colorize_texture_none_2.png") !important;
+  }
 .colorize_blue_texture {
     background: url("../img/bg_colorize_blue_texture.png");
   }
@@ -906,15 +909,6 @@ input[readonly="readonly"] {
     position: absolute;
     left: 250px;
     }
-  .delete_post_form {
-    position: absolute;
-    right: 50px;
-    }
-  .hidden_edit_form {
-    position: absolute;
-    width: 200px;
-    left: 250px;
-    }
   .are_you_sure {
     display: none;
     }
@@ -1066,15 +1060,22 @@ input[readonly="readonly"] {
   .back_to_bubble .go_back {
       z-index: 10;
     }
+  .back_to_bubble .delete_post_button,
   .back_to_bubble .edit_post_button {
       text-shadow: 2px 2px rgba(0, 0, 0, .35);
+      padding: 25px 30px 25px 45px !important;
       font-family: 'Proxima_Nova_Extrabold';
-      padding: 25px 30px 25px 45px;
       text-transform: uppercase;
       position: relative;
       font-size: 13px;
       color: white;
+    }
+  .back_to_bubble .delete_post_button {
+      left: -30px;
+    }
+  .back_to_bubble .edit_post_button {
       left: -15px;
+      z-index: 5;
     }
     .back_to_bubble .back_button .descriptor {
       text-transform: uppercase;
