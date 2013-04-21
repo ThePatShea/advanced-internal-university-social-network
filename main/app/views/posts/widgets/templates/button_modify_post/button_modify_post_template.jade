@@ -1,4 +1,4 @@
 block set_parameters
 
-a(href='/bubbles/#{bubble._id}/#{bubble_section}/#{modify_type}/#{post._id}')
-  button.edit_post.red_button #{modify_type} #{bubble_section}
+a(class='back_button gradient_gray colorize_texture_#{bubble_section}_2 edit_post_button', href='/bubbles/#{bubble._id}/#{bubble_section}/#{modify_type}/#{post._id}')
+  | #{modify_type} #{bubble_section}
