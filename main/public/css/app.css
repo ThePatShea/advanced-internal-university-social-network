@@ -1066,10 +1066,11 @@ input[readonly="readonly"] {
   .back_to_bubble .edit_post_button {
       text-shadow: 2px 2px rgba(0, 0, 0, .35);
       font-family: 'Proxima_Nova_Extrabold';
+      padding: 25px 30px 25px 45px;
       text-transform: uppercase;
-      padding-left: 45px;
       position: relative;
       font-size: 13px;
+      z-index: -10;
       color: white;
       left: -15px;
     }
