@@ -5,5 +5,7 @@ form.delete_post_form(method='post', action=url_delete)
   input(type="hidden", name="_method", value="DELETE")
   section.are_you_sure
     div.descriptor.red_text Are you sure you want to delete this #{object_type}?
-    button.action_button.colorize_blue_texture.are_you_sure_yes(type='submit') yes
-    button.action_button.colorize_white_texture.colorize_text_gray.are_you_sure_no no
+    div.box_center_outer
+      div.box_center_inner
+        button.action_button.colorize_blue_texture.are_you_sure_yes(type='submit') yes
+        button.action_button.colorize_white_texture.colorize_text_gray.are_you_sure_no no
