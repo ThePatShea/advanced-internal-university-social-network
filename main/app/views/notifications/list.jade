@@ -1,6 +1,10 @@
 extends ../layouts/default
 
 block main
-  ul#post_list.post_list
+  div.page_content.subscriptions
+    section.list_heading_buttons_container
+      div.subtitle.colorize_blue from my bubbles
+
+    ul#post_list.post_list
   
-  section.hidden#list_pagelet_url= list_pagelet_url
+    section.hidden#list_pagelet_url= list_pagelet_url

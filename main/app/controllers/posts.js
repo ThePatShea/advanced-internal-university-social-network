@@ -132,6 +132,14 @@
       post.bubbles.addToSet(bubble._id)
       post.creator = req.user._id
 
+      // Determine which users get the notification
+        var users_notified = bubble.connections.users.admins.concat(bubble.connections.users.members)
+
+        if (post.privacy == 'public')
+          users_notified = notification_subscribers.concat(bubble.connections.users.fans)
+
+        post.connections.users.notified = users_notified
+
       post.save(function(err) {
         if (bubble_section == 'event') {
           bubble.connections.posts.events.addToSet(post._id)
