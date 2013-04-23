@@ -82,7 +82,7 @@
           query_parameters_find_talk.bubbles  =  bubble._id
 
         // Show only public posts to users who aren't an admin or member or this bubble
-          if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
+          if (bubble_section == 'dashboard' && bubble_connect_status != 'admin' && bubble_connect_status != 'member')
             query_parameters_find_talk.privacy = 'public'
 
         req.Talk
@@ -139,7 +139,7 @@
         var users_notified = bubble.connections.users.admins.concat(bubble.connections.users.members)
 
         if (post.privacy == 'public')
-          users_notified = notification_subscribers.concat(bubble.connections.users.fans)
+          users_notified = users_notified.concat(bubble.connections.users.fans)
 
         post.connections.users.notified = users_notified
         post.connections.users.notified.remove(post.creator)
