@@ -51,7 +51,7 @@
     exports.list = function(req, res) {
 
       res.render('notifications/list', {
-          list_pagelet_url: '/notifications/list_pagelet/'
+          list_pagelet_url: '/notifications/view/list_pagelet/'
         , rendered_sidebar: req.rendered_sidebar
         , current_page: 'notifications'
         , title: 'notifications'
@@ -70,6 +70,8 @@
         .skip(skip)
         .populate('connections.users.creator')
         .exec(function (err, notifications) {
+          console.log(notifications) //TESTING
+
           res.render('notifications/list_pagelet', {
               notifications: notifications
             , skip: skip
