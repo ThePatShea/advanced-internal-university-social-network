@@ -142,6 +142,7 @@
           users_notified = notification_subscribers.concat(bubble.connections.users.fans)
 
         post.connections.users.notified = users_notified
+        post.connections.users.notified.remove(post.creator)
 
       post.save(function(err) {
         if (bubble_section == 'event') {
