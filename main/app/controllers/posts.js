@@ -47,7 +47,7 @@
           query_parameters_find.bubbles  =  bubble._id
  
       // Show only public posts to users who aren't an admin or member or this bubble
-        if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
+        if (bubble_section != 'notifications' && bubble_connect_status != 'admin' && bubble_connect_status != 'member')
           query_parameters_find.privacy = 'public'
 
       if (bubble_section != 'dashboard' && bubble_section != 'notifications') {
@@ -82,7 +82,7 @@
           query_parameters_find_talk.bubbles  =  bubble._id
 
         // Show only public posts to users who aren't an admin or member or this bubble
-          if (bubble_section == 'dashboard' && bubble_connect_status != 'admin' && bubble_connect_status != 'member')
+          if (bubble_section != 'notifications' && bubble_connect_status != 'admin' && bubble_connect_status != 'member')
             query_parameters_find_talk.privacy = 'public'
 
         req.Talk
