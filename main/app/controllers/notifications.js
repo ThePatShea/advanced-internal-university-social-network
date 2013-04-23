@@ -70,8 +70,6 @@
         .skip(skip)
         .populate('connections.users.creator')
         .exec(function (err, notifications) {
-          console.log(notifications) //TESTING
-
           res.render('notifications/list_pagelet', {
               notifications: notifications
             , skip: skip
