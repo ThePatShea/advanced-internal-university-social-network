@@ -48,6 +48,12 @@ module.exports = function (app, passport, auth) {
 
         req.Event                    =  Event
         req.Talk                     =  Talk
+      } else if (id == 'notifications') { 
+        req.query_parameters_find    =  { 'connections.users.notified': req.user._id } 
+        req.query_parameters_sort    =  { createdAt: 'desc' } 
+
+        req.Event                    =  Event
+        req.Talk                     =  Talk
       }
 
       next()
@@ -187,7 +193,7 @@ module.exports = function (app, passport, auth) {
 
   // Notification Routes
     app.get('/notifications'                     ,  auth.requiresLogin  ,  notifications.reset_unviewed  ,  sidebar.user  ,  notifications.list)
-    app.get('/notifications/view/list_pagelet/:skip'  ,  auth.requiresLogin  ,  notifications.list_pagelet)
+    // app.get('/notifications/list_pagelet/:skip'  ,  auth.requiresLogin  ,  notifications.list_pagelet)
 
 
   // Search Routes

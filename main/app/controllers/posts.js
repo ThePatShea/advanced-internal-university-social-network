@@ -50,7 +50,7 @@
         if (bubble_connect_status != 'admin' && bubble_connect_status != 'member')
           query_parameters_find.privacy = 'public'
 
-      if (bubble_section != 'dashboard') {
+      if (bubble_section != 'dashboard' && bubble_section != 'notifications') {
         Post = req.Post
 
         // Find some posts the current bubble has
@@ -73,7 +73,10 @@
                 })
              })
       } else {
-        query_parameters_find_talk          =  { }
+        if (bubble_section == 'dashboard')
+          query_parameters_find_talk          =  { }
+        else
+          query_parameters_find_talk          =  query_parameters_find
 
         if (bubble)
           query_parameters_find_talk.bubbles  =  bubble._id
