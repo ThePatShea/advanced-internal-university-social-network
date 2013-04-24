@@ -2199,6 +2199,16 @@ ul.nav.pull-right {
     width: 100%;
     top: 0;
   }
+.landing_page h1 {
+    font-family:  'Proxima_Nova_Bold';
+    color: #000;
+    margin-top : 1em;
+    font-size : 50px;
+    line-height : .8;
+    letter-spacing:-3px;
+    text-transform: none;
+    text-shadow: none;
+  }
   .landing_page #wrapper {
       width: 100%;
       position: relative;
