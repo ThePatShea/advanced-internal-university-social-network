@@ -2318,14 +2318,10 @@ ul.nav.pull-right {
        color:#2D5972;
      }
    .landing_page .footeritem a {
-       display: block;
        color:#92ACBF;
-       float: left;
      }
    .landing_page .footeritem .footerspacer {
-       display: block;
        margin: 0 3px;
-       float: left;
      }
    .landing_page .footeritem a:hover {
        text-decoration:underline;
@@ -2353,14 +2349,30 @@ ul.nav.pull-right {
         box-sizing: border-box;
 
         padding-right: 100px;
+        position: relative;
         text-align: right;
+        float: left;
         width: 50%;
       }
+      .left_links .footerspacer 
+      .left_links a {
+          display: block;
+          float: right;
+        }
+      .left_links h5 {
+          position: absolute;
+          right: 80px;
+        }
     .landing_page #footercontainer .right_links {
         position: absolute;
         margin-left: 70px;
         left: 50%;
       }
+      .right_links .footerspacer 
+      .right_links a {
+          display: block;
+          float: left;
+        }
 
 @media (min-width: 1200px) {
   .bubble_logo {
