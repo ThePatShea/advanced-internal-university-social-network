@@ -2302,7 +2302,7 @@ ul.nav.pull-right {
      }
    .landing_page .footeritem {
        padding: 1em 0px;
-       height: 65px;
+       min-height: 65px;
      }
    .landing_page .footerlogo {
        width: 57px;
@@ -2310,7 +2310,7 @@ ul.nav.pull-right {
      }
    .landing_page .footerlinks {
        margin-top: 15px;
-       margin: 20px 30px 0px 30px;
+       margin: 20px 10px 0px 10px;
      }
    .landing_page .footeritem h5 {
        font-family: 'Proxima_Nova_Regular';
@@ -2318,7 +2318,14 @@ ul.nav.pull-right {
        color:#2D5972;
      }
    .landing_page .footeritem a {
+       display: block;
        color:#92ACBF;
+       float: left;
+     }
+   .landing_page .footeritem .footerspacer {
+       display: block;
+       margin: 0 3px;
+       float: left;
      }
    .landing_page .footeritem a:hover {
        text-decoration:underline;
@@ -2341,9 +2348,13 @@ ul.nav.pull-right {
         top: 10px;
       }
     .landing_page #footercontainer .left_links {
-        position: absolute;
-        margin-left: -332px;
-        left: 50%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
+        padding-right: 100px;
+        text-align: right;
+        width: 50%;
       }
     .landing_page #footercontainer .right_links {
         position: absolute;
