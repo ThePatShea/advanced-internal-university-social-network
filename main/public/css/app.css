@@ -2314,7 +2314,7 @@ ul.nav.pull-right {
      }
    .landing_page .footeritem h5 {
        font-family: 'Proxima_Nova_Regular';
-       letter-spacing:0px;
+       letter-spacing: -1px;
        text-shadow: none;
        color:#2D5972;
      }
