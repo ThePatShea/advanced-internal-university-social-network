@@ -2302,7 +2302,7 @@ ul.nav.pull-right {
      }
    .landing_page .footeritem {
        padding: 1em 0px;
-       min-height: 65px;
+       height: 65px;
      }
    .landing_page .footerlogo {
        width: 57px;
@@ -2469,6 +2469,10 @@ ul.nav.pull-right {
 }
 
 @media (max-width: 767px) {
+   .landing_page .footeritem {
+       height: 85px;
+     }
+
   .bubble_form .input_talk_name {
       width: 100%;
     }
