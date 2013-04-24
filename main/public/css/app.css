@@ -2244,6 +2244,7 @@ ul.nav.pull-right {
     }
   .landing_page p {
       font-family: 'Proxima_Nova_Regular';
+      line-height: 20px;
       font-size: 16px;
       hyphens: auto;
       color:#E5E5E5;
@@ -2307,13 +2308,16 @@ ul.nav.pull-right {
        width: 100%;   
        background-image:url(../img/auth/sliderbg.jpg);
        background-repeat: no-repeat;
-       background-position: 0px 130px;
-       height: 585px;
+       background-position: center bottom;
+       min-height: 585px;
        margin-top:140px;
      }
    .landing_page #footercontainer {
        width: 100%;   
        background: #011126;
+     }
+   .landing_page .group {
+       margin-top: 45px;
      }
    .landing_page .span_1_of_3 {
        margin-left: 3%;
@@ -2488,6 +2492,14 @@ ul.nav.pull-right {
 }
 
 @media (max-width: 767px) {
+   .landing_page .group {
+       margin-top: 10px;
+     }
+   .landing_page .span_1_of_3 {
+       margin: 0 0 20px 0;
+       width: 100%;
+     }
+
    .landing_page .footeritem {
        height: 85px;
      }
