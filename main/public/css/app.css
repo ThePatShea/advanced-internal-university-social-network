@@ -2341,12 +2341,14 @@ ul.nav.pull-right {
         top: 10px;
       }
     .landing_page #footercontainer .left_links {
-        margin-left: 25%;
-        float: left;
+        position: absolute;
+        margin-left: -340px;
+        left: 50%;
       }
     .landing_page #footercontainer .right_links {
-        margin-right: 25%;
-        float: right;
+        position: absolute;
+        margin-left: 70px;
+        left: 50%;
       }
 
 @media (min-width: 1200px) {
