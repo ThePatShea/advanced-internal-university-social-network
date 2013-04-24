@@ -2211,7 +2211,7 @@ ul.nav.pull-right {
       -moz-border-radius: 25px;
       border-radius: 25px;
       border: 1px solid #95AFBF;
-      width: 120px;
+      width: 150px;
       float: left;
       height: 25px;
       font-size: 11px;
@@ -2257,7 +2257,7 @@ ul.nav.pull-right {
     text-align: center;
     }
    .landing_page .buttonitem {
-        width: 270px; /* 1000px / 1250px */
+        width: 330px; /* 1000px / 1250px */
         margin: 0 auto;
         position: relative;
         height: 35px;
@@ -2315,6 +2315,7 @@ ul.nav.pull-right {
    .landing_page .footeritem h5 {
        font-family: 'Proxima_Nova_Regular';
        letter-spacing:0px;
+       text-shadow: none;
        color:#2D5972;
      }
    .landing_page .footeritem a {
