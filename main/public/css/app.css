@@ -2199,6 +2199,30 @@ ul.nav.pull-right {
     width: 100%;
     top: 0;
   }
+  .landing_page .button {
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      color: #95AFBF;
+      padding: 7px 0 0 0;
+      margin-right: 10px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 25px;
+      border: 1px solid #95AFBF;
+      width: 120px;
+      float: left;
+      height: 25px;
+      font-size: 13px;
+    }
+  .landing_page .button:hover {
+      color: #011126;
+      background-color:#FFF;
+    }
+  .landing_page .button:visited {
+      color: #2E5972;
+    }
 .landing_page h1 {
     font-family:  'Proxima_Nova_Bold';
     color: #000;
