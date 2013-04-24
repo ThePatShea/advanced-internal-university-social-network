@@ -2313,7 +2313,7 @@ ul.nav.pull-right {
        margin: 20px 30px 0px 30px;
      }
    .landing_page .footeritem h5 {
-       font-family: 'Proxima_Nova_Semibold';
+       font-family: 'Proxima_Nova_Regular';
        letter-spacing:0px;
        color:#2D5972;
      }
@@ -2342,7 +2342,7 @@ ul.nav.pull-right {
       }
     .landing_page #footercontainer .left_links {
         position: absolute;
-        margin-left: -340px;
+        margin-left: -332px;
         left: 50%;
       }
     .landing_page #footercontainer .right_links {
