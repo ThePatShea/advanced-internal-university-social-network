@@ -1729,12 +1729,24 @@ input[readonly="readonly"] {
 
         background: url("../img/bg_sidebar_footer.png");
         border-top: 1px solid #4D4F51;
+        text-align: center;
         position: fixed;
         height: 30px;
         width: 242px;
         bottom: 0;
         left: 0;
       }
+      .sidebar .sidebar_main .bottom_links a, 
+      .sidebar .sidebar_main .bottom_links {
+          font-family: 'Proxima_Nova_Semibold';
+          text-shadow: 2px 2px black;
+          text-transform: uppercase;
+          font-size: 11px;
+          color: #545759;
+        }
+        .sidebar .sidebar_main .bottom_links a:hover {
+            text-decoration: underline;
+          }
   .sidebar .sidebar_right_border {
     background: url("../img/bg_sidebar_dark.png");
     width: 5px;
