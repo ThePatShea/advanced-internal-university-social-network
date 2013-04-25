@@ -1731,7 +1731,7 @@ input[readonly="readonly"] {
         border-top: 1px solid #4D4F51;
         text-align: center;
         position: fixed;
-        height: 30px;
+        padding: 6px 0;
         width: 242px;
         bottom: 0;
         left: 0;
@@ -1741,7 +1741,7 @@ input[readonly="readonly"] {
           font-family: 'Proxima_Nova_Semibold';
           text-shadow: 2px 2px black;
           text-transform: uppercase;
-          font-size: 11px;
+          font-size: 10px;
           color: #545759;
         }
         .sidebar .sidebar_main .bottom_links a:hover {
