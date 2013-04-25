@@ -1723,6 +1723,10 @@ input[readonly="readonly"] {
     float: left;
     }
     .sidebar .sidebar_main .bottom_links {
+        -webkit-box-shadow: 0 -1px black;
+        -moz-box-shadow: 0 -1px black;
+        box-shadow: 0 -1px black;
+
         background: url("../img/bg_sidebar_footer.png");
         border-top: 1px solid #4D4F51;
         position: fixed;
