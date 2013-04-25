@@ -2419,10 +2419,20 @@ ul.nav.pull-right {
 }
 
 .iosSlider .bg_image {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-}
+    position: absolute;
+    bottom: 20px;
+  }
+  @media (min-width: 545px) {
+    .iosSlider .bg_image {
+        margin-left: -256px;
+        left: 50%;
+      }
+  }
+  @media (max-width: 544px) {
+    .iosSlider .bg_image {
+        left: 0;
+      }
+  }
 
 .iosSlider .slider #item1 {
         background: url('../img/auth/slider/transparent.png') no-repeat 50% 0;
