@@ -1721,7 +1721,16 @@ input[readonly="readonly"] {
     height: 100%;
     width: 242px;
     float: left;
-  }
+    }
+    .sidebar .sidebar_main .bottom_links {
+        background: url("../img/bg_sidebar_footer.png");
+        border-top: 1px solid #4D4F51;
+        position: fixed;
+        height: 30px;
+        width: 242px;
+        bottom: 0;
+        left: 0;
+      }
   .sidebar .sidebar_right_border {
     background: url("../img/bg_sidebar_dark.png");
     width: 5px;
@@ -2600,6 +2609,10 @@ ul.nav.pull-right {
 }
 
 @media (max-width: 767px) {
+   .sidebar .sidebar_main .bottom_links {
+       display: none;
+     }
+
    .landing_page .group {
        margin-top: 10px;
      }
