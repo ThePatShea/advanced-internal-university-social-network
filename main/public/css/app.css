@@ -2418,6 +2418,12 @@ ul.nav.pull-right {
         margin: 0 0 0 0;
 }
 
+.iosSlider .bg_image {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+}
+
 .iosSlider .slider #item1 {
         background: url('../img/auth/slider/transparent.png') no-repeat 50% 0;
 }
@@ -2466,10 +2472,11 @@ ul.nav.pull-right {
 
 .iosSliderButtons {
         position: absolute;
-        bottom: 3px;
-        left: 285px;
-        width: 200px;
+        margin-left: -38px;
         height: 10px;
+        width: 90px;
+        bottom: 3px;
+        left: 50%;
 }
 
 .iosSliderButtons .button {
