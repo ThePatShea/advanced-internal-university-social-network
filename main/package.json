@@ -1,7 +1,7 @@
 {
     "name": "campus_bubble",
     "description": "A platform for college groups to communicate by sharing discussions, events, files, and more",
-    "version": "3.0.0-73",
+    "version": "3.0.0-76",
     "private": false,
     "author": "Campus Bubble",
     "engines": {
