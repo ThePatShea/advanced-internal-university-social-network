@@ -2419,19 +2419,19 @@ ul.nav.pull-right {
 }
 
 .iosSlider .slider #item1 {
-        background: url('../img/auth/slider/slide1.png') no-repeat 50% 0;
+        background: url('../img/auth/slider/transparent.png') no-repeat 50% 0;
 }
 
 .iosSlider .slider #item2 {
-        background: url('../img/auth/slider/slide2.png') no-repeat 50% 0;
+        background: url('../img/auth/slider/transparent.png') no-repeat 50% 0;
 }
 
 .iosSlider .slider #item3 {
-        background: url('../img/auth/slider/slide3.png') no-repeat 50% 0;
+        background: url('../img/auth/slider/transparent.png') no-repeat 50% 0;
 }
 
 .iosSlider .slider #item4 {
-        background: url('../img/auth/slider/slide4.png') no-repeat 50% 0;
+        background: url('../img/auth/slider/transparent.png') no-repeat 50% 0;
 }
 
 .iosSlider .slider .item .text1 {
