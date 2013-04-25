@@ -2310,7 +2310,7 @@ ul.nav.pull-right {
        background-repeat: no-repeat;
        background-position: center bottom;
        min-height: 585px;
-       margin-top:140px;
+       margin-top:40px;
      }
    .landing_page #footercontainer {
        width: 100%;   
@@ -2401,7 +2401,6 @@ ul.nav.pull-right {
 .iosSlider {
         width: 600px;
         height: 350px;
-        margin-top: 100px;
 }
 
 .iosSlider .slider {
