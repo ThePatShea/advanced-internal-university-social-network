@@ -10,10 +10,12 @@ $(document).ready(function() {
                 responsiveSlideWidth: true,
                 navSlideSelector: $('.iosSliderButtons .button'),
                 infiniteSlider: true,
-                startAtSlide: '2',
+                startAtSlide: '1',
                 onSlideChange: slideContentChange,
                 onSlideComplete: slideContentComplete,
-                onSliderLoaded: slideContentLoaded
+                onSliderLoaded: slideContentLoaded,
+                autoSlide: true,
+                autoSlideTimer: 5000
         });
         
         function slideContentChange(args) {
