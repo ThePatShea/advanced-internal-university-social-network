@@ -1879,6 +1879,7 @@ input[readonly="readonly"] {
       }
       .sidebar .sidebar_buttons li:hover,
       .current_page_home .sidebar_button_home,
+      .current_page_browse_bubbles .sidebar_button_browse_bubbles,
       .current_page_new_bubble .sidebar_button_new_bubble,
       .current_page_edit_bubble .sidebar_button_edit_bubble,
       .current_page_dashboard .sidebar_button_dashboard,
@@ -1966,6 +1967,7 @@ input[readonly="readonly"] {
           }
          .sidebar .sidebar_buttons li:hover .icon_sidebar_select,
          .current_page_home .sidebar_button_home .icon_sidebar_select,
+         .current_page_browse_bubbles .sidebar_button_browse_bubbles .icon_sidebar_select,
          .current_page_new_bubble .sidebar_button_new_bubble .icon_sidebar_select,
          .current_page_dashboard .sidebar_button_dashboard .icon_sidebar_select,
          .current_page_edit_bubble .sidebar_button_edit_bubble .icon_sidebar_select,
@@ -2965,6 +2967,7 @@ ul.nav.pull-right {
       }
     .sidebar .sidebar_buttons li:hover,
     .current_page_home .sidebar_button_home,
+    .current_page_browse_bubbles .sidebar_button_browse_bubbles,
     .current_page_new_bubble .sidebar_button_new_bubble,
     .current_page_edit_bubble .sidebar_button_edit_bubble,
     .current_page_dashboard .sidebar_button_dashboard,
