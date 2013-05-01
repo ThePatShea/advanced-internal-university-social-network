@@ -110,3 +110,19 @@ exports.new_bubble = function(req, res){
         })
     })
 }
+
+
+// Browse all bubbles
+exports.browse_bubbles = function(req, res){
+  Bubble
+    .find({ },"name pic_big")
+    .exec(function(err, bubbles) {
+      if (err) return res.render('500')
+      res.render('users/browse_bubbles', {
+          rendered_sidebar: req.rendered_sidebar
+        , current_page: 'browse_bubbles'
+        , title: 'browse bubbles'
+        , bubbles: bubbles
+      })
+    })
+}
