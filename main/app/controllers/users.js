@@ -119,6 +119,7 @@ exports.browse_bubbles = function(req, res){
 
   Bubble
     .find(search_query,"name pic_big")
+    .sort({name: 1})
     .exec(function(err, bubbles) {
       if (err) return res.render('500')
       res.render('users/browse_bubbles', {
