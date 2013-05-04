@@ -2106,6 +2106,19 @@ ul.nav.pull-right {
         background: url("../img/sprites.png") -281px -86px;
         left: 0;
         }
+    ul.nav.pull-right li .icon_header_search {
+      background: url("../img/sprites.png") -256px -149px;
+      position: relative;
+      height: 20px;
+      width: 20px;
+      left: 1px;
+      top: 1px;
+      }
+      ul.nav.pull-right li a:hover .icon_header_search,
+      .current_page_browse_bubbles ul.nav.pull-right li .icon_header_search {
+        background: url("../img/sprites.png") -232px -149px;
+        left: 0;
+        }
     ul.nav.pull-right li .icon_header_create {
       background: url("../img/sprites.png") -170px -12px;
       position: relative;
