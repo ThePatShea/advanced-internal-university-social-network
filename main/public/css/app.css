@@ -2865,6 +2865,7 @@ ul.nav.pull-right {
       width: 100% !important;
     }
     .pull-right .header_button_create,
+    .pull-right .header_button_search,
     .pull-right .user_widget {
         display: none !important;
       }
