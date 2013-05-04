@@ -112,7 +112,7 @@ exports.new_bubble = function(req, res){
 }
 
 
-// Browse all bubbles
+// Search bubbles
 exports.browse_bubbles = function(req, res){
   var search_name      =  new RegExp(req.query,'i')
   var search_query     =  {name: search_name}
@@ -128,4 +128,9 @@ exports.browse_bubbles = function(req, res){
         , bubbles: bubbles
       })
     })
+}
+
+// Submit a search
+exports.submit_search = function(req, res){
+
 }
