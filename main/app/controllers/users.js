@@ -114,8 +114,11 @@ exports.new_bubble = function(req, res){
 
 // Browse all bubbles
 exports.browse_bubbles = function(req, res){
+  var search_name      =  new RegExp(req.query,'i')
+  var search_query     =  {name: search_name}
+
   Bubble
-    .find({ },"name pic_big")
+    .find(search_query,"name pic_big")
     .exec(function(err, bubbles) {
       if (err) return res.render('500')
       res.render('users/browse_bubbles', {

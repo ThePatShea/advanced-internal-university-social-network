@@ -129,6 +129,11 @@ module.exports = function (app, passport, auth) {
         })
     })
 
+  // User parameters
+    app.param('query', function(req, res, next, id) {
+      req.query = id
+      next()
+    })
 
   // Post Routes
     // Get Requests
@@ -176,6 +181,7 @@ module.exports = function (app, passport, auth) {
     app.get('/auth/facebook'             ,  passport.authenticate('facebook', { scope: [ 'email', 'user_about_me' ]  ,  failureRedirect: '/login' })  ,  users.signin)
     app.get('/auth/facebook/callback'    ,  passport.authenticate('facebook', { failureRedirect: '/login' })         ,  users.authCallback)
     app.post('/users/session'            ,  passport.authenticate('local', {failureRedirect: '/login'})              ,  users.session)
+    app.get('/browse_bubbles/:query'     ,  auth.requiresLogin  ,  sidebar.user  ,  users.browse_bubbles)
     app.get('/browse_bubbles'            ,  auth.requiresLogin  ,  sidebar.user  ,  users.browse_bubbles)
     app.get('/users/:userId/new_bubble'  ,  auth.requiresLogin  ,  sidebar.user  ,  users.new_bubble)
     app.get('/users/:userId'             ,  auth.requiresLogin  ,  sidebar.user  ,  users.home)
