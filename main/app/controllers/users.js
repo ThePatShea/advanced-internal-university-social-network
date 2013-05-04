@@ -114,8 +114,8 @@ exports.new_bubble = function(req, res){
 
 // Search bubbles
 exports.browse_bubbles = function(req, res){
-  var search_name      =  new RegExp(req.query,'i')
-  var search_query     =  {name: search_name}
+  var search_name   =  new RegExp(req.query,'i')
+  var search_query  =  {name: search_name}
 
   Bubble
     .find(search_query,"name pic_big")
