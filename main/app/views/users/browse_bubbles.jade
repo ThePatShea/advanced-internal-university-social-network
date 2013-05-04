@@ -4,11 +4,9 @@ block main
   div.page_content.subscriptions
     include widgets/form_search
     user_subscribed = 0
-    section.subscription_section
-      h4.subscription_section_name find bubbles
-    div.divider
     section.list_heading_buttons_container
-      div.subtitle.colorize_blue all bubbles
+      div.subtitle.colorize_blue #{bubbles.length} bubbles found
+    div.divider
     section.subscription_section
       ul.subscription_list
         each bubble in bubbles

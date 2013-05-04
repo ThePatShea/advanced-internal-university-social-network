@@ -662,6 +662,9 @@ input[readonly="readonly"] {
 .bubble_input {
     float: none !important;
   }
+.search_form_container {
+    margin: 0 0 15px 0 !important;
+  }
 .bubble_form_container {
     margin: 0 0 50px 0;
     position: relative;

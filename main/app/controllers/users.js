@@ -132,5 +132,5 @@ exports.browse_bubbles = function(req, res){
 
 // Submit a search
 exports.submit_search = function(req, res){
-
+  res.redirect('/browse_bubbles/' + req.body.query)
 }
