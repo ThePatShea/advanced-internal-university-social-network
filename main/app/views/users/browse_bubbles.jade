@@ -2,6 +2,7 @@ extends ../layouts/default
 
 block main
   div.page_content.subscriptions
+    include widgets/form_search
     user_subscribed = 0
     section.subscription_section
       h4.subscription_section_name find bubbles
