@@ -2,7 +2,7 @@ extends ../layouts/default
 
 block main
   div.page_content.subscriptions
-    if (user.connections.bubbles.invitee.length > 0 || user.connections.bubbles.applicant > 0)
+    if (user.connections.bubbles.invitee.length > 0 || user.connections.bubbles.applicant.length > 0)
       section.subscription_section
         user_subscribed = 0
         h4.subscription_section_name pending bubbles
