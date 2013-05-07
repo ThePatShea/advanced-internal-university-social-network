@@ -21,17 +21,17 @@ else if (bubble_connect_status == 'none')
   block if_none
 
 if (connect_bubble_hide != 'true')
-  form(method='post', action='/bubbles/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
-    div.box_center_outer
-      div.box_center_inner
+  div.box_center_outer
+    div.box_center_inner
+      form.form_action_button(method='post', action='/bubbles/' + bubble._id + '/' + connect_bubble_action + '/' + req.user._id)
+        input(type='hidden', name='redirect_url', value=req.url)
+        if (extra_class == 'activate_are_you_sure')
+          section.are_you_sure
+            p Are you sure you want to leave this bubble?
+            button.red_button.are_you_sure_yes(type='submit') yes
+            button.red_button.are_you_sure_no no
         button#connect_bubble_apply.action_button.colorize_blue_texture(type='submit', class=extra_class) #{connect_bubble_phrase}
-        if (decline_invite_hide != 'true')
-          form(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + req.user._id)
-            button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit', class=extra_class) deny
-            input(type='hidden', name='redirect_url', value=req.url)
-    input(type='hidden', name='redirect_url', value=req.url)
-    if (extra_class == 'activate_are_you_sure')
-      section.are_you_sure
-        p Are you sure you want to leave this bubble?
-        button.red_button.are_you_sure_yes(type='submit') yes
-        button.red_button.are_you_sure_no no
+      if (decline_invite_hide != 'true')
+        form.form_action_button(method='post', action='/bubbles/' + bubble._id + '/remove_invitee/' + req.user._id)
+          button#connect_bubble_apply.action_button.colorize_white_texture.colorize_text_gray(type='submit', class=extra_class) deny
+          input(type='hidden', name='redirect_url', value=req.url)

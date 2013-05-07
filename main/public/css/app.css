@@ -448,6 +448,9 @@ input[readonly="readonly"] {
 .colorize_text_green {
     color: #4C8A4A !important;
   }
+.form_action_button {
+    float: left;
+  }
 .action_button {
     -webkit-box-shadow:  0 2px 1px rgba(0, 0, 0, .15);
     box-shadow:          0 2px 1px rgba(0, 0, 0, .15), inset 0 -1px rgba(0, 0, 0, .21), inset 0 1px rgba(255, 255, 255, .81);
