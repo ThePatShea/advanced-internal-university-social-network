@@ -1569,6 +1569,9 @@ input[readonly="readonly"] {
           margin-top: -22px;
           top: 50%;
         }
+        .post_list .post_widget .post_widget_mid_right .button_connect_post:hover {
+            opacity: .8;
+          }
     .post_list .post_widget .post_widget_right {
       height: 100px;
       width: 275px;
@@ -1596,6 +1599,9 @@ input[readonly="readonly"] {
         border-bottom-left-radius: 40px;
         border-top-left-radius: 40px;
         }
+        .post_list .post_widget .post_widget_right .venue_widget:hover {
+            opacity: .9;
+          }
         .post_list .post_widget .post_widget_right .venue_widget .pic_venue_container {
           background: url("../img/sprites.png") -165px -198px;
           position: relative;
