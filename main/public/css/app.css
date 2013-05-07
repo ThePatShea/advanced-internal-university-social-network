@@ -464,6 +464,13 @@ input[readonly="readonly"] {
     color: white;
     float: left;
   }
+  .action_button:hover {
+      -webkit-box-shadow: 0 0 !important;
+      box-shadow: 0 0 !important;
+      position: relative;
+      opacity: .9;
+      top: 1px;
+    }
 .center_cancel_application {
   margin: 0 0 0 22px;
   }
