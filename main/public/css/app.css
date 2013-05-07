@@ -2174,7 +2174,10 @@ ul.nav.pull-right {
       width: 21px;
       left: -8px;
       top: 3px;
-    }
+      }
+      ul.nav.pull-right li .icon_header_sign_out:hover {
+        background: url("../img/sprites.png") -257px -62px;
+        }
     ul.nav.pull-right .user_widget {
       -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.35);
       -moz-box-shadow: 0 1px 0 rgba(255,255,255,.35);
