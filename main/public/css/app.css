@@ -1075,8 +1075,12 @@ input[readonly="readonly"] {
   .subscription_list .bubble_widget_container {
     margin: 0 0 10px 0;
     position: relative;
-    height: 105px;
+    height: 80px;
     float: left;
+    }
+  .subscription_list .bubble_widget_container_applicant,
+  .subscription_list .bubble_widget_container_invitee {
+    height: 105px;
     }
     .subscription_list .bubble_widget_container .button_connect_bubble_container {
       width: 200px;
