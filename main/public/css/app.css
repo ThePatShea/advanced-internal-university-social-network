@@ -1113,6 +1113,9 @@ input[readonly="readonly"] {
       margin: 5px;
       }
       .subscription_list .bubble_widget .section_inner .pic {
+        -webkit-border-radius: 30px;
+        border-radius: 30px;
+
         position: absolute;
         min-height: 100%;
         min-width: 100%;
