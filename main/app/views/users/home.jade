@@ -2,6 +2,21 @@ extends ../layouts/default
 
 block main
   div.page_content.subscriptions
+    if (user.connections.bubbles.invitee.length > 0 || user.connections.bubbles.applicant > 0)
+      section.subscription_section
+        user_subscribed = 0
+        h4.subscription_section_name pending bubbles
+        div.subtitle.colorize_blue
+          | pending #{req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length}
+      div.divider
+      section.subscription_section
+        ul.subscription_list
+          each bubble in user.connections.bubbles.invitee
+            bubble_connect_status = 'invitee'
+            include ../widgets/bubble_widget
+          each bubble in user.connections.bubbles.applicant
+            bubble_connect_status = 'applicant'
+            include ../widgets/bubble_widget
     section.subscription_section
       user_subscribed = 0
       h4.subscription_section_name my bubbles
@@ -9,22 +24,14 @@ block main
         | member of #{req.user.connections.bubbles.member.length}
         if (req.user.connections.bubbles.admin.length > 0)
           |  | admin of #{req.user.connections.bubbles.admin.length}
-        if (req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length > 0)
-          |  | pending #{req.user.connections.bubbles.applicant.length + req.user.connections.bubbles.invitee.length}
     div.divider
     section.subscription_section
       ul.subscription_list
-        each bubble in user.connections.bubbles.invitee
-          bubble_connect_status = 'invitee'
-          include ../widgets/bubble_widget
         each bubble in user.connections.bubbles.admin
           bubble_connect_status = 'admin'
           include ../widgets/bubble_widget
         each bubble in user.connections.bubbles.member
           bubble_connect_status = 'member'
-          include ../widgets/bubble_widget
-        each bubble in user.connections.bubbles.applicant
-          bubble_connect_status = 'applicant'
           include ../widgets/bubble_widget
         a(href='/users/#{req.user._id}/new_bubble')
           button.bubble_widget_add_bubble
