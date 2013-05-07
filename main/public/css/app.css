@@ -1093,6 +1093,10 @@ input[readonly="readonly"] {
     width: 204px;
     float: left;
     }
+    .subscription_list .bubble_widget_add_bubble:hover,
+    .subscription_list .bubble_widget:hover {
+        opacity: .9;
+      }
   .subscription_list .bubble_widget_add_bubble {
     background: url("../img/sprites.png") -10px -366px;
     margin: 0 24px 2px 0;
