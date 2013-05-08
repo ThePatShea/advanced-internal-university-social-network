@@ -1,0 +1,16 @@
+{
+    'dependencies' : {
+        'connect-assets' : 'latest'
+      , 'coffee-script'  : 'latest'
+      , 'express'        : 'latest'
+      , 'stylus'         : 'latest'
+      , 'jade'           : 'latest'
+    }
+  , 'devDependencies' : {
+        'node-dev'       : 'latest'
+      , 'mocha'          : 'latest'
+    }
+  , 'name'    : 'campus-bubble'
+  , 'version' : '2.0.1'
+  , 'private' : false
+}
