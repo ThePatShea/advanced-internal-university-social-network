@@ -18,9 +18,11 @@ app.configure ->
 app.configure 'development', ->
   app.use express.errorHandler()
 
-app.get '/api/posts', api.posts
+app.get '/api/bubble', ->
+  console.log 'loaded bubble page'
 
-app.get '*', res.render 'index'
+app.get '*', (req, res) ->
+  res.render 'index'
 
 http.createServer(app).listen app.get('port'), ->
   console.log 'Express server listening on port ' + app.get('port')
