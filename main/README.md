@@ -51,6 +51,6 @@ THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <<<<<<< HEAD
 
  =======================
- Testing Terminal Commit
+ Testing Terminal Merge
  =======================
 >>>>>>> 8a325fa17bbfcfed22486416f1385a90dedc5f1f
