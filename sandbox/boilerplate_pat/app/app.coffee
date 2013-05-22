@@ -2,6 +2,7 @@
 api      =  require('./routes/api')
 routes   =  require('./routes')
 express  =  require('express')
+stylus   =  require('stylus')
 http     =  require('http')
 
 
@@ -11,12 +12,26 @@ app      =  module.exports = express()
 
 # Configure the server
 app.configure ->
+  # Sets Jade as the view engine
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
+
+  # Sets Stylus as the CSS engine
+  app.use stylus.middleware(
+    src: __dirname + '/public'
+    compile: compile
+  )
+
+  # Configures Express
   app.use express.bodyParser()
   app.use express.methodOverride()
   app.use express.static(__dirname + '/public')
+
+  # Sets the  router to handle URL requests
   app.use app.router
+
+compile = (str, path) ->
+  stylus(str).set("filename", path).set("compress", true)
 
 
 # Configure development mode for the server
