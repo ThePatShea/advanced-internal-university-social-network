@@ -1,8 +1,12 @@
-express  =  require('express')
-routes   =  require('./routes')
-api      =  require('./routes/api')
+express  =  require 'express'
+views    =  require './views'
+post     =  require './controller/post'
 app      =  module.exports = express()
-http     =  require('http')
+http     =  require 'http'
+
+# Bootstrap db connection
+mongoose = require('mongoose')
+mongoose.connect 'mongodb://localhost/test'
 
 app.configure ->
   app.set 'views', __dirname + '/views'
@@ -17,19 +21,19 @@ app.configure 'development', ->
 
 # Routes
 
-app.get '/', routes.index
-app.get '/partials/:name', routes.partials
+app.get '/', views.index
+app.get '/partials/:name', views.partials
 
 # JSON API
 
-app.get '/api/posts', api.posts
-app.get '/api/post/:id', api.post
-app.post '/api/post', api.addPost
-app.put '/api/post/:id', api.editPost
-app.delete '/api/post/:id', api.deletePost
+app.get '/api/posts', post.posts
+app.get '/api/post/:id', post.post
+app.post '/api/post', post.addPost
+app.put '/api/post/:id', post.editPost
+app.delete '/api/post/:id', post.deletePost
 
 # redirect all others to the index (HTML5 history)
-app.get '*', routes.index
+app.get '*', views.index
 
 # Start server
 
