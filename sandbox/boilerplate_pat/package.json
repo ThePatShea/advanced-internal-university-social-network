@@ -1,0 +1,19 @@
+{
+    "dependencies" : {
+        "underscore.string" : "latest"
+      , "connect-assets"    : "latest"
+      , "coffee-script"     : "latest"
+      , "underscore"        : "latest"
+      , "mongoose"          : "latest"
+      , "express"           : "latest"
+      , "stylus"            : "latest"
+      , "jade"              : "latest"
+    }
+  , "devDependencies" : {
+        "node-dev"          : "latest"
+      , "mocha"             : "latest"
+    }
+  , "name"    : "campus-bubble"
+  , "version" : "2.0.1"
+  , "private" : false
+}
