@@ -8,7 +8,7 @@ postSchema  = new Schema {
     trim: true
   },
 
-  body:{
+  text:{
     type: String
     default: ""
     trim: true
@@ -19,9 +19,9 @@ postSchema.path("title").validate ((title) ->
   title.length > 0
 ), "Post title cannot be blank"
 
-postSchema.path("body").validate ((body) ->
+postSchema.path("text").validate ((body) ->
   body.length > 0
-), "Post body cannot be blank"
+), "Post text cannot be blank"
 
 
 Post = mongoose.model("Post", postSchema)
