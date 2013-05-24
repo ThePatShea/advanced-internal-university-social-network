@@ -1,0 +1,6 @@
+each post in posts
+  a(href='/bubbles/'+post.bubbles[0]._id+'/#{post.post_type}/view/#{post._id}')
+    if (post.post_type == 'talk')
+      include widgets/top_bar_talk_home
+    else if (post.post_type == 'event')
+      include widgets/top_bar_event_home

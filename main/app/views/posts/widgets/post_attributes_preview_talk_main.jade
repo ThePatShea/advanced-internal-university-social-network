@@ -1,0 +1,7 @@
+div.icon_views
+div.views_text.colorize_text_green #{post.connections.users.viewed.length}
+div.gray_text.last_reply_text
+  if (post.comments.length > 0)
+    | Last reply #{moment(post.comments[post.comments.length - 1].createdAt).fromNow()}
+  else
+    | Posted #{moment(post.createdAt).fromNow()}

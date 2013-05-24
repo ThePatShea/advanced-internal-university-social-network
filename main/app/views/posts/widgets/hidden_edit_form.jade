@@ -1,0 +1,7 @@
+form.hidden_edit_form(method='post', action='/bubbles/#{bubble._id}/#{bubble_section}/save/#{post._id}')
+  input#hidden_edit_start_time(type='hidden', name='start_time', value=post.start_time)
+  input#hidden_edit_location(type='hidden', name='location', value=post.location)
+  textarea#hidden_edit_description.hidden(name='description')= post.description
+  input#hidden_edit_name(type='hidden', name='name', value=post.name)
+  button#submitBtn(class='back_button gradient_gray colorize_texture_#{bubble_section}_2 edit_post_button', type='submit') save #{bubble_section}
+    p.warning.descriptor.red_text Please fill in every field before saving your #{bubble_section}

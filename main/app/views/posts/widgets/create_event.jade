@@ -1,0 +1,22 @@
+extends templates/create/create_template
+
+block button_text
+  | create an event
+
+block form
+  input.requiredInput.input_event_name(type='text', maxlength="35", name="name", placeholder='Event Name')
+  input.requiredInput.input_event_location(type='text', maxlength="35", name="location", placeholder='Location')
+
+  input#start_time.requiredInput.input_event_start_time(type='text', name="start_time", readonly="readonly", placeholder='Start time')
+  input#end_time.requiredInput.input_event_end_time(type='text', name="end_time", readonly="readonly", placeholder='End time')
+  section.initialize_event_privacy
+    input#privacy_private(type='radio', name='privacy', value='private', checked='checked')
+    | private
+    input#privacy_public(type='radio', name='privacy', value='public')
+    | public
+
+  textarea.requiredInput.input_event_description(type='text', rows="3", name="description", placeholder='Describe your event')
+  button#submitBtn.submit_post.submit_post_event.colorize_texture_event.initialize_event_submit(type='submit') submit
+    p.warning.descriptor.red_text Please fill in every field before creating your event
+
+  div.icon_arrow_up_event.hide_form.toggle_visible_reverse

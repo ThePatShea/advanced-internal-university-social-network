@@ -1,0 +1,10 @@
+
+if (comment && comment.user)
+  .comment
+    a
+      div.pic_commenter.face_circle_container
+        img.face_circle(src='http://graph.facebook.com/'+comment.user.facebook.id+'/picture?type=square')
+    a(href="/users/"+comment.user._id)
+      h6.comment_user_name= comment.user.name
+    div.comment_date_posted.descriptor.red_text #{moment(comment.createdAt).fromNow()}
+    pre.comment_body= comment.body

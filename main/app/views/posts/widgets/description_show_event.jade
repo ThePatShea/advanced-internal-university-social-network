@@ -1,0 +1,5 @@
+extends templates/description/description_template
+
+block description_info
+  pre#post_description= post.description
+  button#read_more(class='read_more action_button colorize_texture_#{bubble_section}') read more

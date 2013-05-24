@@ -1,0 +1,5 @@
+extends templates/form_delete_template
+
+block set_parameters
+  url_delete   =  '/bubbles/' + bubble._id + '/' + bubble_section + '/delete/' + post._id
+  object_type  =  bubble_section

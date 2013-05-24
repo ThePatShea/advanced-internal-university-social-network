@@ -1,0 +1,20 @@
+extends templates/create/create_template
+
+block button_text
+  | start a discussion
+
+block form
+  input.requiredInput.input_talk_name(type='text', maxlength="35", name="name", placeholder="Discussion title")
+
+  textarea#description.requiredInput.input_talk_description(type='text', rows="5", name="description", placeholder='Start your discussion')
+
+  section.privacy_and_submit
+    input#privacy_private(type='radio', name='privacy', value='private', checked='checked')
+    | private
+    input#privacy_public(type='radio', name='privacy', value='public')
+    | public
+     
+    button#submitBtn.submit_post.colorize_texture_talk(type='submit') submit
+      p.warning.descriptor.red_text Please fill in every field before creating your talk
+
+  div.icon_arrow_up_talk.hide_form.toggle_visible_reverse

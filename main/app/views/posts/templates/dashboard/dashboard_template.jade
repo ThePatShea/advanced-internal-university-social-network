@@ -1,0 +1,31 @@
+extends ../../../layouts/default
+
+block main
+  div.page_content.subscriptions
+    section.subscription_section.bubble_dashboard_attributes
+      section.attributes_section.attributes_medium
+        h4.subscription_section_name info
+        div.subtitle_bubble_type.colorize_blue #{bubble.bubble_type}
+        if (bubble.location != undefined && bubble.location != '')
+          div.location_icon
+          div.descriptor.gray_text #{bubble.location}
+      div.divider_vertical
+      section.attributes_section.attributes_medium
+        h4.subscription_section_name join
+        div.descriptor.gray_text.membership_type #{bubble.exclusivity} membership
+        include ../../widgets/button_connect_bubble_member
+      div.divider_vertical
+      section.attributes_section
+        h4.subscription_section_name people
+        div.face_circle_container
+          img.face_circle(src='http://graph.facebook.com/#{bubble.connections.users.admins[0].facebook.id}/picture?type=square')
+        - for (var i = 0; (i < 4 && i < bubble.connections.users.members.length); ++i) {
+          div.face_circle_container
+            img.face_circle(src='http://graph.facebook.com/#{bubble.connections.users.members[i].facebook.id}/picture?type=square')
+        - }
+    div.divider
+    section.list_heading_buttons_container
+      div.subtitle.colorize_blue latest activity
+    ul#post_list.post_list.list_view
+
+  section.hidden#list_pagelet_url= list_pagelet_url
