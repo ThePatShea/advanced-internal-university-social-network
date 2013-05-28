@@ -3,37 +3,32 @@
 /* Controllers */
 
 function IndexCtrl($scope, $http,socket ) {
-  socket.on('send:time', function (data) {
-    $scope.time = data.time;
-  });
-  socket.on('send:name', function (data) {
-    $scope.name = data.name;
-  });
+  // socket.on('send:time', function (data) {
+  //   $scope.time = data.time;
+  // });
   
- //  $scope.sendMessage = function () {
-	//     socket.emit('send:message', {
-	//         message: $scope.message
-	//     });
+  // socket.on('send:name', function (data) {
+  //   $scope.name = data.name;
+  // });
 
-	//     // add the message to our model locally
-	//     $scope.messages.push({
-	//         user: $scope.name,
-	//         text: $scope.message
-	//     });
+  socket.on('send:post', function (data) {
+    console.log("Angular post is: " + JSON.stringify(data.post));
+    $scope.posts.push(data.post);
+  });
 
-	//     // clear message box
-	//     $scope.message = '';
-	// };
-    
   $http.get('/api/posts').
     success(function(data, status, headers, config) {
       $scope.posts = data.posts;
     });
+
 }
 
-function AddPostCtrl($scope, $http, $location) {
+function AddPostCtrl($scope, $http, $location, socket) {
   $scope.form = {};
   $scope.submitPost = function () {
+    socket.emit('send:post', {
+      post: $scope.form
+    });
     $http.post('/api/post', $scope.form).
       success(function(data) {
         $location.path('/');
