@@ -1,18 +1,18 @@
 # Requires the dependencies
 post      =  require './controller/post'
+_         =  require 'underscore'
 mongoose  =  require 'mongoose'
 express   =  require 'express'
+views     =  require './views'
 stylus    =  require 'stylus'
 http      =  require 'http'
-routes    =  require './routes'
 fs        =  require 'fs'
-_         =  require 'underscore'
 
 # Creates the server
 app       =  module.exports = express()
 
 # Socket.io Communication
-socket    = require("./routes/socket")
+socket    = require("./controller/socket")
 server    =  http.createServer(app)
 io        =  require('socket.io').listen(server)
 
@@ -51,7 +51,7 @@ model_files.forEach (file) ->
   require models_path + '/' + file
 
 # Sets the routes
-app.get    '/partials/:name', routes.partials
+app.get    '/partials/:name', views.partials
 
 # Sets the create/read/update/delete routes
 app.delete '/api/post/:id' , post.deletePost
@@ -61,8 +61,8 @@ app.get    '/api/posts'    , post.posts
 app.get    '/api/post/:id' , post.post
 
 # Sets the index routes
-app.get '/', routes.index
-app.get '*', routes.index
+app.get '/', views.index
+app.get '*', views.index
 
 # Socket.io Communication
 
