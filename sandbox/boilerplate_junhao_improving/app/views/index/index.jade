@@ -1,20 +1,19 @@
 extends layout
 
 block body
-  div(ng-controller='IndexCtrl')
-    h2 Hello {{name}}
-    p The current time is {{time}}
-    ul.menu
-      li
-        a(href='/') Home
-      li
-        a(href='/addPost') Add a new post
+  
+  h2 Hello 
+  ul.menu
+    li
+      a(href='/') Home
+    li
+      a(href='/addPost') Add a new post
 
-    div(ng-view)
+  div(ng-view)
 
-    div
-      | Angular Socket.io seed app: v
-      span(app-version)
+  div
+    | Angular Socket.io seed app: v
+    span(app-version)
 
   script(src='js/lib/angular/angular.js')
   script(src='/socket.io/socket.io.js')

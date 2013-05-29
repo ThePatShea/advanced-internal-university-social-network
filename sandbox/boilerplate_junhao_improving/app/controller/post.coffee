@@ -9,9 +9,9 @@ exports.posts = (req, res) ->
   Post.find {}, (err, items) ->
     items.forEach (item) ->
       posts.push
-        id: item.id
+        _id: item.id
         title: item.title
-        text: item.text.substr(0, 50) + "..."
+        text: item.text
 
     res.json posts: posts
 
@@ -29,10 +29,7 @@ exports.addPost = (req, res) ->
   post = new Post({title:req.body.title , text:req.body.text})
   post.save (err, product) ->
     console.log err  if err
-  res.json req.body
-  # data.posts.push req.body
-  # res.json req.body
-
+  res.json post
 
 # PUT
 exports.editPost = (req, res) ->

@@ -2,24 +2,24 @@
 # * Serve content over a socket
 # 
 
-require  '../models/post' 
-mongoose = require("mongoose")
-Post = mongoose.model("Post")
-_ = require("underscore")
-
 module.exports = (socket) ->
-  # socket.emit "send:name",
-  #   name: "Joe"
+  #
+  #To receive the emited socket data from angular controller
+  #
 
-  # setInterval (->
-  #   socket.emit "send:time",
-  #     time: (new Date()).toString()
+ 	#Add posts
+  socket.on "add:post", (data) ->
+	  socket.broadcast.emit "add:post",
+	    post: data.post
 
-  # ), 1000
-  
-  socket.on "send:post", (data) ->
-  	console.log "This is data: " + JSON.stringify(data)
-	  socket.broadcast.emit "send:post",
+  #Edit posts
+  socket.on "edit:post", (data) ->
+	  socket.broadcast.emit "edit:post",
+	    post: data.post
+
+	#Delete posts
+  socket.on "delete:post", (data) ->
+	  socket.broadcast.emit "delete:post",
 	    post: data.post
 
 
