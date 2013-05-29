@@ -3,11 +3,11 @@
         "underscore.string" : "latest"
       , "coffee-script"     : "latest"
       , "underscore"        : "latest"
+      , "socket.io"         : "latest"
       , "mongoose"          : "latest"
       , "express"           : "latest"
       , "stylus"            : "latest"
       , "jade"              : "latest"
-      , "socket.io"         : "latest"
     }
   , "devDependencies" : {
         "node-dev"          : "latest"
