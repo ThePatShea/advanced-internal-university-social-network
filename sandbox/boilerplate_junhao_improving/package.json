@@ -7,7 +7,7 @@
       , "express"           : "latest"
       , "stylus"            : "latest"
       , "jade"              : "latest"
-      , "socket.io"               : "latest"
+      , "socket.io"         : "latest"
     }
   , "devDependencies" : {
         "node-dev"          : "latest"

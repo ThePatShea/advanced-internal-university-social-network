@@ -3,7 +3,6 @@
 /* Controllers */
 
 function IndexCtrl($scope, $http,socket ) {
-
   //Update list of post for Add
   socket.on('add:post', function (data) {
     $scope.posts.push(data.post);
