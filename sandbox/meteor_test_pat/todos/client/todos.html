@@ -48,11 +48,9 @@
       {{else}}
         <div id="new-todo-box">
           <h2 id="new-todo-heading">create a discussion</h2>
-          <form id="new-todo-form">
-            <input type="text" id="new-todo" name="name" placeholder="Discussion title" />
-            <input type="text" id="new-todo-body" placeholder="Discussion body" />
-            <button type="submit" id="create-todo-btn">create</button>
-          </form>
+          <input type="text" id="new-todo-name" name="name" placeholder="Discussion title" />
+          <input type="text" id="new-todo-body" placeholder="Discussion body" />
+          <button id="create-todo-btn">create</button>
         </div>
         <ul id="item-list">
           {{#each todos}}
@@ -73,9 +71,10 @@
     {{else}}
       <div class="destroy"></div>
       <div class="display">
-        <div class="todo-text">{{name}}</div>
-        <button class="edit-btn">edit</div>
+        <h3 class="todo-name">{{name}}</h3>
+        <p class="todo-body">{{body}}</p>
       </div>
+      <button class="edit-btn">edit</div>
     {{/if}}
   </li>
 </template>

@@ -154,8 +154,8 @@ h3 {
     font-size: 24px;
 }
 
-  #new-todo-body
-, #new-todo {
+  #new-todo-name
+, #new-todo-body {
     width: 100%;
     margin: 5px;
 }
@@ -167,7 +167,6 @@ h3 {
 
 #item-list .todo {
     display: block;
-    height: 50px;
     position: relative;
     overflow: hidden;
     border-top: 1px solid #ccc;
@@ -191,7 +190,7 @@ h3 {
     line-height: 1;
 }
 
-#item-list .todo .display .edit-btn {
+#item-list .todo .edit-btn {
     cursor: pointer;
     padding: 0 5px;
     margin: 0 10px;

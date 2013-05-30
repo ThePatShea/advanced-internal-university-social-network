@@ -139,19 +139,27 @@ Template.todos.any_list_selected = function () {
   return !Session.equals('list_id', null);
 };
 
-Template.todos.events(okCancelEvents(
-  '#new-todo',
-  {
-    ok: function (name, evt) {
+Template.todos.events = {
+    'click #create-todo-btn': function () {
+      var input_name  =  document.getElementById('new-todo-name');
+      var input_body  =  document.getElementById('new-todo-body');
+
+      var name  =  input_name.value;
+      var body  =  input_body.value;
+
       Todos.insert({
         name: name,
+        body: body,
         list_id: Session.get('list_id'),
         done: false,
         timestamp: (new Date()).getTime()
       });
-      evt.target.value = '';
+
+      input_name.value  =  "";
+      input_body.value  =  "";
     }
-  }));
+}
+
 
 Template.todos.todos = function () {
   // Determine which todos to display in main pane,
