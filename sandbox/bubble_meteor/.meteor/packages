@@ -6,3 +6,7 @@
 autopublish
 insecure
 preserve-inputs
+bootstrap
+accounts-ui-bootstrap-dropdown
+accounts-password
+router
