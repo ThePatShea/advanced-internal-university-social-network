@@ -139,7 +139,7 @@ Template.todos.any_list_selected = function () {
   return !Session.equals('list_id', null);
 };
 
-Template.todos.events = {
+Template.todos.events({
     'click #create-todo-btn': function () {
       var input_name  =  document.getElementById('new-todo-name');
       var input_body  =  document.getElementById('new-todo-body');
@@ -158,7 +158,7 @@ Template.todos.events = {
       input_name.value  =  "";
       input_body.value  =  "";
     }
-}
+});
 
 
 Template.todos.todos = function () {
@@ -214,18 +214,33 @@ Template.todo_item.events(okCancelEvents(
 ////////// Tracking selected list in URL //////////
 
 var TodosRouter = Backbone.Router.extend({
-  routes: {
-    ":list_id": "main"
-  },
-  main: function (list_id) {
-    var oldList = Session.get("list_id");
-    if (oldList !== list_id) {
-      Session.set("list_id", list_id);
+    routes: {
+        ":list_id": "main"
+      , ":list_id/posts/:post_id": "single"
     }
-  },
-  setList: function (list_id) {
-    this.navigate(list_id, true);
-  }
+  , main: function (list_id) {
+      var oldList = Session.get("list_id");
+      if (oldList !== list_id) {
+        Session.set("list_id", list_id);
+      }
+    }
+  , single: function (list_id, post_id) {
+      var oldList = Session.get("list_id");
+      if (oldList !== list_id) {
+        Session.set("list_id", list_id);
+      }
+
+      var oldPost = Session.get("post_id");
+      if (oldPost !== post_id) {
+        Session.set("post_id", post_id);
+      }
+    }
+  , setList: function (list_id) {
+      this.navigate(list_id, true);
+    }
+  , setSingle: function (list_id, post_id) {
+      this.navigate(list_id +'/posts/' + post_id, true);
+    }
 });
 
 Router = new TodosRouter;

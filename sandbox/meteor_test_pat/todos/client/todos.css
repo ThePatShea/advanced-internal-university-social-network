@@ -146,7 +146,6 @@ h3 {
 #new-todo-box {
     margin: 10px 30px 10px 10px;
     font-size: 120%;
-    height: 150px;
 }
 
 #new-todo-heading {
@@ -160,6 +159,21 @@ h3 {
     margin: 5px;
 }
 
+#new-todo-body {
+    resize: none;
+}
+
+.todo-name {
+    text-transform: uppercase;
+    text-align: left;
+    padding: 5px 0;
+}
+
+.todo-body {
+    font-family: 'Arial';
+    font-size: 12px;
+}
+
 #items-view {
     margin-top: 5px;
     margin-left: 5px;
@@ -170,6 +184,15 @@ h3 {
     position: relative;
     overflow: hidden;
     border-top: 1px solid #ccc;
+  }
+  #item-list .todo:hover {
+      background: gray;
+      cursor: pointer;
+  }
+
+a, a:hover, a:visited {
+  text-decoration: none;
+  color: black;
 }
 
 #item-list .todo .destroy {
@@ -186,7 +209,7 @@ h3 {
     height: 100%;
     width: auto;
     float: left;
-    padding-top: 18px;
+    padding: 18px 0;
     line-height: 1;
 }
 

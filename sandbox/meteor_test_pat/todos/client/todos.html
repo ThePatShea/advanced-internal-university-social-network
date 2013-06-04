@@ -48,8 +48,8 @@
       {{else}}
         <div id="new-todo-box">
           <h2 id="new-todo-heading">create a discussion</h2>
-          <input type="text" id="new-todo-name" name="name" placeholder="Discussion title" />
-          <input type="text" id="new-todo-body" placeholder="Discussion body" />
+          <input    type="text" id="new-todo-name" placeholder="Discussion title" />
+          <textarea rows="8"    id="new-todo-body" placeholder="Discussion body"  />
           <button id="create-todo-btn">create</button>
         </div>
         <ul id="item-list">
@@ -63,18 +63,20 @@
 </template>
 
 <template name="todo_item">
-  <li class="todo {{done_class}}">
-    {{#if editing}}
-      <div class="edit">
-        <input id="todo-input" type="text" value="{{name}}" />
-      </div>
-    {{else}}
-      <div class="destroy"></div>
-      <div class="display">
-        <h3 class="todo-name">{{name}}</h3>
-        <p class="todo-body">{{body}}</p>
-      </div>
-      <button class="edit-btn">edit</div>
-    {{/if}}
-  </li>
+  <a class="list-name {{name_class}}" href="{{list_id}}/posts/{{_id}}">
+    <li class="todo {{done_class}}">
+      {{#if editing}}
+        <div class="edit">
+          <input id="todo-input" type="text" value="{{name}}" />
+        </div>
+      {{else}}
+        <div class="destroy"></div>
+        <div class="display">
+          <h3  class="todo-name">{{name}}</h3>
+          <pre class="todo-body">{{body}}</pre>
+        </div>
+        <button class="edit-btn">edit</div>
+      {{/if}}
+    </li>
+  </a>
 </template>
