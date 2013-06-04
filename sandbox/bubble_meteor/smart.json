@@ -3,5 +3,11 @@
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master"
   },
-  "packages": {}
+  "packages": {
+    "router": {},
+    "accounts-ui-bootstrap-dropdown": {},
+    "spin": {},
+    "paginated-subscription": {},
+    "pagination": {}
+  }
 }
