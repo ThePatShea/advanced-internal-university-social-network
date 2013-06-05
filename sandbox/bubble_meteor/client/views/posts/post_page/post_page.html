@@ -2,17 +2,6 @@
   {{#with currentPost}}
     {{> postItem}}
     {{> postAttributes}}    
-
-    <ul class="comments">
-      {{#each comments}}
-        {{> comment}}
-      {{/each}}
-    </ul>
-    
-    {{#if currentUser}}
-      {{> commentSubmit}}
-    {{else}}
-      <p>Please log in to leave a comment.</p>
-    {{/if}}
+    {{> commentsList}}
   {{/with}}
 </template>
