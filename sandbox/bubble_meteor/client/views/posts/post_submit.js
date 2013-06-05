@@ -27,3 +27,22 @@ Template.postSubmit.events({
     });
   }
 });
+
+Template.postSubmit.helpers({
+  currentPostType: function() {
+    return Session.get('currentPostType');
+  },
+
+  activePostTypeClass: function() {
+    var currentPostType  =  Session.get('currentPostType');
+    var buttonPostType   =  arguments[0];
+    var active;
+
+    if (buttonPostType === currentPostType)
+      active = true
+    else
+      active = false
+
+    return active && 'active';
+  }
+});

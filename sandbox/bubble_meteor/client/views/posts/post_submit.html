@@ -1,10 +1,14 @@
 <template name="postSubmit">
   <section class="main">
     <ul class="nav nav-pills">
-      <li class="active"><a href="#">discussion</a></li>
-      <li><a href="#">event</a></li>
-      <li><a href="#">file</a></li>
+      <li class="{{activePostTypeClass 'discussion'}}"><a href="{{postSubmitPath}}discussion">discussion</a></li>
+      <li class="{{activePostTypeClass 'event'     }}"><a href="{{postSubmitPath}}event">event</a></li>
+      <li class="{{activePostTypeClass 'file'      }}"><a href="{{postSubmitPath}}file">file</a></li>
+      <li class="{{activePostTypeClass 'document'  }}"><a href="{{postSubmitPath}}document">document</a></li>
     </ul>
+ 
+    <section class="TEST"> {{currentPostType}} </section>
+
     <section class="postForm">
       {{> discussionSubmit}}
     </section>

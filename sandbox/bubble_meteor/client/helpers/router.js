@@ -13,7 +13,10 @@ Meteor.Router.add({
     and: function(id) { Session.set('currentPostId', id); }    
   },
   
-  '/submit': 'postSubmit'
+  '/submit/:_type': {
+    to: 'postSubmit', 
+    and: function(type) { Session.set('currentPostType', type); }    
+  }
 });
 
 Meteor.Router.filters({
