@@ -1,13 +1,9 @@
 Template.discussionSubmit.events({
   'submit form': function(event) {
     event.preventDefault();
-    var url = $(event.target).find('[name=url]').val();
-    if (url.length>7 && url.slice(0,7) != "http://"){
-      url = "http://" + url;
-    }
     
     var post = {
-      url: url,
+      url: $(event.target).find('[name=url]').val(),
       title: $(event.target).find('[name=title]').val(),
       message: $(event.target).find('[name=message]').val()
     }

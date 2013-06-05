@@ -14,8 +14,7 @@ Posts.deny({
 
 Meteor.methods({
   post: function(postAttributes) {
-    var user = Meteor.user(),
-      postWithSameLink = Posts.findOne({url: postAttributes.url});
+    var user = Meteor.user();
     
     // ensure the user is logged in
     if (!user)
@@ -23,14 +22,7 @@ Meteor.methods({
     
     // ensure the post has a title
     if (!postAttributes.title)
-      throw new Meteor.Error(422, 'Please fill in a headline');
-    
-    // check that there are no previous posts with the same link
-    if (postAttributes.url && postWithSameLink) {
-      throw new Meteor.Error(302, 
-        'This link has already been posted', 
-        postWithSameLink._id);
-    }
+      throw new Meteor.Error(422, 'Please fill in a name');
     
     // pick out the whitelisted keys
     var post = _.extend(_.pick(postAttributes, 'url', 'title', 'message', 'bubbleId'), {
