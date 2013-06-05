@@ -1,0 +1,36 @@
+<template name="eventSubmit">
+  <section class="main">
+    {{> selectPostType}}
+    <form>
+      <div class="control-group">
+          <div class="controls">
+              <input name="name" type="text" value="" placeholder="Event name"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input name="startTime" type="text" value="" placeholder="Start time"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input name="location" type="text" value="" placeholder="Location"/>
+          </div>
+      </div>
+
+      <div class="control-group">
+          <div class="controls">
+              <textarea name="body" type="text" value="" placeholder="Describe your event"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input type="submit" value="Submit" class="btn btn-primary"/>
+          </div>
+      </div>
+    </form>
+  </section>
+</template>

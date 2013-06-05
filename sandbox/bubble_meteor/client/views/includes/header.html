@@ -10,7 +10,7 @@
           <a href="{{bestPostsPath}}">Best</a>
         </li>
         {{#if currentUser}}
-          <li class="{{activeRouteClass 'discussionSubmit'}}">
+          <li class="{{activeRouteClass 'discussionSubmit' 'eventSubmit' 'fileSubmit' 'documentSubmit'}}">
             <a href="/submit/discussion">Submit Post</a>
           </li>
         {{/if}}

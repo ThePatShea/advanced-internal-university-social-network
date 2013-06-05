@@ -20,26 +20,42 @@ Meteor.methods({
     if (!user)
       throw new Meteor.Error(401, "You need to login to post new stories");
     
-    // ensure the post has a title
-    if (!postAttributes.name || !postAttributes.body)
+    // ensure the post has all of its fields filled in
+    if ( postAttributes.postType == 'discussion' && (!postAttributes.name || !postAttributes.body) )
       throw new Meteor.Error(422, 'Please fill in all fields');
-    
+    else if ( postAttributes.postType == 'event' && (!postAttributes.name || !postAttributes.body || !postAttributes.location || !postAttributes.startTime) )
+      throw new Meteor.Error(422, 'Please fill in all fields');
+
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes,'name', 'body', 'bubbleId'), {
+    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'startTime', 'location'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
       commentsCount: 0,
       upvoters: [], 
-      votes: 0,
-      bubbleId: 0
+      votes: 0
     });
     
     var postId = Posts.insert(post);
-    
+
     return postId;
   },
   
+  validateAndPost: function(postAttributes) {
+    Meteor.call('post', postAttributes, function(error, id) {
+      if (error) {
+        // display the error to the user
+        throwError(error.reason);
+
+        // if the error is that the post already exists, take us there
+        if (error.error === 302)
+          Meteor.Router.to('postPage', error.details)
+      } else {
+        Meteor.Router.to('postPage', id);
+      }
+    }); 
+  },
+
   upvote: function(postId) {
     var user = Meteor.user();
     // ensure the user is logged in
