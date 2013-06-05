@@ -4,7 +4,7 @@ Template.discussionSubmit.events({
     
     var post = {
       name: $(event.target).find('[name=name]').val(),
-      message: $(event.target).find('[name=message]').val()
+      body: $(event.target).find('[name=body]').val()
     }
     
     Meteor.call('post', post, function(error, id) {
