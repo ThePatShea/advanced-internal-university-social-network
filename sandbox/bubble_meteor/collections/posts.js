@@ -21,11 +21,11 @@ Meteor.methods({
       throw new Meteor.Error(401, "You need to login to post new stories");
     
     // ensure the post has a title
-    if (!postAttributes.title)
-      throw new Meteor.Error(422, 'Please fill in a name');
+    if (!postAttributes.name)
+      throw new Meteor.Error(422, 'Please fill in all fields');
     
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'url', 'title', 'message', 'bubbleId'), {
+    var post = _.extend(_.pick(postAttributes,'name', 'message', 'bubbleId'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
