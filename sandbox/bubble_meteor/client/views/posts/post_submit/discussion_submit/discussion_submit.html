@@ -1,0 +1,30 @@
+<template name="discussionSubmit">
+  <section class="main">
+    {{> selectPostType}}
+    <form>
+      <div class="control-group">
+          <div class="controls">
+              <input name="url" type="text" value="" placeholder="Your URL"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input name="title" type="text" value="" placeholder="Name your post"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <textarea name="message" type="text" value="" placeholder="Start your discussion"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input type="submit" value="Submit" class="btn btn-primary"/>
+          </div>
+      </div>
+    </form>
+  </section>
+</template>

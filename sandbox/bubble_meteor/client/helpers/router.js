@@ -13,10 +13,10 @@ Meteor.Router.add({
     and: function(id) { Session.set('currentPostId', id); }    
   },
   
-  '/submit/:_type': {
-    to: 'postSubmit', 
-    and: function(type) { Session.set('currentPostType', type); }    
-  }
+  '/submit/discussion': 'discussionSubmit',
+  '/submit/document': 'documentSubmit',
+  '/submit/event': 'eventSubmit',
+  '/submit/file': 'fileSubmit'
 });
 
 Meteor.Router.filters({
