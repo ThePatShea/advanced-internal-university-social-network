@@ -15,7 +15,7 @@ Template.bubbleEdit.events({
       description: $(e.target).find('[name=description]').val()
     }
     
-    Bubble.update(currentBubbleId, {$set: bubbleProperties}, function(error) {
+    Bubbles.update(currentBubbleId, {$set: bubbleProperties}, function(error) {
       if (error) {
         // display the error to the user
         throwError(error.reason);
