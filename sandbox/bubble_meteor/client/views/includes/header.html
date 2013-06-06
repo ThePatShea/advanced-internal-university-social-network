@@ -1,7 +1,7 @@
 <template name="header">
   <header class="navbar">
     <div class="navbar-inner">
-      <a class="brand" href="/">Microscope</a>
+      <a class="brand" href="/">Emory Bubble</a>
       <ul class="nav">
         <li class="{{activeRouteClass 'home' 'newPosts'}}">
           <a href="{{homePath}}">New</a>
@@ -9,16 +9,16 @@
         <li class="{{activeRouteClass  'bestPosts'}}">
           <a href="{{bestPostsPath}}">Best</a>
         </li>
-        {{#if currentUser}}
-          <li class="{{activeRouteClass 'discussionSubmit' 'eventSubmit' 'fileSubmit' 'documentSubmit'}}">
-            <a href="/submit/discussion">Submit Post</a>
-          </li>
-        {{/if}}
-        <li class="dropdown">
-          {{> notifications}}
-        </li>
       </ul>
       <ul class="nav pull-right">
+        {{#if currentUser}}
+          <li class="dropdown">
+            {{> notifications}}
+          </li>
+          <li class="{{activeRouteClass 'discussionSubmit' 'eventSubmit' 'fileSubmit' 'documentSubmit'}}">
+            <a href="/submit/discussion">+ Post</a>
+          </li>
+        {{/if}}
         <li>{{loginButtons}}</li>
       </ul>
     </div>
