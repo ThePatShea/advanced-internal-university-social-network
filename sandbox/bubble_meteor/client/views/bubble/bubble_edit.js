@@ -1,6 +1,6 @@
 Template.bubbleEdit.helpers({
   bubble: function() {
-    return Bubble.findOne(Session.get('currentBubbleId'));
+    return Bubbles.findOne(Session.get('currentBubbleId'));
   }
 });
 
@@ -31,7 +31,7 @@ Template.bubbleEdit.events({
     if (confirm("Delete this bubble?")) {
       var currentBubbleId = Session.get('currentBubbleId');
       Bubbles.remove(currentBubbleId);
-      Meteor.Router.to('bubbleList');
+      Meteor.Router.to('bubblesList');
     }
   }
 });

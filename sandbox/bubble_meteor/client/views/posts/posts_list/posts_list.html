@@ -11,13 +11,5 @@
     {{#each postsWithRank}}
       {{> postItem}}
     {{/each}}
-    
-    {{#if postsReady}}
-      {{#unless allPostsLoaded}}
-    		<b>Scroll down for more</b>
-      {{/unless}}
-    {{else}}
-      <div>{{> spinner}}</div>
-    {{/if}}
   </div>
 </template>

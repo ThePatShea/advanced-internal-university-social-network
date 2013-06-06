@@ -3,7 +3,7 @@ Bubbles = new Meteor.Collection('bubbles');
 Meteor.methods({
 	bubble: function(bubbleAttributes){
 		var user = Meteor.user(),
-			bubbleWithSameName = Bubbles.findOne({title:bubbleAttribute.title});
+			bubbleWithSameName = Bubbles.findOne({title:bubbleAttributes.title});
 
 		// ensure the user is logged in
     if (!user)
