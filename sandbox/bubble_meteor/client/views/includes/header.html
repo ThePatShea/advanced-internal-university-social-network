@@ -2,15 +2,13 @@
   <header class="navbar">
     <div class="navbar-inner">
       <a class="brand" href="/">Emory Bubble</a>
-      <ul class="nav">
+      <ul class="nav pull-right">
         <li class="{{activeRouteClass 'home' 'newPosts'}}">
           <a href="{{homePath}}">New</a>
         </li>
         <li class="{{activeRouteClass  'bestPosts'}}">
           <a href="{{bestPostsPath}}">Best</a>
         </li>
-      </ul>
-      <ul class="nav pull-right">
         {{#if currentUser}}
           <li class="dropdown">
             {{> notifications}}
