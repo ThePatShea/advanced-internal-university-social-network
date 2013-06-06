@@ -1,3 +1,4 @@
+/*
 // Fixture data 
 if (Posts.find().count() === 0) {
   var now = new Date().getTime();
@@ -70,3 +71,4 @@ if (Posts.find().count() === 0) {
     });
   }
 }
+*/
