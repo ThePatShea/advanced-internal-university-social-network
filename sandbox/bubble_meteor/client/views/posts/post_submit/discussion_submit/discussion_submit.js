@@ -11,7 +11,8 @@ Template.discussionSubmit.events({
     var post = {
     	name: $(event.target).find('[name=name]').val(),
       body: $(event.target).find('[name=body]').val(),
-      postType: 'discussion'
+      postType: 'discussion',
+      bubbleId: Session.get('currentBubbleId')
     }
 
     createObject(post,'post','postPage');

@@ -27,13 +27,13 @@ Meteor.methods({
       throw new Meteor.Error(422, 'Please fill in all fields');
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'startTime', 'location'), {
+    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'startTime', 'location','bubbleId'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
       commentsCount: 0,
       upvoters: [], 
-      votes: 0
+      votes: 0,
     });
     
     var postId = Posts.insert(post);

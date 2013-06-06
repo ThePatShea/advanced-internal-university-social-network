@@ -1,5 +1,17 @@
 <template name="bubblePage">
 	{{#with currentBubble}}
     {{> bubbleItem}}
+	  <div class="btn">
+	    <span class="addPost">
+	      <a href="{{discussionSubmitPath this}}">Start a Post</a>
+	    </span>
+	  </div>
+
+	  <br />
+	  <hr/>
+
+	  {{#each posts}}
+	  	{{> postItem}}
+	  {{/each}}
   {{/with}}
 </template>
