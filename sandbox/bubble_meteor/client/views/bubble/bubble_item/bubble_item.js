@@ -9,7 +9,6 @@ Template.bubbleItem.helpers({
       }
     }
   },
-
   
 });
 
