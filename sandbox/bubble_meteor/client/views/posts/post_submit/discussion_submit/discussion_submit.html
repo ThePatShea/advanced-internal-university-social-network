@@ -13,7 +13,12 @@
               <textarea name="body" type="text" value="" placeholder="Start your discussion"/>
           </div>
       </div>
-    
+      
+      {{#with bubble}}
+        <span class="badge badge-inverse">{{title}}</span>
+      {{/with}}
+      <hr />
+
       <div class="control-group">
           <div class="controls">
               <input type="submit" value="Submit" class="btn btn-primary"/>

@@ -1,3 +1,10 @@
+Template.discussionSubmit.helpers({
+  bubble: function() {
+  	console.log(Session.get('currentBubbleId'));
+    return Bubbles.findOne(Session.get('currentBubbleId'));
+  }
+});
+
 Template.discussionSubmit.events({
   'submit form': function(event) {
     event.preventDefault();

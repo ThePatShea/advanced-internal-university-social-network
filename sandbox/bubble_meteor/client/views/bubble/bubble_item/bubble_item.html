@@ -4,10 +4,15 @@
       <h3>{{title}}<span>{{domain}}</span></h3>
       <p>
         {{description}}
-        {{#if ownPost}}
+        {{#if ownBubble}}
         	<a href="{{bubbleEditPath this}}">Edit</a>
         {{/if}}
       </p>
+    </div>
+    <div class="btn pull-right">
+      <span class="addPost">
+        <a href="{{discussionSubmitPath this}}">Start a Post</a>
+      </span>
     </div>
     <div style="width: 100px;" class="pull-right">
       <p style="line-height: 10px;">Posted by</p>

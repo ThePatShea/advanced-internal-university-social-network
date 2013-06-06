@@ -10,7 +10,7 @@
           <a href="{{bestPostsPath}}">Best</a>
         </li>
         <li class="{{activeRouteClass 'bubblesList'}}">
-          <a href="/bubbles">Bubbles</a>
+          <a href="{{bubblesListPath}}">Bubbles</a>
         </li>
       </ul>
       <ul class="nav pull-right">
@@ -19,10 +19,10 @@
             {{> notifications}}
           </li>
           <li class="{{activeRouteClass 'bubbleSubmit'}}">
-            <a href="/submit/bubble">+ Bubble</a>
+            <a href="{{bubbleSubmitPath}}">+ Bubble</a>
           </li>
           <li class="{{activeRouteClass 'discussionSubmit' 'eventSubmit' 'fileSubmit' 'documentSubmit'}}">
-            <a href="/submit/discussion">+ Post</a>
+            <a href="{{discussionSubmitPath}}">+ Post</a>
           </li>
         {{/if}}
         <li>{{loginButtons}}</li>
