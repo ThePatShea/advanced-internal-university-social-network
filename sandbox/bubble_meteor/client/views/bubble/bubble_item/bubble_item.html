@@ -1,0 +1,17 @@
+<template name="bubbleItem">
+  <div class="post">
+    <div class="post-content">
+      <h3>{{title}}<span>{{domain}}</span></h3>
+      <p>
+        {{description}}
+        {{#if ownPost}}
+        	<a href="{{bubbleEditPath this}}">Edit</a>
+        {{/if}}
+      </p>
+    </div>
+    <div style="width: 100px;" class="pull-right">
+      <p style="line-height: 10px;">Posted by</p>
+      <h4 style="line-height: 16px; text-transform: uppercase;">{{author}}</h4>
+    </div>
+  </div>
+</template>
