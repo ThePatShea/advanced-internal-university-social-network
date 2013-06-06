@@ -1,5 +1,5 @@
 
-createObject = function(postAttributes,objName, location){
+createObject = function(postAttributes, objName, location){
 	Meteor.call(objName, postAttributes, function(error, id) {
     if (error) {
       // display the error to the user
