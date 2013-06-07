@@ -12,3 +12,7 @@ Template.eventSubmit.events({
     });
   }
 });
+
+Template.eventSubmit.rendered = function() {
+  $(".date-picker").glDatePicker({cssName: 'flatwhite'});
+}

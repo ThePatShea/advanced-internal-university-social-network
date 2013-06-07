@@ -10,6 +10,8 @@
     "paginated-subscription": {},
     "pagination": {},
     "jquery-ui": {},
-    "jquery-ui-bootstrap": {}
+    "jquery-ui-bootstrap": {},
+    "bootstrap-datepicker": {},
+    "glDatePicker": {}
   }
 }

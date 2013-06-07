@@ -12,7 +12,9 @@
       "paginated-subscription": {},
       "pagination": {},
       "jquery-ui": {},
-      "jquery-ui-bootstrap": {}
+      "jquery-ui-bootstrap": {},
+      "bootstrap-datepicker": {},
+      "glDatePicker": {}
     },
     "packages": {
       "router": {
@@ -49,6 +51,16 @@
         "git": "https://github.com/TimHeckel/meteor-jquery-ui-bootstrap.git",
         "tag": "v0.1.2",
         "commit": "fa742a85639307003e105898e15b631394b63509"
+      },
+      "bootstrap-datepicker": {
+        "git": "https://github.com/acidsound/bootstrap-datepicker.git",
+        "tag": "v0.5.1",
+        "commit": "578d0bad1b5b5120c1abc333e449b8d0256969b4"
+      },
+      "glDatePicker": {
+        "git": "https://github.com/properapp/glDatePicker.git",
+        "tag": "v0.1.0",
+        "commit": "16c95d1f939fe35ebb7ede245f0fbfd57e38df9f"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
