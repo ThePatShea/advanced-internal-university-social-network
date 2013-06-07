@@ -126,7 +126,7 @@
     background: #011126;
     color: #95AFBF;
   }
-  body, .grid-block, .main, .post:nth-child(even), .comments li, .comment-form {
+  body, .grid-block, .main, .post:nth-child(even), .comments li:nth-child(even), .comment-form {
     background: #F7F8F8;
   }
   .post:nth-child(odd), .comments li:nth-child(odd) {
