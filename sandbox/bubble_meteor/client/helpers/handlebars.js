@@ -7,6 +7,33 @@ Handlebars.registerHelper('pluralize', function(n, thing) {
   }
 });
 
+Handlebars.registerHelper('getCurrentBubble', function() {
+  return Bubbles.findOne(Session.get('currentBubbleId'));
+});
+
+Handlebars.registerHelper('getBubbles', function() {
+  return Bubbles.find();
+});
+
+Handlebars.registerHelper('getCurrentPost', function() {
+  return Posts.findOne(Session.get('currentPostId'));
+});
+
+Handlebars.registerHelper('getPosts', function() {
+  return Posts.find();
+});
+
+Handlebars.registerHelper('ownBubble', function() {
+  if(Meteor.user()){
+    var user = Meteor.users.findOne({_id: Meteor.user()._id});
+    if(user.username == "admin"){
+      return true;
+    }else{
+      return this.userId == Meteor.userId();
+    }
+  }
+})
+
 
 
 

@@ -1,9 +1,3 @@
-Template.eventSubmit.helpers({
-  bubble: function() {
-    return Bubbles.findOne(Session.get('currentBubbleId'));
-  }
-});
-
 Template.eventSubmit.events({
   'submit form': function(event) {
     event.preventDefault();

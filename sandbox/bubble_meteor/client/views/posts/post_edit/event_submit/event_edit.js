@@ -1,9 +1,3 @@
-Template.eventEdit.helpers({
-  post: function() {
-    return Posts.findOne(Session.get('currentPostId'));
-  }
-});
-
 Template.eventEdit.events({
   'submit form': function(e) {
     e.preventDefault();

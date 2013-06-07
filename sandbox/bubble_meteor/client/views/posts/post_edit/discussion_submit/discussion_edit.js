@@ -1,9 +1,3 @@
-Template.discussionEdit.helpers({
-  post: function() {
-    return Posts.findOne(Session.get('currentPostId'));
-  }
-});
-
 Template.discussionEdit.events({
   'submit form': function(e) {
     e.preventDefault();

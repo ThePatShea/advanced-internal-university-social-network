@@ -5,8 +5,5 @@ Template.selectPostType.helpers({
     var buttonPostType   =  arguments[0];
 
     return (currentPostType === buttonPostType) && 'active';
-  },
-  currentBubble: function() {
-  	return Bubbles.findOne(Session.get("currentBubbleId"));
   }
 });

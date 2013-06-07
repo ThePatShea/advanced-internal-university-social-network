@@ -1,7 +1,5 @@
 Template.bubblePage.helpers({
-  currentBubble: function() {
-    return Bubbles.findOne(Session.get('currentBubbleId'));
-  },
+  //Get posts assigned to this bubble
   posts: function(){
   	return Posts.find({bubbleId:Session.get('currentBubbleId')});
   }
