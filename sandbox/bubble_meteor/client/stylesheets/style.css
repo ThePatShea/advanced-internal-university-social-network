@@ -1,4 +1,10 @@
 /* Added by Pat */
+a:visited,
+a:hover,
+a {
+  text-decoration: none;
+}
+
 .sidebar .main-btns .main-btn,
 .sidebar .top-btns .top-btn,
 .navbar .nav > li > a,
