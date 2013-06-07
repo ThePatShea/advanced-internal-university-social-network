@@ -7,9 +7,16 @@
       </a>
     </div>
     <div class="main-btns">
-      {{#each bubbles}}
+      {{#each getBubbles}}
         <a href="{{bubblePagePath this}}">
-          <button class="main-btn">{{title}}</button>
+          <button class="main-btn">
+            {{#if notificationCount}}
+              <span class="badge badge-inverse">
+                {{notificationCount}}
+              </span>
+            {{/if}}
+            {{title}}
+          </button>
         </a>
       {{/each}}
     </div>
