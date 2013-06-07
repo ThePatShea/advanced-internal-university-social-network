@@ -8,7 +8,7 @@ Posts.allow({
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following three fields:
-    return (_.without(fieldNames, 'name', 'body').length > 0);
+    return (_.without(fieldNames, 'name', 'body', 'startTime', 'location').length > 0);
   }
 });
 

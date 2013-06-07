@@ -1,8 +1,18 @@
 <template name="selectPostType">
-  <ul class="nav nav-pills">
-    <li class="{{activePostTypeClass 'discussion'}}"><a href="/submit/discussion">discussion</a></li>
-    <li class="{{activePostTypeClass 'event'     }}"><a href="/submit/event">event</a></li>
-    <li class="{{activePostTypeClass 'file'      }}"><a href="/submit/file">file</a></li>
-    <li class="{{activePostTypeClass 'document'  }}"><a href="/submit/document">document</a></li>
-  </ul>
+	{{#with currentBubble}}
+	  <ul class="nav nav-pills">
+	    <li class="{{activePostTypeClass 'discussion'}}">
+	    	<a href="{{discussionSubmitPath this}}">discussion</a>
+	    </li>
+	    <li class="{{activePostTypeClass 'event'     }}">
+	    	<a href="{{eventSubmitPath this}}">event</a>
+	    </li>
+	    <li class="{{activePostTypeClass 'file'      }}">
+	    	<a href="/submit/file">file</a>
+	    </li>
+	    <li class="{{activePostTypeClass 'document'  }}">
+	    	<a href="/submit/document">document</a>
+	    </li>
+	  </ul>
+	{{/with}}
 </template>

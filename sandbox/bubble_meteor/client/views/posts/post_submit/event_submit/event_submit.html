@@ -25,6 +25,11 @@
               <textarea name="body" type="text" value="" placeholder="Describe your event"/>
           </div>
       </div>
+
+      {{#with bubble}}
+        <span class="badge badge-inverse">{{title}}</span>
+      {{/with}}
+      <hr />
     
       <div class="control-group">
           <div class="controls">

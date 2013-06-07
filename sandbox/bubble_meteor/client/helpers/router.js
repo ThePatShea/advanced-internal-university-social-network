@@ -7,8 +7,12 @@ Meteor.Router.add({
     to: 'postPage', 
     and: function(id) { Session.set('currentPostId', id); }
   },
-  '/posts/:_id/edit': {
-    to: 'postEdit', 
+  '/posts/:_id/edit/discussion': {
+    to: 'discussionEdit', 
+    and: function(id) { Session.set('currentPostId', id); }    
+  },
+  '/posts/:_id/edit/event': {
+    to: 'eventEdit', 
     and: function(id) { Session.set('currentPostId', id); }    
   },
 
@@ -24,10 +28,16 @@ Meteor.Router.add({
   },
   
   //Submit Routes
-  '/submit/discussion': 'discussionSubmit',
-  '/submit/document': 'documentSubmit',
-  '/submit/event': 'eventSubmit',
-  '/submit/file': 'fileSubmit',
+  '/bubbles/:_id/submit/discussion':  {
+    to: 'discussionSubmit', 
+    and: function(id) { Session.set('currentBubbleId', id); }    
+  },
+  '/bubbles/:_id/submit/event': {
+    to: 'eventSubmit', 
+    and: function(id) { Session.set('currentBubbleId', id); }    
+  },
+  '/bubbles/:_id/submit/document': 'documentSubmit',
+  '/bubbles/:_id/submit/file': 'fileSubmit',
   '/submit/bubble': 'bubbleSubmit'
 });
 

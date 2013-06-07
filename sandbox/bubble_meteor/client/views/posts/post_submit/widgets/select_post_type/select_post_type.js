@@ -1,9 +1,12 @@
 Template.selectPostType.helpers({
   activePostTypeClass: function() {
     var pathArray        =  window.location.pathname.split( '/' );
-    var currentPostType  =  pathArray[2];
+    var currentPostType  =  pathArray[4];
     var buttonPostType   =  arguments[0];
 
     return (currentPostType === buttonPostType) && 'active';
+  },
+  currentBubble: function() {
+  	return Bubbles.findOne(Session.get("currentBubbleId"));
   }
 });
