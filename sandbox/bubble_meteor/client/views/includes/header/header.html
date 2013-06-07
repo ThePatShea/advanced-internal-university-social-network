@@ -3,20 +3,12 @@
     <div class="navbar-inner">
       <a class="brand" href="/">Emory Bubble</a>
       <ul class="nav pull-right">
-        <li class="{{activeRouteClass 'home' 'newPosts'}}">
-          <a href="{{homePath}}">view</a>
-        </li>
         <li class="{{activeRouteClass 'bubblesList'}}">
           <a href="{{bubblesListPath}}">Bubbles</a>
         </li>
-      </ul>
-      <ul class="nav pull-right">
         {{#if currentUser}}
           <li class="dropdown">
             {{> notifications}}
-          </li>
-          <li class="{{activeRouteClass 'discussionSubmit' 'eventSubmit' 'fileSubmit' 'documentSubmit'}}">
-            <a href="{{discussionSubmitPath}}">+ Post</a>
           </li>
         {{/if}}
         <li>{{loginButtons}}</li>

@@ -6,5 +6,12 @@
         <button class="top-btn">+ create</button>
       </a>
     </div>
+    <div class="main-btns">
+      {{#each bubbles}}
+        <a href="{{bubblePagePath this}}">
+          <button class="main-btn">{{title}}</button>
+        </a>
+      {{/each}}
+    </div>
   </section>
 </template>
