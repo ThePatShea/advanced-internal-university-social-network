@@ -91,12 +91,3 @@ createPost = function(postAttributes){
     }
   });
 }
-
-getCurrentPost = function(){
-  return Posts.findOne(Session.get("currentPostId"));
-}
-
-getPosts = function(){
-  return Posts.find();
-}
-
