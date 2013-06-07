@@ -13,6 +13,7 @@ createCommentNotification = function(comment) {
     commentId: comment._id,
     invokerName: comment.author,
     read: false,
+    notificationType: "createComment",
     content: " commented on your post."
   });
 };
@@ -26,6 +27,7 @@ createPostNotification = function(post) {
     bubbleId: bubble._id,
     invokerName: post.author,
     read: false,
+    notificationType: "createPost",
     content: " added a new post in " + bubble.title + "."
   });
 };
@@ -35,10 +37,11 @@ createBubbleNotification = function(bubble) {
   var members = bubble.members;
   for (var i=0; i<members.size(); i++) {
   	Notifications.insert({
-	    userId: bubble.userId,
+	    userId: members[i],
 	    bubbleId: bubble._id,
-	    invokerName: post.author,
+	    invokerName: bubble.author,
 	    read: false,
+    	notificationType: "editBubble",
 	    content: bubble.title + " has been edited."
     });
   }
