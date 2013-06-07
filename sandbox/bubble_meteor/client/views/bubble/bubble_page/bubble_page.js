@@ -10,16 +10,7 @@ Template.bubblePage.helpers({
 Template.bubblePage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
-    	console.log("This worked");
-      var handle;
-      if (Session.get("sortPostBy")=="new"){
-        handle = this.newPostsHandle;
-      }else{
-        handle = this.bestPostsHandle;
-      }
-      if (!Session.get("allPostsLoaded")){
-        handle.loadNextPage();
-      }
+      this.postsHandle.loadNextPage();
     }
   });
 }

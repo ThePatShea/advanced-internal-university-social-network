@@ -15,7 +15,7 @@ Template.discussionSubmit.events({
       bubbleId: Session.get('currentBubbleId')
     }
 
-    createObject(post,'post','postPage');
+    createPost(post);
 
   }
 });

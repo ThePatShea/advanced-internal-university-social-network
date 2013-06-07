@@ -12,7 +12,8 @@ Template.discussionEdit.events({
     
     var postProperties = {
       name: $(e.target).find('[name=name]').val(),
-      body: $(e.target).find('[name=body]').val()
+      body: $(e.target).find('[name=body]').val(),
+      lastUpdated: new Date().getTime()
     }
     
     Posts.update(currentPostId, {$set: postProperties}, function(error) {

@@ -12,7 +12,8 @@ Template.bubbleEdit.events({
     
     var bubbleProperties = {
       title: $(e.target).find('[name=title]').val(),
-      description: $(e.target).find('[name=description]').val()
+      description: $(e.target).find('[name=description]').val(),
+      lastUpdated: new Date().getTime()
     }
     
     Bubbles.update(currentBubbleId, {$set: bubbleProperties}, function(error) {

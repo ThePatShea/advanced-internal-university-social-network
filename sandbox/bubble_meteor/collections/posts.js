@@ -22,6 +22,7 @@ Meteor.methods({
     
     // ensure the post has all of its fields filled in
     if ( postAttributes.postType == 'discussion' && (!postAttributes.name || !postAttributes.body) )
+
       throw new Meteor.Error(422, 'Please fill in all fields');
     else if ( postAttributes.postType == 'event' && (!postAttributes.name || !postAttributes.body || !postAttributes.location || !postAttributes.startTime) )
       throw new Meteor.Error(422, 'Please fill in all fields');
@@ -31,9 +32,10 @@ Meteor.methods({
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
+      lastUpdated: new Date().getTime(),
       commentsCount: 0,
       upvoters: [], 
-      votes: 0,
+      votes: 0
     });
     
     var postId = Posts.insert(post);
@@ -71,3 +73,14 @@ Meteor.methods({
   }
   
 });
+
+createPost = function(postAttributes){
+  Meteor.call('post', postAttributes, function(error, id) {
+    if (error) {
+      // display the error to the user
+      throwError(error.reason);
+    } else {
+      Meteor.Router.to('postPage', id);
+    }
+  });
+}

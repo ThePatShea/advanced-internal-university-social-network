@@ -6,8 +6,13 @@ Template.bubbleSubmit.events({
       title: $(event.target).find('[name=title]').val(),
       description: $(event.target).find('[name=description]').val()
     }
-    
-    createObject(bubble, 'bubble', 'bubblePage');
-
+    Meteor.call('bubble', bubble, function(error, bubbleId) {
+      if (error) {
+        // display the error to the user
+        throwError(error.reason);
+      } else {
+        Meteor.Router.to('bubblePage', bubbleId);
+      }
+    });
   }
 });

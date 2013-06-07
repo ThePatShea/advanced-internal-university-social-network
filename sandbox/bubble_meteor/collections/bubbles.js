@@ -23,7 +23,9 @@ Meteor.methods({
     var bubble = _.extend(_.pick(bubbleAttributes, 'title', 'description'), {
     	userId: user._id,
     	author: user.username,
-    	submitted: new Date().getTime()
+    	submitted: new Date().getTime(),
+      lastUpdated: new Date().getTime(),
+      members: []
     }),
 
     bubbleId = Bubbles.insert(bubble);
