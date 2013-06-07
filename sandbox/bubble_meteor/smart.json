@@ -8,6 +8,8 @@
     "accounts-ui-bootstrap-dropdown": {},
     "spin": {},
     "paginated-subscription": {},
-    "pagination": {}
+    "pagination": {},
+    "jquery-ui": {},
+    "jquery-ui-bootstrap": {}
   }
 }
