@@ -33,7 +33,7 @@ Template.eventEdit.events({
     if (confirm("Delete this post?")) {
       var currentPostId = Session.get('currentPostId');
       Posts.remove(currentPostId);
-      Meteor.Router.to('/'+Session.get("sortPostBy"));
+      Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
     }
   }
 });
