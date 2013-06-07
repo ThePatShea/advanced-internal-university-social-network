@@ -35,3 +35,11 @@ Meteor.methods({
 
 	
 })
+
+getCurrentBubble = function() {
+  return Bubbles.findOne(Session.get('currentBubbleId'));
+}
+
+getAllBubbles = function() {
+  return bubbles.find();
+}

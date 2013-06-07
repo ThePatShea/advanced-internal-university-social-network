@@ -15,6 +15,8 @@ Posts.deny({
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
+    var bubble = Bubbles.findOne(postAttributes.bubbleId);
+    // console.log(user._id);
     
     // ensure the user is logged in
     if (!user)
@@ -41,7 +43,7 @@ Meteor.methods({
     var postId = Posts.insert(post);
 
     // now create a notification, informing the bubble owner that there's been a new post
-    if (user._id != post.userId){
+    if (user._id != bubble.userId){
       createPostNotification(post);
     }
 
@@ -89,3 +91,12 @@ createPost = function(postAttributes){
     }
   });
 }
+
+getCurrentPost = function(){
+  return Posts.findOne(Session.get("currentPostId"));
+}
+
+getPosts = function(){
+  return Posts.find();
+}
+

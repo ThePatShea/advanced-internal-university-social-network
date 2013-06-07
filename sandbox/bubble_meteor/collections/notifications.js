@@ -20,7 +20,7 @@ createCommentNotification = function(comment) {
 
 //For bubble owners when post is created
 createPostNotification = function(post) {
-  var bubble = Posts.findOne(post.bubbleId);
+  var bubble = Bubbles.findOne(post.bubbleId);
   Notifications.insert({
     userId: bubble.userId,
     postId: post._id,
