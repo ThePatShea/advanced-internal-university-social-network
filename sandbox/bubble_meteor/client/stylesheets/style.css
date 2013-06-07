@@ -1,4 +1,5 @@
 /* Added by Pat */
+.sidebar .main-btns .main-btn,
 .sidebar .top-btns .top-btn,
 .navbar .nav > li > a,
 .navbar .brand,
@@ -48,6 +49,28 @@
       }
       .sidebar .top-btns .top-btn:hover {
         background: #9CB7C8;
+      }
+  .sidebar .main-btns {
+      
+    }
+    .sidebar .main-btns .main-btn {
+      border: 0;
+      border-bottom: 1px solid #386C8B;
+
+      padding-left: 15px;
+      text-align: left;
+      background: none;
+      display: block;
+      height: 50px;
+      width: 100%;
+
+      font-family: Arial;
+      font-weight: bold;
+      font-size: 16px;
+      color: #95AFBF;
+      }
+      .sidebar .main-btns .main-btn:hover {
+        background: #325F7B;
       }
 
 #main {
