@@ -35,14 +35,16 @@ createPostNotification = function(post) {
 //For bubble members when bubble is edited
 createBubbleNotification = function(bubble) {
   var members = bubble.members;
-  for (var i=0; i<members.size(); i++) {
-  	Notifications.insert({
-	    userId: members[i],
-	    bubbleId: bubble._id,
-	    invokerName: bubble.author,
-	    read: false,
-    	notificationType: "editBubble",
-	    content: bubble.title + " has been edited."
-    });
-  }
+  if (members) {
+	  for (var i=0; i<members.length; i++) {
+	  	Notifications.insert({
+		    userId: members[i],
+		    bubbleId: bubble._id,
+		    invokerName: bubble.author,
+		    read: false,
+	    	notificationType: "editBubble",
+		    content: bubble.title + " has been edited."
+	    });
+	  }
+	}
 };

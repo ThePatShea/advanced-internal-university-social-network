@@ -14,8 +14,7 @@ Template.eventSubmit.events({
       name: $(event.target).find('[name=name]').val(),
       body: $(event.target).find('[name=body]').val(),
       postType: 'event',
-      bubbleId: Session.get('currentBubbleId'),
-      lastUpdated: new Date().getTime()
+      bubbleId: Session.get('currentBubbleId')
     });
   }
 });

@@ -21,6 +21,7 @@ Template.bubbleEdit.events({
         // display the error to the user
         throwError(error.reason);
       } else {
+        createBubbleNotification(Bubbles.findOne(currentBubbleId));
         Meteor.Router.to('bubblePage', currentBubbleId);
       }
     });
