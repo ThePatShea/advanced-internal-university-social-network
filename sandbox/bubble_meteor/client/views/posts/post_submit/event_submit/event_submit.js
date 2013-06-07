@@ -10,7 +10,7 @@ Template.eventSubmit.events({
      
     createObject( 
       { 
-        startTime: $(event.target).find('[name=startTime]').val(),
+        dateTime: $(event.target).find('[name=startTime]').val(),
         location: $(event.target).find('[name=location]').val(),
         name: $(event.target).find('[name=name]').val(),
         body: $(event.target).find('[name=body]').val(),
