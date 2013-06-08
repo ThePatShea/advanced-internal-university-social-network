@@ -1,4 +1,8 @@
 /* Added by Pat */
+.gldp-flatwhite .dow {
+  cursor: default !important; /* overrides the datepicker framework's 'wait' cursor  */
+}
+
 a:visited,
 a:hover,
 a {
