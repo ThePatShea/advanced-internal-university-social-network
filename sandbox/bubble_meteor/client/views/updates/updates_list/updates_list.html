@@ -1,27 +1,7 @@
-<template name="updates">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Updates
-    {{#if updateCount}}
-      <span class="badge badge-inverse">{{updateCount}}</span>
-    {{/if}}
-    <b class="caret"></b>
-  </a>
-  <ul class="update dropdown-menu">
-    {{#if updateCount}}
-      {{#each updates}}
-        {{> update}}
-      {{/each}}
-    {{else}}
-      <li><span>No Updates</span></li>
-    {{/if}}
-  </ul>
+<template name="updatesList">
+  {{#each updates}}
+    {{>updateItem}}
+  {{/each}}
 </template>
 
-<template name="update">
-  <li>
-    <a href="{{postPagePath postId}}">
-      <strong>{{getInvokerId invokerId}}</strong> {{content}}
-    </a>
-  </li>
-</template>
 

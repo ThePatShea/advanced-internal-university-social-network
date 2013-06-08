@@ -14,7 +14,8 @@
       "jquery-ui": {},
       "jquery-ui-bootstrap": {},
       "bootstrap-datepicker": {},
-      "glDatePicker": {}
+      "glDatePicker": {},
+      "moment": {}
     },
     "packages": {
       "router": {
@@ -61,6 +62,11 @@
         "git": "https://github.com/properapp/glDatePicker.git",
         "tag": "v0.1.0",
         "commit": "16c95d1f939fe35ebb7ede245f0fbfd57e38df9f"
+      },
+      "moment": {
+        "git": "https://github.com/possibilities/meteor-moment.git",
+        "tag": "v1.7.0",
+        "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

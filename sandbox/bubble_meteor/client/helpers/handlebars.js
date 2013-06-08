@@ -32,7 +32,12 @@ Handlebars.registerHelper('ownBubble', function() {
       return this.userId == Meteor.userId();
     }
   }
-})
+});
+
+Handlebars.registerHelper('submittedText', function(submitted){
+  return moment(new Date(submitted).toString()).fromNow();
+});
+
 
 
 

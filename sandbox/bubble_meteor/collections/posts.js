@@ -40,14 +40,14 @@ Meteor.methods({
       votes: 0
     });
     
-    var postId = Posts.insert(post);
+    post._id = Posts.insert(post);
 
     // now create a update, informing the bubble owner that there's been a new post
     if (user._id != bubble.userId){
       createPostUpdate(post);
     }
 
-    return postId;
+    return post._id;
   },
 
   upvote: function(postId) {

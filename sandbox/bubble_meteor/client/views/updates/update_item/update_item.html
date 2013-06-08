@@ -1,14 +1,15 @@
 <template name="updateItem">
   <div class="post">
-    <div class="post-content">
-      <!-- <h3><a href="{{updatePagePath this}}">{{title}}</a><span>{{domain}}</span></h3> -->
-      <p>
-        <!-- {{description}} -->
-      </p>
+    <div style="width:200px" class="post-content">
+      {{submittedText submitted}}
+
+    </div>
+    <div style="width:100px" class="post-content">
+      {{getPostName postId}}
     </div>
     <div style="width: 100px;" class="pull-right">
-      <p style="line-height: 10px;">Posted by</p>
-      <h4 style="line-height: 16px; text-transform: uppercase;">{{author}}</h4>
+      <p style="line-height: 10px;">Number of Comments</p>
+      <h4 style="line-height: 16px; text-transform: uppercase;">{{getCommentsCount postId}}</h4>
     </div>
   </div>
 </template>

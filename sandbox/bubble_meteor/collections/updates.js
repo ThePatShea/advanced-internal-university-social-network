@@ -4,15 +4,30 @@ Updates.allow({
   update: ownsDocument
 });
 
+Meteor.methods({
+  update: function(updateAttributes){
+    var user = Meteor.user()
+   
+    var update = _.extend(_.pick(updateAttributes, 'userId', 'postId', 'commentId', 'bubbleId', 'invokerId', 'updateType', 'content'), {
+      submitted: new Date().getTime(),
+      read: false
+    });
+
+    updateId = Updates.insert(update);
+
+    return updateId;
+  }
+
+});
+
 //For post owners when comment is created
 createCommentUpdate = function(comment) {
   var post = Posts.findOne(comment.postId);
-  Updates.insert({
+  Meter.call('update',{
     userId: post.userId,
     postId: post._id,
     commentId: comment._id,
     invokerId: comment.userId,
-    read: false,
     updateType: "createComment",
     content: " commented on your post."
   });
@@ -28,12 +43,11 @@ createPostUpdate = function(post) {
   for (var i=0; i<admins.length; i++) {
     //Check if user is creating a post in their own bubble
     if (admins[i]._id != post.userId){      
-      Updates.insert({
+      Meteor.call('update',{
         userId: admins[i],
         postId: post._id,
         bubbleId: bubble._id,
         invokerId: post.userId,
-        read: false,
         updateType: "createPost",
         content: " added a new post in " + bubble.title + "."
       });
@@ -44,12 +58,11 @@ createPostUpdate = function(post) {
   if (members){
     for (var i=0; i<members.length; i++) {
       if (members[i]._id != post.userId){      
-        Updates.insert({
+        Meteor.call('update',{
           userId: members[i],
           postId: post._id,
           bubbleId: bubble._id,
           invokerId: post.userId,
-          read: false,
           updateType: "createPost",
           content: " added a new post in " + bubble.title + "."
         });
@@ -67,11 +80,10 @@ createBubbleUpdate = function(bubble) {
   for (var i=0; i<admins.length; i++) {
     //Check if user is creating a post in their own bubble
     if (admins[i]._id != post.userId){      
-      Updates.insert({
+      Meteor.call('update',{
         userId: admins[i],
         bubbleId: bubble._id,
         invokerId: Meteor.userId(),
-        read: false,
         updateType: "editBubble",
         content: bubble.title + " has been edited."
       });
@@ -82,11 +94,10 @@ createBubbleUpdate = function(bubble) {
   if (members){
     for (var i=0; i<members.length; i++) {
       if (members[i]._id != post.userId){      
-        Updates.insert({
+        Meteor.call('update',{
           userId: members[i],
           bubbleId: bubble._id,
           invokerId: Meteor.userId(),
-          read: false,
           updateType: "editBubble",
           content: bubble.title + " has been edited."
         });
