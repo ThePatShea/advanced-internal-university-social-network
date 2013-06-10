@@ -29,7 +29,7 @@ createCommentUpdate = function(comment) {
     commentId: comment._id,
     invokerId: comment.userId,
     updateType: "createComment",
-    content: " commented on your post."
+    content: comment.author + " commented on your post."
   });
 }
 
@@ -49,7 +49,7 @@ createPostUpdate = function(post) {
         bubbleId: bubble._id,
         invokerId: post.userId,
         updateType: "createPost",
-        content: " added a new post in " + bubble.title + "."
+        content: post.author + " added a new post in " + bubble.title + "."
       });
     }
   }
@@ -64,7 +64,7 @@ createPostUpdate = function(post) {
           bubbleId: bubble._id,
           invokerId: post.userId,
           updateType: "createPost",
-          content: " added a new post in " + bubble.title + "."
+          content: post.author + " added a new post in " + bubble.title + "."
         });
       }
     }

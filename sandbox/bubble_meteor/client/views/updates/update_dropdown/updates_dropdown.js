@@ -6,6 +6,7 @@ Template.updatesDropdown.helpers({
   	return Updates.find({userId: Meteor.userId(), read: false}).count();
   },
   getInvokerName: function(userId){
+    console.log(Meteor.users.find(userId).username);
   	return Meteor.users.find(userId).username;
   }
 });

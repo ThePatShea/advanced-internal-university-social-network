@@ -4,13 +4,15 @@
       {{submittedText submitted}}
 
     </div>
-    <div style="width:100px" class="post-content">
-      {{getPostName postId}}
-    </div>
-    <div style="width: 100px;" class="pull-right">
-      <p style="line-height: 10px;">Number of Comments</p>
-      <h4 style="line-height: 16px; text-transform: uppercase;">{{getCommentsCount postId}}</h4>
-    </div>
+    {{#with getPost postId}}
+      <div style="width:100px" class="post-content">
+        {{name}}
+      </div>
+      <div style="width: 100px;" class="pull-right">
+        <p style="line-height: 10px;">Number of Comments</p>
+        <h4 style="line-height: 16px; text-transform: uppercase;">{{commentsCount}}</h4>
+      </div>
+    {{/with}}
   </div>
 </template>
 
