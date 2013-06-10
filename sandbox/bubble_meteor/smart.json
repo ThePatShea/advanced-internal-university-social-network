@@ -8,10 +8,7 @@
     "accounts-ui-bootstrap-dropdown": {},
     "spin": {},
     "paginated-subscription": {},
-    "pagination": {},
-    "jquery-ui": {},
     "jquery-ui-bootstrap": {},
-    "bootstrap-datepicker": {},
     "glDatePicker": {},
     "moment": {}
   }

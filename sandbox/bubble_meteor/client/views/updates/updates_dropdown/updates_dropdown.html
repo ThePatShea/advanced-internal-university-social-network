@@ -7,8 +7,8 @@
     <b class="caret"></b>
   </a>
   <ul class="update dropdown-menu">
-    {{#if updateCount}}
-      {{#each updates}}
+    {{#if compressUpdates}}
+      {{#each compressUpdates}}
         {{> update}}
       {{/each}}
     {{else}}
@@ -19,9 +19,21 @@
 
 <template name="update">
   <li>
-    <a href="{{postPagePath postId}}">
-      <strong>{{getInvokerId invokerId}}</strong> {{content}}
-    </a>
+    {{#if updateTypeIs 'newPost'}}
+      <a href="{{postPagePath postId}}">
+        {{content}}
+      </a>
+    {{/if}}
+    {{#if updateTypeIs 'newComment'}}
+      <a href="{{postPagePath postId}}">
+        {{content}}
+      </a>
+    {{/if}}
+    {{#if updateTypeIs 'newMember'}}
+      <a href="{{postPagePath postId}}">
+        {{content}}
+      </a>
+    {{/if}}
   </li>
 </template>
 
