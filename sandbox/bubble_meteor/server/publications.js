@@ -18,10 +18,11 @@ Meteor.publish('bubbles', function(){
 	return Bubbles.find();
 });
 
-Meteor.publish("allUsers", function (userId) {
+Meteor.publish("findOneUser", function (userId) {
   return Meteor.users.find({_id:userId}, {
    	fields: {
-     'username': 1
+     'username': 1,
+     'emails': 1
 		}
 	});
 });

@@ -14,10 +14,8 @@ Meteor.methods({
     });
 
     updateId = Updates.insert(update);
-
     return updateId;
   }
-
 });
 
 //For post owners when comment is created
