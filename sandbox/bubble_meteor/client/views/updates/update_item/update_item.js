@@ -11,9 +11,11 @@ Template.updateItem.helpers({
 		} else if (updateType == "newMember") {
 			return "JOINED";
 		}
-	},
-	// invokerNameIs: function(){
-	// 	Session.set('selectedUser',this.invokerId);
-	// 	return Meteor.users.findOne(this.invokerId).username.toUpperCase();
-	// }
+	}
 });
+
+Template.updateItem.events({
+  'click a': function() {
+    Updates.update(this._id, {$set: {read: true}});
+  }
+})

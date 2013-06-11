@@ -9,19 +9,23 @@
       {{submittedText submitted}}
     </div>
 
-    {{#with getPost postId}}
-      <div style="width:100px" class="post-content">
-        {{name}}
-      </div>
-      <div style="width: 100px;" class="pull-right">
+    <div style="width:100px" class="post-content">
+      <a href="{{postPagePath postId}}">
+        {{#with getPost postId}} 
+          {{name}}
+        {{/with}}
+      </a>
+    </div>
+    <div style="width: 100px;" class="pull-right">
+      {{#with getPost postId}}  
         <p style="line-height: 10px;">Number of Comments</p>
-        <div class="badgeCenter">
-          <span class="badge badge-inverse">
-            {{commentsCount}}
-          </span>
-        </div>
+      {{/with}}
+      <div class="badgeCenter">
+        <span class="badge badge-inverse">
+          {{commentsCount}}
+        </span>
       </div>
-    {{/with}}
+    </div>
   </div>
 </template>
 
