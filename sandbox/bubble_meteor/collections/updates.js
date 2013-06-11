@@ -30,7 +30,7 @@ createCommentUpdate = function(comment) {
       commentId: comment._id,
       invokerId: comment.userId,
       updateType: "newComment",
-      content: comment.author + " commented on your post."
+      content: comment.author + " commented in a " + post.postType + "."
     });
   }
 }

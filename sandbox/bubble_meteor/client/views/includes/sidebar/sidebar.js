@@ -24,9 +24,6 @@ Template.sidebar.helpers({
         compressedPostList.push(update);
       }
     }
-
-
-
     return compressedPostList.length;
   }
 });

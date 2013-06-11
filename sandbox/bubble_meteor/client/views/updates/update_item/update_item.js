@@ -1,5 +1,6 @@
 Template.updateItem.helpers({
 	getPost: function(postId){
+		console.log(postId);
 		return Posts.findOne(postId);
 	},
 	updateTypeIs: function(){
@@ -13,6 +14,6 @@ Template.updateItem.helpers({
 		}
 	},
 	invokerNameIs: function(){
-		return Meteor.user(this.invokerId).username.toUpperCase();
+		return Meteor.users.findOne(this.invokerId).username.toUpperCase();
 	}
 });
