@@ -18,8 +18,8 @@ Meteor.publish('bubbles', function(){
 	return Bubbles.find();
 });
 
-Meteor.publish("allUsers", function () {
-  return Meteor.users.find({}, {
+Meteor.publish("allUsers", function (userId) {
+  return Meteor.users.find({_id:userId}, {
    	fields: {
      'username': 1
 		}

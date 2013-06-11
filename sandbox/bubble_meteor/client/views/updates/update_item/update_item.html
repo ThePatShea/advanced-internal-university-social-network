@@ -1,13 +1,14 @@
 <template name="updateItem">
   <div class="post">
     <div style="width:70px" class="post-content">
-      {{invokerNameIs}}
+      {{toUpperCase invokerName}}
     </div>
     <div style="width:200px" class="post-content">
       {{updateTypeIs}}
       <br />
       {{submittedText submitted}}
     </div>
+
     {{#with getPost postId}}
       <div style="width:100px" class="post-content">
         {{name}}

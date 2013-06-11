@@ -12,7 +12,8 @@ Template.updateItem.helpers({
 			return "JOINED";
 		}
 	},
-	invokerNameIs: function(){
-		return Meteor.users.findOne(this.invokerId).username.toUpperCase();
-	}
+	// invokerNameIs: function(){
+	// 	Session.set('selectedUser',this.invokerId);
+	// 	return Meteor.users.findOne(this.invokerId).username.toUpperCase();
+	// }
 });

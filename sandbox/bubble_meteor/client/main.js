@@ -5,8 +5,8 @@ Deps.autorun(function() {
   // Meteor.subscribe('singlePost', Session.get('currentPostId'));
   
   Meteor.subscribe('comments', Session.get('currentPostId'));
+	Meteor.subscribe('allUsers', Session.get('selectedUser'));
 })
 
 Meteor.subscribe('updates');
 Meteor.subscribe('bubbles');
-Meteor.subscribe('allUsers');
