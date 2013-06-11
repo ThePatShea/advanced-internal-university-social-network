@@ -1,7 +1,7 @@
 Template.updatesList.helpers({
   updates: function() {
   	var compressedList = [];
-    var updateList = Updates.find({userId: Meteor.userId(), read: false});
+    var updateList = Updates.find({userId: Meteor.userId(), read: false, bubbleId:Session.get('currentBubbleId')});
     for (var i=0; i<updateList.count(); i++) {
       var update = updateList.db_objects[i];
       var added = false;

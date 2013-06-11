@@ -28,6 +28,7 @@ createCommentUpdate = function(comment) {
       userId: post.userId,
       postId: post._id,
       commentId: comment._id,
+      bubbleId: post.bubbleId,
       invokerId: comment.userId,
       updateType: "newComment",
       content: comment.author + " commented in a " + post.postType + "."

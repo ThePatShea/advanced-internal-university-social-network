@@ -4,7 +4,7 @@ Template.sidebar.helpers({
   },
   compressedCount: function(){
     var compressedPostList = [];
-    var updateList = Updates.find({userId: Meteor.userId(), read: false});
+    var updateList = Updates.find({userId: Meteor.userId(), read: false, bubbleId: this._id});
     for (var i=0; i<updateList.count(); i++) {
       var update = updateList.db_objects[i];
       var added = false;
@@ -26,4 +26,5 @@ Template.sidebar.helpers({
     }
     return compressedPostList.length;
   }
+
 });

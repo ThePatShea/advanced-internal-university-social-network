@@ -1,6 +1,5 @@
 Template.updateItem.helpers({
 	getPost: function(postId){
-		console.log(postId);
 		return Posts.findOne(postId);
 	},
 	updateTypeIs: function(){
