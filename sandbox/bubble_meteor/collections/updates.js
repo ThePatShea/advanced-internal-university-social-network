@@ -23,14 +23,16 @@ Meteor.methods({
 //For post owners when comment is created
 createCommentUpdate = function(comment) {
   var post = Posts.findOne(comment.postId);
-  Meter.call('update',{
-    userId: post.userId,
-    postId: post._id,
-    commentId: comment._id,
-    invokerId: comment.userId,
-    updateType: "createComment",
-    content: " commented on your post."
-  });
+  if (post.userId != comment.userId){
+    Meteor.call('update',{
+      userId: post.userId,
+      postId: post._id,
+      commentId: comment._id,
+      invokerId: comment.userId,
+      updateType: "newComment",
+      content: comment.author + " commented on your post."
+    });
+  }
 }
 
 //For bubble owners when post is created
@@ -48,8 +50,8 @@ createPostUpdate = function(post) {
         postId: post._id,
         bubbleId: bubble._id,
         invokerId: post.userId,
-        updateType: "createPost",
-        content: " added a new post in " + bubble.title + "."
+        updateType: "newPost",
+        content: post.author + " added a new post in " + bubble.title + "."
       });
     }
   }
@@ -63,8 +65,8 @@ createPostUpdate = function(post) {
           postId: post._id,
           bubbleId: bubble._id,
           invokerId: post.userId,
-          updateType: "createPost",
-          content: " added a new post in " + bubble.title + "."
+          updateType: "newPost",
+          content: post.author + " added a new post in " + bubble.title + "."
         });
       }
     }
@@ -84,7 +86,7 @@ createBubbleUpdate = function(bubble) {
         userId: admins[i],
         bubbleId: bubble._id,
         invokerId: Meteor.userId(),
-        updateType: "editBubble",
+        updateType: "newMember",
         content: bubble.title + " has been edited."
       });
     }
@@ -98,7 +100,7 @@ createBubbleUpdate = function(bubble) {
           userId: members[i],
           bubbleId: bubble._id,
           invokerId: Meteor.userId(),
-          updateType: "editBubble",
+          updateType: "newMember",
           content: bubble.title + " has been edited."
         });
       }

@@ -1,6 +1,12 @@
-Template.updatesList.helpers({
+Template.updatesDropdown.helpers({
   updates: function() {
-  	var compressedList = [];
+    return Updates.find({userId: Meteor.userId(), read: false});
+  },
+  updateCount: function(){
+  	return Updates.find({userId: Meteor.userId(), read: false}).count();
+  },
+  compressUpdates: function(){
+    var compressedList = [];
     var updateList = Updates.find({userId: Meteor.userId(), read: false});
     for (var i=0; i<updateList.count(); i++) {
       var update = updateList.db_objects[i];
@@ -22,6 +28,18 @@ Template.updatesList.helpers({
       }
     }
     return compressedList;
-   
+  }
+});
+
+Template.update.events({
+  'click a': function() {
+    Updates.update(this._id, {$set: {read: true}});
+  }
+})
+
+
+Template.update.helpers({
+  updateTypeIs: function(updateType){
+    return updateType == this.updateType;
   }
 });

@@ -8,10 +8,9 @@
     "basePackages": {
       "router": {},
       "accounts-ui-bootstrap-dropdown": {},
-      "spin": {},
       "paginated-subscription": {},
+      "spin": {},
       "jquery-ui-bootstrap": {},
-      "glDatePicker": {},
       "moment": {}
     },
     "packages": {
@@ -25,25 +24,20 @@
         "tag": "v0.1.0",
         "commit": "e66558aaa4dc0d85c6ddb63bd2289b38c2b793f6"
       },
-      "spin": {
-        "git": "https://github.com/SachaG/meteor-spin.git",
-        "tag": "v0.2.0",
-        "commit": "fd3a2871a69442848b4b4e74f5e1ae28fa4a95a4"
-      },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
         "tag": "v0.1.1",
         "commit": "1ba670364ddac149f404158407b2afc89db42ce5"
       },
+      "spin": {
+        "git": "https://github.com/SachaG/meteor-spin.git",
+        "tag": "v0.2.0",
+        "commit": "fd3a2871a69442848b4b4e74f5e1ae28fa4a95a4"
+      },
       "jquery-ui-bootstrap": {
         "git": "https://github.com/TimHeckel/meteor-jquery-ui-bootstrap.git",
         "tag": "v0.1.2",
         "commit": "fa742a85639307003e105898e15b631394b63509"
-      },
-      "glDatePicker": {
-        "git": "https://github.com/properapp/glDatePicker.git",
-        "tag": "v0.1.0",
-        "commit": "16c95d1f939fe35ebb7ede245f0fbfd57e38df9f"
       },
       "moment": {
         "git": "https://github.com/possibilities/meteor-moment.git",

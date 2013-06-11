@@ -6,10 +6,9 @@
   "packages": {
     "router": {},
     "accounts-ui-bootstrap-dropdown": {},
-    "spin": {},
     "paginated-subscription": {},
+    "spin": {},
     "jquery-ui-bootstrap": {},
-    "glDatePicker": {},
     "moment": {}
   }
 }
