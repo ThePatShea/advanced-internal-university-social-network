@@ -1,3 +1,14 @@
+/* Added by Junhao */
+.badgeCenter
+{
+  margin-left:auto;
+  margin-right:auto;
+  width:60%;
+}
+
+
+/* Added by Junhao */
+
 /* Added by Pat */
 .gldp-flatwhite .dow {
   cursor: default !important; /* overrides the datepicker framework's 'wait' cursor  */

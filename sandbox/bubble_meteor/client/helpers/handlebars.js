@@ -35,7 +35,11 @@ Handlebars.registerHelper('ownBubble', function() {
 });
 
 Handlebars.registerHelper('submittedText', function(submitted){
-  return moment(new Date(submitted).toString()).fromNow();
+  return moment(new Date(submitted).toString()).fromNow().toUpperCase();
+});
+
+Handlebars.registerHelper('toUpperCase', function(text){
+  return text.toUpperCase();
 });
 
 
