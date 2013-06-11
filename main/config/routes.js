@@ -192,6 +192,7 @@ module.exports = function (app, passport, auth) {
     app.get('/logout'                    ,  users.logout)
     app.post('/users'                    ,  users.create)
     app.get('/login'                     ,  users.login)
+    app.get('/beta'                      ,  res.redirect('/') )
 
 
   // Upload Routes
