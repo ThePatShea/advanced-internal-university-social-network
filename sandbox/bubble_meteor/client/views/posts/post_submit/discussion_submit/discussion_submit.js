@@ -8,6 +8,14 @@ Template.discussionSubmit.events({
       postType: 'discussion',
       bubbleId: Session.get('currentBubbleId')
     });
-
+    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    _.each(getEveryone(bubble),function(userId){
+			if (userId) {
+	      sendEmail(userId, 'New Post', 'New post for your bubble');
+	    }else{
+	      console.log("User is undefined for sending emails");
+	    }
+    });
+    
   }
 });

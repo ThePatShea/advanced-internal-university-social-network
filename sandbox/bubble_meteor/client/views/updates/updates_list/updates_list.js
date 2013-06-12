@@ -1,15 +1,14 @@
 Template.updatesList.helpers({
   updates: function() {
-    var updateList = Updates.find({userId: Meteor.userId(), read: false, bubbleId:Session.get('currentBubbleId')});
-    
-    updateList = updateList.collection.docs;
+
+    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId')}).fetch();
+    var compressedList = [];
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId;
+        return update.postId == newUpdate.postId && update.updateType == newUpdate.updateType == 'mewComment' ;
       });
-      updateList.push(update);
+      compressedList.push(update);
     });
-    console.log(updateList);
-    return updateList;
+    return compressedList;
   }
 });

@@ -44,5 +44,3 @@ Handlebars.registerHelper('toUpperCase', function(text){
 
 
 
-
-
