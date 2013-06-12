@@ -1,14 +1,12 @@
 Template.updatesDropdown.helpers({
   updates: function() {
-    return Updates.find({userId: Meteor.userId(), read: false});
+    return Updates.find({userId: Meteor.userId()});
   },
   updateCount: function(){
   	return Updates.find({userId: Meteor.userId(), read: false}).count();
   },
   compressUpdates: function(){
-    var updateList = Updates.find({userId: Meteor.userId(), read: false, bubbleId:Session.get('currentBubbleId')});
-    
-    updateList = updateList.collection.docs;
+    var updateList = Updates.find({bubbleId:Session.get('currentBubbleId')}).fetch();
 
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
@@ -19,10 +17,7 @@ Template.updatesDropdown.helpers({
     return updateList;
   },
   compressedCount: function(){
-    var compressedList = [];
-    var updateList = Updates.find({userId: Meteor.userId(), read: false, bubbleId:Session.get('currentBubbleId')});
-    
-    updateList = updateList.collection.docs;
+    var updateList = Updates.find({bubbleId:Session.get('currentBubbleId')}).fetch();
 
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
