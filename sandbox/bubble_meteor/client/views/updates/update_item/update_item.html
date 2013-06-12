@@ -19,12 +19,12 @@
     <div style="width: 100px;" class="pull-right">
       {{#with getPost postId}}  
         <p style="line-height: 10px;">Number of Comments</p>
+        <div class="badgeCenter">
+          <span class="badge badge-inverse">
+            {{commentsCount}}
+          </span>
+        </div>
       {{/with}}
-      <div class="badgeCenter">
-        <span class="badge badge-inverse">
-          {{commentsCount}}
-        </span>
-      </div>
     </div>
   </div>
 </template>

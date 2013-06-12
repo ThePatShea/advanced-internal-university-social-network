@@ -8,7 +8,9 @@ Meteor.methods({
   update: function(updateAttributes){
     var user = Meteor.user()
    
-    var update = _.extend(_.pick(updateAttributes, 'userId', 'postId', 'commentId', 'bubbleId', 'invokerId', 'invokerName', 'updateType', 'content'), {
+    var update = _.extend(_.pick(updateAttributes, 
+      'userId', 'postId', 'commentId', 'bubbleId', 
+      'invokerId', 'invokerName', 'updateType', 'content'), {
       submitted: new Date().getTime(),
       read: false
     });
