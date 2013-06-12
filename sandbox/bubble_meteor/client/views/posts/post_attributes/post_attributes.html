@@ -1,8 +1,12 @@
 <template name="postAttributes">
+<script language="JavaScript" src="/pdfobject.js"></script>
+
   <div class="main">
     <p><b><u>{{startTime}}</u></b></p>
     <p>{{location}}</p>
-    <img src="{{file}}"/>
+    <!-- <img src="{{file}}"/> -->
+    <object data={{file}} type="application/pdf" width="100%" height="400px"></object>
+    <div if="pdf"></div>
     <div id="file-data">{{file}}</div>
     <button id="download-btn">download</button>
     <pre>{{body}}</pre>
