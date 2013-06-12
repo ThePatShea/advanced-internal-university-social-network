@@ -1,10 +1,11 @@
 <template name="postAttributes">
-<script language="JavaScript" src="/pdfobject.js"></script>
+<script language="JavaScript" src="js/pdfobject.js"></script>
 
   <div class="main">
     <p><b><u>{{startTime}}</u></b></p>
     <p>{{location}}</p>
     {{> fileObject}}
+    <div id="file-data" hidden="true"></div>
     <button id="download-btn">download</button>
     <pre>{{body}}</pre>
   </div>
