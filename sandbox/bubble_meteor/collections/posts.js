@@ -41,8 +41,6 @@ Meteor.methods({
     });
     
     post._id = Posts.insert(post);
-  
-    // now create a update, informing the bubble owner that there's been a new post
     createPostUpdate(post);
 
     return post._id;

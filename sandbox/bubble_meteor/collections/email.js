@@ -15,4 +15,8 @@ if(Meteor.isServer){
       });
     }
   });
+  
+  Meteor.startup(function () {
+    // process.env.MAIL_URL = 'smtp://no-reply%40thecampusbubble.com:u3nT8dAC@smtp.gmail.com:465/';
+  });
 }
