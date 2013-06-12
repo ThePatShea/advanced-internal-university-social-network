@@ -8,7 +8,7 @@ Posts.allow({
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following three fields:
-    return (_.without(fieldNames, 'name', 'body', 'startTime', 'location').length > 0);
+    return (_.without(fieldNames, 'name', 'body', 'startTime', 'location', 'file').length > 0);
   }
 });
 
@@ -30,7 +30,7 @@ Meteor.methods({
       throw new Meteor.Error(422, 'Please fill in all fields');
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'startTime', 'location','bubbleId'), {
+    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'file', 'startTime', 'location','bubbleId'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
@@ -41,11 +41,9 @@ Meteor.methods({
     });
     
     post._id = Posts.insert(post);
-
+  
     // now create a update, informing the bubble owner that there's been a new post
-    if (user._id != bubble.userId){
-      createPostUpdate(post);
-    }
+    createPostUpdate(post);
 
     return post._id;
   },
