@@ -19,6 +19,7 @@ Template.updateItem.helpers({
 
 Template.updateItem.events({
   'click a': function() {
-    Updates.update({postId:this.postId, updateType:this.updateType}, {$set: {read: true}});
+  	var updatesList = Updates.find({postId: this.postId, read:false}).collection.docs;
+  	Meteor.call('setRead', updatesList);
   }
 })

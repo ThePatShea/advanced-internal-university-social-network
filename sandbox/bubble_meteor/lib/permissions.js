@@ -2,3 +2,7 @@
 ownsDocument = function(userId, doc) {
 	return doc && doc.userId === userId;
 }
+
+ownsUpdate = function(userId, doc) {
+	return doc && doc.invokerId === userId;
+}
