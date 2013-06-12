@@ -7,11 +7,11 @@ Meteor.publish('singlePost', function(id) {
 });
 
 Meteor.publish('comments', function(postId) {
-  return Comments.find({postId: postId});
+  return Comments.find({postId: postId}, {sort: {submitted:-1}});
 });
 
 Meteor.publish('updates', function() {
-  return Updates.find({userId: this.userId});
+  return Updates.find({userId: this.userId}, {sort: {submitted:1}});
 });
 
 Meteor.publish('bubbles', function(){

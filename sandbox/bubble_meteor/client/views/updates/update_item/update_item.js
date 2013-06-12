@@ -11,11 +11,14 @@ Template.updateItem.helpers({
 		} else if (updateType == "newMember") {
 			return "JOINED";
 		}
+	},
+	getNewCommentsCount: function(postId){
+		return Updates.find({postId:postId, updateType:'newComment', read:false}).count();
 	}
 });
 
 Template.updateItem.events({
   'click a': function() {
-    Updates.update(this._id, {$set: {read: true}});
+    Updates.update({postId:this.postId, updateType:this.updateType}, {$set: {read: true}});
   }
 })

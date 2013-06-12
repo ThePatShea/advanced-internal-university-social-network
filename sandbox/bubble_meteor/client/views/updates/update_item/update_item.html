@@ -17,14 +17,12 @@
       </a>
     </div>
     <div style="width: 100px;" class="pull-right">
-      {{#with getPost postId}}  
-        <p style="line-height: 10px;">Number of Comments</p>
-        <div class="badgeCenter">
-          <span class="badge badge-inverse">
-            {{commentsCount}}
-          </span>
-        </div>
-      {{/with}}
+      <p style="line-height: 10px;">Number of New Comments</p>
+      <div class="badgeCenter">
+        <span class="badge badge-inverse">
+          {{getNewCommentsCount postId}}
+        </span>
+      </div>
     </div>
   </div>
 </template>
