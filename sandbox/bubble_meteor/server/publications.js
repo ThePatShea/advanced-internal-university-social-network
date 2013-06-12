@@ -16,4 +16,13 @@ Meteor.publish('updates', function() {
 
 Meteor.publish('bubbles', function(){
 	return Bubbles.find();
-})
+});
+
+Meteor.publish("findOneUser", function (userId) {
+  return Meteor.users.find({_id:userId}, {
+   	fields: {
+     'username': 1,
+     'emails': 1
+		}
+	});
+});

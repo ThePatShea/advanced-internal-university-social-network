@@ -1,18 +1,31 @@
 <template name="updateItem">
   <div class="post">
-    <div style="width:200px" class="post-content">
-      {{submittedText submitted}}
-
+    <div style="width:70px" class="post-content">
+      {{toUpperCase invokerName}}
     </div>
-    {{#with getPost postId}}
-      <div style="width:100px" class="post-content">
-        {{name}}
-      </div>
-      <div style="width: 100px;" class="pull-right">
+    <div style="width:200px" class="post-content">
+      {{updateTypeIs}}
+      <br />
+      {{submittedText submitted}}
+    </div>
+
+    <div style="width:100px" class="post-content">
+      <a href="{{postPagePath postId}}">
+        {{#with getPost postId}} 
+          {{name}}
+        {{/with}}
+      </a>
+    </div>
+    <div style="width: 100px;" class="pull-right">
+      {{#with getPost postId}}  
         <p style="line-height: 10px;">Number of Comments</p>
-        <h4 style="line-height: 16px; text-transform: uppercase;">{{commentsCount}}</h4>
+      {{/with}}
+      <div class="badgeCenter">
+        <span class="badge badge-inverse">
+          {{commentsCount}}
+        </span>
       </div>
-    {{/with}}
+    </div>
   </div>
 </template>
 

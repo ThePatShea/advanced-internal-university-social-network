@@ -10,9 +10,9 @@
       {{#each getBubbles}}
         <a href="{{bubblePagePath this}}">
           <button class="main-btn">
-            {{#if updateCount}}
+            {{#if compressedCount}}
               <span class="badge badge-inverse">
-                {{updateCount}}
+                {{compressedCount}}
               </span>
             {{/if}}
             {{title}}
