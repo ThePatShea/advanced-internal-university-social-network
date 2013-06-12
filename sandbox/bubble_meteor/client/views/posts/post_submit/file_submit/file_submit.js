@@ -6,7 +6,7 @@ Template.fileSubmit.events({
     var reader = new FileReader();
     reader.onload = function(e) {
       createPost({
-        name: $(event.target).find('[name=name]').val(),
+        name: $(e.target).find('[name=name]').val(),
         file: e.target.result,
         postType: 'file',
         bubbleId: Session.get('currentBubbleId')
