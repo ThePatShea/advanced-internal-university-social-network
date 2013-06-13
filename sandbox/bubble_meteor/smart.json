@@ -12,7 +12,7 @@
     "jquery-ui": {},
     "jquery-ui-bootstrap": {},
     "glDatePicker": {},
-    "moment": {}
+    "moment": {},
+    "bootstrap-wysiwyg": {}
   }
 }
-
