@@ -3,7 +3,9 @@ Template.bubbleItem.helpers({
 		var admins = this.users.admins;
 		for (var i=0; i<admins.length; i++) {
 			if (admins[i] == Meteor.userId()){
-				return true;
+				return "Yes";
+			}else{
+			  	return "No";
 			}
 		}
 	}

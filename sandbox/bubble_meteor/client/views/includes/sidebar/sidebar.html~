@@ -1,0 +1,29 @@
+<template name="sidebar">
+  <section class="sidebar">
+    <div class="top-btns">
+      <button class="top-btn">O- search</button>
+      <a href="{{bubbleSubmitPath}}">
+        <button class="top-btn">+ create</button>
+      </a>
+    </div>
+    <div class="main-btns">
+      {{#each getBubbles}} 
+        <a href="{{bubblePagePath this}}">
+          <button class="main-btn">
+            {{#if compressedCount}}
+              <span class="badge badge-inverse">
+                {{compressedCount}} 
+              </span>
+            {{/if}}
+            {{title}}
+          </button>
+        </a>
+      {{/each}}
+    </div>
+    <hr>
+      <div class="main-btns">
+        INVITATIONS
+      </div>
+    </hr>
+  </section>
+</template>

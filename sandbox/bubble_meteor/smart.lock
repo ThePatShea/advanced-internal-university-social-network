@@ -10,6 +10,8 @@
       "accounts-ui-bootstrap-dropdown": {},
       "spin": {},
       "paginated-subscription": {},
+      "pagination": {},
+      "jquery-ui": {},
       "jquery-ui-bootstrap": {},
       "glDatePicker": {},
       "moment": {}
@@ -35,6 +37,16 @@
         "tag": "v0.1.1",
         "commit": "1ba670364ddac149f404158407b2afc89db42ce5"
       },
+      "pagination": {
+        "git": "https://github.com/egtann/meteor-pagination.git",
+        "tag": "v1.0.0",
+        "commit": "df546295d4bf11a89e57198c8074aa812d85755c"
+      },
+      "jquery-ui": {
+        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
+        "tag": "v1.9.2",
+        "commit": "c437d45edcf1367df8d5ffa8bad2867758030bd2"
+      },
       "jquery-ui-bootstrap": {
         "git": "https://github.com/TimHeckel/meteor-jquery-ui-bootstrap.git",
         "tag": "v0.1.2",
@@ -54,11 +66,6 @@
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
         "tag": "v1.3.5",
         "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
-      },
-      "jquery-ui": {
-        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
-        "tag": "v1.9.2",
-        "commit": "c437d45edcf1367df8d5ffa8bad2867758030bd2"
       }
     }
   }

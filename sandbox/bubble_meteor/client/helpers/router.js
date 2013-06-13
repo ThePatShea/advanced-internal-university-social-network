@@ -24,6 +24,10 @@ Meteor.Router.add({
     to: 'bubbleEdit', 
     and: function(id) { Session.set('currentBubbleId', id); }    
   },
+  '/bubbles/:_id/invitation':{
+    to: 'bubbleInvitation',
+    and: function(id) { Session.set('currentBubbleId', id);}
+  },
   
   //Submit Routes
   '/bubbles/:_id/submit/discussion':  {

@@ -1,0 +1,18 @@
+<template name="bubbleItem">
+  <div class="post">
+    <div class="post-content">
+      <h3><a href="{{bubblePagePath this}}">{{title}}</a><span>{{domain}}+YYYYYYYYYYYYYYY</span></h3>
+      <p>
+        {{description}}
+        {{#if ownBubble}}
+          <a href="{{bubbleEditPath this}}">Edit Bubble |</a>
+	  <a href="{{bubbleInvitationPath this}}">Invite Friend </a>
+        {{/if}}
+      </p>
+    </div>
+    <div style="width: 100px;" class="pull-right">
+      <p style="line-height: 10px;">Admin</p>
+      <h4 style="line-height: 16px; text-transform: uppercase;">{{isAdmin}}</h4>
+    </div>
+  </div>
+</template>
