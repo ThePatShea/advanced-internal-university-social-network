@@ -13,7 +13,7 @@
 .wysiwyg_group #wysiwyg_discussion {
   border: 1px solid #ccc;
   background: white; 
-  height: 300px;
+  min-height: 300px;
 }
 
 .post-submit {
