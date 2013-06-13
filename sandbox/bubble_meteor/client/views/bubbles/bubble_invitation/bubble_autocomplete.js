@@ -7,9 +7,9 @@ function extractLast( term ) {
 }
 
 
-Template.invitation_autocomplete.rendered = function () {
-  start_compose_autocomplete();
-}
+// Template.invitation_autocomplete.rendered = function () {
+//   start_compose_autocomplete();
+// }
 
 function start_compose_autocomplete() {
   $(Meteor.user).autocomplete({
