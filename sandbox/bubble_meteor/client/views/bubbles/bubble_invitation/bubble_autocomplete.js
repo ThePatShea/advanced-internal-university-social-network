@@ -6,7 +6,6 @@ function extractLast( term ) {
   return split( term ).pop();
 }
 
-
 // Template.invitation_autocomplete.rendered = function () {
 //   start_compose_autocomplete();
 // }
@@ -34,3 +33,4 @@ function start_compose_autocomplete() {
     }
   });
 }
+

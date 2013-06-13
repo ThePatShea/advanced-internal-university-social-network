@@ -8,7 +8,7 @@ Posts.allow({
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following three fields:
-    return (_.without(fieldNames, 'name', 'body', 'startTime', 'location', 'file').length > 0);
+    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file').length > 0);
   }
 });
 
@@ -23,14 +23,16 @@ Meteor.methods({
       throw new Meteor.Error(401, "You need to login to post new stories");
     
     // ensure the post has all of its fields filled in
-    if ( postAttributes.postType == 'discussion' && (!postAttributes.name || !postAttributes.body) )
-
+    if ( postAttributes.postType == 'discussion' && (!postAttributes.name || !postAttributes.body) ) {
       throw new Meteor.Error(422, 'Please fill in all fields');
-    else if ( postAttributes.postType == 'event' && (!postAttributes.name || !postAttributes.body || !postAttributes.location || !postAttributes.startTime) )
+    } else if ( postAttributes.postType == 'event' && (!postAttributes.name || !postAttributes.body || !postAttributes.location || !postAttributes.dateTime) ) {
       throw new Meteor.Error(422, 'Please fill in all fields');
+    } else if ( postAttributes.postType == 'file' && (!postAttributes.name || !postAttributes.file) ) {
+      throw new Meteor.Error(422, 'Please fill in all fields');
+    }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'file', 'startTime', 'location','bubbleId'), {
+    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'file', 'dateTime', 'location','bubbleId'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
@@ -39,7 +41,7 @@ Meteor.methods({
       upvoters: [], 
       votes: 0
     });
-    
+
     post._id = Posts.insert(post);
     createPostUpdate(post);
 

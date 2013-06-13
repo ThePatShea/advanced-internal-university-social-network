@@ -10,6 +10,20 @@
 /* Added by Junhao */
 
 /* Added by Pat */
+.wysiwyg_group #wysiwyg_discussion {
+  border: 1px solid #ccc;
+  background: white; 
+  height: 300px;
+}
+
+.post-submit {
+
+  }
+  .post-submit input {
+    height: 30px;
+    width: 100%;
+  }
+
 .gldp-flatwhite .dow {
   cursor: default !important; /* overrides the datepicker framework's 'wait' cursor  */
 }
@@ -26,6 +40,7 @@ a {
 .navbar .brand,
 .sidebar, 
 .post,
+.post-submit input,
 #main {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

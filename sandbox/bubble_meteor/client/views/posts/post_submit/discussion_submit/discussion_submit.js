@@ -4,7 +4,7 @@ Template.discussionSubmit.events({
     
     createPost({
       name: $(event.target).find('[name=name]').val(),
-      body: $(event.target).find('[name=body]').val(),
+      body: $(event.target).find('#wysiwyg_discussion').html(),
       postType: 'discussion',
       bubbleId: Session.get('currentBubbleId')
     });
@@ -19,3 +19,7 @@ Template.discussionSubmit.events({
     
   }
 });
+
+Template.discussionSubmit.rendered = function() {
+  $('#wysiwyg_discussion').wysiwyg();
+}
