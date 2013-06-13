@@ -14,7 +14,8 @@
       "jquery-ui": {},
       "jquery-ui-bootstrap": {},
       "glDatePicker": {},
-      "moment": {}
+      "moment": {},
+      "bootstrap-wysiwyg": {}
     },
     "packages": {
       "router": {
@@ -24,8 +25,8 @@
       },
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
-        "tag": "v0.1.0",
-        "commit": "e66558aaa4dc0d85c6ddb63bd2289b38c2b793f6"
+        "tag": "v0.1.3",
+        "commit": "42aa4d95070a2bd2aa200dcfd6c0edc69e3815c3"
       },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
@@ -34,8 +35,8 @@
       },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
-        "tag": "v0.1.1",
-        "commit": "1ba670364ddac149f404158407b2afc89db42ce5"
+        "tag": "v0.1.2",
+        "commit": "35e0c6112df2b4cfeb60b559276a93cac5ee2dd6"
       },
       "pagination": {
         "git": "https://github.com/egtann/meteor-pagination.git",
@@ -61,6 +62,11 @@
         "git": "https://github.com/possibilities/meteor-moment.git",
         "tag": "v1.7.0",
         "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
+      },
+      "bootstrap-wysiwyg": {
+        "git": "https://github.com/mcrider/meteor-bootstrap-wysiwyg.git",
+        "tag": "v0.1.0",
+        "commit": "b9b1ffadb42b8bbfade08aaea10e4fbe890d21dd"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
