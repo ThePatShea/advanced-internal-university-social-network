@@ -6,26 +6,28 @@ Template.updatesDropdown.helpers({
   	return Updates.find({userId: Meteor.userId(), read: false}).count();
   },
   compressUpdates: function(){
-    var updateList = Updates.find({bubbleId:Session.get('currentBubbleId')}).fetch();
+    var updateList = Updates.find().fetch();
+    compressedList = [];
 
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId;
+        return update.postId == newUpdate.postId && update.updateType == 'newComment';
       });
-      updateList.push(update);
+      compressedList.push(update);
     });
-    return updateList;
+    return compressedList;
   },
   compressedCount: function(){
-    var updateList = Updates.find({bubbleId:Session.get('currentBubbleId')}).fetch();
+    var updateList = Updates.find().fetch();
+    compressedList = [];
 
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId;
+        return update.postId == newUpdate.postId && update.updateType == 'newComment';
       });
-      updateList.push(update);
+      compressedList.push(update);
     });
-    return updateList.length;
+    return compressedList.length;
   }
 });
 

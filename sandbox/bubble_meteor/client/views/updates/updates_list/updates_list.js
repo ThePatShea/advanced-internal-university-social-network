@@ -1,6 +1,5 @@
 Template.updatesList.helpers({
   updates: function() {
-
     var updateList = Updates.find({bubbleId: Session.get('currentBubbleId')}).fetch();
     var compressedList = [];
     _.each(updateList, function(update){
