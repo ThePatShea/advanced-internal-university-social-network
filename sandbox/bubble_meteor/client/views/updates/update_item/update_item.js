@@ -12,7 +12,14 @@ Template.updateItem.helpers({
 			return "JOINED";
 		}
 	},
-	invokerNameIs: function(){
-		return Meteor.user(this.invokerId).username.toUpperCase();
+	getNewCommentsCount: function(postId){
+		return Updates.find({postId:postId, updateType:'newComment', read:false}).count();
 	}
 });
+
+Template.updateItem.events({
+  'click a': function() {
+  	var updatesList = Updates.find({postId: this.postId, read:false}).collection.docs;
+  	Meteor.call('setRead', updatesList);
+  }
+})

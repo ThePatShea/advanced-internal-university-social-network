@@ -39,5 +39,3 @@ Handlebars.registerHelper('getAllUsers', function(){
   return Users.find();
 });
 
-
-

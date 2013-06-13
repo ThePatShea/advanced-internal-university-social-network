@@ -1,7 +1,7 @@
 {
     "name": "campus_bubble",
     "description": "A platform for college groups to communicate by sharing discussions, events, files, and more",
-    "version": "3.0.0-83",
+    "version": "3.0.0-84",
     "private": false,
     "author": "Campus Bubble",
     "engines": {
@@ -32,5 +32,9 @@
         "mailchimp": "latest",
         "moment": "latest"
     },
-    "subdomain": "main.campusbubble"
+    "subdomain": "main.campusbubble",
+    "domains": [
+        "emorybubble.com",
+        "www.emorybubble.com"
+    ]
 }

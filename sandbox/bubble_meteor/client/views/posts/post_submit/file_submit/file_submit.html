@@ -1,0 +1,29 @@
+<template name="fileSubmit">
+  <section class="main">
+    {{> selectPostType}}
+    <form>
+      <div class="control-group">
+          <div class="controls">
+              <input name="name" type="text" value="" placeholder="File name"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input name="file" type="file" value="" placeholder="Select your file"/>
+          </div>
+      </div>
+      
+      {{#with getCurrentBubble}}
+        <span class="badge badge-inverse">{{title}}</span>
+      {{/with}}
+      <hr />
+
+      <div class="control-group">
+          <div class="controls">
+              <input type="submit" value="Submit" class="btn btn-primary"/>
+          </div>
+      </div>
+    </form>
+  </section>
+</template>

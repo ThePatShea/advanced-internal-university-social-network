@@ -7,13 +7,35 @@ Meteor.publish('singlePost', function(id) {
 });
 
 Meteor.publish('comments', function(postId) {
-  return Comments.find({postId: postId});
+  return Comments.find({postId: postId}, {sort: {submitted:-1}});
 });
 
 Meteor.publish('updates', function() {
-  return Updates.find({userId: this.userId});
+  return Updates.find({userId: this.userId, read: false}, {sort: {submitted:1}});
 });
 
 Meteor.publish('bubbles', function(){
 	return Bubbles.find();
-})
+});
+
+Meteor.publish("findOneUser", function (userId) {
+  return Meteor.users.find({_id:userId}, {
+   	fields: {
+     'username': 1,
+     'emails': 1
+		}
+	});
+});
+
+Meteor.publish("findUsersByName", function (username) {
+  var search_name   =  new RegExp(username,'i');
+  var search_query  =  {name: search_name};
+  //TODO: Add in _id: {$nin: connected_users} (an array of all members/admins/invitees of that bubble)
+
+  return Meteor.users.find(search_query, {
+    fields: {
+     'username': 1,
+     'emails': 1
+    }
+  });
+});
