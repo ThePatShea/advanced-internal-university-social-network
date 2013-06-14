@@ -21,7 +21,7 @@ Template.fileSubmit.events({
           }*/
           
           createPost({
-            name: escape(e.target.name),
+            name: escape(f.name),
             file: e.target.result,
             fileType: f.type,
             postType: 'file',
