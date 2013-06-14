@@ -1,0 +1,32 @@
+<template name="loginPage">
+	<br />
+	<div class="row">
+	<div class="span8">
+		<form action="login" method="post" class="form-horizontal" id="loginform" accept-charset="utf-8">
+ 
+			<div class="control-group">
+				<div class="controls"><input name="name" placeholder="Username or Email" type="text" value="" id="name">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					<input name="password" placeholder="Password" type="password" value="" id="password">
+				</div>
+			</div>
+ 
+			<div class="form-actions">
+				<button type="submit" class="btn btn-large btn-primary">Login</button>
+			</div>
+		</form>
+	</div>
+</div>
+</template>
+
+<template name="loginCallback">
+	<br />
+	<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Hello!</strong> You are logged in!
+</div>
+</template>
