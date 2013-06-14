@@ -9,7 +9,7 @@ Template.discussionEdit.events({
       body: $(e.target).find('.wysiwyg').html(),
       lastUpdated: new Date().getTime()
     }
-    
+
     Posts.update(currentPostId, {$set: postProperties}, function(error) {
       if (error) {
         // display the error to the user

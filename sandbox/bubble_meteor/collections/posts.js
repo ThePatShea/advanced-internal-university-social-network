@@ -4,14 +4,14 @@ Posts.allow({
   update: ownsDocument,
   remove: ownsDocument
 });
-
+//*
 Posts.deny({
   update: function(userId, post, fieldNames) {
-    // may only edit the following three fields:
-    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file').length > 0);
+    // may only edit the following fields:
+    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'lastUpdated').length > 0);
   }
 });
-
+//*/
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
