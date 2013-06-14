@@ -1,0 +1,40 @@
+<template name="bubbleInvitation">
+  {{#with getCurrentBubble}}
+    <form class="main">
+      <div class="control-group">
+          <label class="control-label" for="title">Key in your friend's name here:</label>
+          <div class="controls">
+              <input name="title" type="text" placeholder="Place your friend's name"/>
+              <input type="submit" value="Submit" class="btn btn-primary submit"/>
+          </div>
+      </div>
+
+
+
+      <li class="member_widget">
+          <div class="face_circle_container"><img src="http://graph.facebook.com/695341783/picture?type=square" style="float: left" class="face_circle">
+          </div>
+
+          <section class="user_info_container">
+              <h4>Jun Hao Peh</h4>
+              <div class="member_subtitle">member</div>
+          </section>
+          <section class="action_button_container">
+
+              <form method="post" action="/bubbles/51b766a30d729fe1e100011c/add_admin/">
+                  <button id="connect_bubble_apply" type="submit" class="action_button colorize_blue_texture">promote to admin</button>
+                  <input type="hidden" name="redirect_url" value="/edit/bubbles/">
+              </form>
+
+              <form method="post" action="/bubbles/51b766a30d729fe1e100011c/remove_member/">
+                  <button id="connect_bubble_apply" type="submit" class="action_button colorize_white_texture colorize_text_gray">
+              remove from bubble
+                  </button>
+                  <input type="hidden" name="redirect_url" value="/edit/bubbles/">
+              </form>
+          </section>
+      </li>
+    </form>
+
+  {{/with}}
+</template>
