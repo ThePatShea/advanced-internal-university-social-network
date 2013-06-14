@@ -24,6 +24,10 @@ Meteor.Router.add({
     to: 'bubbleEdit', 
     and: function(id) { Session.set('currentBubbleId', id); }    
   },
+  '/bubbles/:_id/invitation':{
+    to: 'bubbleInvitation',
+    and: function(id) { Session.set('currentBubbleId', id);}
+  },
   
   //Submit Routes
   '/bubbles/:_id/submit/discussion':  {
@@ -38,6 +42,8 @@ Meteor.Router.add({
   '/bubbles/:_id/submit/file': 'fileSubmit',
   '/submit/bubble': 'bubbleSubmit'
 });
+
+
 
 Meteor.Router.filters({
   'requireLogin': function(page) {

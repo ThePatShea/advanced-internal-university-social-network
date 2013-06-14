@@ -23,15 +23,8 @@ Handlebars.registerHelper('getPosts', function() {
   return Posts.find();
 });
 
-Handlebars.registerHelper('ownBubble', function() {
-  if(Meteor.user()){
-    var user = Meteor.users.findOne({_id: Meteor.user()._id});
-    if(user.username == "admin"){
-      return true;
-    }else{
-      return this.userId == Meteor.userId();
-    }
-  }
+Handlebars.registerHelper('ownBubble', function() {  
+  return _.contains(this.users.admins, Meteor.userId());
 });
 
 Handlebars.registerHelper('submittedText', function(submitted){
@@ -42,7 +35,7 @@ Handlebars.registerHelper('toUpperCase', function(text){
   return text.toUpperCase();
 });
 
-
-
-
+Handlebars.registerHelper('getAllUsers', function(){
+  return Users.find();
+});
 

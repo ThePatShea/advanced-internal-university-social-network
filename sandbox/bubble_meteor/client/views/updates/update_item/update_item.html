@@ -1,7 +1,7 @@
 <template name="updateItem">
   <div class="post">
     <div style="width:70px" class="post-content">
-      {{invokerNameIs}}
+      {{toUpperCase invokerName}}
     </div>
     <div style="width:200px" class="post-content">
       {{updateTypeIs}}
@@ -9,19 +9,21 @@
       {{submittedText submitted}}
     </div>
 
-    {{#with getPost postId}}
-      <div style="width:100px" class="post-content">
-        {{name}}
+    <div style="width:100px" class="post-content">
+      <a href="{{postPagePath postId}}">
+        {{#with getPost postId}} 
+          {{name}}
+        {{/with}}
+      </a>
+    </div>
+    <div style="width: 100px;" class="pull-right">
+      <p style="line-height: 10px;">Number of New Comments</p>
+      <div class="badgeCenter">
+        <span class="badge badge-inverse">
+          {{getNewCommentsCount postId}}
+        </span>
       </div>
-      <div style="width: 100px;" class="pull-right">
-        <p style="line-height: 10px;">Number of Comments</p>
-        <div class="badgeCenter">
-          <span class="badge badge-inverse">
-            {{commentsCount}}
-          </span>
-        </div>
-      </div>
-    {{/with}}
+    </div>
   </div>
 </template>
 

@@ -4,10 +4,22 @@ Template.discussionSubmit.events({
     
     createPost({
       name: $(event.target).find('[name=name]').val(),
-      body: $(event.target).find('[name=body]').val(),
+      body: $(event.target).find('#wysiwyg_discussion').html(),
       postType: 'discussion',
       bubbleId: Session.get('currentBubbleId')
     });
-
+    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    _.each(getEveryone(bubble),function(userId){
+			if (userId) {
+	      sendEmail(userId, 'New Post', 'New post for your bubble');
+	    }else{
+	      console.log("User is undefined for sending emails");
+	    }
+    });
+    
   }
 });
+
+Template.discussionSubmit.rendered = function() {
+  $('#wysiwyg_discussion').wysiwyg();
+}

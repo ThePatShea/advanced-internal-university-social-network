@@ -10,9 +10,12 @@
       "accounts-ui-bootstrap-dropdown": {},
       "spin": {},
       "paginated-subscription": {},
+      "pagination": {},
+      "jquery-ui": {},
       "jquery-ui-bootstrap": {},
       "glDatePicker": {},
-      "moment": {}
+      "moment": {},
+      "bootstrap-wysiwyg": {}
     },
     "packages": {
       "router": {
@@ -22,8 +25,8 @@
       },
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
-        "tag": "v0.1.0",
-        "commit": "e66558aaa4dc0d85c6ddb63bd2289b38c2b793f6"
+        "tag": "v0.1.3",
+        "commit": "42aa4d95070a2bd2aa200dcfd6c0edc69e3815c3"
       },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
@@ -32,8 +35,18 @@
       },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
-        "tag": "v0.1.1",
-        "commit": "1ba670364ddac149f404158407b2afc89db42ce5"
+        "tag": "v0.1.2",
+        "commit": "35e0c6112df2b4cfeb60b559276a93cac5ee2dd6"
+      },
+      "pagination": {
+        "git": "https://github.com/egtann/meteor-pagination.git",
+        "tag": "v1.0.0",
+        "commit": "df546295d4bf11a89e57198c8074aa812d85755c"
+      },
+      "jquery-ui": {
+        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
+        "tag": "v1.9.2",
+        "commit": "c437d45edcf1367df8d5ffa8bad2867758030bd2"
       },
       "jquery-ui-bootstrap": {
         "git": "https://github.com/TimHeckel/meteor-jquery-ui-bootstrap.git",
@@ -50,15 +63,15 @@
         "tag": "v1.7.0",
         "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
       },
+      "bootstrap-wysiwyg": {
+        "git": "https://github.com/mcrider/meteor-bootstrap-wysiwyg.git",
+        "tag": "v0.1.0",
+        "commit": "b9b1ffadb42b8bbfade08aaea10e4fbe890d21dd"
+      },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
         "tag": "v1.3.5",
         "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
-      },
-      "jquery-ui": {
-        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
-        "tag": "v1.9.2",
-        "commit": "c437d45edcf1367df8d5ffa8bad2867758030bd2"
       }
     }
   }
