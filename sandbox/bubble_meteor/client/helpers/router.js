@@ -39,6 +39,8 @@ Meteor.Router.add({
   '/submit/bubble': 'bubbleSubmit'
 });
 
+
+
 Meteor.Router.filters({
   'requireLogin': function(page) {
     if (Meteor.user())
