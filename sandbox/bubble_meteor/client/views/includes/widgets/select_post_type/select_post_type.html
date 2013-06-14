@@ -1,0 +1,15 @@
+<template name="selectPostType">
+	{{#with getCurrentBubble}}
+	  <ul class="nav nav-pills">
+	    <li class="{{activePostTypeClass 'discussion'}}">
+	    	<a href="{{discussionSubmitPath this}}">discussion</a>
+	    </li>
+	    <li class="{{activePostTypeClass 'event'     }}">
+	    	<a href="{{eventSubmitPath this}}">event</a>
+	    </li>
+	    <li class="{{activePostTypeClass 'file'      }}">
+	    	<a href="{{fileSubmitPath this}}">file</a>
+	    </li>
+	  </ul>
+	{{/with}}
+</template>

@@ -6,7 +6,7 @@ Template.discussionEdit.events({
     
     var postProperties = {
       name: $(e.target).find('[name=name]').val(),
-      body: $(e.target).find('[name=body]').val(),
+      body: $(e.target).find('.wysiwyg').html(),
       lastUpdated: new Date().getTime()
     }
     

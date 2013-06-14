@@ -10,7 +10,7 @@
 /* Added by Junhao */
 
 /* Added by Pat */
-.wysiwyg_group #wysiwyg_discussion {
+.wysiwyg_group .wysiwyg {
   border: 1px solid #ccc;
   background: white; 
   min-height: 300px;
