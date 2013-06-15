@@ -1,35 +1,53 @@
-// Reusable elements
-border-thin(color)
-  border 1px solid color
-
-border-box(n)
-  -webkit-box-sizing border-box
-  -moz-box-sizing border-box
-  box-sizing border-box
-
-std-padding(n)
-  padding 10px 30px
-
-std-btn(n)
-  padding 10px 15px
-  height 30px
-
-std-btn-light
-  border-thin #BECDD5
-  color #2E5972
-  std-btn 0
-  
-
-// Reusable elements
-
-
-
+// CSS reset
+button
+  line-height            normal
+  background             none
+  border                 none
 
 button,
 div
-  border-box 0
+  border-box             0
+// CSS reset
 
+
+
+// Reusable elements
+border-thin(color)
+  border                 1px solid color
+
+border-radius(n)
+  -webkit-border-radius  n
+  -moz-border-radius     n
+  border-radius          n
+
+border-box(n)
+  -webkit-box-sizing     border-box
+  -moz-box-sizing        border-box
+  box-sizing             border-box
+
+std-btn(n)
+  text-transform         uppercase
+  padding                8px 15px
+  border-radius          15px
+  font-size              11px
+
+.std-btn-light
+  border-thin            #BECDD5
+  color                  #2E5972
+  std-btn                0
+
+.std-btn-dark
+  background             rgba(0,0,0,.35)
+  border-thin            #95AFBF
+  color                  #94AEBF
+  std-btn                0
+// Reusable elements
+
+
+
+// Single-use elements
 .bubble-cover
-  background #999 // TESTING
-  padding 30px
-  height 145px
+  background             #999 // TESTING
+  height                 145px
+  padding                20px 30px // TODO: CHANGE THIS TO VERTICAL ALIGN MIDDLE
+// Single-use elements
