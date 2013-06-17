@@ -1,4 +1,9 @@
 Meteor.Router.add({
+  //Login from authentication system
+  '/login': function(){
+    Meteor.Router.to('bubbleList');
+  }
+
   //Post Routes
   '/': {to: 'bubblesList', as: 'home'},
   '/posts/:_id': {
