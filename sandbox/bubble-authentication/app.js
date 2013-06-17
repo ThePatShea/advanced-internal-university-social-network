@@ -12,15 +12,29 @@ var express = require('express')
   , BasicStrategy = require('passport-http').BasicStrategy
   , SamlStrategy = require('passport-saml').Strategy
   , mongoose = require('mongoose')
+  , crypto = require('crypto')
   , querystring = require('querystring');
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost:27017/test');
 
 var userSchema = mongoose.Schema({
+  username: String,
   email: String
-})
+});
+
 
 var User = mongoose.model('User',userSchema);
+
+
+User.find({},
+  function(err, users){
+    if(err) console.log(err);
+    if(users.length == 0){
+      var newuser = User({username: 'pxferna', email: 'fernandes.praphat@gmail.com'});
+      newuser.save();
+    }
+  });
+
 
 passport.use(new SamlStrategy(
   {
@@ -28,13 +42,11 @@ passport.use(new SamlStrategy(
     entryPoint: 'https://openidp.feide.no/simplesaml/saml2/idp/SSOService.php',
     issuer: 'passport-saml'
   },
+
   function(profile, done) {
-    User.findOne({email:profile.email}).exec(function (err, user) {
-      if (user == null){
-        user = new User({email:profile.email});
-        user.save();
-      }
-      return done(null,user);
+    User.findOne({'username': profile.uid}, function(err, user){
+      console.log(user);
+      return done(null, user);
     });
   }
 ));
@@ -77,20 +89,24 @@ app.get('/login',
 );
 
 app.post('/login/callback',
-  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-  function(req, res) {
-    
 
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+
+  function(req, res) {
+    var seed = crypto.randomBytes(20);
+    var secret = crypto.createHash('sha1').update(seed).digest('hex');
     // Build the post string from an object
+    //secret = '121212121212121212121212'
     var post_data = querystring.stringify({
-      'secret':'123123123'
+      'username': req.user.username,
+      'secret':secret
     });
 
     var options = {
       hostname: '127.0.0.1',
       port: 8000,
-      path: '/user/' + req.user.email,
-      method: 'POST',
+      path: '/usersecret',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Content-Length': post_data.length
@@ -109,7 +125,9 @@ app.post('/login/callback',
     // post the data
     post_req.write(post_data);
     post_req.end();
+    res.redirect('http://127.0.0.1:8000/user/' + req.user.username + '/' + secret);
   }
+  
 );
 
 app.get('/home', function(req, res){
