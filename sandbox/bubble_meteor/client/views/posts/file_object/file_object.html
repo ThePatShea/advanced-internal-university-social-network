@@ -1,0 +1,7 @@
+<template name="fileObject">
+    {{#if isPDF}}
+        <object data={{file}} type="application/pdf" width="100%" height="400px"></object>
+    {{else}}
+        <img src="{{file}}" width="300px" height="400px">
+    {{/if}}
+</template>
