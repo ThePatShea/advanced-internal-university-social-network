@@ -1,0 +1,31 @@
+<template name="bubbleSearch">
+  <form class="main">
+	<input name="keywords" type="text" value="" placeholder="Name of an organization, class, etc."/>
+	<input type="submit" value="Submit" class="btn btn-primary"/>
+  </form>
+
+  {{#unless results}}
+  {{/unless}}
+
+  {{#each results}}
+    {{>result}}
+  {{/each}}
+
+
+</template>
+
+<template name = "result">
+ <body>
+  <div class="row-fluid">
+  <div class= "posts">
+     <div class="post">
+       <div class="post-content">
+	<h3>
+	  <a href=/bubbles/{{_id}}>{{title}}</a>
+	</h3>
+       </div>
+     </div>
+  </div>
+  </div>
+ </body>
+</template>

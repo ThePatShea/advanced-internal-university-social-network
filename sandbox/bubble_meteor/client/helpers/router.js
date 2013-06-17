@@ -28,6 +28,8 @@ Meteor.Router.add({
     to: 'bubbleInvitation',
     and: function(id) { Session.set('currentBubbleId', id);}
   },
+  //Bubble Search
+  '/search': 'bubbleSearch',
   
   //Submit Routes
   '/bubbles/:_id/submit/discussion':  {
