@@ -11,7 +11,8 @@ var express = require('express')
   , passport = require('passport')
   , BasicStrategy = require('passport-http').BasicStrategy
   , SamlStrategy = require('passport-saml').Strategy
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , querystring = require('querystring');
 
 mongoose.connect('mongodb://localhost/test');
 
@@ -78,7 +79,36 @@ app.get('/login',
 app.post('/login/callback',
   passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
   function(req, res) {
-    res.redirect('/home');
+    
+
+    // Build the post string from an object
+    var post_data = querystring.stringify({
+      'secret':'123123123'
+    });
+
+    var options = {
+      hostname: '127.0.0.1',
+      port: 8000,
+      path: '/user/' + req.user.email,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': post_data.length
+      }
+    };
+    // Set up the request
+    var post_req = http.request(options, function(res) {
+      res.setEncoding('utf8');
+
+      // res.redirect(res.headers.location);
+      res.on('data', function (chunk) {
+          console.log('Response: ' + chunk);
+      });
+    });
+
+    // post the data
+    post_req.write(post_data);
+    post_req.end();
   }
 );
 
