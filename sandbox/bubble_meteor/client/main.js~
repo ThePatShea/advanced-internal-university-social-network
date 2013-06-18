@@ -1,16 +1,19 @@
 postsHandle = Meteor.subscribeWithPagination('posts', 15);
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
 
-usersHandle = Meteor.subscribeWithPagination('findUsersByName');
-
 
 Deps.autorun(function() {
   Meteor.subscribe('comments', Session.get('currentPostId'));
+<<<<<<< HEAD
   //subscription
   Meteor.subscribe('findUsersByName');
   
 	Meteor.subscribe('findOneUser', Session.get('selectedUser'));
 	//Meteor.subscribe('findUsersByName', Session.get('selectedUsername'));
+=======
+	Meteor.subscribe('findOneUser', Session.get('selectedUserId'));
+	Meteor.subscribe('findUsersByName', Session.get('selectedUsername'));
+>>>>>>> junhao
 })
 
 Meteor.subscribe('updates');

@@ -1,29 +1,23 @@
 <template name="fileSubmit">
   <section class="main">
     {{> selectPostType}}
-    <form>
-      <div class="control-group">
-          <div class="controls">
-              <input name="name" type="text" value="" placeholder="File name"/>
-          </div>
-      </div>
-    
-      <div class="control-group">
-          <div class="controls">
-              <input name="file" type="file" value="" placeholder="Select your file"/>
-          </div>
-      </div>
-      
-      {{#with getCurrentBubble}}
-        <span class="badge badge-inverse">{{title}}</span>
-      {{/with}}
-      <hr />
+    <style>
+    #drop_zone{border:2px dashed #bbb;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:25px;text-align:center;font: 20pt bold 'Vollkorn';color:#bbb}
+    .thumb {
+    height: 75px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+  }
+    </style>
 
-      <div class="control-group">
+    <form>
+    <div id="drop_zone">Drop files here</div>
+    <output id="list"></output>
+    <hr />
+    <div class="control-group">
           <div class="controls">
               <input type="submit" value="Submit" class="btn btn-primary"/>
           </div>
       </div>
-    </form>
   </section>
 </template>

@@ -20,8 +20,11 @@
         </a>
       {{/each}}
     </div>
+<<<<<<< HEAD
       <div class="main-btns">
         INVITATIONS
       </div>
+=======
+>>>>>>> junhao
   </section>
 </template>

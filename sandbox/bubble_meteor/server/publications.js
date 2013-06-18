@@ -27,26 +27,18 @@ Meteor.publish("findOneUser", function (userId) {
 	});
 });
 
-Meteor.publish("findUsersByName", function (){
-	//console.log(Meteor.users.find().fetch());
-	//console.log(db.users.find());
-	return db.collection.users.find();
+Meteor.publish("findUsersByName", function (username) {
+  var search_name   =  new RegExp(username,'i');
+  var search_query  =  {username: search_name};
+  //TODO: Add in _id: {$nin: connected_users} (an array of all members/admins/invitees of that bubble)
+  //exclude the members already in the bubble
+  //Match.check(searchContent);
+  
+  return Meteor.users.find(search_query, {
+    fields: {
+     'username': 1,
+     'emails': 1
+    }
+  });
 });
-
-//Meteor.publish("findUsersByName", function (username) {
-//  var search_name   =  new RegExp(username,'i');
-//  var search_query  =  {name: search_name};
-//  //TODO: Add in _id: {$nin: connected_users} (an array of all members/admins/invitees of that bubble)
-//  //exclude the members already in the bubble
-//  //Match.check(searchContent);
-//  
-//  
-//  
-//  return Meteor.users.find(search_query, {
-//    fields: {
-//     'username': 1,
-//     'emails': 1
-//    }
-//  });
-//});
 

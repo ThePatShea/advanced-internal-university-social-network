@@ -1,10 +1,14 @@
 <template name="postAttributes">
+<script language="JavaScript" src="js/pdfobject.js"></script>
+<script language="JavaScript" src="js/FileSaver.js"></script>
+
   <div class="main">
     <p><b><u>{{dateTime}}</u></b></p>
     <p>{{location}}</p>
-    <img src="{{file}}"/>
-    <div id="file-data">{{file}}</div>
-    <button id="download-btn">download</button>
-    <pre>{{{body}}}</pre>
+    {{> fileObject}}
+    <div id="file-data" hidden="true">{{file}}</div>
+    <!--<button id="download-btn">download</button>-->
+    <a class="btn download-btn" href="{{file}}" download="{{name}}">Download</a>
+    <pre>{{body}}</pre>
   </div>
 </template>

@@ -98,7 +98,7 @@ createBubbleEditUpdate = function(bubble) {
   var everyone = getEveryone(bubble);
 
   for (var i=0; i<everyone.length; i++) {
-    if (everyone[i] != post.userId){      
+    if (everyone[i] != Meteor.userId()){      
       Meteor.call('update',{
         userId: everyone[i],
         bubbleId: bubble._id,
