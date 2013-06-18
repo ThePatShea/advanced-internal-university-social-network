@@ -29,7 +29,7 @@ Meteor.publish("findOneUser", function (userId) {
 
 Meteor.publish("findUsersByName", function (username) {
   var search_name   =  new RegExp(username,'i');
-  var search_query  =  {name: search_name};
+  var search_query  =  {username: search_name};
   //TODO: Add in _id: {$nin: connected_users} (an array of all members/admins/invitees of that bubble)
 
   return Meteor.users.find(search_query, {

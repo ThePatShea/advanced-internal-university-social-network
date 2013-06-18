@@ -3,8 +3,8 @@ commentsHandle = Meteor.subscribeWithPagination('comments',10);
 
 Deps.autorun(function() {
   Meteor.subscribe('comments', Session.get('currentPostId'));
-	Meteor.subscribe('findOneUser', Session.get('selectedUser'));
-	Meteor.subscribe('findUsersByName', Session.get('selectedUsernames'));
+	Meteor.subscribe('findOneUser', Session.get('selectedUserId'));
+	Meteor.subscribe('findUsersByName', Session.get('selectedUsername'));
 })
 
 Meteor.subscribe('updates');

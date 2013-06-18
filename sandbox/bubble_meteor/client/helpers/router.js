@@ -45,10 +45,14 @@ Meteor.Router.add({
   },
   '/bubbles/:_id/submit/document': 'documentSubmit',
   '/bubbles/:_id/submit/file': 'fileSubmit',
-  '/submit/bubble': 'bubbleSubmit'
+  '/submit/bubble': 'bubbleSubmit',
+
+  //Routes for User
+  'userprofile/:id': {
+    to: 'userProfile',
+    and: function(id) { Session.set('selectedUserId',id); }
+  }
 });
-
-
 
 Meteor.Router.filters({
   'requireLogin': function(page) {

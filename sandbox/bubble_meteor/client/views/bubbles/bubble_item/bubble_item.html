@@ -10,9 +10,11 @@
         {{/if}}
       </p>
     </div>
-    <div style="width: 100px;" class="pull-right">
-      <p style="line-height: 10px;">Admin</p>
-      <h4 style="line-height: 16px; text-transform: uppercase;">{{isAdmin}}</h4>
-    </div>
+    {{#if isAdmin}}
+      <div style="width: 100px;" class="pull-right">
+        <p style="line-height: 10px;">Admin</p>
+        <h4 style="line-height: 16px; text-transform: uppercase;">True</h4>
+      </div>
+    {{/if}}
   </div>
 </template>
