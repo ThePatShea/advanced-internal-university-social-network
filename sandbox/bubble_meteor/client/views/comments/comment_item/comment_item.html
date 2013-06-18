@@ -1,7 +1,7 @@
 <template name="commentItem">
   <li>
     <h4>
-      <span class="author">{{author}}</span>
+      <a href="{{userProfilePath userId}}">{{author}}</a>
       <span class="date">{{submittedText submitted}}</span>
     </h4>
     <p>{{body}}</p>

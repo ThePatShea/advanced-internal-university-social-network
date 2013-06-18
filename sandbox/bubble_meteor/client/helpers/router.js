@@ -48,7 +48,7 @@ Meteor.Router.add({
   '/submit/bubble': 'bubbleSubmit',
 
   //Routes for User
-  'userprofile/:id': {
+  '/userprofile/:id': {
     to: 'userProfile',
     and: function(id) { Session.set('selectedUserId',id); }
   }

@@ -19,14 +19,6 @@ Template.postItem.helpers({
   },
   getPostType: function(postType) {
     return this.postType === postType;
-  },
-  getUser: function() {
-    //Sets what is to be sent over to the local db from the server side
-    Session.set('selectedUsername',"xiao");
-
-    //searches the local db
-    console.log(Meteor.users.find({username:this.author}).fetch());
-    // return Meteor.users.find({username:this.author});
   }
 });
 

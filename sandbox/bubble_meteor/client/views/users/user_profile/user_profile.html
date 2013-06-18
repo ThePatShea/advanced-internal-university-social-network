@@ -1,0 +1,9 @@
+<template name='userProfile'>
+	{{#with getUser}}
+		<h4>Username: <a href="{{userProfile this}}">{{username}}</a></h4><span>Email: {{getEmail}}</span></h3>
+
+		{{#each getBubblesList}}
+			{{> bubbleItem}}
+		{{/each}}
+	{{/with}}
+</template>
