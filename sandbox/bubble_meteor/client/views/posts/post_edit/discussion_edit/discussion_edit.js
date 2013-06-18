@@ -3,8 +3,10 @@ Template.discussionEdit.events({
     e.preventDefault();
     
     var currentPostId = Session.get('currentPostId');
-    
+    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+
     var postProperties = {
+      dateTime: dateTime,
       name: $(e.target).find('[name=name]').val(),
       body: $(e.target).find('.wysiwyg').html(),
       lastUpdated: new Date().getTime()

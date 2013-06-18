@@ -3,8 +3,10 @@ Template.eventSubmit.events({
     event.preventDefault();
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    console.log(moment(dateTime).fromNow());
+    
     createPost({ 
-      dateTime: dateTime,
+      dateTime: moment(dateTime).valueOf(),
       location: $(event.target).find('[name=location]').val(),
       name: $(event.target).find('[name=name]').val(),
       body: $(event.target).find('[name=body]').val(),

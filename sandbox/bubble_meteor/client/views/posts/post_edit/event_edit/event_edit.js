@@ -1,9 +1,9 @@
 Template.eventEdit.helpers({
   getDate: function(){
-    return moment(this.submitted).format("M/DD/YYYY");
+    return moment(this.dateTime).format("M/DD/YYYY");
   },
   getTime: function(){
-    return moment(this.submitted).format("hh:mm a");
+    return moment(this.dateTime).format("hh:mm a");
   }
 
 });
@@ -13,11 +13,12 @@ Template.eventEdit.events({
     e.preventDefault();
     
     var currentPostId = Session.get('currentPostId');
+    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
     
     var postProperties = {
       name: $(e.target).find('[name=name]').val(),
       body: $(e.target).find('[name=body]').val(),
-      dateTime: $(e.target).find('[name=dateTime]').val(),
+      dateTime: moment(dateTime).valueOf(),
       location: $(e.target).find('[name=location]').val(),
       lastUpdated: new Date().getTime()
     }
@@ -43,17 +44,22 @@ Template.eventEdit.events({
 });
 
 Template.eventEdit.rendered = function() {
-  $(".date-picker").glDatePicker({cssName: 'flatwhite'});
+  $(".date-picker").glDatePicker(
+    {
+      cssName: 'flatwhite',
+      selectedDate: new Date($(".date-picker").val())
+    }
+  );
 
   //Format the time when the textbox is changed
   $(".input-small").change(function(){
     var time = $(".input-small").val();
     if (time) {
-
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $(".input-small").val("Time (ex: 9am)");
+        $(".input-small").val("");
+        $(".input-small").attr("placeholder","Time (ex: 9am)");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
         $(".input-small").val(formatedTime);
