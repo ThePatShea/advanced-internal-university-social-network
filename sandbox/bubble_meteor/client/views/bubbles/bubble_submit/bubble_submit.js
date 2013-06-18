@@ -4,7 +4,8 @@ Template.bubbleSubmit.events({
 
     var bubble = {
       title: $(event.target).find('[name=title]').val(),
-      description: $(event.target).find('[name=description]').val()
+      description: $(event.target).find('[name=description]').val(),
+      category: $(event.target).find('[name=category]').val()
     }
     
     Meteor.call('bubble', bubble, function(error, bubbleId) {

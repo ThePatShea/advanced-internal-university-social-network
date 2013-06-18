@@ -15,10 +15,38 @@
       </div>
 
       <div class="control-group">
+        <label class="control-label" for="category">Category</label>
+        <div class="controls">
+            <select name="category">
+              {{#if isSelected 'academics'}}
+                <option selected value='academics'>Academics</option>
+              {{/if}}
+              {{#if notSelected 'academics'}}
+                <option value='academics'>Academics</option>
+              {{/if}}
+              {{#if isSelected 'studentresource'}}
+                <option selected value='studentresource'>Student Resource</option>
+              {{/if}}
+              {{#if notSelected 'studentresource'}}
+                <option value='studentresource'>Student Resource</option>
+              {{/if}}
+              {{#if isSelected 'studentorganization'}}
+                <option selected value='studentorganization'>Student Organization</option>
+              {{/if}}
+              {{#if notSelected 'studentorganization'}}
+                <option value='studentorganization'>Student Organization</option>
+              {{/if}}
+            </select>
+        </div>
+      </div>
+
+      <hr>
+      <div class="control-group">
           <div class="controls">
               <input type="submit" value="Submit" class="btn btn-primary submit"/>
           </div>
       </div>
+
       <hr/>
       <div class="control-group">
           <div class="controls">

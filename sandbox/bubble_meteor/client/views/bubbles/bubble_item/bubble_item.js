@@ -8,6 +8,16 @@ Template.bubbleItem.helpers({
 			  	return "No";
 			}
 		}
+	},
+	getCategory: function(){
+		var category = this.category;
+		if(category == 'academics') {
+			return 'Academics';
+		}else if(category == 'studentresource'){
+			return 'Student Resource';
+		}else if(category == 'studentorganization'){
+			return 'Student Organization';
+		}
 	}
 });
 
