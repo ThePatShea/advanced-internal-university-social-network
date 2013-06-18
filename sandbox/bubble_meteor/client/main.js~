@@ -1,6 +1,8 @@
 postsHandle = Meteor.subscribeWithPagination('posts', 15);
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
 
+usersHandle = Meteor.subscribeWithPagination('findUsersByName');
+
 
 Deps.autorun(function() {
   Meteor.subscribe('comments', Session.get('currentPostId'));

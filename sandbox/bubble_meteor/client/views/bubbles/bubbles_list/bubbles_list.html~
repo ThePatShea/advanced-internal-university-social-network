@@ -1,0 +1,7 @@
+<template name="bubblesList">
+  <div class="posts">
+    {{#each getBubbles}}
+      {{> bubbleItem}}+UUUUUUUUUUUUUU
+    {{/each}}
+  </div>
+</template>

@@ -1,0 +1,18 @@
+<template name="header">
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="/">Emory Bubble</a>
+      <ul class="nav pull-right">
+        <li class="{{activeRouteClass 'bubblesList'}}">
+          <a href="{{bubblesListPath}}">Bubbles</a>
+        </li>
+        {{#if currentUser}}
+          <li class="dropdown">
+            {{> updatesDropdown}}
+          </li>
+        {{/if}}
+        <li>{{loginButtons}}       {{searchContent}} + 66666666</li>
+      </ul>
+    </div>
+  </header>
+</template>

@@ -1,5 +1,5 @@
 Template.bubbleSubmit.events({
-  'submit form': function(event) {
+  'subm': function(event) {
     event.preventDefault();
 
     var bubble = {

@@ -26,7 +26,7 @@ Template.bubbleInvitation.helpers({
 		//Meteor.users.find({username:Session.get('selectedUsername')});
 		
 		//console.log(Meteor.users.find({username:Session.get('selectedUsername')}).fetch());
-		return Meteor.users.find();
+		return Meteor.users.find({username:Session.get('selectedUsername')});
 	}
 
 });

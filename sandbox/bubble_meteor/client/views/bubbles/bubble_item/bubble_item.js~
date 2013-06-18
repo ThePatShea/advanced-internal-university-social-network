@@ -12,8 +12,7 @@ Template.bubbleItem.helpers({
 });
 
 Template.bubbleItem.events({
-  'click .addPost': function(){
+  'click .yy': function(){
     Session.set('currentBubbleId', this._id);
   }
 });
-
