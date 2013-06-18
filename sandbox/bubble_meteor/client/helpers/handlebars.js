@@ -39,3 +39,7 @@ Handlebars.registerHelper('getAllUsers', function(){
   return Users.find();
 });
 
+Handlebars.registerHelper('isLoggedIn',function() {
+  return Meteor.userId();
+})
+

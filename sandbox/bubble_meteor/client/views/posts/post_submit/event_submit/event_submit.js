@@ -3,7 +3,6 @@ Template.eventSubmit.events({
     event.preventDefault();
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
-    console.log(moment(dateTime).fromNow());
     
     createPost({ 
       dateTime: moment(dateTime).valueOf(),
@@ -23,7 +22,6 @@ Template.eventSubmit.rendered = function() {
   $(".input-small").change(function(){
     var time = $(".input-small").val();
     if (time) {
-
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){

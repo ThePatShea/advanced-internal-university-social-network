@@ -39,7 +39,8 @@ Meteor.methods({
       lastUpdated: new Date().getTime(),
       commentsCount: 0,
       upvoters: [], 
-      votes: 0
+      votes: 0,
+      attendees: []
     });
 
     post._id = Posts.insert(post);
@@ -75,7 +76,15 @@ Meteor.methods({
     }, {
       $addToSet: {bubble: bubble._id}
     });
+  },
+
+  attendEvent: function(postId,username){
+    Posts.update({_id:postId},
+    {
+      $addToSet: {attendees:username}
+    });
   }
+      
   
 });
 
