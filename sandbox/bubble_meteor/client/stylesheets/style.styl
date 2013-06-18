@@ -1,0 +1,143 @@
+/***************         CSS Reset         ***************/
+button
+  line-height            normal
+  background             none
+  border                 none
+
+button,
+div
+  border-box             0
+/***************         CSS Reset         ***************/
+
+
+
+/***************  Multi-Purpose Elements   ***************/
+/**********  Color Palette  **********/
+main-xdark-color(n)
+  color                  #011126
+main-xdark-fill(n)
+  fill                   #011126
+main-xdark-bg(n)
+  background             #011126
+
+
+main-dark-color(n)
+  color                  #001f37
+main-dark-fill(n)
+  fill                   #001f37
+main-dark-bg(n)
+  background             #001f37
+
+
+main-light-color(n)
+  color                  #2f5973
+main-light-fill(n)
+  fill                   #2f5973
+main-light-bg(n)
+  background             #2f5973
+
+
+main-xlight-color(n)
+  color                  #95afbf
+main-xlight-fill(n)
+  fill                   #95afbf
+main-xlight-bg(n)
+  background             #95afbf
+/**********  Color Palette  **********/
+
+
+/**********  Font Palette   **********/
+/*****    Main Font     *****/
+font-main(n)
+  font-family            'brandon-grotesque'
+font-main-black(n)
+  font-weight            900
+  font-main              0
+font-main-bold(n)
+  font-weight            700
+  font-main              0
+font-main-medium(n)
+  font-weight            500
+  font-main              0
+font-main-regular(n)
+  font-weight            400
+  font-main              0
+/*****    Main Font     *****/
+
+/*****  Alternate Font  *****/
+font-alt(n)
+  font-family            'proxima-nova'
+font-alt-black(n)
+  font-weight            900
+  font-alt               0
+font-alt-extrabold(n)
+  font-weight            800
+  font-alt               0
+font-alt-bold(n)
+  font-weight            700
+  font-alt               0
+font-alt-semibold(n)
+  font-weight            600
+  font-alt               0
+font-alt-regular(n)
+  font-weight            400
+  font-alt               0
+/*****  Alternate Font  *****/
+/**********  Font Palette   **********/
+
+
+/**********   Properties    **********/
+border-thin(color)
+  border                 1px solid color
+
+border-box(n)
+  -webkit-box-sizing     border-box
+  -moz-box-sizing        border-box
+  box-sizing             border-box
+
+border-radius(n)
+  -webkit-border-radius  n
+  -moz-border-radius     n
+  border-radius          n
+/**********   Properties    **********/
+
+
+/**********     Buttons     **********/
+std-btn(n)
+  text-transform         uppercase
+  padding                8px 15px
+  border-radius          15px
+  font-size              11px
+
+.std-btn-light
+  border-thin            #BECDD5
+  color                  #2E5972
+  font-main-bold         0
+  std-btn                0
+
+.std-btn-dark
+  background             rgba(0,0,0,.35)
+  border-thin            #95AFBF
+  color                  #94AEBF
+  font-main-black        0
+  std-btn                0
+/**********     Buttons     **********/
+
+
+/**********      Icons      **********/
+.cb-icon
+  vertical-align         top
+
+.cb-icon-light
+  main-light-fill        0
+/**********      Icons      **********/
+/***************  Multi-Purpose Elements   ***************/
+
+
+
+/***************  Single-Purpose Elements  ***************/
+.bubble-cover
+  background             #999 // TESTING
+  height                 145px
+  padding                20px 30px // TODO: CHANGE THIS TO VERTICAL ALIGN MIDDLE WITH 30PX LEFT/RIGHT PADDING
+/***************  Single-Purpose Elements  ***************/

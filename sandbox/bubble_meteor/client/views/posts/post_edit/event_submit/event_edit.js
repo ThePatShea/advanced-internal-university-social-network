@@ -7,7 +7,7 @@ Template.eventEdit.events({
     var postProperties = {
       name: $(e.target).find('[name=name]').val(),
       body: $(e.target).find('[name=body]').val(),
-      startTime: $(e.target).find('[name=startTime]').val(),
+      dateTime: $(e.target).find('[name=dateTime]').val(),
       location: $(e.target).find('[name=location]').val(),
       lastUpdated: new Date().getTime()
     }
