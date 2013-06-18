@@ -1,14 +1,3 @@
-/* Added by Junhao */
-.badgeCenter
-{
-  margin-left:auto;
-  margin-right:auto;
-  width:60%;
-}
-
-
-/* Added by Junhao */
-
 /* Added by Pat */
 .wysiwyg_group .wysiwyg {
   border: 1px solid #ccc;
@@ -57,17 +46,6 @@ a {
   width: 100%;
 }
 
-.sidebar {
-  background: #2F5973;
-  position: fixed;
-  height: 5000px;
-  width: 240px;
-  }
-  .sidebar .top-btns {
-    overflow: hidden; /* Makes border wrap around float left divs */
-    border-bottom: 1px solid #BBCCD7;
-    border-top: 1px solid #BBCCD7;
-    }
     .sidebar .top-btns .top-btn {
       text-transform: uppercase;
       background: #95AFBF;

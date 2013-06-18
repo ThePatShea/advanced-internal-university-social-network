@@ -37,6 +37,8 @@ main-light-bg(n)
   background             #2f5973
 
 
+main-xlight-border(n)
+  border-thin            #95afbf
 main-xlight-color(n)
   color                  #95afbf
 main-xlight-fill(n)
@@ -87,6 +89,10 @@ font-alt-regular(n)
 
 
 /**********   Properties    **********/
+border-thin-top-btm(color)
+  border-bottom          1px solid color
+  border-top             1px solid color
+
 border-thin(color)
   border                 1px solid color
 
@@ -108,17 +114,16 @@ std-btn(n)
   padding                8px 15px
   border-radius          15px
   font-size              11px
+  main-xlight-border     0
 
 .std-btn-light
-  border-thin            #BECDD5
-  color                  #2E5972
+  main-light-color       0
   font-main-bold         0
   std-btn                0
 
 .std-btn-dark
   background             rgba(0,0,0,.35)
-  border-thin            #95AFBF
-  color                  #94AEBF
+  main-xlight-color      0
   font-main-black        0
   std-btn                0
 /**********     Buttons     **********/
@@ -136,8 +141,22 @@ std-btn(n)
 
 
 /***************  Single-Purpose Elements  ***************/
+/**********       sidebar        **********/
+.sidebar
+  height                 5000px
+  width                  240px
+  position               fixed
+  main-light-bg          0
+  .top-btns
+    border-thin-top-btm  #BBCCD7
+    overflow             hidden
+    
+/**********       sidebar        **********/
+
+/**********     bubble-cover     **********/
 .bubble-cover
   background             #999 // TESTING
   height                 145px
   padding                20px 30px // TODO: CHANGE THIS TO VERTICAL ALIGN MIDDLE WITH 30PX LEFT/RIGHT PADDING
+/**********     bubble-cover     **********/
 /***************  Single-Purpose Elements  ***************/
