@@ -80,7 +80,11 @@ a {
       width: 50%;
       border: 0;
       }
-      .sidebar .top-btns .top-btn:first-child {
+      .sidebar .top-btns .top-btn .lbl {
+        line-height: 20px;
+        padding: 0 0 0 10px;
+      }
+      .sidebar .top-btns .top-btn.left {
         border-right: 1px solid #7C9CAF;
       }
       .sidebar .top-btns .top-btn:hover {
