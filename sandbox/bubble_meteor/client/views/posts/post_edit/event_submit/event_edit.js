@@ -1,3 +1,13 @@
+Template.eventEdit.helpers({
+  getDate: function(){
+    return moment(this.submitted).format("M/DD/YYYY");
+  },
+  getTime: function(){
+    return moment(this.submitted).format("hh:mm a");
+  }
+
+});
+
 Template.eventEdit.events({
   'submit form': function(e) {
     e.preventDefault();
@@ -31,3 +41,25 @@ Template.eventEdit.events({
     }
   }
 });
+
+Template.eventEdit.rendered = function() {
+  $(".date-picker").glDatePicker({cssName: 'flatwhite'});
+
+  //Format the time when the textbox is changed
+  $(".input-small").change(function(){
+    var time = $(".input-small").val();
+    if (time) {
+
+      var firstAlphabet  = parseInt(time[0]);
+
+      if (time.length > 9 || (!firstAlphabet)){
+        $(".input-small").val("Time (ex: 9am)");
+      }else{
+        formatedTime = moment(time,"h:mm a").format("h:mm a");
+        $(".input-small").val(formatedTime);
+      }
+
+    }
+  });
+
+}
