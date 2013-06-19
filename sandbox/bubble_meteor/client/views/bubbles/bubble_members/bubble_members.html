@@ -1,0 +1,13 @@
+<template name="bubbleMembers">
+  {{#with getCurrentBubble}}
+  	{{>bubbleInvitation}}
+
+  	<hr>
+    {{> invitationList}}
+    <hr>
+    {{> bubbleAdminList}}
+    <hr>
+    {{> bubbleMemberList}}
+
+  {{/with}}
+</template>

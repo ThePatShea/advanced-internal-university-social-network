@@ -1,14 +1,11 @@
 <template name="bubbleInvitation">
-  {{#with getCurrentBubble}}
-    <form class="main">
+    <div class="control-group">
+        <label class="control-label" for="title">Search Friends</label>
+        <div class="controls">
+            <input class="search-text" name="searchText" type="text" placeholder="Friend's Name"/>
+        </div>
+    </div>
 
-      <div class="control-group">
-          <label class="control-label" for="title">Search Friends</label>
-          <div class="controls">
-              <input class="search-text" name="searchText" type="text" placeholder="Friend's Name"/>
-          </div>
-      </div>
-    </form>
     <hr>
     Search Field
     <br />
@@ -26,15 +23,6 @@
     <br />
     <button class="btn btn-small add-invitees" type="button">Add to Invitee List</button>
 
-
-    <hr>
-    Invitee List
-    <br />
-    {{#each getInvitees}}
-      {{this}}
-      <br />
-    {{/each}}
-  {{/with}}
 </template>
 
 

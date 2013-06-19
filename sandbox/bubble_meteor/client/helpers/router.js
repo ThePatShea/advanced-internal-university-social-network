@@ -29,8 +29,8 @@ Meteor.Router.add({
     to: 'bubbleEdit', 
     and: function(id) { Session.set('currentBubbleId', id); }    
   },
-  '/bubbles/:_id/invitation':{
-    to: 'bubbleInvitation',
+  '/bubbles/:_id/members':{
+    to: 'bubbleMembersPage',
     and: function(id) { Session.set('currentBubbleId', id);}
   },
   '/bubbles/:_id/search_result':{
