@@ -1,11 +1,6 @@
 Template.bubbleItem.helpers({
 	isAdmin: function(){
-		var admins = this.users.admins;
-		for (var i=0; i<admins.length; i++) {
-			if (admins[i] == Meteor.userId()){
-				return true;
-			}
-		}
+		return _.contains(this.users.admins,Meteor.userId());
 	},
 	getCategory: function(){
 		var category = this.category;
