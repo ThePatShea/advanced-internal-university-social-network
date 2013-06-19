@@ -84,6 +84,9 @@ font-alt-semibold(n)
 font-alt-regular(n)
   font-weight            400
   font-alt               0
+font-alt-light(n)
+  font-weight            300
+  font-alt               0
 /*****  Alternate Font  *****/
 /**********  Font Palette   **********/
 
@@ -135,6 +138,9 @@ std-btn(n)
 
 .cb-icon-light
   main-light-fill        0
+
+.cb-icon-xlight
+  main-xlight-fill       0
 /**********      Icons      **********/
 /***************  Multi-Purpose Elements   ***************/
 
@@ -148,15 +154,24 @@ std-btn(n)
   position               fixed
   main-light-bg          0
   .top-btns
-    border-thin-top-btm  #BBCCD7
-    overflow             hidden
+    border-thin-top-btm      #BBCCD7
+    overflow                 hidden
     
 /**********       sidebar        **********/
 
-/**********     bubble-cover     **********/
+/**********        bubble-cover       **********/
 .bubble-cover
   background             #999 // TESTING
   height                 145px
   padding                20px 30px // TODO: CHANGE THIS TO VERTICAL ALIGN MIDDLE WITH 30PX LEFT/RIGHT PADDING
-/**********     bubble-cover     **********/
+  .std-btn-dark
+    .lbl
+      padding                    0 0 0 5px
+/**********        bubble-cover       **********/
+
+/**********  bubble-section-selector  **********/
+.bubble-section-selector
+  height                 100px
+  background             red // TESTING
+/**********  bubble-section-selector  **********/
 /***************  Single-Purpose Elements  ***************/

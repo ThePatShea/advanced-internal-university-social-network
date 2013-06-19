@@ -3,7 +3,10 @@
     {{title}}
     {{#if ownBubble}}
       <a href="{{bubbleEditPath this}}">
-        <button class="std-btn-dark pull-right">edit bubble</button>
+        <button class="std-btn-dark pull-right">
+          <span class="cb-icon-xlight">{{> icon-settings}}</span>
+          <span class="lbl">edit bubble</span>
+        </button>
       </a>
     {{/if}}
   </div>
