@@ -22,3 +22,13 @@ Template.bubbleInvitation.events({
   },
 });
 
+
+Template.bubbleInvitation.rendered = function() {
+
+  //Format the searchfield when the textbox is changed
+  $(".search-text").change(function(){
+    var searchText = $(".search-text").val();
+    $(".search-field").val(searchText);
+  });
+
+}
