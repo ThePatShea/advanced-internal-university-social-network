@@ -8,20 +8,18 @@
               <input type="submit" value="Submit" class="btn btn-primary submit"/>
           </div>
       </div>
-
-		<div class="search_result" style="float: left"">
-
-
-					{{getSelectedUsers}}
-
-		</div>
-  
+			<div class="search_result" style="float: left">
+				{{#each findUsers}} 
+					<p><a href="">{{>userItem}}</a></p>
+				{{/each}}
+			</div>
+		</form>
   {{/with}}
 </template>
 
-<template name="selectedUserItem">
-  <div>
-    {{getSelectedUser}}
-  </div>
+<template name="userItem">
+	{{username}}
+	<p>
+<!--	{{emails}}-->
 </template>
 
