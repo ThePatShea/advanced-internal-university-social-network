@@ -1,7 +1,18 @@
-Template.bubblesList.rendered = function(){
-  $(window).scroll(function(){
-    if ($(window).scrollTop() == $(document).height() - $(window).height()){
-      this.newPostsHandle.loadNextPage();
-    }
-  });
-}
+Template.bubblesList.helpers({
+	bubblesReady: function(){
+		return ! bubblesHandle.loading();
+	},
+	allBubblesLoaded: function() {
+		return ! bubblesHandle.loading() && 
+			Bubbles.find().count() < bubblesHandle.loaded();
+	}
+});
+
+Template.bubblesList.events({
+	'click .load-more': function(event) {
+    event.preventDefault();
+    this.handle.loadNextPage();
+  }
+});
+
+

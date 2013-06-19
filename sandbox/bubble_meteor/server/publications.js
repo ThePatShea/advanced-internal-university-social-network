@@ -14,8 +14,12 @@ Meteor.publish('updates', function() {
   return Updates.find({userId: this.userId, read: false}, {sort: {submitted:1}});
 });
 
-Meteor.publish('bubbles', function(){
-	return Bubbles.find();
+Meteor.publish('singleBubble', function(id){
+	return id && Bubbles.find(id);
+});
+
+Meteor.publish('bubbles', function(limit) {
+  return Bubbles.find({}, {sort: {submitted: -1}, limit: limit});
 });
 
 Meteor.publish("findOneUser", function (userId) {
