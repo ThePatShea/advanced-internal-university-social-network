@@ -8,12 +8,12 @@
               <input type="submit" value="Submit" class="btn btn-primary submit"/>
           </div>
       </div>
-			<div class="search_result" style="float: left">
-				{{#each findUsers}} 
-					<p><a href="">{{>userItem}}</a></p>
-				{{/each}}
-			</div>
-		</form>
+    </form>
+		<div class="search_result" style="float: left">
+			{{#each findUsers}} 
+				<p><a href="">{{>userItem}}</a></p>
+			{{/each}}
+		</div>
   {{/with}}
 </template>
 

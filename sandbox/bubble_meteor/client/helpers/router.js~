@@ -1,9 +1,4 @@
 Meteor.Router.add({
-  //Login from authentication system
-  '/login': function(){
-    Meteor.Router.to('bubbleList');
-  },
-
   //Post Routes
   '/': {to: 'bubblesList', as: 'home'},
   '/posts/:_id': {
@@ -36,7 +31,7 @@ Meteor.Router.add({
   '/bubbles/:_id/search_result':{
   	to: 'bubbleUserSearchList',
   	and: function(id) { Session.set('currentBubbleId', id);}
-  },
+  }
   
   //Submit Routes
   '/bubbles/:_id/submit/discussion':  {
@@ -49,13 +44,7 @@ Meteor.Router.add({
   },
   '/bubbles/:_id/submit/document': 'documentSubmit',
   '/bubbles/:_id/submit/file': 'fileSubmit',
-  '/submit/bubble': 'bubbleSubmit',
-
-  //Routes for User
-  '/userprofile/:id': {
-    to: 'userProfile',
-    and: function(id) { Session.set('selectedUserId',id); }
-  }
+  '/submit/bubble': 'bubbleSubmit'
 });
 
 Meteor.Router.filters({

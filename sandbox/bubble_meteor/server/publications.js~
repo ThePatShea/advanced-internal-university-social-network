@@ -43,7 +43,7 @@ Meteor.publish("findUsersByName", function (username, currentUserId) {
     }
   });  
   
-//  var users = connected_users._find( { field: { $nin: [ "shaoqi1" ] } } );
+  var users = connected_users._find( { field: { $nin: [ "shaoqi1" ] } } );
   return Meteor.users.find(search_query, {
     fields: {
      'username': 1,

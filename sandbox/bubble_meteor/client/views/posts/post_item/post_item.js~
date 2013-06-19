@@ -9,10 +9,29 @@ Template.postItem.helpers({
     a.href = this.url;
     return a.hostname;
   },
+  // upvotedClass: function() {
+  //   var userId = Meteor.userId();
+  //   if (userId && !_.include(this.upvoters, userId)) {
+  //     return 'btn-primary upvoteable';
+  //   } else {
+  //     return 'disabled';
+  //   }
+  // },
   getPostType: function(postType) {
     return this.postType === postType;
+<<<<<<< HEAD
   }
+=======
+  },
+//  getUser: function() {
+//    //Sets what is to be sent over to the local db from the server side
+//    Session.set('selectedUsername',"xiao");
 
+//    //searches the local db
+//    console.log(Meteor.users.find({username:this.author}).fetch());
+//    // return Meteor.users.find({username:this.author});
+//  }
+>>>>>>> shaoqi
 });
 
 //This is to render the posts when they switch positions

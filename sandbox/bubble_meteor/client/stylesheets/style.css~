@@ -10,7 +10,7 @@
 /* Added by Junhao */
 
 /* Added by Pat */
-.wysiwyg_group .wysiwyg {
+.wysiwyg_group #wysiwyg_discussion {
   border: 1px solid #ccc;
   background: white; 
   min-height: 300px;
@@ -80,11 +80,7 @@ a {
       width: 50%;
       border: 0;
       }
-      .sidebar .top-btns .top-btn .lbl {
-        line-height: 20px;
-        padding: 0 0 0 10px;
-      }
-      .sidebar .top-btns .top-btn.left {
+      .sidebar .top-btns .top-btn:first-child {
         border-right: 1px solid #7C9CAF;
       }
       .sidebar .top-btns .top-btn:hover {
@@ -389,6 +385,4 @@ body {
     }
 
 /* added by Shao QI */
-
-
 

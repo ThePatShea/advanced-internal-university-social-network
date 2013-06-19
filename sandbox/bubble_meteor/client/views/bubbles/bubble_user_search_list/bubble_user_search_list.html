@@ -1,0 +1,10 @@
+<template name="bubbleUserSearchList">
+  {{#with getCurrentBubble}}
+    {{> bubbleItem}}
+	  {{searchContent}}
+	  {{#each bubbleUserSearchList}}
+	  	{{> bubbleUserItem}}
+	  	
+	  {{/each}}
+  {{/with}}
+</template>

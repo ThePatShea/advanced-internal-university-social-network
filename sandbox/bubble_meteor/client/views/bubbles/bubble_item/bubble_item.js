@@ -24,3 +24,4 @@ Template.bubbleItem.events({
     Session.set('currentBubbleId', this._id);
   }
 });
+
