@@ -27,24 +27,20 @@ Meteor.publish("findOneUser", function (userId) {
 	});
 });
 
-Meteor.publish("findUsersByName", function (username, currentUserId) {
+Meteor.publish("findUsersByName", function (username, bubbleId) {
   var search_name   =  new RegExp(username,'i');
+
+  //Retrieve list of users who should not be retrieved
+  var users = Bubbles.findOne(bubbleId).users;
+  var rejectList = [];
+  rejectList = rejectList.concat(users.admins);
+  rejectList = rejectList.concat(users.invitees);
+  rejectList = rejectList.concat(users.members);
+  rejectList = rejectList.concat(users.applicants);
+
   var search_query  =  {username: search_name};
   
-  
-  
-  //TODO: Add in _id: {$nin: connected_users} (an array of all members/admins/invitees of that bubble)
-  //exclude the members already in the bubble
-  //Match.check(searchContent);
-  var connected_users = Meteor.users.find(search_query, {
-    fields: {
-     'username': 1,
-     'emails': 1
-    }
-  });  
-  
-//  var users = connected_users._find( { field: { $nin: [ "shaoqi1" ] } } );
-  return Meteor.users.find(search_query, {
+  return Meteor.users.find(search_query, {username: {$nin:rejectList}}, {
     fields: {
      'username': 1,
      'emails': 1

@@ -5,7 +5,7 @@ commentsHandle = Meteor.subscribeWithPagination('comments',10);
 Deps.autorun(function() {
   Meteor.subscribe('comments', Session.get('currentPostId'));
 	Meteor.subscribe('findOneUser', Session.get('selectedUserId'));
-	Meteor.subscribe('findUsersByName', Session.get('selectedUsername',Session.get('currentUserId')));
+	Meteor.subscribe('findUsersByName', Session.get('selectedUsername'),Session.get('currentBubbleId'));
 })
 
 Meteor.subscribe('updates');
