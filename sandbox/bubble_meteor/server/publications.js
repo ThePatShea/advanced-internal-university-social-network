@@ -27,11 +27,23 @@ Meteor.publish("findOneUser", function (userId) {
 	});
 });
 
-Meteor.publish("findUsersByName", function (username) {
+Meteor.publish("findUsersByName", function (username, currentUserId) {
   var search_name   =  new RegExp(username,'i');
   var search_query  =  {username: search_name};
+  
+  
+  
   //TODO: Add in _id: {$nin: connected_users} (an array of all members/admins/invitees of that bubble)
-
+  //exclude the members already in the bubble
+  //Match.check(searchContent);
+  var connected_users = Meteor.users.find(search_query, {
+    fields: {
+     'username': 1,
+     'emails': 1
+    }
+  });  
+  
+//  var users = connected_users._find( { field: { $nin: [ "shaoqi1" ] } } );
   return Meteor.users.find(search_query, {
     fields: {
      'username': 1,
@@ -39,3 +51,4 @@ Meteor.publish("findUsersByName", function (username) {
     }
   });
 });
+

@@ -62,7 +62,7 @@ a {
   position: fixed;
   height: 5000px;
   width: 240px;
-  }
+}
   .sidebar .top-btns {
     overflow: hidden; /* Makes border wrap around float left divs */
     border-bottom: 1px solid #BBCCD7;
@@ -389,4 +389,6 @@ body {
     }
 
 /* added by Shao QI */
+
+
 
