@@ -1,9 +1,15 @@
 <template name="sidebar">
   <section class="sidebar">
     <div class="top-btns">
-      <button class="top-btn">O- search</button>
+      <a href="#">
+        <button class="top-btn left">O- search</button>
+      </a>
       <a href="{{bubbleSubmitPath}}">
-        <button class="top-btn">+ create</button>
+        <button class="top-btn right">
+          <span class="cb-icon-light">{{> icon-bubble}}</span>
+          <span>+</span>
+          <span class="lbl">create</span>
+        </button>
       </a>
     </div>
     <div class="main-btns">
@@ -20,8 +26,5 @@
         </a>
       {{/each}}
     </div>
-      <div class="main-btns">
-        INVITATIONS
-      </div>
   </section>
 </template>

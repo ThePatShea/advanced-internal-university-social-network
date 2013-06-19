@@ -3,10 +3,18 @@ Template.bubbleItem.helpers({
 		var admins = this.users.admins;
 		for (var i=0; i<admins.length; i++) {
 			if (admins[i] == Meteor.userId()){
-				return "Yes";
-			}else{
-			  	return "No";
+				return true;
 			}
+		}
+	},
+	getCategory: function(){
+		var category = this.category;
+		if(category == 'academics') {
+			return 'Academics';
+		}else if(category == 'studentresource'){
+			return 'Student Resource';
+		}else if(category == 'studentorganization'){
+			return 'Student Organization';
 		}
 	}
 });
@@ -16,3 +24,4 @@ Template.bubbleItem.events({
     Session.set('currentBubbleId', this._id);
   }
 });
+

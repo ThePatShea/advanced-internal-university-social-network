@@ -9,17 +9,10 @@ Template.postItem.helpers({
     a.href = this.url;
     return a.hostname;
   },
-  upvotedClass: function() {
-    var userId = Meteor.userId();
-    if (userId && !_.include(this.upvoters, userId)) {
-      return 'btn-primary upvoteable';
-    } else {
-      return 'disabled';
-    }
-  },
-  getPostType: function(postType){
+  getPostType: function(postType) {
     return this.postType === postType;
   }
+
 });
 
 //This is to render the posts when they switch positions

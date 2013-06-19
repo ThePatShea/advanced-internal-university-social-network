@@ -7,8 +7,8 @@ Posts.allow({
 
 Posts.deny({
   update: function(userId, post, fieldNames) {
-    // may only edit the following three fields:
-    return (_.without(fieldNames, 'name', 'body', 'startTime', 'location', 'file','fileType').length > 0);
+    // may only edit the following fields:
+    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastUpdated').length > 0);
   }
 });
 
@@ -32,7 +32,7 @@ Meteor.methods({
     }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes,'postType', 'name', 'body', 'file', 'fileType','startTime', 'location','bubbleId'), {
+    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
@@ -75,7 +75,23 @@ Meteor.methods({
     }, {
       $addToSet: {bubble: bubble._id}
     });
+  },
+
+  attendEvent: function(postId,username){
+    post = Posts.findOne(postId);
+    if (!_.contains(post.attendees,username)) {
+      Posts.update({_id:postId},
+      {
+        $addToSet: {attendees:username}
+      });
+    }else{
+      Posts.update({_id:postId},
+      {
+        $pull: {attendees:username}
+      });
+    }
   }
+      
   
 });
 

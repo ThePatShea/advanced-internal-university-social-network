@@ -3,5 +3,25 @@
     {{> postItem}}
     {{> postAttributes}}    
     {{> commentsList}}
+
+
+	  <h4>{{numOfAttendees}} people going</h4>
+    {{#if isEvent}}
+		  </br>
+		  {{#if notAttending}}
+			  <p>
+				  <button class="btn btn-small btn-success" type="button">I'M GOING</button>
+				</p>
+			{{/if}}
+			{{#if isAttending}}
+			  <p>
+				  <button class="btn btn-small btn-success" type="button">I'M NOT GOING</button>
+				</p>
+			{{/if}}
+			{{#with attendees}}
+				{{this}}
+			{{/with}}
+		{{/if}}
+
   {{/with}}
 </template>

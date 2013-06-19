@@ -1,0 +1,47 @@
+<template name="eventEdit">
+  {{#with getCurrentPost}}
+    <form class="main">
+      <div class="control-group">
+          <div class="controls">
+              <input name="name" type="text" value="{{name}}"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input class="date-picker" name="date" type="text" value="{{getDate}}"/>
+              <input class="input-small" name="time" type="text" value="{{getTime}}"/>
+          </div>
+      </div>
+    
+      <div class="control-group">
+          <div class="controls">
+              <input name="location" type="text" value="{{location}}" />
+          </div>
+      </div>
+
+      <div class="control-group">
+          <div class="controls">
+              <textarea name="body" type="text">{{body}}</textarea>
+          </div>
+      </div>
+
+      {{#with getCurrentBubble}}
+        <span class="badge badge-inverse">{{title}}</span>
+      {{/with}}
+      <hr />
+    
+      <div class="control-group">
+          <div class="controls">
+              <input type="submit" value="Submit" class="btn btn-primary"/>
+          </div>
+      </div>
+      <hr/>
+      <div class="control-group">
+          <div class="controls">
+              <a class="btn btn-danger delete" href="#">Delete post</a>
+          </div>
+      </div>
+    </form>
+  {{/with}}
+</template>

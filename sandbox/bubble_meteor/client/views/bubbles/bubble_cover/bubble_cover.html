@@ -1,0 +1,14 @@
+<template name="bubbleCover">
+  <div class="bubble-cover">
+    {{title}}
+    {{#if ownBubble}}
+      <a href="{{bubbleEditPath this}}">
+        <button class="std-btn-dark pull-right">edit bubble</button>
+      </a>
+
+      <a href="{{bubbleMembersPagePath this}}">
+        <button class="std-btn-dark pull-right">Members Page</button>
+      </a>
+    {{/if}}
+  </div>
+</template>

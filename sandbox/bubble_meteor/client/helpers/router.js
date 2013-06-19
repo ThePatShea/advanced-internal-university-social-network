@@ -29,9 +29,13 @@ Meteor.Router.add({
     to: 'bubbleEdit', 
     and: function(id) { Session.set('currentBubbleId', id); }    
   },
-  '/bubbles/:_id/invitation':{
-    to: 'bubbleInvitation',
+  '/bubbles/:_id/members':{
+    to: 'bubbleMembersPage',
     and: function(id) { Session.set('currentBubbleId', id);}
+  },
+  '/bubbles/:_id/search_result':{
+  	to: 'bubbleUserSearchList',
+  	and: function(id) { Session.set('currentBubbleId', id);}
   },
   
   //Submit Routes
@@ -45,10 +49,14 @@ Meteor.Router.add({
   },
   '/bubbles/:_id/submit/document': 'documentSubmit',
   '/bubbles/:_id/submit/file': 'fileSubmit',
-  '/submit/bubble': 'bubbleSubmit'
+  '/submit/bubble': 'bubbleSubmit',
+
+  //Routes for User
+  '/userprofile/:id': {
+    to: 'userProfile',
+    and: function(id) { Session.set('selectedUserId',id); }
+  }
 });
-
-
 
 Meteor.Router.filters({
   'requireLogin': function(page) {
