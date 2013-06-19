@@ -16,12 +16,7 @@ Template.bubbleInvitation.helpers({
 });
 
 Template.bubbleInvitation.events({
-  'submit form': function(e) {
-    e.preventDefault();
-    //store the content into the session
-		Session.set('selectedUsername', $(e.target).find('[name=title]').val()); 
-    Session.set('currentUserId', Meteor.userId());
-  },
+
   'click .shortlist-invitee': function(event){
     event.preventDefault();
     var list = Session.get('inviteeList'+Session.get('currentBubbleId'));
@@ -51,10 +46,8 @@ Template.bubbleInvitation.events({
 
 Template.bubbleInvitation.rendered = function() {
 
-  //Format the searchfield when the textbox is changed
-  $(".search-text").change(function(){
+  $(".search-text").bind("propertychange keyup input paste", function (event) {
     var searchText = $(".search-text").val();
     Session.set('selectedUsername', searchText);
   });
-
 }
