@@ -32,15 +32,14 @@ Meteor.methods({
     }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId'), {
+    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       commentsCount: 0,
       upvoters: [], 
-      votes: 0,
-      attendees: []
+      votes: 0
     });
 
     post._id = Posts.insert(post);
@@ -79,10 +78,18 @@ Meteor.methods({
   },
 
   attendEvent: function(postId,username){
-    Posts.update({_id:postId},
-    {
-      $addToSet: {attendees:username}
-    });
+    post = Posts.findOne(postId);
+    if (!_.contains(post.attendees,username)) {
+      Posts.update({_id:postId},
+      {
+        $addToSet: {attendees:username}
+      });
+    }else{
+      Posts.update({_id:postId},
+      {
+        $pull: {attendees:username}
+      });
+    }
   }
       
   

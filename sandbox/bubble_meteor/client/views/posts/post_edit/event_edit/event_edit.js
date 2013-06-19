@@ -47,7 +47,9 @@ Template.eventEdit.rendered = function() {
   $(".date-picker").glDatePicker(
     {
       cssName: 'flatwhite',
-      selectedDate: new Date($(".date-picker").val())
+      selectedDate: new Date($(".date-picker").val()),
+      allowMonthSelect: false,
+      allowYearSelect: false
     }
   );
 

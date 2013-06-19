@@ -10,13 +10,20 @@ Template.eventSubmit.events({
       name: $(event.target).find('[name=name]').val(),
       body: $(event.target).find('[name=body]').val(),
       postType: 'event',
-      bubbleId: Session.get('currentBubbleId')
+      bubbleId: Session.get('currentBubbleId'),
+      attendees: [Meteor.users.findOne().username]
     });
   }
 });
 
 Template.eventSubmit.rendered = function() {
-  $(".date-picker").glDatePicker({cssName: 'flatwhite'});
+  $(".date-picker").glDatePicker(
+    {
+      cssName: 'flatwhite',
+      allowMonthSelect: false,
+      allowYearSelect: false
+    }
+  );
 
   //Format the time when the textbox is changed
   $(".input-small").change(function(){

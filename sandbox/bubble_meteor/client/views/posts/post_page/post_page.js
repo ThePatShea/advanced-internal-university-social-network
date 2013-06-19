@@ -11,8 +11,12 @@ Template.postPage.helpers({
   	return this.attendees.length;
   },
   isAttending: function() {
-  	return !_.contains(this.attendees,Meteor.users.findOne().username);
+  	return _.contains(this.attendees,Meteor.users.findOne().username);
+  },
+  notAttending: function() {
+    return !_.contains(this.attendees,Meteor.users.findOne().username);
   }
+
 });
 
 Template.postPage.events({
