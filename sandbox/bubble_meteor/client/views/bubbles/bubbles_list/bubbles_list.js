@@ -1,18 +1,16 @@
 Template.bubblesList.helpers({
 	bubblesReady: function(){
-		return ! bubblesHandle.loading();
+		return ! mainBubblesHandle.loading();
 	},
 	allBubblesLoaded: function() {
-		return ! bubblesHandle.loading() && 
-			Bubbles.find().count() < bubblesHandle.loaded();
+		return ! mainBubblesHandle.loading() && 
+			Bubbles.find().count() < mainBubblesHandle.loaded();
 	}
 });
 
 Template.bubblesList.events({
-	'click .load-more': function(event) {
-    event.preventDefault();
-    this.handle.loadNextPage();
+  'click .load-more': function(e) {
+    e.preventDefault();
+    mainBubblesHandle.loadNextPage();
   }
 });
-
-

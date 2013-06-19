@@ -12,7 +12,7 @@ Handlebars.registerHelper('getCurrentBubble', function() {
 });
 
 Handlebars.registerHelper('getBubbles', function() {
-  return Bubbles.find({}, {sort: {submitted: -1}, limit: bubblesHandle.limit()});
+  return Bubbles.find({}, {sort: {submitted: -1}, limit: mainBubblesHandle.limit()});
 });
 
 Handlebars.registerHelper('getCurrentPost', function() {

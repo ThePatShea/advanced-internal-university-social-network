@@ -12,5 +12,14 @@ Template.sidebar.helpers({
       compressedList.push(update);
     });
     return compressedList.length;
+  },
+  getSidebarBubbles: function(){
+    return Bubbles.find({}, {sort: {submitted: -1}, limit: 5});
+  },
+
+  getInvitations: function() {
+    var bubbles =  Bubbles.find({'users.invitees':Meteor.userId()});
+    console.log(bubbles.fetch());
+    return bubbles;
   }
 });
