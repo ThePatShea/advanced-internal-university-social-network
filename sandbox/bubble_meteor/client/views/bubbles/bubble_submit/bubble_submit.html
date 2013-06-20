@@ -1,4 +1,12 @@
 <template name="bubbleSubmit">
+<style>
+#drop_zone{width: 500px; border:2px dashed #bbb;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:25px;text-align:center;font: 20pt bold 'Vollkorn';color:#bbb}
+.thumb {
+height: 75px;
+border: 1px solid #000;
+margin: 10px 5px 0 0;
+}
+</style>
   <form class="main">
     <div class="control-group">
         <label class="control-label" for="title">Title</label>
@@ -11,6 +19,13 @@
         <label class="control-label" for="description">Description</label>
         <div class="controls">
             <input name="description" type="text" value="" placeholder="Description of Bubble"/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div id="bubble_image">
+            <div id="drop_zone">Drop bubble image here.</div>
+            <output id="list"></output>
         </div>
     </div>
 
