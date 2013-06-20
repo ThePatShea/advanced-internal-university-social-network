@@ -1,8 +1,8 @@
-<template name="inviteeList">
+<template name="bubbleInviteesList">
   Invitee List
   <br />
   {{#each getInvitees}}
-    {{this}}
+    {{getUsername this}}
     <br />
   {{/each}}
 </template>

@@ -1,7 +1,7 @@
 <template name="bubbleCover">
   <div class="bubble-cover">
     {{title}}
-    {{#if ownBubble}}
+    {{#if isAdmin}}
       <a href="{{bubbleEditPath this}}">
         <button class="std-btn-dark pull-right">edit bubble</button>
       </a>
