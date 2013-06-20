@@ -32,7 +32,7 @@ Meteor.methods({
     }
 
     if(!postAttributes.attendees){
-      postAttribtues.attendees = [];
+      postAttributes.attendees = [];
     }
 
     // pick out the whitelisted keys
