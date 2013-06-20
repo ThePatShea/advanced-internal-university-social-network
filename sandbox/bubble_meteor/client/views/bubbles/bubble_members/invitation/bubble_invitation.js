@@ -2,11 +2,12 @@ Template.bubbleInvitation.helpers({
   findUsers: function(){
     var users = this.users;
     var rejectList = [];
-    rejectList = rejectList.concat(users.invitees);
-    console.log("A: " + rejectList);
-    rejectList = rejectList.concat(Session.get('inviteeList'+Session.get('currentBubbleId')));
-    console.log("currentBubbleId: "+Session.get('inviteeList'+Session.get('currentBubbleId')));
-    rejectList.push(Meteor.userId());
+    rejectList = rejectList.concat(users.invitees)
+                  .concat(Session.get('inviteeList'+Session.get('currentBubbleId')))
+                  .concat(users.admins)
+                  .concat(users.members)
+                  .concat(users.invitees)
+                  .concat(users.applicants)
     console.log("B: " + rejectList);
       return Meteor.users.find({_id: {$nin: rejectList}});
   },
@@ -51,6 +52,10 @@ Template.bubbleInvitation.rendered = function() {
 
   $(".search-text").bind("propertychange keyup input paste", function (event) {
     var searchText = $(".search-text").val();
-    Session.set('selectedUsername', searchText);
+    if (searchText == ""){
+      Session.set('selectedUsername',undefined);
+    }else{
+      Session.set('selectedUsername', searchText);
+    }
   });
 }

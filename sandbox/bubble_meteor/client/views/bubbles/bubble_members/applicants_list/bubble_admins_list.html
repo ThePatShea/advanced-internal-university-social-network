@@ -1,0 +1,12 @@
+<template name="bubbleApplicantsList">
+	This is applicant list
+	<br />
+  {{#each getApplicants}}
+    {{getUsername this}}
+		{{#if isAdmin}}
+  		<button class="btn btn-small btn-success accept" type="button">Accept</button>
+      <button class="btn btn-small btn-danger reject" type="button">Reject</button>
+		{{/if}}
+    <br />
+  {{/each}}
+</template>

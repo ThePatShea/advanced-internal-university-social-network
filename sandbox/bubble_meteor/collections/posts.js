@@ -38,7 +38,8 @@ Meteor.methods({
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       commentsCount: 0,
-      upvoters: [], 
+      upvoters: [],
+      attendees: 0, 
       votes: 0
     });
 
