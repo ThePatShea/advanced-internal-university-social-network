@@ -3,7 +3,9 @@ Template.bubbleMembersList.helpers({
 		return this.users.members;
 	},
   chosen: function() {
-    return Session.get(Session.get('currentBubbleId')+Meteor.userId);
+    if(Session.get(Session.get('currentBubbleId')+Meteor.userId) == this.toString()){
+      return true;
+    }
   }
 });
 
@@ -24,10 +26,13 @@ Template.bubbleMembersList.events({
     Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
   },
   'click .activate': function() {
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,true);
+    if (Session.get(Session.get('currentBubbleId')+Meteor.userId)){
+      Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+    }else{
+      Session.set(Session.get('currentBubbleId')+Meteor.userId,this.toString());
+    }
   },
   'click .deactivate': function() {
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
   }
 
 });
