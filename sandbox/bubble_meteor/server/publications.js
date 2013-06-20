@@ -27,8 +27,9 @@ Meteor.publish('invitedBubbles', function(userId) {
 });
 
 Meteor.publish('relatedUsers', function(bubbleId) {
-  if(bubbleId){
-    var users = Bubbles.findOne(bubbleId).users;
+  var bubble = Bubbles.findOne(bubbleId);
+  if(bubble){
+    var users = bubble.users;
     var userList = [];
     userList = userList.concat(users.admins)
                     .concat(users.invitees)

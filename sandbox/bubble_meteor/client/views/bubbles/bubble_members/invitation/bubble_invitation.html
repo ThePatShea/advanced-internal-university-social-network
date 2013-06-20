@@ -21,7 +21,9 @@
       <br />
     {{/each}}
     <br />
-    <button class="btn btn-small add-invitees" type="button">Add to Invitee List</button>
+    {{#if potentialInvitees}}
+        <button class="btn btn-small add-invitees" type="button">Add to Invitee List</button>
+    {{/if}}
 
 </template>
 

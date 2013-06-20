@@ -37,10 +37,12 @@ Meteor.methods({
 	},
 
   addInvitee: function(bubbleId,userList){
-    Bubbles.update({_id:bubbleId},
-    {
-      $addToSet: {'users.invitees': {$each: userList}}
-    }); 
+    if(userList && bubbleId){   
+      Bubbles.update({_id:bubbleId},
+      {
+        $addToSet: {'users.invitees': {$each: userList}}
+      }); 
+    }
   }
 
 });
