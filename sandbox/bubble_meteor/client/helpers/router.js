@@ -21,7 +21,7 @@ Meteor.Router.add({
 
   //Bubble Routes
   '/bubbles': 'bubblesList',
-  '/bubbles/:_id': {
+  '/bubbles/:_id/home': {
     to: 'bubblePage', 
     and: function(id) { Session.set('currentBubbleId', id); }
   },

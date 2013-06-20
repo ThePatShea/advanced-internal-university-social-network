@@ -1,17 +1,36 @@
 <template name="bubblePage">
   {{#with getCurrentBubble}}
-    {{> bubbleCover}}
 
+    <div class="page-tabs">
+      <a class="home" href="{{bubblePagePath this}}">Home || </a>
+      <a class="events" href="/">Events ||</a>
+      <a class="discussions" href="/">Discussions ||</a>
+      <a class="files" href="/">Files ||</a>
+      <a class="members" href="/">Members</a>
+    </div>
+ 	<hr>
+  	bubble updates
+    <hr>
+    upcoming events
+    <hr>
+    active discussions
+    <hr>
+    recent documents
+    <hr>
+    latest files
+    <hr>
+
+ 	{{> bubbleCover}}
     <a href="{{discussionSubmitPath this}}">
       <div class="btn">Start a Post</div>
 	  </a>
 	  <hr/>
-	  {{>updatesList}}
-	  <hr/>
-	  
+	  	{{>updatesList}}
+	  <hr/>  
 	  {{#each posts}}
 	  	{{> postItem}}
 	  {{/each}}
+
   {{/with}}
 </template>
 
