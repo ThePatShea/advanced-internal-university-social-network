@@ -7,17 +7,14 @@
       <h3><a href="{{postPagePath this}}">{{name}}</a></h3>
       <p>
         <a href="{{postPagePath this}}">{{pluralize commentsCount "comment"}}</a>
-        {{#if ownPost}} |
-
+        {{#if hasPermission}} |
           {{#if getPostType "discussion"}}
             <a href="{{discussionEditPath this}}">Edit</a>
           {{/if}}
           {{#if getPostType "event"}}
             <a href="{{eventEditPath this}}">Edit</a>
           {{/if}}
-
         {{/if}}
-
       </p>
     </div>
     <div style="width: 100px;" class="pull-right">

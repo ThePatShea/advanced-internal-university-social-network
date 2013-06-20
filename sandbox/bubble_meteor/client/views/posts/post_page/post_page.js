@@ -8,6 +8,7 @@ Template.postPage.helpers({
   	}
   },
   numOfAttendees: function() {
+    console.log(this);
   	return this.attendees.length;
   },
   isAttending: function() {

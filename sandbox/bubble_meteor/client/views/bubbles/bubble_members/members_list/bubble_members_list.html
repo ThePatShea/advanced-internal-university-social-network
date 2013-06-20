@@ -2,10 +2,20 @@
 	This is members list
 	<br />
 	{{#each getMembers}}
-		{{getUsername this}}
 		{{#if isAdmin}}
-    	<button class="btn btn-small btn-inverse promote-member" type="button">Promote to Admin</button>
-    	<button class="btn btn-small btn-inverse remove-member" type="button">Remove from Bubble</button>
+			{{#if chosen}}
+				<button class="btn btn-small deactivate" type="button">
+			{{/if}}
+			{{#if notChosen}}
+				<button class="btn btn-small activate" type="button">
+			{{/if}}
+					{{getUsername this}}
+				</button>
+
+			{{#if chosen}}
+	    	<button class="btn btn-small btn-inverse promote-member" type="button">Promote to Admin</button>
+	    	<button class="btn btn-small btn-inverse remove-member" type="button">Remove from Bubble</button>
+			{{/if}}
 		{{/if}}
 		<br />
 	{{/each}}

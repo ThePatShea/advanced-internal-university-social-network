@@ -45,7 +45,7 @@ Handlebars.registerHelper('isLoggedIn',function() {
 });
 
 Handlebars.registerHelper('getUsername', function(userId) {
-  var user = Meteor.users.findOne({_id:userId});
+  var user = Meteor.users.findOne({_id:userId.toString()});
   if(user) {
     return user.username;
   }

@@ -17,5 +17,4 @@ Deps.autorun(function() {
 })
 
 Meteor.subscribe('updates');
-Meteor.subscribe('relatedUsers');
 

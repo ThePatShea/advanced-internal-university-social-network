@@ -9,9 +9,11 @@
     <hr>
     Search Field
     <br />
-    {{#each findUsers}}
-      <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
-    {{/each}}
+    {{#if hasSearchText}}
+        {{#each findUsers}}
+          <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
+        {{/each}}
+    {{/if}}
 
     <hr>
     Potential Invitee List

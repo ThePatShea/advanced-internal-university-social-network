@@ -5,11 +5,13 @@
       <a href="{{bubbleEditPath this}}">
         <button class="std-btn-dark pull-right">edit bubble</button>
       </a>
+    {{/if}}
 
+    {{#if hasJoinedBubble}}
       <a href="{{bubbleMembersPagePath this}}">
         <button class="btn btn-large btn-info pull-right">Members Page</button>
       </a>
-    {{/if}}
+    {{/if}}}
 
     {{#if hasNotJoinedBubble}}
       {{#if hasApplied}}

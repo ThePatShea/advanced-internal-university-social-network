@@ -26,25 +26,26 @@
         </a>
       {{/each}}
     </div>
-
-    <div class="row">
-      <div class="span9"> 
-        <span class="label label-success">
-          YOU HAVE INVITATIONS 
-        </span>
+    {{#if hasInvitations}}
+      <div class="row">
+        <div class="span9"> 
+          <span class="label label-success">
+            YOU HAVE INVITATIONS 
+          </span>
+        </div>
+        {{#each getInvitations}}
+        <div class="span2">
+          <a href="{{bubblePagePath this}}">
+            {{title}}
+          </a>
+        </div>
+        <div class="span1">
+        <a class="btn btn-mini btn-alert pull-right accept-invitation">accept</a>
+        <a class="btn btn-mini btn-alert pull-right reject-invitation">reject</a>
+        </div>
+        {{/each}}
       </div>
-      {{#each getInvitations}}
-      <div class="span2">
-        <a href="{{bubblePagePath this}}">
-          {{title}}
-        </a>
-      </div>
-      <div class="span1">
-      <a class="btn btn-mini btn-alert pull-right accept-invitation">accept</a>
-      <a class="btn btn-mini btn-alert pull-right reject-invitation">reject</a>
-      </div>
-      {{/each}}
-    </div>
+    {{/if}}
 
     </div>
   </section>

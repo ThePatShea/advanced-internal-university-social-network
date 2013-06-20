@@ -7,6 +7,14 @@ Template.bubbleCover.helpers({
 							_.contains(users.admins, Meteor.userId()) ||
 							_.contains(users.invitees, Meteor.userId()));
 	},
+	hasJoinedBubble: function() {
+		//check that user is not a member of bubble
+		var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
+
+		return (_.contains(users.members, Meteor.userId()) || 
+							_.contains(users.admins, Meteor.userId()) ||
+							_.contains(users.invitees, Meteor.userId()));
+	},
 	hasApplied: function() {
 		var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
 

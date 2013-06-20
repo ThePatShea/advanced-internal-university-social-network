@@ -31,7 +31,10 @@ Meteor.Router.add({
   },
   '/bubbles/:_id/members':{
     to: 'bubbleMembersPage',
-    and: function(id) { Session.set('currentBubbleId', id);}
+    and: function(id) { 
+      Session.set('currentBubbleId', id); 
+      Session.set('selectedUsername',undefined);
+    }
   },
   '/bubbles/:_id/search_result':{
   	to: 'bubbleUserSearchList',
