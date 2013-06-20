@@ -3,9 +3,12 @@ Template.bubbleInvitation.helpers({
     var users = this.users;
     var rejectList = [];
     rejectList = rejectList.concat(users.invitees);
+    console.log("A: " + rejectList);
     rejectList = rejectList.concat(Session.get('inviteeList'+Session.get('currentBubbleId')));
+    console.log("currentBubbleId: "+Session.get('inviteeList'+Session.get('currentBubbleId')));
     rejectList.push(Meteor.userId());
-    return Meteor.users.find({_id: {$nin: rejectList}});
+    console.log("B: " + rejectList);
+      return Meteor.users.find({_id: {$nin: rejectList}});
   },
   getInvitees: function(){
     return this.users.invitees;
