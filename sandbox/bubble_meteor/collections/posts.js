@@ -31,6 +31,10 @@ Meteor.methods({
       throw new Meteor.Error(422, 'Please fill in all fields');
     }
 
+    if(!postAttributes.attendees){
+      postAttribtues.attendees = [];
+    }
+
     // pick out the whitelisted keys
     var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees'), {
       userId: user._id, 
@@ -38,8 +42,7 @@ Meteor.methods({
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       commentsCount: 0,
-      upvoters: [], 
-      attendees: 0,
+      upvoters: [],
       votes: 0
     });
 

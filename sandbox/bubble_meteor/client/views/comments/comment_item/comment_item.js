@@ -17,7 +17,7 @@ Template.commentItem.helpers({
 });
 
 Template.commentItem.events({
-	'click .btn': function(event){
+	'click .delete-comment': function(event){
 		event.preventDefault();
 		if (confirm("Delete this comment?")) {
     	Comments.remove(this._id);
