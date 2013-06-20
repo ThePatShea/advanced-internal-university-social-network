@@ -36,7 +36,6 @@ createCommentUpdate = function(comment) {
   var post = Posts.findOne(comment.postId);
   var bubble = Bubbles.findOne(post.bubbleId);
   var everyone = getEveryone(bubble);
-  console.log(everyone);
 
   for (var i=0; i<everyone.length; i++) {
     if (everyone[i] != comment.userId){

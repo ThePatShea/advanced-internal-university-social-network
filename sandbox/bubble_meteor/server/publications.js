@@ -35,8 +35,7 @@ Meteor.publish('relatedUsers', function(bubbleId) {
                     .concat(users.invitees)
                     .concat(users.members)
                     .concat(users.applicants);
-
-    
+                    
     return Meteor.users.find({_id: {$in: userList}}, {
       fields: {
        'username': 1,

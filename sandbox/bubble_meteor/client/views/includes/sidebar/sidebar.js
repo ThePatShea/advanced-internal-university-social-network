@@ -16,11 +16,18 @@ Template.sidebar.helpers({
   getSidebarBubbles: function(){
     return Bubbles.find({}, {sort: {submitted: -1}, limit: 5});
   },
-
   getInvitations: function() {
     invitees = [Meteor.userId()];
-    var bubbles =  Bubbles.find({'users.invitees':Meteor.userId()});
+    var bubbles =  Bubbles.find({'users.invitees': Meteor.userId()});
     return bubbles;
+  },
+  hasInvitations: function() {
+    invitees = [Meteor.userId()];
+    var bubbles =  Bubbles.find({'users.invitees': Meteor.userId()});
+    if(bubbles.count() >0){
+      return true;
+    }
+    return false;
   }
 });
 
