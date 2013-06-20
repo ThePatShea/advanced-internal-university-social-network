@@ -25,15 +25,27 @@
           </button>
         </a>
       {{/each}}
+    </div>
 
-
-      <button class="main-btn">
-        Invitations
-      </button>
-
+    <div class="row">
+      <div class="span9"> 
+        <span class="label label-success">
+          YOU HAVE INVITATIONS 
+        </span>
+      </div>
       {{#each getInvitations}}
-        {{this}}
+      <div class="span2">
+        <a href="{{bubblePagePath this}}">
+          {{title}}
+        </a>
+      </div>
+      <div class="span1">
+      <a class="btn btn-mini btn-alert pull-right accept-invitation">accept</a>
+      <a class="btn btn-mini btn-alert pull-right reject-invitation">reject</a>
+      </div>
       {{/each}}
+    </div>
+
     </div>
   </section>
 </template>

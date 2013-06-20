@@ -1,0 +1,11 @@
+<template name="bubbleMembersList">
+	This is members list
+	<br />
+	{{#each getMembers}}
+		{{getUsername this}}
+		{{#if isAdmin}}
+    	<button class="btn btn-small btn-inverse promote-member" type="button">Promote to Admin</button>
+		{{/if}}
+		<br />
+	{{/each}}
+</template>

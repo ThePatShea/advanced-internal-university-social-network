@@ -4,12 +4,18 @@ mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',5);
 
 
 Deps.autorun(function() {
+	//Retrieves Bubbles
   Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
+  Meteor.subscribe('invitedBubbles', Meteor.userId());
+  
   Meteor.subscribe('singlePost', Session.get('currentPostId'));
   Meteor.subscribe('comments', Session.get('currentPostId'));
-	Meteor.subscribe('findOneUser', Session.get('selectedUserId'));
-	Meteor.subscribe('findUsersByName', Session.get('selectedUsername'), Session.get('currentBubbleId'));
+
+  //Retrieves Users
+	Meteor.subscribe('relatedUsers',Session.get('currentBubbleId'));
+	searchedUsersHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 2);
 })
 
 Meteor.subscribe('updates');
+Meteor.subscribe('relatedUsers');
 

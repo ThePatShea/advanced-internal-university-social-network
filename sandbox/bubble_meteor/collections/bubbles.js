@@ -37,15 +37,9 @@ Meteor.methods({
 	},
 
   addInvitee: function(bubbleId,userList){
-    var users = Bubbles.findOne(bubbleId).users;
-    _.each(userList, function(userId) {
-      if(!_.contains(users.invitees,userId)){
-        users.invitees.push(userId);
-      }
-    });
     Bubbles.update({_id:bubbleId},
     {
-      $set: {users: users}
+      $addToSet: {'users.invitees': {$each: userList}}
     }); 
   }
 

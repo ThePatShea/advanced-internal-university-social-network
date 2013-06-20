@@ -18,8 +18,26 @@ Template.sidebar.helpers({
   },
 
   getInvitations: function() {
+    invitees = [Meteor.userId()];
     var bubbles =  Bubbles.find({'users.invitees':Meteor.userId()});
-    console.log(bubbles.fetch());
     return bubbles;
   }
 });
+
+Template.sidebar.events({
+  'click .accept-invitation': function(){
+    Bubbles.update({_id:this._id},
+    {
+      $addToSet: {'users.members': Meteor.userId()},
+      $pull: {'users.invitees': Meteor.userId()}
+    });
+  },
+  'click .reject-invitation': function(){
+    if (confirm("Reject this invitation?")) {
+      Bubbles.update({_id:this._id},
+      {
+        $pull: {'users.invitees': Meteor.userId()}
+      });
+    }
+  }
+}); 

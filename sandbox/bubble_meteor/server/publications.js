@@ -22,35 +22,39 @@ Meteor.publish('bubbles', function(limit) {
   return Bubbles.find({}, {sort: {submitted: -1}, limit: limit});
 });
 
-Meteor.publish("findOneUser", function (userId) {
-  return Meteor.users.find({_id:userId}, {
-   	fields: {
-     'username': 1,
-     'emails': 1
-		}
-	});
+Meteor.publish('invitedBubbles', function(userId) {
+  return Bubbles.find({'users.invitees':userId});
 });
 
-Meteor.publish("findUsersByName", function (username, bubbleId) {
-  var search_name   =  new RegExp(username,'i');
-
+Meteor.publish('relatedUsers', function(bubbleId) {
   if(bubbleId){
-    //Retrieve list of users who should not be retrieved
     var users = Bubbles.findOne(bubbleId).users;
-    var rejectList = [];
-    rejectList = rejectList.concat(users.admins);
-    rejectList = rejectList.concat(users.invitees);
-    rejectList = rejectList.concat(users.members);
-    rejectList = rejectList.concat(users.applicants);
+    var userList = [];
+    userList = userList.concat(users.admins)
+                    .concat(users.invitees)
+                    .concat(users.members)
+                    .concat(users.applicants);
 
-    var search_query  =  {username: search_name};
     
-    return Meteor.users.find(search_query, {username: {$nin:rejectList}}, {
+    return Meteor.users.find({_id: {$in: userList}}, {
       fields: {
        'username': 1,
        'emails': 1
       }
     });
   }
+})
+
+Meteor.publish("findUsersByName", function (username) {
+  var search_name   =  new RegExp(username,'i');
+  var search_query  =  {username: search_name};
+    
+  return Meteor.users.find(search_query, {
+    fields: {
+     'username': 1,
+     'emails': 1
+    }
+  });
+
 });
 

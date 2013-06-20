@@ -23,8 +23,9 @@ Handlebars.registerHelper('getPosts', function() {
   return Posts.find();
 });
 
-Handlebars.registerHelper('ownBubble', function() {  
-  return _.contains(this.users.admins, Meteor.userId());
+Handlebars.registerHelper('isAdmin', function() {  
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  return _.contains(bubble.users.admins, Meteor.userId());
 });
 
 Handlebars.registerHelper('submittedText', function(submitted){
@@ -41,5 +42,12 @@ Handlebars.registerHelper('getAllUsers', function(){
 
 Handlebars.registerHelper('isLoggedIn',function() {
   return Meteor.userId();
-})
+});
+
+Handlebars.registerHelper('getUsername', function(userId) {
+  var user = Meteor.users.findOne({_id:userId});
+  if(user) {
+    return user.username;
+  }
+});
 

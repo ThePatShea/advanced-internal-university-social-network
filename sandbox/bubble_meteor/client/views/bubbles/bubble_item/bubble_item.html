@@ -4,7 +4,7 @@
       <h3><a href="{{bubblePagePath this}}">{{title}}</a><span>{{getCategory}}</span></h3>
       <p>
         {{description}}
-        {{#if ownBubble}}
+        {{#if isAdmin}}
           <a href="{{bubbleEditPath this}}">Edit Bubble |</a>
 	  			<a href="{{bubbleMembersPath this}}">Member Page</a>
         {{/if}}
