@@ -22,6 +22,10 @@ Meteor.publish('bubbles', function(limit) {
   return Bubbles.find({}, {sort: {submitted: -1}, limit: limit});
 });
 
+Meteor.publish('joinedBubbles', function(userId, limit) {
+  return Bubbles.find({$or: [{'users.members': userId},{'users.admins': userId}]}, {sort: {submitted: -1}, limit: limit});
+});
+
 Meteor.publish('invitedBubbles', function(userId) {
   return Bubbles.find({'users.invitees':userId});
 });

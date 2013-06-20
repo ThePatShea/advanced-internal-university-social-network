@@ -14,7 +14,7 @@ Template.sidebar.helpers({
     return compressedList.length;
   },
   getSidebarBubbles: function(){
-    return Bubbles.find({}, {sort: {submitted: -1}, limit: 5});
+    return Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}, {limit: joinedBubblesHandle.limit()});
   },
   getInvitations: function() {
     invitees = [Meteor.userId()];

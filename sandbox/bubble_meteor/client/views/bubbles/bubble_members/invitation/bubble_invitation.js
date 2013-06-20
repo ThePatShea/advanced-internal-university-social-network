@@ -12,8 +12,9 @@ Template.bubbleInvitation.helpers({
 
     //The regular expression is used here again to prevent showing 
     //users who are removed from bubble but still exists in the local db
+    // console.log(searchedUsersHandle.limit);
     return Meteor.users.find({$and: [{_id: {$nin: rejectList}}, 
-      {username: new RegExp(Session.get('selectedUsername'),'i')}]});
+      {username: new RegExp(Session.get('selectedUsername'),'i')}]},{limit: searchedUsersHandle.limit()});
   },
   getInvitees: function() {
     return this.users.invitees;
@@ -23,6 +24,13 @@ Template.bubbleInvitation.helpers({
   },
   hasSearchText: function() {
     return Session.get('selectedUsername');
+  },
+  usersReady: function(){
+    return ! searchedUsersHandle.loading();
+  },
+  allUsersLoaded: function() {
+    return ! searchedUsersHandle.loading() && 
+      Meteor.users.find().count() < searchedUsersHandle.loaded();
   }
 });
 
@@ -52,6 +60,10 @@ Template.bubbleInvitation.events({
     Meteor.call('addInvitee', Session.get('currentBubbleId'), Session.get('inviteeList'+Session.get('currentBubbleId')));
     Session.set('selectedUsername',undefined);
     Session.set('inviteeList'+Session.get('currentBubbleId'),undefined);
+  },
+  'click .load': function(e) {
+    e.preventDefault();
+    searchedUsersHandle.loadNextPage();
   }
 });
 

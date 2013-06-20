@@ -49,7 +49,6 @@ createCommentUpdate = function(comment) {
         updateType: "newComment",
         content: comment.author + " commented in a " + post.postType + "."
       });
-      console.log("this ran");
     }
   }
 }

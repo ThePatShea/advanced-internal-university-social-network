@@ -1,6 +1,5 @@
 sendEmail = function(userId,title,body){
-  Session.set('selectedUser', userId); 
-  var user = Meteor.users.findOne(Session.get('selectedUser'));
+  var user = Meteor.users.findOne(userId);
 
   if (user) {
 	  Meteor.call( 'sendEmail',

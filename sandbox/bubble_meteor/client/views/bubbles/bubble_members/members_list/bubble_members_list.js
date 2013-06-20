@@ -4,9 +4,6 @@ Template.bubbleMembersList.helpers({
 	},
   chosen: function() {
     return Session.get(Session.get('currentBubbleId')+Meteor.userId);
-  },
-  notChosen: function() {
-    return !Session.get(Session.get('currentBubbleId')+Meteor.userId);
   }
 });
 

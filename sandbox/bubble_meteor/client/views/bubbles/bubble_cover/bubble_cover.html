@@ -11,13 +11,10 @@
       <a href="{{bubbleMembersPagePath this}}">
         <button class="btn btn-large btn-info pull-right">Members Page</button>
       </a>
-    {{/if}}}
-
-    {{#if hasNotJoinedBubble}}
+    {{else}}
       {{#if hasApplied}}
         <button class="btn btn-large btn-success pull-right cancel-apply">Cancel Application</button>
-      {{/if}}
-      {{#if hasNotApplied}}
+      {{else}}
         <button class="btn btn-large btn-success pull-right join-apply">Join Bubble</button>
       {{/if}}
     {{/if}}
