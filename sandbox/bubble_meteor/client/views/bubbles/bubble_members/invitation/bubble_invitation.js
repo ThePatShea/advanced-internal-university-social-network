@@ -7,7 +7,8 @@ Template.bubbleInvitation.helpers({
                   .concat(users.admins)
                   .concat(users.members)
                   .concat(users.invitees)
-                  .concat(users.applicants)
+                  .concat(users.applicants)    
+
     rejectList.push(Meteor.userId());
 
     //The regular expression is used here again to prevent showing 
