@@ -3,7 +3,7 @@ Template.bubbleMembersList.helpers({
 		return this.users.members;
 	},
   chosen: function() {
-    if(Session.get(Session.get('currentBubbleId')+Meteor.userId) == this.toString()){
+    if(Session.get(Session.get('currentBubbleId')+this.toString()) == this.toString()){
       return true;
     }
   }
@@ -26,13 +26,11 @@ Template.bubbleMembersList.events({
     Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
   },
   'click .activate': function() {
-    if (Session.get(Session.get('currentBubbleId')+Meteor.userId)){
-      Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+    if (Session.get(Session.get('currentBubbleId')+this.toString())){
+      Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
     }else{
-      Session.set(Session.get('currentBubbleId')+Meteor.userId,this.toString());
+      Session.set(Session.get('currentBubbleId')+this.toString(),this.toString());
     }
-  },
-  'click .deactivate': function() {
   }
 
 });
