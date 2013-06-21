@@ -1,4 +1,4 @@
-postsHandle = Meteor.subscribeWithPagination('posts', 15);
+postsHandle = Meteor.subscribeWithPagination('posts', 3);
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
 mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',5);
 
@@ -14,7 +14,7 @@ Deps.autorun(function() {
   Meteor.subscribe('comments', Session.get('currentPostId'));
 
   //Retrieves Users
-	Meteor.subscribe('relatedUsers',Session.get('currentBubbleId'));
+	Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'));
 	searchedUsersHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 4);
 })
 

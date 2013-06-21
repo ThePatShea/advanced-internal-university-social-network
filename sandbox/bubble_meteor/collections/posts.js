@@ -88,12 +88,15 @@ Meteor.methods({
       {
         $addToSet: {attendees:username}
       });
+      //Create an update for user who are in the event
+      createNewAttendeeUpdate(postId);
     }else{
       Posts.update({_id:postId},
       {
         $pull: {attendees:username}
       });
     }
+
   }
       
   

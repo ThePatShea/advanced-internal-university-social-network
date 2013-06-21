@@ -7,27 +7,27 @@ Template.updatesDropdown.helpers({
   },
   compressUpdates: function(){
     var updateList = Updates.find().fetch();
-    compressedList = [];
-
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId && update.updateType == 'newComment';
+        return update.userId == newUpdate.userId && 
+                update.invokerId == newUpdate.invokerId && 
+                update.updateType == newUpdate.updateType;
       });
-      compressedList.push(update);
+      updateList.push(update);
     });
-    return compressedList;
+    return updateList;
   },
   compressedCount: function(){
     var updateList = Updates.find().fetch();
-    compressedList = [];
-
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId && update.updateType == 'newComment';
+        return update.userId == newUpdate.userId && 
+                update.invokerId == newUpdate.invokerId && 
+                update.updateType == newUpdate.updateType;
       });
-      compressedList.push(update);
+      updateList.push(update);
     });
-    return compressedList.length;
+    return updateList.length;
   }
 });
 
