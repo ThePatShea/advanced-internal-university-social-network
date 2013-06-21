@@ -7,6 +7,9 @@ button
 button,
 div
   border-box             0
+
+h1, h2, h3, h4, h5, h6
+  margin                 0
 /***************         CSS Reset         ***************/
 
 
@@ -111,6 +114,20 @@ border-radius(n)
 /**********   Properties    **********/
 
 
+/**********     Helpers     **********/
+/*****  Vertical Middle  *****/
+.v-middle-outer
+  display                table
+  height                 100%
+  width                  100%
+
+.v-middle-inner
+  display                table-cell
+  vertical-align         middle
+/*****  Vertical Middle  *****/
+/**********     Helpers     **********/
+
+
 /**********     Buttons     **********/
 std-btn(n)
   text-transform         uppercase
@@ -161,9 +178,13 @@ std-btn(n)
 
 /**********        bubble-cover       **********/
 .bubble-cover
-  background             #999 // TESTING
+  background             #777 // TESTING
   height                 145px
-  padding                20px 30px // TODO: CHANGE THIS TO VERTICAL ALIGN MIDDLE WITH 30PX LEFT/RIGHT PADDING
+  padding                0 30px
+  .bubble-name
+    color                    white
+    font-size                37px
+    font-alt-light           0
   .std-btn-dark
     .lbl
       padding                    0 0 0 5px

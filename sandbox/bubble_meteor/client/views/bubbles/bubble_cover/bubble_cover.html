@@ -1,13 +1,17 @@
 <template name="bubbleCover">
   <div class="bubble-cover">
-    {{title}}
-    {{#if ownBubble}}
-      <a href="{{bubbleEditPath this}}">
-        <button class="std-btn-dark pull-right">
-          <span class="cb-icon-xlight">{{> icon-settings}}</span>
-          <span class="lbl">edit bubble</span>
-        </button>
-      </a>
-    {{/if}}
+    <div class="v-middle-outer">
+      <div class="v-middle-inner">
+        <h1 class="bubble-name pull-left">{{title}}</h1>
+        {{#if ownBubble}}
+          <a href="{{bubbleEditPath this}}">
+            <button class="std-btn-dark pull-right">
+              <span class="cb-icon-xlight">{{> icon-settings}}</span>
+              <span class="lbl">edit bubble</span>
+            </button>
+          </a>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </template>
