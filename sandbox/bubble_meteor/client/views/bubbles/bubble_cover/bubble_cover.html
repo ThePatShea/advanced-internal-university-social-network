@@ -10,24 +10,24 @@
           </h2>
         </div>
         <div class="pull-right">
-          {{#if hasJoinedBubble}}
-            <a href="{{bubbleMembersPagePath this}}">
-              <button class="std-btn-dark pull-right">Members Page</button>
-            </a>
-          {{else}}
-            {{#if hasApplied}}
-              <button class="std-btn-dark pull-right cancel-apply">Cancel Application</button>
-            {{else}}
-              <button class="std-btn-dark pull-right join-apply">Join Bubble</button>
-            {{/if}}
-          {{/if}}
           {{#if isAdmin}}
             <a href="{{bubbleEditPath this}}">
-              <button class="std-btn-dark pull-right">
+              <button class="std-btn-dark">
                 <span class="cb-icon-xlight">{{> icon-settings}}</span>
                 <span class="lbl">edit bubble</span>
               </button>
             </a>
+          {{/if}}
+          {{#if hasJoinedBubble}}
+            <a href="{{bubbleMembersPagePath this}}">
+              <button class="std-btn-dark">Members Page</button>
+            </a>
+          {{else}}
+            {{#if hasApplied}}
+              <button class="std-btn-dark cancel-apply">Cancel Application</button>
+            {{else}}
+              <button class="std-btn-dark join-apply">Join Bubble</button>
+            {{/if}}
           {{/if}}
         </div>
       </div>
