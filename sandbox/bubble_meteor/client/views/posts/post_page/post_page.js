@@ -3,26 +3,22 @@ Template.postPage.helpers({
     return Posts.findOne(Session.get('currentPostId'));
   },
   isEvent: function() {
-  	if(this.postType == 'event'){
-  		return true;
-  	}
+  	return this.postType == 'event';
   },
   numOfAttendees: function() {
   	return this.attendees.length;
   },
   isAttending: function() {
-  	return _.contains(this.attendees,Meteor.users.findOne().username);
+  	return _.contains(this.attendees,Meteor.user().username);
   },
   notAttending: function() {
-    return !_.contains(this.attendees,Meteor.users.findOne().username);
+    return !_.contains(this.attendees,Meteor.user().username);
   }
 
 });
 
 Template.postPage.events({
 	'click .attending': function(){
-		console.log("this ran");
-		Meteor.call('attendEvent',this._id,Meteor.users.findOne().username);
-
+		Meteor.call('attendEvent',this._id,Meteor.user().username);
   }
 });

@@ -31,6 +31,9 @@ Template.eventEdit.events({
         Meteor.Router.to('postPage', currentPostId);
       }
     });
+
+    //Create update for members who are attending the event
+    createEditEventUpdate(this);
   },
   
   'click .delete': function(e) {
@@ -38,6 +41,10 @@ Template.eventEdit.events({
     if (confirm("Delete this post?")) {
       var currentPostId = Session.get('currentPostId');
       Posts.remove(currentPostId);
+
+      //Create update for members who are attending the event
+      createDeleteEventUpdate(this);
+
       Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
     }
   }

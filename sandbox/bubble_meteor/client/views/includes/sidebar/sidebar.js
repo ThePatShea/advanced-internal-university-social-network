@@ -4,14 +4,15 @@ Template.sidebar.helpers({
   },
   compressedCount: function(){
     var updateList = Updates.find({userId: Meteor.userId(), bubbleId:this._id}).fetch();
-    compressedList = [];
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId && update.updateType == 'newComment';
+        return update.userId == newUpdate.userId && 
+                update.invokerId == newUpdate.invokerId && 
+                update.updateType == newUpdate.updateType;
       });
-      compressedList.push(update);
+      updateList.push(update);
     });
-    return compressedList.length;
+    return updateList.length;
   },
   getSidebarBubbles: function(){
     return Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}, {limit: joinedBubblesHandle.limit()});
