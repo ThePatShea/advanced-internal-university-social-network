@@ -72,6 +72,72 @@ createPostUpdate = function(post) {
   });
 }
 
+//For everyone attending
+createEditEventUpdate = function(post) {
+  var bubble = Bubbles.findOne(post.bubbleId);
+  var attendees = post.attendees;
+  //Remove post owner from list of attendees
+  var index = attendees.indexOf(post.author);
+  attendees.splice(index,1);
+
+  _.each(attendees, function(username){
+    var user = Meteor.users.findOne({username:username});
+    Meteor.call('update',{
+      userId: user._id,
+      postId: post._id,
+      bubbleId: bubble._id,
+      invokerId: post.userId,
+      invokerName: post.author,
+      updateType: "editPost",
+      content: post.author + " has edited " + post.name
+    });
+  });
+}
+
+//For everyone attending
+createNewAttendeeUpdate = function(postId) {
+  var post = Posts.findOne(postId);
+  var bubble = Bubbles.findOne(post.bubbleId);
+  var attendees = post.attendees;
+  //Remove user from list of attendees
+  var index = attendees.indexOf(Meteor.user().username);
+  attendees.splice(index,1);
+
+  _.each(attendees, function(username){
+    var user = Meteor.users.findOne({username:username});
+    Meteor.call('update',{
+      userId: user._id,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "newAttendee",
+      content: Meteor.user().username + " is attending " + post.name
+    });
+  });
+}
+
+//For everyone attending
+createDeleteEventUpdate = function(post) {
+  var bubble = Bubbles.findOne(post.bubbleId);
+  var attendees = post.attendees;
+  //Remove post owner from list of attendees
+  var index = attendees.indexOf(post.author);
+  attendees.splice(index,1);
+
+  _.each(attendees, function(username){
+    var user = Meteor.users.findOne({username:username});
+    Meteor.call('update',{
+      userId: user._id,
+      postId: post._id,
+      bubbleId: bubble._id,
+      invokerId: post.userId,
+      invokerName: post.author,
+      updateType: "editPost",
+      content: post.author + " has canceled " + post.name
+    });
+  });
+}
+
 //For bubble members when a member is added
 createNewMemberUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
@@ -201,7 +267,7 @@ createNewApplicantUpdate = function() {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "rejectApplication",
+      updateType: "newApplication",
       content: Meteor.user().username + " has applied for " + bubble.title
     });
   });

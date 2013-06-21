@@ -30,8 +30,14 @@ Meteor.publish('invitedBubbles', function(userId) {
   return Bubbles.find({'users.invitees':userId});
 });
 
-Meteor.publish('relatedUsers', function(bubbleId) {
+Meteor.publish('relatedUsers', function(bubbleId,postId) {
   var bubble = Bubbles.findOne(bubbleId);
+  if(!bubble) {
+    var post = Posts.findOne(postId);
+    if(post) {
+      bubble = Bubbles.findOne(post.bubbleId);
+    }
+  }
   if(bubble){
     var users = bubble.users;
     var userList = [];
