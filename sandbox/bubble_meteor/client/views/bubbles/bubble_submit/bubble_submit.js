@@ -6,7 +6,7 @@ Template.bubbleSubmit.events({
       title: $(event.target).find('[name=title]').val(),
       description: $(event.target).find('[name=description]').val(),
       category: $(event.target).find('[name=category]').val(),
-      titleImage: $(event.target).find('[id=bubblepic]').attr('src')
+      titleImage: $(event.target).find('[id=titleImage]').attr('src')
     }
     
     Meteor.call('bubble', bubble, function(error, bubbleId) {
@@ -45,20 +45,24 @@ Template.bubbleSubmit.events({
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
-        return function(e) {
-        // Render thumbnail.
-        dropzone = document.getElementById('drop_zone');
-        parent = document.getElementById('bubble_image');
-        parent.removeChild(dropzone);
-        var span = document.createElement('span');
-        span.innerHTML = ['<img id="bubblepic" class="thumb" src="', e.target.result,
-                        '" title="', escape(theFile.name), '"/>'].join('');
-        document.getElementById('bubble_image').appendChild(span);
-        };
+          return function(e) {
+            // Render thumbnail.
+            /*dropzone = document.getElementById('drop_zone');
+            parent = document.getElementById('bubble_image');
+            parent.removeChild(dropzone);*/
+            $("#drop_zone").hide();
+            $("#titleImage").attr("src", e.target.result);
+            $("#titleImage").attr("title", escape(theFile.name));
+            $("#titleImage").show();
+            $(document).ready( function(){
+              $(function(){ console.log($('#titleImage')); console.log($('#titleImage').Jcrop()); });
+            });
+          };
         })(f);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
+
       }
 
       else{
@@ -72,3 +76,8 @@ Template.bubbleSubmit.events({
   },
 
 });
+
+Template.bubbleSubmit.rendered = function(){
+};
+
+

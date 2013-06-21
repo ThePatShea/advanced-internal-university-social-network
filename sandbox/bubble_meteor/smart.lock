@@ -15,7 +15,8 @@
       "jquery-ui-bootstrap": {},
       "glDatePicker": {},
       "moment": {},
-      "bootstrap-wysiwyg": {}
+      "bootstrap-wysiwyg": {},
+      "jquery-jcrop": {}
     },
     "packages": {
       "router": {
@@ -67,6 +68,11 @@
         "git": "https://github.com/mcrider/meteor-bootstrap-wysiwyg.git",
         "tag": "v0.1.0",
         "commit": "b9b1ffadb42b8bbfade08aaea10e4fbe890d21dd"
+      },
+      "jquery-jcrop": {
+        "git": "https://github.com/waltyuyu/meteor-jquery-jcrop.git",
+        "tag": "v0.0.3",
+        "commit": "45a62562f3d13cbc72a7710472a76cf9c3c589cd"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

@@ -13,6 +13,7 @@
     "jquery-ui-bootstrap": {},
     "glDatePicker": {},
     "moment": {},
-    "bootstrap-wysiwyg": {}
+    "bootstrap-wysiwyg": {},
+    "jquery-jcrop": {}
   }
 }
