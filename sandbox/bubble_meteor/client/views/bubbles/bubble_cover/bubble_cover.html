@@ -2,7 +2,13 @@
   <div class="bubble-cover">
     <div class="v-middle-outer">
       <div class="v-middle-inner">
-        <h1 class="bubble-name pull-left">{{title}}</h1>
+        <div class="pull-left">
+          <h1 class="bubble-name">{{title}}</h1>
+          <h2 class="bubble-subtitle">
+            <span>category</span>
+            <span> | # members</span>
+          </h2>
+        </div>
         {{#if ownBubble}}
           <a href="{{bubbleEditPath this}}">
             <button class="std-btn-dark pull-right">
