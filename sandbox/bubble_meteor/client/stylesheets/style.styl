@@ -18,6 +18,17 @@ h1, h2, h3, h4, h5, h6
 
 /***************  Multi-Purpose Elements   ***************/
 /**********  Color Palette  **********/
+/*****    Standard White    *****/
+std-white-light-color(n)
+  color                  #F7F8F8
+std-white-light-fill(n)
+  fill                   #F7F8F8
+std-white-light-bg(n)
+  background             #F7F8F8
+/*****    Standard White    *****/
+
+
+/*****      Main Color      *****/
 main-xdark-color(n)
   color                  #011126
 main-xdark-fill(n)
@@ -50,6 +61,7 @@ main-xlight-fill(n)
   fill                   #95afbf
 main-xlight-bg(n)
   background             #95afbf
+/*****      Main Color      *****/
 
 
 /*****  Category: Academics  *****/
@@ -62,6 +74,8 @@ category-academics-fill(n)
 category-academics-bg(n)
   background             #b0606d
 
+.category-academics-bg-low-opacity 
+  background             rgba(176,96,109,.15)
 .category-academics-border-top-4
   border-top             4px solid #b0606d
 .category-academics-border
@@ -85,6 +99,8 @@ category-student-organization-fill(n)
 category-student-organization-bg(n)
   background             #70c889
 
+.category-student-organization-bg-low-opacity 
+  background             rgba(112,200,137,.15)
 .category-student-organization-border-top-4
   border-top             4px solid #70c889
 .category-student-organization-border
@@ -252,11 +268,15 @@ std-btn(n)
     height                   100px
     width                    100px
     float                    left
+  .btn-bubble-section:nth-child(1)
+    std-white-light-bg       0
   .btn-bubble-section:nth-child(3)
     opacity                  .85
   .btn-bubble-section:nth-child(4)
     opacity                  .70
   .btn-bubble-section:nth-child(5)
     opacity                  .55
+  .btn-bubble-section:nth-child(6)
+    opacity                  .40
 /**********  bubble-section-selector  **********/
 /***************  Single-Purpose Elements  ***************/
