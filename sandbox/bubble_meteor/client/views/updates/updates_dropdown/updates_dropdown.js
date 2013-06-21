@@ -7,15 +7,30 @@ Template.updatesDropdown.helpers({
   },
   compressUpdates: function(){
     var updateList = Updates.find().fetch();
+    //To combine updates with same userId, invokerId, updateType and postId
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
         return update.userId == newUpdate.userId && 
                 update.invokerId == newUpdate.invokerId && 
-                update.updateType == newUpdate.updateType;
+                update.updateType == newUpdate.updateType &&
+                update.postId == newUpdate.postId;
       });
-      updateList.push(update);
+      if(!_.contains(updateList,update)){
+        updateList.push(update);
+      }
     });
-    return updateList;
+
+    //To combine updates for comments in the same post
+    _.each(updateList, function(update){
+      updateList = _.reject(updateList, function(newUpdate) {
+        return update.postId == newUpdate.postId && 
+                update.updateType == newUpdate.updateType &&
+                update.updateType == 'newComment';
+      });
+      if(!_.contains(updateList,update)){
+        updateList.push(update);
+      }
+    });
   },
   compressedCount: function(){
     var updateList = Updates.find().fetch();
