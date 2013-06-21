@@ -16,14 +16,12 @@ Template.bubbleCover.helpers({
 
 Template.bubbleCover.events({
 	'click .join-apply': function() {
-		console.log("apply");
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $addToSet: {'users.applicants': Meteor.userId()}
     });
   },
   'click .cancel-apply': function() {
-		console.log("cancel");
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.applicants': Meteor.userId()}

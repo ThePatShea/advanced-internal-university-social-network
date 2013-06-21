@@ -19,21 +19,11 @@
 
 <template name="update">
   <li>
-    {{#if updateTypeIs 'newPost'}}
-      <a href="{{postPagePath postId}}">
-        {{content}}
-      </a>
-    {{/if}}
-    {{#if updateTypeIs 'newComment'}}
-      <a href="{{postPagePath postId}}">
-        {{content}}
-      </a>
-    {{/if}}
-    {{#if updateTypeIs 'newMember'}}
-      <a href="{{postPagePath postId}}">
-        {{content}}
-      </a>
-    {{/if}}
+
+    <a href="{{postPagePath postId}}">
+      {{content}}
+    </a>
+
   </li>
 </template>
 

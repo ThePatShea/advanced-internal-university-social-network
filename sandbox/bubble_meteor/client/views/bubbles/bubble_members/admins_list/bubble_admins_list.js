@@ -21,6 +21,7 @@ Template.bubbleAdminsList.events({
       $pull: {'users.admins': this.toString()}
     });
     Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
+    createAdminDemoteUpdate(this.toString());
   },
   'click .activate': function() {
     if (Session.get(Session.get('currentBubbleId')+this.toString())){

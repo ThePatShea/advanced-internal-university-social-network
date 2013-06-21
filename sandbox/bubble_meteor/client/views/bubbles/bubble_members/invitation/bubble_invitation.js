@@ -57,7 +57,13 @@ Template.bubbleInvitation.events({
   'click .add-invitees': function(event){
     event.preventDefault();
 
+    //Add Invitees to the bubble object
     Meteor.call('addInvitee', Session.get('currentBubbleId'), Session.get('inviteeList'+Session.get('currentBubbleId')));
+
+    //Create notifications
+    createInvitationUpdate(Session.get('inviteeList'+Session.get('currentBubbleId')));
+    
+    //Reset Session objects
     Session.set('selectedUsername',undefined);
     Session.set('inviteeList'+Session.get('currentBubbleId'),undefined);
   },

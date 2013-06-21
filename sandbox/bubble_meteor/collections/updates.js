@@ -14,7 +14,6 @@ Meteor.methods({
       submitted: new Date().getTime(),
       read: false
     });
-
     updateId = Updates.insert(update);
     return updateId;
   },
@@ -74,27 +73,36 @@ createPostUpdate = function(post) {
 }
 
 //For bubble members when a member is added
-createNewMemberUpdate = function(bubble) {
+createNewMemberUpdate = function(userId) {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   var everyone = getEveryone(bubble);
-
   for (var i=0; i<everyone.length; i++) {
-    if (everyone[i] != Meteor.userId()){      
+    if (everyone[i] != Meteor.userId() && everyone[i] != userId){      
       Meteor.call('update',{
         userId: everyone[i],
         bubbleId: bubble._id,
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
         updateType: "newMember",
-        content: bubble.title + " has been edited."
+        content: Meteor.users.findOne(userId).username + " has joined " + bubble.title
+      });
+    }else if(everyone[i] != userId) {
+      Meteor.call('update',{
+        userId: userId,
+        bubbleId: bubble._id,
+        invokerId: Meteor.userId(),
+        invokerName: Meteor.user().username,
+        updateType: "joinedBubble",
+        content: "Congratulations, you have just joined " + bubble.title
       });
     }
   }
 }
 
 //For bubble members when a bubble is edited
-createBubbleEditUpdate = function(bubble) {
+createBubbleEditUpdate = function() {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   var everyone = getEveryone(bubble);
-
   for (var i=0; i<everyone.length; i++) {
     if (everyone[i] != Meteor.userId()){      
       Meteor.call('update',{
@@ -102,9 +110,75 @@ createBubbleEditUpdate = function(bubble) {
         bubbleId: bubble._id,
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
-        updateType: "newMember",
-        content: bubble.title + " has been edited."
+        updateType: "editBubble",
+        content: bubble.title + " Bubble has been edited."
       });
     }
   }
 }
+
+//For bubble admins who were just promoted
+createMemberPromoteUpdate = function(userId) {
+  Meteor.call('update',{
+    userId: userId,
+    bubbleId: Session.get('currentBubbleId'),
+    invokerId: Meteor.userId(),
+    invokerName: Meteor.user().username,
+    updateType: "promoteMember",
+    content: "You have been promoted to an Admin"
+  });
+}
+
+//For bubble members who were just demoted
+createAdminDemoteUpdate = function(userId) {
+  Meteor.call('update',{
+    userId: userId,
+    bubbleId: Session.get('currentBubbleId'),
+    invokerId: Meteor.userId(),
+    invokerName: Meteor.user().username,
+    updateType: "demoteAdmin",
+    content: "You have been demoted to a Member"
+  });
+}
+
+//For users who have received an invitation
+createInvitationUpdate = function(userList) {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  _.each(userList, function(userId){
+    Meteor.call('update',{
+      userId: userId,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "inviteUser",
+      content: "You have been invited to join " + bubble.title
+    });
+  });
+}
+
+//For users who are removed from bubble
+createRemoveMemberUpdate = function(userId) {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  Meteor.call('update',{
+    userId: userId,
+    bubbleId: bubble._id,
+    invokerId: Meteor.userId(),
+    invokerName: Meteor.user().username,
+    updateType: "removeMember",
+    content: "You have been removed from " + bubble.title
+  });
+}
+
+//For users who are removed from bubble
+createRejectApplicationUpdate = function(userId) {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  Meteor.call('update',{
+    userId: userId,
+    bubbleId: bubble._id,
+    invokerId: Meteor.userId(),
+    invokerName: Meteor.user().username,
+    updateType: "rejectApplication",
+    content: "Your application has been rejected by " + bubble.title
+  });
+}
+
