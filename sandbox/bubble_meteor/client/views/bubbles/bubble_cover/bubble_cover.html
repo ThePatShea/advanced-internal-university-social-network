@@ -1,9 +1,10 @@
 <template name="bubbleCover">
-  <div class="bubble-cover">
+  <div class="bubble-cover" style="background-image: url('{{coverPhoto}}'); height: 145px; width: 804px; z-index:-1;">
     <div class="v-middle-outer">
       <div class="v-middle-inner">
         <div class="pull-left">
           <h1 class="bubble-name">{{title}}</h1>
+          <img src="{{profilePicture}}" class="bubbleprofile">
           <h2 class="bubble-subtitle">
             <span>category</span>
             <span> | # members</span>

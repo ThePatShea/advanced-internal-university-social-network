@@ -1,7 +1,6 @@
 <template name="bubbleSubmit">
 <head>
 <style>
-#drop_zone{width: 500px; border:2px dashed #bbb;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:25px;text-align:center;font: 20pt bold 'Vollkorn';color:#bbb}
 .thumb {
 height: 75px;
 border: 1px solid #000;
@@ -27,8 +26,17 @@ margin: 10px 5px 0 0;
 
     <div class="control-group">
         <div id="bubble_image">
-            <div id="drop_zone">Drop bubble image here.</div>
-            <img id="titleImage" src="" />
+            <div id="cover_dropzone" class="dropzone">Drop cover photo here.</div>
+                <img id="coverphoto_upload" src="" />
+                <img id="coverphoto_preview" src="" />
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div id="bubble_profile">
+            <div id="profile_dropzone" class="dropzone">Drop bubble profile picture here.</div>
+                <img id="profilepicture_upload" src="" />
+                <img id="profilepicture_preview" src="" />
         </div>
     </div>
 
