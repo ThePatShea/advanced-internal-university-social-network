@@ -1,13 +1,15 @@
 postsHandle = Meteor.subscribeWithPagination('posts', 15);
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
-mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',2);
-
+mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',3);
+discussionListHandle = Meteor.subscribeWithPagination('posts',3);
+eventListHandle = Meteor.subscribeWithPagination('posts',3);
+fileListHandle = Meteor.subscribeWithPagination('posts',3);
 
 Deps.autorun(function() {
 	//Retrieves Bubbles
   Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
   Meteor.subscribe('invitedBubbles', Meteor.userId());
-	joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 4);
+  joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 4);
 
   
   Meteor.subscribe('singlePost', Session.get('currentPostId'));

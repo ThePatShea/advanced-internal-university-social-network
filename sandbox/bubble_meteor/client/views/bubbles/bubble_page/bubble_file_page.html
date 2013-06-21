@@ -6,10 +6,8 @@
 	</a>
 
 	{{#each posts}}
-    	{{#if isFile}}
-      		{{> postItem}}
-    	{{/if}}
-  	{{/each}}
+    {{> postItem}}
+  {{/each}}
 
   {{/with}}
 </template>

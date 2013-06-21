@@ -1,17 +1,14 @@
 Template.bubbleDiscussionPage.helpers({
   //Get posts assigned to this bubble
   posts: function(){
-  	return Posts.find({bubbleId:Session.get('currentBubbleId')});
-  },
-  isEvent: function() {
-  	return this.postType == "event";
-  },
-  isDiscussion: function() {
-    return this.postType == "discussion";
-  },
-  isFile: function() {
-    return this.postType == "file";
+  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}, {limit: discussionListHandle.limit()});   
   }
-
 });
 
+Template.bubbleDiscussionPage.rendered = function(){
+  $(window).scroll(function(){
+    if ($(window).scrollTop() == $(document).height() - $(window).height()){
+        this.discussionListHandle.loadNextPage();
+    }
+  });
+}
