@@ -1,35 +1,35 @@
 <template name="bubbleCover">
   <div class="bubble-cover">
-    <div class="v-middle-outer">
-      <div class="v-middle-inner">
-        <div class="pull-left">
-          <h1 class="bubble-name">{{title}}</h1>
-          <h2 class="bubble-subtitle">
-            <span>category</span>
-            <span> | # members</span>
-          </h2>
-        </div>
-        <div class="pull-right">
-          {{#if isAdmin}}
-            <a href="{{bubbleEditPath this}}">
-              <button class="std-btn-dark">
-                <span class="cb-icon-xlight">{{> icon-settings}}</span>
-                <span class="lbl">edit bubble</span>
-              </button>
-            </a>
-          {{/if}}
-          {{#if hasJoinedBubble}}
-            <a href="{{bubbleMembersPagePath this}}">
-              <button class="std-btn-dark">Members Page</button>
-            </a>
+    <div class="v-middle pull-left">
+      <div class="v-inner">
+        <h1 class="bubble-name">{{title}}</h1>
+        <h2 class="bubble-subtitle">
+          <span>category</span>
+          <span> | # members</span>
+        </h2>
+      </div>
+    </div>
+    <div class="v-middle pull-right">
+      <div class="v-inner">
+        {{#if isAdmin}}
+          <a href="{{bubbleEditPath this}}">
+            <button class="std-btn-dark">
+              <span class="cb-icon-xlight">{{> icon-settings}}</span>
+              <span class="lbl">edit bubble</span>
+            </button>
+          </a>
+        {{/if}}
+        {{#if hasJoinedBubble}}
+          <a href="{{bubbleMembersPagePath this}}">
+            <button class="std-btn-dark">Members Page</button>
+          </a>
+        {{else}}
+          {{#if hasApplied}}
+            <button class="std-btn-dark cancel-apply">Cancel Application</button>
           {{else}}
-            {{#if hasApplied}}
-              <button class="std-btn-dark cancel-apply">Cancel Application</button>
-            {{else}}
-              <button class="std-btn-dark join-apply">Join Bubble</button>
-            {{/if}}
+            <button class="std-btn-dark join-apply">Join Bubble</button>
           {{/if}}
-        </div>
+        {{/if}}
       </div>
     </div>
   </div>
