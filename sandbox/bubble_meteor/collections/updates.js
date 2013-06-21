@@ -35,86 +35,96 @@ createCommentUpdate = function(comment) {
   var post = Posts.findOne(comment.postId);
   var bubble = Bubbles.findOne(post.bubbleId);
   var everyone = getEveryone(bubble);
+  var index = everyone.indexOf(comment.userId);
+  everyone.splice(index,1);
 
-  for (var i=0; i<everyone.length; i++) {
-    if (everyone[i] != comment.userId){
-      Meteor.call('update',{
-        userId: everyone[i],
-        postId: post._id,
-        commentId: comment._id,
-        bubbleId: post.bubbleId,
-        invokerId: comment.userId,
-        invokerName: comment.author,
-        updateType: "newComment",
-        content: comment.author + " commented in a " + post.postType + "."
-      });
-    }
-  }
+  _.each(everyone, function(userId) {
+    Meteor.call('update',{
+      userId: userId,
+      postId: post._id,
+      commentId: comment._id,
+      bubbleId: post.bubbleId,
+      invokerId: comment.userId,
+      invokerName: comment.author,
+      updateType: "newComment",
+      content: comment.author + " commented in a " + post.postType + "."
+    });
+  });
 }
 
 //For bubble admins n members when post is created
 createPostUpdate = function(post) {
   var bubble = Bubbles.findOne(post.bubbleId);
   var everyone = getEveryone(bubble);
+  var index = everyone.indexOf(post.userId);
+  everyone.splice(index,1);
 
-  for (var i=0; i<everyone.length; i++) {    
-    if (everyone[i] != post.userId) {
-      Meteor.call('update',{
-        userId: everyone[i],
-        postId: post._id,
-        bubbleId: bubble._id,
-        invokerId: post.userId,
-        invokerName: post.author,
-        updateType: "newPost",
-        content: post.author + " added a new post in " + bubble.title + "."
-      });
-    }
-  }
+  _.each(everyone, function(userId) {
+    Meteor.call('update',{
+      userId: userId,
+      postId: post._id,
+      bubbleId: bubble._id,
+      invokerId: post.userId,
+      invokerName: post.author,
+      updateType: "newPost",
+      content: post.author + " added a new post in " + bubble.title + "."
+    });
+  });
 }
 
 //For bubble members when a member is added
 createNewMemberUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   var everyone = getEveryone(bubble);
-  for (var i=0; i<everyone.length; i++) {
-    if (everyone[i] != Meteor.userId() && everyone[i] != userId){      
-      Meteor.call('update',{
-        userId: everyone[i],
-        bubbleId: bubble._id,
-        invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
-        updateType: "newMember",
-        content: Meteor.users.findOne(userId).username + " has joined " + bubble.title
-      });
-    }else if(everyone[i] != userId) {
-      Meteor.call('update',{
-        userId: userId,
-        bubbleId: bubble._id,
-        invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
-        updateType: "joinedBubble",
-        content: "Congratulations, you have just joined " + bubble.title
-      });
-    }
+  var index = everyone.indexOf(Meteor.userId());
+  everyone.splice(index,1);
+  index = everyone.indexOf(userId);
+  everyone.splice(index,1);
+
+  // This shows that admin has accepted an application and
+  // an update needs to be sent to the newly added member
+  if(userId != Meteor.userId()){
+    Meteor.call('update',{
+      userId: userId,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "joinedBubble",
+      content: "Congratulations, you have just joined " + bubble.title
+    });
   }
+
+  //Sends an update to everyone who is not the new member 
+  //nor the admin who accepted the member
+  _.each(everyone, function(memberId){
+    Meteor.call('update',{
+      userId: memberId,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "newMember",
+      content: Meteor.users.findOne(userId).username + " has joined " + bubble.title
+    });
+  });
 }
 
 //For bubble members when a bubble is edited
 createBubbleEditUpdate = function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   var everyone = getEveryone(bubble);
-  for (var i=0; i<everyone.length; i++) {
-    if (everyone[i] != Meteor.userId()){      
-      Meteor.call('update',{
-        userId: everyone[i],
-        bubbleId: bubble._id,
-        invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
-        updateType: "editBubble",
-        content: bubble.title + " Bubble has been edited."
-      });
-    }
-  }
+  var index = everyone.indexOf(Meteor.userId());
+  everyone.splice(index,1);
+
+  _.each(everyone, function(userId){  
+    Meteor.call('update',{
+      userId: userId,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "editBubble",
+      content: bubble.title + " Bubble has been edited."
+    });
+  });
 }
 
 //For bubble admins who were just promoted
@@ -179,6 +189,21 @@ createRejectApplicationUpdate = function(userId) {
     invokerName: Meteor.user().username,
     updateType: "rejectApplication",
     content: "Your application has been rejected by " + bubble.title
+  });
+}
+
+//For users who are removed from bubble
+createNewApplicantUpdate = function() {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  _.each(bubble.users.admins, function(adminId){
+    Meteor.call('update',{
+      userId: adminId,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "rejectApplication",
+      content: Meteor.user().username + " has applied for " + bubble.title
+    });
   });
 }
 

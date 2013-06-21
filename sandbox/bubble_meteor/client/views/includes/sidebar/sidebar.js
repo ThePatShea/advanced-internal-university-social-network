@@ -38,6 +38,7 @@ Template.sidebar.events({
       $addToSet: {'users.members': Meteor.userId()},
       $pull: {'users.invitees': Meteor.userId()}
     });
+    createNewMemberUpdate(Meteor.userId());
   },
   'click .reject-invitation': function(){
     if (confirm("Reject this invitation?")) {

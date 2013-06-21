@@ -20,6 +20,7 @@ Template.bubbleCover.events({
     {
       $addToSet: {'users.applicants': Meteor.userId()}
     });
+    createNewApplicantUpdate();
   },
   'click .cancel-apply': function() {
     Bubbles.update({_id:Session.get('currentBubbleId')},
