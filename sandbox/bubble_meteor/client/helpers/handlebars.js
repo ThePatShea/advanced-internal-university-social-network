@@ -1,5 +1,5 @@
 Handlebars.registerHelper('pluralize', function(n, thing) {
-  // fairly stupid pluralizer
+  // fairly simple pluralizer
   if (n === 1) {
     return '1 ' + thing;
   } else {
@@ -51,3 +51,9 @@ Handlebars.registerHelper('getUsername', function(userId) {
   }
 });
 
+Handlebars.registerHelper('getBubbleUsersCount',function() {
+  var bubble = Bubbles.findOne(Session.get("currentBubbleId"));
+
+  var users = bubble.users.admins.concat(bubble.users.members);
+  return users.length;
+});

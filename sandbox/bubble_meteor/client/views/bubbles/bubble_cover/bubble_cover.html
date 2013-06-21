@@ -4,8 +4,8 @@
       <div class="v-inner">
         <h1 class="bubble-name">{{title}}</h1>
         <h2 class="bubble-subtitle">
-          <span>category</span>
-          <span> | # members</span>
+          <span>{{category}}</span>
+          <span> | {{pluralize getBubbleUsersCount "member"}}</span>
         </h2>
       </div>
     </div>
