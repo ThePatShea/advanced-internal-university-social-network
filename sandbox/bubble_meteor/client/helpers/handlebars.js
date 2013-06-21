@@ -57,3 +57,7 @@ Handlebars.registerHelper('getBubbleUsersCount',function() {
   var users = bubble.users.admins.concat(bubble.users.members);
   return users.length;
 });
+
+Handlebars.registerHelper('convertSpacesToDashes',function(word) {
+  return word.replace(" ","-");
+});
