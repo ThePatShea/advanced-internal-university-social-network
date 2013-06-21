@@ -14,7 +14,7 @@ Template.sidebar.helpers({
     return compressedList.length;
   },
   getSidebarBubbles: function(){
-    return Bubbles.find({}, {sort: {submitted: -1}, limit: 5});
+    return Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}, {limit: joinedBubblesHandle.limit()});
   },
   getInvitations: function() {
     invitees = [Meteor.userId()];
@@ -38,6 +38,7 @@ Template.sidebar.events({
       $addToSet: {'users.members': Meteor.userId()},
       $pull: {'users.invitees': Meteor.userId()}
     });
+    createNewMemberUpdate(Meteor.userId());
   },
   'click .reject-invitation': function(){
     if (confirm("Reject this invitation?")) {

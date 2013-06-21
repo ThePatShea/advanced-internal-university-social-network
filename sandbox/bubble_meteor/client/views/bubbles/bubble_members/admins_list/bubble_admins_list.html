@@ -2,10 +2,14 @@
 	This is admin list
 	<br />
   {{#each getAdmins}}
-    {{getUsername this}}
+    <button class="btn btn-small activate" type="button">
+      {{getUsername this}}
+    </button>
 		{{#if isAdmin}}
 			{{#if ifNotSelf}}
-    		<button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
+        {{#if chosen}}
+          <button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
+        {{/if}}
   		{{/if}}
 		{{/if}}
     <br />

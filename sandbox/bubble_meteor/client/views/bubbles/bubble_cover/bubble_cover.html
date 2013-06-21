@@ -1,25 +1,36 @@
 <template name="bubbleCover">
   <div class="bubble-cover">
-    {{title}}
-    {{#if isAdmin}}
-      <a href="{{bubbleEditPath this}}">
-        <button class="std-btn-dark pull-right">edit bubble</button>
-      </a>
-    {{/if}}
-
-    {{#if hasJoinedBubble}}
-      <a href="{{bubbleMembersPagePath this}}">
-        <button class="btn btn-large btn-info pull-right">Members Page</button>
-      </a>
-    {{/if}}}
-
-    {{#if hasNotJoinedBubble}}
-      {{#if hasApplied}}
-        <button class="btn btn-large btn-success pull-right cancel-apply">Cancel Application</button>
-      {{/if}}
-      {{#if hasNotApplied}}
-        <button class="btn btn-large btn-success pull-right join-apply">Join Bubble</button>
-      {{/if}}
-    {{/if}}
+    <div class="v-middle-outer">
+      <div class="v-middle-inner">
+        <div class="pull-left">
+          <h1 class="bubble-name">{{title}}</h1>
+          <h2 class="bubble-subtitle">
+            <span>category</span>
+            <span> | # members</span>
+          </h2>
+        </div>
+        <div class="pull-right">
+          {{#if hasJoinedBubble}}
+            <a href="{{bubbleMembersPagePath this}}">
+              <button class="std-btn-dark pull-right">Members Page</button>
+            </a>
+          {{else}}
+            {{#if hasApplied}}
+              <button class="std-btn-dark pull-right cancel-apply">Cancel Application</button>
+            {{else}}
+              <button class="std-btn-dark pull-right join-apply">Join Bubble</button>
+            {{/if}}
+          {{/if}}
+          {{#if isAdmin}}
+            <a href="{{bubbleEditPath this}}">
+              <button class="std-btn-dark pull-right">
+                <span class="cb-icon-xlight">{{> icon-settings}}</span>
+                <span class="lbl">edit bubble</span>
+              </button>
+            </a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
   </div>
 </template>

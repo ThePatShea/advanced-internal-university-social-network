@@ -11,8 +11,9 @@ if(Meteor.isServer){
         to: to,
         from: "no-reply@emorybubble.com",
         subject: subject,
-        text: text
+        html: text
       });
+      console.log("An email is sent");
     }
   });
   

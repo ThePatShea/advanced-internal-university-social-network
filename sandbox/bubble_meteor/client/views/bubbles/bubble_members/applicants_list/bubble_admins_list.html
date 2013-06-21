@@ -2,11 +2,18 @@
 	This is applicant list
 	<br />
   {{#each getApplicants}}
-    {{getUsername this}}
-		{{#if isAdmin}}
-  		<button class="btn btn-small btn-success accept" type="button">Accept</button>
+    {{#if isAdmin}}
+      <button class="btn btn-small activate" type="button">
+        {{getUsername this}}
+      </button>
+
+      {{#if chosen}}
+      <button class="btn btn-small btn-success accept" type="button">Accept</button>
       <button class="btn btn-small btn-danger reject" type="button">Reject</button>
-		{{/if}}
+      {{/if}}
+    {{else}}
+      {{getUsername this}}
+    {{/if}}
     <br />
   {{/each}}
 </template>
