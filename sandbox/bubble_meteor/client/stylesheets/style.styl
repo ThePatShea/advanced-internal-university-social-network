@@ -7,6 +7,10 @@ button
 button,
 div
   border-box             0
+
+h1, h2, h3, h4, h5, h6
+  line-height            100%
+  margin                 0
 /***************         CSS Reset         ***************/
 
 
@@ -37,6 +41,8 @@ main-light-bg(n)
   background             #2f5973
 
 
+main-xlight-border(n)
+  border-thin            #95afbf
 main-xlight-color(n)
   color                  #95afbf
 main-xlight-fill(n)
@@ -49,7 +55,7 @@ main-xlight-bg(n)
 /**********  Font Palette   **********/
 /*****    Main Font     *****/
 font-main(n)
-  font-family            'brandon-grotesque'
+  font-family            'brandon-grotesque', Arial, Sans-Serif
 font-main-black(n)
   font-weight            900
   font-main              0
@@ -66,7 +72,7 @@ font-main-regular(n)
 
 /*****  Alternate Font  *****/
 font-alt(n)
-  font-family            'proxima-nova'
+  font-family            'proxima-nova', Arial, Sans-Serif
 font-alt-black(n)
   font-weight            900
   font-alt               0
@@ -82,11 +88,18 @@ font-alt-semibold(n)
 font-alt-regular(n)
   font-weight            400
   font-alt               0
+font-alt-light(n)
+  font-weight            300
+  font-alt               0
 /*****  Alternate Font  *****/
 /**********  Font Palette   **********/
 
 
 /**********   Properties    **********/
+border-thin-top-btm(color)
+  border-bottom          1px solid color
+  border-top             1px solid color
+
 border-thin(color)
   border                 1px solid color
 
@@ -102,23 +115,36 @@ border-radius(n)
 /**********   Properties    **********/
 
 
+/**********     Helpers     **********/
+/*****  Vertical Middle  *****/
+.v-middle-outer
+  display                table
+  height                 100%
+  width                  100%
+
+.v-middle-inner
+  display                table-cell
+  vertical-align         middle
+/*****  Vertical Middle  *****/
+/**********     Helpers     **********/
+
+
 /**********     Buttons     **********/
 std-btn(n)
   text-transform         uppercase
   padding                8px 15px
   border-radius          15px
   font-size              11px
+  main-xlight-border     0
 
 .std-btn-light
-  border-thin            #BECDD5
-  color                  #2E5972
+  main-light-color       0
   font-main-bold         0
   std-btn                0
 
 .std-btn-dark
   background             rgba(0,0,0,.35)
-  border-thin            #95AFBF
-  color                  #94AEBF
+  main-xlight-color      0
   font-main-black        0
   std-btn                0
 /**********     Buttons     **********/
@@ -130,14 +156,49 @@ std-btn(n)
 
 .cb-icon-light
   main-light-fill        0
+
+.cb-icon-xlight
+  main-xlight-fill       0
 /**********      Icons      **********/
 /***************  Multi-Purpose Elements   ***************/
 
 
 
 /***************  Single-Purpose Elements  ***************/
+/**********       sidebar        **********/
+.sidebar
+  height                 5000px
+  width                  240px
+  position               fixed
+  main-light-bg          0
+  .top-btns
+    border-thin-top-btm      #BBCCD7
+    overflow                 hidden
+    
+/**********       sidebar        **********/
+
+/**********        bubble-cover       **********/
 .bubble-cover
-  background             #999 // TESTING
+  background             #777 // TESTING
   height                 145px
-  padding                20px 30px // TODO: CHANGE THIS TO VERTICAL ALIGN MIDDLE WITH 30PX LEFT/RIGHT PADDING
+  padding                0 30px
+  .bubble-name
+    color                    white
+    font-size                37px
+    font-alt-light           0
+  .bubble-subtitle
+    text-transform           uppercase
+    font-size                12px
+    main-xlight-color        0
+    font-main-bold           0
+  .std-btn-dark
+    .lbl
+      padding                    0 0 0 5px
+/**********        bubble-cover       **********/
+
+/**********  bubble-section-selector  **********/
+.bubble-section-selector
+  height                 100px
+  background             red // TESTING
+/**********  bubble-section-selector  **********/
 /***************  Single-Purpose Elements  ***************/
