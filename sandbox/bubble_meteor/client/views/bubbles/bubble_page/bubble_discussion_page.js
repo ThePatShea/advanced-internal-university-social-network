@@ -1,4 +1,4 @@
-Template.bubblePage.helpers({
+Template.bubbleDiscussionPage.helpers({
   //Get posts assigned to this bubble
   posts: function(){
   	return Posts.find({bubbleId:Session.get('currentBubbleId')});
@@ -15,10 +15,3 @@ Template.bubblePage.helpers({
 
 });
 
-Template.bubblePage.rendered = function(){
-  $(window).scroll(function(){
-    if ($(window).scrollTop() == $(document).height() - $(window).height()){
-      this.postsHandle.loadNextPage();
-    }
-  });
-}

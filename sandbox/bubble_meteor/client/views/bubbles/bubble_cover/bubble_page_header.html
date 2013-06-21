@@ -1,0 +1,10 @@
+<template name="bubblePageHeader">
+	{{>bubbleCover}}
+	<div class="page-tabs">
+	    <a class="home" href="{{bubblePagePath this}}">Home || </a>
+	    <a class="events" href="{{bubbleEventPagePath this}}">Events ||</a>
+	    <a class="discussions" href="{{bubbleDiscussionPagePath this}}">Discussions ||</a>
+	    <a class="files" href="{{bubbleFilePagePath this}}">Files ||</a>
+	    <a class="members" href="{{bubbleMembersPagePath this}}">Members</a>
+	</div>
+</template>

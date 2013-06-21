@@ -16,13 +16,11 @@ Template.postPage.helpers({
   notAttending: function() {
     return !_.contains(this.attendees,Meteor.users.findOne().username);
   }
-
 });
 
 Template.postPage.events({
 	'click .attending': function(){
 		console.log("this ran");
 		Meteor.call('attendEvent',this._id,Meteor.users.findOne().username);
-
   }
 });

@@ -25,6 +25,18 @@ Meteor.Router.add({
     to: 'bubblePage', 
     and: function(id) { Session.set('currentBubbleId', id); }
   },
+  '/bubbles/:_id/event': {
+    to: 'bubbleEventPage', 
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
+  '/bubbles/:_id/discussion': {
+    to: 'bubbleDiscussionPage', 
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
+  '/bubbles/:_id/file': {
+    to: 'bubbleFilePage', 
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
   '/bubbles/:_id/edit': {
     to: 'bubbleEdit', 
     and: function(id) { Session.set('currentBubbleId', id); }    

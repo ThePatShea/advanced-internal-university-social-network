@@ -1,6 +1,6 @@
 postsHandle = Meteor.subscribeWithPagination('posts', 15);
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
-mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',5);
+mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',2);
 
 
 Deps.autorun(function() {

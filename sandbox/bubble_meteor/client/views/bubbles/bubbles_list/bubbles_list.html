@@ -3,12 +3,6 @@
     {{#each getBubbles}}
       {{> bubbleItem}}
     {{/each}}
-    {{#if bubblesReady}}
-      {{#unless allBubblesLoaded}}
-        <a class="load-more" href="#">Load more</a>
-      {{/unless}}
-    {{else}}
-      <div>{{> spinner}}</div>
-    {{/if}}
+    
   </div>
 </template>

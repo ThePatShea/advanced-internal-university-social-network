@@ -1,0 +1,15 @@
+<template name="bubbleFilePage">
+  {{#with getCurrentBubble}}
+    {{> bubblePageHeader}}
+    <a href="{{fileSubmitPath this}}">
+    	<div class="btn">Update a File</div>
+	</a>
+
+	{{#each posts}}
+    	{{#if isFile}}
+      		{{> postItem}}
+    	{{/if}}
+  	{{/each}}
+
+  {{/with}}
+</template>
