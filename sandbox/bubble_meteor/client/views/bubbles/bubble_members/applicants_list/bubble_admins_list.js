@@ -16,12 +16,14 @@ Template.bubbleApplicantsList.events({
       $addToSet: {'users.members': this.toString()},
       $pull: {'users.applicants': this.toString()}
     });
+    Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   },
 	'click .reject': function(){
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.applicants': this.toString()}
     });
+    Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   },
   'click .activate': function() {
     if (Session.get(Session.get('currentBubbleId')+this.toString())){

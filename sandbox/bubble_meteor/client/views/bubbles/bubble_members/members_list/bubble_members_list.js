@@ -16,14 +16,14 @@ Template.bubbleMembersList.events({
       $addToSet: {'users.admins': this.toString()},
       $pull: {'users.members': this.toString()}
     });
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+      Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   },
   'click .remove-member': function() {
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.members': this.toString()}
     });
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+      Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   },
   'click .activate': function() {
     if (Session.get(Session.get('currentBubbleId')+this.toString())){
