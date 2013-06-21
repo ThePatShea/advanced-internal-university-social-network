@@ -1,6 +1,7 @@
 <template name="bubblePage">
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
 
     <a href="{{discussionSubmitPath this}}">
       <div class="btn">Start a Post</div>
@@ -10,7 +11,7 @@
 	  <hr/>
 	  
 	  {{#each posts}}
-	  	{{> postItem}}
+	    {{> postItem}}
 	  {{/each}}
   {{/with}}
 </template>

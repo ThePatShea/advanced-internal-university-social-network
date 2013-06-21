@@ -3,10 +3,10 @@ Template.bubbleMembersList.helpers({
 		return this.users.members;
 	},
   chosen: function() {
-    return Session.get(Session.get('currentBubbleId')+Meteor.userId);
-  },
-  notChosen: function() {
-    return !Session.get(Session.get('currentBubbleId')+Meteor.userId);
+    //Checks if user has clicked on username to activate options
+    if(Session.get(Session.get('currentBubbleId')+this.toString()) == this.toString()){
+      return true;
+    }
   }
 });
 
@@ -17,20 +17,27 @@ Template.bubbleMembersList.events({
       $addToSet: {'users.admins': this.toString()},
       $pull: {'users.members': this.toString()}
     });
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+    Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
+
+    //Create update for member who is promoted
+    createMemberPromoteUpdate(this.toString());
   },
   'click .remove-member': function() {
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.members': this.toString()}
     });
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+    Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
+
+    //Create update for member who is removed from bubble
+    createRemoveMemberUpdate(this.toString());
   },
   'click .activate': function() {
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,true);
-  },
-  'click .deactivate': function() {
-    Session.set(Session.get('currentBubbleId')+Meteor.userId,undefined);
+    if (Session.get(Session.get('currentBubbleId')+this.toString())){
+      Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
+    }else{
+      Session.set(Session.get('currentBubbleId')+this.toString(),this.toString());
+    }
   }
 
 });

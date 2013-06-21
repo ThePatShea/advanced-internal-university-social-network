@@ -8,7 +8,6 @@ Template.postPage.helpers({
   	}
   },
   numOfAttendees: function() {
-    console.log(this);
   	return this.attendees.length;
   },
   isAttending: function() {
@@ -21,9 +20,8 @@ Template.postPage.helpers({
 });
 
 Template.postPage.events({
-	'click .btn': function(event){
-		event.preventDefault();
-		
+	'click .attending': function(){
+		console.log("this ran");
 		Meteor.call('attendEvent',this._id,Meteor.users.findOne().username);
 
   }

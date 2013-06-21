@@ -13,13 +13,21 @@
         {{#each findUsers}}
           <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
         {{/each}}
+        <br/>
+        {{#if usersReady}}
+          {{#unless allUsersLoaded}}
+            <button class="btn btn-small btn-info load" type="button">Load more</button>
+          {{/unless}}
+        {{else}}
+          <div>{{> spinner}}</div>
+        {{/if}}
     {{/if}}
 
     <hr>
     Potential Invitee List
     <br />
     {{#each potentialInvitees}}
-      <button class="btn btn-small btn-danger remove-invitee" type="button">{{this}}</button>
+      <button class="btn btn-small btn-danger remove-invitee" type="button">{{getUsername this}}</button>
       <br />
     {{/each}}
     <br />

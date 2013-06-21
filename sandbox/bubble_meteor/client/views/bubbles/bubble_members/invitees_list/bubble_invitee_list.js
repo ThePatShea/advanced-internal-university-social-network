@@ -1,6 +1,7 @@
 Template.bubbleInviteesList.helpers({
 	getInvitees: function(){
-    return this.users.invitees;
+		var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    return bubble.users.invitees;
   }
 });
 
