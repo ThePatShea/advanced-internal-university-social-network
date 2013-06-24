@@ -64,6 +64,7 @@ Template.bubbleInvitation.events({
     //Reset Session objects
     Session.set('selectedUsername',undefined);
     Session.set('inviteeList'+Session.get('currentBubbleId'),undefined);
+    Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   }
 });
 

@@ -30,7 +30,10 @@ Meteor.publish('invitedBubbles', function(userId) {
   return Bubbles.find({'users.invitees':userId});
 });
 
-Meteor.publish('relatedUsers', function(bubbleId,postId) {
+Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
+  if (!usernameList) {
+    usernameList = [];
+  }
   var bubble = Bubbles.findOne(bubbleId);
   if(!bubble) {
     var post = Posts.findOne(postId);
@@ -46,7 +49,7 @@ Meteor.publish('relatedUsers', function(bubbleId,postId) {
                     .concat(users.members)
                     .concat(users.applicants);
                     
-    return Meteor.users.find({_id: {$in: userList}}, {
+    return Meteor.users.find({$or: [{_id: {$in: userList}},{username: {$in: usernameList}}]}, {
       fields: {
        'username': 1,
        'emails': 1
@@ -65,17 +68,16 @@ Meteor.publish("findUsersByName", function (username) {
      'emails': 1
     }
   });
-
 });
 
-Meteor.publish('shortlistedUsers', function(usernameList) {
-  if(usernameList){
-    return Meteor.users.find({username: {$in: usernameList}},{
-      fields: {
-        'username': 1,
-        'emails': 1
-      }
-    });
-  }
-});
+// Meteor.publish('shortlistedUsers', function(usernameList) {
+//   if(usernameList){
+//     return Meteor.users.find({username: {$in: usernameList}},{
+//       fields: {
+//         'username': 1,
+//         'emails': 1
+//       }
+//     });
+//   }
+// });
 
