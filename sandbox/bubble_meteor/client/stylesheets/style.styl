@@ -275,16 +275,20 @@ svg
     .main-btn
       box-shadow                 0 1px #386C8B
       padding                    0 0 0 15px
+      position                   relative
       display                    block
       text-align                 left
       height                     50px
       font-size                  15px
       width                      100%
+      z-index                    20
       std-white-light-color      0
       font-alt-light             0
       &:hover
-        text-decoration          underline
-        background               #274B61
+        text-decoration              underline
+        position                     relative
+        background                   #274B61
+        z-index                      10
 /**********       sidebar        **********/
 
 /**********        bubble-cover       **********/
