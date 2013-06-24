@@ -5,9 +5,6 @@
       <h4 style="line-height: 16px; text-transform: uppercase;">{{postType}}</h4>
     </div>
     <div class="post-content">
-      {{#if getPostType "event"}}
-        <img src="{{eventPhoto}}" />
-      {{/if}}
       <h3><a href="{{postPagePath this}}">{{name}}</a></h3>
       <p>
         <a href="{{postPagePath this}}">{{pluralize commentsCount "comment"}}</a>
