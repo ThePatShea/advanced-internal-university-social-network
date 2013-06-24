@@ -4,13 +4,7 @@ Template.bubbleAdminsList.helpers({
   },
   ifNotSelf: function() {
   	return this.toString() != Meteor.userId();
-  },
-  chosen: function() {
-    if(Session.get(Session.get('currentBubbleId')+this.toString()) == this.toString()){
-      return true;
-    }
   }
-
 });
 
 Template.bubbleAdminsList.events({

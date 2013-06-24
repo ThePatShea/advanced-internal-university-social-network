@@ -56,8 +56,8 @@ Meteor.publish('relatedUsers', function(bubbleId,postId) {
 })
 
 Meteor.publish("findUsersByName", function (username) {
-  var search_name   =  new RegExp(username,'i');
-  var search_query  =  {username: search_name};
+  var search_name = new RegExp(username,'i');
+  var search_query = {username: search_name};
     
   return Meteor.users.find(search_query, {
     fields: {
@@ -66,5 +66,16 @@ Meteor.publish("findUsersByName", function (username) {
     }
   });
 
+});
+
+Meteor.publish('shortlistedUsers', function(usernameList) {
+  if(usernameList){
+    return Meteor.users.find({username: {$in: usernameList}},{
+      fields: {
+        'username': 1,
+        'emails': 1
+      }
+    });
+  }
 });
 
