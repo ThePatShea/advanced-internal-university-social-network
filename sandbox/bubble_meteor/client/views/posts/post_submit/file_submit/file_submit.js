@@ -7,18 +7,6 @@ Template.fileSubmit.events({
       reader.onload = (function(f){
         return function(e) {
           console.log(f.type);
-          /*buffer = e.target.result;
-          file_header = buffer.slice(0, 40);
-          var re = new RegExp('\:(.+)\;');
-          var m = re.exec(file_header);
-          var file_type = null;
-          if(m.length == 2){
-            file_type =  m[1];
-            console.log(m[1]);
-          }
-          else{
-            file_type = 'application/octet-stream'
-          }*/
           
           createPost({
             name: escape(f.name),
