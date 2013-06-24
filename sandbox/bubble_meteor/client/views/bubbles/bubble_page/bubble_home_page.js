@@ -1,4 +1,4 @@
-Template.bubblePage.helpers({
+Template.bubbleHomePage.helpers({
   //Get posts assigned to this bubble
   eventsCount: function() {
     return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event'}).count() - 3;
