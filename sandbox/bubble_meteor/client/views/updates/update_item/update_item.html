@@ -1,29 +1,58 @@
 <template name="updateItem">
   <div class="post">
-    <div style="width:70px" class="post-content">
+    <div style="width:200px" class="post-content">
       {{toUpperCase invokerName}}
     </div>
     <div style="width:200px" class="post-content">
-      {{updateTypeIs}}
+      {{updateType}}
       <br />
       {{submittedText submitted}}
     </div>
 
-    <div style="width:100px" class="post-content">
-      <a href="{{postPagePath postId}}">
-        {{#with getPost postId}} 
-          {{name}}
-        {{/with}}
-      </a>
-    </div>
-    <div style="width: 100px;" class="pull-right">
-      <p style="line-height: 10px;">Number of New Comments</p>
-      <div class="badgeCenter">
-        <span class="badge badge-inverse">
-          {{getNewCommentsCount postId}}
-        </span>
+    {{#if isPost}}
+      <div style="width:100px" class="post-content">
+        <a href="{{url}}">
+          {{#with getPost}} 
+            {{name}}
+          {{/with}}
+        </a>
       </div>
-    </div>
+    {{else}}
+      {{#if isBubbleMember}}
+        <div style="width:100px" class="post-content">
+          <a href="{{url}}">
+            Member List
+          </a>
+        </div>
+      {{else}}
+        {{#if isBubbleList}}
+          <div style="width:100px" class="post-content">
+            <a href="{{url}}">
+              Bubble List
+            </a>
+          </div>
+        {{else}}
+          <div style="width:100px" class="post-content">
+            <a href="{{url}}">
+              {{#with getBubble}}
+                {{title}}
+              {{/with}}
+            </a>
+          </div>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+    
+    {{#if isPost}}
+      <div style="width: 100px;" class="pull-right">
+        <p style="line-height: 10px;">Number of New Comments</p>
+        <div class="badgeCenter">
+          <span class="badge badge-inverse">
+            {{getNewCommentsCount}}
+          </span>
+        </div>
+      </div>
+    {{/if}}
   </div>
 </template>
 

@@ -1,25 +1,40 @@
 Template.updateItem.helpers({
-	getPost: function(postId){
-		return Posts.findOne(postId);
+	getPost: function() {
+		return Posts.findOne(this.postId);
 	},
-	updateTypeIs: function(){
-		var updateType = this.updateType;
-		if (updateType == "newPost") {
-			return "POSTED";
-		} else if (updateType == "newComment") {
-			return "REPLIED ON";
-		} else if (updateType == "newMember") {
-			return "JOINED";
+	isPost: function() {
+		if(this.updateType == "REPLIED" || 
+				this.updateType == "POSTED" || 
+				this.updateType == "EDITED POST") {
+			return true;
 		}
 	},
-	getNewCommentsCount: function(postId){
-		return Updates.find({postId:postId, updateType:'newComment', read:false}).count();
+	isBubbleMember: function() {
+		if(this.updateType == "NEW ATTENDEE" || 
+				this.updateType == "JOINED BUBBLE" || 
+				this.updateType == "EDITED BUBBLE" || 
+				this.updateType == "MEMBER PROMOTED" || 
+				this.updateType == "MEMBER DEMOTED" ||
+				this.updateType == "NEW APPLICANT") {
+			return true;
+		}
+	},
+	isBubbleList: function() {
+		if(this.updateType == "REMOVED FROM BUBBLE" || 
+				this.updateType == "APPLICATION REJECTED") {
+			return true;
+		}
+	},
+	getNewCommentsCount: function() {
+		return Updates.find({postId:this.postId, updateType:'REPLIED', read:false}).count();
+	},
+	getBubble: function() {
+		return Bubbles.findOne(this.bubbleId);
 	}
 });
 
 Template.updateItem.events({
-  'click a': function() {
-  	var updatesList = Updates.find({postId: this.postId, read:false}).collection.docs;
-  	Meteor.call('setRead', updatesList);
+  'click a': function() {	
+  	Meteor.call('setRead', this);
   }
 });

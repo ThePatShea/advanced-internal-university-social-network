@@ -21,6 +21,7 @@ Meteor.publish('comments', function(postId) {
 
 Meteor.publish('updates', function() {
   return Updates.find({userId: this.userId, read: false}, {sort: {submitted:1}});
+  // return Updates.find({$or: [{invokerId:this.userId},{userId:this.userId}], read: false}, {sort: {submitted:1}});
 });
 
 Meteor.publish('singleBubble', function(id){
@@ -39,7 +40,10 @@ Meteor.publish('invitedBubbles', function(userId) {
   return Bubbles.find({'users.invitees':userId});
 });
 
-Meteor.publish('relatedUsers', function(bubbleId,postId) {
+Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
+  if (!usernameList) {
+    usernameList = [];
+  }
   var bubble = Bubbles.findOne(bubbleId);
   if(!bubble) {
     var post = Posts.findOne(postId);
@@ -55,7 +59,7 @@ Meteor.publish('relatedUsers', function(bubbleId,postId) {
                     .concat(users.members)
                     .concat(users.applicants);
                     
-    return Meteor.users.find({_id: {$in: userList}}, {
+    return Meteor.users.find({$or: [{_id: {$in: userList}},{username: {$in: usernameList}}]}, {
       fields: {
        'username': 1,
        'emails': 1
@@ -65,8 +69,8 @@ Meteor.publish('relatedUsers', function(bubbleId,postId) {
 })
 
 Meteor.publish("findUsersByName", function (username) {
-  var search_name   =  new RegExp(username,'i');
-  var search_query  =  {username: search_name};
+  var search_name = new RegExp(username,'i');
+  var search_query = {username: search_name};
     
   return Meteor.users.find(search_query, {
     fields: {
@@ -74,6 +78,16 @@ Meteor.publish("findUsersByName", function (username) {
      'emails': 1
     }
   });
-
 });
+
+// Meteor.publish('shortlistedUsers', function(usernameList) {
+//   if(usernameList){
+//     return Meteor.users.find({username: {$in: usernameList}},{
+//       fields: {
+//         'username': 1,
+//         'emails': 1
+//       }
+//     });
+//   }
+// });
 

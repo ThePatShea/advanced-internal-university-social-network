@@ -1,11 +1,6 @@
 Template.bubbleApplicantsList.helpers({
 	getApplicants: function() {
     return this.users.applicants;
-  },
-  chosen: function() {
-    if(Session.get(Session.get('currentBubbleId')+this.toString()) == this.toString()){
-      return true;
-    }
   }
 });
 
