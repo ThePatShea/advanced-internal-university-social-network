@@ -17,7 +17,6 @@ Deps.autorun(function() {
 	Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'), 
 											Session.get('inviteeList'+Session.get('currentBubbleId')));
 	Meteor.subscribe('findUsersByName', Session.get('selectedUsername'));
-	// Meteor.subscribe('shortlistedUsers', Session.get('inviteeList'+Session.get('currentBubbleId')));
 })
 
 Meteor.subscribe('updates');
