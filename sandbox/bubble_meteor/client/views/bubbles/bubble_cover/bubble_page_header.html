@@ -1,10 +1,12 @@
 <template name="bubblePageHeader">
 	{{>bubbleCover}}
+	<br>
 	<div class="page-tabs">
-	    <a class="home" href="{{bubblePagePath this}}">Home || </a>
-	    <a class="events" href="{{bubbleEventPagePath this}}">Events ||</a>
-	    <a class="discussions" href="{{bubbleDiscussionPagePath this}}">Discussions ||</a>
-	    <a class="files" href="{{bubbleFilePagePath this}}">Files ||</a>
-	    <a class="members" href="{{bubbleMembersPagePath this}}">Members</a>
+	    <a class="home" href="{{bubblePagePath this}}"> <font size ="4.5"> | Home | </font></a>
+	    <a class="events" href="{{bubbleEventPagePath this}}"> <font size ="4.5"> | Events | </font></a>
+	    <a class="discussions" href="{{bubbleDiscussionPagePath this}}"> <font size ="4.5"> | Discussions | </font></a>
+	    <a class="files" href="{{bubbleFilePagePath this}}"><font size ="4.5"> | Files | </font></a>
+	    <a class="members" href="{{bubbleMembersPagePath this}}"><font size ="4.5"> | Members </font></a>
 	</div>
+	<br>
 </template>

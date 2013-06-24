@@ -1,9 +1,10 @@
-postsHandle = Meteor.subscribeWithPagination('posts', 3);
+// postsHandle = Meteor.subscribeWithPagination('posts');
+
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
 mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',3);
-discussionListHandle = Meteor.subscribeWithPagination('posts',3);
-eventListHandle = Meteor.subscribeWithPagination('posts',3);
-fileListHandle = Meteor.subscribeWithPagination('posts',3);
+eventListHandle = Meteor.subscribeWithPagination('events',3);
+discussionListHandle = Meteor.subscribeWithPagination('discussions',3);
+fileListHandle = Meteor.subscribeWithPagination('files',3);
 
 Deps.autorun(function() {
 	//Retrieves Bubbles
@@ -21,4 +22,3 @@ Deps.autorun(function() {
 })
 
 Meteor.subscribe('updates');
-

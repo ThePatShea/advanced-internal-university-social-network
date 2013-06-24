@@ -8,6 +8,7 @@ Template.bubbleFilePage.helpers({
 Template.bubbleFilePage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
+        console.log("File");
         this.fileListHandle.loadNextPage();
     }
   });

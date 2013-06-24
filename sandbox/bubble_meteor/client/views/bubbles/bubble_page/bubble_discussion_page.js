@@ -8,6 +8,7 @@ Template.bubbleDiscussionPage.helpers({
 Template.bubbleDiscussionPage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
+    	console.log("Discuss");
         this.discussionListHandle.loadNextPage();
     }
   });

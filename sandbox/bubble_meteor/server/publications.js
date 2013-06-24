@@ -1,6 +1,15 @@
-Meteor.publish('posts', function(limit) {
-  return Posts.find({}, {sort: {submitted: -1}, limit: limit});
+//seperate the scroll down to view functions
+Meteor.publish('events', function() {
+  return Posts.find({postType:'event'}, {sort: {submitted: -1}});
 });
+Meteor.publish('discussions', function() {
+  return Posts.find({postType:'discussion'}, {sort: {submitted: -1}});
+});
+Meteor.publish('files', function() {
+  return Posts.find({postType:'file'}, {sort: {submitted: -1}});
+});
+
+//add the date to event/event page
 
 Meteor.publish('singlePost', function(id) {
   return id && Posts.find(id);

@@ -22,4 +22,4 @@ Template.updateItem.events({
   	var updatesList = Updates.find({postId: this.postId, read:false}).collection.docs;
   	Meteor.call('setRead', updatesList);
   }
-})
+});
