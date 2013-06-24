@@ -2,11 +2,14 @@
   <section class="sidebar">
     <div class="top-btns">
       <a href="#">
-        <button class="top-btn left">O- search</button>
+        <button class="top-btn left">
+          <span class="cb-icon-light-stroke">{{> icon-search}}</span>
+          <span class="lbl">search</span>
+        </button>
       </a>
       <a href="{{bubbleSubmitPath}}">
         <button class="top-btn right">
-          <span class="cb-icon-light">{{> icon-bubble}}</span>
+          <span class="cb-icon-light-fill">{{> icon-bubble}}</span>
           <span>+</span>
           <span class="lbl">create</span>
         </button>
@@ -15,7 +18,7 @@
     <div class="main-btns">
       {{#each getSidebarBubbles}} 
         <a href="{{bubblePagePath this}}">
-          <button class="main-btn">
+          <button class="main-btn category-{{convertSpacesToDashes category}}-border-left-3">
             {{#if compressedCount}}
               <span class="badge badge-inverse">
                 {{compressedCount}} 

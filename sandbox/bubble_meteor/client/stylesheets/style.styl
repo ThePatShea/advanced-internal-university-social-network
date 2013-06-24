@@ -3,7 +3,7 @@ button
   line-height            normal
   display                block
   background             none
-  border                 none
+  border                 0
 
 button,
 div
@@ -45,6 +45,9 @@ main-dark-bg(n)
   background             #001f37
 
 
+main-light-stroke(n)
+  path
+    stroke                   #2f5973
 main-light-color(n)
   color                  #2f5973
 main-light-fill(n)
@@ -76,6 +79,8 @@ category-academics-bg(n)
 
 .category-academics-bg-low-opacity 
   background             rgba(176,96,109,.15)
+.category-academics-border-left-3
+  border-left            3px solid #b0606d
 .category-academics-border-top-4
   border-top             4px solid #b0606d
 .category-academics-border
@@ -101,6 +106,8 @@ category-student-organization-bg(n)
 
 .category-student-organization-bg-low-opacity 
   background             rgba(112,200,137,.15)
+.category-student-organization-border-left-3
+  border-left            3px solid #70c889
 .category-student-organization-border-top-4
   border-top             4px solid #70c889
 .category-student-organization-border
@@ -132,6 +139,11 @@ font-main-medium(n)
 font-main-regular(n)
   font-weight            400
   font-main              0
+
+font-main-black-11-u(n)
+  text-transform         uppercase
+  font-size              11px
+  font-main-black        0
 /*****    Main Font     *****/
 
 /*****  Alternate Font  *****/
@@ -171,6 +183,11 @@ border-box(n)
   -webkit-box-sizing     border-box
   -moz-box-sizing        border-box
   box-sizing             border-box
+
+box-shadow(args...)
+  -webkit-box-shadow     args
+  -moz-box-shadow        args
+  box-shadow             args
 
 border-radius(n)
   -webkit-border-radius  n
@@ -213,10 +230,13 @@ std-btn(n)
 
 
 /**********      Icons      **********/
-.cb-icon
+svg
   vertical-align         top
 
-.cb-icon-light
+.cb-icon-light-stroke
+  main-light-stroke      0
+
+.cb-icon-light-fill
   main-light-fill        0
 
 .cb-icon-xlight
@@ -236,7 +256,35 @@ std-btn(n)
   .top-btns
     border-thin-top-btm      #BBCCD7
     overflow                 hidden
-    
+    .top-btn
+      height                     50px
+      float                      left
+      width                      50%
+      font-main-black-11-u       0
+      main-light-color           0
+      main-xlight-bg             0
+      &.left
+        border-right                 1px solid #7C9CAF
+      .lbl
+        padding                      0 0 0 10px
+        line-height                  20px
+      &:hover
+        text-decoration              underline
+        background                   #B7C8D3
+  .main-btns
+    .main-btn
+      box-shadow                 0 1px #386C8B
+      padding                    0 0 0 15px
+      display                    block
+      text-align                 left
+      height                     50px
+      font-size                  15px
+      width                      100%
+      std-white-light-color      0
+      font-alt-light             0
+      &:hover
+        text-decoration          underline
+        background               #274B61
 /**********       sidebar        **********/
 
 /**********        bubble-cover       **********/
@@ -264,6 +312,7 @@ std-btn(n)
 /**********  bubble-section-selector  **********/
 .bubble-section-selector
   height                 100px
+  std-white-light-fill   0
   .btn-bubble-section
     height                   100px
     width                    100px

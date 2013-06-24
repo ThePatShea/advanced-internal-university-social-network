@@ -1,9 +1,9 @@
 <template name="bubbleSectionSelector">
   <div class="bubble-section-selector category-{{convertSpacesToDashes category}}-border-top-4 category-{{convertSpacesToDashes category}}-bg-low-opacity">
-    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-color">home</button>
-    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">events</button>
-    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">discussions</button>
-    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">files</button>
-    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">members</button>
+    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-fill">{{> icon-home}}</button>
+    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">{{> icon-event}}</button>
+    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">{{> icon-discussion}}</button>
+    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">{{> icon-file}}</button>
+    <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg">{{> icon-member}}</button>
   </div>
 </template>

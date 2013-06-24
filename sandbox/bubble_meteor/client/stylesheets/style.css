@@ -46,50 +46,8 @@ a {
   width: 100%;
 }
 
-    .sidebar .top-btns .top-btn {
-      text-transform: uppercase;
-      background: #95AFBF;
-      font-family: Arial;
-      font-weight: bold;
-      font-size: 11px;
-      color: #2F5973;
-      height: 50px;
-      float: left;
-      width: 50%;
-      border: 0;
-      }
-      .sidebar .top-btns .top-btn .lbl {
-        line-height: 20px;
-        padding: 0 0 0 10px;
-      }
-      .sidebar .top-btns .top-btn.left {
-        border-right: 1px solid #7C9CAF;
-      }
-      .sidebar .top-btns .top-btn:hover {
-        background: #9CB7C8;
-      }
-  .sidebar .main-btns {
-      
-    }
-    .sidebar .main-btns .main-btn {
-      border: 0;
-      border-bottom: 1px solid #386C8B;
 
-      padding-left: 15px;
-      text-align: left;
-      background: none;
-      display: block;
-      height: 50px;
-      width: 100%;
 
-      font-family: Arial;
-      font-weight: bold;
-      font-size: 16px;
-      color: #95AFBF;
-      }
-      .sidebar .main-btns .main-btn:hover {
-        background: #325F7B;
-      }
 
 #main {
   padding-left: 240px;
