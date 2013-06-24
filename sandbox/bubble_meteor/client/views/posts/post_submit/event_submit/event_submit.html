@@ -2,6 +2,13 @@
   <section class="main">
     {{> selectPostType}}
     <form>
+    <div class="control-group">
+        <div id="eventphoto_image">
+            <div id="eventphoto_dropzone" class="dropzone">Drop event photo here.</div>
+                <img id="eventphoto_upload" src="" />
+                <img id="eventphoto_preview" src="" />
+        </div>
+    </div>
       <div class="control-group">
           <div class="controls">
               <input name="name" type="text" value="" placeholder="Event name"/>
