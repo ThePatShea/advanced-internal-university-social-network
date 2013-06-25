@@ -9,8 +9,6 @@ Meteor.publish('files', function() {
   return Posts.find({postType:'file'}, {sort: {submitted: -1}});
 });
 
-//add the date to event/event page
-
 Meteor.publish('singlePost', function(id) {
   return id && Posts.find(id);
 });

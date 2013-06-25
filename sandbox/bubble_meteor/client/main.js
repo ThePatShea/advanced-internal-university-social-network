@@ -5,6 +5,7 @@ mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',10);
 eventListHandle = Meteor.subscribeWithPagination('events',15);
 discussionListHandle = Meteor.subscribeWithPagination('discussions',15);
 fileListHandle = Meteor.subscribeWithPagination('files',15);
+updateListHandle = Meteor.subscribeWithPagination('updates', 2);
 
 Deps.autorun(function() {
 	//Retrieves Bubbles
