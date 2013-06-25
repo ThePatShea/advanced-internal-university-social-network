@@ -1,20 +1,24 @@
 <template name='userprofileEdit'>
-	{{#with getProfile}}
-		<h1>{{username}}</h1>
-	    <form class="main">
-	    
-	      <div class="control-group">
-	          <div class="controls">
-	              <input name="email" type="text" value="{{getEmail}}"/>
-	          </div>
-	      </div>
-	      <hr />
-	    
-	      <div class="control-group">
-	          <div class="controls">
-	              <input type="submit" value="Submit" class="btn btn-primary"/>
-	          </div>
-	      </div>
-	    </form>
-	{{/with}}
+	{{#if hasPermission}}
+		{{#with getProfile}}
+			<h1>{{username}}</h1>
+		    <form class="main">
+		    
+		      <div class="control-group">
+		          <div class="controls">
+		              <input name="email" type="text" value="{{getEmail}}"/>
+		          </div>
+		      </div>
+		      <hr />
+		    
+		      <div class="control-group">
+		          <div class="controls">
+		              <input type="submit" value="Submit" class="btn btn-primary"/>
+		          </div>
+		      </div>
+		    </form>
+		{{/with}}
+	{{else}}
+		<h1>You do not have permission to edit this profile.</h1>
+	{{/if}}
 </template>

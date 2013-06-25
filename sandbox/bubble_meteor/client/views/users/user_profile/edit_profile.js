@@ -1,11 +1,23 @@
 Template.userprofileEdit.helpers({
 	getProfile: function() {
 		//console.log('get profile: ', Meteor.users.findOne({_id:Session.get('selectedUserId')}));
+		console.log(Meteor.user());
 		return Meteor.users.findOne({_id:Session.get('selectedUserId')});
 	},
 
 	getEmail: function(){
 		return this.emails[0].address;
+	},
+
+	hasPermission: function(){
+		var profileId = Session.get('selectedUserId');
+		//console.log(Meteor.user(), profileId);
+		if((Meteor.user())._id == profileId){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 });
