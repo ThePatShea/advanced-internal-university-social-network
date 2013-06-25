@@ -1,37 +1,5 @@
-/* Added by Pat */
-.sidebar .main-btns .main-btn,
-.sidebar .top-btns .top-btn,
-.navbar .nav > li > a,
-.navbar .brand,
-.sidebar, 
-.post,
-.post-submit input,
-#main {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-/* Added by Pat */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .grid-block, .main, .comments li, .comment-form {
   padding: 10px; }
-
-body {
-  color: #666666; }
 
 #spinner {
   height: 300px; }
