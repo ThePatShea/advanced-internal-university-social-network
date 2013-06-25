@@ -5,6 +5,6 @@ Meteor.users.allow({
 
 Meteor.users.deny({
 	update: function(userId, profileId, fieldNames){
-		return (_.without(fieldNames, 'emails', 'profilePicture', 'lastUpdated').length > 0);
+		return (_.without(fieldNames, 'emails', 'phone','profilePicture', 'lastUpdated').length > 0);
 	}
 });
