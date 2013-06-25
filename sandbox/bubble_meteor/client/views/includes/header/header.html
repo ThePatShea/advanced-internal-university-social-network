@@ -1,7 +1,10 @@
 <template name="header">
   <header class="navbar">
     <div class="navbar-inner">
-      <a class="brand" href="/">emory bubble</a>
+      <a class="brand" href="/">
+        <span class="logo-main">{{> icon-logo-main}}</span>
+        <span class="left">emory</span><span class="right">bubble</span>
+      </a>
       <ul class="nav pull-right">
         {{#if isLoggedIn}}
           <li class="{{activeRouteClass 'bubblesList'}}">

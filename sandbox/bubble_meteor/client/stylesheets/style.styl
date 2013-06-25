@@ -177,6 +177,12 @@ font-main-medium(n)
 font-main-regular(n)
   font-weight            400
   font-main              0
+font-main-light(n)
+  font-weight            300
+  font-main              0
+font-main-thin(n)
+  font-weight            100
+  font-main              0
 
 font-main-black-11-u(n)
   text-transform         uppercase
@@ -341,8 +347,8 @@ navbar-height        =  60px
   .navbar .nav > .active > a:hover,
   .navbar .nav > li > a:hover,
   .navbar .nav > .active > a
-  main-light-color           0
-  main-light-fill            0
+  std-white-light-color      0
+  std-white-light-fill       0
   main-dark-bg               0
 
 
@@ -352,6 +358,8 @@ navbar-height        =  60px
   position               fixed
   width                  100%
   z-index                10
+  svg
+    vertical-align           middle
   .navbar-inner
     main-xdark-bg        0
     .brand
@@ -359,6 +367,14 @@ navbar-height        =  60px
       height                   navbar-height
       padding                  0 0 0 15px
       font-size                14px
+      .logo-main
+        margin                     0 5px 0 0
+      .left
+        std-white-light-color      0
+        font-main-black            0
+      .right
+        main-xlight-color          0
+        font-main-medium           0
     .nav
       & > li
         border-right               1px solid navbar-border-color
@@ -376,13 +392,12 @@ navbar-height        =  60px
           main-xlight-color            0
           main-xlight-fill             0
           &:hover
-            main-light-color           0
-            main-light-fill            0
+            std-white-light-color      0
+            std-white-light-fill       0
             main-dark-bg               0
           svg
-            vertical-align                 text-top
             position                       relative
-            top                            4px
+            top                            -2px
             
 /**********        navbar        **********/
 
@@ -393,6 +408,7 @@ navbar-height        =  60px
   position               fixed
   main-light-bg          0
   .top-btns
+    margin                   1px 0 0 0
     border-thin-top-btm      #BBCCD7
     overflow                 hidden
     .top-btn
