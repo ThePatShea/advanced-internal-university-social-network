@@ -174,7 +174,6 @@ category-student-organization-bg(n)
 .category-student-organization-bg 
   background             #70c889
 /*****  Category: Student Organization  *****/
-
 /**********  Color Palette  **********/
 
 
@@ -486,14 +485,20 @@ navbar-height        =  60px
 /**********        bubble-cover       **********/
 
 /**********  bubble-section-selector  **********/
+bubble-section-selector-height  =  100px
+
 .bubble-section-selector
-  height                 100px
+  height                 bubble-section-selector-height
   std-white-light-fill   0
-  .btn-bubble-section
-    height                   100px
-    width                    100px
+  .opacity-wrapper
+    height                   bubble-section-selector-height
     float                    left
-  .btn-bubble-section:nth-child(1)
     std-white-light-bg       0
+    .btn-bubble-section
+      height                   bubble-section-selector-height
+      width                    bubble-section-selector-height
+      float                    left
+    .btn-bubble-section:nth-child(1)
+      std-white-light-bg       0
 /**********  bubble-section-selector  **********/
 /***************  Single-Purpose Elements  ***************/
