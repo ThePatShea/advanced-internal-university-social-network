@@ -9,12 +9,10 @@
 <body>
   <div class="container">
     {{> header}}
-    {{#if isLoggedIn}}
 	    {{> sidebar}}
 	    <div id="main" class="row-fluid">
 	      {{> errors}}
 	      {{renderPage}}
 	    </div>
-    {{/if}}
   </div>
 </body>

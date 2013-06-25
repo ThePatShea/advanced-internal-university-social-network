@@ -3,14 +3,12 @@
     <div class="navbar-inner">
       <a class="brand" href="/">emory bubble</a>
       <ul class="nav pull-right">
-        {{#if isLoggedIn}}
           <li class="{{activeRouteClass 'bubblesList'}}">
             <a href="{{bubblesListPath}}">Bubbles</a>
           </li>
           <li class="dropdown">
             {{> updatesDropdown}}
           </li>
-        {{/if}}
         <li>{{loginButtons}}</li>
       </ul>
     </div>

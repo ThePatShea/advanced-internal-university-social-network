@@ -90,8 +90,20 @@ Meteor.Router.filters({
   'clearErrors': function(page) {
     clearErrors();
     return page;
+  },
+  'requireMembership': function(page) {
+    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+        console.log("this ran");
+    if(bubble) {
+      if(!(_.contains(bubble.users.admins, Meteor.userId()) || _.contains(bubble.users.members, Meteor.userId()))) {
+        console.log("this ran");
+        Meteor.Router.to('bubblePage');
+      }
+    }
+    Meteor.Router.to('bubbleList');
   }
 });
 
-Meteor.Router.filter('requireLogin', {only: 'postSubmit'});
+// Meteor.Router.filter('requireMembership');
+Meteor.Router.filter('requireLogin');
 Meteor.Router.filter('clearErrors');

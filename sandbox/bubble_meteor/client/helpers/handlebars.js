@@ -54,10 +54,6 @@ Handlebars.registerHelper('toUpperCase', function(text){
   return text.toUpperCase();
 });
 
-Handlebars.registerHelper('isLoggedIn',function() {
-  return Meteor.userId();
-});
-
 Handlebars.registerHelper('getUsername', function(userId) {
   var user = Meteor.users.findOne({_id:userId.toString()});
   if(user) {
