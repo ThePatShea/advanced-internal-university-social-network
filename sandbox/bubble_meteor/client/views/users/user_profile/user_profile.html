@@ -1,5 +1,6 @@
 <template name='userProfile'>
 	{{#with getUser}}
+		<img src="{{getProfilePicture}}" />
 		<h4>Username: <a href="{{userProfile this}}">{{username}}</a></h4><span>Email: {{getEmail}}</span></h3>
 		{{#if hasPermission}}
 			<h6><a href="{{userprofileEditPath getUserId}}">Edit</a></h6>

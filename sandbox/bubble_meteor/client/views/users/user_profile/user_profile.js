@@ -15,6 +15,12 @@ Template.userProfile.helpers({
 		return this.emails[0].address;
 	},
 
+	getProfilePicture: function(){
+		var user = Meteor.users.findOne({_id:Session.get('selectedUserId')});
+		console.log('The User object: ',user);
+		return user.profilePicture;
+	},
+
 	hasPermission: function(){
 		var profileId = Session.get('selectedUserId');
 		//console.log(Meteor.user(), profileId);

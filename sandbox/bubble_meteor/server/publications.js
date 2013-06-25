@@ -80,6 +80,10 @@ Meteor.publish("findUsersByName", function (username) {
   });
 });
 
+Meteor.publish(null, function() {
+  return Meteor.users.find({}, {fields: {'profilePicture': 1}});
+});
+
 // Meteor.publish('shortlistedUsers', function(usernameList) {
 //   if(usernameList){
 //     return Meteor.users.find({username: {$in: usernameList}},{
