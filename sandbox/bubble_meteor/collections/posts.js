@@ -36,7 +36,7 @@ Meteor.methods({
     }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees'), {
+    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto'), {
       userId: user._id, 
       author: user.username, 
       submitted: new Date().getTime(),

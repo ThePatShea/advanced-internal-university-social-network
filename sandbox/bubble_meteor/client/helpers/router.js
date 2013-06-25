@@ -70,6 +70,11 @@ Meteor.Router.add({
   '/userprofile/:id': {
     to: 'userProfile',
     and: function(id) { Session.set('selectedUserId',id); }
+  },
+
+  '/editprofile/:id': {
+    to: 'userprofileEdit',
+    and: function(id) { Session.set('selectedUserId',id)}
   }
 });
 

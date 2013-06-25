@@ -1,13 +1,7 @@
 Template.bubbleMembersList.helpers({
 	getMembers: function() {
 		return this.users.members;
-	},
-  chosen: function() {
-    //Checks if user has clicked on username to activate options
-    if(Session.get(Session.get('currentBubbleId')+this.toString()) == this.toString()){
-      return true;
-    }
-  }
+	}
 });
 
 Template.bubbleMembersList.events({
@@ -41,4 +35,3 @@ Template.bubbleMembersList.events({
   }
 
 });
-

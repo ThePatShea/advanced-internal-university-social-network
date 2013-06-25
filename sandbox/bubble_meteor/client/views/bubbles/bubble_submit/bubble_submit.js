@@ -34,23 +34,23 @@ Template.bubbleSubmit.events({
     evt.preventDefault();
 
     files = evt.dataTransfer.files;
+
+    //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
       error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
       throwError(error.reason);
     }
     else{
       f = files[0];
-      //If it is an image then render a thumbnail
+      //If the file dropped on the dropzone is an image then start processing it
       if (f.type.match('image.*')) {
         var reader = new FileReader();
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            // Render thumbnail.
-            /*dropzone = document.getElementById('drop_zone');
-            parent = document.getElementById('bubble_image');
-            parent.removeChild(dropzone);*/
+            var coverphoto_width = 900;
+            var coverphoto_height = 145;
             $("#cover_dropzone").hide();
             $("#coverphoto_upload").attr("src", e.target.result);
             $("#coverphoto_preview").attr("src", e.target.result);
@@ -58,25 +58,24 @@ Template.bubbleSubmit.events({
             $("#coverphoto_upload").show();
             $(document).ready( function(){
               $(function(){
-                //console.log($('#titleImage'));
                 function showPreview(coords){
-                  //var rx = 1000 / coords.w;
-                  //var ry = 1000 / coords.h;
                   var mycanvas = document.createElement('canvas');
-                  mycanvas.width = 500;
-                  mycanvas.height = 250;
+                  mycanvas.width = coverphoto_width;
+                  mycanvas.height = coverphoto_height;
                   console.log(coords);
                   mycontext = mycanvas.getContext('2d');
-                  mycontext.drawImage($("#coverphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, 500, 250);
+                  mycontext.drawImage($("#coverphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
                   var imagedata = mycanvas.toDataURL();
                   $("#coverphoto_preview").attr("src", imagedata);
+                  $("#coverphoto_preview").attr("width", coverphoto_width/2);
+                  $("#coverphoto_preview").attr("height", coverphoto_height/2);
                 };
 
                 $('#coverphoto_upload').Jcrop({
                   onChange: showPreview,
                   onSelect: showPreview,
-                  setSelect:   [ 50, 50, 500, 250 ],
-                  aspectRatio: 500/250
+                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
+                  aspectRatio: coverphoto_width/coverphoto_height
                 }, function(){
                   jcrop_api = this;
                   jcrop_api.setOptions({ allowResize: false });
@@ -92,6 +91,7 @@ Template.bubbleSubmit.events({
 
       }
 
+      //If the file dropped on the dropzone is not an image then throw an error to the user
       else{
         error = new Meteor.Error(422, 'Please choose a valid image.');
         throwError(error.reason);
@@ -108,23 +108,23 @@ Template.bubbleSubmit.events({
     evt.preventDefault();
 
     files = evt.dataTransfer.files;
+
+    //If more than one file dropped on the dropzone then throw an error to the user
     if(files.length > 1){
       error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
       throwError(error.reason);
     }
     else{
       f = files[0];
-      //If it is an image then render a thumbnail
+      //If the file dropped on the dropzone is an image then start processing it
       if (f.type.match('image.*')) {
         var reader = new FileReader();
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            // Render thumbnail.
-            /*dropzone = document.getElementById('drop_zone');
-            parent = document.getElementById('bubble_image');
-            parent.removeChild(dropzone);*/
+            var profilepicture_width = 300;
+            var profilepicture_height = 300;
             $("#profile_dropzone").hide();
             $("#profilepicture_upload").attr("src", e.target.result);
             $("#profilepicture_preview").attr("src", e.target.result);
@@ -132,24 +132,23 @@ Template.bubbleSubmit.events({
             $("#profilepicture_upload").show();
             $(document).ready( function(){
               $(function(){
-                //console.log($('#titleImage'));
                 function showPreview(coords){
-                  //var rx = 1000 / coords.w;
-                  //var ry = 1000 / coords.h;
                   var mycanvas = document.createElement('canvas');
-                  mycanvas.width = 300;
-                  mycanvas.height = 300;
+                  mycanvas.width = profilepicture_width;
+                  mycanvas.height = profilepicture_height;
                   console.log(coords);
                   mycontext = mycanvas.getContext('2d');
-                  mycontext.drawImage($("#profilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, 300, 300);
+                  mycontext.drawImage($("#profilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, profilepicture_width, profilepicture_height);
                   var imagedata = mycanvas.toDataURL();
                   $("#profilepicture_preview").attr("src", imagedata);
+                  $("#profilepicture_preview").attr("width", profilepicture_width);
+                  $("#profilepicture_preview").attr("height", profilepicture_height);
                 };
 
                 $('#profilepicture_upload').Jcrop({
                   onChange: showPreview,
                   onSelect: showPreview,
-                  setSelect:   [ 50, 50, 300, 300 ],
+                  setSelect:   [ 50, 50, profilepicture_width, profilepicture_height ],
                   aspectRatio: 1
                 }, function(){
                   jcrop_api = this;
@@ -166,6 +165,7 @@ Template.bubbleSubmit.events({
 
       }
 
+      //If the file dropped on the dropzone is not an image then throw an error to the user
       else{
         error = new Meteor.Error(422, 'Please choose a valid image.');
         throwError(error.reason);
