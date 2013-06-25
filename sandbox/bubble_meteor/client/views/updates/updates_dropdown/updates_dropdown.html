@@ -9,7 +9,7 @@
   <ul class="update dropdown-menu">
     {{#if compressUpdates}}
       {{#each compressUpdates}}
-        {{> update}}
+        {{>updateBubble}}
       {{/each}}
     {{else}}
       <li><span>No Updates</span></li>
@@ -24,6 +24,17 @@
       {{content}}
     </a>
 
+  </li>
+</template>
+
+<template name="updateBubble">
+  <li>    
+    <a href="{{bubblePagePath getBubbleId}}">
+      {{getBubbleName}}
+    </a>
+    {{#each this}}
+      {{>update}}
+    {{/each}}
   </li>
 </template>
 
