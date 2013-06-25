@@ -9,8 +9,6 @@ Meteor.publish('files', function() {
   return Posts.find({postType:'file'}, {sort: {submitted: -1}});
 });
 
-//add the date to event/event page
-
 Meteor.publish('singlePost', function(id) {
   return id && Posts.find(id);
 });
@@ -21,7 +19,6 @@ Meteor.publish('comments', function(postId) {
 
 Meteor.publish('updates', function() {
   return Updates.find({userId: this.userId, read: false}, {sort: {submitted:1}});
-  // return Updates.find({$or: [{invokerId:this.userId},{userId:this.userId}], read: false}, {sort: {submitted:1}});
 });
 
 Meteor.publish('singleBubble', function(id){
@@ -79,15 +76,4 @@ Meteor.publish("findUsersByName", function (username) {
     }
   });
 });
-
-// Meteor.publish('shortlistedUsers', function(usernameList) {
-//   if(usernameList){
-//     return Meteor.users.find({username: {$in: usernameList}},{
-//       fields: {
-//         'username': 1,
-//         'emails': 1
-//       }
-//     });
-//   }
-// });
 

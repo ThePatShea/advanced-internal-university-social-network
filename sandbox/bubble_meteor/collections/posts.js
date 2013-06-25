@@ -1,9 +1,9 @@
 Posts = new Meteor.Collection('posts');
 
-Posts.allow({
-  update: ownsDocument,
-  remove: ownsDocument
-});
+// Posts.allow({
+//   update: ownsDocument,
+//   remove: ownsDocument
+// });
 
 Posts.deny({
   update: function(userId, post, fieldNames) {
@@ -41,9 +41,7 @@ Meteor.methods({
       author: user.username, 
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
-      commentsCount: 0,
-      upvoters: [],
-      votes: 0
+      commentsCount: 0
     });
 
     post._id = Posts.insert(post);
@@ -98,8 +96,6 @@ Meteor.methods({
     }
 
   }
-      
-  
 });
 
 createPost = function(postAttributes){

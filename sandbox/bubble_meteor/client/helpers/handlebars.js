@@ -1,9 +1,17 @@
 Handlebars.registerHelper('pluralize', function(n, thing) {
   // fairly stupid pluralizer
-  if (n === 1) {
-    return '1 ' + thing;
-  } else {
-    return n + ' ' + thing + 's';
+  if(thing == 'person'){
+    if (n === 1) {
+      return '1 ' + 'person';
+    } else {
+      return n + ' people';
+    }
+  }else{
+    if (n === 1) {
+      return '1 ' + thing;
+    } else {
+      return n + ' ' + thing + 's';
+    }
   }
 });
 
