@@ -2,60 +2,147 @@ Template.updatesList.helpers({
   updates: function() {
     var updateList = Updates.find({bubbleId: Session.get('currentBubbleId')}).fetch();
 
-    //To combine updates with same userId, invokerId, updateType and postId
-    _.each(updateList, function(update){
-      updateList = _.reject(updateList, function(newUpdate) {
-        return  update.bubbleId == newUpdate.bubbleId && 
-                update.userId == newUpdate.userId && 
-                update.invokerId == newUpdate.invokerId && 
-                update.updateType == newUpdate.updateType &&
-                update.postId == newUpdate.postId;
+    if(updateList.length > 0) {
+      //To combine updates with same userId, invokerId, updateType and postId
+      _.each(updateList, function(update){
+        updateList = _.reject(updateList, function(newUpdate) {
+          return  update.bubbleId == newUpdate.bubbleId && 
+                  update.userId == newUpdate.userId && 
+                  update.invokerId == newUpdate.invokerId && 
+                  update.updateType == newUpdate.updateType &&
+                  update.postId == newUpdate.postId;
+        });
+        if(!_.contains(updateList,update)){
+          updateList.push(update);
+        }
       });
-      if(!_.contains(updateList,update)){
-        updateList.push(update);
-      }
-    });
 
-    //To combine updates for comments in the same post
-    _.each(updateList, function(update){
-      updateList = _.reject(updateList, function(newUpdate) {
-        return update.postId == newUpdate.postId && 
-                update.updateType == newUpdate.updateType &&
-                update.updateType == 'REPLIED';
+      /**
+      * To combine updates for comments in the same post
+      **/
+      var postUpdateList = 
+      [ 
+        "REPLIED",
+        "EVENT CANCELLED"
+      ]
+      _.each(postUpdateList, function(type) {
+        _.each(updateList, function(update){
+
+          var commentUpdates = _.reject(updateList, function(update) {
+            return update.updateType != type;
+          });
+
+          //Combine and chain the names together
+          if (commentUpdates.length > 0) {
+            updateList = _.reject(updateList, function(newUpdate) {
+              return update.postId == newUpdate.postId && 
+                      update.updateType == newUpdate.updateType &&
+                      update.updateType == type;
+            });
+            if(!_.contains(updateList,update)) {
+              //Pull out comment updates that belong to the same post
+              singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
+                return update.postId != newUpdate.postId;
+              });
+              if (singleTypeUpdates.length > 0) {
+                //Create the chained name
+                var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+                var chainedName = nameArray.join();
+                var maxLength = 13;
+
+                //Checks to see if the length of names exceed a certain limit
+                if(chainedName.length > maxLength) {
+                  chainedName = chainedName.substring(0,maxLength);
+                  var nameList = chainedName.split(',');
+                  if(nameArray[0].length > maxLength) {
+                    nameList[0] = nameArray[0];
+                  }else{
+                    nameList.pop();
+                  }
+                  var excessCount = nameArray.length - nameList.length;
+                  chainedName = nameList.join();
+                  if(excessCount == 1) {
+                    chainedName = chainedName + " and " + excessCount + " other";
+                  }else if(excessCount > 1){
+                    chainedName = chainedName + " and " + excessCount + " others";
+                  }
+                }else{
+                  chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+                }
+
+                //Add the chained name to the invokerName
+                update.invokerName = chainedName;
+              }
+              updateList.push(update);
+            }
+          }
+        });
       });
-      if(!_.contains(updateList,update)){
-        updateList.push(update);
-      }
-    });
 
-    // //To combine and chain up names for similar updates
-    // applicantUpdates = _.reject(updateList, function(update) {
-    //   return update.updateType != "NEW APPLICANT";
-    // });
-    // chainedName = _.pluck(applicantUpdates,"invokerName").join();
-    // if(chainedName.legnth > 30) {
-    //   chainedName = chainedName.substring(0,30);
-    //   nameList = chainedName.split(',');
-    //   nameList = chainedName.splice(chainedName.length-1,1);
-    //   chainedName = nameList.join();
-    // }
+      //Declaring the types that needs collapsing of names
+      var bubbleUpdateList = 
+      [ 
+        "NEW APPLICANT",
+        "NEW ATTENDEE",        
+        "MEMBER PROMOTED",
+        "MEMBER DEMOTED",
+        "JOINED BUBBLE"
+      ]
 
-    // //First retrieve applicant
-    // applicantUpdate = _.find(updateList, function(update) {
-    //   update.invokerName = chainedName;
-    //   return update.updateType == "NEW APPLICANT";
-    // });
-    // // Next remove all applicants
-    // updateList = _.reject(updateList, function(newUpdate) {
-    //   return newUpdate.updateType == 'NEW APPLICANT';
-    // });
-    // //Now all back with the applicant that has a changed invoker name
-    // updateList.push(applicantUpdate);
-    // updateList = _.sortBy(updateList, function(newUpdate) {
-    //   return newUpdate.submitted;
-    // }); 
-    // console.log(updateList);
+      /**
+      *  To combine and chain up names for similar updates
+      **/
+      _.each(bubbleUpdateList, function(type) {
+        var singleTypeUpdates = _.reject(updateList, function(update) {
+          return update.updateType != type;
+        });
+        if (singleTypeUpdates.length > 0) {
+          var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+          var chainedName = nameArray.join();
+          var maxLength = 13;
 
-    return updateList;
+          if(chainedName.length > maxLength) {
+            chainedName = chainedName.substring(0,maxLength);
+            var nameList = chainedName.split(',');
+            if(nameArray[0].length > maxLength) {
+              nameList[0] = nameArray[0];
+            }else{
+              nameList.pop();
+            }
+            var excessCount = nameArray.length - nameList.length;
+            chainedName = nameList.join();
+            if(excessCount == 1) {
+              chainedName = chainedName + " and " + excessCount + " other";
+            }else{
+              chainedName = chainedName + " and " + excessCount + " others";
+            } 
+          }else{
+            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+          }
+
+          //First retrieve applicant
+          var firstUpdate = _.find(updateList, function(update) {
+            update.invokerName = chainedName;
+            return update.updateType == type
+          });
+          // Next remove all applicants
+          updateList = _.reject(updateList, function(newUpdate) {
+            return newUpdate.updateType == type;
+          });
+          //Now ad back with the applicant that has a changed invoker name
+          if(firstUpdate){
+            updateList.push(firstUpdate);
+          }
+        }
+        
+      });
+
+      updateList = _.sortBy(updateList, function(newUpdate) {
+        return newUpdate.submitted; 
+      }); 
+      
+      return updateList;
+    }
+    
   }
 });
