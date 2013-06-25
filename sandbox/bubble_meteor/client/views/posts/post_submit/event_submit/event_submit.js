@@ -11,7 +11,7 @@ Template.eventSubmit.events({
       body: $(event.target).find('[name=body]').val(),
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
-      attendees: [Meteor.users.findOne().username],
+      attendees: [Meteor.user().username],
       eventPhoto: $(event.target).find('[id=eventphoto_preview]').attr('src')
     });
   },

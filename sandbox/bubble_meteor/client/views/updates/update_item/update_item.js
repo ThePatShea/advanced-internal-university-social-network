@@ -12,7 +12,6 @@ Template.updateItem.helpers({
 	isBubbleMember: function() {
 		if(this.updateType == "NEW ATTENDEE" || 
 				this.updateType == "JOINED BUBBLE" || 
-				this.updateType == "EDITED BUBBLE" || 
 				this.updateType == "MEMBER PROMOTED" || 
 				this.updateType == "MEMBER DEMOTED" ||
 				this.updateType == "NEW APPLICANT") {

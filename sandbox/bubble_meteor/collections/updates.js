@@ -14,15 +14,14 @@ Meteor.methods({
       submitted: new Date().getTime(),
       read: false
     });
-    console.log(updateAttributes.content);
     updateId = Updates.insert(update);
     return updateId;
   },
 
   setRead: function(update) {
-    // Updates.update(update._id, {$set: {read: true}});
 
-    updateList = Updates.find({ read:false, 
+    updateList = Updates.find({ userId: Meteor.userId(),
+                                read:false, 
                                 updateType: update.updateType,
                                 bubbleId: update.bubbleId
                               }).fetch();
@@ -32,10 +31,26 @@ Meteor.methods({
         if(newUpdate.updateType == 'REPLIED' && 
             newUpdate.postId == update.postId){
           //Set read for comments
-          Updates.update(newUpdate._id, {$set: {read: true}});
+          Updates.update({_id:newUpdate._id,read:false}, {$set: {read: true}});
         }else if(newUpdate.invokerId == update.invokerId) {
           //Set read for updates for the same person
-          Updates.update(newUpdate._id, {$set: {read: true}});
+          Updates.update({_id:newUpdate._id,read:false}, {$set: {read: true}});
+        }else if((newUpdate.updateType == "NEW APPLICANT" ||
+                  newUpdate.updateType == "INVITATION" ||
+                  newUpdate.updateType == "MEMBER DEMOTED" ||
+                  newUpdate.updateType == "MEMBER PROMOTED" ||
+                  newUpdate.updateType == "JOINED BUBBLE" ||
+                  newUpdate.updateType == "EDITED BUBBLE") &&
+                  update.updateType == newUpdate.updateType &&
+                  update.bubbleId == newUpdate.bubbleId) {
+          //Set read for bubble related collapsed updates
+          Updates.update({_id:newUpdate._id,read:false}, {$set: {read: true}});
+        }else if((newUpdate.updateType == "EDITED POST" ||
+                  newUpdate.updateType == "NEW ATTENDEE" ) &&
+                  update.updateType == newUpdate.updateType &&
+                  update.postId == newUpdate.postId) {
+          //Set read for post related collapsed updates
+          Updates.update({_id:newUpdate._id,read:false}, {$set: {read: true}});
         }
       });
     }
@@ -160,7 +175,7 @@ createDeleteEventUpdate = function(post) {
       invokerId: post.userId,
       invokerName: post.author,
       updateType: "EVENT CANCELLED",
-      url: '/bubbles/'+bubble._id,
+      url: '/bubbles/'+bubble._id+"/home",
       content: post.author + " has canceled " + post.name
     });
   });
@@ -176,7 +191,7 @@ createInvitationUpdate = function(userList) {
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
       updateType: "INVITATION",
-      url: '/bubbles/'+bubble._id,
+      url: '/bubbles/'+bubble._id+"/home",
       content: "You have been invited to join " + bubble.title
     });
   });
@@ -206,8 +221,13 @@ createNewAttendeeUpdate = function(postId) {
 }
 
 //For bubble members when a member is added
-createNewMemberUpdate = function(userId) {
-  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+createNewMemberUpdate = function(userId,bubbleId) {
+  var bubble;
+  if(bubbleId) {
+    bubble = Bubbles.findOne(bubbleId);
+  }else{
+    bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  }
   var everyone = getEveryone(bubble);
   var index = everyone.indexOf(Meteor.userId());
   everyone.splice(index,1);
@@ -257,7 +277,7 @@ createBubbleEditUpdate = function() {
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
       updateType: "EDITED BUBBLE",
-      url: '/bubbles/'+bubble._id,
+      url: '/bubbles/'+bubble._id+"/home",
       content: bubble.title + " Bubble has been edited."
     });
   });
@@ -265,6 +285,7 @@ createBubbleEditUpdate = function() {
 
 //For bubble admins who were just promoted
 createMemberPromoteUpdate = function(userId) {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   Meteor.call('update',{
     userId: userId,
     bubbleId: Session.get('currentBubbleId'),
@@ -278,6 +299,7 @@ createMemberPromoteUpdate = function(userId) {
 
 //For bubble members who were just demoted
 createAdminDemoteUpdate = function(userId) {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   Meteor.call('update',{
     userId: userId,
     bubbleId: Session.get('currentBubbleId'),
@@ -292,7 +314,6 @@ createAdminDemoteUpdate = function(userId) {
 //For admins where there are new applicants
 createNewApplicantUpdate = function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-
   _.each(bubble.users.admins, function(adminId){
     Meteor.call('update',{
       userId: adminId,
@@ -301,7 +322,7 @@ createNewApplicantUpdate = function() {
       invokerName: Meteor.user().username,
       updateType: "NEW APPLICANT",
       url: '/bubbles/'+bubble._id+'/members',
-      content: chainedNames + " has applied for " + bubble.title
+      content: Meteor.user().username + " has applied for " + bubble.title
     });
   });
 }
