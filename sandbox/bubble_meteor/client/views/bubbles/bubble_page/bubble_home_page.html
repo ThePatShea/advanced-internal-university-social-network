@@ -1,8 +1,12 @@
-<template name="bubbleHomePage">
+<template name="bubblePage">
   {{#with getCurrentBubble}}
 
     {{> bubblePageHeader}}
   	bubble updates
+    <hr>
+    {{currentDate}}
+    <br>
+    {{currentTime}}
     <a href=""> 
       <button class = "btn btn-small btn-success more-events" type="button" > SEE ALL </button>
     </a>
@@ -25,7 +29,7 @@
       <button class = "btn btn-small btn-success more-discussions" type="button" > +{{discussionsCount}} MORE DISCUSSIONS </button>
     </a>
     <hr>
-    recent documents
+    recent documents  
     <hr>
     latest files
     {{#each filePosts}}

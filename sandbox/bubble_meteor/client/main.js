@@ -2,9 +2,9 @@
 
 commentsHandle = Meteor.subscribeWithPagination('comments',10);
 mainBubblesHandle = Meteor.subscribeWithPagination('bubbles',10);
-eventListHandle = Meteor.subscribeWithPagination('events',10);
-discussionListHandle = Meteor.subscribeWithPagination('discussions',10);
-fileListHandle = Meteor.subscribeWithPagination('files',10);
+eventListHandle = Meteor.subscribeWithPagination('events',15);
+discussionListHandle = Meteor.subscribeWithPagination('discussions',15);
+fileListHandle = Meteor.subscribeWithPagination('files',15);
 
 Deps.autorun(function() {
 	//Retrieves Bubbles

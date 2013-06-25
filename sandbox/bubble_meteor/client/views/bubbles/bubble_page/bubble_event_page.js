@@ -8,7 +8,6 @@ Template.bubbleEventPage.helpers({
 Template.bubbleEventPage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
-        console.log("Event");
         this.eventListHandle.loadNextPage();
     }
   });
