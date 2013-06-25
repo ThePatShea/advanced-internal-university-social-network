@@ -78,8 +78,8 @@ Template.userprofileEdit.events({
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            var coverphoto_width = 300;
-            var coverphoto_height = 300;
+            var coverphoto_width = 100;
+            var coverphoto_height = 100;
             $("#userprofilepicture_dropzone").hide();
             $("#userprofilepicture_upload").attr("src", e.target.result);
             $("#userprofilepicture_preview").attr("src", e.target.result);
