@@ -1,62 +1,41 @@
 <template name="bubblePage">
   {{#with getCurrentBubble}}
+    {{>bubbleCover}}
+    {{#if belongsToBubble}}
+      {{>bubblePageHeader}}
+    	bubble updates
+      <a href=""> 
+        <button class = "btn btn-small btn-success more-events" type="button" > SEE ALL </button>
+      </a>
+      {{>updatesList}}
+      <hr>
+      upcoming events
+      {{#each eventPosts}}
+        {{> postItem}}
+      {{/each}}
+      <a href="{{bubbleEventPagePath this}}"> 
+        <button class = "btn btn-small btn-success more-events" type="button" > +{{eventsCount}} MORE EVENTS </button>
+      </a>
 
-    {{> bubblePageHeader}}
-  	bubble updates
-    <a href=""> 
-      <button class = "btn btn-small btn-success more-events" type="button" > SEE ALL </button>
-    </a>
-    {{>updatesList}}
-    <hr>
-    upcoming events
-    {{#each eventPosts}}
-      {{> postItem}}
-    {{/each}}
-    <a href="{{bubbleEventPagePath this}}"> 
-      <button class = "btn btn-small btn-success more-events" type="button" > +{{eventsCount}} MORE EVENTS </button>
-    </a>
-
-    <hr>
-    active discussions
-    {{#each discussionPosts}}
-      {{> postItem}}
-    {{/each}}
-    <a href="{{bubbleDiscussionPagePath this}}"> 
-      <button class = "btn btn-small btn-success more-discussions" type="button" > +{{discussionsCount}} MORE DISCUSSIONS </button>
-    </a>
-    <hr>
-    recent documents
-    <hr>
-    latest files
-    {{#each filePosts}}
-      {{> postItem}}
-    {{/each}}
-    <a href="{{bubbleFilePagePath this}}">
-      <button class = "btn btn-small btn-success more-files" type="button" > +{{filesCount}} MORE FILES </button>
-    </a>
-    <hr>
+      <hr>
+      active discussions
+      {{#each discussionPosts}}
+        {{> postItem}}
+      {{/each}}
+      <a href="{{bubbleDiscussionPagePath this}}"> 
+        <button class = "btn btn-small btn-success more-discussions" type="button" > +{{discussionsCount}} MORE DISCUSSIONS </button>
+      </a>
+      <hr>
+      recent documents
+      <hr>
+      latest files
+      {{#each filePosts}}
+        {{> postItem}}
+      {{/each}}
+      <a href="{{bubbleFilePagePath this}}">
+        <button class = "btn btn-small btn-success more-files" type="button" > +{{filesCount}} MORE FILES </button>
+      </a>
+      <hr>
+    {{/if}}
   {{/with}}
 </template>
-
-<!-- 
-<template name="bubblePage">
-  {{#with getCurrentBubble}}
-  	{{>bubbleCover}}
-  	<hr>
-  	bubble updates
-    {{> bubblePageId}}
-    <hr>
-    upcoming events
-    {{> bubbleAdminsList}}
-    <hr>
-    active discussions
-    {{> bubbleMembersList}}
-    <hr>
-    recent documents
-    {{> bubbleApplicantsList}}
-    <hr>
-    latest files
-
-
-  {{/with}}
-</template> -->
