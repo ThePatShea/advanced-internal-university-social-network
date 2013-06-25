@@ -1,17 +1,37 @@
 /***************         CSS Reset         ***************/
+.gldp-flatwhite
+  .dow
+    cursor               default !important  // Overrides the datepicker framework's 'wait' cursor
+
 button
   line-height            normal
   display                block
   background             none
   border                 0
 
-button,
-div
-  border-box             0
+a:visited,
+a:hover,
+a
+  text-decoration        none
 
 h1, h2, h3, h4, h5, h6
   line-height            100%
   margin                 0
+
+button,
+div
+  border-box             0
+
+.navbar
+  .navbar-inner
+    border-radius          0
+    border                 0
+    a
+      text-shadow              0 0
+    .nav
+      & > li
+        a
+          text-shadow            0 0
 /***************         CSS Reset         ***************/
 
 
@@ -25,6 +45,13 @@ std-white-light-fill(n)
   fill                   #F7F8F8
 std-white-light-bg(n)
   background             #F7F8F8
+
+std-white-dark-color(n)
+  color                  #EEF0F0
+std-white-dark-fill(n)
+  fill                   #EEF0F0
+std-white-dark-bg(n)
+  background             #EEF0F0
 /*****    Standard White    *****/
 
 
@@ -192,6 +219,8 @@ box-shadow(args...)
 border-radius(n)
   -webkit-border-radius  n
   -moz-border-radius     n
+  -ms-border-radius      n
+  -o-border-radius       n
   border-radius          n
 /**********   Properties    **********/
 
@@ -242,12 +271,111 @@ svg
 .cb-icon-xlight
   main-xlight-fill       0
 /**********      Icons      **********/
+
+
+/**********     WYSIWYG     **********/
+.wysiwyg_group
+  .wysiwyg
+    border               1px solid #ccc
+    background           white
+    min-height           300px
+/**********     WYSIWYG     **********/
+
+
+/**********   post-submit   **********/
+.post-submit
+  input
+    height               30px
+    width                100%
+/**********   post-submit   **********/
 /***************  Multi-Purpose Elements   ***************/
 
 
 
 /***************  Single-Purpose Elements  ***************/
-/**********       sidebar        **********/
+/**********      Base Divs       **********/
+#main
+  padding-left           240px
+
+.comments li:nth-child(even),
+.post:nth-child(even),
+.comment-form,
+.grid-block,
+.main,
+body
+  std-white-light-bg     0
+
+.comments li:nth-child(odd),
+.post:nth-child(odd)
+  std-white-dark-bg      0
+
+.post
+  padding                15px 30px
+  height                 70px
+
+.container
+  position               relative
+  width                  100%
+
+.container,
+.sidebar
+  top                    60px
+/**********      Base Divs       **********/
+
+/**********        navbar        **********/
+navbar-border-color  =  #224253
+navbar-height        =  60px
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+  .navbar .nav > .active > a:hover,
+  .navbar .nav > li > a:hover,
+  .navbar .nav > .active > a
+  main-light-color           0
+  main-light-fill            0
+  main-dark-bg               0
+
+
+.navbar
+  border-bottom          1px solid navbar-border-color
+  text-transform         uppercase
+  position               fixed
+  width                  100%
+  z-index                10
+  .navbar-inner
+    main-xdark-bg        0
+    .brand
+      line-height              navbar-height 
+      height                   navbar-height
+      padding                  0 0 0 15px
+      font-size                14px
+    .nav
+      & > li
+        border-right               1px solid navbar-border-color
+        line-height                navbar-height 
+        height                     navbar-height 
+        font-size                  12px
+        font-main-black            0
+        &:first-child
+          border-left                  1px solid navbar-border-color
+        &:last-child
+          border-right                 0
+          border-left                  0
+        a
+          padding                      0 15px
+          main-xlight-color            0
+          main-xlight-fill             0
+          &:hover
+            main-light-color           0
+            main-light-fill            0
+            main-dark-bg               0
+          svg
+            vertical-align                 text-top
+            position                       relative
+            top                            4px
+            
+/**********        navbar        **********/
+
+/**********        sidebar       **********/
 .sidebar
   height                 5000px
   width                  240px
