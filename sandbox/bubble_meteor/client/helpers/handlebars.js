@@ -36,16 +36,22 @@ Handlebars.registerHelper('isAdmin', function() {
   return _.contains(bubble.users.admins, Meteor.userId());
 });
 
+Handlebars.registerHelper('belongsToBubble', function() {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  if(bubble) {
+    if(_.contains(bubble.users.admins, Meteor.userId()) || _.contains(bubble.users.members, Meteor.userId())) {
+      return true;
+    }
+  }
+  return false;
+}); 
+
 Handlebars.registerHelper('submittedText', function(submitted){
   return moment(new Date(submitted).toString()).fromNow().toUpperCase();
 });
 
 Handlebars.registerHelper('toUpperCase', function(text){
   return text.toUpperCase();
-});
-
-Handlebars.registerHelper('getAllUsers', function(){
-  return Users.find();
 });
 
 Handlebars.registerHelper('isLoggedIn',function() {
