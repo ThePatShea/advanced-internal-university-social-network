@@ -1,6 +1,6 @@
 Template.updatesList.helpers({
   updates: function() {
-    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId')}, {limit: 5}).fetch();
+    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId')}).fetch();
 
     if(updateList.length > 0) {
       //To combine updates with same userId, invokerId, updateType and postId
