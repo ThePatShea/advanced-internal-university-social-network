@@ -5,7 +5,11 @@ Meteor.Router.add({
   },
 
   //Post Routes
-  '/': {to: 'bubblesList', as: 'home'},
+  '/': {
+    to: 'bubblesList',
+    and: function() { Session.set('currentBubbleId', undefined); }
+  },
+
   '/posts/:_id': {
     to: 'postPage', 
     and: function(id) { Session.set('currentPostId', id); }

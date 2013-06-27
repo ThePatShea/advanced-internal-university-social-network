@@ -1,22 +1,72 @@
 /***************         CSS Reset         ***************/
+.gldp-flatwhite
+  .dow
+    cursor               default !important  // Overrides the datepicker framework's 'wait' cursor
+
 button
   line-height            normal
+  display                block
   background             none
-  border                 none
+  border                 0
 
-button,
-div
-  border-box             0
+a:visited,
+a:hover,
+a
+  text-decoration        none
 
-h1, h2, h3, h4, h5, h6
+.row-fluid
+  width                  auto
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
   line-height            100%
   margin                 0
+
+section,
+button,
+input,
+div,
+a
+  border-box             0
+
+.navbar
+  .navbar-inner
+    border-radius          0
+    border                 0
+    a
+      text-shadow              0 0
+    .nav
+      & > li
+        a
+          text-shadow            0 0
 /***************         CSS Reset         ***************/
 
 
 
 /***************  Multi-Purpose Elements   ***************/
 /**********  Color Palette  **********/
+/*****    Standard White    *****/
+std-white-light-color(n)
+  color                  #F7F8F8
+std-white-light-fill(n)
+  fill                   #F7F8F8
+std-white-light-bg(n)
+  background             #F7F8F8
+
+std-white-dark-color(n)
+  color                  #EEF0F0
+std-white-dark-fill(n)
+  fill                   #EEF0F0
+std-white-dark-bg(n)
+  background             #EEF0F0
+/*****    Standard White    *****/
+
+
+/*****      Main Color      *****/
 main-xdark-color(n)
   color                  #011126
 main-xdark-fill(n)
@@ -33,6 +83,9 @@ main-dark-bg(n)
   background             #001f37
 
 
+main-light-stroke(n)
+  path
+    stroke                   #2f5973
 main-light-color(n)
   color                  #2f5973
 main-light-fill(n)
@@ -49,6 +102,78 @@ main-xlight-fill(n)
   fill                   #95afbf
 main-xlight-bg(n)
   background             #95afbf
+/*****      Main Color      *****/
+
+
+/*****  Category: Academics  *****/
+category-academics-border(n)
+  border-thin            #b0606d
+category-academics-color(n)
+  color                  #b0606d
+category-academics-fill(n)
+  fill                   #b0606d
+category-academics-bg(n)
+  background             #b0606d
+
+.category-academics-bg-opacity-100
+  background             rgba(176,96,109,1)
+.category-academics-bg-opacity-90
+  background             rgba(176,96,109,.90)
+.category-academics-bg-opacity-80
+  background             rgba(176,96,109,.80)
+.category-academics-bg-opacity-70
+  background             rgba(176,96,109,.70)
+.category-academics-bg-opacity-60
+  background             rgba(176,96,109,.60)
+.category-academics-border-left-3
+  border-left            3px solid #b0606d
+.category-academics-border-top-4
+  border-top             4px solid #b0606d
+.category-academics-border
+  border-thin            #b0606d
+.category-academics-color
+  color                  #b0606d
+.category-academics-fill
+  fill                   #b0606d
+.category-academics-bg 
+  background             #b0606d
+/*****  Category: Academics  *****/
+
+
+/*****  Category: Student Organization  *****/
+category-student-organization-border(n)
+  border-thin            #70c889
+category-student-organization-color(n)
+  color                  #70c889
+category-student-organization-fill(n)
+  fill                   #70c889
+category-student-organization-bg(n)
+  background             #70c889
+
+.category-student-organization-bg-opacity-100
+  background             rgba(112,200,137,1)
+.category-student-organization-bg-opacity-90
+  background             rgba(112,200,137,.90)
+.category-student-organization-bg-opacity-80
+  background             rgba(112,200,137,.80)
+.category-student-organization-bg-opacity-70
+  background             rgba(112,200,137,.70)
+.category-student-organization-bg-opacity-60
+  background             rgba(112,200,137,.60)
+
+.category-student-organization-border-left-3
+  border-left            3px solid #70c889
+.category-student-organization-border-top-4
+  border-top             4px solid #70c889
+.category-student-organization-border
+  border-thin            #70c889
+.category-student-organization-color
+  color                  #70c889
+.category-student-organization-fill
+  fill                   #70c889
+.category-student-organization-bg 
+  background             #70c889
+/*****  Category: Student Organization  *****/
 /**********  Color Palette  **********/
 
 
@@ -68,6 +193,17 @@ font-main-medium(n)
 font-main-regular(n)
   font-weight            400
   font-main              0
+font-main-light(n)
+  font-weight            300
+  font-main              0
+font-main-thin(n)
+  font-weight            100
+  font-main              0
+
+font-main-black-11-u(n)
+  text-transform         uppercase
+  font-size              11px
+  font-main-black        0
 /*****    Main Font     *****/
 
 /*****  Alternate Font  *****/
@@ -108,23 +244,28 @@ border-box(n)
   -moz-box-sizing        border-box
   box-sizing             border-box
 
+box-shadow(args...)
+  -webkit-box-shadow     args
+  -moz-box-shadow        args
+  box-shadow             args
+
 border-radius(n)
   -webkit-border-radius  n
   -moz-border-radius     n
+  -ms-border-radius      n
+  -o-border-radius       n
   border-radius          n
 /**********   Properties    **********/
 
 
 /**********     Helpers     **********/
 /*****  Vertical Middle  *****/
-.v-middle-outer
+.v-middle
   display                table
   height                 100%
-  width                  100%
-
-.v-middle-inner
-  display                table-cell
-  vertical-align         middle
+  .v-inner
+    display                table-cell
+    vertical-align         middle
 /*****  Vertical Middle  *****/
 /**********     Helpers     **********/
 
@@ -151,35 +292,179 @@ std-btn(n)
 
 
 /**********      Icons      **********/
-.cb-icon
+svg
   vertical-align         top
 
-.cb-icon-light
+.cb-icon-light-stroke
+  main-light-stroke      0
+
+.cb-icon-light-fill
   main-light-fill        0
 
 .cb-icon-xlight
   main-xlight-fill       0
 /**********      Icons      **********/
+
+
+/**********     WYSIWYG     **********/
+.wysiwyg_group
+  .wysiwyg
+    border               1px solid #ccc
+    background           white
+    min-height           300px
+/**********     WYSIWYG     **********/
+
+
+/**********   post-submit   **********/
+.post-submit
+  input
+    height               30px
+    width                100%
+/**********   post-submit   **********/
 /***************  Multi-Purpose Elements   ***************/
 
 
 
 /***************  Single-Purpose Elements  ***************/
-/**********       sidebar        **********/
+/**********      Base Divs       **********/
+#main
+  padding-left           240px
+
+.comments li:nth-child(even),
+.post:nth-child(even),
+.comment-form,
+.grid-block,
+.main,
+body
+  std-white-light-bg     0
+
+.comments li:nth-child(odd),
+.post:nth-child(odd)
+  std-white-dark-bg      0
+
+.post
+  padding                15px 30px
+  height                 70px
+
+.container
+  position               relative
+  width                  100%
+
+.container,
+.sidebar
+  top                    60px
+/**********      Base Divs       **********/
+
+/**********        navbar        **********/
+navbar-border-color  =  #224253
+navbar-height        =  60px
+
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+  .navbar .nav > .active > a:hover,
+  .navbar .nav > li > a:hover,
+  .navbar .nav > .active > a
+  std-white-light-color      0
+  std-white-light-fill       0
+  main-dark-bg               0
+
+
+.navbar
+  border-bottom          1px solid navbar-border-color
+  text-transform         uppercase
+  position               fixed
+  width                  100%
+  z-index                10
+  svg
+    vertical-align           middle
+  .navbar-inner
+    main-xdark-bg        0
+    .brand
+      line-height              navbar-height 
+      height                   navbar-height
+      padding                  0 0 0 15px
+      font-size                14px
+      .logo-main
+        margin                     0 5px 0 0
+      .left
+        std-white-light-color      0
+        font-main-black            0
+      .right
+        main-xlight-color          0
+        font-main-medium           0
+    .nav
+      & > li
+        border-right               1px solid navbar-border-color
+        line-height                navbar-height 
+        height                     navbar-height 
+        font-size                  12px
+        font-main-black            0
+        &:first-child
+          border-left                  1px solid navbar-border-color
+        &:last-child
+          border-right                 0
+          border-left                  0
+        a
+          padding                      0 15px
+          main-xlight-color            0
+          main-xlight-fill             0
+          &:hover
+            std-white-light-color      0
+            std-white-light-fill       0
+            main-dark-bg               0
+          svg
+            position                       relative
+            top                            -2px
+            
+/**********        navbar        **********/
+
+/**********        sidebar       **********/
 .sidebar
   height                 5000px
   width                  240px
   position               fixed
   main-light-bg          0
   .top-btns
+    margin                   1px 0 0 0
     border-thin-top-btm      #BBCCD7
     overflow                 hidden
-    
+    .top-btn
+      height                     50px
+      float                      left
+      width                      50%
+      font-main-black-11-u       0
+      main-light-color           0
+      main-xlight-bg             0
+      &.left
+        border-right                 1px solid #7C9CAF
+      .lbl
+        padding                      0 0 0 10px
+        line-height                  20px
+      &:hover
+        text-decoration              underline
+        background                   #B7C8D3
+  .main-btns
+    .main-btn
+      box-shadow                 0 1px #386C8B
+      padding                    0 0 0 15px
+      position                   relative
+      display                    block
+      text-align                 left
+      height                     50px
+      font-size                  15px
+      width                      100%
+      z-index                    20
+      std-white-light-color      0
+      font-alt-light             0
+      &:hover
+        text-decoration              underline
+        position                     relative
+        background                   #274B61
+        z-index                      10
 /**********       sidebar        **********/
 
 /**********        bubble-cover       **********/
 .bubble-cover
-  background             #777 // TESTING
+  background             #333 // TESTING
   height                 145px
   padding                0 30px
   .bubble-name
@@ -192,13 +477,28 @@ std-btn(n)
     main-xlight-color        0
     font-main-bold           0
   .std-btn-dark
+    margin                   5px 0
+    float                    right
+    clear                    right
     .lbl
       padding                    0 0 0 5px
 /**********        bubble-cover       **********/
 
 /**********  bubble-section-selector  **********/
+bubble-section-selector-height  =  100px
+
 .bubble-section-selector
-  height                 100px
-  background             red // TESTING
+  height                 bubble-section-selector-height
+  std-white-light-fill   0
+  .opacity-wrapper
+    height                   bubble-section-selector-height
+    float                    left
+    std-white-light-bg       0
+    .btn-bubble-section
+      height                   bubble-section-selector-height
+      width                    bubble-section-selector-height
+      float                    left
+    .btn-bubble-section:nth-child(1)
+      std-white-light-bg       0
 /**********  bubble-section-selector  **********/
 /***************  Single-Purpose Elements  ***************/
