@@ -1,14 +1,14 @@
 Posts = new Meteor.Collection('posts');
 
-// Posts.allow({
-//   update: ownsDocument,
-//   remove: ownsDocument
-// });
+Posts.allow({
+   update: ownsDocument,
+   remove: ownsDocument
+ });
 
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following fields:
-    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastUpdated').length > 0);
+    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastUpdated', 'eventPhoto').length > 0);
   }
 });
 
