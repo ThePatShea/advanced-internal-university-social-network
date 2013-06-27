@@ -130,3 +130,22 @@ Template.userprofileEdit.events({
   },
   
 });
+
+
+Template.userprofileEdit.rendered = function(){
+  $("#change_profile_picture").click(function(){
+    $(".userprofilepicture").hide();
+    $("#change_profile_picture").hide();
+    $(".dropzone").show();
+  });
+  user = Meteor.users.findOne({_id:Session.get('selectedUserId')});
+  if(!user.profilePicture){
+    $(".userprofilepicture").attr("src", "/img/default_userprofile.png");
+    //$(".dropzone").show();
+  }
+  else{
+    $(".dropzone").hide();
+  }
+};
+
+
