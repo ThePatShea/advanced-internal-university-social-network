@@ -1,11 +1,11 @@
 <template name="bubbleSectionSelector">
   <div class="bubble-section-selector category-{{convertSpacesToDashes category}}-border-top-4 category-{{convertSpacesToDashes category}}-bg-opacity-60">
     <div class="opacity-wrapper">
-      <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-fill">{{> icon-home}}</button>
-      <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-100">{{> icon-event}}</button>
-      <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-90">{{> icon-discussion}}</button>
-      <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-80">{{> icon-file}}</button>
-      <button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-70">{{> icon-member}}</button>
+      <a href="{{bubblePagePath this}}"><button class="btn-bubble-section category-{{convertSpacesToDashes category}}-fill">{{> icon-home}}</button></a>
+      <a href="{{bubbleEventPagePath this}}"><button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-100">{{> icon-event}}</button></a>
+      <a href="{{bubbleDiscussionPagePath this}}"><button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-90">{{> icon-discussion}}</button></a>
+      <a href="{{bubbleFilePagePath this}}"><button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-80">{{> icon-file}}</button></a>
+      <a href="{{bubbleMembersPagePath this}}"><button class="btn-bubble-section category-{{convertSpacesToDashes category}}-bg-opacity-70">{{> icon-member}}</button></a>
     </div>
   </div>
 </template>

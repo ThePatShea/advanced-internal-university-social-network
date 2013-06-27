@@ -5,7 +5,7 @@ Meteor.Router.add({
   },
 
   //Post Routes
-  '/': {
+  '/bubbles': {
     to: 'bubblesList',
     and: function() { Session.set('currentBubbleId', undefined); }
   },
@@ -68,7 +68,10 @@ Meteor.Router.add({
   },
   '/bubbles/:_id/submit/document': 'documentSubmit',
   '/bubbles/:_id/submit/file': 'fileSubmit',
-  '/submit/bubble': 'bubbleSubmit',
+  '/submit/bubble': {
+    to: 'bubbleSubmit',
+    and: function() { Session.set('currentBubbleId', undefined); }
+  },
 
   //Routes for User
   '/userprofile/:id': {
@@ -104,7 +107,7 @@ Meteor.Router.filters({
         return 'bubblePage';
       }
     }
-    return 'bubblesList';
+    return page;
   }
 });
 
