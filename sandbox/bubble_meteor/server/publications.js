@@ -77,3 +77,8 @@ Meteor.publish("findUsersByName", function (username) {
   });
 });
 
+
+Meteor.publish(null, function() {
+  return Meteor.users.find({}, {fields: {'profilePicture': 1}});
+});
+
