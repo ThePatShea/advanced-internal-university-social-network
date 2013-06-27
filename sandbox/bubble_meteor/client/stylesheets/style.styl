@@ -373,6 +373,7 @@ navbar-height        =  60px
   text-transform         uppercase
   position               fixed
   width                  100%
+  letter-spacing         1px
   z-index                10
   svg
     vertical-align           middle
@@ -397,7 +398,7 @@ navbar-height        =  60px
         line-height                navbar-height 
         height                     navbar-height 
         font-size                  12px
-        font-main-black            0
+        font-main-bold             0
         &:first-child
           border-left                  1px solid navbar-border-color
         &:last-child
@@ -430,18 +431,24 @@ navbar-height        =  60px
     .top-btn
       height                     50px
       float                      left
+      letter-spacing             1px
       width                      50%
       font-main-black-11-u       0
       main-light-color           0
       main-xlight-bg             0
-      &.left
-        border-right                 1px solid #7C9CAF
       .lbl
         padding                      0 0 0 10px
-        line-height                  20px
+      &.left
+        border-right                 1px solid #7C9CAF
+        .lbl
+          line-height                  20px
+      &.right
+        .lbl
+          line-height                  22px
       &:hover
-        text-decoration              underline
         background                   #B7C8D3
+        .lbl
+          text-decoration              underline
   .main-btns
     .main-btn
       box-shadow                 0 1px #386C8B
