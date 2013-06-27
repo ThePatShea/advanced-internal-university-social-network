@@ -464,9 +464,29 @@ navbar-height        =  60px
 
 /**********        bubble-cover       **********/
 .bubble-cover
-  background             #333 // TESTING
-  height                 145px
+  position               relative
+  overflow               hidden
   padding                0 30px
+  height                 145px
+  .cover-mask,
+  .cover-pic
+    position                   absolute
+    min-height                 100%
+    min-width                  100%
+    left                       0
+    top                        0
+  .cover-mask
+    background                 rgba(0, 7, 13, .75)
+    height                     100%
+    width                      100%
+    z-index                    -10
+  .cover-pic
+    z-index                    -20
+  .profile-pic-container
+    margin                     0 20px 0 0
+    position                   relative
+    height                     76px
+    width                      76px
   .bubble-name
     color                    white
     font-size                37px
