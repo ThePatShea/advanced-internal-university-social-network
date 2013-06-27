@@ -6,6 +6,15 @@
               <input name="name" type="text" value="{{name}}"/>
           </div>
       </div>
+
+      <div class="control-group">
+          <div id="eventphoto_image">
+              <img id="eventphoto_upload" src="" />
+              <img id="eventphoto_preview" src="{{eventPhoto}}" />
+              <a href="#" class="btn btn-danger delete" id="change_eventphoto">Change</a>
+              <div id="eventphoto_dropzone" class="dropzone">Drop event photo here.</div>
+          </div>
+      </div>
     
       <div class="control-group">
           <div class="controls">
@@ -39,7 +48,7 @@
       <hr/>
       <div class="control-group">
           <div class="controls">
-              <a class="btn btn-danger delete" href="#">Delete post</a>
+              <a class="btn btn-danger delete" id="delete_post" href="#">Delete post</a>
           </div>
       </div>
     </form>
