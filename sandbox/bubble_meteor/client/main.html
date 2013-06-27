@@ -9,12 +9,17 @@
 <body>
   <div class="container">
     {{> header}}
-    {{#if isLoggedIn}}
-	    {{> sidebar}}
-	    <div id="main" class="row-fluid">
-	      {{> errors}}
-	      {{renderPage}}
-	    </div>
-    {{/if}}
+    {{> sidebar}}
+    <div id="main" class="row-fluid">
+      {{> errors}}
+
+      {{#if hasErrors}}
+        {{#with getCurrentBubble}}
+  	      {{>bubbleCover}}
+        {{/with}}
+      {{/if}}
+
+      {{renderPage}}
+    </div>
   </div>
 </body>

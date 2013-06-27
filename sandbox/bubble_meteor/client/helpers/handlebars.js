@@ -72,3 +72,8 @@ Handlebars.registerHelper('chosen', function() {
   }
 });
 
+//Return errors
+Handlebars.registerHelper('hasErrors', function() {
+  return Meteor.Error;
+});
+
