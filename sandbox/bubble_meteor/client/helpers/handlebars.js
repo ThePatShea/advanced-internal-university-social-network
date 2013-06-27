@@ -1,5 +1,5 @@
 Handlebars.registerHelper('pluralize', function(n, thing) {
-  // fairly stupid pluralizer
+  // Fairly simple pluralizer
   if(thing == 'person'){
     if (n === 1) {
       return '1 ' + 'person';
@@ -77,3 +77,13 @@ Handlebars.registerHelper('hasErrors', function() {
   return Meteor.Error;
 });
 
+Handlebars.registerHelper('getBubbleUsersCount',function() {
+  var bubble = Bubbles.findOne(Session.get("currentBubbleId"));
+
+  var users = bubble.users.admins.concat(bubble.users.members);
+  return users.length;
+});
+
+Handlebars.registerHelper('convertSpacesToDashes',function(word) {
+  return word.replace(" ","-");
+});
