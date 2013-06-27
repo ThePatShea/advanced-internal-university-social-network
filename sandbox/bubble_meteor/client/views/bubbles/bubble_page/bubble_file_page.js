@@ -8,7 +8,9 @@ Template.bubbleFilePage.helpers({
 Template.bubbleFilePage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
+      if(Meteor.Router._page == "bubbleFilePage"){
         this.fileListHandle.loadNextPage();
+      }
     }
   });
 }

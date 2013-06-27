@@ -8,7 +8,9 @@ Template.bubbleDiscussionPage.helpers({
 Template.bubbleDiscussionPage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
+      if(Meteor.Router._page == "bubbleDiscussionPage"){
         this.discussionListHandle.loadNextPage();
+      }
     }
   });
 }

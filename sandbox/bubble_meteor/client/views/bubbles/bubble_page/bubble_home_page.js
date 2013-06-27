@@ -1,4 +1,4 @@
-//determin the scale of the past events shown to users
+//the events past 4 hours will not be listed on the event page
 currentDateTime = moment().valueOf();
 referenceDateTime = moment().add('hours',-4).valueOf();
 

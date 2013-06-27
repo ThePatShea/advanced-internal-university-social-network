@@ -9,7 +9,9 @@ Template.bubbleEventPage.helpers({
 Template.bubbleEventPage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
+      if(Meteor.Router._page == "bubbleEventPage"){
         this.eventListHandle.loadNextPage();
+      }
     }
   });
 }
