@@ -5,7 +5,7 @@
     <b>Results for Users</b>
     <br />
     {{#each getSearchedUsers}}
-        <button class="btn btn-small btn-info" type="button">{{username}}</button>  <br />
+      <a href="{{userProfilePath _id}}"<button class="btn btn-small btn-info" type="button">{{username}}</button></a> <br />
     {{/each}}
   {{/if}}
     
