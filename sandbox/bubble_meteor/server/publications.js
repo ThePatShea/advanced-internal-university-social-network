@@ -1,24 +1,30 @@
+getBubbleId =  function(userId) {
+  if(userId){
+    var bubbles = Bubbles.find({$or: [{'users.members': userId.toString()}, {'users.admins': userId.toString()}]});
+    if(bubbles.count() > 0) {
+      return _.pluck(bubbles.fetch(),'_id');
+    }
+  }
+    return [];
+}
+
 //seperate the scroll down to view functions
-Meteor.publish('events', function() {
-  return Posts.find({postType:'event'}, {sort: {submitted: -1}});
+Meteor.publish('events', function(bubbleId, userId, limit) {
+  return Posts.find({postType:'event', bubbleId: {$in: getBubbleId(userId)}}, {sort: {submitted: -1}});
 });
-Meteor.publish('discussions', function() {
-  return Posts.find({postType:'discussion'}, {sort: {submitted: -1}});
+Meteor.publish('discussions', function(bubbleId, userId, limit) {
+  return Posts.find({postType:'discussion', bubbleId: {$in: getBubbleId(userId)}}, {sort: {submitted: -1}});
 });
-Meteor.publish('files', function() {
-  return Posts.find({postType:'file'}, {sort: {submitted: -1}});
-});
-
-Meteor.publish('singlePost', function(id) {
-  return id && Posts.find(id);
+Meteor.publish('files', function(bubbleId, userId, limit) {
+  return Posts.find({postType:'file', bubbleId: {$in: getBubbleId(userId)}}, {sort: {submitted: -1}});
 });
 
-Meteor.publish('comments', function(postId) {
+Meteor.publish('comments', function(postId, limit) {
   return Comments.find({postId: postId}, {sort: {submitted:-1}});
 });
 
-Meteor.publish('updates', function() {
-  return Updates.find({userId: this.userId, read: false}, {sort: {submitted:1}});
+Meteor.publish('updates', function(userId) {
+  return Updates.find({userId: userId, read: false}, {sort: {submitted:1}});
 });
 
 Meteor.publish('singleBubble', function(id){
@@ -29,8 +35,8 @@ Meteor.publish('bubbles', function(limit) {
   return Bubbles.find({}, {sort: {submitted: -1}, limit: limit});
 });
 
-Meteor.publish('joinedBubbles', function(userId, limit) {
-  return Bubbles.find({$or: [{'users.members': userId},{'users.admins': userId}]}, {sort: {submitted: -1}, limit: limit});
+Meteor.publish('joinedBubbles', function(userId) {
+  return Bubbles.find({$or: [{'users.members': userId},{'users.admins': userId}]}, {sort: {submitted: -1}});
 });
 
 Meteor.publish('invitedBubbles', function(userId) {
@@ -63,9 +69,9 @@ Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
       }
     });
   }
-})
+});
 
-Meteor.publish("findUsersByName", function (username) {
+Meteor.publish("findUsersByName", function(username, limit) {
   var search_name = new RegExp(username,'i');
   var search_query = {username: search_name};
     

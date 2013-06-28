@@ -1,0 +1,11 @@
+<template name="searchFiles">
+  {{> searchPage}}
+
+  {{#if hasSearchText}}
+	  <b>Results for File Posts</b>
+	  {{#each getSearchedFiles}}
+			{{> postItem}}
+	  {{/each}}
+	{{/if}}
+
+</template>

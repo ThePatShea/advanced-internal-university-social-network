@@ -1,7 +1,12 @@
 <template name="sidebar">
   <section class="sidebar">
     <div class="top-btns">
-      <a href="#">
+      {{#if hasBubble}}
+        <a href="{{searchAllPath}}">
+      {{else}}
+        <a href="{{searchBubblesPath}}">
+      {{/if}}
+
         <button class="top-btn left">
           <span class="cb-icon-light-stroke">{{> icon-search}}</span>
           <span class="lbl">search</span>

@@ -9,6 +9,7 @@ Template.bubbleDiscussionPage.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == "bubbleDiscussionPage"){
+        console.log("this ran");
         this.discussionListHandle.loadNextPage();
       }
     }

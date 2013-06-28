@@ -1,0 +1,12 @@
+<template name="searchBubbles">
+
+  {{> searchPage}}
+
+  {{#if hasSearchText}}
+    <b>Results for Bubbles</b>
+    {{#each getSearchedBubbles}}
+    	{{> bubbleItem}}
+    {{/each}}
+  {{/if}}
+
+</template>

@@ -1,0 +1,12 @@
+<template name="searchUsers">
+  {{> searchPage}}
+
+  {{#if hasSearchText}}
+    <b>Results for Users</b>
+    <br />
+    {{#each getSearchedUsers}}
+        <button class="btn btn-small btn-info" type="button">{{username}}</button>  <br />
+    {{/each}}
+  {{/if}}
+    
+</template>

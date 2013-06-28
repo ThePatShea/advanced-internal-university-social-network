@@ -1,7 +1,7 @@
 <template name="bubbleItem">
   <div class="post">
     <div class="post-content">
-      <h3><a href="{{bubblePagePath this}}">{{title}}</a><span>{{getCategory}}</span></h3>
+      <h3><a href="{{bubblePagePath this}}">{{title}}</a><span>{{toUpperCase category}}</span></h3>
       <p>
         {{description}}
         {{#if isAdmin}}

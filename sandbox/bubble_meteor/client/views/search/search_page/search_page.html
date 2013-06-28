@@ -1,0 +1,19 @@
+<template name="searchPage">
+
+	<div class="control-group">
+    <label class="control-label" for="title">Search</label>
+    <div class="controls">
+      <input class="search-text" name="searchText" type="text" placeholder="Name, description, file names etc..."/>
+    </div>
+  </div>
+
+	<ul class="nav nav-tabs">
+	  <li class="{{isActive 'all'}} all"> <a href='/search/all' class="all">All</a></li>
+    <li class="{{isActive 'bubbles'}} bubbles"> <a href='/search/bubbles' class="bubbles">Bubbles</a></li>
+    <li class="{{isActive 'users'}} users"> <a href='/search/users' class="users">Users</a></li>
+    <li class="{{isActive 'discussions'}} discussions"> <a href='/search/discussions' class="discussions">Discussions</a></li>
+    <li class="{{isActive 'events'}} events"> <a href='/search/events' class="events">Events</a></li>
+    <li class="{{isActive 'files'}} files"> <a href='/search/files' class="files">Files</a></li>
+	</ul>
+
+</template>

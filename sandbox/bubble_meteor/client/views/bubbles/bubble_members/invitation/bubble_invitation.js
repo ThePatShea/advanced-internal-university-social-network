@@ -13,8 +13,11 @@ Template.bubbleInvitation.helpers({
 
     //The regular expression is used here again to prevent showing 
     //users who are removed from bubble but still exists in the local db
-    return Meteor.users.find({_id: {$nin: rejectList}, 
-      username: new RegExp(Session.get('selectedUsername'),'i')});
+    return Meteor.users.find(
+      {
+        _id: {$nin: rejectList}, 
+        username: new RegExp(Session.get('selectedUsername'),'i')
+      }, {limit: 5});
   },
   getInvitees: function() {
     return this.users.invitees;

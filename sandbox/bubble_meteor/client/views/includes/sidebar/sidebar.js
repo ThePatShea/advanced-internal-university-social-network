@@ -147,7 +147,7 @@ Template.sidebar.helpers({
     }
   },
   getSidebarBubbles: function(){
-    return Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}, {limit: joinedBubblesHandle.limit()});
+    return Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]});
   },
   getInvitations: function() {
     invitees = [Meteor.userId()];
@@ -161,6 +161,13 @@ Template.sidebar.helpers({
       return true;
     }
     return false;
+  },
+  hasBubble: function() {
+    if(Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).count() > 0){
+      return true;
+    }else{
+      return false;
+    }
   }
 });
 

@@ -19,16 +19,8 @@ Handlebars.registerHelper('getCurrentBubble', function() {
   return Bubbles.findOne(Session.get('currentBubbleId'));
 });
 
-Handlebars.registerHelper('getBubbles', function() {
-  return Bubbles.find({}, {sort: {submitted: -1}, limit: mainBubblesHandle.limit()});
-});
-
 Handlebars.registerHelper('getCurrentPost', function() {
   return Posts.findOne(Session.get('currentPostId'));
-});
-
-Handlebars.registerHelper('getPosts', function() {
-  return Posts.find();
 });
 
 Handlebars.registerHelper('isAdmin', function() {  
@@ -69,8 +61,12 @@ Handlebars.registerHelper('chosen', function() {
 });
 
 //Return errors
-Handlebars.registerHelper('hasErrors', function() {
-  return Meteor.Error;
+Handlebars.registerHelper('hasNoErrors', function() {
+  if(Errors.find().fetch().length == 0){
+    return true;
+  }else{
+    return false;
+  }
 });
 
 Handlebars.registerHelper('getBubbleUsersCount',function() {

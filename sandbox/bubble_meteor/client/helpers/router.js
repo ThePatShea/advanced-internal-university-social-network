@@ -5,10 +5,7 @@ Meteor.Router.add({
   },
 
   //Post Routes
-  '/bubbles': {
-    to: 'bubblesList',
-    and: function() { Session.set('currentBubbleId', undefined); }
-  },
+  '/bubbles': 'bubblesList',
 
   '/posts/:_id': {
     to: 'postPage', 
@@ -68,10 +65,7 @@ Meteor.Router.add({
   },
   '/bubbles/:_id/submit/document': 'documentSubmit',
   '/bubbles/:_id/submit/file': 'fileSubmit',
-  '/submit/bubble': {
-    to: 'bubbleSubmit',
-    and: function() { Session.set('currentBubbleId', undefined); }
-  },
+  '/submit/bubble': 'bubbleSubmit',
 
   //Routes for User
   '/userprofile/:id': {
@@ -82,7 +76,16 @@ Meteor.Router.add({
   '/editprofile/:id': {
     to: 'userprofileEdit',
     and: function(id) { Session.set('selectedUserId',id)}
-  }
+  },
+
+  //Routes for Search
+  '/search/all': 'searchAll',
+  '/search/users': 'searchUsers',
+  '/search/bubbles': 'searchBubbles',
+  '/search/discussions': 'searchDiscussions',
+  '/search/events': 'searchEvents',
+  '/search/files': 'searchFiles',
+
 });
 
 Meteor.Router.filters({
@@ -108,9 +111,26 @@ Meteor.Router.filters({
       }
     }
     return page;
+  },
+  'leftSearchPage': function(page){
+    Session.set('searchText', undefined);
+    Session.set('searchCategory', undefined);
+    return page;
+  },
+  'leftBubblePage': function(page){
+    Session.set('currentBubbleId', undefined);
+    Session.set('currentBubbleId', undefined);
+    mainBubblesHandle._limit = mainBubblesHandle.perPage;
+    eventListHandle._limit = eventListHandle.perPage;
+    discussionListHandle._limit = discussionListHandle.perPage;
+    fileListHandle._limit = fileListHandle.perPage;
+    usersListHandle._limit = usersListHandle.perPage;
+    return page;
   }
 });
 
+Meteor.Router.filter('leftSearchPage', {except: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents', 'searchFiles']});
+Meteor.Router.filter('leftBubblePage', {only: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents', 'searchFiles', 'bubblesList', 'bubbleSubmit', 'errors']});
 Meteor.Router.filter('requireMembership');
 Meteor.Router.filter('requireLogin');
 Meteor.Router.filter('clearErrors');
