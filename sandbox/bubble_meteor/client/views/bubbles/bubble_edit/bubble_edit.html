@@ -35,11 +35,7 @@
       <div class="control-group">
         <label class="control-label" for="category">Category</label>
         <div class="controls">
-            <select name="category">
-                <option {{checkSelected 'academic department'}} value='academic department'>academic department</option>
-                <option {{checkSelected 'student organization'}} value='student organization'>student organization</option>
-                <option {{checkSelected 'student resource'}} value='student resource'>student resource/service</option>
-            </select>
+            {{> categorySelector}}
         </div>
       </div>
 

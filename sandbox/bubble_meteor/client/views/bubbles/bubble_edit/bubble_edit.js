@@ -191,14 +191,6 @@ Template.bubbleEdit.events({
   }
 });
 
-Template.bubbleEdit.helpers({
-  checkSelected: function(category) {
-    if (category == this.category)
-      return 'selected'
-    else
-      return false
-  }
-});
 
 Template.bubbleEdit.rendered = function(){
   $("#change_profilepicture").click(function(){

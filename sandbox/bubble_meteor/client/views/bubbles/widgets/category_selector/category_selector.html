@@ -1,0 +1,7 @@
+<template name="categorySelector">
+    <select name="category">
+        {{#each categories}}
+          <option {{checkSelected name_short}} value="{{name_short}}">{{name_long}}</option>
+        {{/each}}
+    </select>
+</template>
