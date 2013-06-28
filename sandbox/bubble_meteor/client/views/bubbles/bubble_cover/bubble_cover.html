@@ -5,7 +5,7 @@
     <div class="v-middle pull-left">
       <div class="v-inner">
         <div class="profile-pic-container">
-          <span class="category-{{convertSpacesToDashes category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
+          <span class="category-{{category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
           <img src="{{profilePicture}}" class="profile-pic">
         </div>
       </div>
@@ -14,7 +14,7 @@
       <div class="v-inner">
         <h1 class="bubble-name">{{title}}</h1>
         <h2 class="bubble-subtitle">
-          <span class="category-{{convertSpacesToDashes category}}-color">{{category}}</span>
+          <span class="category-{{category}}-color">{{category}}</span>
           <span> | {{pluralize getBubbleUsersCount "member"}}</span>
         </h2>
       </div>
