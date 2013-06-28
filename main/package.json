@@ -1,7 +1,7 @@
 {
     "name": "campus_bubble",
     "description": "A platform for college groups to communicate by sharing discussions, events, files, and more",
-    "version": "3.0.0-84",
+    "version": "3.0.0-88",
     "private": false,
     "author": "Campus Bubble",
     "engines": {
@@ -16,7 +16,7 @@
         "express-namespace": "latest",
         "jade": "latest",
         "mongoose": "latest",
-        "connect-mongodb": "latest",
+        "connect-mongodb": "1.1.4",
         "passport": "latest",
         "passport-local": "latest",
         "passport-facebook": "latest",
