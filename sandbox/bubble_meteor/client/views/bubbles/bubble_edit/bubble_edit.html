@@ -15,27 +15,30 @@
       </div>
 
       <div class="control-group">
+          <div id="bubble_image">
+                  <img id="coverphoto_upload" src="" />
+                  <img id="coverphoto_preview" src="{{coverPhoto}}" />
+                  <a href="#" class="btn btn-danger delete" id="change_coverphoto">Change</a>
+              <div id="cover_dropzone" class="dropzone">Drop cover photo here.</div>
+          </div>
+      </div>
+
+      <div class="control-group">
+          <div id="bubble_profile">
+                 <img id="profilepicture_upload" src="" />
+                  <img id="profilepicture_preview" src="{{profilePicture}}" />
+                  <a href="#" class="btn btn-danger delete" id="change_profilepicture">Change</a>
+              <div id="profile_dropzone" class="dropzone">Drop bubble profile picture here.</div>
+          </div>
+      </div>
+
+      <div class="control-group">
         <label class="control-label" for="category">Category</label>
         <div class="controls">
             <select name="category">
-              {{#if isSelected 'academics'}}
-                <option selected value='academics'>Academics</option>
-              {{/if}}
-              {{#if notSelected 'academics'}}
-                <option value='academics'>Academics</option>
-              {{/if}}
-              {{#if isSelected 'studentresource'}}
-                <option selected value='student resource'>Student Resource</option>
-              {{/if}}
-              {{#if notSelected 'studentresource'}}
-                <option value='student resource'>Student Resource</option>
-              {{/if}}
-              {{#if isSelected 'studentorganization'}}
-                <option selected value='student organization'>Student Organization</option>
-              {{/if}}
-              {{#if notSelected 'studentorganization'}}
-                <option value='student organization'>Student Organization</option>
-              {{/if}}
+                <option {{checkSelected 'academic department'}} value='academic department'>academic department</option>
+                <option {{checkSelected 'student organization'}} value='student organization'>Student Organization</option>
+                <option {{checkSelected 'student resource'}} value='student resource'>Student Resource/Service</option>
             </select>
         </div>
       </div>
@@ -50,7 +53,7 @@
       <hr/>
       <div class="control-group">
           <div class="controls">
-              <a class="btn btn-danger delete" href="#">Delete Bubble</a>
+              <a class="btn btn-danger delete" id="delete_bubble" href="#">Delete Bubble</a>
           </div>
       </div>
     </form>

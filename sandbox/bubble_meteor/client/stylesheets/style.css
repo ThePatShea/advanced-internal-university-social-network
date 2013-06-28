@@ -6,12 +6,15 @@
 
 .dropzone{width: 500px; border:2px dashed #bbb;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:25px;text-align:center;font: 20pt bold 'Vollkorn';color:#bbb}
 
-.bubbleprofile{
-  -moz-border-radius:52px;
-  -webkit-border-radius:52px;
-  border-radius:52px;
-  width:100px;
-  height:100px;
+.bubble-cover .profile-pic{
+  -moz-border-radius:70px;
+  -webkit-border-radius:70px;
+  border-radius:70px;
+  width:67px;
+  height:67px;
+  position:absolute;
+  left: 3px;
+  top: 3px;
 }
 
 .userprofilepicture{

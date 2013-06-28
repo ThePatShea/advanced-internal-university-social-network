@@ -1,9 +1,18 @@
 <template name="bubbleCover">
-  <div class="bubble-cover" style="background-image: url('{{coverPhoto}}'); height: 145px; width: 804px;">
+  <div class="bubble-cover">
+    <img class="cover-pic" src="{{coverPhoto}}"/>
+    <div class="cover-mask"></div>
+    <div class="v-middle pull-left">
+      <div class="v-inner">
+        <div class="profile-pic-container">
+          <span class="category-{{convertSpacesToDashes category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
+          <img src="{{profilePicture}}" class="profile-pic">
+        </div>
+      </div>
+    </div>
     <div class="v-middle pull-left">
       <div class="v-inner">
         <h1 class="bubble-name">{{title}}</h1>
-        <img src="{{profilePicture}}" class="bubbleprofile">
         <h2 class="bubble-subtitle">
           <span class="category-{{convertSpacesToDashes category}}-color">{{category}}</span>
           <span> | {{pluralize getBubbleUsersCount "member"}}</span>
