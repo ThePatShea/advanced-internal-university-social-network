@@ -36,24 +36,9 @@
         <label class="control-label" for="category">Category</label>
         <div class="controls">
             <select name="category">
-              {{#if isSelected 'academics'}}
-                <option selected value='academics'>Academics</option>
-              {{/if}}
-              {{#if notSelected 'academics'}}
-                <option value='academics'>Academics</option>
-              {{/if}}
-              {{#if isSelected 'studentresource'}}
-                <option selected value='student resource'>Student Resource</option>
-              {{/if}}
-              {{#if notSelected 'studentresource'}}
-                <option value='student resource'>Student Resource</option>
-              {{/if}}
-              {{#if isSelected 'studentorganization'}}
-                <option selected value='student organization'>Student Organization</option>
-              {{/if}}
-              {{#if notSelected 'studentorganization'}}
-                <option value='student organization'>Student Organization</option>
-              {{/if}}
+                <option {{checkSelected 'academic department'}} value='academic department'>academic department</option>
+                <option {{checkSelected 'student organization'}} value='student organization'>Student Organization</option>
+                <option {{checkSelected 'student resource'}} value='student resource'>Student Resource/Service</option>
             </select>
         </div>
       </div>

@@ -192,15 +192,11 @@ Template.bubbleEdit.events({
 });
 
 Template.bubbleEdit.helpers({
-  isSelected: function(category) {
-    if (category == this.category){
-      return true;
-    }
-  },
-  notSelected: function(cateogry) {
-    if (cateogry != this.category){
-      return true;
-    }
+  checkSelected: function(category) {
+    if (category == this.category)
+      return 'selected'
+    else
+      return false
   }
 });
 
