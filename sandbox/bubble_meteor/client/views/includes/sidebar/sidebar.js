@@ -191,3 +191,16 @@ Template.sidebar.events({
     }
   }
 }); 
+
+Template.sidebar.rendered = function() {
+  // Ensure that the sidebar has a scroll bar whenever it has more buttons than can fit on it
+    var resizeMainBtns = function() {
+      $('.main-btns').height($(window).height() - $('.navbar').height() - $('.top-btns').height());
+    }
+  
+    window.onresize = function() {
+      resizeMainBtns();
+    }
+  
+    resizeMainBtns();
+}

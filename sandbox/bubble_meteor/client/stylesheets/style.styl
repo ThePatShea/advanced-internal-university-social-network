@@ -105,75 +105,82 @@ main-xlight-bg(n)
 /*****      Main Color      *****/
 
 
-/*****  Category: Academics  *****/
-category-academic-department-border(n)
-  border-thin            #b0606d
-category-academic-department-color(n)
-  color                  #b0606d
-category-academic-department-fill(n)
-  fill                   #b0606d
-category-academic-department-bg(n)
-  background             #b0606d
+/*****   Category Colors    *****/
+color-major  =  #b0606d
+color-club   =  #70c889
+/*****   Category Colors    *****/
 
-.category-academic-department-bg-opacity-100
+
+/*****   Category: major    *****/
+category-major-border(n)
+  border-thin            color-major
+category-major-color(n)
+  color                  color-major
+category-major-fill(n)
+  fill                   color-major
+category-major-bg(n)
+  background             color-major
+
+.category-major-bg-opacity-100
   background             rgba(176,96,109,1)
-.category-academic-department-bg-opacity-90
+.category-major-bg-opacity-90
   background             rgba(176,96,109,.90)
-.category-academic-department-bg-opacity-80
+.category-major-bg-opacity-80
   background             rgba(176,96,109,.80)
-.category-academic-department-bg-opacity-70
+.category-major-bg-opacity-70
   background             rgba(176,96,109,.70)
-.category-academic-department-bg-opacity-60
+.category-major-bg-opacity-60
   background             rgba(176,96,109,.60)
-.category-academic-department-border-left-3
-  border-left            3px solid #b0606d
-.category-academic-department-border-top-4
-  border-top             4px solid #b0606d
-.category-academic-department-border
-  border-thin            #b0606d
-.category-academic-department-color
-  color                  #b0606d
-.category-academic-department-fill
-  fill                   #b0606d
-.category-academic-department-bg 
-  background             #b0606d
-/*****  Category: Academics  *****/
+
+.category-major-border-left-3
+  border-left            3px solid color-major
+.category-major-border-top-4
+  border-top             4px solid color-major
+.category-major-border
+  border-thin            color-major
+.category-major-color
+  color                  color-major
+.category-major-fill
+  fill                   color-major
+.category-major-bg 
+  background             color-major
+/*****   Category: major    *****/
 
 
-/*****  Category: Student Organization  *****/
-category-student-organization-border(n)
-  border-thin            #70c889
-category-student-organization-color(n)
-  color                  #70c889
-category-student-organization-fill(n)
-  fill                   #70c889
-category-student-organization-bg(n)
-  background             #70c889
+/*****    Category: club    *****/
+category-club-border(n)
+  border-thin            color-club
+category-club-color(n)
+  color                  color-club
+category-club-fill(n)
+  fill                   color-club
+category-club-bg(n)
+  background             color-club
 
-.category-student-organization-bg-opacity-100
+.category-club-bg-opacity-100
   background             rgba(112,200,137,1)
-.category-student-organization-bg-opacity-90
+.category-club-bg-opacity-90
   background             rgba(112,200,137,.90)
-.category-student-organization-bg-opacity-80
+.category-club-bg-opacity-80
   background             rgba(112,200,137,.80)
-.category-student-organization-bg-opacity-70
+.category-club-bg-opacity-70
   background             rgba(112,200,137,.70)
-.category-student-organization-bg-opacity-60
+.category-club-bg-opacity-60
   background             rgba(112,200,137,.60)
 
-.category-student-organization-border-left-3
-  border-left            3px solid #70c889
-.category-student-organization-border-top-4
-  border-top             4px solid #70c889
-.category-student-organization-border
-  border-thin            #70c889
-.category-student-organization-color
-  color                  #70c889
-.category-student-organization-fill
-  fill                   #70c889
-.category-student-organization-bg 
-  background             #70c889
-/*****  Category: Student Organization  *****/
+.category-club-border-left-3
+  border-left            3px solid color-club
+.category-club-border-top-4
+  border-top             4px solid color-club
+.category-club-border
+  border-thin            color-club
+.category-club-color
+  color                  color-club
+.category-club-fill
+  fill                   color-club
+.category-club-bg 
+  background             color-club
+/*****    Category: club    *****/
 /**********  Color Palette  **********/
 
 
@@ -450,6 +457,7 @@ navbar-height        =  60px
         .lbl
           text-decoration              underline
   .main-btns
+    overflow-y               scroll
     .main-btn
       box-shadow                 0 1px #386C8B
       padding                    0 0 0 15px
