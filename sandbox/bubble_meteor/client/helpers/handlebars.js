@@ -62,7 +62,7 @@ Handlebars.registerHelper('chosen', function() {
 
 //Return errors
 Handlebars.registerHelper('hasNoErrors', function() {
-  if(Errors.find().fetch().length == 0){
+  if(Errors.find().count() == 0){
     return true;
   }else{
     return false;
@@ -78,4 +78,18 @@ Handlebars.registerHelper('getBubbleUsersCount',function() {
 
 Handlebars.registerHelper('convertSpacesToDashes',function(word) {
   return word.replace(" ","-");
+});
+
+Handlebars.registerHelper('isLoggedIn', function() {
+  if(Meteor.user()) {
+    return true;
+  }
+});
+
+Handlebars.registerHelper('hasBubble', function() {
+  if(Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).count() > 0){
+    return true;
+  }else{
+    return false;
+  }
 });

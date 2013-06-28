@@ -1,8 +1,20 @@
 Meteor.Router.add({
   //Login from authentication system
   '/login': function(){
-    Meteor.Router.to('bubbleList');
+    Meteor.Router.to('bubblesList');
   },
+
+  // '/': {
+  //   and: function() {
+  //     var bubble = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch()[0];
+  //     if(bubble) {
+  //       Session.set('currentBubbleId',bubble._id);
+  //       Meteor.Router.to('/bubbles/'+bubble._id+'/home');
+  //     }else{
+  //       Meteor.Router.to('searchBubbles');
+  //     }
+  //   }
+  // },
 
   //Post Routes
   '/bubbles': 'bubblesList',
@@ -90,12 +102,15 @@ Meteor.Router.add({
 
 Meteor.Router.filters({
   'requireLogin': function(page) {
-    if (Meteor.user())
+    if (Meteor.user()){
       return page;
-    else if (Meteor.loggingIn())
+    }
+    else if (Meteor.loggingIn()){
       return 'loading';
-    else
+    }
+    else{
       return 'accessDenied';
+    }
   },
   'clearErrors': function(page) {
     clearErrors();
@@ -119,13 +134,16 @@ Meteor.Router.filters({
   },
   'leftBubblePage': function(page){
     Session.set('currentBubbleId', undefined);
-    Session.set('currentBubbleId', undefined);
+    Session.set('currentPostId', undefined);
     mainBubblesHandle._limit = mainBubblesHandle.perPage;
     eventListHandle._limit = eventListHandle.perPage;
     discussionListHandle._limit = discussionListHandle.perPage;
     fileListHandle._limit = fileListHandle.perPage;
     usersListHandle._limit = usersListHandle.perPage;
     return page;
+  },
+  'homePage': function(page){
+
   }
 });
 

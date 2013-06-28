@@ -14,10 +14,12 @@
     <div id="main" class="row-fluid">
       {{> errors}}
 
-      {{#if hasNoErrors}}
-        {{#with getCurrentBubble}}
-  	      {{> bubbleCover}}
-        {{/with}}
+      {{#if isLoggedIn}}
+        {{#if hasNoErrors}}
+          {{#with getCurrentBubble}}
+    	      {{> bubbleCover}}
+          {{/with}}
+        {{/if}}
       {{/if}}
 
       {{renderPage}}
