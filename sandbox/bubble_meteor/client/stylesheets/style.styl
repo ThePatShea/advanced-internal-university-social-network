@@ -339,7 +339,10 @@ svg
 /***************  Single-Purpose Elements  ***************/
 /**********      Base Divs       **********/
 #main
-  padding-left           240px
+  @media (min-width: 768px)
+    padding-left               240px
+  @media (max-width: 767px)
+    padding-left               0
 
 .comments li:nth-child(even),
 .post:nth-child(even),
@@ -390,14 +393,6 @@ navbar-height        =  60px
     vertical-align           middle
   .navbar-inner
     main-xdark-bg            0
-    .reveal-sidebar
-      position               absolute
-      left                   10px
-      top                    10px
-      @media (min-width: 768px)
-        display                      none
-      @media (max-width: 767px)
-        display                      block
     .brand
       line-height              navbar-height 
       height                   navbar-height
@@ -454,6 +449,7 @@ navbar-height        =  60px
   height                 5000px
   width                  240px
   position               fixed
+  z-index                50
   main-light-bg          0
   .top-btns
     margin                   1px 0 0 0
