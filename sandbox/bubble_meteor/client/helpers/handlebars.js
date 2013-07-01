@@ -93,3 +93,14 @@ Handlebars.registerHelper('hasBubble', function() {
     return false;
   }
 });
+
+Handlebars.registerHelper('hasLastVisitedBubble', function() {
+  if(Session.get('lastVisitedBubbleId')){
+    return true;
+  }
+  return false;
+});
+
+Handlebars.registerHelper('getLastVisitedBubble', function() {
+  return Bubbles.findOne(Session.get('lastVisitedBubbleId'));
+});

@@ -1,16 +1,43 @@
 <template name="header">
   <header class="navbar">
     <div class="navbar-inner">
-      <a class="brand" href="/">
-        <span class="logo-main">{{> icon-logo-main}}</span>
-        <span class="left">emory</span><span class="right">bubble</span>
-      </a>
+
+      {{#if hasBubble}}
+        {{#if hasLastVisitedBubble}}
+          {{#with getLastVisitedBubble}}
+            <a href="{{bubblePagePath this}}" class="brand">
+              <span class="logo-main">{{> icon-logo-main}}</span>
+              <span class="left">emory</span><span class="right">bubble</span>
+            </a>
+          {{/with}}
+        {{else}}
+          {{#with getFirstBubble}}
+            <a href="{{bubblePagePath this}}" class="brand">
+              <span class="logo-main">{{> icon-logo-main}}</span>
+              <span class="left">emory</span><span class="right">bubble</span>
+            </a>
+          {{/with}}
+        {{/if}}
+      {{else}}
+        <a href="{{searchAllPath}}" class="brand">
+          <span class="logo-main">{{> icon-logo-main}}</span>
+          <span class="left">emory</span><span class="right">bubble</span>
+        </a>
+      {{/if}}
+      
+      
       <ul class="nav pull-right">
           <li class="{{activeRouteClass 'bubblesList'}}">
             {{#if hasBubble}}
-              {{#with getFirstBubble}}
-                <a href="{{bubblePagePath this}}" class="my-bubble">my bubbles</a>
-              {{/with}}
+              {{#if hasLastVisitedBubble}}
+                {{#with getLastVisitedBubble}}
+                  <a href="{{bubblePagePath this}}" class="my-bubble">my bubbles</a>
+                {{/with}}
+              {{else}}
+                {{#with getFirstBubble}}
+                  <a href="{{bubblePagePath this}}" class="my-bubble">my bubbles</a>
+                {{/with}}
+              {{/if}}
             {{else}}
                 <a href="{{searchAllPath}}" class="my-bubble">my bubbles</a>
             {{/if}}

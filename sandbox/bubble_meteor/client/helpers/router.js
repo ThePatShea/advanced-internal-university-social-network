@@ -4,17 +4,7 @@ Meteor.Router.add({
     Meteor.Router.to('bubblesList');
   },
 
-  // '/': {
-  //   and: function() {
-  //     var bubble = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch()[0];
-  //     if(bubble) {
-  //       Session.set('currentBubbleId',bubble._id);
-  //       Meteor.Router.to('/bubbles/'+bubble._id+'/home');
-  //     }else{
-  //       Meteor.Router.to('searchBubbles');
-  //     }
-  //   }
-  // },
+  '/': 'searchBubbles',
 
   //Post Routes
   '/bubbles': 'bubblesList',
@@ -36,23 +26,23 @@ Meteor.Router.add({
   '/bubbles': 'bubblesList',
   '/bubbles/:_id/home': {
     to: 'bubblePage', 
-    and: function(id) { Session.set('currentBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
   },
   '/bubbles/:_id/event': {
     to: 'bubbleEventPage', 
-    and: function(id) { Session.set('currentBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
   },
   '/bubbles/:_id/discussion': {
     to: 'bubbleDiscussionPage', 
-    and: function(id) { Session.set('currentBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
   },
   '/bubbles/:_id/file': {
     to: 'bubbleFilePage', 
-    and: function(id) { Session.set('currentBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
   },
   '/bubbles/:_id/edit': {
     to: 'bubbleEdit', 
-    and: function(id) { Session.set('currentBubbleId', id); }    
+    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }    
   },
   '/bubbles/:_id/members':{
     to: 'bubbleMembersPage',
