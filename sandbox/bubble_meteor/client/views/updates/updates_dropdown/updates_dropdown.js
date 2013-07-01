@@ -13,7 +13,7 @@ Template.updatesDropdown.helpers({
     var resultList = [];
 
     _.each(bubbleList, function(bubble) {
-      var updateList = Updates.find({bubbleId:bubble._id}).fetch();
+      var updateList = Updates.find({userId: Meteor.userId(), bubbleId:bubble._id}).fetch();
 
       //To combine updates with same userId, invokerId, updateType and postId
       if(updateList.length > 0) {
@@ -164,7 +164,7 @@ Template.updatesDropdown.helpers({
     var resultList = [];
 
     _.each(bubbleList, function(bubble) {
-      var updateList = Updates.find({bubbleId:bubble._id}).fetch();
+      var updateList = Updates.find({userId: Meteor.userId(), bubbleId:bubble._id}).fetch();
 
       //To combine updates with same userId, invokerId, updateType and postId
       if(updateList.length > 0) {
@@ -315,7 +315,7 @@ Template.updatesDropdown.helpers({
 
 Template.update.events({
   'click a': function() {
-    Updates.update(this._id, {$set: {read: true}});
+    Meteor.call('setRead', this);
   }
 })
 
@@ -323,6 +323,9 @@ Template.update.events({
 Template.update.helpers({
   updateTypeIs: function(updateType){
     return updateType == this.updateType;
+  },
+  getContent: function() {
+    return this.invokerName + this.content;
   }
 });
 

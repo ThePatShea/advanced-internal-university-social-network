@@ -1,6 +1,6 @@
 Template.updatesList.helpers({
   updates: function() {
-    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId')}).fetch();
+    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId'), read:false}).fetch();
 
     if(updateList.length > 0) {
       //To combine updates with same userId, invokerId, updateType and postId
@@ -129,7 +129,7 @@ Template.updatesList.helpers({
           updateList = _.reject(updateList, function(newUpdate) {
             return newUpdate.updateType == type;
           });
-          //Now ad back with the applicant that has a changed invoker name
+          //Now add back with the applicant that has a changed invoker name
           if(firstUpdate){
             updateList.push(firstUpdate);
           }

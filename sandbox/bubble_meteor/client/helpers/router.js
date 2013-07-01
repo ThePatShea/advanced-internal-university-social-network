@@ -98,7 +98,8 @@ Meteor.Router.filters({
     else if (Meteor.loggingIn()){
       return 'loading';
     }
-    else{
+    else{ 
+      Session.set('lastVisitedBubbleId', undefined);
       return 'accessDenied';
     }
   },
@@ -131,9 +132,6 @@ Meteor.Router.filters({
     fileListHandle._limit = fileListHandle.perPage;
     usersListHandle._limit = usersListHandle.perPage;
     return page;
-  },
-  'homePage': function(page){
-
   }
 });
 

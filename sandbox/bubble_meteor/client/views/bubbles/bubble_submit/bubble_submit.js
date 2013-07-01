@@ -20,8 +20,7 @@ Template.bubbleSubmit.events({
     });
   },
 
-
-    'dragover .dropzone': function(evt){
+  'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();
@@ -97,9 +96,6 @@ Template.bubbleSubmit.events({
         throwError(error.reason);
       }
     }
-
-
-    
   },
 
   'drop #profile_dropzone': function(evt){
@@ -171,14 +167,7 @@ Template.bubbleSubmit.events({
         throwError(error.reason);
       }
     }
-
-
-    
   },
 
 });
-
-Template.bubbleSubmit.rendered = function(){
-};
-
 

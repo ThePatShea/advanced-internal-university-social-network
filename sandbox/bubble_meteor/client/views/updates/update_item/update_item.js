@@ -1,4 +1,4 @@
-Template.updateItem.helpers({
+userId: Meteor.userId(), Template.updateItem.helpers({
 	getPost: function() {
 		return Posts.findOne(this.postId);
 	},

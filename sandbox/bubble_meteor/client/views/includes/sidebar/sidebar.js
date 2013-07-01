@@ -171,7 +171,6 @@ Template.sidebar.events({
       $addToSet: {'users.members': Meteor.userId()},
       $pull: {'users.invitees': Meteor.userId()}
     });
-    createNewMemberUpdate(Meteor.userId(),this._id);
 
     Meteor.call('setRead', Updates.findOne({userId:Meteor.userId(), bubbleId:this._id, updateType:"INVITATION"}));
   },

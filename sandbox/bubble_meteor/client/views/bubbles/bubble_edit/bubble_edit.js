@@ -208,8 +208,6 @@ Template.bubbleEdit.rendered = function(){
   var currentBubbleId = Session.get('currentBubbleId');
   var currentbubble = Bubbles.findOne({_id: currentBubbleId});
   $(".dropzone").hide();
-  console.log((currentbubble.coverPhoto.length==0));
-  console.log((currentbubble.profilePicture.length==0));
   if(currentbubble.coverPhoto.length == 0){
     $("#coverphoto_preview").attr("src", "/img/default_coverphoto.jpg");
   }

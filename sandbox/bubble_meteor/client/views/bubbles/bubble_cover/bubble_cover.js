@@ -10,6 +10,13 @@ Template.bubbleCover.helpers({
 		var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
 
 		return _.contains(users.applicants, Meteor.userId());
+	},
+	getLongCategory: function() {
+		console.log(this);
+		return _.find(categories, function(category) {
+
+			return this.category == category.name_short;
+		}).name_long;
 	}
 });
 

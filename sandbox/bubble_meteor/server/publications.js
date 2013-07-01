@@ -24,7 +24,7 @@ Meteor.publish('comments', function(postId, limit) {
 });
 
 Meteor.publish('updates', function(userId) {
-  return Updates.find({userId: userId, read: false}, {sort: {submitted:1}});
+  return Updates.find({read: false}, {sort: {submitted:1}});
 });
 
 Meteor.publish('singleBubble', function(id){
