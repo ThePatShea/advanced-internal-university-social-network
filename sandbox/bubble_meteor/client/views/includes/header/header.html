@@ -1,50 +1,21 @@
 <template name="header">
   <header class="navbar">
     <div class="navbar-inner">
-
-      {{#if hasBubble}}
-        {{#if hasLastVisitedBubble}}
-          {{#with getLastVisitedBubble}}
-            <a href="{{bubblePagePath this}}" class="brand">
-              <span class="logo-main">{{> icon-logo-main}}</span>
-              <span class="left">emory</span><span class="right">bubble</span>
-            </a>
-          {{/with}}
-        {{else}}
-          {{#with getFirstBubble}}
-            <a href="{{bubblePagePath this}}" class="brand">
-              <span class="logo-main">{{> icon-logo-main}}</span>
-              <span class="left">emory</span><span class="right">bubble</span>
-            </a>
-          {{/with}}
-        {{/if}}
-      {{else}}
-        <a href="{{searchAllPath}}" class="brand">
-          <span class="logo-main">{{> icon-logo-main}}</span>
-          <span class="left">emory</span><span class="right">bubble</span>
-        </a>
-      {{/if}}
+      <a href="{{getMyBubblesUrlPath}}" class="brand">
+        <span class="logo-main">{{> icon-logo-main}}</span>
+        <span class="left">emory</span><span class="right">bubble</span>
+      </a>
       
       
       <ul class="nav pull-right">
-          <li class="{{activeRouteClass 'bubblesList'}}">
-            {{#if hasBubble}}
-              {{#if hasLastVisitedBubble}}
-                {{#with getLastVisitedBubble}}
-                  <a href="{{bubblePagePath this}}" class="my-bubble">my bubbles</a>
-                {{/with}}
-              {{else}}
-                {{#with getFirstBubble}}
-                  <a href="{{bubblePagePath this}}" class="my-bubble">my bubbles</a>
-                {{/with}}
-              {{/if}}
-            {{else}}
-                <a href="{{searchAllPath}}" class="my-bubble">my bubbles</a>
-            {{/if}}
-          </li>
-          <li class="dropdown">
-            {{> updatesDropdown}}
-          </li>
+        {{#if currentUser}}
+        <li class="{{activeRouteClass}}">
+          <a href="{{getMyBubblesUrlPath}}" class="my-bubble">my bubbles</a>
+        </li>
+        <li class="dropdown">
+          {{> updatesDropdown}}
+        </li>
+        {{/if}}
         <li>{{loginButtons}}</li>
       </ul>
     </div>

@@ -256,7 +256,7 @@ createNewMemberUpdate = function(userId,bubbleId) {
     bubbleId: bubble._id,
     invokerId: Meteor.userId(),
     invokerName: Meteor.user().username,
-    updateType: "JOINED BUBBLE",
+    updateType: "ACCEPTED APPLICATION",
     url: '/bubbles/'+bubble._id+'/members',
     content: "Congratulations! " + bubble.title + " accepted your application"
   });

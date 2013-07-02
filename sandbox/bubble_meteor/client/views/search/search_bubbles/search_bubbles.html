@@ -2,11 +2,9 @@
 
   {{> searchPage}}
 
-  {{#if hasSearchText}}
-    <b>Results for Bubbles</b>
-    {{#each getSearchedBubbles}}
-    	{{> bubbleItem}}
-    {{/each}}
-  {{/if}}
+  <b>Results for Bubbles</b>
+  {{#each getSearchedBubbles}}
+  	{{> bubbleItem}}
+  {{/each}}
 
 </template>

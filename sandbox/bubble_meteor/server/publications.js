@@ -31,6 +31,10 @@ Meteor.publish('singleBubble', function(id){
 	return id && Bubbles.find(id);
 });
 
+Meteor.publish('bubbles', function(limit) {
+  return Bubbles.find({}, {sort: {submitted: -1}, limit:limit});
+});
+
 Meteor.publish('searchBubbles', function(bubbleTitle,limit) {
   return Bubbles.find(
       { $or: [
@@ -70,7 +74,8 @@ Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
     return Meteor.users.find({$or: [{_id: {$in: userList}},{username: {$in: usernameList}}]}, {
       fields: {
        'username': 1,
-       'emails': 1
+       'emails': 1,
+       'userType': 1
       }
     });
   }
@@ -83,9 +88,14 @@ Meteor.publish("findUsersByName", function(username, limit) {
   return Meteor.users.find(search_query, {
     fields: {
      'username': 1,
-     'emails': 1
+     'emails': 1,
+     'userType': 1
     }
   });
+});
+
+Meteor.publish('userData', function() {
+  return Meteor.users.find({_id: this.userId})
 });
 
 

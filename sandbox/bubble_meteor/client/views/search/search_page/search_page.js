@@ -14,8 +14,13 @@ Template.searchPage.rendered = function() {
     var searchText = $(".search-text").val();
     if (searchText == ""){
       Session.set('searchText',undefined);
-    }else if(searchText.length > 2){
+    }else if(Meteor.Router.page() == 'searchAll' && searchText.length > 2) {
+      Session.set('searchText',searchText);
+    }else if(Meteor.Router.page() != 'searchAll'){
       Session.set('searchText', searchText);
+    }else{
+      Session.set('searchText', searchText);
+      
     }
   });
 }

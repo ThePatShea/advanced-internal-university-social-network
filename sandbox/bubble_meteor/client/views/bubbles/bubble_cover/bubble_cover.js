@@ -12,10 +12,10 @@ Template.bubbleCover.helpers({
 		return _.contains(users.applicants, Meteor.userId());
 	},
 	getLongCategory: function() {
-		var category =  _.find(categories, function(category) {
-			return this.category == category.name_short;
+		var currentCat = this.category;
+		var category =  _.find(categories, function(cat) {
+			return currentCat == cat.name_short;
 		});
-
 		if(category) {
 			return category.name_long;
 		}
