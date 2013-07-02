@@ -33,6 +33,10 @@ div,
 a
   border-box             0
 
+body
+  @media (max-width: 767px)
+    padding 0
+
 .navbar
   .navbar-inner
     border-radius          0
@@ -630,7 +634,10 @@ svg
 /***************  Single-Purpose Elements  ***************/
 /**********      Base Divs       **********/
 #main
-  padding-left           240px
+  @media (min-width: 768px)
+    padding-left               240px
+  @media (max-width: 767px)
+    padding-left               0
 
 .comments li:nth-child(even),
 .post:nth-child(even),
@@ -680,14 +687,26 @@ navbar-height        =  60px
   svg
     vertical-align           middle
   .navbar-inner
-    main-xdark-bg        0
+    main-xdark-bg            0
     .brand
       line-height              navbar-height 
       height                   navbar-height
-      padding                  0 0 0 15px
       font-size                14px
+      @media (min-width: 980px)
+        padding                    0 0 0 15px
+      @media (max-width: 979px)
+        padding                    0
+      @media (max-width: 767px)
+        position                   absolute
+        margin-right               -16px
+        left                       50%
       .logo-main
         margin                     0 5px 0 0
+      .logo-words
+        @media (min-width: 768px)
+          display                      inline
+        @media (max-width: 767px)
+          display                      none
       .left
         std-white-light-color      0
         font-main-black            0
@@ -725,6 +744,7 @@ navbar-height        =  60px
   height                 5000px
   width                  240px
   position               fixed
+  z-index                50
   main-light-bg          0
   .top-btns
     margin                   1px 0 0 0
@@ -732,16 +752,29 @@ navbar-height        =  60px
     overflow                 hidden
     .top-btn
       height                     50px
-      float                      left
       letter-spacing             1px
-      width                      50%
       font-main-black-11-u       0
       main-light-color           0
       main-xlight-bg             0
+      @media (min-width: 768px)
+        float                      left
+        width                      50%
+      @media (max-width: 767px)
+        padding-left               20px
+        float                      none
+        width                      100%
+      span
+        @media (min-width: 768px)
+          float                        none
+        @media (max-width: 767px)
+          float                        left
       .lbl
         padding                      0 0 0 10px
       &.left
-        border-right                 1px solid #7C9CAF
+        @media (min-width: 768px)
+          border-right                 1px solid #7C9CAF
+        @media (max-width: 767px)
+          border-bottom                1px solid #7C9CAF
         .lbl
           line-height                  20px
       &.right
@@ -777,7 +810,10 @@ navbar-height        =  60px
   position               relative
   overflow               hidden
   padding                0 30px
-  height                 145px
+  @media (min-width: 768px)
+    height                   145px
+  @media (max-width: 767px)
+    height                   100px
   .cover-mask,
   .cover-pic
     position                   absolute
@@ -797,15 +833,25 @@ navbar-height        =  60px
     position                   relative
     height                     76px
     width                      76px
+    @media (min-width: 768px)
+      display                  block
+    @media (max-width: 767px)
+      display                  none
   .bubble-name
     color                    white
-    font-size                37px
     font-alt-light           0
+    @media (min-width: 768px)
+      font-size                37px
+    @media (max-width: 767px)
+      font-size                25px
   .bubble-subtitle
     text-transform           uppercase
-    font-size                12px
     main-xlight-color        0
     font-main-bold           0
+    @media (min-width: 768px)
+      font-size                12px
+    @media (max-width: 767px)
+      font-size                11px
   .std-btn-dark
     margin                   5px 0
     float                    right
@@ -815,19 +861,30 @@ navbar-height        =  60px
 /**********        bubble-cover       **********/
 
 /**********  bubble-section-selector  **********/
-bubble-section-selector-height  =  100px
+bubble-section-selector-height-large  =  100px
+bubble-section-selector-height-small  =  75px
+
+.bubble-section-selector,
+.btn-bubble-section,
+.opacity-wrapper
+  @media (min-width: 768px)
+    height                   bubble-section-selector-height-large
+  @media (max-width: 767px)
+    height                   bubble-section-selector-height-small
 
 .bubble-section-selector
-  height                 bubble-section-selector-height
+  overflow-x             scroll
+  overflow-y             hidden
   .opacity-wrapper
-    height                   bubble-section-selector-height
     float                    left
     std-white-light-bg       0
     a
       std-white-light-fill   0
       .btn-bubble-section
-        height                   bubble-section-selector-height
-        width                    bubble-section-selector-height
         float                    left
+        @media (min-width: 768px)
+          width                    bubble-section-selector-height-large
+        @media (max-width: 767px)
+          width                    bubble-section-selector-height-small
 /**********  bubble-section-selector  **********/
 /***************  Single-Purpose Elements  ***************/
