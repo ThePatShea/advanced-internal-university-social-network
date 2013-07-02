@@ -155,7 +155,6 @@ Template.sidebar.helpers({
     return bubbles;
   },
   hasInvitations: function() {
-    invitees = [Meteor.userId()];
     var bubbles =  Bubbles.find({'users.invitees': Meteor.userId()});
     if(bubbles.count() >0){
       return true;

@@ -23,8 +23,10 @@ Template.bubbleMembersList.events({
     });
     Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
 
-    //Create update for member who is removed from bubble
-    createRemoveMemberUpdate(this.toString());
+    if(this.toString() != Meteor.userId()){
+      //Create update for member who is removed from bubble
+      createRemoveMemberUpdate(this.toString());
+    }
   },
   'click .activate': function() {
     if (Session.get(Session.get('currentBubbleId')+this.toString())){

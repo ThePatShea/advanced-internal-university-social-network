@@ -31,8 +31,13 @@ Meteor.publish('singleBubble', function(id){
 	return id && Bubbles.find(id);
 });
 
-Meteor.publish('bubbles', function(limit) {
-  return Bubbles.find({}, {sort: {submitted: -1}, limit: limit});
+Meteor.publish('searchBubbles', function(bubbleTitle,limit) {
+  return Bubbles.find(
+      { $or: [
+        {title: new RegExp(bubbleTitle,'i')}, 
+        {description: new RegExp(bubbleTitle,'i')}
+        ]
+      }, {sort: {submitted: -1}, limit:limit});
 });
 
 Meteor.publish('joinedBubbles', function(userId) {

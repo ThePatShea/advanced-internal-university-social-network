@@ -12,11 +12,13 @@ Template.bubbleCover.helpers({
 		return _.contains(users.applicants, Meteor.userId());
 	},
 	getLongCategory: function() {
-		console.log(this);
-		return _.find(categories, function(category) {
-
+		var category =  _.find(categories, function(category) {
 			return this.category == category.name_short;
-		}).name_long;
+		});
+
+		if(category) {
+			return category.name_long;
+		}
 	}
 });
 

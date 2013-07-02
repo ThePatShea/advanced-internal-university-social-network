@@ -6,7 +6,12 @@
       {{getUsername this}}
     </button>
 		{{#if isAdmin}}
-			{{#if ifNotSelf}}
+			{{#if isUser this}}
+        {{#if chosen}}
+          <button class="btn btn-small btn-inverse remove-admin" type="button">Leave Bubble</button>
+          <button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
+        {{/if}}
+      {{else}}
         {{#if chosen}}
           <button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
         {{/if}}

@@ -104,3 +104,7 @@ Handlebars.registerHelper('hasLastVisitedBubble', function() {
 Handlebars.registerHelper('getLastVisitedBubble', function() {
   return Bubbles.findOne(Session.get('lastVisitedBubbleId'));
 });
+
+Handlebars.registerHelper('isUser', function(userId) {
+  return userId.toString() == Meteor.userId();
+});

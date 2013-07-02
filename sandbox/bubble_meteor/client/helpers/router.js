@@ -4,8 +4,6 @@ Meteor.Router.add({
     Meteor.Router.to('bubblesList');
   },
 
-  '/': 'searchBubbles',
-
   //Post Routes
   '/bubbles': 'bubblesList',
 

@@ -38,7 +38,9 @@ Template.bubbleInvitation.events({
     if(!usernameList){
       usernameList = [];
     }
-    usernameList.push(this.username);
+    if(!_.contains(usernameList, this.username)) {
+      usernameList.push(this.username);
+    }
     Session.set('inviteeList'+Session.get('currentBubbleId'),usernameList);
   },
   'click .remove-invitee': function(event){

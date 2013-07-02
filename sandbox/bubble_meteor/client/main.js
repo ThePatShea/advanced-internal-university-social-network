@@ -6,14 +6,13 @@ eventListHandle = Meteor.subscribeWithPagination('events', Session.get('currentB
 discussionListHandle = Meteor.subscribeWithPagination('discussions', Session.get('currentBubbleId'), Meteor.userId(), 10);
 fileListHandle = Meteor.subscribeWithPagination('files', Session.get('currentBubbleId'), Meteor.userId(), 10);
 
-//For Bubbles
-mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 10);
 
 Deps.autorun(function() {
 	//Retrieves Bubbles
   Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
   Meteor.subscribe('invitedBubbles', Meteor.userId());
   Meteor.subscribe('joinedBubbles', Meteor.userId());
+	mainBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
 
   Meteor.subscribe('comments', Session.get('currentPostId'));
 
