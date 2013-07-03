@@ -19,11 +19,11 @@
         </h2>
       </div>
     </div>
-    <div class="v-middle cover-buttons">
+    <div class="v-middle cover-btns">
       <div class="v-inner">
         {{#if isAdmin}}
           <a href="{{bubbleEditPath this}}">
-            <button class="std-btn-dark">
+            <button class="std-btn-dark cover-btn">
               <span class="cb-icon-xlight">{{> icon-settings}}</span>
               <span class="lbl">edit bubble</span>
             </button>
@@ -31,13 +31,13 @@
         {{/if}}
         {{#if hasJoinedBubble}}
           <a href="{{bubbleMembersPagePath this}}">
-            <button class="std-btn-dark">Members Page</button>
+            <button class="std-btn-dark cover-btn">Members Page</button>
           </a>
         {{else}}
           {{#if hasApplied}}
-            <button class="std-btn-dark cancel-apply">Cancel Application</button>
+            <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
           {{else}}
-            <button class="std-btn-dark join-apply">Join Bubble</button>
+            <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
           {{/if}}
         {{/if}}
       </div>

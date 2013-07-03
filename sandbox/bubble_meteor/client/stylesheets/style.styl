@@ -874,7 +874,8 @@ body
 /**********       sidebar        **********/
 
 /**********        bubble-cover       **********/
-cover-buttons-width  =  150px
+cover-btns-width-large  =  150px
+cover-btns-width-small  =  130px
 
 .bubble-cover
   position               relative
@@ -908,7 +909,10 @@ cover-buttons-width  =  150px
     @media (max-width: 767px)
       display                  none
   .bubble-name-and-subtitle
-    margin-right             cover-buttons-width
+    @media (min-width: 768px)
+      margin-right             cover-btns-width-large
+    @media (max-width: 767px)
+      margin-right             cover-btns-width-small
     .bubble-name
       color                    white
       font-alt-light           0
@@ -924,12 +928,16 @@ cover-buttons-width  =  150px
         font-size                12px
       @media (max-width: 767px)
         font-size                11px
-  .cover-buttons
-    width                    cover-buttons-width
+  .cover-btns
     position                 absolute
-    right                    30px
     top                      0
-  .std-btn-dark
+    @media (min-width: 768px)
+      width                    cover-btns-width-large
+      right                    30px
+    @media (max-width: 767px)
+      width                    cover-btns-width-small
+      right                    10px
+  .cover-btn
     margin                   5px 0
     float                    right
     clear                    right
