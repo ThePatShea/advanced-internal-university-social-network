@@ -188,10 +188,33 @@ Template.sidebar.rendered = function() {
     var resizeMainBtns = function() {
       $('.main-btns').height($(window).height() - $('.navbar').height() - $('.top-btns').height());
     }
-  
-    window.onresize = function() {
-      resizeMainBtns();
+
+
+  // Resize the sidebar based on whether the window is desktop width or mobile width
+    var adjustSidebar = function() {
+      if ($(window).width() < 768) {
+        if ($('#menu').width() > 0)
+          $('#menu').collapse('hide');
+      } else {
+        if ($('#menu').width() == 0)
+          $('#menu').collapse('show');
+      }
     }
+
+
+  // Collapse the sidebar menu when the user clicks a button
+    $("#menu a").click(function(e) {
+      if ($(window).width() < 768)
+        $('#menu').collapse('hide');
+    });
+
+
+  // Run these functions on load and on window resize
+    $(window).resize(function() {
+      resizeMainBtns();
+      adjustSidebar();
+    });
   
     resizeMainBtns();
+    adjustSidebar();
 }

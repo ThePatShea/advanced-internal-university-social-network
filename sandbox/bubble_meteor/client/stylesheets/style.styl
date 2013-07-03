@@ -44,6 +44,9 @@ body
     border                 0
     a
       text-shadow              0 0
+    .brand
+      padding                  0
+      margin                   0
     .nav
       & > li
         a
@@ -692,9 +695,9 @@ navbar-height        =  60px
       line-height              navbar-height 
       height                   navbar-height
       font-size                14px
-      padding                  0
       @media (min-width: 768px)
         position                   fixed
+        left                       15px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
@@ -713,6 +716,10 @@ navbar-height        =  60px
         main-xlight-color          0
         font-main-medium           0
     .nav
+      @media (min-width: 768px)
+        display                    block
+      @media (max-width: 767px)
+        display                    none
       & > li
         border-right               1px solid navbar-border-color
         line-height                navbar-height 
@@ -752,9 +759,9 @@ body
   z-index                  60
   left                     0
   @media (min-width: 768px)
-    display                    none
+    display                  none
   @media (max-width: 767px)
-    display                    block
+    display                  block
 
 .viewport
   position                 absolute
@@ -765,15 +772,21 @@ body
   top                      0
   .frame
     position                 absolute
-    width                    200%
     height                   100%
     bottom                   0
     left                     0
     top                      0
+    @media (min-width: 768px)
+      width                      100%
+    @media (max-width: 767px)
+      width                      200%
     .view
       overflow                 hidden
       height                   100%
-      width                    50%
+      @media (min-width: 768px)
+        width                      auto
+      @media (max-width: 767px)
+        width                      50%
     .menu
       height                   100%
       &.collapse
