@@ -643,16 +643,16 @@ svg
 
 /***************  Single-Purpose Elements  ***************/
 /**********      Base Divs       **********/
-.comments li:nth-child(even),
-.post:nth-child(even),
+.comments li:nth-child(odd),
+.post:nth-child(odd),
 .comment-form,
 .grid-block,
 .main,
 body
   std-white-light-bg     0
 
-.comments li:nth-child(odd),
-.post:nth-child(odd)
+.comments li:nth-child(even),
+.post:nth-child(even)
   std-white-dark-bg      0
 
 .post
@@ -972,4 +972,20 @@ bubble-section-selector-height-small  =  75px
         @media (max-width: 767px)
           width                    bubble-section-selector-height-small
 /**********  bubble-section-selector  **********/
+
+/**********        bubble-page        **********/
+.bubble-list
+  @media (min-width: 768px)
+    margin                 50px 0
+  @media (max-width: 767px)
+    margin                 15px 0
+  .bubble-list-heading
+    overflow               hidden
+    @media (min-width: 768px)
+      padding                0 20px 30px 20px
+    @media (max-width: 767px)
+      padding                0 10px 10px 20px
+    
+/**********        bubble-page        **********/
+
 /***************  Single-Purpose Elements  ***************/
