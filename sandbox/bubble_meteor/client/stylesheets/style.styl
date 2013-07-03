@@ -973,8 +973,11 @@ bubble-section-selector-height-small  =  75px
   overflow-x             scroll
   overflow-y             hidden
   .opacity-wrapper
-    float                    left
     std-white-light-bg       0
+    @media (min-width: 768px)
+      float                    left
+    @media (max-width: 767px)
+      float                    none
     a
       std-white-light-fill   0
       .btn-bubble-section
@@ -982,7 +985,8 @@ bubble-section-selector-height-small  =  75px
         @media (min-width: 768px)
           width                    bubble-section-selector-height-large
         @media (max-width: 767px)
-          width                    bubble-section-selector-height-small
+          // width                    bubble-section-selector-height-small
+          width 20%
 /**********  bubble-section-selector  **********/
 
 /**********        bubble-page        **********/
