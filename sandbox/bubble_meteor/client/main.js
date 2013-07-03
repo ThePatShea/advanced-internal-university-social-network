@@ -5,6 +5,7 @@ commentsHandle = Meteor.subscribeWithPagination('comments', Session.get('current
 eventListHandle = Meteor.subscribeWithPagination('events', Session.get('currentBubbleId'), Meteor.userId(), 10);
 discussionListHandle = Meteor.subscribeWithPagination('discussions', Session.get('currentBubbleId'), Meteor.userId(), 10);
 fileListHandle = Meteor.subscribeWithPagination('files', Session.get('currentBubbleId'), Meteor.userId(), 10);
+mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 20);
 
 
 Deps.autorun(function() {
@@ -12,7 +13,7 @@ Deps.autorun(function() {
   Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
   Meteor.subscribe('invitedBubbles', Meteor.userId());
   Meteor.subscribe('joinedBubbles', Meteor.userId());
-	mainBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
+	searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
 
   Meteor.subscribe('comments', Session.get('currentPostId'));
 
@@ -23,3 +24,4 @@ Deps.autorun(function() {
 });
 
 Meteor.subscribe('updates', Meteor.userId());
+Meteor.subscribe('userData');

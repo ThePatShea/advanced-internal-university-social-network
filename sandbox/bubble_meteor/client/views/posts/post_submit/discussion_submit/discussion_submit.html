@@ -1,4 +1,8 @@
 <template name="discussionSubmit">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+  {{/with}}
   <section class="main">
     {{> selectPostType}}
 

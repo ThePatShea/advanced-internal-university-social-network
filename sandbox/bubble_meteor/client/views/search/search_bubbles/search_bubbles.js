@@ -1,16 +1,15 @@
 Template.searchBubbles.helpers({
-  hasSearchText: function() {
-    if(Session.get('searchText') != undefined){
-      return true;
-    }
-  },
   getSearchedBubbles: function() {
-  	return Bubbles.find(
-  		{	$or: [
-  			{title: new RegExp(Session.get('searchText'),'i')}, 
-  			{description: new RegExp(Session.get('searchText'),'i')}
-  			]
-  		}, {limit:mainBubblesHandle.limit()});
+    if(Session.get('searchText')){
+      return Bubbles.find(
+        { $or: [
+          {title: new RegExp(Session.get('searchText'),'i')}, 
+          {description: new RegExp(Session.get('searchText'),'i')}
+          ]
+        }, {limit:searchBubblesHandle.limit()});
+    }else{
+      return Bubbles.find({}, {limit: mainBubblesHandle.limit()});
+    }
   }
 });
 
@@ -22,8 +21,20 @@ Template.searchBubbles.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == 'searchBubbles'){
-        this.mainBubblesHandle.loadNextPage();
+        if(Session.get('searchText')){
+          this.searchBubblesHandle.loadNextPage();
+        }else{
+          this.mainBubblesHandle.loadNextPage();
+        }
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

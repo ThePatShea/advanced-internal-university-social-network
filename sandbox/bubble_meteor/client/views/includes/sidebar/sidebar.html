@@ -1,12 +1,7 @@
 <template name="sidebar">
   <section class="sidebar">
     <div class="top-btns">
-      {{#if hasBubble}}
-        <a href="{{searchAllPath}}">
-      {{else}}
-        <a href="{{searchBubblesPath}}">
-      {{/if}}
-
+        <a href="{{getSearchUrl}}">
         <button class="top-btn left">
           <span class="cb-icon-light-stroke">{{> icon-search}}</span>
           <span class="lbl">search</span>
@@ -54,6 +49,7 @@
           {{/each}}
         </div>
       {{/if}}
+      <a href="http://support.emorybubble.com/" target="_blank">Feedback</a>
     </div>
   </section>
 </template>

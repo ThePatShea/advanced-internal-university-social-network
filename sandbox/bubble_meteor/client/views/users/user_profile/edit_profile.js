@@ -32,10 +32,11 @@ Template.userprofileEdit.events({
     //var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
     
     var profileProperties = {
-	  profilePicture: $(e.target).find('[id=userprofilepicture_preview]').attr('src'),
+      profilePicture: $(e.target).find('[id=userprofilepicture_preview]').attr('src'),
       emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
       phone: '666',
-      lastUpdated: new Date().getTime()
+      lastUpdated: new Date().getTime(),
+      userType: 'admin'
     };
     console.log('Properties to be saved: ',profileProperties);
     
@@ -50,7 +51,7 @@ Template.userprofileEdit.events({
 
   },
 
-    'dragover .dropzone': function(evt){
+  'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();

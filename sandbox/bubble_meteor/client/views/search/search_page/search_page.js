@@ -14,7 +14,7 @@ Template.searchPage.rendered = function() {
     var searchText = $(".search-text").val();
     if (searchText == ""){
       Session.set('searchText',undefined);
-    }else if(searchText.length > 2){
+    }else{
       Session.set('searchText', searchText);
     }
   });

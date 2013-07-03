@@ -1,15 +1,11 @@
 Meteor.Router.add({
   //Login from authentication system
-  '/login': function(){
-    Meteor.Router.to('bubblesList');
-  },
+  '/login': 'loginPage',
 
   //Post Routes
-  '/bubbles': 'bubblesList',
-
-  '/posts/:_id': {
+  '/mybubbles/:_bId/posts/:_pId': {
     to: 'postPage', 
-    and: function(id) { Session.set('currentPostId', id); }
+    and: function(bId, pId) { Session.set('currentPostId', pId); }
   },
   '/posts/:_id/edit/discussion': {
     to: 'discussionEdit', 
@@ -25,51 +21,49 @@ Meteor.Router.add({
   },
 
   //Bubble Routes
-  '/bubbles': 'bubblesList',
-  '/bubbles/:_id/home': {
+  '/mybubbles/:_id/home': {
     to: 'bubblePage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/event': {
+  '/mybubbles/:_id/event': {
     to: 'bubbleEventPage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/discussion': {
+  '/mybubbles/:_id/discussion': {
     to: 'bubbleDiscussionPage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/file': {
+  '/mybubbles/:_id/file': {
     to: 'bubbleFilePage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/edit': {
-    to: 'bubbleEdit', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }    
+  '/mybubbles/:_id/public': {
+    to: 'bubblePublicPage', 
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/members':{
+  '/mybubbles/:_id/edit': {
+    to: 'bubbleEdit',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  }, 
+  '/mybubbles/:_id/members': {
     to: 'bubbleMembersPage',
-    and: function(id) { 
-      Session.set('currentBubbleId', id); 
-      Session.set('selectedUsername',undefined);
-    }
-  },
-  '/bubbles/:_id/search_result':{
-  	to: 'bubbleUserSearchList',
-  	and: function(id) { Session.set('currentBubbleId', id);}
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
   
   //Submit Routes
-  '/bubbles/:_id/submit/discussion':  {
-    to: 'discussionSubmit', 
-    and: function(id) { Session.set('currentBubbleId', id); }    
+  '/mybubbles/:_id/create/discussion': {
+    to: 'discussionSubmit',
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/submit/event': {
-    to: 'eventSubmit', 
-    and: function(id) { Session.set('currentBubbleId', id); }    
+  '/mybubbles/:_id/create/event': {
+    to: 'eventSubmit',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  }, 
+  '/mybubbles/:_id/create/file': {
+    to: 'fileSubmit',
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/bubbles/:_id/submit/document': 'documentSubmit',
-  '/bubbles/:_id/submit/file': 'fileSubmit',
-  '/submit/bubble': 'bubbleSubmit',
+  '/mybubbles/create/bubble': 'bubbleSubmit',
 
   //Routes for User
   '/userprofile/:id': {
@@ -83,62 +77,47 @@ Meteor.Router.add({
   },
 
   //Routes for Search
-  '/search/all': 'searchAll',
-  '/search/users': 'searchUsers',
-  '/search/bubbles': 'searchBubbles',
-  '/search/discussions': 'searchDiscussions',
-  '/search/events': 'searchEvents',
-  '/search/files': 'searchFiles',
+  '/mybubbles/search/all': 'searchAll',
+  '/mybubbles/search/users': 'searchUsers',
+  '/mybubbles/search/bubbles': 'searchBubbles',
+  '/mybubbles/search/discussions': 'searchDiscussions',
+  '/mybubbles/search/events': 'searchEvents',
+  '/mybubbles/search/files': 'searchFiles',
 
+  //Capturing rogue urls, hopefully this will be a 404 page in the future
+  '/': 'searchAll',
+  '*': '404NotFound'
 });
 
 Meteor.Router.filters({
-  'requireLogin': function(page) {
-    if (Meteor.user()){
+  'belongToBubble': function(page) {
+    if(Meteor.user()){
+      if(Meteor.user().userType != 'superuser'){
+        var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+        if(bubble) {
+          if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
+            return 'bubblePublicPage';
+          }
+        }
+      }
       return page;
-    }
-    else if (Meteor.loggingIn()){
-      return 'loading';
-    }
-    else{ 
-      Session.set('lastVisitedBubbleId', undefined);
-      return 'accessDenied';
     }
   },
   'clearErrors': function(page) {
     clearErrors();
     return page;
   },
-  'requireMembership': function(page) {
-    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-    if(bubble) {
-      if(_.contains(bubble.users.admins, Meteor.userId()) || _.contains(bubble.users.members, Meteor.userId())) {
-        return page;
-      }else{
-        return 'bubblePage';
-      }
+  'checkLoginStatus': function(page) {
+    if(Meteor.userId()){
+      return page;
+    }else if(Meteor.loggingIn()) {
+      return 'loading';
+    }else {
+      return 'loginPage';
     }
-    return page;
-  },
-  'leftSearchPage': function(page){
-    Session.set('searchText', undefined);
-    Session.set('searchCategory', undefined);
-    return page;
-  },
-  'leftBubblePage': function(page){
-    Session.set('currentBubbleId', undefined);
-    Session.set('currentPostId', undefined);
-    mainBubblesHandle._limit = mainBubblesHandle.perPage;
-    eventListHandle._limit = eventListHandle.perPage;
-    discussionListHandle._limit = discussionListHandle.perPage;
-    fileListHandle._limit = fileListHandle.perPage;
-    usersListHandle._limit = usersListHandle.perPage;
-    return page;
   }
 });
 
-Meteor.Router.filter('leftSearchPage', {except: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents', 'searchFiles']});
-Meteor.Router.filter('leftBubblePage', {only: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents', 'searchFiles', 'bubblesList', 'bubbleSubmit', 'errors']});
-Meteor.Router.filter('requireMembership');
-Meteor.Router.filter('requireLogin');
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers'] });
 Meteor.Router.filter('clearErrors');
+Meteor.Router.filter('checkLoginStatus');

@@ -1,4 +1,8 @@
 <template name="eventSubmit">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+  {{/with}}
   <section class="main">
     {{> selectPostType}}
     <form>

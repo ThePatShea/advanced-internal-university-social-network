@@ -1,4 +1,8 @@
 <template name="eventEdit">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+  {{/with}}
   {{#with getCurrentPost}}
     <form class="main">
       <div class="control-group">

@@ -1,13 +1,14 @@
 <template name="bubbleDiscussionPage">
   {{#with getCurrentBubble}}
-      {{> bubbleSectionSelector}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
     <a href="{{discussionSubmitPath this}}">
     	<div class="btn">Start a Discussion</div>
-	</a>
+		</a>
 
-	{{#each posts}}
-    {{> postItem}}
-  {{/each}}
+		{{#each posts}}
+	    {{> postItem}}
+	  {{/each}}
 
   {{/with}}
 </template>

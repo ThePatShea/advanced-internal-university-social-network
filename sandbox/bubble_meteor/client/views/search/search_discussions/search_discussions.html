@@ -2,11 +2,9 @@
 
   {{> searchPage}}
 
-  {{#if hasSearchText}}
-    <b>Results for Discussions</b>
-    {{#each getSearchedDiscussions}}
-  		{{> postItem}}
-    {{/each}}
-  {{/if}}
+  <b>Results for Discussions</b>
+  {{#each getSearchedDiscussions}}
+		{{> postItem}}
+  {{/each}}
 
 </template>

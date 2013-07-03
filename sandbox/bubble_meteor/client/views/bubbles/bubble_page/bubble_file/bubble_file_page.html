@@ -1,11 +1,12 @@
 <template name="bubbleFilePage">
   {{#with getCurrentBubble}}
-      {{> bubbleSectionSelector}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
     <a href="{{fileSubmitPath this}}">
     	<div class="btn">Upload a File</div>
-	</a>
+		</a>
 
-	{{#each posts}}
+		{{#each posts}}
     	{{> postItem}}
   	{{/each}}
 

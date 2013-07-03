@@ -10,7 +10,6 @@ Template.discussionSubmit.events({
       children: []
     }, files);
     
-
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
     _.each(getEveryone(bubble),function(userId){
 			if (userId) {
