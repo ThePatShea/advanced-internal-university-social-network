@@ -7,22 +7,31 @@
     <title>Emory Bubble</title>
 </head>
 <body>
-  <div class="container">
-    {{> header}}
-    {{> sidebar}}
-    
-    <div id="main" class="row-fluid">
-      {{> errors}}
+  <div class="viewport">
+    <div class="frame">
 
-      {{#if isLoggedIn}}
-        {{#if hasNoErrors}}
-          {{#with getCurrentBubble}}
-    	      {{> bubbleCover}}
-          {{/with}}
-        {{/if}}
-      {{/if}}
+      <button class="btn sidebar-collapse" data-toggle="collapse" data-target="#menu"></button>
+      <div id="menu" class="menu nav-collapse collapse width">
+        {{> sidebar}}
+      </div>
 
-      {{renderPage}}
+      <div class="view">
+        {{> header}}
+        <div id="main" class="row-fluid">
+          {{> errors}}
+
+          {{#if isLoggedIn}}
+            {{#if hasNoErrors}}
+              {{#with getCurrentBubble}}
+                {{> bubbleCover}}
+              {{/with}}
+            {{/if}}
+          {{/if}}
+
+          {{renderPage}}
+        </div>
+      </div>
+
     </div>
   </div>
 </body>
