@@ -47,7 +47,7 @@ Template.fileSubmit.events({
         return function(e) {
         // Render thumbnail.
         var span = document.createElement('span');
-        span.innerHTML = ['<img class="thumb" src="', e.target.result,
+        span.innerHTML = ['<img class="previewthumb" src="', e.target.result,
                         '" title="', escape(theFile.name), '"/>'].join('');
         document.getElementById('list').insertBefore(span, null);
         };
