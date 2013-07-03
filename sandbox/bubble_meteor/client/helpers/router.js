@@ -1,8 +1,6 @@
 Meteor.Router.add({
   //Login from authentication system
-  '/login': function(){
-    Meteor.Router.to('bubblesList');
-  },
+  '/login': 'loginPage',
 
   //Post Routes
   '/posts/:_id': {
@@ -21,19 +19,23 @@ Meteor.Router.add({
   //Bubble Routes
   '/mybubbles/:_id/home': {
     to: 'bubblePage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
   '/mybubbles/:_id/event': {
     to: 'bubbleEventPage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
   '/mybubbles/:_id/discussion': {
     to: 'bubbleDiscussionPage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
   '/mybubbles/:_id/file': {
     to: 'bubbleFilePage', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
+  '/mybubbles/:_id/public': {
+    to: 'bubblePublicPage', 
+    and: function(id) { Session.set('currentBubbleId', id); }
   },
   '/mybubbles/:_id/edit': 'bubbleEdit',
   '/mybubbles/:_id/members': 'bubbleMembersPage',
@@ -66,37 +68,37 @@ Meteor.Router.add({
   //Capturing rogue urls, hopefully this will be a 404 page in the future
   '*': {
     to: 'searchBubbles',
-    and: function() { Meteor.Router.to('searchBubbles'); }
+    and: function() { Meteor.Router.to('searchBubbles');}
   }
 });
 
 Meteor.Router.filters({
-  'checkLoginAndRoutes': function(page) {
+  'checkRoutes': function(page) {
     if(Meteor.user()){
+      var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+      if(bubble) {
+        if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
+          return 'bubblePublicPage';
+        }
+      }
       return page;
-    }else if(Meteor.loggingIn()) {
-      return 'loading';
-    }else { 
-      return 'accessDenied';
     }
   },
   'clearErrors': function(page) {
     clearErrors();
     return page;
   },
-  'isLoggedIn': function(page) {
-    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-    if(bubble) {
-      if(_.contains(bubble.users.admins, Meteor.userId()) || _.contains(bubble.users.members, Meteor.userId())) {
-        return page;
-      }else{
-        return 'bubbleCover';
-      }
+  'checkLoginStatus': function(page) {
+    if(Meteor.userId()){
+      return page;
+    }else if(Meteor.loggingIn()) {
+      return 'loading';
+    }else {
+      return 'loginPage';
     }
-    return page;
   }
 });
 
-Meteor.Router.filter('checkLoginAndRoutes');
+Meteor.Router.filter('checkRoutes', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers'] });
 Meteor.Router.filter('clearErrors');
-// Meteor.Router.filter('isLoggedIn');
+Meteor.Router.filter('checkLoginStatus');
