@@ -874,6 +874,8 @@ body
 /**********       sidebar        **********/
 
 /**********        bubble-cover       **********/
+cover-buttons-width  =  150px
+
 .bubble-cover
   position               relative
   overflow               hidden
@@ -905,21 +907,28 @@ body
       display                  block
     @media (max-width: 767px)
       display                  none
-  .bubble-name
-    color                    white
-    font-alt-light           0
-    @media (min-width: 768px)
-      font-size                37px
-    @media (max-width: 767px)
-      font-size                25px
-  .bubble-subtitle
-    text-transform           uppercase
-    main-xlight-color        0
-    font-main-bold           0
-    @media (min-width: 768px)
-      font-size                12px
-    @media (max-width: 767px)
-      font-size                11px
+  .bubble-name-and-subtitle
+    margin-right             cover-buttons-width
+    .bubble-name
+      color                    white
+      font-alt-light           0
+      @media (min-width: 768px)
+        font-size                37px
+      @media (max-width: 767px)
+        font-size                25px
+    .bubble-subtitle
+      text-transform           uppercase
+      main-xlight-color        0
+      font-main-bold           0
+      @media (min-width: 768px)
+        font-size                12px
+      @media (max-width: 767px)
+        font-size                11px
+  .cover-buttons
+    width                    cover-buttons-width
+    position                 absolute
+    right                    30px
+    top                      0
   .std-btn-dark
     margin                   5px 0
     float                    right
