@@ -186,7 +186,12 @@ Template.bubbleEdit.events({
     if (confirm("Delete this bubble?")) {
       var currentBubbleId = Session.get('currentBubbleId');
       Bubbles.remove(currentBubbleId);
-      Meteor.Router.to('bubblesList');
+      var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
+      if(bubbles.length > 0) {
+        Meteor.Router.to('/mybubbles/' + bubbles[0]._id + '/home');
+      }else{
+        Meteor.Router.to('searchBubbles');
+      }
     }
   }
 });

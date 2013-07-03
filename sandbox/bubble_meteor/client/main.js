@@ -24,3 +24,4 @@ Deps.autorun(function() {
 });
 
 Meteor.subscribe('updates', Meteor.userId());
+Meteor.subscribe('userData');

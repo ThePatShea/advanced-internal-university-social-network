@@ -47,7 +47,7 @@ Meteor.methods({
     post._id = Posts.insert(post);
     createPostUpdate(post);
 
-    return post._id;
+    return post;
   },
 
   upvote: function(postId) {
@@ -99,12 +99,12 @@ Meteor.methods({
 });
 
 createPost = function(postAttributes){
-  Meteor.call('post', postAttributes, function(error, id) {
+  Meteor.call('post', postAttributes, function(error, post) {
     if (error) {
       // display the error to the user
       throwError(error.reason);
     } else {
-      Meteor.Router.to('postPage', id);
+      Meteor.Router.to('postPage', post.bubbleId, post._id);
     }
   });
 }

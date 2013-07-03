@@ -1,9 +1,11 @@
 Template.categorySelector.helpers({
   checkSelected: function(category) {
-    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-    if(bubble) {
-      if (category == bubble.category) {
-        return 'selected';
+    if(Meteor.Router.page() != 'bubbleSubmit') {
+      var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+      if(bubble) {
+        if (category == bubble.category) {
+          return 'selected';
+        }
       }
     }
     return false;

@@ -95,7 +95,13 @@ Meteor.publish("findUsersByName", function(username, limit) {
 });
 
 Meteor.publish('userData', function() {
-  return Meteor.users.find({_id: this.userId})
+  return Meteor.users.find({_id: this.userId},{
+    fields: {
+     'username': 1,
+     'emails': 1,
+     'userType': 1
+    }
+  });
 });
 
 

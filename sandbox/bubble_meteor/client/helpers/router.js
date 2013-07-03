@@ -41,13 +41,28 @@ Meteor.Router.add({
     to: 'bubblePublicPage', 
     and: function(id) { Session.set('currentBubbleId', id); }
   },
-  '/mybubbles/:_id/edit': 'bubbleEdit',
-  '/mybubbles/:_id/members': 'bubbleMembersPage',
+  '/mybubbles/:_id/edit': {
+    to: 'bubbleEdit',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  }, 
+  '/mybubbles/:_id/members': {
+    to: 'bubbleMembersPage',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
   
   //Submit Routes
-  '/mybubbles/:_id/create/discussion': 'discussionSubmit',
-  '/mybubbles/:_id/create/event': 'eventSubmit', 
-  '/mybubbles/:_id/create/file': 'fileSubmit',
+  '/mybubbles/:_id/create/discussion': {
+    to: 'discussionSubmit',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
+  '/mybubbles/:_id/create/event': {
+    to: 'eventSubmit',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  }, 
+  '/mybubbles/:_id/create/file': {
+    to: 'fileSubmit',
+    and: function(id) { Session.set('currentBubbleId', id); }
+  },
   '/mybubbles/create/bubble': 'bubbleSubmit',
 
   //Routes for User
@@ -70,16 +85,19 @@ Meteor.Router.add({
   '/mybubbles/search/files': 'searchFiles',
 
   //Capturing rogue urls, hopefully this will be a 404 page in the future
+  '/': 'searchAll',
   '*': '404NotFound'
 });
 
 Meteor.Router.filters({
-  'checkRoutes': function(page) {
+  'belongToBubble': function(page) {
     if(Meteor.user()){
-      var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-      if(bubble) {
-        if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
-          return 'bubblePublicPage';
+      if(Meteor.user().userType != 'superuser'){
+        var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+        if(bubble) {
+          if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
+            return 'bubblePublicPage';
+          }
         }
       }
       return page;
@@ -100,6 +118,6 @@ Meteor.Router.filters({
   }
 });
 
-Meteor.Router.filter('checkRoutes', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers'] });
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');

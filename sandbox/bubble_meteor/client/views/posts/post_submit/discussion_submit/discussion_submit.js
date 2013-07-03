@@ -8,6 +8,7 @@ Template.discussionSubmit.events({
       postType: 'discussion',
       bubbleId: Session.get('currentBubbleId')
     });
+    
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
     _.each(getEveryone(bubble),function(userId){
 			if (userId) {

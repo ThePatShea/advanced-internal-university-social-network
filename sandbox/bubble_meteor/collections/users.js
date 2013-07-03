@@ -11,7 +11,8 @@ Meteor.users.deny({
 
 if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
-		if(user.username == new RegExp('admin','i')){
+		//Sets usertype as superuser for names that contains admin
+		if(user.username.match(new RegExp('admin','i'))[0]) {
 			user.userType = 'superuser';
 		}else{
 			user.userType = 'user';

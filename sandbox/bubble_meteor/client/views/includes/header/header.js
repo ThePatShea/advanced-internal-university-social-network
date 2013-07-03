@@ -16,6 +16,6 @@ Template.header.helpers({
         return '/mybubbles/' + bubbles[0]._id + '/home';
       }
     }
-    return '/mysearch/bubbles';
+    return '/mybubbles/search/bubbles';
   }
 });
