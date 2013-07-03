@@ -3,9 +3,9 @@ Meteor.Router.add({
   '/login': 'loginPage',
 
   //Post Routes
-  '/posts/:_id': {
+  '/mybubbles/:_bId/posts/:_pId': {
     to: 'postPage', 
-    and: function(id) { Session.set('currentPostId', id); }
+    and: function(bId, pId) { Session.set('currentPostId', pId); }
   },
   '/posts/:_id/edit/discussion': {
     to: 'discussionEdit', 
@@ -66,10 +66,7 @@ Meteor.Router.add({
   '/mybubbles/search/files': 'searchFiles',
 
   //Capturing rogue urls, hopefully this will be a 404 page in the future
-  '*': {
-    to: 'searchBubbles',
-    and: function() { Meteor.Router.to('searchBubbles');}
-  }
+  '*': '404NotFound'
 });
 
 Meteor.Router.filters({
