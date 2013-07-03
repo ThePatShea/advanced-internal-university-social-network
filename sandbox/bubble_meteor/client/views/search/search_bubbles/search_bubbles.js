@@ -1,9 +1,4 @@
 Template.searchBubbles.helpers({
-  hasSearchText: function() {
-    if(Session.get('searchText') != undefined){
-      return true;
-    }
-  },
   getSearchedBubbles: function() {
     if(Session.get('searchText')){
       return Bubbles.find(
@@ -15,7 +10,6 @@ Template.searchBubbles.helpers({
     }else{
       return Bubbles.find({}, {limit: mainBubblesHandle.limit()});
     }
-  	
   }
 });
 
@@ -35,4 +29,12 @@ Template.searchBubbles.rendered = function(){
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

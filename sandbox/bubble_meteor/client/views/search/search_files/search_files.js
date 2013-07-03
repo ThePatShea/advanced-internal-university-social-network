@@ -1,9 +1,5 @@
 Template.searchFiles.helpers({
-  hasSearchText: function() {
-  	if(Session.get('searchText') != undefined){
-  		return true;
-  	}
-  },
+
   getSearchedFiles: function() {
 
   	var posts =  Posts.find(
@@ -34,4 +30,12 @@ Template.searchFiles.rendered = function(){
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

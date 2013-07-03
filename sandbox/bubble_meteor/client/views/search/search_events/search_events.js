@@ -1,9 +1,5 @@
 Template.searchEvents.helpers({
-  hasSearchText: function() {
-  	if(Session.get('searchText') != undefined){
-  		return true;
-  	}
-  },
+
   getSearchedEvents: function() {
   	return Posts.find(
   		{	postType: 'event',
@@ -27,4 +23,12 @@ Template.searchEvents.rendered = function(){
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

@@ -1,0 +1,14 @@
+<template name="bubbleEventPage">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+    <a href="{{eventSubmitPath this}}">
+    	<div class="btn">Start an Event</div>
+		</a>
+
+		{{#each posts}}
+			{{> postItem}}
+		{{/each}}
+
+  {{/with}}
+</template>

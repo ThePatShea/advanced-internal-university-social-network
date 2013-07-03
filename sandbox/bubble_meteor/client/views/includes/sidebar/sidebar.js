@@ -160,6 +160,14 @@ Template.sidebar.helpers({
       return true;
     }
     return false;
+  },
+  getSearchUrl: function() {
+    Session.set('searchText',undefined);
+    if(Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).count() > 0){
+      return '/mybubbles/search/all';
+    }else{
+      return '/mybubbles/search/bubbles';
+    }
   }
 });
 

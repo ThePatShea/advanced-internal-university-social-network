@@ -97,3 +97,9 @@ Handlebars.registerHelper('hasBubble', function() {
 Handlebars.registerHelper('isUser', function(userId) {
   return userId.toString() == Meteor.userId();
 });
+
+Handlebars.registerHelper('hasSearchText', function() {
+  if(Session.get('searchText') != undefined){
+    return true;
+  }
+});

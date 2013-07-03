@@ -35,14 +35,8 @@ Meteor.Router.add({
     to: 'bubbleFilePage', 
     and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }
   },
-  '/mybubbles/:_id/edit': {
-    to: 'bubbleEdit', 
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }    
-  },
-  '/mybubbles/:_id/members': {
-    to: 'bubbleMembersPage',
-    and: function(id) { Session.set('currentBubbleId', id); Session.set('lastVisitedBubbleId', id); }    
-  },
+  '/mybubbles/:_id/edit': 'bubbleEdit',
+  '/mybubbles/:_id/members': 'bubbleMembersPage',
   
   //Submit Routes
   '/mybubbles/:_id/create/discussion': 'discussionSubmit',
@@ -74,7 +68,6 @@ Meteor.Router.add({
     to: 'searchBubbles',
     and: function() { Meteor.Router.to('searchBubbles'); }
   }
-
 });
 
 Meteor.Router.filters({
@@ -84,7 +77,6 @@ Meteor.Router.filters({
     }else if(Meteor.loggingIn()) {
       return 'loading';
     }else { 
-      // Meteor.Router.to('/');
       return 'accessDenied';
     }
   },
@@ -92,26 +84,19 @@ Meteor.Router.filters({
     clearErrors();
     return page;
   },
-  // 'leftSearchPage': function(page){
-  //   Session.set('searchText', undefined);
-  //   Session.set('searchCategory', undefined);
-  //   return page;
-  // },
-  // 'leftBubblePage': function(page){
-  //   Session.set('currentBubbleId', undefined);
-  //   Session.set('currentPostId', undefined);
-  //   return page;
-  // }
+  'isLoggedIn': function(page) {
+    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    if(bubble) {
+      if(_.contains(bubble.users.admins, Meteor.userId()) || _.contains(bubble.users.members, Meteor.userId())) {
+        return page;
+      }else{
+        return 'bubbleCover';
+      }
+    }
+    return page;
+  }
 });
 
-Meteor.Router.beforeRouting = function() {
-  // Session.set('currentPostId', undefined);
-  // Session.set('searchText', undefined);
-  // Session.set('searchCategory', undefined);
-  // Session.set('selectedUsername',undefined);
-}
-
-// Meteor.Router.filter('leftSearchPage', {except: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents', 'searchFiles']});
-// Meteor.Router.filter('leftBubblePage', {only: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents', 'searchFiles', 'bubbleSubmit', 'errors']});
 Meteor.Router.filter('checkLoginAndRoutes');
 Meteor.Router.filter('clearErrors');
+// Meteor.Router.filter('isLoggedIn');
