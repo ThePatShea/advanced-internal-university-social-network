@@ -1,5 +1,9 @@
 <template name="eventSubmit">
   <section class="main">
+    {{#with getCurrentBubble}}
+      {{> bubbleCover}}
+      {{> bubbleSectionSelector}}
+    {{/with}}
     {{> selectPostType}}
     <form>
     <div class="control-group">
