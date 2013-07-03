@@ -659,12 +659,10 @@ body
   padding                15px 30px
   height                 70px
 
-
 .container
   top                    navbar-height
   position               relative
   width                  100%
-
 /**********      Base Divs       **********/
 
 /**********        navbar        **********/
@@ -980,12 +978,24 @@ bubble-section-selector-height-small  =  75px
   @media (max-width: 767px)
     margin                 15px 0
   .bubble-list-heading
+    text-transform         capitalize
     overflow               hidden
     @media (min-width: 768px)
       padding                0 20px 30px 20px
     @media (max-width: 767px)
       padding                0 10px 10px 20px
-    
+    .section-name
+      main-light-color       0
+      font-alt-light         0
+      @media (min-width: 768px)
+        font-size              30px
+      @media (max-width: 767px)
+        font-size              24px
+      .word1
+        @media (min-width: 768px)
+          display                inline
+        @media (max-width: 767px)
+          display                none
 /**********        bubble-page        **********/
 
 /***************  Single-Purpose Elements  ***************/
