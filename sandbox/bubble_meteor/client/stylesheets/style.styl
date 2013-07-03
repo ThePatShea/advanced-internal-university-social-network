@@ -92,7 +92,10 @@ main-dark-bg(n)
 
 
 main-light-stroke(n)
+  stroke                   #2f5973
   path
+    stroke                   #2f5973
+  line
     stroke                   #2f5973
 main-light-color(n)
   color                  #2f5973
@@ -102,6 +105,12 @@ main-light-bg(n)
   background             #2f5973
 
 
+main-xlight-stroke(n)
+  stroke                   #95afbf
+  path
+    stroke                   #95afbf
+  line
+    stroke                   #95afbf
 main-xlight-border(n)
   border-thin            #95afbf
 main-xlight-color(n)
@@ -753,13 +762,18 @@ body
   margin                   0
 
 .sidebar-collapse
+  line-height              navbar-height
+  padding                  0 20px
   position                 fixed
   z-index                  60
   left                     0
+  main-xlight-stroke       0
   @media (min-width: 768px)
     display                  none
   @media (max-width: 767px)
     display                  block
+  svg
+    vertical-align           middle
 
 .viewport
   position                 absolute

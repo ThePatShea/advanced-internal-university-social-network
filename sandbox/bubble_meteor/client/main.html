@@ -13,7 +13,9 @@
   <div class="viewport">
     <div class="frame">
 
-      <button class="btn sidebar-collapse" data-toggle="collapse" data-target="#menu"></button>
+      <button class="sidebar-collapse" data-toggle="collapse" data-target="#menu">
+        <span>{{> icon-sidebar-arrow-right}}</span>
+      </button>
       <div id="menu" class="menu nav-collapse collapse width">
         {{> sidebar}}
       </div>
