@@ -1,0 +1,38 @@
+<template name="fileobjectEdit">
+  {{#with getCurrentPost}}
+      <form class="main">
+
+
+      <div class="control-group">
+          <div id="uploaded_file">
+            {{#if isImage}}
+              <img id="uploadedfile_preview" src="{{file}}" />
+            {{else}} 
+              {{#if isPdf}}
+                <div id="uploadedfile_preview" class="pdf-icon">{{name}}</div>
+              {{else}}
+                <div id="uploadedfile_preview" class="word-icon">{{name}}</div>
+              {{/if}}
+            {{/if}}
+              <a href="#" class="btn btn-danger delete" id="change_uploadedfile">Change</a>
+              <div id="fileupload_dropzone" class="dropzone">Drop the replacement file here.</div>
+              <input name="filesToUpload" id="filesToUpload" type="file">
+              <output id="list"></output>
+          </div>
+      </div>
+      
+        <div class="control-group">
+            <div class="controls">
+                <input name="email" type="text" value="{{getEmail}}"/>
+            </div>
+        </div>
+        <hr />
+      
+        <div class="control-group">
+            <div class="controls">
+                <input type="submit" value="Submit" class="btn btn-primary"/>
+            </div>
+        </div>
+      </form>
+  {{/with}}
+</template>

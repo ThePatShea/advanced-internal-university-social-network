@@ -66,7 +66,23 @@ Template.fileSubmit.events({
         return function(e) {
         //Render a PDF icon
         var span = document.createElement('span');
-        span.innerHTML = ['<div class="pdf-icon">', 'PDF', escape(theFile.name), '"</div>'].join('');
+        span.innerHTML = ['<div class="pdf-icon">', 'PDF', escape(theFile.name), '</div>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        //Read file as a data url.
+        reader.readAsDataURL(f);
+      }
+      else if (f.type.match('msword.*') || f.type.match('ms-excel.*') || f.type.match('officedocument.*')){
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        //Render a PDF icon
+        var span = document.createElement('span');
+        span.innerHTML = ['<div class="word-icon">', 'Word Document: ', escape(theFile.name), '</div>'].join('');
         document.getElementById('list').insertBefore(span, null);
         };
         })(f);
@@ -91,6 +107,86 @@ Template.fileSubmit.events({
 
     }
   },
+
+  'change #filesToUpload': function(evt){
+    files = evt.target.files;
+
+    l = document.getElementById('list');
+    while(l.hasChildNodes()){
+      l.removeChild(l.lastChild);
+    };
+
+    for (var i = 0, f; f = files[i]; i++) {
+
+
+      //If it is an image then render a thumbnail
+      if (f.type.match('image.*')) {
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        // Render thumbnail.
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f);
+      }
+
+      //If it is a PDF then render a PDF icon
+      else if (f.type.match('pdf.*')){
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        //Render a PDF icon
+        var span = document.createElement('span');
+        span.innerHTML = ['<div class="pdf-icon">', 'PDF', escape(theFile.name), '</div>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        //Read file as a data url.
+        reader.readAsDataURL(f);
+      }
+      else if (f.type.match('msword.*') || f.type.match('ms-excel.*') || f.type.match('officedocument.*')){
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        //Render a PDF icon
+        var span = document.createElement('span');
+        span.innerHTML = ['<div class="word-icon">', 'Word Document: ', escape(theFile.name), '</div>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        //Read file as a data url.
+        reader.readAsDataURL(f);
+      }
+      else{
+        console.log('Else');
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+          return function(e) {
+            console.log(e.target.result);
+          };
+        })(f);
+
+        reader.readAsDataURL(f);
+      }
+    }
+
+}
 
 
 
