@@ -39,7 +39,7 @@ var samlStrategy = new SamlStrategy(
     'isShibboleth': true,
 
     // The URL where the IdP should redirect the user to.
-    'callbackUrl': 'http://54.243.243.128/login/samlcallback',
+    'callbackUrl': 'https://54.243.243.128/login/samlcallback',
 
     // The URL where we should redirect the user to.
     //'entryPoint': 'https://idp.testshib.org/idp/profile/SAML2/Redirect/SSO',
@@ -47,7 +47,8 @@ var samlStrategy = new SamlStrategy(
 
     // The entityID that we used to register our SP
     //'issuer': 'http://54.243.243.128:8000/shibboleth',
-    'issuer': 'emorybubble',
+    //'issuer': 'emorybubble',
+    'issuer': 'https://54.243.243.128/shibboleth',
 
     // The public certificate of the TestShib IdP
     // Find the full one at https://www.testshib.org/metadata/testshib-providers.xml
@@ -188,3 +189,5 @@ app.get('/users', user.list);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+https.createServer(options, app).listen(443);
