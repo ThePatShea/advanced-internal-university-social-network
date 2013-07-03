@@ -15,6 +15,9 @@
           {{#if getPostType "event"}}
             <a href="{{eventEditPath this}}">Edit</a>
           {{/if}}
+          {{#if getPostType "file"}}
+            <a href="{{fileobjectEditPath this}}">Edit</a>
+          {{/if}}
         {{/if}}
       </p>
     </div>
