@@ -8,7 +8,7 @@
       <h3><a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a></h3>
       <p>
         <a href="{{postPagePath this}}">{{pluralize commentsCount "comment"}}</a>
-        {{#if hasPermission}} |
+        {{#if ownsPost}} |
           {{#if getPostType "discussion"}}
             <a href="{{discussionEditPath this}}">Edit</a>
           {{/if}}

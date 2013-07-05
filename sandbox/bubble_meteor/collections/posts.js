@@ -127,7 +127,7 @@ createPostWithAttachments = function(postAttributes, fileList){
               fileType: f.type,
               postType: 'file',
               bubbleId: Session.get('currentBubbleId'),
-              parent: id   //This needs to be set to the ID of the post created above.
+              parent: post._id   //This needs to be set to the ID of the post created above.
             };
             var parentid = post._id;
             Meteor.call('post', attributes, function(error, newPost){
