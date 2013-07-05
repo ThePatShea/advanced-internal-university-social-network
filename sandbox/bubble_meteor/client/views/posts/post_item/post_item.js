@@ -1,6 +1,12 @@
 Template.postItem.helpers({
-  getPostType: function(postType) {
-    return this.postType === postType;
+  getPostEditUrl: function(post) {
+  	if(post.postType == 'discussion') {
+  		return '/mybubbles/' + post.bubbleId + '/posts/' + post._id + '/edit/discussion';
+  	}else if(post.postType == 'event') {
+  		return '/mybubbles/' + post.bubbleId + '/posts/' + post._id + '/edit/event';
+  	}else if(post.postType == 'file') {
+  		return '/mybubbles/' + post.bubbleId + '/posts/' + post._id + '/edit/file';
+  	}
   }
 
 });

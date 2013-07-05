@@ -1,5 +1,10 @@
 Bubbles = new Meteor.Collection('bubbles');
 
+Bubbles.allow({
+   update: ownsBubble,
+   remove: ownsBubble
+ });
+
 Meteor.methods({
 	bubble: function(bubbleAttributes){
 		var user = Meteor.user(),
