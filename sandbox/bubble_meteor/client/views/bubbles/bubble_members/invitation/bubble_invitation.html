@@ -1,32 +1,42 @@
 <template name="bubbleInvitation">
-    <div class="control-group">
-        <label class="control-label" for="title">Search Friends</label>
-        <div class="controls">
-            <input class="search-text" name="searchText" type="text" placeholder="Friend's Name"/>
-        </div>
+  <div class="control-group">
+    <label class="control-label" for="title">Search Friends</label>
+    <div class="controls">
+        <input class="search-text" name="searchText" type="text" placeholder="Friend's Name"/>
     </div>
+  </div>
 
-    <hr>
-    Search Field
-    <br />
-    {{#if hasSearchText}}
-        {{#each findUsers}}
-          <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
-        {{/each}}
-        <br/>
-    {{/if}}
-
-    <hr>
-    Potential Invitee List
-    <br />
-    {{#each potentialInvitees}}
-      <button class="btn btn-small btn-danger remove-invitee" type="button">{{this}}</button>
-      <br />
+  <hr>
+  Search Field
+  <br />
+  {{#if hasSearchText}}
+    {{#each findUsers}}
+      <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
     {{/each}}
+    <br/>
+  {{/if}}
+
+  <hr>
+  {{#if isSuperBubble this}}
+    Potential Members List
+  {{else}}
+    Potential Invitee List
+  {{/if}}
+  <br />
+  {{#each potentialInvitees}}
+    <button class="btn btn-small btn-danger remove-invitee" type="button">{{this}}</button>
     <br />
-    {{#if potentialInvitees}}
-        <button class="btn btn-small add-invitees" type="button">Add to Invitee List</button>
-    {{/if}}
+  {{/each}}
+  <br />
+  {{#if potentialInvitees}}
+    <button class="btn btn-small add-users" type="button">
+      {{#if isSuperBubble this}}
+        Add to Members List
+      {{else}}
+        Add to Invitee List
+      {{/if}}
+    </button>
+  {{/if}}
 
 </template>
 

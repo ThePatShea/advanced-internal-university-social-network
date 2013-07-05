@@ -4,8 +4,10 @@
     {{> bubbleSectionSelector}}
   	{{> bubbleInvitation}}
 
-  	<hr>
-    {{> bubbleInviteesList}}
+    {{#unless isSuperBubble this}}
+    	<hr>
+      {{> bubbleInviteesList}}
+    {{/unless}}
     <hr>
     {{> bubbleAdminsList}}
     <hr>

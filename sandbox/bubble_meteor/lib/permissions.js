@@ -3,12 +3,18 @@ ownsUpdate = function(userId, doc) {
 }
 
 ownsProfile = function(userId, profile) {
-	console.log(userId, profile._id);
-	return (userId === profile._id);
+	return 'megauser' == Meteor.user().userType || userId === profile._id;
 }
 
-ownsDocument = function(userId, doc) {
-	var user = Meteor.users.findOne({_id: userId});
-	return (doc.author == user.username);
+ownsPost = function(userId, doc) {
+	var bubble = Bubbles.findOne(doc.bubbleId);
+	return ('superuser' == Meteor.user().userType 
+		|| doc.author == Meteor.user().username
+		|| _.contains(bubble.users.admins,Meteor.userId()));
 }
 
+ownsBubble = function(userId, doc, onChange) {
+	return true;
+	//Feature is currently on hold
+	// return ('superuser' == Meteor.user().userType || _.contains(doc.users.admins, Meteor.user().username));
+}
