@@ -206,10 +206,10 @@ Template.sidebar.rendered = function() {
     var adjustSidebar = function() {
       if ($(window).width() < 768) {
         if ($('#menu').width() > 0)
-          closeSidebar();
+          $('#menu').collapse('hide');
       } else {
         if ($('#menu').width() == 0)
-          openSidebar();
+          $('#menu').collapse('show');
       }
     }
 
