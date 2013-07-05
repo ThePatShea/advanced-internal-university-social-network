@@ -29,17 +29,13 @@
             </button>
           </a>
         {{/if}}
-        {{#if hasJoinedBubble}}
-          <a href="{{bubbleMembersPagePath this}}">
-            <button class="std-btn-dark cover-btn">Members Page</button>
-          </a>
-        {{else}}
+        {{#unless hasJoinedBubble}}
           {{#if hasApplied}}
             <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
           {{else}}
             <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
           {{/if}}
-        {{/if}}
+        {{/unless}}
       </div>
     </div>
   </div>

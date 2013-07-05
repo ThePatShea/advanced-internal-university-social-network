@@ -694,7 +694,6 @@ navbar-height        =  60px
   text-transform         uppercase
   width                  100%
   letter-spacing         1px
-  z-index                10
   svg
     vertical-align           middle
   .navbar-inner
@@ -762,6 +761,9 @@ body
   width                    100%
   padding                  0
   margin                   0
+
+#main
+  overflow-y               scroll
 
 .sidebar-collapse
   line-height              navbar-height
@@ -994,12 +996,22 @@ bubble-section-selector-height-small  =  75px
         float                    left
         @media (min-width: 768px)
           width                    bubble-section-selector-height-large
+          svg
+            height                   32px
         @media (max-width: 767px)
-          // width                    bubble-section-selector-height-small
-          width 20%
+          width                    20%
+          svg
+            height                   25px
 /**********  bubble-section-selector  **********/
 
 /**********        bubble-page        **********/
+section-icon(n)
+  main-light-fill        0
+  @media (min-width: 768px)
+    display                inline
+  @media (max-width: 767px)
+    display                none
+
 .bubble-list
   @media (min-width: 768px)
     margin                 50px 0
@@ -1012,6 +1024,18 @@ bubble-section-selector-height-small  =  75px
       padding                0 20px 30px 20px
     @media (max-width: 767px)
       padding                0 10px 10px 20px
+    .section-icon-discussion
+      section-icon           0
+      svg
+        height                 28px
+    .section-icon-event
+      section-icon           0
+      svg
+        height                 24px
+    .section-icon-file
+      section-icon           0
+      svg
+        height                 30px
     .section-name
       main-light-color       0
       font-alt-light         0

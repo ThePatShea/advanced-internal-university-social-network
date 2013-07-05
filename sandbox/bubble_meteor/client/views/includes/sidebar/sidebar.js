@@ -214,6 +214,12 @@ Template.sidebar.rendered = function() {
     }
 
 
+  // Resize the main section to make scrolling work properly
+    var adjustMain = function() {
+      $('#main').css('height', $(window).height() - $('.navbar').height());
+    }
+
+
   // Collapse the sidebar menu when the user clicks a button
     $("#menu a").click(function(e) {
       if ($(window).width() < 768)
@@ -222,11 +228,15 @@ Template.sidebar.rendered = function() {
 
 
   // Run these functions on load and on window resize
-    $(window).resize(function() {
+    var adjustInterface = function() {
       resizeMainBtns();
       adjustSidebar();
+      adjustMain();
+    }
+
+    $(window).resize(function() {
+      adjustInterface();
     });
-  
-    resizeMainBtns();
-    adjustSidebar();
+
+    adjustInterface();
 }
