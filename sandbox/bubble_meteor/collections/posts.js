@@ -110,12 +110,11 @@ createPost = function(postAttributes){
 }
 
 createPostWithAttachments = function(postAttributes, fileList){
-  Meteor.call('post', postAttributes, function(error, id){
+  Meteor.call('post', postAttributes, function(error, post){
     if (error) {
       // display the error to the user
       throwError(error.reason);
     } else {
-      console.log('Parent Id: ', id);
       var filepostIds = [];
       for (var i = 0, f; f = files[i]; i++) {
         var reader = new FileReader();
@@ -130,8 +129,8 @@ createPostWithAttachments = function(postAttributes, fileList){
               bubbleId: Session.get('currentBubbleId'),
               parent: id   //This needs to be set to the ID of the post created above.
             };
-            var parentid = id;
-            Meteor.call('post', attributes, function(error, id){
+            var parentid = post._id;
+            Meteor.call('post', attributes, function(error, newPost){
               if(error){
                 throwError(error.reason);
               }
@@ -142,7 +141,7 @@ createPostWithAttachments = function(postAttributes, fileList){
                 if(childPosts == null){
                   childPosts = [];
                 }
-                childPosts.push(id);
+                childPosts.push(newPost._id);
                 console.log(childPosts);
                 var updatedProperties = {
                   children: childPosts
@@ -159,7 +158,7 @@ createPostWithAttachments = function(postAttributes, fileList){
         reader.readAsDataURL(f);
       }
 
-      Meteor.Router.to('postPage', id);
+      Meteor.Router.to('postPage', post.bubbleId, post._id);
 
     }
   });

@@ -15,10 +15,6 @@ Meteor.Router.add({
     to: 'eventEdit', 
     and: function(id) { Session.set('currentPostId', id); }    
   },
-  '/posts/:_id/edit/file': {
-    to: 'fileobjectEdit', 
-    and: function(id) { Session.set('currentPostId', id); }    
-  },
 
   //Bubble Routes
   '/mybubbles/:_id/home': {
@@ -118,6 +114,6 @@ Meteor.Router.filters({
   }
 });
 
-Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers'] });
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');

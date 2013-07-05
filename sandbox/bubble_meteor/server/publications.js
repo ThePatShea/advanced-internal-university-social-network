@@ -8,15 +8,82 @@ getBubbleId =  function(userId) {
     return [];
 }
 
-//seperate the scroll down to view functions
-Meteor.publish('events', function(bubbleId, userId, limit) {
-  return Posts.find({postType:'event', bubbleId: {$in: getBubbleId(userId)}}, {sort: {submitted: -1}});
+//This publication only allows normal user to view posts
+Meteor.publish('posts', function(bubbleId){
+  return Posts.find({bubbleId: bubbleId});
 });
-Meteor.publish('discussions', function(bubbleId, userId, limit) {
-  return Posts.find({postType:'discussion', bubbleId: {$in: getBubbleId(userId)}}, {sort: {submitted: -1}});
+
+//This Publication allows normal user to view all posts during searching
+Meteor.publish('searchEvents', function(searchText, userId, limit) {
+  return Posts.find(
+    { postType:'event', 
+      bubbleId: {$in: getBubbleId(userId)},
+      $or: [
+        {name: new RegExp(searchText,'i')}, 
+        {body: new RegExp(searchText,'i')}, 
+        {file: new RegExp(searchText,'i')}, 
+        {location: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}});
 });
-Meteor.publish('files', function(bubbleId, userId, limit) {
-  return Posts.find({postType:'file', bubbleId: {$in: getBubbleId(userId)}}, {sort: {submitted: -1}});
+Meteor.publish('searchDiscussions', function(searchText, userId, limit) {
+  return Posts.find(
+    { postType:'discussion', 
+      bubbleId: {$in: getBubbleId(userId)},
+      $or: [
+        {name: new RegExp(searchText,'i')}, 
+        {body: new RegExp(searchText,'i')}, 
+        {file: new RegExp(searchText,'i')}, 
+        {location: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}});
+});
+Meteor.publish('searchFiles', function(searchText, userId, limit) {
+  return Posts.find(
+    { postType:'file', 
+      bubbleId: {$in: getBubbleId(userId)},
+      $or: [
+        {name: new RegExp(searchText,'i')}, 
+        {body: new RegExp(searchText,'i')}, 
+        {file: new RegExp(searchText,'i')}, 
+        {location: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}});
+});
+
+//This Publication allows super to view all posts during searching
+Meteor.publish('superSearchEvents', function(searchText, searchText, limit){
+  return Posts.find(
+    { postType: 'event',
+      $or: [
+        {name: new RegExp(searchText,'i')}, 
+        {body: new RegExp(searchText,'i')}, 
+        {file: new RegExp(searchText,'i')}, 
+        {location: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}, limit:limit});
+});
+Meteor.publish('superSearchDiscussions', function(searchText, limit){
+  return Posts.find(
+    { postType: 'discussion',
+      $or: [
+        {name: new RegExp(searchText,'i')}, 
+        {body: new RegExp(searchText,'i')}, 
+        {file: new RegExp(searchText,'i')}, 
+        {location: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}, limit:limit});
+});
+Meteor.publish('superSearchFiles', function(searchText, limit){
+  return Posts.find(
+    { postType: 'file',
+      $or: [
+        {name: new RegExp(searchText,'i')}, 
+        {body: new RegExp(searchText,'i')}, 
+        {file: new RegExp(searchText,'i')}, 
+        {location: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}, limit:limit});
 });
 
 Meteor.publish('comments', function(postId, limit) {
@@ -35,13 +102,13 @@ Meteor.publish('bubbles', function(limit) {
   return Bubbles.find({}, {sort: {submitted: -1}, limit:limit});
 });
 
-Meteor.publish('searchBubbles', function(bubbleTitle,limit) {
+Meteor.publish('searchBubbles', function(searchText,limit) {
   return Bubbles.find(
-      { $or: [
-        {title: new RegExp(bubbleTitle,'i')}, 
-        {description: new RegExp(bubbleTitle,'i')}
-        ]
-      }, {sort: {submitted: -1}, limit:limit});
+    { $or: [
+        {title: new RegExp(searchText,'i')}, 
+        {description: new RegExp(searchText,'i')}
+      ]
+    }, {sort: {submitted: -1}, limit:limit});
 });
 
 Meteor.publish('joinedBubbles', function(userId) {
@@ -94,8 +161,8 @@ Meteor.publish("findUsersByName", function(username, limit) {
   });
 });
 
-Meteor.publish('userData', function() {
-  return Meteor.users.find({_id: this.userId},{
+Meteor.publish('userData', function(userId) {
+  return Meteor.users.find({_id: userId},{
     fields: {
      'username': 1,
      'emails': 1,
