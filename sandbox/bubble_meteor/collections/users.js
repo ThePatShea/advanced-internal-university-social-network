@@ -11,14 +11,10 @@ Meteor.users.deny({
 
 if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
-		//Sets usertype as superuser for names that contains admin
-		if(user.username.match(new RegExp('admin','i'))) {
-			user.userType = 'superuser';
+		if(user.username == 'campusbubble') {
+			user.userType = 'megauser';
 		}else{
 			user.userType = 'user';
-		}
-		if(options.profile) {
-			user.profile = options.profile;
 		}
 		return user;
 	});

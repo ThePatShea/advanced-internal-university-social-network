@@ -15,6 +15,8 @@ Deps.autorun(function() {
 	Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'), 
 											Session.get('inviteeList'+Session.get('currentBubbleId')));
 	usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
+	Meteor.subscribe('userData', Meteor.userId());
+	Meteor.subscribe('userData', Session.get('selectedUserId'));
 
 	//Retrieves Posts related to current bubble
 	postsListHandle = Meteor.subscribeWithPagination('posts', Session.get('currentBubbleId'), 2);
@@ -31,7 +33,6 @@ Deps.autorun(function() {
 		
 	//Retrieves Comments
 	commentsHandle = Meteor.subscribeWithPagination('comments', Session.get('currentPostId'), Meteor.userId(), 10);
-	Meteor.subscribe('userData', Meteor.userId());
 });
 
 Meteor.subscribe('updates', Meteor.userId());

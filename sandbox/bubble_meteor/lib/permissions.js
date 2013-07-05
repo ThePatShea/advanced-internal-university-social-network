@@ -3,11 +3,11 @@ ownsUpdate = function(userId, doc) {
 }
 
 ownsProfile = function(userId, profile) {
-	return (userId === profile._id);
+	return 'megauser' == Meteor.user().userType || userId === profile._id;
 }
 
 ownsPost = function(userId, doc) {
-	var bubble = Bubble.findOne(doc.bubbleId);
+	var bubble = Bubbles.findOne(doc.bubbleId);
 	return ('superuser' == Meteor.user().userType 
 		|| doc.author == Meteor.user().username
 		|| _.contains(bubble.users.admins,Meteor.userId()));

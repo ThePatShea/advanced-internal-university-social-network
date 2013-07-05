@@ -31,7 +31,7 @@ Template.searchAll.helpers({
     var posts =  Posts.find(
       { postType: 'file',
         name: new RegExp(Session.get('searchText'),'i')
-      }, {limit: fileListHandle.limit() }).fetch();
+      }, {limit: 2}).fetch();
 
     // return posts where searchText is not similar to file extension
     if(posts) {

@@ -114,6 +114,6 @@ Meteor.Router.filters({
   }
 });
 
-Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit'] });
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');
