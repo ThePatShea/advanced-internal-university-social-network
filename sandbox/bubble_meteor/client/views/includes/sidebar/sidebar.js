@@ -190,14 +190,26 @@ Template.sidebar.rendered = function() {
     }
 
 
+  // Change the direction of the sidebar-arrow depending on if the sidebar is open or closed
+    $(".sidebar-collapse").click(function(e) {
+      if ( $('#menu').width() == $('.sidebar').width() ) {
+        $('.sidebar-arrow-right').show();
+        $('.sidebar-arrow-left').hide();
+      } else if ( $('#menu').width() == 0 ) {
+        $('.sidebar-arrow-right').hide();
+        $('.sidebar-arrow-left').show();
+      }
+    });
+
+
   // Resize the sidebar based on whether the window is desktop width or mobile width
     var adjustSidebar = function() {
       if ($(window).width() < 768) {
         if ($('#menu').width() > 0)
-          $('#menu').collapse('hide');
+          closeSidebar();
       } else {
         if ($('#menu').width() == 0)
-          $('#menu').collapse('show');
+          openSidebar();
       }
     }
 
