@@ -21,7 +21,8 @@ Template.userProfile.helpers({
 	},
 	hasPermission: function() {
 		var profileId = Session.get('selectedUserId');
-		if(Meteor.userId() && (Meteor.user())._id == profileId){
+		//Checks if user is a mega user or if user is viewing own profile
+		if('megauser' == Meteor.user().userType ||  Meteor.userId() == profileId) {
 			return true;
 		}
 		else{
@@ -29,7 +30,6 @@ Template.userProfile.helpers({
 		}
 	},
 	getUserType: function() {
-		console.log(Meteor.users.findOne({_id:Session.get('selectedUserId')}));
 		return Meteor.users.findOne({_id:Session.get('selectedUserId')}).userType;
 	}
 

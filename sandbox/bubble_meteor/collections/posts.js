@@ -1,8 +1,8 @@
 Posts = new Meteor.Collection('posts');
 
 Posts.allow({
-   update: ownsDocument,
-   remove: ownsDocument
+   update: ownsPost,
+   remove: ownsPost
  });
 
 Posts.deny({
@@ -15,7 +15,7 @@ Posts.deny({
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
-    var bubble = Bubbles.findOne(postAttributes.bubbleId);
+    var postWithSameName = Posts.findOne({name: postAttributes.name, bubbleId: postAttributes.bubbleId});
     // console.log(user._id);
     
     // ensure the user is logged in
@@ -31,13 +31,20 @@ Meteor.methods({
       throw new Meteor.Error(422, 'Please fill in all fields');
     }
 
+    // check that there are no previous posts with the same title
+    if (postAttributes.title && postWithSameName) {
+      throw new Meteor.Error(302, 
+        'This post has already been created', 
+        postWithSameName._id);
+    }
+
     if(!postAttributes.attendees){
       postAttributes.attendees = [];
     }
 
     // pick out the whitelisted keys
     var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto', 'parent', 'children'), {
-      userId: user._id, 
+      userId: user._id,
       author: user.username, 
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
@@ -94,7 +101,6 @@ Meteor.methods({
         $pull: {attendees:username}
       });
     }
-
   }
 });
 

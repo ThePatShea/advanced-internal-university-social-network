@@ -1,3 +1,11 @@
+Template.bubbleSubmit.helpers({
+  'isSuperUser': function() {
+    if('superuser' == Meteor.user().userType){
+      return true;
+    }
+  }
+});
+
 Template.bubbleSubmit.events({
   'submit form': function(event) {
     event.preventDefault();
@@ -7,7 +15,8 @@ Template.bubbleSubmit.events({
       description: $(event.target).find('[name=description]').val(),
       category: $(event.target).find('[name=category]').val(),
       coverPhoto: $(event.target).find('[id=coverphoto_preview]').attr('src'),
-      profilePicture: $(event.target).find('[id=profilepicture_preview]').attr('src')
+      profilePicture: $(event.target).find('[id=profilepicture_preview]').attr('src'),
+      bubbleType: $(event.target).find('[name=bubbleType]').val()
     }
     
     Meteor.call('bubble', bubble, function(error, bubbleId) {

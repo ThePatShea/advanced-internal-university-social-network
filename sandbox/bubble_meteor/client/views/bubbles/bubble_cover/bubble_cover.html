@@ -10,7 +10,7 @@
           </div>
         </div>
       </div>
-      <div class="v-middle pull-left">
+      <div class="v-middle bubble-name-and-subtitle">
         <div class="v-inner">
           <h1 class="bubble-name">{{title}}</h1>
           <h2 class="bubble-subtitle">
@@ -19,27 +19,23 @@
           </h2>
         </div>
       </div>
-      <div class="v-middle pull-right">
+      <div class="v-middle cover-btns">
         <div class="v-inner">
           {{#if isAdmin}}
             <a href="{{bubbleEditPath this}}">
-              <button class="std-btn-dark">
-                <span class="cb-icon-xlight">{{> icon-settings}}</span>
+              <button class="std-btn-dark cover-btn">
+                <span class="cb-icon-xlight cb-icon-settings">{{> icon-settings}}</span>
                 <span class="lbl">edit bubble</span>
               </button>
             </a>
           {{/if}}
-          {{#if belongsToBubble}}
-            <a href="{{bubbleMembersPagePath this}}">
-              <button class="std-btn-dark">Members Page</button>
-            </a>
-          {{else}}
+          {{#unless hasJoinedBubble}}
             {{#if hasApplied}}
-              <button class="std-btn-dark cancel-apply">Cancel Application</button>
+              <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
             {{else}}
-              <button class="std-btn-dark join-apply">Join Bubble</button>
+              <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
             {{/if}}
-          {{/if}}
+          {{/unless}}
         </div>
       </div>
     </div>

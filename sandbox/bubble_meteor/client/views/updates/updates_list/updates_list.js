@@ -1,6 +1,6 @@
 Template.updatesList.helpers({
   updates: function() {
-    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId'), read:false}).fetch();
+    var updateList = Updates.find({userId: Meteor.userId(), bubbleId: Session.get('currentBubbleId'), read:false}).fetch();
 
     if(updateList.length > 0) {
       //To combine updates with same userId, invokerId, updateType and postId

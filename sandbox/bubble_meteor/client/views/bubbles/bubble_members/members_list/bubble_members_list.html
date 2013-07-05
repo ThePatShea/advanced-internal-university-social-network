@@ -2,27 +2,42 @@
 	This is members list
 	<br />
 	{{#each getMembers}}
-		{{#if isAdmin}}
-			<button class="btn btn-small activate" type="button">
-				{{getUsername this}}
-			</button>
+		{{#if isSuperBubble}}
+			{{#if isSuperUser}}
+	      <button class="btn btn-small activate" type="button">
+	        {{getUsername this}}
+	      </button>
+	      {{#if chosen}}
+			    	<button class="btn btn-small btn-inverse promote-member" type="button">Promote to Admin</button>
+			    	<button class="btn btn-small btn-inverse remove-member" type="button">Remove from Bubble</button>
+	      {{/if}}
+      {{else}}
+        {{getUsername this}}
+      {{/if}}
+      
+    {{else}}
 
-			{{#if chosen}}
-	    	<button class="btn btn-small btn-inverse promote-member" type="button">Promote to Admin</button>
-	    	<button class="btn btn-small btn-inverse remove-member" type="button">Remove from Bubble</button>
-			{{/if}}
-		{{else}}
-			{{#if isUser this}}
-				<button class="btn btn-small activate" type="button">
+    	{{#if isAdmin}}
+	      <button class="btn btn-small activate" type="button">
+	        {{getUsername this}}
+	      </button>
+        {{#if chosen}}
+		    	<button class="btn btn-small btn-inverse remove-member" type="button">Remove from Bubble</button>
+        {{/if}}
+     	{{else}}
+      	{{#if isUser this}}
+      		<button class="btn btn-small activate" type="button">
+						{{getUsername this}}
+					</button>
+					{{#if chosen}}
+			    	<button class="btn btn-small btn-inverse remove-member" type="button">Leave Bubble</button>
+			    {{/if}}
+      	{{else}}
 					{{getUsername this}}
-				</button>
-				{{#if chosen}}
-		    	<button class="btn btn-small btn-inverse remove-member" type="button">Leave Bubble</button>
-				{{/if}}
-			{{else}}
-				{{getUsername this}}
-			{{/if}}
-		{{/if}}
+      	{{/if}}
+      {{/if}}
+
+    {{/if}}
 		<br />
 	{{/each}}
 </template>

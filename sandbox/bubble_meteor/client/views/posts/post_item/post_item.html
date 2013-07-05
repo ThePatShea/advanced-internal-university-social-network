@@ -18,6 +18,10 @@
           {{#if getPostType "file"}}
             <a href="{{fileobjectEditPath this}}">Edit</a>
           {{/if}}
+
+        <a href="{{postPagePath this.bubbleId this._id}}">{{pluralize commentsCount "comment"}}</a>
+        {{#if ownsPost}} |
+            <a href="{{getPostEditUrl this}}">Edit</a>
         {{/if}}
       </p>
     </div>

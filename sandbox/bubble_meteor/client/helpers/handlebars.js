@@ -25,7 +25,7 @@ Handlebars.registerHelper('getCurrentPost', function() {
 
 Handlebars.registerHelper('isAdmin', function() {  
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-  return (Meteor.userId().userType == 'superuser') || _.contains(bubble.users.admins, Meteor.userId());
+  return (Meteor.user().userType == 'superuser') || _.contains(bubble.users.admins, Meteor.userId());
 });
 
 Handlebars.registerHelper('belongsToBubble', function() {
@@ -35,7 +35,7 @@ Handlebars.registerHelper('belongsToBubble', function() {
       return true;
     }
   }
-  return  Meteor.userId().userType == 'superuser' || false;
+  return  Meteor.user().userType == 'superuser' || false;
 }); 
 
 Handlebars.registerHelper('ownsPost', function() {
@@ -43,7 +43,7 @@ Handlebars.registerHelper('ownsPost', function() {
   if(bubble) {
     userList = bubble.users.admins;
     userList.push(this.userId);
-    return (Meteor.userId().userType == 'superuser') || _.contains(userList, Meteor.userId())
+    return (Meteor.user().userType == 'superuser') || _.contains(userList, Meteor.userId())
   }   
 });
 
@@ -104,11 +104,23 @@ Handlebars.registerHelper('hasBubble', function() {
 });
 
 Handlebars.registerHelper('isUser', function(userId) {
-  return (Meteor.userId().userType != 'superuser') || userId.toString() == Meteor.userId();
+  return (userId.toString() == Meteor.userId());
 });
 
 Handlebars.registerHelper('hasSearchText', function() {
   if(Session.get('searchText') != undefined){
+    return true;
+  }
+});
+
+Handlebars.registerHelper('isSuperUser', function() {
+  if('superuser' == Meteor.user().userType) {
+    return true;
+  }
+})
+
+Handlebars.registerHelper('isSuperBubble', function() {
+  if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType) {
     return true;
   }
 });

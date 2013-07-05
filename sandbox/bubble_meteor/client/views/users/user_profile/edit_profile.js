@@ -1,25 +1,28 @@
 Template.userprofileEdit.helpers({
 	getProfile: function() {
-		//console.log('get profile: ', Meteor.users.findOne({_id:Session.get('selectedUserId')}));
-		console.log(Meteor.user());
 		return Meteor.users.findOne({_id:Session.get('selectedUserId')});
 	},
-
-	getEmail: function(){
-		return this.emails[0].address;
+	getEmail: function() {
+    if(this.emails) {
+      return this.emails[0].address;
+    }
 	},
-
-	hasPermission: function(){
+	hasPermission: function() {
 		var profileId = Session.get('selectedUserId');
-		//console.log(Meteor.user(), profileId);
 		var user = Meteor.user();
-		if(user._id == profileId){
+		if('megauser' == Meteor.user().userType || user._id == profileId){
 			return true;
 		}
 		else{
 			return false;
 		}
-	}
+	},
+  checkUserType: function(type) {
+    if(Meteor.user().userType == type) {
+      console.log("THIS RAN");
+      return 'selected';
+    }
+  }
 
 });
 
@@ -36,7 +39,7 @@ Template.userprofileEdit.events({
       emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
       phone: '666',
       lastUpdated: new Date().getTime(),
-      userType: 'admin'
+      userType: $(e.target).find('[name=userType]').val()
     };
     console.log('Properties to be saved: ',profileProperties);
     
@@ -139,7 +142,7 @@ Template.userprofileEdit.rendered = function(){
     $("#change_profile_picture").hide();
     $(".dropzone").show();
   });
-  user = Meteor.users.findOne({_id:Session.get('selectedUserId')});
+  var user = Meteor.users.findOne({_id:Session.get('selectedUserId')});
   if(!user.profilePicture){
     //$(".userprofilepicture").attr("src", "/img/default_userprofile.png");
     $("#userprofilepicture_preview").attr("src", "/img/default_userprofile.png");

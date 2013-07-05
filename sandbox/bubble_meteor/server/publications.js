@@ -132,7 +132,8 @@ Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
       fields: {
        'username': 1,
        'emails': 1,
-       'userType': 1
+       'userType': 1,
+       'profilePicture': 1
       }
     });
   }
@@ -146,7 +147,8 @@ Meteor.publish("findUsersByName", function(username, limit) {
     fields: {
      'username': 1,
      'emails': 1,
-     'userType': 1
+     'userType': 1,
+     'profilePicture': 1
     }
   });
 });
@@ -156,13 +158,9 @@ Meteor.publish('userData', function(userId) {
     fields: {
      'username': 1,
      'emails': 1,
-     'userType': 1
+     'userType': 1,
+     'profilePicture': 1
     }
   });
-});
-
-
-Meteor.publish(null, function() {
-  return Meteor.users.find({}, {fields: {'profilePicture': 1}});
 });
 

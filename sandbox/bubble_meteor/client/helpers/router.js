@@ -5,15 +5,15 @@ Meteor.Router.add({
   //Post Routes
   '/mybubbles/:_bId/posts/:_pId': {
     to: 'postPage', 
-    and: function(bId, pId) { Session.set('currentPostId', pId); }
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
   },
-  '/posts/:_id/edit/discussion': {
+  '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
     to: 'discussionEdit', 
-    and: function(id) { Session.set('currentPostId', id); }    
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
   },
-  '/posts/:_id/edit/event': {
+  '/mybubbles/:_bId/posts/:_pId/edit/event': {
     to: 'eventEdit', 
-    and: function(id) { Session.set('currentPostId', id); }    
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }  
   },
   '/posts/:_id/edit/file': {
     to: 'fileobjectEdit',
@@ -118,6 +118,6 @@ Meteor.Router.filters({
   }
 });
 
-Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit'] });
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');

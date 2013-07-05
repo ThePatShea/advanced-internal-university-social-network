@@ -1,8 +1,8 @@
 Updates = new Meteor.Collection('updates');
 
-// Updates.allow({
-//   update: ownsUpdate
-// });
+Updates.allow({
+  update: ownsUpdate
+});
 
 Meteor.methods({
   update: function(updateAttributes){

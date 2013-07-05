@@ -1,5 +1,10 @@
 Bubbles = new Meteor.Collection('bubbles');
 
+Bubbles.allow({
+   update: ownsBubble,
+   remove: ownsBubble
+ });
+
 Meteor.methods({
 	bubble: function(bubbleAttributes){
 		var user = Meteor.user(),
@@ -20,7 +25,7 @@ Meteor.methods({
         bubbleWithSameName._id);
     }
 
-    var bubble = _.extend(_.pick(bubbleAttributes, 'title', 'description', 'category', 'coverPhoto', 'profilePicture'), {
+    var bubble = _.extend(_.pick(bubbleAttributes, 'title', 'description', 'category', 'coverPhoto', 'profilePicture', 'bubbleType'), {
     	submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       users: {
