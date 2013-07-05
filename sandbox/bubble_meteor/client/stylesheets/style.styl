@@ -38,11 +38,15 @@ body
     padding 0
 
 .navbar
+  margin               0
   .navbar-inner
     border-radius          0
     border                 0
     a
       text-shadow              0 0
+    .brand
+      padding                  0
+      margin                   0
     .nav
       & > li
         a
@@ -88,7 +92,10 @@ main-dark-bg(n)
 
 
 main-light-stroke(n)
+  stroke                   #2f5973
   path
+    stroke                   #2f5973
+  line
     stroke                   #2f5973
 main-light-color(n)
   color                  #2f5973
@@ -98,6 +105,12 @@ main-light-bg(n)
   background             #2f5973
 
 
+main-xlight-stroke(n)
+  stroke                   #95afbf
+  path
+    stroke                   #95afbf
+  line
+    stroke                   #95afbf
 main-xlight-border(n)
   border-thin            #95afbf
 main-xlight-color(n)
@@ -561,6 +574,12 @@ border-radius(n)
   -ms-border-radius      n
   -o-border-radius       n
   border-radius          n
+
+transition(args...)
+  -webkit-transition     args
+  -moz-transition        args
+  -o-transition          args
+  transition             args
 /**********   Properties    **********/
 
 
@@ -579,9 +598,10 @@ border-radius(n)
 /**********     Buttons     **********/
 std-btn(n)
   text-transform         uppercase
-  padding                8px 15px
+  padding                8px 10px
   border-radius          15px
   font-size              11px
+  line-height            100%
   main-xlight-border     0
 
 .std-btn-light
@@ -633,35 +653,27 @@ svg
 
 /***************  Single-Purpose Elements  ***************/
 /**********      Base Divs       **********/
-#main
-  @media (min-width: 768px)
-    padding-left               240px
-  @media (max-width: 767px)
-    padding-left               0
-
-.comments li:nth-child(even),
-.post:nth-child(even),
+.comments li:nth-child(odd),
+.post:nth-child(odd),
 .comment-form,
 .grid-block,
 .main,
 body
   std-white-light-bg     0
 
-.comments li:nth-child(odd),
-.post:nth-child(odd)
+.comments li:nth-child(even),
+.post:nth-child(even)
   std-white-dark-bg      0
 
 .post
   padding                15px 30px
   height                 70px
+  border-box             0
 
 .container
+  top                    navbar-height
   position               relative
   width                  100%
-
-.container,
-.sidebar
-  top                    60px
 /**********      Base Divs       **********/
 
 /**********        navbar        **********/
@@ -680,26 +692,24 @@ navbar-height        =  60px
 .navbar
   border-bottom          1px solid navbar-border-color
   text-transform         uppercase
-  position               fixed
   width                  100%
   letter-spacing         1px
-  z-index                10
   svg
     vertical-align           middle
   .navbar-inner
+    height                   60px
     main-xdark-bg            0
     .brand
       line-height              navbar-height 
       height                   navbar-height
       font-size                14px
-      @media (min-width: 980px)
-        padding                    0 0 0 15px
-      @media (max-width: 979px)
-        padding                    0
+      @media (min-width: 768px)
+        position                   fixed
+        left                       15px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
-        left                       50%
+        left                       25%
       .logo-main
         margin                     0 5px 0 0
       .logo-words
@@ -714,6 +724,10 @@ navbar-height        =  60px
         main-xlight-color          0
         font-main-medium           0
     .nav
+      @media (min-width: 768px)
+        display                    block
+      @media (max-width: 767px)
+        display                    none
       & > li
         border-right               1px solid navbar-border-color
         line-height                navbar-height 
@@ -740,14 +754,88 @@ navbar-height        =  60px
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
+/*****   sidebar-collapse   *****/
+body
+  position                 absolute
+  height                   100%
+  width                    100%
+  padding                  0
+  margin                   0
+
+#main
+  overflow-y               scroll
+
+.sidebar-collapse
+  line-height              navbar-height
+  padding                  0 20px
+  position                 fixed
+  z-index                  60
+  left                     0
+  main-xlight-stroke       0
+  @media (min-width: 768px)
+    display                  none
+  @media (max-width: 767px)
+    display                  block
+  svg
+    vertical-align           middle
+  .sidebar-arrow-right
+    display                  inline
+  .sidebar-arrow-left
+    display                  none
+ 
+
+.viewport
+  position                 absolute
+  overflow                 hidden
+  bottom                   0
+  right                    0
+  left                     0
+  top                      0
+  .frame
+    position                 absolute
+    height                   100%
+    bottom                   0
+    left                     0
+    top                      0
+    @media (min-width: 768px)
+      width                      100%
+    @media (max-width: 767px)
+      width                      200%
+    .view
+      overflow                 hidden
+      height                   100%
+      @media (min-width: 768px)
+        width                      auto
+      @media (max-width: 767px)
+        width                      50%
+    .menu
+      height                   100%
+      &.collapse
+        height                   100% !important
+        float                    left
+        width                    auto
+        &.width
+          position                 relative
+          overflow                 hidden
+          width                    0
+          @media (min-width: 768px)
+            transition               width 0.01s
+          @media (max-width: 767px)
+            transition               width 0.35s ease
+        &.in
+          &.width
+            width                    auto
+      .collapse-inner
+        position                 relative
+        height                   100%
+/*****   sidebar-collapse   *****/
+
+/*****     main sidebar     *****/
 .sidebar
-  height                 5000px
   width                  240px
-  position               fixed
   z-index                50
   main-light-bg          0
   .top-btns
-    margin                   1px 0 0 0
     border-thin-top-btm      #BBCCD7
     overflow                 hidden
     .top-btn
@@ -803,9 +891,13 @@ navbar-height        =  60px
         position                     relative
         background                   #274B61
         z-index                      10
+/*****     main sidebar     *****/
 /**********       sidebar        **********/
 
 /**********        bubble-cover       **********/
+cover-btns-width-large  =  150px
+cover-btns-width-small  =  130px
+
 .bubble-cover
   position               relative
   overflow               hidden
@@ -837,27 +929,44 @@ navbar-height        =  60px
       display                  block
     @media (max-width: 767px)
       display                  none
-  .bubble-name
-    color                    white
-    font-alt-light           0
+  .bubble-name-and-subtitle
     @media (min-width: 768px)
-      font-size                37px
+      margin-right             cover-btns-width-large
     @media (max-width: 767px)
-      font-size                25px
-  .bubble-subtitle
-    text-transform           uppercase
-    main-xlight-color        0
-    font-main-bold           0
+      margin-right             cover-btns-width-small
+    .bubble-name
+      color                    white
+      font-alt-light           0
+      @media (min-width: 768px)
+        font-size                37px
+      @media (max-width: 767px)
+        font-size                25px
+    .bubble-subtitle
+      text-transform           uppercase
+      main-xlight-color        0
+      font-main-bold           0
+      @media (min-width: 768px)
+        font-size                12px
+      @media (max-width: 767px)
+        font-size                11px
+  .cover-btns
+    position                 absolute
+    top                      0
     @media (min-width: 768px)
-      font-size                12px
+      width                    cover-btns-width-large
+      right                    30px
     @media (max-width: 767px)
-      font-size                11px
-  .std-btn-dark
-    margin                   5px 0
-    float                    right
-    clear                    right
-    .lbl
-      padding                    0 0 0 5px
+      width                    cover-btns-width-small
+      right                    10px
+    .cover-btn
+      margin                   5px 0
+      float                    right
+      clear                    right
+      .cb-icon-settings
+        svg
+          margin                    -3px 0
+      .lbl
+        padding                    0 0 0 5px
 /**********        bubble-cover       **********/
 
 /**********  bubble-section-selector  **********/
@@ -876,15 +985,69 @@ bubble-section-selector-height-small  =  75px
   overflow-x             scroll
   overflow-y             hidden
   .opacity-wrapper
-    float                    left
     std-white-light-bg       0
+    @media (min-width: 768px)
+      float                    left
+    @media (max-width: 767px)
+      float                    none
     a
       std-white-light-fill   0
       .btn-bubble-section
         float                    left
         @media (min-width: 768px)
           width                    bubble-section-selector-height-large
+          svg
+            height                   32px
         @media (max-width: 767px)
-          width                    bubble-section-selector-height-small
+          width                    20%
+          svg
+            height                   25px
 /**********  bubble-section-selector  **********/
+
+/**********        bubble-page        **********/
+section-icon(n)
+  main-light-fill        0
+  @media (min-width: 768px)
+    display                inline
+  @media (max-width: 767px)
+    display                none
+
+.bubble-list
+  @media (min-width: 768px)
+    margin                 50px 0
+  @media (max-width: 767px)
+    margin                 15px 0
+  .bubble-list-heading
+    text-transform         capitalize
+    overflow               hidden
+    @media (min-width: 768px)
+      padding                0 20px 30px 20px
+    @media (max-width: 767px)
+      padding                0 10px 10px 20px
+    .section-icon-discussion
+      section-icon           0
+      svg
+        height                 28px
+    .section-icon-event
+      section-icon           0
+      svg
+        height                 24px
+    .section-icon-file
+      section-icon           0
+      svg
+        height                 30px
+    .section-name
+      main-light-color       0
+      font-alt-light         0
+      @media (min-width: 768px)
+        font-size              30px
+      @media (max-width: 767px)
+        font-size              24px
+      .word1
+        @media (min-width: 768px)
+          display                inline
+        @media (max-width: 767px)
+          display                none
+/**********        bubble-page        **********/
+
 /***************  Single-Purpose Elements  ***************/

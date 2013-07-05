@@ -1,40 +1,47 @@
 <head>
+  <! Makes the site size correctly on mobile devices !>
+    <meta content="width=device-width,minimum-scale=1,maximum-scale=1" name="viewport">
+
   <! Activates Typekit fonts !>
     <script type="text/javascript" src="//use.typekit.net/yiq3yhp.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  <! Sets the text in the title bar !>
 
+  <! Sets the favicon !>
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
 
-  <script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script> 
-  <script type="text/javascript"> if (typeof GSFN !== "undefined") { GSFN.loadWidget(6125,{"containerId":"getsat-widget-6125"}); } </script>
+  <! Sets the text in the browser's title bar !>
+    <title>Emory Bubble</title>
+
+  <! Initializes the support widget !>
+    <script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script> 
+    <script type="text/javascript"> if (typeof GSFN !== "undefined") { GSFN.loadWidget(6125,{"containerId":"getsat-widget-6125"}); } </script>
   
-  <title>Emory Bubble</title>
-
-  <link rel="icon" 
-        type="image/ico" 
-        href="/img/favicon.ico">
-
-  <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="http://www.facebook.com/2008/fbml">
-            
-  <title>Emory Bubble</title>
-  <meta property="og:title" content="Emory Bubble">
-  <meta property="og:type" content="school">
-  <meta property="og:url" content="http://bubble.meteor.com">
-  <meta property="og:image" content="http://bubble.meteor.com/img/ogimage1.png">
-
+  <! Sets the Open Graph data for Facebook !>
+    <meta property="og:image" content="http://bubble.meteor.com/img/ogimage1.png">
+    <meta property="og:url" content="http://bubble.meteor.com">
+    <meta property="og:title" content="Emory Bubble">
+    <meta property="og:type" content="school">
 </head>
 <body>
-  <div class="container">
-    {{> header}}
-    {{> sidebar}}
-    
-    <div id="main" class="row-fluid">
-      <!--<div id="getsat-widget-6125"></div>-->
+  <div class="viewport">
+    <div class="frame">
 
-      {{> errors}}
-      {{renderPage}}
+      <button class="sidebar-collapse" data-toggle="collapse" data-target="#menu">
+        <span class="sidebar-arrow-right">{{> icon-sidebar-arrow-right}}</span>
+        <span class="sidebar-arrow-left">{{> icon-sidebar-arrow-left}}</span>
+      </button>
+      <div id="menu" class="menu nav-collapse collapse width">
+        {{> sidebar}}
+      </div>
+
+      <div class="view">
+        {{> header}}
+        <div id="main" class="row-fluid">
+          {{> errors}}
+          {{renderPage}}
+        </div>
+      </div>
+
     </div>
   </div>
 </body>
