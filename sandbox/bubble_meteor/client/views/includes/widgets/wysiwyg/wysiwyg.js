@@ -1,5 +1,6 @@
 Template.wysiwyg.rendered = function() {
   files = [];
+  removed = [];
   $('.wysiwyg').wysiwyg();
 
   var maxwidth = 300;
@@ -67,6 +68,31 @@ Template.wysiwyg.rendered = function() {
   $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_parseimages);
 
   $("#fileuploadtool").slideToggle();
+
+
+
+  var currentPostId = Session.get('currentPostId');
+  if(currentPostId){
+    console.log('Editing');
+    var post = Posts.findOne({_id: currentPostId});
+    var attachments = [];
+    for(var i = 0; i < post.children.length; i++){
+      var attachment = Posts.findOne({_id: post.children[i]});
+      if(attachment.fileType.match('image.*')){
+        $("#list").append('<div><img class="previewthumb" src="' + attachment.file + '"/>' + attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a>'+ '</div>');
+      }
+      else if(attachment.fileType.match('pdf.*')){
+        $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
+      }
+      else if(attachment.fileType.match('msword.*')|| f.type.match('ms-excel.*') || f.type.match('officedocument.*')){
+        $("#list").append('<div class="word-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
+      }
+    }
+  }
+  else{
+    console.log('Creating');
+  }
+
 };
 
 
@@ -213,9 +239,10 @@ Template.wysiwyg.events({
         reader.onload = (function(theFile) {
         return function(e) {
         // Render thumbnail.
+        var fname = theFile.name;
         var span = document.createElement('span');
         span.innerHTML = ['<img class="previewthumb" src="', e.target.result,
-                        '" title="', escape(theFile.name), '"/>'].join('');
+                        '" title="', fname, '"/>', ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>'].join('');
         document.getElementById('list').insertBefore(span, null);
         };
         })(f);
@@ -232,8 +259,9 @@ Template.wysiwyg.events({
         reader.onload = (function(theFile) {
         return function(e) {
         //Render a PDF icon
+        var fname = theFile.name;
         var span = document.createElement('span');
-        span.innerHTML = ['<div class="pdf-icon">', 'PDF', escape(theFile.name), '</div>'].join('');
+        span.innerHTML = ['<div class="pdf-icon">', 'PDF', fname, ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>', '</div>'].join('');
         document.getElementById('list').insertBefore(span, null);
         };
         })(f);
@@ -248,8 +276,9 @@ Template.wysiwyg.events({
         reader.onload = (function(theFile) {
         return function(e) {
         //Render a PDF icon
+        var fname = theFile.name;
         var span = document.createElement('span');
-        span.innerHTML = ['<div class="word-icon">', 'Word Document: ', escape(theFile.name), '</div>'].join('');
+        span.innerHTML = ['<div class="word-icon">', 'Word Document: ', fname, ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>', '</div>'].join('');
         document.getElementById('list').insertBefore(span, null);
         };
         })(f);
@@ -272,6 +301,33 @@ Template.wysiwyg.events({
       }
     }
 
-}
+  },
+
+  'click .unsaved-remove': function(e){
+      console.log(e.target.id);
+      var updated_files = [];
+      for(var i = 0; i < files.length; i++){
+        console.log(files[i].name, e.target.id);
+        if(files[i].name != e.target.id){
+          updated_files.push(files[i]);
+        }
+      }
+      $(e.target).parent().remove();
+      files = updated_files;
+    },
+
+
+  'click .saved-remove': function(e){
+    console.log(e.target.id);
+    //Posts.remove({_id: e.target.id});
+    if(typeof removed == 'undefined'){
+      removed = [];
+      removed.push(e.target.id);
+    }
+    else{
+      removed.push(e.target.id);
+    }
+    $(e.target).parent().remove();
+  }
 
 })

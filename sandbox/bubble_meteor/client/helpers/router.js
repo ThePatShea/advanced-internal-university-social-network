@@ -53,7 +53,7 @@ Meteor.Router.add({
   //Submit Routes
   '/mybubbles/:_id/create/discussion': {
     to: 'discussionSubmit',
-    and: function(id) { Session.set('currentBubbleId', id); }
+    and: function(id) { Session.set('currentBubbleId', id), Session.set('currentPostId', null); }
   },
   '/mybubbles/:_id/create/event': {
     to: 'eventSubmit',
