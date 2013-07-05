@@ -13,7 +13,6 @@ Template.searchBubbles.helpers({
   }
 });
 
-
 Template.searchBubbles.rendered = function(){
   //To set header as active
   Session.set('searchCategory', 'bubbles');

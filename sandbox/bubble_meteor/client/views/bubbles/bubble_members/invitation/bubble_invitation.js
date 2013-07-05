@@ -52,7 +52,7 @@ Template.bubbleInvitation.events({
     });
     Session.set('inviteeList'+Session.get('currentBubbleId'),usernameList);
   },
-  'click .add-invitees': function(event){
+  'click .add-users': function(event){
     event.preventDefault();
 
     //convert usernameList into userIdList
@@ -61,8 +61,17 @@ Template.bubbleInvitation.events({
     _.each(usernameList, function(username) {
       userIdList.push(Meteor.users.findOne({username:username})._id);
     });
-    //Add Invitees to the bubble object
-    Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
+
+    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    if(bubble.bubbleType == 'super') {
+      Bubbles.update({_id:bubble._id},
+      {
+        $addToSet: {'users.members': {$each: userIdList}}
+      });
+    }else{   
+      //Add Invitees to the bubble object
+      Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
+    }
 
     //Create notifications
     createInvitationUpdate(userIdList);
