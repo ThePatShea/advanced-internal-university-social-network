@@ -21,7 +21,6 @@ Meteor.publish('searchEvents', function(searchText, userId, limit) {
       $or: [
         {name: new RegExp(searchText,'i')}, 
         {body: new RegExp(searchText,'i')}, 
-        {file: new RegExp(searchText,'i')}, 
         {location: new RegExp(searchText,'i')}
       ]
     }, {sort: {submitted: -1}});
@@ -32,9 +31,7 @@ Meteor.publish('searchDiscussions', function(searchText, userId, limit) {
       bubbleId: {$in: getBubbleId(userId)},
       $or: [
         {name: new RegExp(searchText,'i')}, 
-        {body: new RegExp(searchText,'i')}, 
-        {file: new RegExp(searchText,'i')}, 
-        {location: new RegExp(searchText,'i')}
+        {body: new RegExp(searchText,'i')}
       ]
     }, {sort: {submitted: -1}});
 });
@@ -43,22 +40,19 @@ Meteor.publish('searchFiles', function(searchText, userId, limit) {
     { postType:'file', 
       bubbleId: {$in: getBubbleId(userId)},
       $or: [
-        {name: new RegExp(searchText,'i')}, 
-        {body: new RegExp(searchText,'i')}, 
-        {file: new RegExp(searchText,'i')}, 
-        {location: new RegExp(searchText,'i')}
+        {name: new RegExp(searchText,'i')},
+        {file: new RegExp(searchText,'i')}
       ]
     }, {sort: {submitted: -1}});
 });
 
 //This Publication allows super to view all posts during searching
-Meteor.publish('superSearchEvents', function(searchText, searchText, limit){
+Meteor.publish('superSearchEvents', function(searchText, limit){
   return Posts.find(
     { postType: 'event',
       $or: [
         {name: new RegExp(searchText,'i')}, 
         {body: new RegExp(searchText,'i')}, 
-        {file: new RegExp(searchText,'i')}, 
         {location: new RegExp(searchText,'i')}
       ]
     }, {sort: {submitted: -1}, limit:limit});
@@ -68,9 +62,7 @@ Meteor.publish('superSearchDiscussions', function(searchText, limit){
     { postType: 'discussion',
       $or: [
         {name: new RegExp(searchText,'i')}, 
-        {body: new RegExp(searchText,'i')}, 
-        {file: new RegExp(searchText,'i')}, 
-        {location: new RegExp(searchText,'i')}
+        {body: new RegExp(searchText,'i')}
       ]
     }, {sort: {submitted: -1}, limit:limit});
 });
@@ -79,9 +71,7 @@ Meteor.publish('superSearchFiles', function(searchText, limit){
     { postType: 'file',
       $or: [
         {name: new RegExp(searchText,'i')}, 
-        {body: new RegExp(searchText,'i')}, 
-        {file: new RegExp(searchText,'i')}, 
-        {location: new RegExp(searchText,'i')}
+        {file: new RegExp(searchText,'i')}
       ]
     }, {sort: {submitted: -1}, limit:limit});
 });
