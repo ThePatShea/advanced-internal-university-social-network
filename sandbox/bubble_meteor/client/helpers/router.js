@@ -2,25 +2,7 @@ Meteor.Router.add({
   //Login from authentication system
   '/login': 'loginPage',
 
-  //Post Routes
-  '/mybubbles/:_bId/posts/:_pId': {
-    to: 'postPage', 
-    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
-  },
-  '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
-    to: 'discussionEdit', 
-    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
-  },
-  '/mybubbles/:_bId/posts/:_pId/edit/event': {
-    to: 'eventEdit', 
-    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }  
-  },
-  '/posts/:_id/edit/file': {
-    to: 'fileobjectEdit',
-    and: function(id) { Session.set('currentPostId', id);}
-  },
-
-  //Bubble Routes
+  /***************  Bubbles Related Routes   ***************/
   '/mybubbles/:_id/home': {
     to: 'bubblePage', 
     and: function(id) { Session.set('currentBubbleId', id); }
@@ -49,8 +31,28 @@ Meteor.Router.add({
     to: 'bubbleMembersPage',
     and: function(id) { Session.set('currentBubbleId', id); }
   },
-  
-  //Submit Routes
+  /***************  Bubbles Related Routes (End)   ***************/
+
+  /***************  Posts Related Routes   ***************/
+  '/mybubbles/:_bId/posts/:_pId': {
+    to: 'postPage', 
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
+  },
+  '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
+    to: 'discussionEdit', 
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
+  },
+  '/mybubbles/:_bId/posts/:_pId/edit/event': {
+    to: 'eventEdit', 
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }  
+  },
+  '/posts/:_id/edit/file': {
+    to: 'fileobjectEdit',
+    and: function(id) { Session.set('currentPostId', id);}
+  },
+  /***************  Posts Related Routes (End)   ***************/
+
+  /***************  Creation Related Routes   ***************/
   '/mybubbles/:_id/create/discussion': {
     to: 'discussionSubmit',
     and: function(id) { Session.set('currentBubbleId', id), Session.set('currentPostId', null); }
@@ -64,8 +66,9 @@ Meteor.Router.add({
     and: function(id) { Session.set('currentBubbleId', id); }
   },
   '/mybubbles/create/bubble': 'bubbleSubmit',
+  /***************  Creation Related Routes (End)   ***************/
 
-  //Routes for User
+  /***************  User Profile Related Routes   ***************/
   '/userprofile/:id': {
     to: 'userProfile',
     and: function(id) { Session.set('selectedUserId',id); }
@@ -75,18 +78,26 @@ Meteor.Router.add({
     to: 'userprofileEdit',
     and: function(id) { Session.set('selectedUserId',id)}
   },
+  /***************  User Profile Related Routes (End)   ***************/
 
-  //Routes for Search
+  /***************  Search Related Routes   ***************/
   '/mybubbles/search/all': 'searchAll',
   '/mybubbles/search/users': 'searchUsers',
   '/mybubbles/search/bubbles': 'searchBubbles',
   '/mybubbles/search/discussions': 'searchDiscussions',
   '/mybubbles/search/events': 'searchEvents',
   '/mybubbles/search/files': 'searchFiles',
+  /***************  Search Related Routes (End)   ***************/
 
+  /***************  Flags Related Routes   ***************/
+  '/flags/all': 'flagsList',
+  /***************  Flags Related Routes (End)   ***************/
+
+  /***************  Etc Routes   ***************/
   //Capturing rogue urls, hopefully this will be a 404 page in the future
   '/': '/',
   '*': '404NotFound'
+  /***************  Etc Routes (End)   ***************/
 });
 
 Meteor.Router.filters({
@@ -128,19 +139,25 @@ Meteor.Router.filters({
     return page;
   },
   'hasSuperPermissions': function(page) {
-    if(Meteor.user().userType == 'superuser'){
-      return page;
+    if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType){
+      if('superuser' == Meteor.user().userType){
+        return page;
+      }else{
+        Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+        return 'bubblePage';
+      }
     }else{
-      Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
-      return 'bubblePage';
+      return page;
     }
   }
 });
 
-Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit'] });
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit', 'flagsList'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');
+
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
+
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
 Meteor.Router.filter('hasSuperPermissions', {only: ['discussionSubmit', 'eventSubmit', 'fileSubmit', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})

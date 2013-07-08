@@ -6,7 +6,7 @@ Updates.allow({
 
 Meteor.methods({
   update: function(updateAttributes){
-    var user = Meteor.user()
+    var user = Meteor.user();
    
     var update = _.extend(_.pick(updateAttributes, 
       'userId', 'postId', 'commentId', 'bubbleId', 'invokerId',
@@ -14,7 +14,7 @@ Meteor.methods({
       submitted: new Date().getTime(),
       read: false
     });
-    updateId = Updates.insert(update);
+    var updateId = Updates.insert(update);
     return updateId;
   },
 
@@ -102,7 +102,7 @@ createPostUpdate = function(post) {
       invokerId: post.userId,
       invokerName: post.author,
       updateType: "POSTED",
-      url: '/mybubbles'+bubble._id+'/posts/'+post._id,
+      url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
       content: post.author + " created a new " + post.postType + " in " + bubble.title
     });
   });

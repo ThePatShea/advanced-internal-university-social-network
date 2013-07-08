@@ -17,8 +17,19 @@ Template.postPage.helpers({
 });
 
 Template.postPage.events({
-	'click .attending': function(){
+	'click .attending': function() {
 		Meteor.call('attendEvent',this._id,Meteor.user().username);
 
+  },
+  'click .flag': function() {
+    if (confirm("Flag this post?")) {
+      var flagAttributes = {
+        postId: this._id,
+        bubbleId: this.bubbleId,
+        invokerId: Meteor.userId(),
+        invokerName: Meteor.user().username,
+      }
+      Meteor.call('createFlag',flagAttributes);
+    }
   }
 });

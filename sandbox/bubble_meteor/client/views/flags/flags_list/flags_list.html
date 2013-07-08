@@ -1,0 +1,15 @@
+<template name='flagsList'>
+	<h3>Unsolved Flags List</h3>
+	<br />
+	{{#each getUnsolvedFlags}}
+		{{> flagItem}}
+		<br />
+	{{/each}}
+	<hr>
+	<h3>Solved Flags List</h3>
+	<br />
+	{{#each getSolvedFlags}}
+		{{> flagItem}}
+		<br />
+	{{/each}}
+</template>

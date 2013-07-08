@@ -3,6 +3,8 @@ Template.header.helpers({
     var pathname = window.location.pathname.split('/')[1];
     if(pathname == 'mybubbles') {
       return 'active';
+    }else if(pathname == 'flag') {
+      return 'active';
     }
 
   },
@@ -17,5 +19,8 @@ Template.header.helpers({
       }
     }
     return '/mybubbles/search/bubbles';
+  },
+  isSuperUser: function() {
+    return Meteor.user().userType == 'superuser';
   }
 });

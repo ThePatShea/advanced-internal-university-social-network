@@ -1,0 +1,7 @@
+<template name='flagItem'>
+	{{invokerName}} || Post Name:
+	{{#with getPost}}
+		<a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a>
+	{{/with}}
+	<button class="btn btn-small resolve-flag">Solve this issue</button>
+</template>

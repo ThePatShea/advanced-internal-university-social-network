@@ -1,3 +1,4 @@
+//This method returns a list of bubbleIds of the bubble that the user belongs to
 getBubbleId =  function(userId) {
   if(userId){
     var bubbles = Bubbles.find({$or: [{'users.members': userId.toString()}, {'users.admins': userId.toString()}]});
@@ -8,10 +9,18 @@ getBubbleId =  function(userId) {
     return [];
 }
 
+/***************  Posts Related Publications   ***************/
 //This publication only allows normal user to view posts
 Meteor.publish('posts', function(bubbleId){
   return Posts.find({bubbleId: bubbleId});
 });
+
+//This publication only returns posts that are flagged
+Meteor.publish('flaggedPosts', function(){
+  var flags = Flags.find().fetch();
+  var postsList = _.pluck(flags, 'postId');
+  return Posts.find({_id: {$in: postsList}});
+})
 
 //This Publication allows normal user to view all posts during searching
 Meteor.publish('searchEvents', function(searchText, userId, limit) {
@@ -75,15 +84,23 @@ Meteor.publish('superSearchFiles', function(searchText, limit){
       ]
     }, {sort: {submitted: -1}, limit:limit});
 });
+/***************  Posts Related Publications (End)   ***************/
+
+/***************  Comments Related Publications   ***************/
 
 Meteor.publish('comments', function(postId, limit) {
   return Comments.find({postId: postId}, {sort: {submitted:-1}});
 });
+/***************  Comments Related Publications (End)   ***************/
+
+/***************  Updates Related Publications   ***************/
 
 Meteor.publish('updates', function(userId) {
   return Updates.find({read: false}, {sort: {submitted:1}});
 });
+/***************  Updates Related Publications (End)   ***************/
 
+/***************  Bubbles Related Publications   ***************/
 Meteor.publish('singleBubble', function(id){
 	return id && Bubbles.find(id);
 });
@@ -108,7 +125,9 @@ Meteor.publish('joinedBubbles', function(userId) {
 Meteor.publish('invitedBubbles', function(userId) {
   return Bubbles.find({'users.invitees':userId});
 });
+/***************  Bubbles Related Publications (End)   ***************/
 
+/***************  Meteor Users Related Publications   ***************/
 Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
   if (!usernameList) {
     usernameList = [];
@@ -163,4 +182,16 @@ Meteor.publish('userData', function(userId) {
     }
   });
 });
+/***************  Meteor Users Related Publications (End)   ***************/
 
+/***************  Flags Related Publications   ***************/
+Meteor.publish('solvedFlags', function(limit) {
+  return Flags.find({solved: true}, {limit: limit});
+});
+Meteor.publish('unsolvedFlags', function(limit) {
+  return Flags.find({solved: false}, {limit: limit});
+});
+Meteor.publish('allFlags', function(limit) {
+  return Flags.find({}, {limit: limit});
+});
+/***************  Flags Related Publications (End)   ***************/
