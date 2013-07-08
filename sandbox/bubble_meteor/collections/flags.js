@@ -20,6 +20,7 @@ Meteor.methods({
     return flag;
   },
   resolveFlag: function(flag){
-  	Flags.update({_id: flagId}, {$set: {solved: true}});
+  	Flags.update({_id: flag._id}, {$set: {solved: true}});
+    Posts.update({_id: flag.postId}, {$set: {flagged: false}});
   }
 });

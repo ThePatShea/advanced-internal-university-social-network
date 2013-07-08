@@ -29,12 +29,14 @@
               </button>
             </a>
           {{/if}}
-          {{#unless hasJoinedBubble}}
-            {{#if hasApplied}}
-              <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
-            {{else}}
-              <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
-            {{/if}}
+          {{#unless isSuperBubble}}
+            {{#unless hasJoinedBubble}}
+              {{#if hasApplied}}
+                <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
+              {{else}}
+                <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
+              {{/if}}
+            {{/unless}}
           {{/unless}}
         </div>
       </div>

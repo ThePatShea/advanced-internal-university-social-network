@@ -4,10 +4,3 @@ Template.flagItem.helpers({
 	}
 });
 
-Template.flagItem.events({
-	'click .resolve-flag': function() {
-		if (confirm("Solve this flag?")) {
-			Meteor.call('resolveFlag',this._id);
-		}
-	}
-});

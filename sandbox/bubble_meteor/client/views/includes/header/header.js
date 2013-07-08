@@ -9,16 +9,16 @@ Template.header.helpers({
 
   },
   getMyBubblesUrlPath: function() {
-    
-    if(Session.get('currentBubbleId')) { 
-      return '/mybubbles/' + Session.get('currentBubbleId') + '/home';
-    }else{
-      var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
-      if(bubbles.length > 0) {
+    var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
+    if(bubbles.length > 0) {
+      if(Session.get('currentBubbleId')){
+        return '/mybubbles/' + Session.get('currentBubbleId') + '/home';
+      }else{
         return '/mybubbles/' + bubbles[0]._id + '/home';
       }
+    }else{
+      return '/mybubbles/search/bubbles';
     }
-    return '/mybubbles/search/bubbles';
   },
   isSuperUser: function() {
     return Meteor.user().userType == 'superuser';
