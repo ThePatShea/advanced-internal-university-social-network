@@ -5,20 +5,30 @@
           <div class="day">{{timestampToDayLong dateTime}}</div>
           <div class="month">{{timestampToMonthShort dateTime}}</div>
         </div>
-        <h3 class="pull-left post-name">{{name}}</h3>
-        <div class="pull-right post-item-attributes">
-          <span class="attribute">
-            <span class="post-item-icon">{{> icon-member}}</span>
-            <span class="post-item-lbl">{{numOfAttendees}}</span>
-          </span>
-          <span class="attribute">
-            <span class="post-item-icon">{{> icon-location}}</span>
-            <span class="post-item-lbl">{{location}}</span>
-          </span>
-          <span class="attribute">
-            <span class="post-item-icon">{{> icon-time}}</span>
-            <span class="post-item-lbl">{{timestampToTime dateTime}}</span>
-          </span>
+        <h4 class="post-name">{{name}}</h4>
+        <div class="post-item-attributes">
+          <div class="v-middle">
+            <div class="v-inner">
+              <span class="attribute">
+                <div class="pull-right post-item-lbl">
+                  <span class="post-item-icon">{{> icon-time}}</span>
+                  {{timestampToTime dateTime}}
+                </div>
+              </span>
+              <span class="attribute">
+                <div class="pull-right post-item-lbl">
+                  <span class="post-item-icon">{{> icon-member}}</span>
+                  {{numOfAttendees}}
+                </div>
+              </span>
+              <span class="attribute">
+                <div class="pull-right post-item-lbl post-location">
+                  <span class="post-item-icon">{{> icon-location}}</span>
+                  {{location}}
+                </div>
+              </span>
+            </div>
+          </div>
         </div>
     </a>
   </div>

@@ -701,9 +701,10 @@ body
 /**********      Base Divs       **********/
 
 /**********      post-item       **********/
-post-item-padding-vertical  =  15px
-post-item-padding-vertical  =  15px
-post-item-height            =  75px
+post-item-attributes-width-minus-30  =  250px
+post-item-attributes-width           =  280px
+post-item-padding-vertical           =  15px
+post-item-height                     =  75px
 
 align-with-post-item(n)
   bottom                 post-item-padding-vertical
@@ -713,6 +714,7 @@ align-with-post-item(n)
 .post-item
   height                 post-item-height
   position               relative
+  overflow               hidden
   &:hover
     background             white
     .post-date
@@ -724,6 +726,18 @@ align-with-post-item(n)
     std-white-dark-bg      0
     &:hover
       background             white
+  .post-item-link
+    position               absolute
+    display                block
+    height                 100%
+    width                  100%
+    border-box             0
+    left                   0
+    top                    0
+    @media (min-width: 768px)
+      padding                post-item-padding-vertical 30px
+    @media (max-width: 767px)
+      padding                post-item-padding-vertical 20px
   .post-date
     text-transform         uppercase
     padding                7px 0 0 0
@@ -741,35 +755,47 @@ align-with-post-item(n)
     .month
       font-size              11px
   .post-name
-    padding                0 0 0 15px
+    margin                 0 0 0 55px
     color                  #333
     font-size              16px
     align-with-post-item   0
     font-alt-regular       0
     &:hover
       text-decoration        underline
+    @media (min-width: 768px)
+      margin-right           post-item-attributes-width-minus-30
+    @media (max-width: 767px)
+      margin-right           0
   .post-item-attributes
+    width                    post-item-attributes-width
+    height                   post-item-height
+    position                 absolute
+    padding-right            20px
+    border-box               0
+    right                    0
+    top                      0
+    @media (min-width: 768px)
+      display                  block
+    @media (max-width: 767px)
+      display                  none
     .attribute
-      padding                0 0 0 10px
-      align-with-post-item   0
-      font-main-tiny-gray    0
+      font-main-tiny-gray      0
       .post-item-icon
-        std-white-xdark-fill   0
+        position                 relative
+        top                      -1px
+        std-white-xdark-fill     0
         svg
           vertical-align         middle
           width                  20px
           height                 12px
       .post-item-lbl
-        padding                0 0 0 2px
-  .post-item-link
-    padding                post-item-padding-vertical 30px
-    position               absolute
-    display                block
-    height                 100%
-    width                  100%
-    border-box             0
-    left                   0
-    top                    0
+        padding                0 10px 0 2px
+        position               relative
+        overflow               hidden
+        &.post-location
+          text-align             right
+          width                  125px
+          height                 20px
 
 /**********      post-item       **********/
 
