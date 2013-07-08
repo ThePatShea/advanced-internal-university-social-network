@@ -2,6 +2,7 @@
   <div class="post-item">
     <a class="post-item-link" href="{{postPagePath this.bubbleId this._id}}">
         <div class="pull-left post-date">
+          <div class="day">{{timestampToDayLong dateTime}}</div>
           <div class="month">{{timestampToMonthShort dateTime}}</div>
         </div>
         <h3 class="pull-left post-name">{{name}}</h3>

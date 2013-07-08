@@ -55,6 +55,10 @@ Handlebars.registerHelper('timestampToMonthShort', function(dateTime){
   return moment(new Date(dateTime).toString()).format('MMM');
 });
 
+Handlebars.registerHelper('timestampToDayLong', function(dateTime){
+  return moment(new Date(dateTime).toString()).format('DD');
+});
+
 Handlebars.registerHelper('timestampToTime', function(dateTime){
   return moment(new Date(dateTime).toString()).format('h:mma');
 });
