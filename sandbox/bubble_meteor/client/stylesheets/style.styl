@@ -72,6 +72,8 @@ std-white-dark-fill(n)
 std-white-dark-bg(n)
   background             #EEF0F0
 
+std-white-xdark-border(n)
+  border                 1px solid #ACB6BE
 std-white-xdark-color(n)
   color                  #ACB6BE
 std-white-xdark-fill(n)
@@ -98,6 +100,8 @@ main-dark-bg(n)
   background             #001f37
 
 
+main-light-border(n)
+  border                  1px solid #2f5973
 main-light-stroke(n)
   stroke                   #2f5973
   path
@@ -711,10 +715,34 @@ align-with-post-item(n)
   position               relative
   &:hover
     background             white
+    .post-date
+      main-light-border      0
+      main-light-color       0
+    .post-name
+      main-light-color       0
   &:nth-child(even)
     std-white-dark-bg      0
     &:hover
       background             white
+  .post-date
+    height                 40px
+    width                  38px
+    border-radius          8px
+    std-white-xdark-border 0
+    std-white-xdark-color  0
+    font-main-regular      0
+    .month
+      text-transform         uppercase
+      text-align             center
+      font-size              11px
+  .post-name
+    padding                0 0 0 15px
+    color                  #333
+    font-size              16px
+    align-with-post-item   0
+    font-alt-regular       0
+    &:hover
+      text-decoration        underline
   .post-item-attributes
     .attribute
       padding                0 0 0 10px
@@ -737,14 +765,6 @@ align-with-post-item(n)
     border-box             0
     left                   0
     top                    0
-  .post-name
-    color                  #333
-    font-size              16px
-    align-with-post-item   0
-    font-alt-regular       0
-    &:hover
-      text-decoration        underline
-      main-light-color       0
 
 /**********      post-item       **********/
 
