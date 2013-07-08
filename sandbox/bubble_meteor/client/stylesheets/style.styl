@@ -623,11 +623,13 @@ std-btn(n)
   main-xlight-border     0
 
 .btn-tiny
-  padding                8px 15px
+  padding                6px 15px
   line-height            100%
   border-radius          15px
   std-white-xdark-border 0
   font-main-tiny-gray    0
+  &:hover
+    background             white
 
 .std-btn-light
   main-light-color       0
@@ -1141,47 +1143,52 @@ section-icon(n)
   @media (max-width: 767px)
     display                none
 
-.bubble-list
+.bubble-page-content
   @media (min-width: 768px)
-    margin                 50px 0
+    padding              50px 0
   @media (max-width: 767px)
-    margin                 15px 0
-  .bubble-list-heading
-    text-transform         capitalize
-    overflow               hidden
+    padding              25px 0
+  .bubble-list
     @media (min-width: 768px)
-      padding                0 20px 20px 20px
+      margin                 0 0 100px 0
     @media (max-width: 767px)
-      padding                0 10px 10px 20px
-    .section-icon-discussion
-      section-icon           0
-      svg
-        height                 28px
-    .section-icon-event
-      section-icon           0
-      svg
-        height                 24px
-    .section-icon-file
-      section-icon           0
-      svg
-        height                 30px
-    .section-name
-      main-light-color       0
-      font-alt-light         0
+      margin                 0 0 50px 0
+    .bubble-list-heading
+      text-transform         capitalize
+      overflow               hidden
       @media (min-width: 768px)
-        font-size              30px
+        padding                0 30px 20px 30px
       @media (max-width: 767px)
-        font-size              24px
-      .word1
+        padding                0 10px 10px 20px
+      .section-icon-discussion
+        section-icon           0
+        svg
+          height                 28px
+      .section-icon-event
+        section-icon           0
+        svg
+          height                 24px
+      .section-icon-file
+        section-icon           0
+        svg
+          height                 30px
+      .section-name
+        main-light-color       0
+        font-alt-light         0
         @media (min-width: 768px)
-          display                inline
+          font-size              30px
         @media (max-width: 767px)
-          display                none
-  .more-posts
-    @media (min-width: 768px)
-      margin                 20px 30px
-    @media (max-width: 767px)
-      margin                 10px 20px
+          font-size              24px
+        .word1
+          @media (min-width: 768px)
+            display                inline
+          @media (max-width: 767px)
+            display                none
+    .more-posts
+      @media (min-width: 768px)
+        margin                 20px 30px
+      @media (max-width: 767px)
+        margin                 10px 20px
 /**********        bubble-page        **********/
 
 /***************  Single-Purpose Elements  ***************/
