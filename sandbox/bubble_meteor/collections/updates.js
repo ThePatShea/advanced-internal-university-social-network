@@ -93,7 +93,7 @@ createPostUpdate = function(post) {
   var everyone = getEveryone(bubble);
   var index = everyone.indexOf(post.userId);
   everyone.splice(index,1);
-
+  console.log(post.author);
   _.each(everyone, function(userId) {
     Meteor.call('update',{
       userId: userId,

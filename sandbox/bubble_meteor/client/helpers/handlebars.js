@@ -113,8 +113,8 @@ Handlebars.registerHelper('hasSearchText', function() {
   }
 });
 
-Handlebars.registerHelper('isSuperUser', function() {
-  if('superuser' == Meteor.user().userType) {
+Handlebars.registerHelper('hasSuperPermissions', function() {
+  if('superuser' == Meteor.user().userType && 'super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType) {
     return true;
   }
 })

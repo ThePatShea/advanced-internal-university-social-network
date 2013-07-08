@@ -129,20 +129,17 @@ Template.updatesList.helpers({
           updateList = _.reject(updateList, function(newUpdate) {
             return newUpdate.updateType == type;
           });
-          //Now add back with the applicant that has a changed invoker name
+          //Now ad back with the applicant that has a changed invoker name
           if(firstUpdate){
             updateList.push(firstUpdate);
           }
         }
-        
       });
 
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
-      }); 
-      
+      });  
       return updateList;
     }
-    
   }
 });

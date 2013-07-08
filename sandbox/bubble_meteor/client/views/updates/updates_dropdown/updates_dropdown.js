@@ -13,7 +13,7 @@ Template.updatesDropdown.helpers({
     var resultList = [];
 
     _.each(bubbleList, function(bubble) {
-      var updateList = Updates.find({userId: Meteor.userId(), bubbleId:bubble._id}).fetch();
+      var updateList = Updates.find({userId: Meteor.userId(), bubbleId:bubble._id, read:false}).fetch();
 
       //To combine updates with same userId, invokerId, updateType and postId
       if(updateList.length > 0) {

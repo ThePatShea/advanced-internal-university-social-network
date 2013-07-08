@@ -85,7 +85,7 @@ Meteor.Router.add({
   '/mybubbles/search/files': 'searchFiles',
 
   //Capturing rogue urls, hopefully this will be a 404 page in the future
-  '/': 'searchAll',
+  '/': '/',
   '*': '404NotFound'
 });
 
@@ -115,9 +115,21 @@ Meteor.Router.filters({
     }else {
       return 'loginPage';
     }
+  },
+  'routeWhenLogin': function(page) {
+    var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
+    if(bubbles.length > 0) {
+      console.log("this ran");
+      Meteor.Router.to('bubblePage',bubbles[0]._id);
+      return 'bubblePage';
+    }else{
+      return 'searchBubbles';
+    }
+    return page;
   }
 });
 
 Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');
+Meteor.Router.filter('routeWhenLogin', {only: ['/']});

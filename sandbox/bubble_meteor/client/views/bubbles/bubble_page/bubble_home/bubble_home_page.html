@@ -19,9 +19,11 @@
           <span class="word1">upcoming</span>
           <span class="word2">events</span>
         </h3>
-        <a href="{{eventSubmitPath this}}">
-          <button class="std-btn-light pull-right">add new event</button>
-        </a>
+        {{#if hasSuperPermissions}}
+          <a href="{{eventSubmitPath this}}">
+            <button class="std-btn-light pull-right">add new event</button>
+          </a>
+        {{/if}}
       </div>
       {{#if eventPosts}}
         {{#each eventPosts}}
@@ -29,7 +31,7 @@
         {{/each}}
         {{#if hasMoreEvents}}
           <a href="{{bubbleEventPagePath this}}">
-            <button class="btn btn-small btn-success more-events">+{{eventsCount}} more events</button>
+            <button class="btn btn-small btn-success more-events">+{{pluralize eventsCount 'more event'}} </button>
           </a>
           {{/if}}
         {{else}}
@@ -54,7 +56,7 @@
         {{/each}}
         {{#if hasMoreDiscussions}}
           <a href="{{bubbleDiscussionPagePath this}}">
-            <button class = "btn btn-small btn-success more-discussions" type="button" >+{{discussionsCount}} more discussions</button>
+            <button class = "btn btn-small btn-success more-discussions" type="button" >+{{pluralize discussionsCount 'more discussion'}}</button>
           </a>
         {{/if}}
         {{else}}
@@ -79,7 +81,7 @@
         {{/each}}
         {{#if hasMoreFiles}}
           <a href="{{bubbleFilePagePath this}}">
-            <button class = "btn btn-small btn-success more-files" type="button" >+{{filesCount}} more files</button>
+            <button class = "btn btn-small btn-success more-files" type="button" >+{{pluralize filesCount 'more file'}}</button>
           </a>
         {{/if}}
       {{else}}

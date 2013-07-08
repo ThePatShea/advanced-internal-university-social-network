@@ -3,7 +3,7 @@
 	<br />
 	{{#each getMembers}}
 		{{#if isSuperBubble}}
-			{{#if isSuperUser}}
+			{{#if hasSuperPermissions}}
 	      <button class="btn btn-small activate" type="button">
 	        {{getUsername this}}
 	      </button>

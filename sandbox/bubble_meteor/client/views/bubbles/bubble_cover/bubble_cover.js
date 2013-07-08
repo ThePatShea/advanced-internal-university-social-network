@@ -1,8 +1,7 @@
 Template.bubbleCover.helpers({
 	hasApplied: function() {
-		var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-
-		return  _.contains(users.applicants, Meteor.userId());
+		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
+		return _.contains(this.users.applicants, Meteor.userId());
 	},
 	getLongCategory: function() {
 		var currentCat = this.category;
@@ -12,6 +11,10 @@ Template.bubbleCover.helpers({
 		if(category) {
 			return category.name_long;
 		}
+	},
+	hasJoinedBubble: function() {
+		return _.contains(this.users.members, Meteor.userId())
+					|| _.contains(this.users.admins, Meteor.userId());
 	}
 });
 

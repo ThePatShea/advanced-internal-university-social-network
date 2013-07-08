@@ -1,7 +1,6 @@
 
 mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 20);
 
-
 Deps.autorun(function() {
 	//Retrieves Bubbles
   Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
@@ -19,7 +18,7 @@ Deps.autorun(function() {
 	Meteor.subscribe('userData', Session.get('selectedUserId'));
 
 	//Retrieves Posts related to current bubble
-	postsListHandle = Meteor.subscribeWithPagination('posts', Session.get('currentBubbleId'), 2);
+	postsListHandle = Meteor.subscribeWithPagination('posts', Session.get('currentBubbleId'), 10);
 	//Retrieves searched Posts
 	if( Meteor.user() && 'superuser' == Meteor.user().userType){
 		searchEventsHandle = Meteor.subscribeWithPagination('superSearchEvents', Session.get('searchText'), 10);
