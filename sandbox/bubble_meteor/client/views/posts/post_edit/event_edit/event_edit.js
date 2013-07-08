@@ -11,6 +11,8 @@ Template.eventEdit.helpers({
 Template.eventEdit.events({
   'submit form': function(e) {
     e.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Edit Event', this.name]);
     
     var currentPostId = Session.get('currentPostId');
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
@@ -119,6 +121,8 @@ Template.eventEdit.events({
   
   'click #delete_post': function(e) {
     e.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Delete Event', this.name]);
     if (confirm("Delete this post?")) {
       var currentPostId = Session.get('currentPostId');
       Posts.remove({_id: currentPostId});

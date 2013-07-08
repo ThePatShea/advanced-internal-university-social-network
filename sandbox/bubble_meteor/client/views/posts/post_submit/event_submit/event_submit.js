@@ -1,6 +1,8 @@
 Template.eventSubmit.events({
   'submit form': function(event) {
     event.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
     

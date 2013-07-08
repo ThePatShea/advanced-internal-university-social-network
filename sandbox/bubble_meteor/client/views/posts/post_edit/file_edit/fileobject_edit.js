@@ -1,6 +1,8 @@
 Template.fileobjectEdit.events({
   'submit form': function(e) {
     e.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Edit File', this.name]);
     
     var currentPostId = Session.get('currentPostId');
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();

@@ -9,6 +9,8 @@ Template.bubbleSubmit.helpers({
 Template.bubbleSubmit.events({
   'submit form': function(event) {
     event.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Bubble', 'Create', $(event.target).find('[name=title]').val()]);
 
     var bubble = {
       title: $(event.target).find('[name=title]').val(),
