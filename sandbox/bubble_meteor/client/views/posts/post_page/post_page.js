@@ -27,6 +27,8 @@ Template.postPage.helpers({
 
 Template.postPage.events({
 	'click .attending': function() {
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Attending Event', +this.name]);
 		Meteor.call('attendEvent',this._id,Meteor.user().username);
 
   },
