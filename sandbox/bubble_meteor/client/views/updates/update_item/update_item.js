@@ -19,7 +19,9 @@ userId: Meteor.userId(), Template.updateItem.helpers({
 				this.updateType == "POSTED" || 
 				this.updateType == "EDITED POST") {
 			var post = Posts.findOne(this.postId);
-			return post.name;
+			if(post){
+				return post.name;
+			}
 		}else if(this.updateType == "REMOVED FROM BUBBLE" || 
 				this.updateType == "APPLICATION REJECTED") {
 			return 'Bubble List';

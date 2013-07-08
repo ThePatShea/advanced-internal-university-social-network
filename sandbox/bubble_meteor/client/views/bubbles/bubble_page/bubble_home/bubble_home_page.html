@@ -46,9 +46,11 @@
           <span class="word1">active</span>
           <span class="word2">discussions</span>
         </h3>
-        <a href="{{discussionSubmitPath this}}">
-          <button class="std-btn-light pull-right">add new discussion</button>
-        </a>
+        {{#if hasSuperPermissions}}
+          <a href="{{discussionSubmitPath this}}">
+            <button class="std-btn-light pull-right">add new discussion</button>
+          </a>
+        {{/if}}
       </div>
       {{#if discussionPosts}}
         {{#each discussionPosts}}
@@ -71,9 +73,12 @@
           <span class="word1">latest</span>
           <span class="word2">files</span>
         </h3>
-        <a href="{{fileSubmitPath this}}">
-          <button class="std-btn-light pull-right">add new file</button>
-        </a> 
+
+        {{#if hasSuperPermissions}}
+          <a href="{{fileSubmitPath this}}">
+            <button class="std-btn-light pull-right">add new file</button>
+          </a> 
+        {{/if}}
       </div>
       {{#if filePosts}}
         {{#each filePosts}}

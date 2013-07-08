@@ -2,9 +2,12 @@
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
-    <a href="{{eventSubmitPath this}}">
-    	<div class="btn">Start an Event</div>
-		</a>
+
+    {{#if hasSuperPermissions}}
+      <a href="{{eventSubmitPath this}}">
+      	<div class="btn">Start an Event</div>
+  		</a>
+    {{/if}}
 
 		{{#each getEventPosts}}
 			{{> postItem}}

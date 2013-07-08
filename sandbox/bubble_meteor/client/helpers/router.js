@@ -126,10 +126,21 @@ Meteor.Router.filters({
       return 'searchBubbles';
     }
     return page;
+  },
+  'hasSuperPermissions': function(page) {
+    if(Meteor.user().userType == 'superuser'){
+      return page;
+    }else{
+      Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+      return 'bubblePage';
+    }
   }
 });
 
 Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');
+//Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
+//Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
+Meteor.Router.filter('hasSuperPermissions', {only: ['discussionSubmit', 'eventSubmit', 'fileSubmit', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})

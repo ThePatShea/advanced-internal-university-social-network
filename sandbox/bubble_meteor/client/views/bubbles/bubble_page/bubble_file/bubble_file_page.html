@@ -2,9 +2,12 @@
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
-    <a href="{{fileSubmitPath this}}">
-    	<div class="btn">Upload a File</div>
-		</a>
+
+    {{#if hasSuperPermissions}}
+      <a href="{{fileSubmitPath this}}">
+      	<div class="btn">Upload a File</div>
+  		</a>
+    {{/if}}
 
 		{{#each getFilePosts}}
     	{{> postItem}}
