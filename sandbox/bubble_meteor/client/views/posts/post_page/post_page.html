@@ -6,6 +6,7 @@
   {{#with currentPost}}
     {{> postItem}}
   	<button class='btn btn-small flag'>flag here!</button>
+  	<a href="{{getPostEditUrl}}"><button class='btn btn-small'>Edit Post</button></a>
     {{> postAttributes}}    
     {{> commentsList}}
 
@@ -23,6 +24,5 @@
 					{{this}}
 				{{/with}}
 		{{/if}}
-
   {{/with}}
 </template>

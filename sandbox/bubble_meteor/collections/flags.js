@@ -11,11 +11,12 @@ Meteor.methods({
       solved: false
     });
     var flagId = Flags.insert(flag);
-    return flagId;
-  	// console.log(Meteor.users.find({userType:'superuser'}));
+    //Flags the specific post
+    Posts.update({_id: flag.postId}, {$set: {flagged: true}});
+    console.log(flag);
+    return flag;
   },
-  resolveFlag: function(flagId){
+  resolveFlag: function(flag){
   	Flags.update({_id: flagId}, {$set: {solved: true}});
-
   }
 });
