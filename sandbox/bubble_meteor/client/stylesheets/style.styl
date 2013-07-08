@@ -71,6 +71,13 @@ std-white-dark-fill(n)
   fill                   #EEF0F0
 std-white-dark-bg(n)
   background             #EEF0F0
+
+std-white-xdark-color(n)
+  color                  #ACB6BE
+std-white-xdark-fill(n)
+  fill                   #ACB6BE
+std-white-xdark-bg(n)
+  background             #ACB6BE
 /*****    Standard White    *****/
 
 
@@ -123,15 +130,15 @@ main-xlight-bg(n)
 
 
 /*****   Category Colors    *****/
-color-club  =  #b0606d
-color-sport  =  #ff6b53
-color-greek   =  #70c889
-color-study  =  #f9c148
-color-major   =  #673653
-color-office  =  #de8275
-color-service   =  #6bb6a1
-color-dorm  =  #6dc3ba
-color-art   =  #ff8a54
+color-club     =  #b0606d
+color-sport    =  #ff6b53
+color-greek    =  #70c889
+color-study    =  #f9c148
+color-major    =  #673653
+color-office   =  #de8275
+color-service  =  #6bb6a1
+color-dorm     =  #6dc3ba
+color-art      =  #ff8a54
 color-custom   =  #462446
 /*****   Category Colors    *****/
 /*****    Category: club    *****/
@@ -523,6 +530,13 @@ font-main-black-11-u(n)
   text-transform         uppercase
   font-size              11px
   font-main-black        0
+
+font-main-tiny-gray(n)
+  text-transform         uppercase
+  font-size              10px
+  std-white-xdark-color  0
+  font-main-regular      0
+
 /*****    Main Font     *****/
 
 /*****  Alternate Font  *****/
@@ -608,12 +622,19 @@ std-btn(n)
   main-light-color       0
   font-main-bold         0
   std-btn                0
+  &:hover
+    background             white
 
 .std-btn-dark
   background             rgba(0,0,0,.35)
   main-xlight-color      0
   font-main-black        0
   std-btn                0
+  &:hover
+    color                  black
+    main-xlight-bg         0
+    svg
+      fill                   black
 /**********     Buttons     **********/
 
 
@@ -661,20 +682,70 @@ svg
 body
   std-white-light-bg     0
 
-.comments li:nth-child(even),
-.post:nth-child(even)
+.comments li:nth-child(even)
   std-white-dark-bg      0
-
-.post
-  padding                15px 30px
-  height                 70px
-  border-box             0
 
 .container
   top                    navbar-height
   position               relative
   width                  100%
+
+.post
+  padding                15px 30px
+  height                 70px
+  border-box             0
 /**********      Base Divs       **********/
+
+/**********      post-item       **********/
+post-item-padding-vertical  =  15px
+post-item-padding-vertical  =  15px
+post-item-height            =  75px
+
+align-with-post-item(n)
+  bottom                 post-item-padding-vertical
+  line-height            post-item-height
+  position               relative
+ 
+.post-item
+  height                 post-item-height
+  position               relative
+  &:hover
+    background             white
+  &:nth-child(even)
+    std-white-dark-bg      0
+    &:hover
+      background             white
+  .post-item-attributes
+    padding                0 0 0 15px
+    align-with-post-item   0
+    font-main-tiny-gray    0
+    .post-item-icon
+      std-white-xdark-fill   0
+      svg
+        vertical-align         middle
+        width                  20px
+        height                 12px
+    .post-item-lbl
+      padding                0 0 0 2px
+  .post-item-link
+    padding                post-item-padding-vertical 30px
+    position               absolute
+    display                block
+    height                 100%
+    width                  100%
+    border-box             0
+    left                   0
+    top                    0
+  .post-name
+    color                  #333
+    font-size              16px
+    align-with-post-item   0
+    font-alt-regular       0
+    &:hover
+      text-decoration        underline
+      main-light-color       0
+
+/**********      post-item       **********/
 
 /**********        navbar        **********/
 navbar-border-color  =  #224253
@@ -1021,7 +1092,7 @@ section-icon(n)
     text-transform         capitalize
     overflow               hidden
     @media (min-width: 768px)
-      padding                0 20px 30px 20px
+      padding                0 20px 20px 20px
     @media (max-width: 767px)
       padding                0 10px 10px 20px
     .section-icon-discussion

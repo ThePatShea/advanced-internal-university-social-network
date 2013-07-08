@@ -51,6 +51,18 @@ Handlebars.registerHelper('submittedText', function(submitted){
   return moment(new Date(submitted).toString()).fromNow().toUpperCase();
 });
 
+Handlebars.registerHelper('timestampToMonthShort', function(dateTime){
+  return moment(new Date(dateTime).toString()).format('MMM');
+});
+
+Handlebars.registerHelper('timestampToTime', function(dateTime){
+  return moment(new Date(dateTime).toString()).format('h:mma');
+});
+
+Handlebars.registerHelper('numOfAttendees', function(){
+  return this.attendees.length;
+});
+
 Handlebars.registerHelper('toUpperCase', function(text){
   return text.toUpperCase();
 });

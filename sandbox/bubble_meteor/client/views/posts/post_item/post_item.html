@@ -1,6 +1,5 @@
 <template name="postItem">
   <div class="post">
-
     <div class="pull-left" style="width: 130px;">
       <h4 style="line-height: 16px; text-transform: uppercase;">{{postType}}</h4>
     </div>
@@ -8,23 +7,10 @@
       <h3><a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a></h3>
       <p>
         <a href="{{postPagePath this}}">{{pluralize commentsCount "comment"}}</a>
-        {{#if hasPermission}} |
-          {{#if getPostType "discussion"}}
-            <a href="{{discussionEditPath this}}">Edit</a>
-          {{/if}}
-          {{#if getPostType "event"}}
-            <a href="{{eventEditPath this}}">Edit</a>
-          {{/if}}
-          {{#if getPostType "file"}}
-            <a href="{{fileobjectEditPath this}}">Edit</a>
-          {{/if}}
-        {{/if}}
       </p>
     </div>
     <div style="width: 100px;" class="pull-right">
       <p style="line-height: 10px;">Posted by</p>
       <h4><a href="{{userProfilePath userId}}">{{author}}</a></h4>
-
-
   </div>
 </template>
