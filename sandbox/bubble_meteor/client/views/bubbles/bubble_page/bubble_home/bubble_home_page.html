@@ -29,7 +29,7 @@
         {{/each}}
         {{#if hasMoreEvents}}
           <a href="{{bubbleEventPagePath this}}">
-            <button class="btn btn-small btn-success more-events">+{{eventsCount}} more events</button>
+            <button class="btn-tiny more-posts">+ {{eventsCount}} more events</button>
           </a>
           {{/if}}
         {{else}}
@@ -54,7 +54,7 @@
         {{/each}}
         {{#if hasMoreDiscussions}}
           <a href="{{bubbleDiscussionPagePath this}}">
-            <button class = "btn btn-small btn-success more-discussions" type="button" >+{{discussionsCount}} more discussions</button>
+            <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{discussionsCount}} more discussions</button>
           </a>
         {{/if}}
         {{else}}
@@ -79,7 +79,7 @@
         {{/each}}
         {{#if hasMoreFiles}}
           <a href="{{bubbleFilePagePath this}}">
-            <button class = "btn btn-small btn-success more-files" type="button" >+{{filesCount}} more files</button>
+            <button class = "btn btn-small btn-success more-files" type="button" >+ {{filesCount}} more files</button>
           </a>
         {{/if}}
       {{else}}
