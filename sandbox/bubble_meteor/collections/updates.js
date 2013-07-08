@@ -348,17 +348,20 @@ createNewApplicantUpdate = function() {
 
 //For super useres when there are new flags
 createPostFlagUpdate = function(flag) {
-  var superUsers = Meteor.users.find({userType:'superuser'});
+  var post = Posts.findOne(flag.postId);
+  var superUsers = Meteor.users.find({userType:'superuser'}).fetch();
   _.each(superUsers, function(user) {
-    Meteor.call('update',{
-      userId: adminId,
-      bubbleId: bubble._id,
-      invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
-      updateType: "FLAGGED POST",
-      url: '/mybubbles/'+bubble._id+'/members',
-      content: " applied to be a member of the bubble " + bubble.title
-    });
+    if(user._id != Meteor.userId()){
+      Meteor.call('update',{
+        userId: user._id,
+        bubbleId: flag.bubbleId,
+        invokerId: Meteor.userId(),
+        invokerName: Meteor.user().username,
+        updateType: "FLAGGED POST",
+        url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
+        content: post.name + " has been flagged"
+      });
+    }
   }); 
 }
 

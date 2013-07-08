@@ -11,9 +11,12 @@ Meteor.methods({
       solved: false
     });
     var flagId = Flags.insert(flag);
+
     //Flags the specific post
     Posts.update({_id: flag.postId}, {$set: {flagged: true}});
-    console.log(flag);
+    // Creates the update when the flag object is created
+    createPostFlagUpdate(flag);
+
     return flag;
   },
   resolveFlag: function(flag){

@@ -38,10 +38,7 @@ Template.postPage.events({
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
       }
-      var flag = Meteor.call('createFlag',flagAttributes);
-      console.log(flag);
-      //Creates the update when the flag object is created
-      // Meteor.call('createPostFlagUpdate', );
+      Meteor.call('createFlag',flagAttributes);
     }
   }
 });
