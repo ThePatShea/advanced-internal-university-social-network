@@ -4,16 +4,18 @@
         <div class="pull-left">
           {{timestampToMonthShort dateTime}}
         </div>
-        <h3 class="post-name pull-left">{{name}}</h3>
-        <div class="pull-right">
-          <span class="post-item-attributes">
+        <h3 class="pull-left post-name">{{name}}</h3>
+        <div class="pull-right post-item-attributes">
+          <span class="attribute">
             <span class="post-item-icon">{{> icon-member}}</span>
             <span class="post-item-lbl">{{numOfAttendees}}</span>
           </span>
-          <span class="post-item-attributes">
+          <span class="attribute">
+            <span class="post-item-icon">{{> icon-location}}</span>
             <span class="post-item-lbl">{{location}}</span>
           </span>
-          <span class="post-item-attributes">
+          <span class="attribute">
+            <span class="post-item-icon">{{> icon-time}}</span>
             <span class="post-item-lbl">{{timestampToTime dateTime}}</span>
           </span>
         </div>
