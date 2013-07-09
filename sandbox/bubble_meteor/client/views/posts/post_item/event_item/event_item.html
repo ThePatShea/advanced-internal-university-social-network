@@ -1,40 +1,38 @@
 <template name="eventItem">
   <div class="post-item">
-    <a class="post-item-link" href="{{postPagePath this.bubbleId this._id}}">
-        <div class="pull-left post-date">
-          <div class="day">{{timestampToDayLong dateTime}}</div>
-          <div class="month">{{timestampToMonthShort dateTime}}</div>
+    <div class="pull-left post-date">
+      <div class="day">{{timestampToDayLong dateTime}}</div>
+      <div class="month">{{timestampToMonthShort dateTime}}</div>
+    </div>
+    <h4 class="post-name">{{name}}</h4>
+    <div class="post-item-attributes">
+      <div class="v-middle pull-right">
+        <div class="v-inner">
+          <span class="attribute-items">
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon">{{> icon-time}}</span>
+                {{timestampToTime dateTime}}
+              </div>
+            </span>
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon">{{> icon-member}}</span>
+                {{numOfAttendees}}
+              </div>
+            </span>
+            <span class="attribute">
+              <div class="pull-right post-item-lbl post-location">
+                <span class="post-item-icon">{{> icon-location}}</span>
+                {{location}}
+              </div>
+            </span>
+          </span>
+          <span class="post-actions">
+            {{> imGoing}}
+          </span>
         </div>
-        <h4 class="post-name">{{name}}</h4>
-        <div class="post-item-attributes">
-          <div class="v-middle pull-right">
-            <div class="v-inner">
-              <span class="attribute-items">
-                <span class="attribute">
-                  <div class="pull-right post-item-lbl">
-                    <span class="post-item-icon">{{> icon-time}}</span>
-                    {{timestampToTime dateTime}}
-                  </div>
-                </span>
-                <span class="attribute">
-                  <div class="pull-right post-item-lbl">
-                    <span class="post-item-icon">{{> icon-member}}</span>
-                    {{numOfAttendees}}
-                  </div>
-                </span>
-                <span class="attribute">
-                  <div class="pull-right post-item-lbl post-location">
-                    <span class="post-item-icon">{{> icon-location}}</span>
-                    {{location}}
-                  </div>
-                </span>
-              </span>
-              <span class="post-actions">
-                <button class="post-action">i'm going</button>
-              </span>
-            </div>
-          </div>
-        </div>
-    </a>
+      </div>
+    </div>
   </div>
 </template>

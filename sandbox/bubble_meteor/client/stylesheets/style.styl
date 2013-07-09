@@ -750,7 +750,19 @@ std-btn-xdark(n)
   fontize(main, medium, uppercase, 12px, 100%)
   &:hover
     colorize(auto, main-xdark)
-    
+ 
+/*****     im-going     *****/
+.im-going
+  .hover-words
+    display                none
+  .main-words
+    display                inline
+  &:hover
+    .hover-words
+      display                inline
+    .main-words
+      display                none
+/*****     im-going     *****/
 /**********     Buttons     **********/
 
 
@@ -827,6 +839,7 @@ align-with-post-item(n)
   height                 post-item-height
   position               relative
   overflow               hidden
+  border-box             0
   &:hover
     background             white
     .post-date
@@ -843,18 +856,10 @@ align-with-post-item(n)
     std-white-dark-bg      0
     &:hover
       background             white
-  .post-item-link
-    position               absolute
-    display                block
-    height                 100%
-    width                  100%
-    border-box             0
-    left                   0
-    top                    0
-    @media (min-width: 768px)
-      padding                post-item-padding-vertical 30px
-    @media (max-width: 767px)
-      padding                post-item-padding-vertical 20px
+  @media (min-width: 768px)
+    padding                post-item-padding-vertical 30px
+  @media (max-width: 767px)
+    padding                post-item-padding-vertical 20px
   .post-date
     text-transform         uppercase
     padding                7px 0 0 0
