@@ -21,7 +21,12 @@ Template.postPage.helpers({
     }else if(this.postType == 'discussion'){
       return '/mybubbles/'+Session.get('currentBubbleId')+'/posts/'+Session.get('currentPostId')+'/edit/discussion';
     }else if(this.postType == 'file'){
-      return '/mybubbles/'+Session.get('currentBubbleId')+'/posts/'+Session.get('currentPostId')+'/edit/file';
+      if(typeof this.parent != 'undefined'){
+        return '/mybubbles/' + Session.get('currentBubbleId') + '/posts/' + this.parent + '/edit/discussion';
+      }
+      else{
+        return '/mybubbles/'+Session.get('currentBubbleId')+'/posts/'+Session.get('currentPostId')+'/edit/file';
+      }
     }
   }
 });

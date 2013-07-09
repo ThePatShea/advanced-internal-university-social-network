@@ -5,7 +5,11 @@
       <h4 style="line-height: 16px; text-transform: uppercase;">{{postType}}</h4>
     </div>
     <div class="post-content">
-      <h3><a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a></h3>
+      {{#if this.parent}}
+        <h3><a href="{{postPagePath this.bubbleId this.parent}}">{{name}}</a></h3>
+      {{else}}
+        <h3><a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a></h3>
+      {{/if}}
     </div>
     <div style="width: 100px;" class="pull-right">
       <p style="line-height: 10px;">Posted by</p>
