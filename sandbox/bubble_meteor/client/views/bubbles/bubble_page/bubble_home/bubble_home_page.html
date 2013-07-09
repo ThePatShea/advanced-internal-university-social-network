@@ -14,16 +14,7 @@
       </div>
   
       <div class="bubble-list">
-        <div class="bubble-list-heading">
-          <h3 class="section-name pull-left">
-            <span class="section-icon-event">{{> icon-event}}</span>
-            <span class="word1">upcoming</span>
-            <span class="word2">events</span>
-          </h3>
-          <a class="visible-{{hasSuperPermissions}}" href="{{eventSubmitPath this}}">
-            <button class="std-btn-light pull-right">add new event</button>
-          </a>
-        </div>
+        {{> listHeadingEvent}}
         {{#each eventPosts}}
           {{> eventItem}}
         {{else}}

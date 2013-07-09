@@ -2,16 +2,15 @@
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
-
-    {{#if hasSuperPermissions}}
-      <a href="{{eventSubmitPath this}}">
-      	<div class="btn">Start an Event</div>
-  		</a>
-    {{/if}}
-
-		{{#each getEventPosts}}
-			{{> eventItem}}
-		{{/each}}
-
+    <div class="bubble-page-content">
+      <div class="bubble-list">
+        {{> listHeadingEvent}}
+        {{#each getEventPosts}}
+          {{> eventItem}}
+        {{else}}
+          No events yet.
+        {{/each}}
+      </div>
+    </div>
   {{/with}}
 </template>
