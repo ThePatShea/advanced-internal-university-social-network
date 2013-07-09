@@ -9,23 +9,28 @@
         <div class="post-item-attributes">
           <div class="v-middle pull-right">
             <div class="v-inner">
-              <span class="attribute">
-                <div class="pull-right post-item-lbl">
-                  <span class="post-item-icon">{{> icon-time}}</span>
-                  {{timestampToTime dateTime}}
-                </div>
+              <span class="attribute-items">
+                <span class="attribute">
+                  <div class="pull-right post-item-lbl">
+                    <span class="post-item-icon">{{> icon-time}}</span>
+                    {{timestampToTime dateTime}}
+                  </div>
+                </span>
+                <span class="attribute">
+                  <div class="pull-right post-item-lbl">
+                    <span class="post-item-icon">{{> icon-member}}</span>
+                    {{numOfAttendees}}
+                  </div>
+                </span>
+                <span class="attribute">
+                  <div class="pull-right post-item-lbl post-location">
+                    <span class="post-item-icon">{{> icon-location}}</span>
+                    {{location}}
+                  </div>
+                </span>
               </span>
-              <span class="attribute">
-                <div class="pull-right post-item-lbl">
-                  <span class="post-item-icon">{{> icon-member}}</span>
-                  {{numOfAttendees}}
-                </div>
-              </span>
-              <span class="attribute">
-                <div class="pull-right post-item-lbl post-location">
-                  <span class="post-item-icon">{{> icon-location}}</span>
-                  {{location}}
-                </div>
+              <span class="post-actions">
+                <button class="post-action">i'm going</button>
               </span>
             </div>
           </div>

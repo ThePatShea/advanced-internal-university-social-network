@@ -57,26 +57,30 @@ body
 
 /***************  Multi-Purpose Elements   ***************/
 /**********  Color Palette  **********/
+white-xdark   =  #ACB6BE
+white-dark    =  #EEF0F0
+white-light   =  #F7F8F8
+white-xlight  =  #FFFFFF
+
+main-xdark    =  #011126
+main-dark     =  #001f37
+main-light    =  #2f5973
+main-xlight   =  #95afbf
+
 /*****    Standard White    *****/
-std-white-xdark  =  #ACB6BE
-std-white-dark   =  #EEF0F0
-std-white-light  =  #F7F8F8
-
-
-
 std-white-light-color(n)
-  color                  std-white-light
+  color                  white-light
 std-white-light-fill(n)
-  fill                   std-white-light
+  fill                   white-light
 std-white-light-bg(n)
-  background             std-white-light
+  background             white-light
 
 std-white-dark-color(n)
-  color                  std-white-dark
+  color                  white-dark
 std-white-dark-fill(n)
-  fill                   std-white-dark
+  fill                   white-dark
 std-white-dark-bg(n)
-  background             std-white-dark
+  background             white-dark
 
 std-white-xdark-border(n)
   border                 1px solid #ACB6BE
@@ -574,7 +578,7 @@ font-alt-light(n)
 /**********  Font Palette   **********/
 
 /**********    Functions    **********/
-fontize(family, weight, val-transform = none, val-size = inherit, val-line-height = normal)
+fontize(family, weight, val-transform = none, val-size = inherit, val-line-height = normal, val-letter-spacing = normal)
   if family == main
     font-family    'brandon-grotesque', Arial, Sans-Serif
   else if family == alt
@@ -591,6 +595,7 @@ fontize(family, weight, val-transform = none, val-size = inherit, val-line-heigh
     font-weight    300
   else if weight == thin
     font-weight    100
+  letter-spacing     val-letter-spacing
   line-height        val-line-height
   text-transform     val-transform
   font-size          val-size
@@ -607,7 +612,8 @@ breakpoint-swap(property, val-desktop, val-mobile)
     if property == padding
       padding    val-mobile
 
-positionize(val-height = auto, val-width = auto, val-padding = 0, val-margin = 0, val-float = none, val-move-position = relative, val-display = block, val-overflow = hidden)
+positionize(val-height = auto, val-width = auto, val-padding = 0, val-margin = 0, val-border-radius = 0, val-float = none, val-move-position = relative, val-display = auto, val-overflow = hidden)
+  border-radius     val-border-radius
   overflow          val-overflow
   padding           val-padding
   display           val-display
@@ -630,7 +636,7 @@ move-position(val-position = relative, val-top = 0, val-right = 0, val-bottom = 
   left              val-left
   top               val-top
 
-colorize(val-color = inherit, val-background = transparent, val-fill = inherit, val-border = 0)
+colorize(val-color = auto, val-background = auto, val-fill = auto, val-border = auto)
   background        val-background
   border            val-border
   color             val-color
@@ -730,6 +736,14 @@ std-btn(n)
     main-xlight-bg         0
     svg
       fill                   black
+
+std-btn-xdark(n)
+  positionize(auto, auto, 8px 30px, 10px, 14px)
+  colorize(white-light, main-light, main-light)
+  fontize(main, medium, uppercase, 12px, 100%)
+  &:hover
+    colorize(auto, main-xdark)
+    
 /**********     Buttons     **********/
 
 
@@ -814,6 +828,10 @@ align-with-post-item(n)
     .post-name
       text-decoration        underline
       main-light-color       0
+    .attribute-items
+      display                none
+    .post-action
+      display                block
   &:nth-child(even)
     std-white-dark-bg      0
     &:hover
@@ -886,7 +904,9 @@ align-with-post-item(n)
           text-align             right
           width                  125px
           height                 20px
-
+  .post-action
+    display                  none
+    std-btn-xdark            0
 /**********      post-item       **********/
 
 /**********        navbar        **********/
