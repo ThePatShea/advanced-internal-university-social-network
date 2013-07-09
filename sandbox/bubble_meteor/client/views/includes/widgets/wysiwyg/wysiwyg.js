@@ -224,6 +224,37 @@ Template.wysiwyg.events({
       l.removeChild(l.lastChild);
     };
 
+    var currentPostId = Session.get('currentPostId');
+    if(currentPostId){
+      console.log('Editing');
+      var post = Posts.findOne({_id: currentPostId});
+      var attachments = [];
+      for(var i = 0; i < post.children.length; i++){
+        var removeIt = false;
+        for(var j=0; j < removed.length; j++){
+          if(post.children[i] == removed[j]){
+            removeIt = true;
+            break;
+          }
+        }
+        if(removeIt == false){
+          var attachment = Posts.findOne({_id: post.children[i]});
+          if(attachment.fileType.match('image.*')){
+            $("#list").append('<div><img class="previewthumb" src="' + attachment.file + '"/>' + attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a>'+ '</div>');
+          }
+          else if(attachment.fileType.match('pdf.*')){
+            $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
+          }
+          else if(attachment.fileType.match('msword.*')|| attachment.fileType.match('ms-excel.*') || attachment.fileType.match('officedocument.*')){
+            $("#list").append('<div class="word-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
+          }
+        }
+      }
+    }
+    else{
+      console.log('Creating');
+    }
+
     for (var i = 0, f; f = files[i]; i++) {
 
 
