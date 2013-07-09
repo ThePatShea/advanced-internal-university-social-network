@@ -20,24 +20,18 @@
             <span class="word1">upcoming</span>
             <span class="word2">events</span>
           </h3>
-          {{#if hasSuperPermissions}}
-            <a href="{{eventSubmitPath this}}">
-              <button class="std-btn-light pull-right">add new event</button>
-            </a>
-          {{/if}}
+          <a class="visible-{{hasSuperPermissions}}" href="{{eventSubmitPath this}}">
+            <button class="std-btn-light pull-right">add new event</button>
+          </a>
         </div>
-        {{#if eventPosts}}
-          {{#each eventPosts}}
-            {{> eventItem}}
-          {{/each}}
-          {{#if hasMoreEvents}}
-            <a href="{{bubbleEventPagePath this}}">
-              <button class="btn-tiny more-posts">+ {{pluralize eventsCount 'more event'}}</button>
-            </a>
-          {{/if}}
+        {{#each eventPosts}}
+          {{> eventItem}}
         {{else}}
-          <br><br>There are no events yet. Start an event now!
-        {{/if}}
+          There are no events yet. Start an event now!
+        {{/each}}
+        <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath this}}">
+          <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount 'more event'}}</button>
+        </a>
       </div>
 
       <div class="bubble-list">
@@ -47,24 +41,18 @@
             <span class="word1">active</span>
             <span class="word2">discussions</span>
           </h3>
-          {{#if hasSuperPermissions}}
-            <a href="{{discussionSubmitPath this}}">
-              <button class="std-btn-light pull-right">add new discussion</button>
-            </a>
-          {{/if}}
+          <a class="visible-{{hasSuperPermissions}}" href="{{discussionSubmitPath this}}">
+            <button class="std-btn-light pull-right">add new discussion</button>
+          </a>
         </div>
-        {{#if discussionPosts}}
-          {{#each discussionPosts}}
-            {{> postItem}}
-          {{/each}}
-          {{#if hasMoreDiscussions}}
-            <a href="{{bubbleDiscussionPagePath this}}">
-              <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{pluralize discussionsCount 'more discussion'}}</button>
-            </a>
-          {{/if}}
-          {{else}}
-            <br><br>There are no discussions yet. Start a discusssion now!
-        {{/if}}
+        {{#each discussionPosts}}
+          {{> postItem}}
+        {{else}}
+          There are no discussions yet. Start a discusssion now!
+        {{/each}}
+        <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath this}}">
+          <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{pluralize discussionsCount 'more discussion'}}</button>
+        </a>
       </div>
   
       <div class="bubble-list">
@@ -74,24 +62,18 @@
             <span class="word1">latest</span>
             <span class="word2">files</span>
           </h3>
-          {{#if hasSuperPermissions}}
-            <a href="{{fileSubmitPath this}}">
-              <button class="std-btn-light pull-right">add new file</button>
-            </a>
-          {{/if}}
+          <a class="visible-{{hasSuperPermissions}}" href="{{fileSubmitPath this}}">
+            <button class="std-btn-light pull-right">add new file</button>
+          </a>
         </div>
-        {{#if filePosts}}
-          {{#each filePosts}}
-            {{> postItem}}
-          {{/each}}
-          {{#if hasMoreFiles}}
-            <a href="{{bubbleFilePagePath this}}">
-              <button class = "btn btn-small btn-success more-files" type="button" >+ {{pluralize filesCount 'more file'}}</button>
-            </a>
-          {{/if}}
+        {{#each filePosts}}
+          {{> postItem}}
         {{else}}
-            <br><br>There are no files yet. Upload a file now!
-        {{/if}}
+          There are no files yet. Upload a file now!
+        {{/each}}
+        <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath this}}">
+          <button class = "btn btn-small btn-success more-files" type="button" >+ {{pluralize filesCount 'more file'}}</button>
+        </a>
       </div>
     </div>
   {{/with}}
