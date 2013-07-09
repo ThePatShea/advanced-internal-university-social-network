@@ -110,7 +110,7 @@ Template.wysiwyg.events({
   },
 
   'drop #drop_zone': function(evt){
-    l = document.getElementById('list');
+    /*l = document.getElementById('list');
     while(l.hasChildNodes()){
       l.removeChild(l.lastChild);
     };
@@ -201,7 +201,136 @@ Template.wysiwyg.events({
       }
 
 
+    }*/
+
+    console.log(evt.dataTransfer.files);
+
+    evt.stopPropagation();
+    evt.preventDefault();
+
+
+    if(typeof files == 'undefined'){
+      files = [];
+      for(var i = 0, f; f=evt.dataTransfer.files[i]; i++){
+        files.push(evt.target.files[i]);
+      }
     }
+    else{
+      for(var i = 0, f; f=evt.dataTransfer.files[i]; i++){
+        files.push(evt.dataTransfer.files[i]);
+      }
+    }
+
+    l = document.getElementById('list');
+    while(l.hasChildNodes()){
+      l.removeChild(l.lastChild);
+    };
+
+    var currentPostId = Session.get('currentPostId');
+    if(currentPostId){
+      console.log('Editing');
+      var post = Posts.findOne({_id: currentPostId});
+      var attachments = [];
+      for(var i = 0; i < post.children.length; i++){
+        var removeIt = false;
+        for(var j=0; j < removed.length; j++){
+          if(post.children[i] == removed[j]){
+            removeIt = true;
+            break;
+          }
+        }
+        if(removeIt == false){
+          var attachment = Posts.findOne({_id: post.children[i]});
+          if(attachment.fileType.match('image.*')){
+            $("#list").append('<div><img class="previewthumb" src="' + attachment.file + '"/>' + attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a>'+ '</div>');
+          }
+          else if(attachment.fileType.match('pdf.*')){
+            $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
+          }
+          else if(attachment.fileType.match('msword.*')|| attachment.fileType.match('ms-excel.*') || attachment.fileType.match('officedocument.*')){
+            $("#list").append('<div class="word-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
+          }
+        }
+      }
+    }
+    else{
+      console.log('Creating');
+    }
+
+    for (var i = 0, f; f = files[i]; i++) {
+
+
+      //If it is an image then render a thumbnail
+      if (f.type.match('image.*')) {
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        // Render thumbnail.
+        var fname = theFile.name;
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="previewthumb" src="', e.target.result,
+                        '" title="', fname, '"/>', ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f);
+      }
+
+      //If it is a PDF then render a PDF icon
+      else if (f.type.match('pdf.*')){
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        //Render a PDF icon
+        var fname = theFile.name;
+        var span = document.createElement('span');
+        span.innerHTML = ['<div class="pdf-icon">', 'PDF', fname, ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>', '</div>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        //Read file as a data url.
+        reader.readAsDataURL(f);
+      }
+      else if (f.type.match('msword.*') || f.type.match('ms-excel.*') || f.type.match('officedocument.*')){
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        //Render a PDF icon
+        var fname = theFile.name;
+        var span = document.createElement('span');
+        span.innerHTML = ['<div class="word-icon">', 'Word Document: ', fname, ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>', '</div>'].join('');
+        document.getElementById('list').insertBefore(span, null);
+        };
+        })(f);
+
+        //Read file as a data url.
+        reader.readAsDataURL(f);
+      }
+      else{
+        console.log('Else');
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+          return function(e) {
+            console.log(e.target.result);
+          };
+        })(f);
+
+        reader.readAsDataURL(f);
+      }
+    }
+
+
   },
 
   'change #filesToUpload': function(evt){
