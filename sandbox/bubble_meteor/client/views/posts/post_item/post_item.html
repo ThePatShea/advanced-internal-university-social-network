@@ -1,11 +1,13 @@
 <template name="postItem">
   <div class="post">
-
     <div class="pull-left" style="width: 130px;">
       <h4 style="line-height: 16px; text-transform: uppercase;">{{postType}}</h4>
     </div>
     <div class="post-content">
       <h3><a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a></h3>
+      <p>
+        <a href="{{postPagePath this}}">{{pluralize commentsCount "comment"}}</a>
+      </p>
     </div>
     <div style="width: 100px;" class="pull-right">
       <p style="line-height: 10px;">Posted by</p>

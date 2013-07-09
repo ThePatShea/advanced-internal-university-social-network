@@ -6,9 +6,6 @@ Template.postPage.helpers({
   isEvent: function() {
   	return this.postType == 'event';
   },
-  numOfAttendees: function() {
-  	return this.attendees.length;
-  },
   isAttending: function() {
   	return _.contains(this.attendees,Meteor.user().username);
   },
