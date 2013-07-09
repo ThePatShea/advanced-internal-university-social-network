@@ -46,9 +46,9 @@ Meteor.Router.add({
     to: 'eventEdit', 
     and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }  
   },
-  '/posts/:_id/edit/file': {
+  '/mybubbles/:_bId/posts/:_pId/edit/file': {
     to: 'fileobjectEdit',
-    and: function(id) { Session.set('currentPostId', id);}
+    and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId);}
   },
   /***************  Posts Related Routes (End)   ***************/
 

@@ -84,7 +84,7 @@ Template.wysiwyg.rendered = function() {
       else if(attachment.fileType.match('pdf.*')){
         $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
       }
-      else if(attachment.fileType.match('msword.*')|| f.type.match('ms-excel.*') || f.type.match('officedocument.*')){
+      else if(attachment.fileType.match('msword.*')|| attachment.fileType.match('ms-excel.*') || attachment.fileType.match('officedocument.*')){
         $("#list").append('<div class="word-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
       }
     }
@@ -205,11 +205,7 @@ Template.wysiwyg.events({
   },
 
   'change #filesToUpload': function(evt){
-    //files = evt.target.files;
-    l = document.getElementById('list');
-    while(l.hasChildNodes()){
-      l.removeChild(l.lastChild);
-    };
+
 
     if(typeof files == 'undefined'){
       files = [];
