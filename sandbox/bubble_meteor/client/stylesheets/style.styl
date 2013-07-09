@@ -58,19 +58,25 @@ body
 /***************  Multi-Purpose Elements   ***************/
 /**********  Color Palette  **********/
 /*****    Standard White    *****/
+std-white-xdark  =  #ACB6BE
+std-white-dark   =  #EEF0F0
+std-white-light  =  #F7F8F8
+
+
+
 std-white-light-color(n)
-  color                  #F7F8F8
+  color                  std-white-light
 std-white-light-fill(n)
-  fill                   #F7F8F8
+  fill                   std-white-light
 std-white-light-bg(n)
-  background             #F7F8F8
+  background             std-white-light
 
 std-white-dark-color(n)
-  color                  #EEF0F0
+  color                  std-white-dark
 std-white-dark-fill(n)
-  fill                   #EEF0F0
+  fill                   std-white-dark
 std-white-dark-bg(n)
-  background             #EEF0F0
+  background             std-white-dark
 
 std-white-xdark-border(n)
   border                 1px solid #ACB6BE
@@ -567,6 +573,82 @@ font-alt-light(n)
 /*****  Alternate Font  *****/
 /**********  Font Palette   **********/
 
+/**********    Functions    **********/
+fontize(family, weight, val-transform = none, val-size = inherit, val-line-height = normal)
+  if family == main
+    font-family    'brandon-grotesque', Arial, Sans-Serif
+  else if family == alt
+    font-family    'proxima-nova', Arial, Sans-Serif
+  if weight == black
+    font-weight    900
+  else if weight == bold
+    font-weight    700
+  else if weight == medium
+    font-weight    500
+  else if weight == regular
+    font-weight    400
+  else if weight == light
+    font-weight    300
+  else if weight == thin
+    font-weight    100
+  line-height        val-line-height
+  text-transform     val-transform
+  font-size          val-size
+
+breakpoint-swap(property, val-desktop, val-mobile)
+  @media (min-width: 768px)
+    if property == display
+      display    val-desktop
+    if property == padding
+      padding    val-desktop
+  @media (max-width: 767px)
+    if property == display
+      display    val-mobile
+    if property == padding
+      padding    val-mobile
+
+positionize(val-height = auto, val-width = auto, val-padding = 0, val-margin = 0, val-float = none, val-move-position = relative, val-display = block, val-overflow = hidden)
+  overflow          val-overflow
+  padding           val-padding
+  display           val-display
+  margin            val-margin
+  height            val-height
+  width             val-width
+  float             val-float
+  border-box        0
+
+border-spin(size-top, size-right, size-bottom, size-left, color-top, color-right, color-bottom, color-left)
+  border-bottom     size-bottom solid color-bottom
+  border-right      size-right solid color-right
+  border-left       size-left solid color-left
+  border-top        size-top solid color-top
+
+move-position(val-position = relative, val-top = 0, val-right = 0, val-bottom = 0, val-left = 0)
+  positon           val-position
+  bottom            val-bottom
+  right             val-right
+  left              val-left
+  top               val-top
+
+colorize(val-color = inherit, val-background = transparent, val-fill = inherit, val-border = 0)
+  background        val-background
+  border            val-border
+  color             val-color
+  fill              val-fill
+  stroke            val-fill
+  path
+    stroke          val-fill
+  line
+    stroke          val-fill
+
+generate-button(val-colorize, val-fontize, val-border-radius, val-padding = 0, val-margin = 0)
+  border-radius     val-border-radius
+  colorize          val-colorize
+  fontize           val-fontize
+  padding           val-padding
+  text-transform    uppercase
+  line-height       100%
+/**********    Functions    **********/
 
 /**********   Properties    **********/
 border-thin-top-btm(color)
@@ -581,6 +663,12 @@ border-box(n)
   -moz-box-sizing        border-box
   box-sizing             border-box
 
+transition(args...)
+  -webkit-transition     args
+  -moz-transition        args
+  -o-transition          args
+  transition             args
+
 box-shadow(args...)
   -webkit-box-shadow     args
   -moz-box-shadow        args
@@ -592,12 +680,6 @@ border-radius(n)
   -ms-border-radius      n
   -o-border-radius       n
   border-radius          n
-
-transition(args...)
-  -webkit-transition     args
-  -moz-transition        args
-  -o-transition          args
-  transition             args
 /**********   Properties    **********/
 
 
