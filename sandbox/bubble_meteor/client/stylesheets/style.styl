@@ -905,8 +905,6 @@ align-with-post-item(n)
         position                 relative
         top                      -1px
         std-white-xdark-fill     0
-        &.going-true
-          colorize(auto, auto, main-light)
         svg
           vertical-align         middle
           width                  20px
@@ -915,6 +913,8 @@ align-with-post-item(n)
         padding                0 10px 0 2px
         position               relative
         overflow               hidden
+        &.going-true
+          colorize(main-light, auto, main-light)
         &.post-location
           text-align             right
           width                  125px
