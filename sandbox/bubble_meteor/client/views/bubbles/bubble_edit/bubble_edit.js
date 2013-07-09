@@ -2,6 +2,9 @@ Template.bubbleEdit.events({
   'submit form': function(e) {
     e.preventDefault();
     
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Bubble', 'Edit', $(event.target).find('[name=title]').val()]);
+
     var currentBubbleId = Session.get('currentBubbleId');
     
     var bubbleProperties = {
@@ -182,8 +185,12 @@ Template.bubbleEdit.events({
   
   'click #delete_bubble': function(e) {
     e.preventDefault();
+    console.log(this);
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Bubble', 'Delete', this.title]);
     
     if (confirm("Delete this bubble?")) {
+
       var currentBubbleId = Session.get('currentBubbleId');
       Bubbles.remove(currentBubbleId);
       var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();

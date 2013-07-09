@@ -5,8 +5,16 @@
   {{/with}}
   {{#with currentPost}}
     {{> postItem}}
-  	<button class='btn btn-small flag'>flag here!</button>
-  	<a href="{{getPostEditUrl}}"><button class='btn btn-small'>Edit Post</button></a>
+    {{#if flagged}}
+  		<span class="label label-important">Post Is Flagged</span>
+  	{{else}}
+  		<button class='btn btn-small flag'>Flag here!</button>
+  	{{/if}}
+  	
+  	{{#if hasSuperPermissions}}
+  		<a href="{{getPostEditUrl}}"><button class='btn btn-small'>Edit Post</button></a>
+		{{/if}}
+
     {{> postAttributes}}    
     {{> commentsList}}
 

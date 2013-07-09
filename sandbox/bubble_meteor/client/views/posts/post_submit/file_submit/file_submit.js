@@ -2,6 +2,9 @@ Template.fileSubmit.events({
 
   'submit form': function(e, template) {
     e.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);
+    
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
       reader.onload = (function(f){

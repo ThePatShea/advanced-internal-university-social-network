@@ -96,7 +96,7 @@ Meteor.publish('comments', function(postId, limit) {
 /***************  Updates Related Publications   ***************/
 
 Meteor.publish('updates', function(userId) {
-  return Updates.find({read: false}, {sort: {submitted:1}});
+  return Updates.find({userId: userId, read: false}, {sort: {submitted:1}});
 });
 /***************  Updates Related Publications (End)   ***************/
 

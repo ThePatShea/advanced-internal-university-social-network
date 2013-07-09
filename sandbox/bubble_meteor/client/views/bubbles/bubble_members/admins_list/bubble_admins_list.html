@@ -3,22 +3,7 @@
 	<br />
   {{#each getAdmins}}
     {{#if isSuperBubble}}
-
-      {{#if isSuperUser}}
-        {{#if isUser this}}
-            {{getUsername this}}
-        {{else}}
-          <button class="btn btn-small activate" type="button">
-            {{getUsername this}}
-          </button>
-          {{#if chosen}}
-            <button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
-          {{/if}}
-        {{/if}}
-      {{else}}
-        {{getUsername this}}
-      {{/if}}
-
+      {{getUsername this}}
     {{else}}
 
       {{#if isAdmin}}

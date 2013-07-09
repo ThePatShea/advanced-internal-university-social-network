@@ -28,10 +28,14 @@ Template.postPage.helpers({
 
 Template.postPage.events({
 	'click .attending': function() {
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Attending Event', +this.name]);
 		Meteor.call('attendEvent',this._id,Meteor.user().username);
 
   },
   'click .flag': function() {
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Flagging', 'Flag', +this.name]);
     if (confirm("Flag this post?")) {
       var flagAttributes = {
         postId: this._id,
@@ -39,10 +43,7 @@ Template.postPage.events({
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
       }
-      var flag = Meteor.call('createFlag',flagAttributes);
-      console.log(flag);
-      //Creates the update when the flag object is created
-      // Meteor.call('createPostFlagUpdate', );
+      Meteor.call('createFlag',flagAttributes);
     }
   }
 });

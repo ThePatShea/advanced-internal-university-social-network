@@ -1,6 +1,8 @@
 Template.discussionEdit.events({
   'submit form': function(e) {
     e.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Edit Discussion', this.name]);
     
     var currentPostId = Session.get('currentPostId');
     var currentBubbleId = Session.get('currentBubbleId');
@@ -84,6 +86,8 @@ Template.discussionEdit.events({
   },
   
   'click .delete': function(e) {
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Delete Discussion', this.name]);
     e.preventDefault();
     if (confirm("Delete this post?")) {
       var currentPostId = Session.get('currentPostId');
