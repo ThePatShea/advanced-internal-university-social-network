@@ -16,7 +16,6 @@ Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
     var postWithSameName = Posts.findOne({name: postAttributes.name, bubbleId: postAttributes.bubbleId});
-    // console.log(user._id);
     
     // ensure the user is logged in
     if (!user)
@@ -65,7 +64,6 @@ Meteor.methods({
     // ensure the user is logged in
     if (!user)
       throw new Meteor.Error(401, "You need to login");
-    console.log(Posts.findOne({_id: postId}));
     Posts.update({
       _id: postId, 
       viewList: {$nin: [Meteor.userId()]}

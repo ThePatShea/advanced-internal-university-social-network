@@ -10,6 +10,7 @@ Meteor.methods({
       submitted: new Date().getTime(),
       solved: false
     });
+    console.log(flag);
     var flagId = Flags.insert(flag);
 
     //Flags the specific post

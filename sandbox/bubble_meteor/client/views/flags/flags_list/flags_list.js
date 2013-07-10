@@ -10,6 +10,7 @@ Template.flagsList.helpers({
 Template.flagsList.events({
   'click .resolve-flag': function() {
     if (confirm("Solve this flag?")) {
+      createPostUnflagUpdate(this);
       Meteor.call('resolveFlag',this);
     }
   }

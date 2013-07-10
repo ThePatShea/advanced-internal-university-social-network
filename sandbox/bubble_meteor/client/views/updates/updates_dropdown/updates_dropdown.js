@@ -307,7 +307,6 @@ Template.update.helpers({
   getContent: function() {
     if(this.updateType == "REPLIED" ||
         this.updateType == "NEW ATTENDEE" ||
-        this.updateType == "JOINED BUBBLE" ||
         this.updateType == "NEW APPLICANT"){
       var content = this.content;
       var nameList = this.invokerName.split('and');

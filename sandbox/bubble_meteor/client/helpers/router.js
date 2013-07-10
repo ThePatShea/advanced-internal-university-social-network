@@ -75,7 +75,7 @@ Meteor.Router.add({
   },
 
   '/editprofile/:id': {
-    to: 'userprofileEdit',
+    to: 'userProfileEdit',
     and: function(id) { Session.set('selectedUserId',id)}
   },
   /***************  User Profile Related Routes (End)   ***************/

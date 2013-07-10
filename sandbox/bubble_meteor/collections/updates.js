@@ -123,12 +123,14 @@ createRemoveMemberUpdate = function(userId) {
     bubbleId: bubble._id,
     $or: [
       {userId: userId},
-      {invokerId:userId, updateType: 'ENTERED BUBBLE'}
+      {invokerId:userId, updateType: 'ENTERED BUBBLE'},
+      {invokerId:userId, updateType: 'JOINED BUBBLE'}
     ] 
   }).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
+  console.log("this ran");
 
   Meteor.call('update',{
     userId: userId,
@@ -275,11 +277,11 @@ createNewMemberUpdate = function(userId, bubbleId) {
     Meteor.call('update',{
       userId: memberId,
       bubbleId: bubble._id,
-      invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
+      invokerId: userId,
+      invokerName: user.username,
       updateType: "JOINED BUBBLE",
       url: '/mybubbles/'+bubble._id+'/members',
-      content: " joined " + bubble.title
+      content: user.username + " joined " + bubble.title
     });
   });
 }
@@ -309,7 +311,7 @@ createMemberPromoteUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'MEMBER PROMOTED'}).fetch();
+  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'MEMBER DEMOTED'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -330,7 +332,7 @@ createAdminDemoteUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'MEMBER DEMOTED'}).fetch();
+  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'MEMBER PROMOTED'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -374,7 +376,7 @@ createPostFlagUpdate = function(flag) {
   var post = Posts.findOne(flag.postId);
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, invokerId: Meteor.userId(), postId: post._id, updateType: 'FLAGGED POST'}).fetch();
+  var oldUpdates = Updates.find({read: false, postId: post._id, updateType: 'POST UNFLAGGED'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -385,11 +387,40 @@ createPostFlagUpdate = function(flag) {
       Meteor.call('update',{
         userId: user._id,
         bubbleId: flag.bubbleId,
+        postId: flag.postId,
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
-        updateType: "FLAGGED POST",
+        updateType: "POST FLAGGED",
         url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
         content: post.name + " has been flagged"
+      });
+    }
+  }); 
+}
+
+//For super users when there are new flags
+createPostUnflagUpdate = function(flag) {
+  var post = Posts.findOne(flag.postId);
+
+  //Clears duplicated updates
+  var oldUpdates = Updates.find({read: false, postId: post._id, updateType: 'POST FLAGGED'}).fetch();
+  console.log(flag.postId);
+  _.each(oldUpdates, function(update) {
+    Meteor.call('setRead', update);
+  });
+
+  var superUsers = Meteor.users.find({userType:'superuser'}).fetch();
+  _.each(superUsers, function(user) {
+    if(user._id != Meteor.userId()){
+      Meteor.call('update',{
+        userId: user._id,
+        bubbleId: flag.bubbleId,
+        postId: flag.postId,
+        invokerId: Meteor.userId(),
+        invokerName: Meteor.user().username,
+        updateType: "POST UNFLAGGED",
+        url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
+        content: post.name + " has been unflagged"
       });
     }
   }); 

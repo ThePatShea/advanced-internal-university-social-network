@@ -1,4 +1,4 @@
-Template.userprofileEdit.helpers({
+Template.userProfileEdit.helpers({
 	getProfile: function() {
 		return Meteor.users.findOne({_id:Session.get('selectedUserId')});
 	},
@@ -18,8 +18,7 @@ Template.userprofileEdit.helpers({
 		}
 	},
   checkUserType: function(type) {
-    if(Meteor.user().userType == type) {
-      console.log("THIS RAN");
+    if(this.userType == type) {
       return 'selected';
     }
   }
@@ -27,7 +26,7 @@ Template.userprofileEdit.helpers({
 });
 
 
-Template.userprofileEdit.events({
+Template.userProfileEdit.events({
   'submit form': function(e) {
     e.preventDefault();
     
@@ -206,7 +205,7 @@ Template.userprofileEdit.events({
 });
 
 
-Template.userprofileEdit.rendered = function(){
+Template.userProfileEdit.rendered = function(){
   $("#change_profile_picture").click(function(){
     $("#userprofilepicture_preview").hide();
     $("#change_profile_picture").hide();
