@@ -21,7 +21,7 @@
           {{else}}
             There are no {{postType}}s yet. Add one now!
           {{/each}}
-          <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath this}}">
+          <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath getCurrentBubble._id}}">
             <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount postType 'more'}}</button>
           </a>
         {{/with}}
@@ -30,15 +30,15 @@
       <div class="bubble-list">
         {{#with postProperties.discussion}}
           {{> listHeading}}
+          {{#each posts}}
+            {{> postItem}}
+          {{else}}
+            There are no {{postType}}s yet. Add one now!
+          {{/each}}
+          <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath this}}">
+            <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{pluralize discussionsCount 'more discussion'}}</button>
+          </a>
         {{/with}}
-        {{#each discussionPosts}}
-          {{> postItem}}
-        {{else}}
-          There are no discussions yet. Start a discusssion now!
-        {{/each}}
-        <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath this}}">
-          <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{pluralize discussionsCount 'more discussion'}}</button>
-        </a>
       </div>
   
       <div class="bubble-list">

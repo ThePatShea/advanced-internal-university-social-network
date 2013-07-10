@@ -1,5 +1,4 @@
 //the events past 4 hours will not be listed on the event page
-currentDateTime = moment().valueOf();
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.bubblePage.helpers({ 
@@ -42,28 +41,7 @@ Template.bubblePage.helpers({
   },
 
   // return only latest 3 posts
-  discussionPosts: function() {
-    return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'},{limit: 3}).fetch();
-  },
   filePosts: function() {
     return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'},{limit: 3}).fetch();
   }
-
-  , postProperties : {
-        discussion : {
-            postType      : 'discussion'
-          , word1         : 'active'
-        }
-      , event      : {
-            postType      : 'event'
-          , word1         : 'upcoming'
-          , posts         : function() { 
-              return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event', dateTime: {$gt: referenceDateTime}},{limit: 3}).fetch();
-            }
-        }
-      , file       : {
-            postType      : 'file'
-          , word1         : 'latest'
-        }
-    }
 });

@@ -4,7 +4,9 @@
     {{> bubbleSectionSelector}}
     <div class="bubble-page-content">
       <div class="bubble-list">
-        {{> listHeadingEvent}}
+        {{#with postProperties.event}}
+          {{> listHeading}}
+        {{/with}}
         {{#each getEventPosts}}
           {{> eventItem}}
         {{else}}

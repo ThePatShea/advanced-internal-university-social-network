@@ -20,6 +20,34 @@ Handlebars.registerHelper('pluralize', function(n, thing, between) {
   }
 });
 
+var getPosts = function(inputPostType) {
+  var parameters = {bubbleId: Session.get('currentBubbleId'), postType: inputPostType}
+
+  if (inputPostType == 'event') {
+    parameters.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
+  }
+
+  return Posts.find(parameters, {limit: 3}).fetch();
+}
+
+Handlebars.registerHelper('postProperties', {
+    discussion : {
+        posts         : function() { return getPosts('discussion'); }
+      , postType      : 'discussion'
+      , word1         : 'active'
+    }
+  , event      : {
+        posts         : function() { return getPosts('event'); }
+      , postType      : 'event'
+      , word1         : 'upcoming'
+    }
+  , file       : {
+        posts         : function() { return getPosts('file'); }
+      , postType      : 'file'
+      , word1         : 'latest'
+    }
+});
+
 Handlebars.registerHelper('matchPostType', function(inputPostType) {
   return this.postType == inputPostType;
 });
