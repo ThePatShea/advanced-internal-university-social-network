@@ -25,7 +25,7 @@ Meteor.methods({
         bubbleWithSameName._id);
     }
 
-    var bubble = _.extend(_.pick(bubbleAttributes, 'title', 'description', 'category', 'coverPhoto', 'profilePicture', 'bubbleType'), {
+    var bubble = _.extend(_.pick(bubbleAttributes, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'profilePicture', 'retinaProfilePicture', 'bubbleType'), {
     	submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       users: {
