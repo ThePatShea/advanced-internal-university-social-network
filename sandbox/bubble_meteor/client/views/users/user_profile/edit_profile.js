@@ -89,6 +89,7 @@ Template.userprofileEdit.events({
             $("#userprofilepicture_preview").attr("src", e.target.result);
             $("#userprofilepicture_upload").attr("title", escape(theFile.name));
             $("#userprofilepicture_upload").show();
+            $("#userprofilepicture_preview").show();
             $(document).ready( function(){
               $(function(){
                 function showPreview(coords){
@@ -132,6 +133,75 @@ Template.userprofileEdit.events({
     }
 
   },
+
+
+  'change #filesToUpload': function(evt){
+    files = evt.target.files;
+    //If more than one file dropped on the dropzone then throw an error to the user.
+    if(files.length > 1){
+      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
+      throwError(error.reason);
+    }
+    else{
+      f = files[0];
+      //If the file dropped on the dropzone is an image then start processing it
+      if (f.type.match('image.*')) {
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+          return function(e) {
+            var coverphoto_width = 100;
+            var coverphoto_height = 100;
+            $("#userprofilepicture_dropzone").hide();
+            $("#userprofilepicture_upload").attr("src", e.target.result);
+            $("#userprofilepicture_preview").attr("src", e.target.result);
+            $("#userprofilepicture_upload").attr("title", escape(theFile.name));
+            $("#userprofilepicture_upload").show();
+            $("#userprofilepicture_preview").show();
+            $(document).ready( function(){
+              $(function(){
+                function showPreview(coords){
+                  var mycanvas = document.createElement('canvas');
+                  mycanvas.width = coverphoto_width;
+                  mycanvas.height = coverphoto_height;
+                  console.log(coords);
+                  mycontext = mycanvas.getContext('2d');
+                  mycontext.drawImage($("#userprofilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
+                  var imagedata = mycanvas.toDataURL();
+                  $("#userprofilepicture_preview").attr("src", imagedata);
+                  $("#userprofilepicture_preview").attr("width", coverphoto_width/2);
+                  $("#userprofilepicture_preview").attr("height", coverphoto_height/2);
+                };
+
+                $('#userprofilepicture_upload').Jcrop({
+                  onChange: showPreview,
+                  onSelect: showPreview,
+                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
+                  aspectRatio: coverphoto_width/coverphoto_height
+                }, function(){
+                  jcrop_api = this;
+                  jcrop_api.setOptions({ allowResize: false });
+                });
+
+              });
+            });
+          };
+        })(f);
+
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f);
+
+      }
+
+      //If the file dropped on the dropzone is not an image then throw an error to the user
+      else{
+        error = new Meteor.Error(422, 'Please choose a valid image.');
+        throwError(error.reason);
+      }
+    }
+  }
+
   
 });
 
@@ -141,16 +211,19 @@ Template.userprofileEdit.rendered = function(){
     $("#userprofilepicture_preview").hide();
     $("#change_profile_picture").hide();
     $(".dropzone").show();
+    $("#filesToUpload").show();
   });
   var user = Meteor.users.findOne({_id:Session.get('selectedUserId')});
   if(!user.profilePicture){
     //$(".userprofilepicture").attr("src", "/img/default_userprofile.png");
     $("#userprofilepicture_preview").attr("src", "/img/default_userprofile.png");
     $(".dropzone").hide();
+    $("#filesToUpload").hide();
     //$(".dropzone").show();
   }
   else{
     $(".dropzone").hide();
+    $("#filesToUpload").hide();
   }
 };
 
