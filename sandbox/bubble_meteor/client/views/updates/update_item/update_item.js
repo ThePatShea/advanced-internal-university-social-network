@@ -26,7 +26,7 @@ userId: Meteor.userId(), Template.updateItem.helpers({
 				this.updateType == "APPLICATION REJECTED") {
 			return 'Bubble List';
 		}else{
-			return 'Placeholder Only. URL is not decided yet!:D';
+			return 'DISMISS UPDATE';
 		}
 	}
 });

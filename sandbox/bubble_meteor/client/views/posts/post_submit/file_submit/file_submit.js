@@ -106,8 +106,6 @@ Template.fileSubmit.events({
 
         reader.readAsDataURL(f);
       }
-
-
     }
   },
 

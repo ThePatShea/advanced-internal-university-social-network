@@ -3,7 +3,7 @@ Template.bubbleEdit.events({
     e.preventDefault();
     
     //Google Analytics
-    _gaq.push(['_trackEvent', 'Bubble', 'Edit', $(event.target).find('[name=title]').val()]);
+    // _gaq.push(['_trackEvent', 'Bubble', 'Edit', $(event.target).find('[name=title]').val()]);
 
     var currentBubbleId = Session.get('currentBubbleId');
     
@@ -187,7 +187,7 @@ Template.bubbleEdit.events({
     e.preventDefault();
     console.log(this);
     //Google Analytics
-    _gaq.push(['_trackEvent', 'Bubble', 'Delete', this.title]);
+    // _gaq.push(['_trackEvent', 'Bubble', 'Delete', this.title]);
     
     if (confirm("Delete this bubble?")) {
 

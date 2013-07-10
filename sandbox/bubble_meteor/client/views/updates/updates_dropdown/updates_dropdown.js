@@ -12,6 +12,7 @@ Template.updatesDropdown.helpers({
     var bubbleList = Bubbles.find({$or: [{'users.members': Meteor.userId()},{'users.admins':  Meteor.userId()}]}).fetch();
     var resultList = [];
 
+    //Adds updates based bubbles that user belongs to
     _.each(bubbleList, function(bubble) {
       var updateList = Updates.find({userId: Meteor.userId(), bubbleId:bubble._id, read:false}).fetch();
 
@@ -34,63 +35,56 @@ Template.updatesDropdown.helpers({
         /**
         * To combine updates for comments in the same post
         **/
-        var postUpdateList = 
-        [ 
-          "REPLIED",
-          "EVENT CANCELLED"
-        ]
-        _.each(postUpdateList, function(type) {
-          _.each(updateList, function(update){
+        _.each(updateList, function(update){
 
-            var commentUpdates = _.reject(updateList, function(update) {
-              return update.updateType != type;
-            });
-
-            //Combine and chain the names together
-            if (commentUpdates.length > 0) {
-              updateList = _.reject(updateList, function(newUpdate) {
-                return update.postId == newUpdate.postId && 
-                        update.updateType == newUpdate.updateType &&
-                        update.updateType == type;
-              });
-              if(!_.contains(updateList,update)) {
-                //Pull out comment updates that belong to the same post
-                singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-                  return update.postId != newUpdate.postId;
-                });
-                if (singleTypeUpdates.length > 0) {
-                  //Create the chained name
-                  var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-                  var chainedName = nameArray.join();
-                  var maxLength = 13;
-
-                  //Checks to see if the length of names exceed a certain limit
-                  if(chainedName.length > maxLength) {
-                    chainedName = chainedName.substring(0,maxLength);
-                    var nameList = chainedName.split(',');
-                    if(nameArray[0].length > maxLength) {
-                      nameList[0] = nameArray[0];
-                    }else{
-                      nameList.pop();
-                    }
-                    var excessCount = nameArray.length - nameList.length;
-                    chainedName = nameList.join();
-                    if(excessCount == 1) {
-                      chainedName = chainedName + " and " + excessCount + " other";
-                    }else if(excessCount > 1){
-                      chainedName = chainedName + " and " + excessCount + " others";
-                    }
-                  }else{
-                    chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-                  }
-
-                  //Add the chained name to the invokerName
-                  update.invokerName = chainedName;
-                }
-                updateList.push(update);
-              }
-            }
+          var commentUpdates = _.reject(updateList, function(update) {
+            return update.updateType != "REPLIED";
           });
+
+          //Combine and chain the names together
+          if (commentUpdates.length > 0) {
+            updateList = _.reject(updateList, function(newUpdate) {
+              return update.postId == newUpdate.postId && 
+                      update.updateType == newUpdate.updateType &&
+                      update.updateType == "REPLIED";
+            });
+            if(!_.contains(updateList,update)) {
+              //Pull out comment updates that belong to the same post
+              singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
+                return update.postId != newUpdate.postId;
+              });
+              if (singleTypeUpdates.length > 0) {
+                //Create the chained name
+                var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+                var chainedName = nameArray.join();
+                var maxLength = 13;
+
+                //Checks to see if the length of names exceed a certain limit
+                if(chainedName.length > maxLength) {
+                  chainedName = chainedName.substring(0,maxLength);
+                  var nameList = chainedName.split(',');
+                  if(nameArray[0].length > maxLength) {
+                    nameList[0] = nameArray[0];
+                  }else{
+                    nameList.pop();
+                  }
+                  var excessCount = nameArray.length - nameList.length;
+                  chainedName = nameList.join();
+                  if(excessCount == 1) {
+                    chainedName = chainedName + " and " + excessCount + " other";
+                  }else if(excessCount > 1){
+                    chainedName = chainedName + " and " + excessCount + " others";
+                  }
+                }else{
+                  chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+                }
+
+                //Add the chained name to the invokerName
+                update.invokerName = chainedName;
+              }
+              updateList.push(update);
+            }
+          }
         });
 
         //Declaring the types that needs collapsing of names
@@ -153,10 +147,15 @@ Template.updatesDropdown.helpers({
         updateList = _.sortBy(updateList, function(newUpdate) {
           return newUpdate.submitted; 
         }); 
-
-        resultList.push(updateList);
+        resultList.concat(updateList);
       }
     });
+
+    //Adds updates that user does not belong to
+    var bubbleIdList = _.pluck(bubbleList, '_id');
+    var updateList = Updates.find({read: false, userId: Meteor.userId(), bubbleId: {$nin: bubbleIdList}}).fetch();
+    resultList = resultList.concat(updateList);
+
     return resultList;
   },
   compressedCount: function(){
@@ -185,63 +184,56 @@ Template.updatesDropdown.helpers({
         /**
         * To combine updates for comments in the same post
         **/
-        var postUpdateList = 
-        [ 
-          "REPLIED",
-          "EVENT CANCELLED"
-        ]
-        _.each(postUpdateList, function(type) {
-          _.each(updateList, function(update){
+        _.each(updateList, function(update){
 
-            var commentUpdates = _.reject(updateList, function(update) {
-              return update.updateType != type;
-            });
-
-            //Combine and chain the names together
-            if (commentUpdates.length > 0) {
-              updateList = _.reject(updateList, function(newUpdate) {
-                return update.postId == newUpdate.postId && 
-                        update.updateType == newUpdate.updateType &&
-                        update.updateType == type;
-              });
-              if(!_.contains(updateList,update)) {
-                //Pull out comment updates that belong to the same post
-                singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-                  return update.postId != newUpdate.postId;
-                });
-                if (singleTypeUpdates.length > 0) {
-                  //Create the chained name
-                  var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-                  var chainedName = nameArray.join();
-                  var maxLength = 13;
-
-                  //Checks to see if the length of names exceed a certain limit
-                  if(chainedName.length > maxLength) {
-                    chainedName = chainedName.substring(0,maxLength);
-                    var nameList = chainedName.split(',');
-                    if(nameArray[0].length > maxLength) {
-                      nameList[0] = nameArray[0];
-                    }else{
-                      nameList.pop();
-                    }
-                    var excessCount = nameArray.length - nameList.length;
-                    chainedName = nameList.join();
-                    if(excessCount == 1) {
-                      chainedName = chainedName + " and " + excessCount + " other";
-                    }else if(excessCount > 1){
-                      chainedName = chainedName + " and " + excessCount + " others";
-                    }
-                  }else{
-                    chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-                  }
-
-                  //Add the chained name to the invokerName
-                  update.invokerName = chainedName;
-                }
-                updateList.push(update);
-              }
-            }
+          var commentUpdates = _.reject(updateList, function(update) {
+            return update.updateType != "REPLIED";
           });
+
+          //Combine and chain the names together
+          if (commentUpdates.length > 0) {
+            updateList = _.reject(updateList, function(newUpdate) {
+              return update.postId == newUpdate.postId && 
+                      update.updateType == newUpdate.updateType &&
+                      update.updateType == "REPLIED";
+            });
+            if(!_.contains(updateList,update)) {
+              //Pull out comment updates that belong to the same post
+              singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
+                return update.postId != newUpdate.postId;
+              });
+              if (singleTypeUpdates.length > 0) {
+                //Create the chained name
+                var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+                var chainedName = nameArray.join();
+                var maxLength = 13;
+
+                //Checks to see if the length of names exceed a certain limit
+                if(chainedName.length > maxLength) {
+                  chainedName = chainedName.substring(0,maxLength);
+                  var nameList = chainedName.split(',');
+                  if(nameArray[0].length > maxLength) {
+                    nameList[0] = nameArray[0];
+                  }else{
+                    nameList.pop();
+                  }
+                  var excessCount = nameArray.length - nameList.length;
+                  chainedName = nameList.join();
+                  if(excessCount == 1) {
+                    chainedName = chainedName + " and " + excessCount + " other";
+                  }else if(excessCount > 1){
+                    chainedName = chainedName + " and " + excessCount + " others";
+                  }
+                }else{
+                  chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+                }
+
+                //Add the chained name to the invokerName
+                update.invokerName = chainedName;
+              }
+              updateList.push(update);
+            }
+          }
         });
 
         //Declaring the types that needs collapsing of names
@@ -309,6 +301,12 @@ Template.updatesDropdown.helpers({
         resultList =  resultList.concat(updateList);
       }
     });
+    
+    //Adds updates that user does not belong to
+    var bubbleIdList = _.pluck(bubbleList, '_id');
+    var updateList = Updates.find({read: false, userId: Meteor.userId(), bubbleId: {$nin: bubbleIdList}}).fetch();
+    resultList = resultList.concat(updateList);
+  
     return resultList.length;
   }
 });
@@ -325,6 +323,7 @@ Template.update.helpers({
     return updateType == this.updateType;
   },
   getContent: function() {
+    console.log("this ran");
     if(this.updateType == "REPLIED" ||
         this.updateType == "NEW ATTENDEE" ||
         this.updateType == "JOINED BUBBLE" ||
@@ -338,14 +337,12 @@ Template.update.helpers({
     }else{
       return this.content;
     }
+
   }
 });
 
 Template.updateBubble.helpers({
-  getBubbleId: function() {
-    return this[0].bubbleId;
-  },  
-  getBubbleName: function() {
-    return Bubbles.findOne(this[0].bubbleId).title;
-  },
+  getBubbleName: function(bubbleId) {
+    return Bubbles.findOne(bubbleId).title;
+  }
 });

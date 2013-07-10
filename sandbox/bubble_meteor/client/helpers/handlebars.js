@@ -122,6 +122,22 @@ Handlebars.registerHelper('hasSuperPermissions', function() {
   return true;
 })
 
+//Checks if user is allowed to edit post
+Handlebars.registerHelper('hasEditPermissions', function() {
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  if('super' == bubble.bubbleType) {
+    if('superuser' == Meteor.user().userType) {
+      return true;
+    }
+  }else{
+    var post = Posts.findOne(Session.get('currentPostId'));
+    if(_.contains(bubble.users.admins, Meteor.userId()) || Meteor.userId() == post.userId) {
+      return true;
+    }
+  }
+  return false
+})
+
 Handlebars.registerHelper('isSuperBubble', function() {
   if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType) {
     return true;

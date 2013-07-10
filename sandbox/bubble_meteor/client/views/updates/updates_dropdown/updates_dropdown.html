@@ -29,8 +29,8 @@
 
 <template name="updateBubble">
   <li>    
-    <a href="{{bubblePagePath getBubbleId}}">
-      {{getBubbleName}}
+    <a href="{{bubblePagePath bubbleId}}">
+      {{getBubbleName bubbleId}}
     </a>
     {{#each this}}
       {{>update}}

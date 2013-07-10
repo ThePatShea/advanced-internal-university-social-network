@@ -14,6 +14,7 @@
     "glDatePicker": {},
     "moment": {},
     "bootstrap-wysiwyg": {},
-    "jquery-jcrop": {}
+    "jquery-jcrop": {},
+    "headly": {}
   }
 }
