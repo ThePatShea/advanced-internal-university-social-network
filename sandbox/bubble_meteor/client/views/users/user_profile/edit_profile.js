@@ -36,8 +36,9 @@ Template.userprofileEdit.events({
     
     var profileProperties = {
       profilePicture: $(e.target).find('[id=userprofilepicture_preview]').attr('src'),
+      retinaProfilePicture: $(e.target).find('[id=userprofilepicture_retina]').attr('src'),
       emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
-      phone: '666',
+      phone: '',
       lastUpdated: new Date().getTime(),
       userType: $(e.target).find('[name=userType]').val()
     };
@@ -82,8 +83,10 @@ Template.userprofileEdit.events({
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            var coverphoto_width = 100;
-            var coverphoto_height = 100;
+            var coverphoto_width = 160;
+            var coverphoto_height = 160;
+            var retina_width = 320;
+            var retina_height = 320;
             $("#userprofilepicture_dropzone").hide();
             $("#userprofilepicture_upload").attr("src", e.target.result);
             $("#userprofilepicture_preview").attr("src", e.target.result);
@@ -94,15 +97,22 @@ Template.userprofileEdit.events({
               $(function(){
                 function showPreview(coords){
                   var mycanvas = document.createElement('canvas');
+                  var retinacanvas = document.createElement('canvas');
+                  var mycontext = mycanvas.getContext('2d');
+                  var retinacontext = retinacanvas.getContext('2d');
                   mycanvas.width = coverphoto_width;
                   mycanvas.height = coverphoto_height;
+                  retinacanvas.width = retina_width;
+                  retinacanvas.height = retina_height;
                   console.log(coords);
-                  mycontext = mycanvas.getContext('2d');
                   mycontext.drawImage($("#userprofilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
+                  retinacontext.drawImage($("#userprofilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
                   var imagedata = mycanvas.toDataURL();
+                  var retinaImageData = retinacanvas.toDataURL();
                   $("#userprofilepicture_preview").attr("src", imagedata);
                   $("#userprofilepicture_preview").attr("width", coverphoto_width/2);
                   $("#userprofilepicture_preview").attr("height", coverphoto_height/2);
+                  $("#userprofilepicture_retina").attr("src", retinaImageData);
                 };
 
                 $('#userprofilepicture_upload').Jcrop({
@@ -151,8 +161,10 @@ Template.userprofileEdit.events({
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            var coverphoto_width = 100;
-            var coverphoto_height = 100;
+            var coverphoto_width = 160;
+            var coverphoto_height = 160;
+            var retina_width = 320;
+            var retina_height = 320;
             $("#userprofilepicture_dropzone").hide();
             $("#userprofilepicture_upload").attr("src", e.target.result);
             $("#userprofilepicture_preview").attr("src", e.target.result);
@@ -163,15 +175,22 @@ Template.userprofileEdit.events({
               $(function(){
                 function showPreview(coords){
                   var mycanvas = document.createElement('canvas');
+                  var retinacanvas = document.createElement('canvas');
+                  var mycontext = mycanvas.getContext('2d');
+                  var retinacontext = retinacanvas.getContext('2d');
                   mycanvas.width = coverphoto_width;
                   mycanvas.height = coverphoto_height;
+                  retinacanvas.width = retina_width;
+                  retinacanvas.height = retina_height;
                   console.log(coords);
-                  mycontext = mycanvas.getContext('2d');
                   mycontext.drawImage($("#userprofilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
+                  retinacontext.drawImage($("#userprofilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
                   var imagedata = mycanvas.toDataURL();
+                  var retinaImageData = retinacanvas.toDataURL();
                   $("#userprofilepicture_preview").attr("src", imagedata);
                   $("#userprofilepicture_preview").attr("width", coverphoto_width/2);
                   $("#userprofilepicture_preview").attr("height", coverphoto_height/2);
+                  $("#userprofilepicture_retina").attr("src", retinaImageData);
                 };
 
                 $('#userprofilepicture_upload').Jcrop({
@@ -207,6 +226,7 @@ Template.userprofileEdit.events({
 
 
 Template.userprofileEdit.rendered = function(){
+  $("#userprofilepicture_retina").hide();
   $("#change_profile_picture").click(function(){
     $("#userprofilepicture_preview").hide();
     $("#change_profile_picture").hide();
