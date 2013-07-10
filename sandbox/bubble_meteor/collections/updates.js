@@ -27,10 +27,9 @@ Meteor.methods({
                                 bubbleId: update.bubbleId,
                                 postId: update.postId
                               }).fetch();
-
     if(updateList.length>0) {
       _.each(updateList, function(newUpdate) {
-        Updates.update({_id:newUpdate._id,read:false}, {$set: {read: true}});
+        Updates.update({_id:newUpdate._id, read:false}, {$set: {read: true}});
       });
     }
     return true; 
@@ -58,7 +57,7 @@ createCommentUpdate = function(comment) {
       invokerId: comment.userId,
       invokerName: comment.author,
       updateType: "REPLIED",
-      url: '/mybubbles'+bubble._id+'/posts/'+post._id,
+      url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
       content: " commented on " + post.name
     });
   });
@@ -86,6 +85,12 @@ createPostUpdate = function(post) {
 
 //For everyone attending
 createEditEventUpdate = function(postId) {
+  //Removes previous updates that shows post is edited
+  var update = Updates.find({read: false, postId: postId, updateType: 'EDITED POST'}).fetch();
+  _.each(oldUpdates, function(update) {
+    Meteor.call('setRead', update);
+  });
+
   var post = Posts.findOne(postId);
   var bubble = Bubbles.findOne(post.bubbleId);
   var attendees = post.attendees;
@@ -102,7 +107,7 @@ createEditEventUpdate = function(postId) {
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
       updateType: "EDITED POST",
-      url: '/mybubbles'+bubble._id+'/posts/'+post._id,
+      url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
       content: Meteor.user().username + " edited " + post.name
     });
   });
@@ -112,9 +117,15 @@ createEditEventUpdate = function(postId) {
 createRemoveMemberUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
-  //Clears all other updates when user has joined bubble
-  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id }).fetch()
-  oldUpdates = oldUpdates.concat(Updates.find({read: false, invokerId:userId, bubbleId: bubble._id, updateType: 'JOINED BUBBLE' }).fetch());
+  //Clears all other user specific updates
+  var oldUpdates = Updates.find({
+    read: false, 
+    bubbleId: bubble._id,
+    $or: [
+      {userId: userId},
+      {invokerId:userId, updateType: 'ENTERED BUBBLE'}
+    ] 
+  }).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -187,7 +198,7 @@ createInvitationUpdate = function(userList) {
       invokerName: Meteor.user().username,
       updateType: "INVITATION",
       url: '/mybubbles/'+bubble._id+"/home",
-      content: Meteor.user().username + " invited to the bubble " + bubble.title
+      content: Meteor.user().username + " invited you to " + bubble.title
     });
   });
 }
@@ -212,6 +223,7 @@ createNewAttendeeUpdate = function(postId) {
     var user = Meteor.users.findOne({username:username});
     Meteor.call('update',{
       userId: user._id,
+      postId: postId,
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
@@ -243,15 +255,15 @@ createNewMemberUpdate = function(userId, bubbleId) {
   everyone.splice(index,1);
   index = everyone.indexOf(userId);
   everyone.splice(index,1);
-
+  var user = Meteor.users.findOne(userId);
 
   // This shows that admin has accepted an application and
   // an update needs to be sent to the newly added member
   Meteor.call('update',{
-    userId: userId,
+    userId: user._id,
     bubbleId: bubble._id,
-    invokerId: Meteor.userId(),
-    invokerName: Meteor.user().username,
+    invokerId: user._id,
+    invokerName: user.username,
     updateType: "ENTERED BUBBLE",
     url: '/mybubbles/'+bubble._id+'/members',
     content: "Congratulations! You Are now part of " + bubble.title 
@@ -339,7 +351,7 @@ createNewApplicantUpdate = function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, invokerId: userId, bubbleId: bubble._id, updateType: 'MEMBER PROMOTED'}).fetch();
+  var oldUpdates = Updates.find({read: false, invokerId: userId, bubbleId: bubble._id, updateType: 'NEW APPLICANT'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });

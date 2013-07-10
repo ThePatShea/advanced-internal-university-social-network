@@ -8,12 +8,7 @@ Template.bubbleInvitation.helpers({
         return Meteor.users.findOne({username:username})._id;
       }
     });
-    rejectList = rejectList.concat(users.invitees)
-                  .concat(inviteeIdList)
-                  .concat(users.admins)
-                  .concat(users.members)
-                  .concat(users.invitees)
-                  .concat(users.applicants)    
+    rejectList = rejectList.concat(users.invitees, inviteeIdList, users.admins, users.members, users.invitees, users.applicants); 
 
     rejectList.push(Meteor.userId());
     //The regular expression is used here again to prevent showing 

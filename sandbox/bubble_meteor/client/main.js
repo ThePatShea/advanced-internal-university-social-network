@@ -4,7 +4,7 @@
 
 
 // Updates Related Subscriptions
-  Meteor.subscribe('updates', Meteor.userId());
+  Meteor.subscribe('updates');
 
 
 // UserLog Related Subscriptions

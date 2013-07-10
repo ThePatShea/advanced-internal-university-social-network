@@ -49,7 +49,9 @@ Meteor.methods({
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       commentsCount: 0,
-      flagged: false
+      flagged: false,
+      viewList: [user._id],
+      viewCount: 1
     });
 
     post._id = Posts.insert(post);
@@ -58,18 +60,18 @@ Meteor.methods({
     return post;
   },
 
-  upvote: function(postId) {
+  incViewCount: function(postId) {
     var user = Meteor.user();
     // ensure the user is logged in
     if (!user)
-      throw new Meteor.Error(401, "You need to login to upvote");
-    
+      throw new Meteor.Error(401, "You need to login");
+    console.log(Posts.findOne({_id: postId}));
     Posts.update({
       _id: postId, 
-      upvoters: {$ne: user._id}
+      viewList: {$nin: [Meteor.userId()]}
     }, {
-      $addToSet: {upvoters: user._id},
-      $inc: {votes: 1}
+      $addToSet: {viewList: Meteor.userId()},
+      $inc: {viewCount: 1}
     });
   },
 

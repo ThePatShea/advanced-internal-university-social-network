@@ -7,13 +7,11 @@
     {{> icon-arrow-down}}
   </a>
   <ul class="update dropdown-menu">
-    {{#if compressUpdates}}
-      {{#each compressUpdates}}
-        {{>updateBubble}}
-      {{/each}}
+    {{#each compressUpdates}}
+      {{> updateBubble}}
     {{else}}
       <li><span>No Updates</span></li>
-    {{/if}}
+    {{/each}}
   </ul>
 </template>
 
@@ -29,9 +27,11 @@
 
 <template name="updateBubble">
   <li>    
-    <a href="{{bubblePagePath bubbleId}}">
-      {{getBubbleName bubbleId}}
-    </a>
+    {{#with getBubble this}}
+      <a href="{{bubblePagePath this}}">
+        {{title}}
+      </a>
+    {{/with}}
     {{#each this}}
       {{>update}}
     {{/each}}
