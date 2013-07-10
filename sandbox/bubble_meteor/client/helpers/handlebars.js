@@ -1,4 +1,9 @@
-Handlebars.registerHelper('pluralize', function(n, thing) {
+Handlebars.registerHelper('pluralize', function(n, thing, between) {
+  if (between == undefined)
+    between = ''
+
+  thing = between + ' ' + thing
+
   // Fairly simple pluralizer
   if(thing == 'person'){
     if (n === 1) {
@@ -13,6 +18,10 @@ Handlebars.registerHelper('pluralize', function(n, thing) {
       return n + ' ' + thing + 's';
     }
   }
+});
+
+Handlebars.registerHelper('matchPostType', function(inputPostType) {
+  return this.postType == inputPostType;
 });
 
 Handlebars.registerHelper('getCurrentBubble', function() {

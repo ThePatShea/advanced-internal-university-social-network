@@ -14,19 +14,23 @@
       </div>
   
       <div class="bubble-list">
-        {{> listHeadingEvent}}
-        {{#each eventPosts}}
-          {{> eventItem}}
-        {{else}}
-          There are no events yet. Start an event now!
-        {{/each}}
-        <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath this}}">
-          <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount 'more event'}}</button>
-        </a>
+        {{#with postProperties.event}}
+          {{> listHeading}}
+          {{#each posts}}
+            {{> eventItem}}
+          {{else}}
+            There are no {{postType}}s yet. Add one now!
+          {{/each}}
+          <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath this}}">
+            <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount postType 'more'}}</button>
+          </a>
+        {{/with}}
       </div>
 
       <div class="bubble-list">
-        {{> listHeadingDiscussion}}
+        {{#with postProperties.discussion}}
+          {{> listHeading}}
+        {{/with}}
         {{#each discussionPosts}}
           {{> postItem}}
         {{else}}
@@ -38,7 +42,9 @@
       </div>
   
       <div class="bubble-list">
-        {{> listHeadingFile}}
+        {{#with postProperties.file}}
+          {{> listHeading}}
+        {{/with}}
         {{#each filePosts}}
           {{> postItem}}
         {{else}}
