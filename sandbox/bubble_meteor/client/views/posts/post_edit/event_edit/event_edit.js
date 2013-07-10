@@ -31,12 +31,12 @@ Template.eventEdit.events({
         // display the error to the user
         throwError(error.reason);
       } else {
-        Meteor.Router.to('postPage', currentPostId);
+        //Create update for members who are attending the event
+        createEditEventUpdate(currentPostId);
+        Meteor.Router.to('postPage', Session.get('currentBubbleId'), currentPostId);
       }
     });
 
-    //Create update for members who are attending the event
-    createEditEventUpdate(this);
   },
 
     'dragover .dropzone': function(evt){

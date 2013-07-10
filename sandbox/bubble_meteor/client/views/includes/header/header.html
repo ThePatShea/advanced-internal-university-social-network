@@ -11,11 +11,11 @@
       <ul class="nav pull-right">
         {{#if currentUser}}
           {{#if isSuperUser}}
-            <li class="{{activeRouteClass}}">
+            <li class="{{activeRouteClass 'flags'}}">
               <a href="{{flagsListPath}}" class="my-bubble">Flag List</a>
             </li>
           {{/if}}
-          <li class="{{activeRouteClass}}">
+          <li class="{{activeRouteClass 'mybubbles'}}">
             <a href="{{getMyBubblesUrlPath}}" class="my-bubble">my bubbles</a>
           </li>
           <li class="dropdown">

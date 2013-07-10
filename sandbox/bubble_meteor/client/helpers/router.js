@@ -130,7 +130,6 @@ Meteor.Router.filters({
   'routeWhenLogin': function(page) {
     var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
     if(bubbles.length > 0) {
-      console.log("this ran");
       Meteor.Router.to('bubblePage',bubbles[0]._id);
       return 'bubblePage';
     }else{
@@ -149,15 +148,19 @@ Meteor.Router.filters({
     }else{
       return page;
     }
+  },
+  'increaseViewCount': function(page) {
+    Meteor.call('incViewCount', Session.get('currentPostId'));
+    return page;
   }
 });
 
 Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchBubbles', 'searchFiles', 'searchEvents', 'searchDiscussions', 'searchUsers', 'bubbleSubmit', 'userProfile', 'userProfileEdit', 'flagsList'] });
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');
-
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
-
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
 Meteor.Router.filter('hasSuperPermissions', {only: ['discussionSubmit', 'eventSubmit', 'fileSubmit', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})
+//Checks if page has a potential increase in view count
+Meteor.Router.filter('increaseViewCount', {only: ['postPage', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})

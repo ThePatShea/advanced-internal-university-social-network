@@ -1,6 +1,5 @@
 Template.postPage.helpers({
   currentPost: function() {
-    console.log('currentPost: ', Session.get('currentPostId'));
     return Posts.findOne(Session.get('currentPostId'));
   },
   isEvent: function() {

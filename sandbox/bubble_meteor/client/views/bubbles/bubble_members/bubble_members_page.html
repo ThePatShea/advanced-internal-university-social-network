@@ -12,8 +12,10 @@
     {{> bubbleAdminsList}}
     <hr>
     {{> bubbleMembersList}}
-    <hr>
-    {{> bubbleApplicantsList}}
+    {{#unless isSuperBubble this}}
+      <hr>
+      {{> bubbleApplicantsList}}
+    {{/unless}}
 
   {{/with}}
 </template>

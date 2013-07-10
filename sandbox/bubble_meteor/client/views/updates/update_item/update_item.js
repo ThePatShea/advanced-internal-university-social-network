@@ -9,13 +9,13 @@ userId: Meteor.userId(), Template.updateItem.helpers({
 		return Bubbles.findOne(this.bubbleId);
 	},
 	getContentTitle: function() {
-		if(this.updateType == "NEW ATTENDEE" || 
-				this.updateType == "JOINED BUBBLE" || 
+		if(this.updateType == "JOINED BUBBLE" || 
 				this.updateType == "MEMBER PROMOTED" || 
 				this.updateType == "MEMBER DEMOTED" ||
 				this.updateType == "NEW APPLICANT") {
 			return 'Member List';
-		}else if(this.updateType == "REPLIED" || 
+		}else if(this.updateType == "NEW ATTENDEE" || 
+				this.updateType == "REPLIED" || 
 				this.updateType == "POSTED" || 
 				this.updateType == "EDITED POST") {
 			var post = Posts.findOne(this.postId);
@@ -26,7 +26,7 @@ userId: Meteor.userId(), Template.updateItem.helpers({
 				this.updateType == "APPLICATION REJECTED") {
 			return 'Bubble List';
 		}else{
-			return 'Placeholder Only. URL is not decided yet!:D';
+			return 'DISMISS UPDATE';
 		}
 	}
 });

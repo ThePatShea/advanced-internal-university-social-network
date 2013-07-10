@@ -22,14 +22,13 @@ Template.updatesList.helpers({
       **/
       var postUpdateList = 
       [ 
-        "REPLIED",
-        "EVENT CANCELLED"
+        "REPLIED"
       ]
-      _.each(postUpdateList, function(type) {
+      // _.each(postUpdateList, function(type) {
         _.each(updateList, function(update){
 
           var commentUpdates = _.reject(updateList, function(update) {
-            return update.updateType != type;
+            return update.updateType != "REPLIED";
           });
 
           //Combine and chain the names together
@@ -77,7 +76,7 @@ Template.updatesList.helpers({
             }
           }
         });
-      });
+      // });
 
       //Declaring the types that needs collapsing of names
       var bubbleUpdateList = 

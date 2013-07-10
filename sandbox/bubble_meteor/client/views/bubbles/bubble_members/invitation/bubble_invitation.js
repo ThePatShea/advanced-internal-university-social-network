@@ -2,15 +2,15 @@ Template.bubbleInvitation.helpers({
   findUsers: function() {
     var users = this.users;
     var rejectList = [];
-    rejectList = rejectList.concat(users.invitees)
-                  .concat(Session.get('inviteeList'+Session.get('currentBubbleId')))
-                  .concat(users.admins)
-                  .concat(users.members)
-                  .concat(users.invitees)
-                  .concat(users.applicants)    
+    //Convert username list -> userId list
+    inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
+      if(Meteor.users.findOne({username:username})) {
+        return Meteor.users.findOne({username:username})._id;
+      }
+    });
+    rejectList = rejectList.concat(users.invitees, inviteeIdList, users.admins, users.members, users.invitees, users.applicants); 
 
     rejectList.push(Meteor.userId());
-
     //The regular expression is used here again to prevent showing 
     //users who are removed from bubble but still exists in the local db
     return Meteor.users.find(
@@ -74,7 +74,13 @@ Template.bubbleInvitation.events({
     }
 
     //Create notifications
-    createInvitationUpdate(userIdList);
+    if(this.bubbleType == 'super') {
+      _.each(userIdList, function(userId) {
+        createNewMemberUpdate(userId);
+      });
+    }else{
+      createInvitationUpdate(userIdList);
+    }
     
     //Reset Session objects
     Session.set('selectedUsername',undefined);
