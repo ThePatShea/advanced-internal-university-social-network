@@ -21,13 +21,16 @@ Handlebars.registerHelper('pluralize', function(n, thing, between) {
 });
 
 var getPosts = function(inputPostType) {
-  var parameters = {bubbleId: Session.get('currentBubbleId'), postType: inputPostType}
+  var params_find  =  {bubbleId: Session.get('currentBubbleId'), postType: inputPostType}
 
   if (inputPostType == 'event') {
-    parameters.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
+    params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
+    var params_sort       =  {dateTime:   1}
+  } else {
+    var params_sort       =  {submitted: -1}
   }
 
-  return Posts.find(parameters, {limit: 3}).fetch();
+  return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();
 }
 
 Handlebars.registerHelper('postProperties', {
