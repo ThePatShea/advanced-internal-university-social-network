@@ -84,11 +84,6 @@
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
         "tag": "v1.3.5",
         "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
-      },
-      "deps-extensions": {
-        "git": "https://github.com/tmeasday/meteor-deps-extensions.git",
-        "tag": "v0.1.0",
-        "commit": "110462c0ba33aaeb35e55069134287325cc453e5"
       }
     }
   }
