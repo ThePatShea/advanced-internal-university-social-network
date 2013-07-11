@@ -2,16 +2,17 @@
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
-
-    {{#if hasSuperPermissions}}
-      <a href="{{fileSubmitPath this}}">
-      	<div class="btn">Upload a File</div>
-  		</a>
-    {{/if}}
-
-		{{#each getFilePosts}}
-    	{{> postItem}}
-  	{{/each}}
-
+    <div class="bubble-page-content">
+      <div class="bubble-list">
+        {{#with postProperties.file}}
+          {{> listHeading}}
+        {{/with}}
+        {{#each getFilePosts}}
+          {{> listItem}}
+        {{else}}
+          No Files yet.
+        {{/each}}
+      </div>
+    </div>
   {{/with}}
 </template>

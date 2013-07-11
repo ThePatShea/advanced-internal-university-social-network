@@ -44,15 +44,16 @@
       <div class="bubble-list">
         {{#with postProperties.file}}
           {{> listHeading}}
+          {{#each posts}}
+            {{> listItem}}
+          {{else}}
+            There are no {{postType}}s yet. Add one now!
+          {{/each}}
+          <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath getCurrentBubble._id}}">
+            <button class="pull-left btn-tiny more-posts">+ {{pluralize filesCount postType 'more'}}</button>
+          </a>
         {{/with}}
-        {{#each filePosts}}
-          {{> postItem}}
-        {{else}}
-          There are no files yet. Upload a file now!
-        {{/each}}
-        <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath this}}">
-          <button class = "btn btn-small btn-success more-files" type="button" >+ {{pluralize filesCount 'more file'}}</button>
-        </a>
+      </div>
       </div>
     </div>
   {{/with}}
