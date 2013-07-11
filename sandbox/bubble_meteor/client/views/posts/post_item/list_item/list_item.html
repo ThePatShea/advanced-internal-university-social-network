@@ -1,8 +1,14 @@
 <template name="listItem">
   <div class="post-item">
-    <div class="pull-left post-date">
+    <div class="visible-{{matchPostType 'event'}} pull-left post-date">
       <div class="day">{{timestampToDayLong dateTime}}</div>
       <div class="month">{{timestampToMonthShort dateTime}}</div>
+    </div>
+    <div class="visible-{{matchPostType 'discussion'}} pull-left">
+      <div class="num-in-bubble comments-count">
+        <span class="cb-icon">{{> icon-bubble}}</span>
+        <span class="lbl">{{commentsCount}}</span>
+      </div>
     </div>
     <h4 class="post-name">{{name}}</h4>
     <div class="post-item-attributes">
