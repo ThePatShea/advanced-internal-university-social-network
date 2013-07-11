@@ -4,10 +4,12 @@
       <div class="day">{{timestampToDayLong dateTime}}</div>
       <div class="month">{{timestampToMonthShort dateTime}}</div>
     </div>
-    <div class="visible-{{matchPostType 'discussion'}} pull-left">
-      <div class="num-in-bubble comments-count">
-        <span class="cb-icon">{{> icon-bubble}}</span>
-        <span class="lbl">{{commentsCount}}</span>
+    <div class="visible-{{matchPostType 'discussion'}} v-middle pull-left">
+      <div class="v-inner">
+        <div class="num-in-bubble comments-count">
+          <span class="cb-icon">{{> icon-bubble-big}}</span>
+          <span class="lbl">{{commentsCount}}</span>
+        </div>
       </div>
     </div>
     <h4 class="post-name">{{name}}</h4>
@@ -44,6 +46,7 @@
           </span>
           <span class="post-actions">
             <span class="visible-{{matchPostType 'event'}}">{{> imGoing}}</span>
+            <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
           </span>
         </div>
       </div>

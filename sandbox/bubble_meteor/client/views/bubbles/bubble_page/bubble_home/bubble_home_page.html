@@ -35,8 +35,8 @@
           {{else}}
             There are no {{postType}}s yet. Add one now!
           {{/each}}
-          <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath this}}">
-            <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{pluralize discussionsCount 'more discussion'}}</button>
+          <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
+            <button class="pull-left btn-tiny more-posts">+ {{pluralize discussionsCount postType 'more'}}</button>
           </a>
         {{/with}}
       </div>
