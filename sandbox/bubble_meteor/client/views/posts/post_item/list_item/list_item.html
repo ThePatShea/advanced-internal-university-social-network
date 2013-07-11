@@ -1,4 +1,4 @@
-<template name="eventItem">
+<template name="listItem">
   <div class="post-item">
     <div class="pull-left post-date">
       <div class="day">{{timestampToDayLong dateTime}}</div>
@@ -8,7 +8,7 @@
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
         <div class="v-inner">
-          <span class="attribute-items">
+          <span class="visible-{{matchPostType 'event'}} attribute-items">
             <span class="attribute">
               <div class="pull-right post-item-lbl">
                 <span class="post-item-icon">{{> icon-time}}</span>
@@ -28,8 +28,16 @@
               </div>
             </span>
           </span>
+          <span class="visible-{{matchPostType 'discussion'}} attribute-items">
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon">{{> icon-time}}</span>
+                {{timestampToFromNow lastCommentTime}}
+              </div>
+            </span>
+          </span>
           <span class="post-actions">
-            {{> imGoing}}
+            <span class="visible-{{matchPostType 'event'}}">{{> imGoing}}</span>
           </span>
         </div>
       </div>

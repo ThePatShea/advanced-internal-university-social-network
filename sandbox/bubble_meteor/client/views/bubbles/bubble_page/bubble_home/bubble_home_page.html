@@ -17,7 +17,7 @@
         {{#with postProperties.event}}
           {{> listHeading}}
           {{#each posts}}
-            {{> eventItem}}
+            {{> listItem}}
           {{else}}
             There are no {{postType}}s yet. Add one now!
           {{/each}}
@@ -31,7 +31,7 @@
         {{#with postProperties.discussion}}
           {{> listHeading}}
           {{#each posts}}
-            {{> postItem}}
+            {{> listItem}}
           {{else}}
             There are no {{postType}}s yet. Add one now!
           {{/each}}

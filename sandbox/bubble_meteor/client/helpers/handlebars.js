@@ -25,9 +25,9 @@ var getPosts = function(inputPostType) {
 
   if (inputPostType == 'event') {
     params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
-    var params_sort       =  {dateTime:   1}
+    var params_sort       =  {dateTime:     1}
   } else {
-    var params_sort       =  {submitted: -1}
+    var params_sort       =  {lastCommentTime: -1}
   }
 
   return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();
@@ -35,19 +35,19 @@ var getPosts = function(inputPostType) {
 
 Handlebars.registerHelper('postProperties', {
     discussion : {
-        posts         : function() { return getPosts('discussion'); }
-      , postType      : 'discussion'
-      , word1         : 'active'
+        posts      : function() { return getPosts('discussion'); }
+      , postType   : 'discussion'
+      , word1      : 'active'
     }
   , event      : {
-        posts         : function() { return getPosts('event'); }
-      , postType      : 'event'
-      , word1         : 'upcoming'
+        posts      : function() { return getPosts('event'); }
+      , postType   : 'event'
+      , word1      : 'upcoming'
     }
   , file       : {
-        posts         : function() { return getPosts('file'); }
-      , postType      : 'file'
-      , word1         : 'latest'
+        posts      : function() { return getPosts('file'); }
+      , postType   : 'file'
+      , word1      : 'latest'
     }
 });
 
@@ -101,6 +101,10 @@ Handlebars.registerHelper('timestampToDayLong', function(dateTime){
 
 Handlebars.registerHelper('timestampToTime', function(dateTime){
   return moment(new Date(dateTime).toString()).format('h:mma');
+});
+
+Handlebars.registerHelper('timestampToFromNow', function(dateTime){
+  return moment(new Date(dateTime).toString()).fromNow();
 });
 
 Handlebars.registerHelper('numOfAttendees', function(){
