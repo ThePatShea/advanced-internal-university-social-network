@@ -153,6 +153,15 @@ Handlebars.registerHelper('decodeURI',function(uri) {
   return decodeURI(uri);
 });
 
+Handlebars.registerHelper('getTextAfterSlash',function(inputText) {
+  if (inputText) {
+    var textAfterSlash = inputText.split('/');
+    return textAfterSlash[1];
+  } else {
+    return false
+  }
+});
+
 Handlebars.registerHelper('isLoggedIn', function() {
   if(Meteor.user()) {
     return true;

@@ -859,6 +859,8 @@ align-with-post-item(n)
       main-light-color       0
     .comments-count
       main-light-fill        0
+    .file-type
+      colorize(main-light, auto, main-light)
     .post-name
       text-decoration        underline
       main-light-color       0
@@ -909,7 +911,12 @@ align-with-post-item(n)
     fontize(alt, medium, uppercase, 7px)
     position               relative
     height                 23px
-    lbl
+    left                   6px
+    .lbl
+      position             absolute
+      text-align           center
+      width                20px
+      bottom               2px
   .post-name
     margin                 0 0 0 55px
     color                  #333
