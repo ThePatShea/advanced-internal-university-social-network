@@ -9,8 +9,6 @@ Meteor.methods({
       page: page,
       login: hasLoggedIn
     }
-
-    console.log(hasLoggedIn);
     log._id = Userlogs.insert(log);
     return log;
   }
