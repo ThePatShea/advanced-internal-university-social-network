@@ -1,5 +1,10 @@
 Comments = new Meteor.Collection('comments');
 
+Comments.allow({
+   update: ownsPost,
+   remove: ownsPost
+ });
+
 Meteor.methods({
   comment: function(commentAttributes) {
     var user = Meteor.user();

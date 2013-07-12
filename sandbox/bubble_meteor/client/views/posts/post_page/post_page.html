@@ -1,9 +1,20 @@
 <template name="postPage">
   {{#with getCurrentBubble}}
+  	{{> bubbleCover}}
     {{> bubbleSectionSelector}}
   {{/with}}
   {{#with currentPost}}
     {{> postItem}}
+    {{#if flagged}}
+  		<span class="label label-important">Post Is Flagged</span>
+  	{{else}}
+  		<button class='btn btn-small flag'>Flag here!</button>
+  	{{/if}}
+  	
+  	{{#if hasEditPermissions}}
+  		<a href="{{getPostEditUrl}}"><button class='btn btn-small'>Edit Post</button></a>
+		{{/if}}
+
     {{> postAttributes}}    
     {{> commentsList}}
 
@@ -21,6 +32,5 @@
 					{{this}}
 				{{/with}}
 		{{/if}}
-
   {{/with}}
 </template>

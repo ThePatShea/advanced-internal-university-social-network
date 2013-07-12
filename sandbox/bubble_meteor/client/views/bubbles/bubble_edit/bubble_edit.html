@@ -1,5 +1,6 @@
 <template name="bubbleEdit">
   {{#with getCurrentBubble}}
+    {{> bubbleCover}}
     <form class="main">
       <div class="control-group">
           <label class="control-label" for="title">Title</label>
@@ -18,8 +19,10 @@
           <div id="bubble_image">
                   <img id="coverphoto_upload" src="" />
                   <img id="coverphoto_preview" src="{{coverPhoto}}" />
+                  <img id="coverphoto_retina" src="" />
                   <a href="#" class="btn btn-danger delete" id="change_coverphoto">Change</a>
               <div id="cover_dropzone" class="dropzone">Drop cover photo here.</div>
+              <input name="filesToUpload[]" id="coverfilesToUpload" type="file">
           </div>
       </div>
 
@@ -27,8 +30,10 @@
           <div id="bubble_profile">
                  <img id="profilepicture_upload" src="" />
                   <img id="profilepicture_preview" src="{{profilePicture}}" />
+                  <img id="profilepicture_retina" src="" />
                   <a href="#" class="btn btn-danger delete" id="change_profilepicture">Change</a>
               <div id="profile_dropzone" class="dropzone">Drop bubble profile picture here.</div>
+              <input name="filesToUpload[]" id="profilefilesToUpload" type="file">
           </div>
       </div>
 

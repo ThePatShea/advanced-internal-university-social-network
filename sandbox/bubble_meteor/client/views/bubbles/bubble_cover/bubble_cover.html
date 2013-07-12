@@ -1,46 +1,44 @@
 <template name="bubbleCover">
-  <div class="bubble-cover">
-    <img class="cover-pic" src="{{coverPhoto}}"/>
-    <div class="cover-mask"></div>
-    <div class="v-middle pull-left">
-      <div class="v-inner">
-        <div class="profile-pic-container">
-          <span class="category-{{category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
-          <img src="{{profilePicture}}" class="profile-pic">
+    <div class="bubble-cover">
+      <img class="cover-pic" src="{{coverPhoto}}"/>
+      <div class="cover-mask"></div>
+      <div class="v-middle pull-left">
+        <div class="v-inner">
+          <div class="profile-pic-container">
+            <span class="category-{{category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
+            <img src="{{profilePicture}}" class="profile-pic">
+          </div>
+        </div>
+      </div>
+      <div class="v-middle bubble-name-and-subtitle">
+        <div class="v-inner">
+          <h1 class="bubble-name">{{title}}</h1>
+          <h2 class="bubble-subtitle">
+            <span class="category-{{category}}-color">{{getLongCategory}}</span>
+            <span> | {{pluralize getBubbleUsersCount "member"}}</span>
+          </h2>
+        </div>
+      </div>
+      <div class="v-middle cover-btns">
+        <div class="v-inner">
+          {{#if isAdmin}}
+            <a href="{{bubbleEditPath this}}">
+              <button class="std-btn-dark cover-btn">
+                <span class="cb-icon-xlight cb-icon-settings">{{> icon-settings}}</span>
+                <span class="lbl">edit bubble</span>
+              </button>
+            </a>
+          {{/if}}
+          {{#unless isSuperBubble}}
+            {{#unless hasJoinedBubble}}
+              {{#if hasApplied}}
+                <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
+              {{else}}
+                <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
+              {{/if}}
+            {{/unless}}
+          {{/unless}}
         </div>
       </div>
     </div>
-    <div class="v-middle pull-left">
-      <div class="v-inner">
-        <h1 class="bubble-name">{{title}}</h1>
-        <h2 class="bubble-subtitle">
-          <span class="category-{{category}}-color">{{getLongCategory}}</span>
-          <span> | {{pluralize getBubbleUsersCount "member"}}</span>
-        </h2>
-      </div>
-    </div>
-    <div class="v-middle pull-right">
-      <div class="v-inner">
-        {{#if isAdmin}}
-          <a href="{{bubbleEditPath this}}">
-            <button class="std-btn-dark">
-              <span class="cb-icon-xlight">{{> icon-settings}}</span>
-              <span class="lbl">edit bubble</span>
-            </button>
-          </a>
-        {{/if}}
-        {{#if hasJoinedBubble}}
-          <a href="{{bubbleMembersPagePath this}}">
-            <button class="std-btn-dark">Members Page</button>
-          </a>
-        {{else}}
-          {{#if hasApplied}}
-            <button class="std-btn-dark cancel-apply">Cancel Application</button>
-          {{else}}
-            <button class="std-btn-dark join-apply">Join Bubble</button>
-          {{/if}}
-        {{/if}}
-      </div>
-    </div>
-  </div>
 </template>

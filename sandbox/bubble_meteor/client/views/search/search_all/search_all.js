@@ -1,10 +1,4 @@
 Template.searchAll.helpers({
-
-  hasSearchText: function() {
-    if(Session.get('searchText') != undefined){
-      return true;
-    }
-  },
   getSearchedBubbles: function() {
     return Bubbles.find(
       { $or: [
@@ -37,7 +31,7 @@ Template.searchAll.helpers({
     var posts =  Posts.find(
       { postType: 'file',
         name: new RegExp(Session.get('searchText'),'i')
-      }, {limit: fileListHandle.limit() }).fetch();
+      }, {limit: 2}).fetch();
 
     // return posts where searchText is not similar to file extension
     if(posts) {
@@ -62,4 +56,12 @@ Template.searchAll.helpers({
 Template.searchAll.rendered = function() {
   //To set header as active
   Session.set('searchCategory','all');
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

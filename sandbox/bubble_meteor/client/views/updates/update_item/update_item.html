@@ -9,39 +9,11 @@
       {{submittedText submitted}}
     </div>
 
-    {{#if isPost}}
-      <div style="width:100px" class="post-content">
-        <a href="{{url}}">
-          {{#with getPost}} 
-            {{name}}
-          {{/with}}
-        </a>
-      </div>
-    {{else}}
-      {{#if isBubbleMember}}
-        <div style="width:100px" class="post-content">
-          <a href="{{url}}">
-            Member List
-          </a>
-        </div>
-      {{else}}
-        {{#if isBubbleList}}
-          <div style="width:100px" class="post-content">
-            <a href="{{url}}">
-              Bubble List
-            </a>
-          </div>
-        {{else}}
-          <div style="width:100px" class="post-content">
-            <a href="{{url}}">
-              {{#with getBubble}}
-                Acknowledge here!:D
-              {{/with}}
-            </a>
-          </div>
-        {{/if}}
-      {{/if}}
-    {{/if}}
+    <div style="width:100px" class="post-content">
+      <a href="{{url}}">
+        {{getContentTitle}}
+      </a>
+    </div>
     
     {{#if isPost}}
       <div style="width: 100px;" class="pull-right">

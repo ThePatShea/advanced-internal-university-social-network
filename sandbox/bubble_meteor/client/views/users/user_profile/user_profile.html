@@ -1,10 +1,14 @@
 <template name='userProfile'>
 	{{#with getUser}}
 		<img src="{{getProfilePicture}}" class="userprofilepicture"/>
-		<h4>Username: <a href="{{userProfile this}}">{{username}}</a></h4><span>Email: {{getEmail}}</span></h3>
+		<h4>Username: <a href="{{userProfile this}}">{{username}}</a></h4>
+		<span>Email: {{getEmail}}</span></h3>
+		<br />
+		<span>User Type: {{getUserType}}</span></h3>
 		{{#if hasPermission}}
-			<h6><a href="{{userprofileEditPath getUserId}}">Edit</a></h6>
+			<h6><a href="{{userProfileEditPath getUserId}}">Edit</a></h6>
 		{{/if}}
+
 
 		{{#each getBubblesList}}
 			{{> bubbleItem}}

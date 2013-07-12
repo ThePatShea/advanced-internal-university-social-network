@@ -1,9 +1,5 @@
 Template.searchDiscussions.helpers({
-  hasSearchText: function() {
-  	if(Session.get('searchText') != undefined){
-  		return true;
-  	}
-  },
+
   getSearchedDiscussions: function() {
   	return Posts.find(
   		{	postType: 'discussion',
@@ -11,7 +7,7 @@ Template.searchDiscussions.helpers({
   			{name: new RegExp(Session.get('searchText'),'i')}, 
   			{body: new RegExp(Session.get('searchText'),'i')}
   			]
-  		}, {limit:discussionListHandle.limit()});
+  		}, {limit:searchDiscussionsHandle.limit()});
   }
 });
 
@@ -22,8 +18,16 @@ Template.searchDiscussions.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == 'searchDiscussions'){
-        this.discussionListHandle.loadNextPage();
+        this.searchDiscussionsHandle.loadNextPage();
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

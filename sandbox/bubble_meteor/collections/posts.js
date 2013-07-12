@@ -1,22 +1,21 @@
 Posts = new Meteor.Collection('posts');
 
 Posts.allow({
-   update: ownsDocument,
-   remove: ownsDocument
+   update: ownsPost,
+   remove: ownsPost
  });
 
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following fields:
-    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastUpdated', 'eventPhoto').length > 0);
+    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto', 'children', 'flagged').length > 0);
   }
 });
 
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
-    var bubble = Bubbles.findOne(postAttributes.bubbleId);
-    // console.log(user._id);
+    var postWithSameName = Posts.findOne({name: postAttributes.name, bubbleId: postAttributes.bubbleId});
     
     // ensure the user is logged in
     if (!user)
@@ -31,37 +30,46 @@ Meteor.methods({
       throw new Meteor.Error(422, 'Please fill in all fields');
     }
 
+    // check that there are no previous posts with the same title
+    if (postAttributes.title && postWithSameName) {
+      throw new Meteor.Error(302, 
+        'This post has already been created', 
+        postWithSameName._id);
+    }
+
     if(!postAttributes.attendees){
       postAttributes.attendees = [];
     }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto'), {
-      userId: user._id, 
+    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto', 'parent', 'children'), {
+      userId: user._id,
       author: user.username, 
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
-      commentsCount: 0
+      commentsCount: 0,
+      flagged: false,
+      viewList: [user._id],
+      viewCount: 1
     });
 
     post._id = Posts.insert(post);
     createPostUpdate(post);
 
-    return post._id;
+    return post;
   },
 
-  upvote: function(postId) {
+  incViewCount: function(postId) {
     var user = Meteor.user();
     // ensure the user is logged in
     if (!user)
-      throw new Meteor.Error(401, "You need to login to upvote");
-    
+      throw new Meteor.Error(401, "You need to login");
     Posts.update({
       _id: postId, 
-      upvoters: {$ne: user._id}
+      viewList: {$nin: [Meteor.userId()]}
     }, {
-      $addToSet: {upvoters: user._id},
-      $inc: {votes: 1}
+      $addToSet: {viewList: Meteor.userId()},
+      $inc: {viewCount: 1}
     });
   },
 
@@ -94,17 +102,71 @@ Meteor.methods({
         $pull: {attendees:username}
       });
     }
-
   }
 });
 
 createPost = function(postAttributes){
-  Meteor.call('post', postAttributes, function(error, id) {
+  Meteor.call('post', postAttributes, function(error, post) {
     if (error) {
       // display the error to the user
       throwError(error.reason);
     } else {
-      Meteor.Router.to('postPage', id);
+      Meteor.Router.to('postPage', post.bubbleId, post._id);
+    }
+  });
+}
+
+createPostWithAttachments = function(postAttributes, fileList){
+  Meteor.call('post', postAttributes, function(error, post){
+    if (error) {
+      // display the error to the user
+      throwError(error.reason);
+    } else {
+      var filepostIds = [];
+      for (var i = 0, f; f = files[i]; i++) {
+        var reader = new FileReader();
+        reader.onload = (function(f){
+          return function(e) {
+            
+            var attributes = {
+              name: escape(f.name),
+              file: e.target.result,
+              fileType: f.type,
+              postType: 'file',
+              bubbleId: Session.get('currentBubbleId'),
+              parent: post._id   //This needs to be set to the ID of the post created above.
+            };
+            var parentid = post._id;
+            Meteor.call('post', attributes, function(error, newPost){
+              if(error){
+                throwError(error.reason);
+              }
+              else{
+                //filepostIds.push(id);
+                var parentPost = Posts.findOne({_id: parentid});
+                var childPosts = parentPost.children;
+                if(childPosts == null){
+                  childPosts = [];
+                }
+                childPosts.push(newPost._id);
+                console.log(childPosts);
+                var updatedProperties = {
+                  children: childPosts
+                };
+                Posts.update(parentid, {$set: updatedProperties}, function(error){
+                  if(error){
+                    throwError(error.reason);
+                  }
+                });
+              }
+            });
+          }
+        })(f);
+        reader.readAsDataURL(f);
+      }
+
+      Meteor.Router.to('postPage', post.bubbleId, post._id);
+
     }
   });
 }

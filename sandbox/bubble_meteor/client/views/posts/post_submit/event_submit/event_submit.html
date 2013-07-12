@@ -1,12 +1,18 @@
 <template name="eventSubmit">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+  {{/with}}
   <section class="main">
     {{> selectPostType}}
     <form>
     <div class="control-group">
         <div id="eventphoto_image">
             <div id="eventphoto_dropzone" class="dropzone">Drop event photo here.</div>
+            <input name="filesToUpload[]" id="eventfilesToUpload" type="file">
                 <img id="eventphoto_upload" src="" />
                 <img id="eventphoto_preview" src="" />
+                <img id="eventphoto_retina" src="" />
         </div>
     </div>
       <div class="control-group">

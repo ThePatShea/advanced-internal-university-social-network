@@ -1,9 +1,5 @@
 Template.searchEvents.helpers({
-  hasSearchText: function() {
-  	if(Session.get('searchText') != undefined){
-  		return true;
-  	}
-  },
+
   getSearchedEvents: function() {
   	return Posts.find(
   		{	postType: 'event',
@@ -12,7 +8,7 @@ Template.searchEvents.helpers({
   			{body: new RegExp(Session.get('searchText'),'i')},
   			{location: new RegExp(Session.get('searchText'),'i')}
   			]
-  		}, {limit: eventListHandle.limit()});
+  		}, {limit: searchEventsHandle.limit()});
   }
 });
 
@@ -23,8 +19,16 @@ Template.searchEvents.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == 'searchEvents'){
-        this.eventListHandle.loadNextPage();
+        this.searchEventsHandle.loadNextPage();
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

@@ -1,28 +1,42 @@
 <head>
+  <! Makes the site size correctly on mobile devices !>
+    <meta content="width=device-width,minimum-scale=1,maximum-scale=1" name="viewport">
+
   <! Activates Typekit fonts !>
     <script type="text/javascript" src="//use.typekit.net/yiq3yhp.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-  <! Sets the text in the title bar !>
+  <! Sets the favicon !>
+    <link rel="icon" type="image/ico" href="/img/favicon.ico">
+
+  <! Sets the text in the browser's title bar !>
     <title>Emory Bubble</title>
+
+  <! Initializes the support widget !>
+    <script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script> 
+    <script type="text/javascript"> if (typeof GSFN !== "undefined") { GSFN.loadWidget(6125,{"containerId":"getsat-widget-6125"}); } </script>
+    <script type="text/javascript" src="/js/jrac/jquery.jrac.js"></script>
 </head>
 <body>
-  <div class="container">
-    {{> header}}
-    {{> sidebar}}
-    
-    <div id="main" class="row-fluid">
-      {{> errors}}
+  {{> googleAnalytics}}
+  <div class="viewport">
+    <div class="frame">
 
-      {{#if isLoggedIn}}
-        {{#if hasNoErrors}}
-          {{#with getCurrentBubble}}
-    	      {{> bubbleCover}}
-          {{/with}}
-        {{/if}}
-      {{/if}}
+      <button class="sidebar-collapse" data-toggle="collapse" data-target="#menu">
+        <span class="sidebar-arrow-right">{{> icon-sidebar-arrow-right}}</span>
+        <span class="sidebar-arrow-left">{{> icon-sidebar-arrow-left}}</span>
+      </button>
+      <div id="menu" class="menu nav-collapse collapse width">
+        {{> sidebar}}
+      </div>
 
-      {{renderPage}}
+      <div class="view">
+        {{> header}}
+        <div id="main" class="row-fluid">
+          {{> errors}}
+          {{renderPage}}
+        </div>
+      </div>
     </div>
   </div>
 </body>

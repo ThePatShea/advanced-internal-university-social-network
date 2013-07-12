@@ -2,15 +2,15 @@ Template.bubbleInvitation.helpers({
   findUsers: function() {
     var users = this.users;
     var rejectList = [];
-    rejectList = rejectList.concat(users.invitees)
-                  .concat(Session.get('inviteeList'+Session.get('currentBubbleId')))
-                  .concat(users.admins)
-                  .concat(users.members)
-                  .concat(users.invitees)
-                  .concat(users.applicants)    
+    //Convert username list -> userId list
+    inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
+      if(Meteor.users.findOne({username:username})) {
+        return Meteor.users.findOne({username:username})._id;
+      }
+    });
+    rejectList = rejectList.concat(users.invitees, inviteeIdList, users.admins, users.members, users.invitees, users.applicants); 
 
     rejectList.push(Meteor.userId());
-
     //The regular expression is used here again to prevent showing 
     //users who are removed from bubble but still exists in the local db
     return Meteor.users.find(
@@ -52,7 +52,7 @@ Template.bubbleInvitation.events({
     });
     Session.set('inviteeList'+Session.get('currentBubbleId'),usernameList);
   },
-  'click .add-invitees': function(event){
+  'click .add-users': function(event){
     event.preventDefault();
 
     //convert usernameList into userIdList
@@ -61,11 +61,26 @@ Template.bubbleInvitation.events({
     _.each(usernameList, function(username) {
       userIdList.push(Meteor.users.findOne({username:username})._id);
     });
-    //Add Invitees to the bubble object
-    Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
+
+    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    if(bubble.bubbleType == 'super') {
+      Bubbles.update({_id:bubble._id},
+      {
+        $addToSet: {'users.members': {$each: userIdList}}
+      });
+    }else{   
+      //Add Invitees to the bubble object
+      Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
+    }
 
     //Create notifications
-    createInvitationUpdate(userIdList);
+    if(this.bubbleType == 'super') {
+      _.each(userIdList, function(userId) {
+        createNewMemberUpdate(userId);
+      });
+    }else{
+      createInvitationUpdate(userIdList);
+    }
     
     //Reset Session objects
     Session.set('selectedUsername',undefined);

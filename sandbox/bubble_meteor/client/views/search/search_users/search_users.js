@@ -1,9 +1,4 @@
 Template.searchUsers.helpers({
-  hasSearchText: function() {
-    if(Session.get('searchText') != undefined){
-      return true;
-    }
-  },
   getSearchedUsers: function() {
   	Session.set('selectedUsername',Session.get('searchText'));
   	return Meteor.users.find(
@@ -25,4 +20,12 @@ Template.searchUsers.rendered = function(){
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

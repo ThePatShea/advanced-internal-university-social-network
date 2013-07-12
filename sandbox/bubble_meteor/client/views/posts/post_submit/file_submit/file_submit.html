@@ -1,4 +1,8 @@
 <template name="fileSubmit">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+  {{/with}}
   <section class="main">
     {{> selectPostType}}
     <style>

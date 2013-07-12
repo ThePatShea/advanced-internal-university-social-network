@@ -1,6 +1,6 @@
 Template.updatesList.helpers({
   updates: function() {
-    var updateList = Updates.find({bubbleId: Session.get('currentBubbleId'), read:false}).fetch();
+    var updateList = Updates.find({userId: Meteor.userId(), bubbleId: Session.get('currentBubbleId'), read:false}).fetch();
 
     if(updateList.length > 0) {
       //To combine updates with same userId, invokerId, updateType and postId
@@ -22,14 +22,13 @@ Template.updatesList.helpers({
       **/
       var postUpdateList = 
       [ 
-        "REPLIED",
-        "EVENT CANCELLED"
+        "REPLIED"
       ]
-      _.each(postUpdateList, function(type) {
+      // _.each(postUpdateList, function(type) {
         _.each(updateList, function(update){
 
           var commentUpdates = _.reject(updateList, function(update) {
-            return update.updateType != type;
+            return update.updateType != "REPLIED";
           });
 
           //Combine and chain the names together
@@ -77,7 +76,7 @@ Template.updatesList.helpers({
             }
           }
         });
-      });
+      // });
 
       //Declaring the types that needs collapsing of names
       var bubbleUpdateList = 
@@ -129,20 +128,17 @@ Template.updatesList.helpers({
           updateList = _.reject(updateList, function(newUpdate) {
             return newUpdate.updateType == type;
           });
-          //Now add back with the applicant that has a changed invoker name
+          //Now ad back with the applicant that has a changed invoker name
           if(firstUpdate){
             updateList.push(firstUpdate);
           }
         }
-        
       });
 
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
-      }); 
-      
+      });  
       return updateList;
     }
-    
   }
 });

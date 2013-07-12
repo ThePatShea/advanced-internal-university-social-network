@@ -1,0 +1,16 @@
+<template name='flagsList'>
+	<h3>Unsolved Flags List</h3>
+	<br />
+	{{#each getUnsolvedFlags}}
+		{{> flagItem}}
+		<button class="btn btn-small resolve-flag">Issue Is Resolved</button>
+		<br />
+	{{/each}}
+	<hr>
+	<h3>Solved Flags List</h3>
+	<br />
+	{{#each getSolvedFlags}}
+		{{> flagItem}}
+		<br />
+	{{/each}}
+</template>

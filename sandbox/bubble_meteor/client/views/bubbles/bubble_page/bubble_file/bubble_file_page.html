@@ -1,0 +1,17 @@
+<template name="bubbleFilePage">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+
+    {{#if hasSuperPermissions}}
+      <a href="{{fileSubmitPath this}}">
+      	<div class="btn">Upload a File</div>
+  		</a>
+    {{/if}}
+
+		{{#each getFilePosts}}
+    	{{> postItem}}
+  	{{/each}}
+
+  {{/with}}
+</template>

@@ -1,15 +1,11 @@
 Template.searchFiles.helpers({
-  hasSearchText: function() {
-  	if(Session.get('searchText') != undefined){
-  		return true;
-  	}
-  },
+
   getSearchedFiles: function() {
 
   	var posts =  Posts.find(
   		{	postType: 'file',
   			name: new RegExp(Session.get('searchText'),'i')
-  		}, {limit: fileListHandle.limit() }).fetch();
+  		}, {limit: searchFilesHandle.limit() }).fetch();
 
     // return posts where searchText is not similar to file extension
     if(posts) {
@@ -30,8 +26,16 @@ Template.searchFiles.rendered = function(){
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == 'searchFiles'){
-        this.fileListHandle.loadNextPage();
+        this.searchFilesHandle.loadNextPage();
       }
     }
   });
+
+  //Set the searchText as session variable
+  var searchText = $(".search-text").val();
+  if (searchText == ""){
+    Session.set('searchText',undefined);
+  }else{
+    Session.set('searchText', searchText);
+  }
 }

@@ -9,7 +9,8 @@
     {{> fileObject}}
     <div id="file-data" hidden="true">{{file}}</div>
     <!--<button id="download-btn">download</button>-->
-    <a class="btn download-btn" href="{{file}}" download="{{name}}">Download</a>
+    <a class="btn download-btn" href="{{file}}" download="{{name}}" onClick="_gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);">Download</a>
     <pre>{{{body}}}</pre>
+    {{> postAttachments}}
   </div>
 </template>

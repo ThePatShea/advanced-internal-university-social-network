@@ -2,6 +2,9 @@ Template.fileSubmit.events({
 
   'submit form': function(e, template) {
     e.preventDefault();
+    //Google Analytics
+    _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);
+    
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
       reader.onload = (function(f){
@@ -47,7 +50,7 @@ Template.fileSubmit.events({
         return function(e) {
         // Render thumbnail.
         var span = document.createElement('span');
-        span.innerHTML = ['<img class="thumb" src="', e.target.result,
+        span.innerHTML = ['<img class="previewthumb" src="', e.target.result,
                         '" title="', escape(theFile.name), '"/>'].join('');
         document.getElementById('list').insertBefore(span, null);
         };
@@ -103,8 +106,6 @@ Template.fileSubmit.events({
 
         reader.readAsDataURL(f);
       }
-
-
     }
   },
 

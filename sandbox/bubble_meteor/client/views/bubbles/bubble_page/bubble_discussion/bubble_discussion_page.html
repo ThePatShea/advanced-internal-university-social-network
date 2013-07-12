@@ -1,0 +1,17 @@
+<template name="bubbleDiscussionPage">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+
+    {{#if hasSuperPermissions}}
+      <a href="{{discussionSubmitPath this}}">
+      	<div class="btn">Start a Discussion</div>
+  		</a>
+    {{/if}}
+
+		{{#each getDiscussionPosts}}
+	    {{> postItem}}
+	  {{/each}}
+
+  {{/with}}
+</template>
