@@ -16,6 +16,6 @@ Template.imGoing.events({
         Meteor.call('attendEvent',this._id,Meteor.user().username);
   
       // Track action on Google Analytics
-        _gaq.push(['_trackEvent', 'Post', 'Attending Event', +this.name]);
+        _gaq.push(['_trackEvent', 'Post', 'Attending Event', this.name]);
     }
 });
