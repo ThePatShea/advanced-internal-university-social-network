@@ -158,7 +158,7 @@ Handlebars.registerHelper('getTextAfterSlash',function(inputText) {
     var textAfterSlash = inputText.split('/');
     return textAfterSlash[1];
   } else {
-    return false
+    return false;
   }
 });
 
