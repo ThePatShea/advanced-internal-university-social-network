@@ -132,7 +132,6 @@ Meteor.Router.filters({
     }else if(Meteor.loggingIn()) {
       return 'loading';
     }else {
-      Meteor.Router.to('/');
       return 'loginPage';
     }
   },
@@ -143,7 +142,7 @@ Meteor.Router.filters({
       page.toString().match('edit') || 
       page.toString().match('file')){
 
-      if(Meteor.user().userType != 'superuser'){
+      if(Meteor.user() && Meteor.user().userType != 'superuser'){
         var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
         if(bubble) {
           if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
@@ -184,15 +183,13 @@ Meteor.Router.filters({
     if(Meteor.user() && Meteor.user().userType == 'superuser') {
       return page;
     }
-    Meteor.Router.to('/');
-    return '404NotFound';
+    return '/';
   },
   'megauserPermissions': function(page){
     if(Meteor.user() && Meteor.user().userType == 'megauser') {
       return page;
     }
-    Meteor.Router.to('/');
-    return '404NotFound';
+    return '/';
   }
 });
 
