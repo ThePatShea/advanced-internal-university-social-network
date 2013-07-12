@@ -279,7 +279,7 @@ Template.updatesDropdown.helpers({
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
       }); 
-      return updateList.length();
+      return updateList.length;
     }
   }
 });
