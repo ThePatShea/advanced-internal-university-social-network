@@ -1,7 +1,7 @@
 Template.bubbleFilePage.helpers({
   //Get posts assigned to this bubble
   getFilePosts: function(){
-  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}, {limit: postsListHandle.limit()});
+  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}, {limit: postsListHandle.limit(), sort: {lastDownloadTime: -1} });
   }
 });
 

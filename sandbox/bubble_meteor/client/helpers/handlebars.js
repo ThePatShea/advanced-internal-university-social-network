@@ -26,8 +26,10 @@ var getPosts = function(inputPostType) {
   if (inputPostType == 'event') {
     params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
     var params_sort       =  {dateTime:     1}
+  } else if (inputPostType == 'file') {
+    var params_sort       =  {lastDownloadTime: -1}
   } else {
-    var params_sort       =  {lastCommentTime: -1}
+    var params_sort       =  {lastCommentTime:  -1}
   }
 
   return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();

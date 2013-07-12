@@ -8,7 +8,7 @@ Posts.allow({
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following fields:
-    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'children', 'flagged').length > 0);
+    return (_.without(fieldNames, 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'numDownloads', 'children', 'flagged', 'lastDownloadTime').length > 0);
   }
 });
 
@@ -43,7 +43,7 @@ Meteor.methods({
     }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto', 'parent', 'children'), {
+    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'), {
       userId: user._id,
       author: user.username, 
       submitted: new Date().getTime(),
