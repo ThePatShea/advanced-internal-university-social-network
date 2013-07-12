@@ -19,7 +19,7 @@ Template.header.helpers({
       return '/mybubbles/search/bubbles';
     }
   },
-  isSuperUser: function() {
-    return Meteor.user().userType == 'superuser';
+  checkUserType: function(userType) {
+    return Meteor.user().userType == userType;
   }
 });

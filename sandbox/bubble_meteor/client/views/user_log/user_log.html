@@ -1,3 +1,33 @@
-<template name="userLog">
+<template name="userlog">
+  <div class="control-group">
+    <label class="control-label" for="title">Search</label>
+    <div class="controls">
+      <input class="search-text" name="searchText" type="text" placeholder="Name"/>
+    </div>
+  </div>
+  <hr>
+
+  <h4>Number of Users Logged In More Than Once</h4>
+  Count: {{countUsersWithMultipleLogin}}
+  <hr>
+
+  <h4>Users Login Count</h4>
+  {{#each getUsersWithMultipleLogin}}
+    {{getUsername}}:{{getLoginCount}}
+    <br />
+  {{/each}}
+  <hr>
   
+  <h4>Overall UserLog</h4>
+  {{#each getUserlogs}}
+    <b>Username: {{getUsername}}</b>
+    <p>
+    {{#each groupByPage}}
+      Page Name : {{getPageName}}
+      <p>
+      Page Count: {{getPageCount}}
+
+    {{/each}}
+    <hr>
+  {{/each}}
 </template>
