@@ -19,14 +19,16 @@ Meteor.methods({
     if (!commentAttributes.postId)
       throw new Meteor.Error(422, 'You must comment on a post');
     
+    currentTime = new Date().getTime();
+
     comment = _.extend(_.pick(commentAttributes, 'postId', 'body'), {
       userId: user._id,
       author: user.username,
-      submitted: new Date().getTime()
+      submitted: currentTime
     });
     
     // update the post with the number of comments
-    Posts.update(comment.postId, {$inc: {commentsCount: 1}});
+    Posts.update(comment.postId, {$set: {lastCommentTime: currentTime}, $inc: {commentsCount: 1}});
     
     // create the comment, save the id
     comment._id = Comments.insert(comment);

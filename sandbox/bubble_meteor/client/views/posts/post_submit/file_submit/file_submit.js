@@ -16,6 +16,8 @@ Template.fileSubmit.events({
             file: e.target.result,
             fileType: f.type,
             postType: 'file',
+            numDownloads: 0,
+            lastDownloadTime: new Date().getTime(),
             bubbleId: Session.get('currentBubbleId')
           });
         }

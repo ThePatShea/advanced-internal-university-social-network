@@ -1,4 +1,9 @@
-Handlebars.registerHelper('pluralize', function(n, thing) {
+Handlebars.registerHelper('pluralize', function(n, thing, between) {
+  if (between == undefined)
+    between = ''
+
+  thing = between + ' ' + thing
+
   // Fairly simple pluralizer
   if(thing == 'person'){
     if (n === 1) {
@@ -13,6 +18,43 @@ Handlebars.registerHelper('pluralize', function(n, thing) {
       return n + ' ' + thing + 's';
     }
   }
+});
+
+var getPosts = function(inputPostType) {
+  var params_find  =  {bubbleId: Session.get('currentBubbleId'), postType: inputPostType}
+
+  if (inputPostType == 'event') {
+    params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
+    var params_sort       =  {dateTime:     1}
+  } else if (inputPostType == 'file') {
+    var params_sort       =  {lastDownloadTime: -1}
+  } else {
+    var params_sort       =  {lastCommentTime:  -1}
+  }
+
+  return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();
+}
+
+Handlebars.registerHelper('postProperties', {
+    discussion : {
+        posts      : function() { return getPosts('discussion'); }
+      , postType   : 'discussion'
+      , word1      : 'active'
+    }
+  , event      : {
+        posts      : function() { return getPosts('event'); }
+      , postType   : 'event'
+      , word1      : 'upcoming'
+    }
+  , file       : {
+        posts      : function() { return getPosts('file'); }
+      , postType   : 'file'
+      , word1      : 'latest'
+    }
+});
+
+Handlebars.registerHelper('matchPostType', function(inputPostType) {
+  return this.postType == inputPostType;
 });
 
 Handlebars.registerHelper('getCurrentBubble', function() {
@@ -63,6 +105,10 @@ Handlebars.registerHelper('timestampToTime', function(dateTime){
   return moment(new Date(dateTime).toString()).format('h:mma');
 });
 
+Handlebars.registerHelper('timestampToFromNow', function(dateTime){
+  return moment(new Date(dateTime).toString()).fromNow();
+});
+
 Handlebars.registerHelper('numOfAttendees', function(){
   return this.attendees.length;
 });
@@ -103,6 +149,19 @@ Handlebars.registerHelper('getBubbleUsersCount',function() {
 
 Handlebars.registerHelper('convertSpacesToDashes',function(word) {
   return word.replace(" ","-");
+});
+
+Handlebars.registerHelper('decodeURI',function(uri) {
+  return decodeURI(uri);
+});
+
+Handlebars.registerHelper('getTextAfterSlash',function(inputText) {
+  if (inputText) {
+    var textAfterSlash = inputText.split('/');
+    return textAfterSlash[1];
+  } else {
+    return false;
+  }
 });
 
 Handlebars.registerHelper('isLoggedIn', function() {

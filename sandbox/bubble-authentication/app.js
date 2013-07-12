@@ -22,8 +22,10 @@ var globalprofile = '';
 //var date = new Date();
 
 
-var privateKey = fs.readFileSync('./certs/ssl-key.pem').toString();
-var certificate = fs.readFileSync('./certs/ssl-cert.pem').toString();
+//var privateKey = fs.readFileSync('./certs/ssl-key.pem').toString();
+//var certificate = fs.readFileSync('./certs/ssl-cert.pem').toString();
+var privateKey = fs.readFileSync('./certs/talkschool.net.key').toString();
+var certificate = fs.readFileSync('./certs/talkschool.net.crt').toString();
 
 
 var userSchema = mongoose.Schema({
@@ -182,7 +184,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
 
 app.get('/users', user.list);
 
