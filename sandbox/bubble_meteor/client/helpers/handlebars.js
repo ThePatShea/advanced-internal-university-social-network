@@ -149,6 +149,10 @@ Handlebars.registerHelper('convertSpacesToDashes',function(word) {
   return word.replace(" ","-");
 });
 
+Handlebars.registerHelper('decodeURI',function(uri) {
+  return decodeURI(uri);
+});
+
 Handlebars.registerHelper('isLoggedIn', function() {
   if(Meteor.user()) {
     return true;

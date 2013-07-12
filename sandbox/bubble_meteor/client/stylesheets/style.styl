@@ -904,6 +904,12 @@ align-with-post-item(n)
       text-align             center
       width                  24px
       top                    2px
+  .file-type
+    colorize(white-xdark, auto, white-xdark)
+    fontize(alt, medium, uppercase, 7px)
+    position               relative
+    height                 23px
+    lbl
   .post-name
     margin                 0 0 0 55px
     color                  #333
@@ -931,7 +937,7 @@ align-with-post-item(n)
       .post-item-icon
         position                 relative
         top                      -1px
-        std-white-xdark-fill     0
+        colorize(auto, auto, white-xdark)
         svg
           vertical-align         middle
           width                  20px
