@@ -1,15 +1,11 @@
 <template name="postAttributes">
 <script language="JavaScript" src="js/pdfobject.js"></script>
 <script language="JavaScript" src="js/FileSaver.js"></script>
-
   <div class="main">
-  	<img src="{{eventPhoto}}" />
+    <img src="{{eventPhoto}}" />
     <p><b><u>{{submittedText dateTime}}</u></b></p>
     <p>{{location}}</p>
     {{> fileObject}}
-    <div id="file-data" hidden="true">{{file}}</div>
-    <a class="btn download-btn" href="{{file}}" download="{{name}}" onClick="
-    _gaq.push(['_trackEvent', 'File', 'Download', this.name]);">Download</a>
     <pre>{{{body}}}</pre>
     {{> postAttachments}}
   </div>
