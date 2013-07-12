@@ -698,6 +698,13 @@ border-radius(n)
     display                table-cell
     vertical-align         middle
 /*****  Vertical Middle  *****/
+
+/*****   Visible False   *****/
+.visible-false,
+.visible-0
+  display                none
+/*****   Visible False   *****/
+
 /**********     Helpers     **********/
 
 
@@ -743,7 +750,19 @@ std-btn-xdark(n)
   fontize(main, medium, uppercase, 12px, 100%)
   &:hover
     colorize(auto, main-xdark)
-    
+ 
+/*****     im-going     *****/
+.im-going
+  .hover-words
+    display                none
+  .main-words
+    display                inline
+  &:hover
+    .hover-words
+      display                inline
+    .main-words
+      display                none
+/*****     im-going     *****/
 /**********     Buttons     **********/
 
 
@@ -777,6 +796,17 @@ svg
     height               30px
     width                100%
 /**********   post-submit   **********/
+
+
+/**********  num-in-bubble  **********/
+.num-in-bubble
+  position               relative
+  .cb-icon
+    position               absolute
+  .lbl
+    position               absolute
+/**********  num-in-bubble  **********/
+
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -820,11 +850,17 @@ align-with-post-item(n)
   height                 post-item-height
   position               relative
   overflow               hidden
+  border-box             0
   &:hover
+    cursor                 pointer
     background             white
     .post-date
       main-light-border      0
       main-light-color       0
+    .comments-count
+      main-light-fill        0
+    .file-type
+      colorize(main-light, auto, main-light)
     .post-name
       text-decoration        underline
       main-light-color       0
@@ -836,18 +872,10 @@ align-with-post-item(n)
     std-white-dark-bg      0
     &:hover
       background             white
-  .post-item-link
-    position               absolute
-    display                block
-    height                 100%
-    width                  100%
-    border-box             0
-    left                   0
-    top                    0
-    @media (min-width: 768px)
-      padding                post-item-padding-vertical 30px
-    @media (max-width: 767px)
-      padding                post-item-padding-vertical 20px
+  @media (min-width: 768px)
+    padding                post-item-padding-vertical 30px
+  @media (max-width: 767px)
+    padding                post-item-padding-vertical 20px
   .post-date
     text-transform         uppercase
     padding                7px 0 0 0
@@ -864,6 +892,31 @@ align-with-post-item(n)
       font-size              23px
     .month
       font-size              11px
+  .comments-count
+    colorize(white-light, auto, white-xdark)
+    fontize(main, bold, auto, 13px)
+    position               relative
+    height                 23px
+    left                   2px
+    .cb-icon
+      svg
+        height                 23px
+        width                  24px
+    .lbl
+      text-align             center
+      width                  24px
+      top                    2px
+  .file-type
+    colorize(white-xdark, auto, white-xdark)
+    fontize(alt, medium, uppercase, 7px)
+    position               relative
+    height                 23px
+    left                   6px
+    .lbl
+      position             absolute
+      text-align           center
+      width                20px
+      bottom               2px
   .post-name
     margin                 0 0 0 55px
     color                  #333
@@ -891,7 +944,7 @@ align-with-post-item(n)
       .post-item-icon
         position                 relative
         top                      -1px
-        std-white-xdark-fill     0
+        colorize(auto, auto, white-xdark)
         svg
           vertical-align         middle
           width                  20px
@@ -900,6 +953,8 @@ align-with-post-item(n)
         padding                0 10px 0 2px
         position               relative
         overflow               hidden
+        &.going-true
+          colorize(main-light, auto, main-light)
         &.post-location
           text-align             right
           width                  125px
@@ -1286,6 +1341,14 @@ section-icon(n)
             display                inline
           @media (max-width: 767px)
             display                none
+      .btn-add
+        position                 relative
+        padding-left             15px
+        .cb-icon-add
+          fill                     main-light
+          position                 absolute
+          left                     -7px
+          top                      5px
     .more-posts
       @media (min-width: 768px)
         margin                 20px 30px
