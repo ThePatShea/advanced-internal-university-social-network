@@ -100,6 +100,9 @@ Meteor.Router.add({
   // Etc Routes
     //Capturing rogue urls, hopefully this will be a 404 page in the future
     '/': '/',
+    '/bubblevisor': {
+      to: 'bubblevisor'
+    },
     '*': '404NotFound'
 });
 

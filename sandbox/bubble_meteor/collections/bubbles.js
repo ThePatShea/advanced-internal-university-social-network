@@ -31,7 +31,7 @@ Meteor.methods({
       users: {
         applicants: [],
         invitees: [],
-        members: [],
+        members: [user._id],
         admins: [user._id]
       }
     });
