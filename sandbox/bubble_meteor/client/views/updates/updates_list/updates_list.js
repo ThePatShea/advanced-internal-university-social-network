@@ -36,7 +36,7 @@ Template.updatesList.helpers({
             updateList = _.reject(updateList, function(newUpdate) {
               return update.postId == newUpdate.postId && 
                       update.updateType == newUpdate.updateType &&
-                      update.updateType == type;
+                      update.updateType == "REPLIED";
             });
             if(!_.contains(updateList,update)) {
               //Pull out comment updates that belong to the same post
@@ -138,7 +138,7 @@ Template.updatesList.helpers({
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
       });  
-      return updateList;
+      return updateList.reverse();
     }
   }
 });
