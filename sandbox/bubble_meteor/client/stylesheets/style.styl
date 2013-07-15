@@ -862,8 +862,12 @@ align-with-post-item(n)
     .file-type
       colorize(main-light, auto, main-light)
     .post-name
-      text-decoration        underline
       main-light-color       0
+      .name-text
+        text-decoration        underline
+      .cb-icon-attachment
+        path
+          fill                   main-light
     .attribute-items
       display                none
     .post-action
@@ -927,6 +931,14 @@ align-with-post-item(n)
       margin-right           post-item-attributes-width-minus-30
     @media (max-width: 767px)
       margin-right           0
+    .cb-icon-attachment
+      padding                0 0 0 10px
+      position               relative
+      top                    -2px
+      path
+        fill                     white-xdark
+      svg
+        vertical-align           middle
   .post-item-attributes
     width                    post-item-attributes-width
     height                   post-item-height

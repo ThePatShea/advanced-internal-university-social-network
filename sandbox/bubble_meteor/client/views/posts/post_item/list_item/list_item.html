@@ -20,7 +20,10 @@
         </div>
       </div>
     </div>
-    <h4 class="post-name">{{decodeURI name}}</h4>
+    <h4 class="post-name">
+      <span class="name-text">{{decodeURI name}}</span>
+      <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
+    </h4>
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
         <div class="v-inner">

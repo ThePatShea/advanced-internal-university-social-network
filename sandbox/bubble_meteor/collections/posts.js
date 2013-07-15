@@ -134,6 +134,8 @@ createPostWithAttachments = function(postAttributes, fileList){
               file: e.target.result,
               fileType: f.type,
               postType: 'file',
+              numDownloads: 0,
+              lastDownloadTime: new Date().getTime(),
               bubbleId: Session.get('currentBubbleId'),
               parent: post._id   //This needs to be set to the ID of the post created above.
             };
