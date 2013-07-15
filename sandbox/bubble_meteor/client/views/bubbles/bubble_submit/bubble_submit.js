@@ -134,8 +134,8 @@ Template.bubbleSubmit.events({
               retinacanvas.width = retina_width;
               retinacanvas.height = retina_height;
               var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-              cropwidth = 1280;
-              cropheight = 150;
+              cropwidth = 640;
+              cropheight = 75;
               var img = $("#coverphoto_upload")[0]; // Get my img elem
               var pic_real_width, pic_real_height;
               $("<img/>") // Make in memory copy of image to avoid css issues
@@ -298,8 +298,8 @@ Template.bubbleSubmit.events({
               retinacanvas.width = retina_width;
               retinacanvas.height = retina_height;
               var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-              cropwidth = 1280;
-              cropheight = 150;
+              cropwidth = 640;
+              cropheight = 75;
               var img = $("#coverphoto_upload")[0]; // Get my img elem
               var pic_real_width, pic_real_height;
               $("<img/>") // Make in memory copy of image to avoid css issues
