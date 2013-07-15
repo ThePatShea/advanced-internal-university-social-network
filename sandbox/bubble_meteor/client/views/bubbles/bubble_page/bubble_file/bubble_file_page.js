@@ -1,16 +1,15 @@
 Template.bubbleFilePage.helpers({
   //Get posts assigned to this bubble
   getFilePosts: function(){
-  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}, {limit: postsListHandle.limit(), sort: {lastDownloadTime: -1} });
+  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}, {limit: filesHandle.limit(), sort: {lastDownloadTime: -1} });
   }
 });
 
 Template.bubbleFilePage.rendered = function(){
-  postsListHandle._limit = postsListHandle.perPage;
   $(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == "bubbleFilePage"){
-        this.postsListHandle.loadNextPage();
+        this.filesHandle.loadNextPage();
       }
     }
   });

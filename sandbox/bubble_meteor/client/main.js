@@ -43,7 +43,9 @@ Deps.autorun(function() {
 
 	// Posts Related Subscriptions
 		Meteor.subscribe('singlePost', Session.get('currentPostId'));
-		postsListHandle = Meteor.subscribeWithPagination('posts', Session.get('currentBubbleId'), 10);
+		eventsHandle = Meteor.subscribeWithPagination('events', Session.get('currentBubbleId'), 10);
+		discussionsHandle = Meteor.subscribeWithPagination('discussions', Session.get('currentBubbleId'), 10);
+		filesHandle = Meteor.subscribeWithPagination('files', Session.get('currentBubbleId'), 10);
 		if(Meteor.user() && '3' == Meteor.user().userType){
 			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}

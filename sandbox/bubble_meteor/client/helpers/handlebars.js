@@ -219,17 +219,17 @@ Handlebars.registerHelper('hasSearchText', function() {
 
 //Checks if user is lvl 2
 Handlebars.registerHelper('hasLevel2Permissions', function() {
-  return Meteor.user().userType == '2';
+  return (Meteor.user() && Meteor.user().userType == '2');
 });
 
 //Checks if user is lvl 2 or 3
 Handlebars.registerHelper('hasLevel2And3Permissions', function() {
-  return (Meteor.user().userType == '2' || Meteor.user().userType == '3');
+  return (Meteor.user() && (Meteor.user().userType == '2' || Meteor.user().userType == '3'));
 });
 
 //Checks if user is lvl 3
 Handlebars.registerHelper('hasLevel3Permissions', function() {
-  return Meteor.user().userType == '3';
+  return (Meteor.user() && Meteor.user().userType == '3');
 });
 
 //Checks if user is allowed to edit post
