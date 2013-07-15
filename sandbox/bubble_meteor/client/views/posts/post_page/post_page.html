@@ -1,9 +1,9 @@
 <template name="postPage">
   {{#with getCurrentBubble}}
-  	{{> bubbleCover}}
+    {{> bubbleCover}}
     {{> bubbleSectionSelector}}
   {{/with}}
-  {{#with currentPost}}
+  {{#with getCurrentPost}}
     {{> postItem}}
     {{#if flagged}}
   		<span class="label label-important">Post Is Flagged</span>
@@ -11,8 +11,8 @@
   		<button class='btn btn-small flag'>Flag here!</button>
   	{{/if}}
   	
-  	{{#if hasEditPermissions}}
-  		<a href="{{getPostEditUrl}}"><button class='btn btn-small'>Edit Post</button></a>
+  	{{#if hasSuperPermissions}}
+  		<a href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}"><button class='btn btn-small'>Edit Post</button></a>
 		{{/if}}
 
     {{> postAttributes}}    

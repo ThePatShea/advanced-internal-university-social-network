@@ -124,6 +124,9 @@ Meteor.headly.config({tagsForRequest: function(req) {
   Meteor.publish('invitedBubbles', function(userId) {
     return Bubbles.find({'users.invitees':userId});
   });
+  Meteor.publish('allBubbles', function(){
+    return Bubbles.find({}, {fields: {'title': 1, 'category': 1, 'bubbleType': 1, 'users': 1}});
+  });
 
 
 // Meteor Users Related Publications 
@@ -148,7 +151,8 @@ Meteor.headly.config({tagsForRequest: function(req) {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'profilePicture': 1
+         'profilePicture': 1,
+       'lastActionTimestamp': new Date().getTime()
         }
       });
     }
@@ -163,36 +167,54 @@ Meteor.headly.config({tagsForRequest: function(req) {
        'username': 1,
        'emails': 1,
        'userType': 1,
-       'profilePicture': 1
+       'profilePicture': 1,
+       'lastActionTimestamp': new Date().getTime()
       }
     });
   });
 
-  Meteor.publish('userData', function(userId) {
-    return Meteor.users.find({_id: userId},{
-      fields: {
-       'username': 1,
-       'emails': 1,
-       'userType': 1,
-       'profilePicture': 1
-      }
-    });
+  Meteor.publish('userData', function(userIdList) {
+    if(userIdList){
+      //Remove null from the userIdList 
+      userIdList = _.reject(userIdList, function(userId){
+        return null;
+      });
+      
+      return Meteor.users.find({_id: {$in: userIdList}}, {
+        fields: {
+         'username': 1,
+         'emails': 1,
+         'userType': 1,
+         'profilePicture': 1,
+         'lastActionTimestamp': new Date().getTime()
+        }
+      });
+    }
+  });
+
+
+  Meteor.publish('allUsers', function(){
+    //var user = Meteor.users.findOne({_id: UserId});
+    return Meteor.users.find({}, {fields: {'_id': 1, 'username': 1, 'lastActionTimestamp': 1}});
   });
 
 
 // Flags Related Publications
-Meteor.publish('solvedFlags', function(limit) {
-  return Flags.find({solved: true}, {limit: limit});
-});
-Meteor.publish('unsolvedFlags', function(limit) {
-  return Flags.find({solved: false}, {limit: limit});
-});
-Meteor.publish('allFlags', function(limit) {
-  return Flags.find({}, {limit: limit});
-});
+  Meteor.publish('solvedFlags', function(limit) {
+    return Flags.find({solved: true}, {limit: limit});
+  });
+  Meteor.publish('unsolvedFlags', function(limit) {
+    return Flags.find({solved: false}, {limit: limit});
+  });
+  Meteor.publish('allFlags', function(limit) {
+    return Flags.find({}, {limit: limit});
+  });
 
 
 // UserLog Related Publications
-Meteor.publish('userLogs', function(limit) {
-  return UserLog.find({}, {limit: limit});
-});
+  Meteor.publish('currentUserlogs', function(userId) {
+    return Userlogs.find({userId: userId}, {limit:10});
+  });
+  Meteor.publish('allUserlogs', function() {
+    return Userlogs.find();
+  });

@@ -7,10 +7,6 @@
   Meteor.subscribe('updates');
 
 
-// UserLog Related Subscriptions
-	userLogHandle = Meteor.subscribeWithPagination('userLogs', 100);
-
-
 // Flags Related Subscriptions
 	solvedFlagsHandle = Meteor.subscribeWithPagination('solvedFlags', 10);
 	unsolvedFlagsHandle = Meteor.subscribeWithPagination('unsolvedFlags', 10);
@@ -23,6 +19,7 @@ Deps.autorun(function() {
 		Meteor.subscribe('invitedBubbles', Meteor.userId());
 		Meteor.subscribe('joinedBubbles', Meteor.userId());
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
+		Meteor.subscribe('allBubbles', Meteor.userId());
 
 
 	// Comments Related Subscriptions
@@ -34,8 +31,17 @@ Deps.autorun(function() {
 		Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'), 
 												Session.get('inviteeList'+Session.get('currentBubbleId')));
 		usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
-		Meteor.subscribe('userData', Meteor.userId());
-		Meteor.subscribe('userData', Session.get('selectedUserId'));
+		Meteor.subscribe('userData', [Meteor.userId()]);
+		Meteor.subscribe('userData', [Session.get('selectedUserId')]);
+		Meteor.subscribe('userData', Session.get('selectedUserIdList'));
+		var currentuserId = Meteor.userId();
+		console.log('User Id: ', currentuserId);
+		var user = Meteor.users.findOne({_id: currentuserId});
+		Meteor.subscribe('allUsers', Meteor.userId());
+		if(user.userType == 'superuser' || user.userType == 'megauser'){
+			Meteor.subscribe('allUsers');
+		};
+
 
 
 	// Posts Related Subscriptions
@@ -54,5 +60,12 @@ Deps.autorun(function() {
 			searchEventsHandle = Meteor.subscribeWithPagination('searchEvents', Session.get('searchText'), Meteor.userId, 10);
 			searchDiscussionsHandle = Meteor.subscribeWithPagination('searchDiscussions', Session.get('searchText'), Meteor.userId, 10);
 			searchFilesHandle = Meteor.subscribeWithPagination('searchFiles', Session.get('searchText'), Meteor.userId, 10);
+		}
+
+
+	// UserLog Related Subscriptions
+		Meteor.subscribe('currentUserlogs', Meteor.userId());
+		if(Meteor.user() && 'megauser' == Meteor.user().userType) {
+			Meteor.subscribe('allUserlogs');
 		}
 });

@@ -2,16 +2,17 @@
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
-
-    {{#if hasSuperPermissions}}
-      <a href="{{discussionSubmitPath this}}">
-      	<div class="btn">Start a Discussion</div>
-  		</a>
-    {{/if}}
-
-		{{#each getDiscussionPosts}}
-	    {{> postItem}}
-	  {{/each}}
-
+    <div class="bubble-page-content">
+      <div class="bubble-list">
+        {{#with postProperties.discussion}}
+          {{> listHeading}}
+        {{/with}}
+        {{#each getDiscussionPosts}}
+          {{> listItem}}
+        {{else}}
+          No discussions yet.
+        {{/each}}
+      </div>
+    </div>
   {{/with}}
 </template>

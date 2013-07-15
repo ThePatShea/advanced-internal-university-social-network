@@ -1,7 +1,7 @@
 Template.bubbleEventPage.helpers({
   //Get posts assigned to this bubble
   getEventPosts: function(){
-	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType: 'event', dateTime: {$gt: referenceDateTime}}, {limit: postsListHandle.limit()});
+	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType: 'event', dateTime: {$gt: moment().add('hours',-4).valueOf()}}, {limit: postsListHandle.limit(), sort: {dateTime: 1} });
   }
   
 });

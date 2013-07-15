@@ -20,12 +20,4 @@ Template.searchUsers.rendered = function(){
       }
     }
   });
-
-  //Set the searchText as session variable
-  var searchText = $(".search-text").val();
-  if (searchText == ""){
-    Session.set('searchText',undefined);
-  }else{
-    Session.set('searchText', searchText);
-  }
 }

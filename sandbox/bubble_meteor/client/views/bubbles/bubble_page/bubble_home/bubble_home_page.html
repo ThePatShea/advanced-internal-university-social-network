@@ -14,84 +14,46 @@
       </div>
   
       <div class="bubble-list">
-        <div class="bubble-list-heading">
-          <h3 class="section-name pull-left">
-            <span class="section-icon-event">{{> icon-event}}</span>
-            <span class="word1">upcoming</span>
-            <span class="word2">events</span>
-          </h3>
-          {{#if hasSuperPermissions}}
-            <a href="{{eventSubmitPath this}}">
-              <button class="std-btn-light pull-right">add new event</button>
-            </a>
-          {{/if}}
-        </div>
-        {{#if eventPosts}}
-          {{#each eventPosts}}
-            {{> eventItem}}
+        {{#with postProperties.event}}
+          {{> listHeading}}
+          {{#each posts}}
+            {{> listItem}}
+          {{else}}
+            There are no {{postType}}s yet. Add one now!
           {{/each}}
-          {{#if hasMoreEvents}}
-            <a href="{{bubbleEventPagePath this}}">
-              <button class="btn-tiny more-posts">+ {{pluralize eventsCount 'more event'}}</button>
-            </a>
-          {{/if}}
-        {{else}}
-          <br><br>There are no events yet. Start an event now!
-        {{/if}}
+          <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath getCurrentBubble._id}}">
+            <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount postType 'more'}}</button>
+          </a>
+        {{/with}}
       </div>
 
       <div class="bubble-list">
-        <div class="bubble-list-heading">
-          <h3 class="section-name pull-left">
-            <span class="section-icon-discussion">{{> icon-discussion}}</span>
-            <span class="word1">active</span>
-            <span class="word2">discussions</span>
-          </h3>
-          {{#if hasSuperPermissions}}
-            <a href="{{discussionSubmitPath this}}">
-              <button class="std-btn-light pull-right">add new discussion</button>
-            </a>
-          {{/if}}
-        </div>
-        {{#if discussionPosts}}
-          {{#each discussionPosts}}
-            {{> postItem}}
-          {{/each}}
-          {{#if hasMoreDiscussions}}
-            <a href="{{bubbleDiscussionPagePath this}}">
-              <button class = "btn btn-small btn-success more-discussions" type="button" >+ {{pluralize discussionsCount 'more discussion'}}</button>
-            </a>
-          {{/if}}
+        {{#with postProperties.discussion}}
+          {{> listHeading}}
+          {{#each posts}}
+            {{> listItem}}
           {{else}}
-            <br><br>There are no discussions yet. Start a discusssion now!
-        {{/if}}
+            There are no {{postType}}s yet. Add one now!
+          {{/each}}
+          <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
+            <button class="pull-left btn-tiny more-posts">+ {{pluralize discussionsCount postType 'more'}}</button>
+          </a>
+        {{/with}}
       </div>
   
       <div class="bubble-list">
-        <div class="bubble-list-heading">
-          <h3 class="section-name pull-left">
-            <span class="section-icon-file">{{> icon-file}}</span>
-            <span class="word1">latest</span>
-            <span class="word2">files</span>
-          </h3>
-          {{#if hasSuperPermissions}}
-            <a href="{{fileSubmitPath this}}">
-              <button class="std-btn-light pull-right">add new file</button>
-            </a>
-          {{/if}}
-        </div>
-        {{#if filePosts}}
-          {{#each filePosts}}
-            {{> postItem}}
+        {{#with postProperties.file}}
+          {{> listHeading}}
+          {{#each posts}}
+            {{> listItem}}
+          {{else}}
+            There are no {{postType}}s yet. Add one now!
           {{/each}}
-          {{#if hasMoreFiles}}
-            <a href="{{bubbleFilePagePath this}}">
-              <button class = "btn btn-small btn-success more-files" type="button" >+ {{pluralize filesCount 'more file'}}</button>
-            </a>
-          {{/if}}
-        {{else}}
-            <br><br>There are no files yet. Upload a file now!
-        {{/if}}
+          <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath getCurrentBubble._id}}">
+            <button class="pull-left btn-tiny more-posts">+ {{pluralize filesCount postType 'more'}}</button>
+          </a>
+        {{/with}}
+      </div>
       </div>
     </div>
   {{/with}}
