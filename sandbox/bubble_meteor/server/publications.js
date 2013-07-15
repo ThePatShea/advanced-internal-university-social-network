@@ -10,22 +10,16 @@ getBubbleId =  function(userId) {
 }
 
 
-// Sets the Open Graph tags to set images
-Meteor.headly.config({tagsForRequest: function(req) {
-  return '<meta property="og:image" content="http://bubble.meteor.com/img/ogimage1.png">';
-}});
-
-
 // Posts Related Publications 
   //This publication only allows normal user to view posts
-  Meteor.publish('posts', function(bubbleId){
-    return Posts.find({bubbleId: bubbleId});
+  Meteor.publish('posts', function(bubbleId, limit){
+    return Posts.find({bubbleId: bubbleId}, {limit: limit});
   });
   //This publication only returns posts that are flagged
-  Meteor.publish('flaggedPosts', function(){
+  Meteor.publish('flaggedPosts', function(limit){
     var flags = Flags.find().fetch();
     var postsList = _.pluck(flags, 'postId');
-    return Posts.find({_id: {$in: postsList}});
+    return Posts.find({_id: {$in: postsList}}, {limit: limit}});
   })
   //This Publication allows normal user to view all posts during searching
   Meteor.publish('searchEvents', function(searchText, userId, limit) {
@@ -37,7 +31,7 @@ Meteor.headly.config({tagsForRequest: function(req) {
           {body: new RegExp(searchText,'i')}, 
           {location: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}});
+      }, {sort: {submitted: -1}, limit: limit});
   });
   Meteor.publish('searchDiscussions', function(searchText, userId, limit) {
     return Posts.find(
@@ -47,7 +41,7 @@ Meteor.headly.config({tagsForRequest: function(req) {
           {name: new RegExp(searchText,'i')}, 
           {body: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}});
+      }, {sort: {submitted: -1}, limit: limit});
   });
   Meteor.publish('searchFiles', function(searchText, userId, limit) {
     return Posts.find(
@@ -57,7 +51,7 @@ Meteor.headly.config({tagsForRequest: function(req) {
           {name: new RegExp(searchText,'i')},
           {file: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}});
+      }, {sort: {submitted: -1}, limit: limit});
   });
 //This Publication allows super to view all posts during searching
   Meteor.publish('superSearchEvents', function(searchText, limit){
@@ -93,13 +87,13 @@ Meteor.headly.config({tagsForRequest: function(req) {
 
 // Comments Related Publications
   Meteor.publish('comments', function(postId, limit) {
-    return Comments.find({postId: postId}, {sort: {submitted:-1}});
+    return Comments.find({postId: postId}, {sort: {submitted:-1}, limit: limit});
   });
 
 
 // Updates Related Publications 
-  Meteor.publish('updates', function() {
-    return Updates.find({read: false}, {sort: {submitted:1}});
+  Meteor.publish('updates', function(limit) {
+    return Updates.find({read: false}, {sort: {submitted:1}, limit: limit});
   });
 
 
@@ -118,11 +112,11 @@ Meteor.headly.config({tagsForRequest: function(req) {
         ]
       }, {sort: {submitted: -1}, limit:limit});
   });
-  Meteor.publish('joinedBubbles', function(userId) {
-    return Bubbles.find({$or: [{'users.members': userId},{'users.admins': userId}]}, {sort: {submitted: -1}});
+  Meteor.publish('joinedBubbles', function(userId, limit) {
+    return Bubbles.find({$or: [{'users.members': userId},{'users.admins': userId}]}, {sort: {submitted: -1}, limit});
   });
-  Meteor.publish('invitedBubbles', function(userId) {
-    return Bubbles.find({'users.invitees':userId});
+  Meteor.publish('invitedBubbles', function(userId, limit) {
+    return Bubbles.find({'users.invitees':userId}, {limit: limit});
   });
 
 
@@ -148,7 +142,7 @@ Meteor.headly.config({tagsForRequest: function(req) {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'profilePicture': 1,
+         'profilePicture': -1,
        'lastActionTimestamp': new Date().getTime()
         }
       });
@@ -164,7 +158,7 @@ Meteor.headly.config({tagsForRequest: function(req) {
        'username': 1,
        'emails': 1,
        'userType': 1,
-       'profilePicture': 1,
+       'profilePicture': -1,
        'lastActionTimestamp': new Date().getTime()
       }
     });
@@ -182,7 +176,7 @@ Meteor.headly.config({tagsForRequest: function(req) {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'profilePicture': 1,
+         'profilePicture': -1,
          'lastActionTimestamp': new Date().getTime()
         }
       });
@@ -203,9 +197,9 @@ Meteor.headly.config({tagsForRequest: function(req) {
 
 
 // UserLog Related Publications
-  Meteor.publish('currentUserlogs', function(userId) {
-    return Userlogs.find({userId: userId}, {limit:10});
+  Meteor.publish('currentUserlogs', function(userId, limit) {
+    return Userlogs.find({userId: userId}, {limit: limit});
   });
-  Meteor.publish('allUserlogs', function() {
-    return Userlogs.find();
+  Meteor.publish('allUserlogs', function(limit) {
+    return Userlogs.find({}, {limit: limit});
   });

@@ -21,3 +21,18 @@ if(Meteor.isServer){
     // process.env.MAIL_URL = 'smtp://no-reply%40thecampusbubble.com:u3nT8dAC@smtp.gmail.com:465/';
   });
 }
+
+sendEmail = function(userId,title,body){
+  var user = Meteor.users.findOne(userId);
+
+  if (user) {
+    console.log("Email is currently disabled to prevent flooding of developer's mailbox");
+    // Meteor.call( 'sendEmail',
+    //   user.emails[0].address,
+    //   title,
+    //   body
+    // );
+  }else{
+    console.log("User is undefined for sending emails");
+  }
+}

@@ -4,7 +4,7 @@
 
 
 // Updates Related Subscriptions
-  Meteor.subscribe('updates');
+  mainUpdatesHandle = Meteor.subscribeWithPagination('updates',50);
 
 
 // Flags Related Subscriptions
@@ -16,8 +16,8 @@ Deps.autorun(function() {
 
 	// Bubble Related Subscriptions
 		Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
-		Meteor.subscribe('invitedBubbles', Meteor.userId());
-		Meteor.subscribe('joinedBubbles', Meteor.userId());
+		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
+		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
 
 
@@ -38,7 +38,7 @@ Deps.autorun(function() {
 	// Posts Related Subscriptions
 		postsListHandle = Meteor.subscribeWithPagination('posts', Session.get('currentBubbleId'), 10);
 		if(Meteor.user() && 'superuser' == Meteor.user().userType){
-			Meteor.subscribe('flaggedPosts');
+			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
 
 
@@ -55,8 +55,8 @@ Deps.autorun(function() {
 
 
 	// UserLog Related Subscriptions
-		Meteor.subscribe('currentUserlogs', Meteor.userId());
+		currentUserLogsHandle = Meteor.subscribeWithPagination('currentUserlogs', Meteor.userId(), 10);
 		if(Meteor.user() && 'megauser' == Meteor.user().userType) {
-			Meteor.subscribe('allUserlogs');
+			mainUserLogsHandle = Meteor.subscribeWithPagination('allUserlogs', 10);
 		}
 });
