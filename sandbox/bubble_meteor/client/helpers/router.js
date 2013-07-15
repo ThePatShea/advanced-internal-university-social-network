@@ -140,7 +140,7 @@ Meteor.Router.filters({
   },
   'belongToBubble': function(page) {
     if(window.location.pathname.match('mybubbles')) {
-      if(Meteor.user() && Meteor.user().userType != '3'){
+      if(Meteor.user() && '3' != Meteor.user().userType){
         var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
         if(bubble) {
           if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
@@ -163,7 +163,7 @@ Meteor.Router.filters({
   },
   'hasSuperBubblePermissions': function(page) {
     if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType){
-      if('2' == Meteor.user().userType || '3' == Meteor.user().userType){
+      if(Meteor.user() && ('2' == Meteor.user().userType || '3' == Meteor.user().userType)){
         return page;
       }else{
         Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
@@ -178,13 +178,7 @@ Meteor.Router.filters({
     return page;
   },
   'level3Permissions': function(page){
-    if(Meteor.user() && Meteor.user().userType == '3') {
-      return page;
-    }
-    return '/';
-  },
-  'megauserPermissions': function(page){
-    if(Meteor.user() && Meteor.user().userType == 'megauser') {
+    if(Meteor.user() && '3' == Meteor.user().userType) {
       return page;
     }
     return '/';
