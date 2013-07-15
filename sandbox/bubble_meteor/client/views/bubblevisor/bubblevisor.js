@@ -1,25 +1,7 @@
 Template.bubblevisor.rendered = function(){
 	$("#bubbles").hide();
 	$("#users").hide();
-	var bubbleresults = Bubbles.find().fetch();
-	console.log("Bubblevisor ", bubbleresults.length);
-	var bubbleedges = [];
-	var nodes = [];
-    for(var i=0; i < bubbleresults.length; i++){
-    	console.log(i);
-		var a = bubbleresults[i].title;
-		nodes.push({name: a, type: 'bubble'});
-		console.log('A: ', a);
-		for(var j=0; j < bubbleresults[i].users.members.length; j++){
-			var memberId = bubbleresults[i].users.members[j];
-			var member = Meteor.users.findOne({_id: memberId});
-			var b = member.username;
-			nodes.push({name: b, type: 'user'});
-			console.log('B: ', b);
-			bubbleedges.push({'a': a, 'b':b});
-			//sys.addEdge(a, b)
-		}
-	}
+
 	
 
 	  var Renderer = function(canvas){
@@ -57,8 +39,8 @@ Template.bubblevisor.rendered = function(){
 	        // which allow you to step through the actual node objects but also pass an
 	        // x,y point in the screen's coordinate system
 	        // 
-	        ctx.fillStyle = "white"
-	        ctx.fillRect(0,0, canvas.width, canvas.height)
+	        ctx.fillStyle = "white";
+	        ctx.fillRect(0,0, canvas.width, canvas.height);
 	        
 	        particleSystem.eachEdge(function(edge, pt1, pt2){
 	          // edge: {source:Node, target:Node, length:#, data:{}}
@@ -66,13 +48,29 @@ Template.bubblevisor.rendered = function(){
 	          // pt2:  {x:#, y:#}  target position in screen coords
 
 	          // draw a line from pt1 to pt2
-	          ctx.strokeStyle = "rgba(0,0,0, .333)"
-	          ctx.lineWidth = 1
-	          ctx.beginPath()
-	          ctx.moveTo(pt1.x, pt1.y)
-	          ctx.lineTo(pt2.x, pt2.y)
-	          ctx.stroke()
-	        })
+	          //console.log('Edge: ', edge);
+	          if(edge.data.type == 'member'){
+		          ctx.strokeStyle = "rgba(0,0,0, .333)";
+		      }
+		      else if(edge.data.type == 'admin'){
+		      	//console.log('Admin edge');
+		      	ctx.strokeStyle = "rgba(255,0,0, .333)";
+		      }
+		      else if(edge.data.type == 'applicant'){
+		      	ctx.strokeStyle = "rgba(0,255,0, .333)";
+		      	//ctx.setLineDash([5,5,2,2]);
+		      }
+		      else if(edge.data.type == 'invitee'){
+		      	ctx.strokeStyle = "rgba(0,0,255, .333)";
+		      	//ctx.setLineDash([1, 0]);
+		      };
+
+	          ctx.lineWidth = 1;
+	          ctx.beginPath();
+	          ctx.moveTo(pt1.x, pt1.y);
+	          ctx.lineTo(pt2.x, pt2.y);
+	          ctx.stroke();
+	        });
 
 	        particleSystem.eachNode(function(node, pt){
 	          // node: {mass:#, p:{x,y}, name:"", data:{}}
@@ -84,19 +82,22 @@ Template.bubblevisor.rendered = function(){
 	          if(node.data.type == 'bubble'){
 	          	//console.log('Bubble node');
 	          	ctx.fillStyle = 'blue';
-
-	          }
-	          else if (node.data.type == 'user'){
-	          	//console.log('User node');
-	          	ctx.fillStyle = 'green';
-	          }
-
 				ctx.beginPath();
 				ctx.arc(pt.x, pt.y, radius, 0, 2*Math.PI, false);
 				ctx.fill();
 				ctx.lineWidth= 1;
 				ctx.strokeStyle = '#000000';
-				ctx.stroke();
+				ctx.stroke();	          	
+
+	          }
+	          else if (node.data.type == 'user'){
+		          //console.log('User node');
+		          ctx.fillStyle = 'green';
+		          var w = 10;
+		          ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w);
+	          }
+
+				
 
 				ctx.font = "10px Arial";
 				ctx.fillStyle = 'black';
@@ -165,15 +166,65 @@ Template.bubblevisor.rendered = function(){
 	    sys.parameters({gravity:true}) // use center-gravity to make the graph settle nicely (ymmv)
 	    sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
 
+		var bubbleresults = Template.bubblevisor.bubbles();
+		//console.log("Bubblevisor ", bubbleresults);
+		var bubbleedges = [];
+		var nodes = [];
+	    for(var i=0; i < bubbleresults.length; i++){
+	    	console.log(i);
+			var a = bubbleresults[i].title;
+			//nodes.push({name: a, type: 'bubble'});
+			sys.addNode(a, {type: 'bubble'});
+			//console.log('A: ', a);
+			for(var j=0; j < bubbleresults[i].users.members.length; j++){
+				var memberId = bubbleresults[i].users.members[j];
+				//console.log('Member: ', memberId);
+				var member = Meteor.users.findOne({_id: memberId});
+				var b = member.username;
+				//nodes.push({name: b, type: 'user'});
+				//console.log('B: ', b);
+				//bubbleedges.push({'a': a, 'b':b, type: 'member'});
+				//sys.addEdge(a, b);
+				sys.addNode(b, {type: 'user'});
+				//console.log('Adding edge: ', a,b);
+				sys.addEdge(a, b, {type: 'member'});
 
-	    for(var i=0; i < nodes.length; i++){
-	    	sys.addNode(nodes[i].name, {type: nodes[i].type});
-	    };
-
-
-	    for(var i=0; i < bubbleedges.length; i++){
-	    	sys.addEdge(bubbleedges[i].a, bubbleedges[i].b);
-	    }
+			};
+			for(var j=0; j < bubbleresults[i].users.admins.length; j++){
+				var adminId = bubbleresults[i].users.admins[j];
+				//console.log('Admin: ', adminId);
+				var admin = Meteor.users.findOne({_id: adminId});
+				var b = admin.username;
+				//console.log('Admin username: ', b);
+				//nodes.push({name: b, type: 'users'});
+				//bubbleedges.push({'a': a, 'b':b, type: 'admin'});
+				sys.addNode(b, {type: 'user'});
+				//console.log('Adding edge: ', a,b);
+				sys.addEdge(a, b, {type: 'admin'});
+			};
+			for(var j=0; j < bubbleresults[i].users.applicants.length; j++){
+				var applicantId = bubbleresults[i].users.applicants[j];
+				var applicant = Meteor.users.findOne({_id: applicantId});
+				var b = applicant.username;
+				//nodes.push({name: b, type: 'users'});
+				//bubbleedges.push({'a': a, 'b':b, type: 'applicant'});
+				//sys.addEdge(a, b);
+				sys.addNode(b, {type: 'user'});
+				//console.log('Adding edge: ', a,b);
+				sys.addEdge(a, b, {type: 'applicant'});
+			};
+			for(var j=0; j < bubbleresults[i].users.invitees.length; j++){
+				var inviteeId = bubbleresults[i].users.invitees[j];
+				invitee = Meteor.users.findOne({_id: inviteeId});
+				var b = invitee.username;
+				//nodes.push({name: b, type: 'users'});
+				//bubbleedges.push({'a': a, 'b':b, type: 'invitee'});
+				//sys.addEdge(a, b);
+				//console.log('Adding edge: ', a,b);
+				sys.addNode(b, {type: 'user'});
+				sys.addEdge(a, b, {type: 'invitee'});
+			};
+		};
 	    
 	  });
 
