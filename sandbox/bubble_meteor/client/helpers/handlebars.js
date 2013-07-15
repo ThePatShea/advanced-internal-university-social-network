@@ -35,6 +35,10 @@ var getPosts = function(inputPostType) {
   return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();
 }
 
+Handlebars.registerHelper('getUserTypeName', function(userType){
+  return userTypes[userType];
+});
+
 Handlebars.registerHelper('postProperties', {
     discussion : {
         posts      : function() { return getPosts('discussion'); }
@@ -47,7 +51,30 @@ Handlebars.registerHelper('postProperties', {
       , word1      : 'upcoming'
     }
   , file       : {
-        posts      : function() { return getPosts('file'); }
+        posts      : function() {
+          var posts = getPosts('file');
+          
+          // Updates missing fields, if necessary
+          _.each(posts, function(post) {
+            if (!post.numDownloads || !post.lastDownloadTime) {
+              if (!post.lastDownloadTime)
+                post.lastDownloadTime = new Date().getTime();
+                
+              if (!post.numDownloads)
+                post.numDownloads = 0;
+
+              Posts.update(
+                  {_id : post._id}
+                , {$set: {
+                      lastDownloadTime : post.lastDownloadTime
+                    , numDownloads     : post.numDownloads
+                  } 
+              });
+            }
+          });
+
+          return posts;
+        }
       , postType   : 'file'
       , word1      : 'latest'
     }
@@ -67,7 +94,7 @@ Handlebars.registerHelper('getCurrentPost', function() {
 
 Handlebars.registerHelper('isAdmin', function() {  
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-  return (Meteor.user().userType == 'superuser') || _.contains(bubble.users.admins, Meteor.userId());
+  return (Meteor.user().userType == '3') || _.contains(bubble.users.admins, Meteor.userId());
 });
 
 Handlebars.registerHelper('belongsToBubble', function() {
@@ -77,7 +104,7 @@ Handlebars.registerHelper('belongsToBubble', function() {
       return true;
     }
   }
-  return  Meteor.user().userType == 'superuser' || false;
+  return  Meteor.user().userType == '3' || false;
 }); 
 
 Handlebars.registerHelper('ownsPost', function() {
@@ -85,7 +112,7 @@ Handlebars.registerHelper('ownsPost', function() {
   if(bubble) {
     userList = bubble.users.admins;
     userList.push(this.userId);
-    return (Meteor.user().userType == 'superuser') || _.contains(userList, Meteor.userId())
+    return (Meteor.user().userType == '3') || _.contains(userList, Meteor.userId())
   }   
 });
 
@@ -114,7 +141,9 @@ Handlebars.registerHelper('numOfAttendees', function(){
 });
 
 Handlebars.registerHelper('toUpperCase', function(text){
-  return text.toUpperCase();
+  if(text) {
+    return text.toUpperCase();
+  }
 });
 
 Handlebars.registerHelper('getUsername', function(userId) {
@@ -188,20 +217,26 @@ Handlebars.registerHelper('hasSearchText', function() {
   }
 });
 
+//Checks if user is lvl 2
+Handlebars.registerHelper('hasLevel2Permissions', function() {
+  return Meteor.user().userType == '2';
+});
 
-//Checks if bubble is a super bubble and if user is a super user
-Handlebars.registerHelper('hasSuperPermissions', function() {
-  if('superuser' != Meteor.user().userType && 'super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType) {
-    return false;
-  }
-  return true;
-})
+//Checks if user is lvl 2 or 3
+Handlebars.registerHelper('hasLevel2And3Permissions', function() {
+  return (Meteor.user().userType == '2' || Meteor.user().userType == '3');
+});
+
+//Checks if user is lvl 3
+Handlebars.registerHelper('hasLevel3Permissions', function() {
+  return Meteor.user().userType == '3';
+});
 
 //Checks if user is allowed to edit post
 Handlebars.registerHelper('hasEditPermissions', function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   if('super' == bubble.bubbleType) {
-    if('superuser' == Meteor.user().userType) {
+    if('2' == Meteor.user().userType || '3' == Meteor.user().userType) {
       return true;
     }
   }else{
@@ -211,10 +246,8 @@ Handlebars.registerHelper('hasEditPermissions', function() {
     }
   }
   return false
-})
+});
 
 Handlebars.registerHelper('isSuperBubble', function() {
-  if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType) {
-    return true;
-  }
+  return 'super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType;
 });

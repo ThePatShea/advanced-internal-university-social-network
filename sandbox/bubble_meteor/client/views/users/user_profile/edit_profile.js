@@ -10,17 +10,18 @@ Template.userProfileEdit.helpers({
 	hasPermission: function() {
 		var profileId = Session.get('selectedUserId');
 		var user = Meteor.user();
-		if('megauser' == Meteor.user().userType || user._id == profileId){
+		if('4' == Meteor.user().userType || user._id == profileId){
 			return true;
 		}
 		else{
 			return false;
 		}
 	},
+  hasLevel4Permission: function(){
+    return ('4' == Meteor.user().userType && this.userType != '4');
+  },
   checkUserType: function(type) {
-    if(this.userType == type) {
-      return 'selected';
-    }
+    return this.userType == type && 'selected';
   }
 
 });

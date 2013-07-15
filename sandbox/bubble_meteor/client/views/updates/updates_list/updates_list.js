@@ -20,15 +20,11 @@ Template.updatesList.helpers({
       /**
       * To combine updates for comments in the same post
       **/
-      var postUpdateList = 
-      [ 
-        "REPLIED"
-      ]
       // _.each(postUpdateList, function(type) {
         _.each(updateList, function(update){
 
           var commentUpdates = _.reject(updateList, function(update) {
-            return update.updateType != "REPLIED";
+            return update.updateType != "replied";
           });
 
           //Combine and chain the names together
@@ -36,7 +32,7 @@ Template.updatesList.helpers({
             updateList = _.reject(updateList, function(newUpdate) {
               return update.postId == newUpdate.postId && 
                       update.updateType == newUpdate.updateType &&
-                      update.updateType == type;
+                      update.updateType == "replied";
             });
             if(!_.contains(updateList,update)) {
               //Pull out comment updates that belong to the same post
@@ -81,11 +77,11 @@ Template.updatesList.helpers({
       //Declaring the types that needs collapsing of names
       var bubbleUpdateList = 
       [ 
-        "NEW APPLICANT",
-        "NEW ATTENDEE",        
-        "MEMBER PROMOTED",
-        "MEMBER DEMOTED",
-        "JOINED BUBBLE"
+        "new applicant",
+        "new attendee",        
+        "member promoted",
+        "member demoted",
+        "joined bubble"
       ]
 
       /**
@@ -138,7 +134,7 @@ Template.updatesList.helpers({
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
       });  
-      return updateList;
+      return updateList.reverse();
     }
   }
 });

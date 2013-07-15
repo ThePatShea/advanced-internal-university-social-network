@@ -1,8 +1,6 @@
 Template.bubbleSubmit.helpers({
-  'isSuperUser': function() {
-    if('superuser' == Meteor.user().userType){
-      return true;
-    }
+  'isLevel2User': function() {
+    return '2' == Meteor.user().userType;
   }
 });
 

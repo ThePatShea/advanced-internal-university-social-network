@@ -1,5 +1,5 @@
 Template.imGoing.helpers({
-    hoverWords : function() {
+    mainWords : function() {
       if (_.contains(this.attendees,Meteor.user().username))
         return "not going"
       else

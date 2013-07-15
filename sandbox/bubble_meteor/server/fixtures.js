@@ -8,9 +8,11 @@ if(!Meteor.users.findOne({username:'campusbubble'})){
 if (Meteor.isServer) {
   Meteor.startup(function () {
 		Meteor.headly.config({tagsForRequest: function(req) {
-		  return '<meta property="og:image" content="http://bubble.meteor.com/img/facebook.gif">' +
-					    '<meta property="og:url" content="http://bubble.meteor.com">' +
+		  return '<meta property="og:image" content="https://bubble.meteor.com/img/facebook.gif">' +
+					    '<meta property="og:url" content="https://bubble.meteor.com">' +
 					    '<meta property="og:title" content="Emory Bubble">';
 		}});
 	});
+	// process.env.MONGO_URL = 'mongodb://haopjh:haopjh@dharma.mongohq.com:10032/bubbletest';
+	// console.log(this.process.env);
 }
