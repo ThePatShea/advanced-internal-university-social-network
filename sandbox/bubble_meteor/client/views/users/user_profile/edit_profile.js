@@ -170,7 +170,22 @@ Template.userProfileEdit.events({
             $("#userprofilepicture_upload").attr("title", escape(theFile.name));
             $("#userprofilepicture_upload").show();
             $("#userprofilepicture_preview").show();
-            $(document).ready( function(){
+            $(document).ready(function(){
+              // Apply jrac on some image.
+              var tempcanvas = document.createElement('canvas');
+              var tempcontext = tempcanvas.getContext('2d');
+              $('#userprofilepicture_upload').jrac({'viewport_onload': function(){
+                  console.log('Viewport loaded.');
+                     var $viewport = this;
+                     $viewport.observator.register('jrac_crop_x', $(document), function(element, event_name, value){console.log("x: ", value);});
+                     $viewport.observator.register('jrac_crop_y', $(document), function(element, event_name, value){console.log("y: ", value);});
+                }
+              });
+
+
+
+            });
+            /*$(document).ready( function(){
               $(function(){
                 function showPreview(coords){
                   var mycanvas = document.createElement('canvas');
@@ -203,7 +218,7 @@ Template.userProfileEdit.events({
                 });
 
               });
-            });
+            });*/
           };
         })(f);
 

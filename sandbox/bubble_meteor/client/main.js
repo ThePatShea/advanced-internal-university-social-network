@@ -19,6 +19,7 @@ Deps.autorun(function() {
 		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
 		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
+		Meteor.subscribe('allBubbles', Meteor.userId());
 
 
 	// Comments Related Subscriptions
@@ -33,6 +34,14 @@ Deps.autorun(function() {
 		Meteor.subscribe('userData', [Meteor.userId()]);
 		Meteor.subscribe('userData', [Session.get('selectedUserId')]);
 		Meteor.subscribe('userData', Session.get('selectedUserIdList'));
+		var currentuserId = Meteor.userId();
+		console.log('User Id: ', currentuserId);
+		var user = Meteor.users.findOne({_id: currentuserId});
+		Meteor.subscribe('allUsers', Meteor.userId());
+		if(user.userType == 'superuser' || user.userType == 'megauser'){
+			Meteor.subscribe('allUsers');
+		};
+
 
 
 	// Posts Related Subscriptions

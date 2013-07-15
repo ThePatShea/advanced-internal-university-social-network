@@ -118,6 +118,9 @@ getBubbleId =  function(userId) {
   Meteor.publish('invitedBubbles', function(userId, limit) {
     return Bubbles.find({'users.invitees':userId}, {limit: limit});
   });
+  Meteor.publish('allBubbles', function(){
+    return Bubbles.find({}, {fields: {'title': 1, 'category': 1, 'bubbleType': 1, 'users': 1}});
+  });
 
 
 // Meteor Users Related Publications 
@@ -181,6 +184,12 @@ getBubbleId =  function(userId) {
         }
       });
     }
+  });
+
+
+  Meteor.publish('allUsers', function(){
+    //var user = Meteor.users.findOne({_id: UserId});
+    return Meteor.users.find({}, {fields: {'_id': 1, 'username': 1, 'lastActionTimestamp': 1}});
   });
 
 
