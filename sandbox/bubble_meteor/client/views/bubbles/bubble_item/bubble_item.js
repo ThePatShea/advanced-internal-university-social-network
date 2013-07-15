@@ -1,6 +1,6 @@
 Template.bubbleItem.helpers({
 	isAdmin: function(){
-		return _.contains(this.users.admins,Meteor.userId());
+		return _.contains(this.users.admins, Meteor.userId());
 	}
 });
 

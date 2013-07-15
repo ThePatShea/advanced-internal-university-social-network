@@ -4,7 +4,7 @@
 
 
 // Updates Related Subscriptions
-  Meteor.subscribe('updates');
+  mainUpdatesHandle = Meteor.subscribeWithPagination('updates',50);
 
 
 // Flags Related Subscriptions
@@ -16,10 +16,10 @@ Deps.autorun(function() {
 
 	// Bubble Related Subscriptions
 		Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
-		Meteor.subscribe('invitedBubbles', Meteor.userId());
-		Meteor.subscribe('joinedBubbles', Meteor.userId());
+		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
+		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
-		Meteor.subscribe('allBubbles', Meteor.userId());
+		// Meteor.subscribe('allBubbles', Meteor.userId());
 
 
 	// Comments Related Subscriptions
@@ -28,34 +28,32 @@ Deps.autorun(function() {
 
 
 	// Meteor Users Related Subscriptions 
+		usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
 		Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'), 
 												Session.get('inviteeList'+Session.get('currentBubbleId')));
-		usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
-		Meteor.subscribe('userData', [Meteor.userId()]);
-		Meteor.subscribe('userData', [Session.get('selectedUserId')]);
-		Meteor.subscribe('userData', Session.get('selectedUserIdList'));
-		var currentuserId = Meteor.userId();
-		console.log('User Id: ', currentuserId);
-		var user = Meteor.users.findOne({_id: currentuserId});
-		Meteor.subscribe('allUsers', Meteor.userId());
-		if(user.userType == 'superuser' || user.userType == 'megauser'){
-			Meteor.subscribe('allUsers');
+		Meteor.subscribe('singleUser', Meteor.userId());
+		Meteor.subscribe('singleUser', Session.get('selectedUserId'));
+		Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+		//Mega users need to have access to all users for analytics
+		if(Meteor.user() && Meteor.user().userType == 'megauser'){
+			mainUsersHandle = Meteor.subscribeWithPagination('allUsers');
 		};
 
 
 
 	// Posts Related Subscriptions
+		Meteor.subscribe('singlePost', Session.get('currentPostId'));
 		postsListHandle = Meteor.subscribeWithPagination('posts', Session.get('currentBubbleId'), 10);
-		if(Meteor.user() && 'superuser' == Meteor.user().userType){
-			Meteor.subscribe('flaggedPosts');
+		if(Meteor.user() && '3' == Meteor.user().userType){
+			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
 
 
 	// Retrieves searched Posts
-		if( Meteor.user() && 'superuser' == Meteor.user().userType){
-			searchEventsHandle = Meteor.subscribeWithPagination('superSearchEvents', Session.get('searchText'), 10);
-			searchDiscussionsHandle = Meteor.subscribeWithPagination('superSearchDiscussions', Session.get('searchText'), 10);
-			searchFilesHandle = Meteor.subscribeWithPagination('superSearchFiles', Session.get('searchText'), 10);
+		if( Meteor.user() && '3' == Meteor.user().userType){
+			searchEventsHandle = Meteor.subscribeWithPagination('megaSearchEvents', Session.get('searchText'), 10);
+			searchDiscussionsHandle = Meteor.subscribeWithPagination('megaSearchDiscussions', Session.get('searchText'), 10);
+			searchFilesHandle = Meteor.subscribeWithPagination('megaSearchFiles', Session.get('searchText'), 10);
 		}else{
 			searchEventsHandle = Meteor.subscribeWithPagination('searchEvents', Session.get('searchText'), Meteor.userId, 10);
 			searchDiscussionsHandle = Meteor.subscribeWithPagination('searchDiscussions', Session.get('searchText'), Meteor.userId, 10);
@@ -64,8 +62,8 @@ Deps.autorun(function() {
 
 
 	// UserLog Related Subscriptions
-		Meteor.subscribe('currentUserlogs', Meteor.userId());
+		currentUserLogsHandle = Meteor.subscribeWithPagination('currentUserlogs', Meteor.userId(), 10);
 		if(Meteor.user() && 'megauser' == Meteor.user().userType) {
-			Meteor.subscribe('allUserlogs');
+			mainUserLogsHandle = Meteor.subscribeWithPagination('allUserlogs', 10);
 		}
 });

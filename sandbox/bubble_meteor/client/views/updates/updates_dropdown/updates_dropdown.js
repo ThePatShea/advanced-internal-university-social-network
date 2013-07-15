@@ -33,7 +33,7 @@ Template.updatesDropdown.helpers({
       _.each(updateList, function(update){
 
         var commentUpdates = _.reject(updateList, function(update) {
-          return update.updateType != "REPLIED";
+          return update.updateType != "replied";
         });
 
         //Combine and chain the names together
@@ -41,7 +41,7 @@ Template.updatesDropdown.helpers({
           updateList = _.reject(updateList, function(newUpdate) {
             return update.postId == newUpdate.postId && 
                     update.updateType == newUpdate.updateType &&
-                    update.updateType == "REPLIED";
+                    update.updateType == "replied";
           });
           if(!_.contains(updateList,update)) {
             //Pull out comment updates that belong to the same post
@@ -85,11 +85,11 @@ Template.updatesDropdown.helpers({
       //Declaring the types that needs collapsing of names
       var bubbleUpdateList = 
       [ 
-        "NEW APPLICANT",
-        "NEW ATTENDEE",        
-        "MEMBER PROMOTED",
-        "MEMBER DEMOTED",
-        "JOINED BUBBLE"
+        "new applicant",
+        "new attendee",        
+        "member promoted",
+        "member demoted",
+        "joined bubble"
       ]
 
       /**
@@ -170,7 +170,7 @@ Template.updatesDropdown.helpers({
       _.each(updateList, function(update){
 
         var commentUpdates = _.reject(updateList, function(update) {
-          return update.updateType != "REPLIED";
+          return update.updateType != "replied";
         });
 
         //Combine and chain the names together
@@ -178,7 +178,7 @@ Template.updatesDropdown.helpers({
           updateList = _.reject(updateList, function(newUpdate) {
             return update.postId == newUpdate.postId && 
                     update.updateType == newUpdate.updateType &&
-                    update.updateType == "REPLIED";
+                    update.updateType == "replied";
           });
           if(!_.contains(updateList,update)) {
             //Pull out comment updates that belong to the same post
@@ -222,11 +222,11 @@ Template.updatesDropdown.helpers({
       //Declaring the types that needs collapsing of names
       var bubbleUpdateList = 
       [ 
-        "NEW APPLICANT",
-        "NEW ATTENDEE",        
-        "MEMBER PROMOTED",
-        "MEMBER DEMOTED",
-        "JOINED BUBBLE"
+        "new applicant",
+        "new attendee",        
+        "member promoted",
+        "member demoted",
+        "joined bubble"
       ]
 
       /**
@@ -296,9 +296,9 @@ Template.update.helpers({
     return updateType == this.updateType;
   },
   getContent: function() {
-    if(this.updateType == "REPLIED" ||
-        this.updateType == "NEW ATTENDEE" ||
-        this.updateType == "NEW APPLICANT"){
+    if(this.updateType == "replied" ||
+        this.updateType == "new attendee" ||
+        this.updateType == "new applicant"){
       var content = this.content;
       var nameList = this.invokerName.split('and');
       if(nameList.length > 1){

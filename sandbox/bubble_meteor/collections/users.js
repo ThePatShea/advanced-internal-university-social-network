@@ -12,9 +12,9 @@ Meteor.users.deny({
 if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
 		if(user.username == 'campusbubble') {
-			user.userType = 'megauser';
+			user.userType = '4';
 		}else{
-			user.userType = 'user';
+			user.userType = '1';
 		}
 		return user;
 	});

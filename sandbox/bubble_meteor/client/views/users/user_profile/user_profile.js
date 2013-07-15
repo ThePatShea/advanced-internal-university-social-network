@@ -21,8 +21,8 @@ Template.userProfile.helpers({
 	},
 	hasPermission: function() {
 		var profileId = Session.get('selectedUserId');
-		//Checks if user is a mega user or if user is viewing own profile
-		if('megauser' == Meteor.user().userType ||  Meteor.userId() == profileId) {
+		//Checks if user is lvl 4 or if user is viewing own profile
+		if('4' == Meteor.user().userType ||  Meteor.userId() == profileId) {
 			return true;
 		}
 		else{
