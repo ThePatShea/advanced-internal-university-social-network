@@ -11,6 +11,13 @@ Create /etc/nginx/sites-available/bubble enter the following:
 
 
 
+server {
+    listen      80;
+    server_name talkschool.net;
+    rewrite ^ https://$server_name$request_uri? permanent;
+}
+
+
   server {
         listen   443;
 
