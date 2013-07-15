@@ -121,7 +121,6 @@ Template.bubbleSubmit.events({
             $("#coverphoto_preview").attr("src", e.target.result);
             $("#coverphoto_upload").attr("title", escape(theFile.name));
             $("#coverphoto_upload").show();
-            $("#coverphoto_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -286,7 +285,6 @@ Template.bubbleSubmit.events({
             $("#coverphoto_preview").attr("src", e.target.result);
             $("#coverphoto_upload").attr("title", escape(theFile.name));
             $("#coverphoto_upload").show();
-            $("#coverphoto_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -450,7 +448,6 @@ Template.bubbleSubmit.events({
             $("#profilepicture_preview").attr("src", e.target.result);
             $("#profilepicture_upload").attr("title", escape(theFile.name));
             $("#profilepicture_upload").show();
-            $("#profilepicture_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -624,7 +621,6 @@ Template.bubbleSubmit.events({
             $("#profilepicture_preview").attr("src", e.target.result);
             $("#profilepicture_upload").attr("title", escape(theFile.name));
             $("#profilepicture_upload").show();
-            $("#profilepicture_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -712,6 +708,8 @@ Template.bubbleSubmit.events({
 
 Template.bubbleSubmit.rendered = function(){
   $("#profilepicture_retina").hide();
-  $("coverphoto_retina").hide();
+  $("#coverphoto_retina").hide();
+  $("#profilepicture_preview").hide();
+  $("#coverphoto_preview").hide();
 }
 

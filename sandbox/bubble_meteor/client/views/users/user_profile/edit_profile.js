@@ -141,7 +141,6 @@ Template.userProfileEdit.events({
             $("#userprofilepicture_preview").attr("src", e.target.result);
             $("#userprofilepicture_upload").attr("title", escape(theFile.name));
             $("#userprofilepicture_upload").show();
-            $("#userprofilepicture_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -250,7 +249,6 @@ Template.userProfileEdit.events({
             $("#userprofilepicture_preview").attr("src", e.target.result);
             $("#userprofilepicture_upload").attr("title", escape(theFile.name));
             $("#userprofilepicture_upload").show();
-            $("#userprofilepicture_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -335,6 +333,7 @@ Template.userProfileEdit.events({
 
 Template.userProfileEdit.rendered = function(){
   $("#userprofilepicture_retina").hide();
+  //$("#userprofilepicture_preview").hide();
   $("#change_profile_picture").click(function(){
     $("#userprofilepicture_preview").hide();
     $("#change_profile_picture").hide();

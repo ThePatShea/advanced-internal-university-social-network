@@ -113,7 +113,6 @@ Template.bubbleEdit.events({
             $("#coverphoto_preview").attr("src", e.target.result);
             $("#coverphoto_upload").attr("title", escape(theFile.name));
             $("#coverphoto_upload").show();
-            $("#coverphoto_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -274,7 +273,6 @@ Template.bubbleEdit.events({
             $("#coverphoto_preview").attr("src", e.target.result);
             $("#coverphoto_upload").attr("title", escape(theFile.name));
             $("#coverphoto_upload").show();
-            $("#coverphoto_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -434,7 +432,6 @@ Template.bubbleEdit.events({
             $("#profilepicture_preview").attr("src", e.target.result);
             $("#profilepicture_upload").attr("title", escape(theFile.name));
             $("#profilepicture_upload").show();
-            $("#profilepicture_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -596,7 +593,6 @@ Template.bubbleEdit.events({
             $("#profilepicture_preview").attr("src", e.target.result);
             $("#profilepicture_upload").attr("title", escape(theFile.name));
             $("#profilepicture_upload").show();
-            $("#profilepicture_preview").show();
             $(document).ready(function(){
               // Apply jrac on some image.
               var tempcanvas = document.createElement('canvas');
@@ -704,6 +700,8 @@ Template.bubbleEdit.events({
 Template.bubbleEdit.rendered = function(){
   $('#coverphoto_retina').hide();
   $('#profilepicture_retina').hide();
+  //$("#profilepicture_preview").hide();
+  //$("#coverphoto_preview").hide();
   $("#change_profilepicture").click(function(){
     $("#profilepicture_preview").hide();
     $("#change_profilepicture").hide();
