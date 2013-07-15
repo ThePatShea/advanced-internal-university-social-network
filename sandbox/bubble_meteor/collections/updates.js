@@ -56,7 +56,7 @@ createCommentUpdate = function(comment) {
       bubbleId: post.bubbleId,
       invokerId: comment.userId,
       invokerName: comment.author,
-      updateType: "REPLIED",
+      updateType: "replied",
       url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
       content: " commented on " + post.name
     });
@@ -76,7 +76,7 @@ createPostUpdate = function(post) {
       bubbleId: bubble._id,
       invokerId: post.userId,
       invokerName: post.author,
-      updateType: "POSTED",
+      updateType: "posted",
       url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
       content: post.author + " created a new " + post.postType + " in " + bubble.title
     });
@@ -86,7 +86,7 @@ createPostUpdate = function(post) {
 //For everyone attending
 createEditEventUpdate = function(postId) {
   //Removes previous updates that shows post is edited
-  var update = Updates.find({read: false, postId: postId, updateType: 'EDITED POST'}).fetch();
+  var oldUpdates = Updates.find({read: false, postId: postId, updateType: 'edited post'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -106,7 +106,7 @@ createEditEventUpdate = function(postId) {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "EDITED POST",
+      updateType: "edited post",
       url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
       content: Meteor.user().username + " edited " + post.name
     });
@@ -123,21 +123,20 @@ createRemoveMemberUpdate = function(userId) {
     bubbleId: bubble._id,
     $or: [
       {userId: userId},
-      {invokerId:userId, updateType: 'ENTERED BUBBLE'},
-      {invokerId:userId, updateType: 'JOINED BUBBLE'}
+      {invokerId:userId, updateType: 'entered bubble'},
+      {invokerId:userId, updateType: 'joined bubble'}
     ] 
   }).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
-  console.log("this ran");
 
   Meteor.call('update',{
     userId: userId,
     bubbleId: bubble._id,
     invokerId: Meteor.userId(),
     invokerName: Meteor.user().username,
-    updateType: "REMOVED FROM BUBBLE",
+    updateType: "removed from bubble",
     url: '/searchAll',
     content: "You have been removed from " + bubble.title
   });
@@ -151,7 +150,7 @@ createRejectApplicationUpdate = function(userId) {
     bubbleId: bubble._id,
     invokerId: Meteor.userId(),
     invokerName: Meteor.user().username,
-    updateType: "APPLICATION REJECTED",
+    updateType: "application rejected",
     url: '/searchAll',
     content: bubble.title + " rejected your application"
   });
@@ -181,7 +180,7 @@ createDeleteEventUpdate = function(post) {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "EVENT CANCELLED",
+      updateType: "event cancelled",
       url: '/mybubbles/'+bubble._id+"/home",
       content: Meteor.user().username + " canceled the event " + post.name
     });
@@ -198,7 +197,7 @@ createInvitationUpdate = function(userList) {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "INVITATION",
+      updateType: "invitation",
       url: '/mybubbles/'+bubble._id+"/home",
       content: Meteor.user().username + " invited you to " + bubble.title
     });
@@ -211,7 +210,7 @@ createNewAttendeeUpdate = function(postId) {
   var bubble = Bubbles.findOne(post.bubbleId);
 
   //Clears multiple attendee updates
-  var oldUpdates = Updates.find({read: false, userId: Meteor.userId(), bubbleId: bubble._id, updateType: 'NEW ATTENDEE'}).fetch();
+  var oldUpdates = Updates.find({read: false, userId: Meteor.userId(), bubbleId: bubble._id, updateType: 'new attendee'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -229,7 +228,7 @@ createNewAttendeeUpdate = function(postId) {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "NEW ATTENDEE",
+      updateType: "new attendee",
       url: '/mybubbles/'+bubble._id+'/members',
       content: " is attending " + post.name
     });
@@ -266,7 +265,7 @@ createNewMemberUpdate = function(userId, bubbleId) {
     bubbleId: bubble._id,
     invokerId: user._id,
     invokerName: user.username,
-    updateType: "ENTERED BUBBLE",
+    updateType: "entered bubble",
     url: '/mybubbles/'+bubble._id+'/members',
     content: "Congratulations! You Are now part of " + bubble.title 
   });
@@ -279,7 +278,7 @@ createNewMemberUpdate = function(userId, bubbleId) {
       bubbleId: bubble._id,
       invokerId: userId,
       invokerName: user.username,
-      updateType: "JOINED BUBBLE",
+      updateType: "joined bubble",
       url: '/mybubbles/'+bubble._id+'/members',
       content: user.username + " joined " + bubble.title
     });
@@ -299,7 +298,7 @@ createBubbleEditUpdate = function() {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "EDITED BUBBLE",
+      updateType: "edited bubble",
       url: '/mybubbles/'+bubble._id+"/home",
       content: Meteor.user().username + " edited the bubble " + bubble.title
     });
@@ -311,7 +310,7 @@ createMemberPromoteUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'MEMBER DEMOTED'}).fetch();
+  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'member demoted'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -321,7 +320,7 @@ createMemberPromoteUpdate = function(userId) {
     bubbleId: Session.get('currentBubbleId'),
     invokerId: Meteor.userId(),
     invokerName: Meteor.user().username,
-    updateType: "MEMBER PROMOTED",
+    updateType: "member promoted",
       url: '/mybubbles/'+bubble._id+'/members',
     content: Meteor.user().username + " promoted you to admin of the bubble " + bubble.title
   });
@@ -332,7 +331,7 @@ createAdminDemoteUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'MEMBER PROMOTED'}).fetch();
+  var oldUpdates = Updates.find({read: false, userId: userId, bubbleId: bubble._id, updateType: 'member promoted'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -342,7 +341,7 @@ createAdminDemoteUpdate = function(userId) {
     bubbleId: Session.get('currentBubbleId'),
     invokerId: Meteor.userId(),
     invokerName: Meteor.user().username,
-    updateType: "MEMBER DEMOTED",
+    updateType: "member demoted",
       url: '/mybubbles/'+bubble._id+'/members',
     content: Meteor.user().username + " demoted you to member of the bubble " + bubble.title
   });
@@ -353,7 +352,7 @@ createNewApplicantUpdate = function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, invokerId: userId, bubbleId: bubble._id, updateType: 'NEW APPLICANT'}).fetch();
+  var oldUpdates = Updates.find({read: false, invokerId: userId, bubbleId: bubble._id, updateType: 'new applicant'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -364,7 +363,7 @@ createNewApplicantUpdate = function() {
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
-      updateType: "NEW APPLICANT",
+      updateType: "new applicant",
       url: '/mybubbles/'+bubble._id+'/members',
       content: " applied to be a member of the bubble " + bubble.title
     });
@@ -376,7 +375,7 @@ createPostFlagUpdate = function(flag) {
   var post = Posts.findOne(flag.postId);
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, postId: post._id, updateType: 'POST UNFLAGGED'}).fetch();
+  var oldUpdates = Updates.find({read: false, postId: post._id, updateType: 'post unflagged'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -390,7 +389,7 @@ createPostFlagUpdate = function(flag) {
         postId: flag.postId,
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
-        updateType: "POST FLAGGED",
+        updateType: "post flagged",
         url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
         content: post.name + " has been flagged"
       });
@@ -403,8 +402,7 @@ createPostUnflagUpdate = function(flag) {
   var post = Posts.findOne(flag.postId);
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, postId: post._id, updateType: 'POST FLAGGED'}).fetch();
-  console.log(flag.postId);
+  var oldUpdates = Updates.find({read: false, postId: post._id, updateType: 'post flagged'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });
@@ -418,7 +416,7 @@ createPostUnflagUpdate = function(flag) {
         postId: flag.postId,
         invokerId: Meteor.userId(),
         invokerName: Meteor.user().username,
-        updateType: "POST UNFLAGGED",
+        updateType: "post unflagged",
         url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
         content: post.name + " has been unflagged"
       });

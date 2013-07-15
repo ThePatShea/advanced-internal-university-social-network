@@ -9,24 +9,24 @@ userId: Meteor.userId(), Template.updateItem.helpers({
 		return Bubbles.findOne(this.bubbleId);
 	},
 	getContentTitle: function() {
-		if(this.updateType == "JOINED BUBBLE" || 
-				this.updateType == "MEMBER PROMOTED" || 
-				this.updateType == "MEMBER DEMOTED" ||
-				this.updateType == "NEW APPLICANT") {
+		if(this.updateType == "joined bubble" || 
+				this.updateType == "member promoted" || 
+				this.updateType == "member demoted" ||
+				this.updateType == "new applicant") {
 			return 'Member List';
-		}else if(this.updateType == "NEW ATTENDEE" || 
-				this.updateType == "REPLIED" || 
-				this.updateType == "POSTED" || 
-				this.updateType == "EDITED POST") {
+		}else if(this.updateType == "new attendee" || 
+				this.updateType == "replied" || 
+				this.updateType == "posted" || 
+				this.updateType == "edited post") {
 			var post = Posts.findOne(this.postId);
 			if(post){
 				return post.name;
 			}
-		}else if(this.updateType == "REMOVED FROM BUBBLE" || 
-				this.updateType == "APPLICATION REJECTED") {
+		}else if(this.updateType == "removed from bubble" || 
+				this.updateType == "application rejected") {
 			return 'Bubble List';
 		}else{
-			return 'DISMISS UPDATE';
+			return 'Dismiss Update';
 		}
 	}
 });

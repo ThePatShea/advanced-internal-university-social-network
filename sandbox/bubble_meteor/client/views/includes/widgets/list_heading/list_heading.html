@@ -9,11 +9,22 @@
       <span class="word1">{{word1}}</span>
       <span class="word2">{{postType}}s</span>
     </h3>
-    <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
-      <button class="std-btn-light pull-right btn-add">
-        <span class="cb-icon-add">{{> icon-add}}</span>
-        <span>add new {{postType}}</span>
-      </button>
-    </a>
+    {{#if isSuperBubble}}
+      {{#if hasLevel2Permissions}}
+        <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
+          <button class="std-btn-light pull-right btn-add">
+            <span class="cb-icon-add">{{> icon-add}}</span>
+            <span>add new {{postType}}</span>
+          </button>
+        </a>
+      {{/if}}
+    {{else}}
+      <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
+        <button class="std-btn-light pull-right btn-add">
+          <span class="cb-icon-add">{{> icon-add}}</span>
+          <span>add new {{postType}}</span>
+        </button>
+      </a>
+    {{/if}}
   </div>
 </template>

@@ -1,3 +1,4 @@
+//Registers the name of the Bubble categories
 categories =  [
         { name_long: 'student organization'       , name_short: 'club'    }
       , { name_long: 'athletics and recreation'   , name_short: 'sport'   }
@@ -10,4 +11,12 @@ categories =  [
       , { name_long: 'arts and entertainment'     , name_short: 'art'     }
       , { name_long: 'custom'                     , name_short: 'custom'  }
     ]
+
+//Registers the name of the different usertypes
+userTypes = {
+  1 : "Level 1",
+  2 : "Level 2",
+  3 : "Level 3",
+  4 : "Level 4"
+}
 

@@ -11,15 +11,30 @@ getBubbleId =  function(userId) {
 
 
 // Posts Related Publications 
-  //This publication only allows normal user to view posts
   Meteor.publish('posts', function(bubbleId, limit){
-    return Posts.find({bubbleId: bubbleId}, {limit: limit});
+    return Posts.find({bubbleId: bubbleId}, {
+      sort: {submitted: -1},
+      limit: limit,
+      fields: {
+        'file': 0,
+        'eventPhoto': 0,
+        'retinaEventPhoto': 0
+      }
+    });
   });
   //This publication only returns posts that are flagged
   Meteor.publish('flaggedPosts', function(limit){
     var flags = Flags.find().fetch();
     var postsList = _.pluck(flags, 'postId');
-    return Posts.find({_id: {$in: postsList}}, {limit: limit}});
+    return Posts.find({_id: {$in: postsList}}, {
+      sort: {submitted: -1},
+      limit: limit,
+      fields: {
+        'file': 0,
+        'eventPhoto': 0,
+        'retinaEventPhoto': 0
+      }
+    });
   })
   //This Publication allows normal user to view all posts during searching
   Meteor.publish('searchEvents', function(searchText, userId, limit) {
@@ -31,7 +46,15 @@ getBubbleId =  function(userId) {
           {body: new RegExp(searchText,'i')}, 
           {location: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit: limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
   });
   Meteor.publish('searchDiscussions', function(searchText, userId, limit) {
     return Posts.find(
@@ -41,7 +64,15 @@ getBubbleId =  function(userId) {
           {name: new RegExp(searchText,'i')}, 
           {body: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit: limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
   });
   Meteor.publish('searchFiles', function(searchText, userId, limit) {
     return Posts.find(
@@ -51,10 +82,18 @@ getBubbleId =  function(userId) {
           {name: new RegExp(searchText,'i')},
           {file: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit: limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
   });
-//This Publication allows super to view all posts during searching
-  Meteor.publish('superSearchEvents', function(searchText, limit){
+//This Publication allows lvl3 to view all posts during searching
+  Meteor.publish('lvl3SearchEvents', function(searchText, limit){
     return Posts.find(
       { postType: 'event',
         $or: [
@@ -62,25 +101,52 @@ getBubbleId =  function(userId) {
           {body: new RegExp(searchText,'i')}, 
           {location: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit:limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
   });
-  Meteor.publish('superSearchDiscussions', function(searchText, limit){
+  Meteor.publish('lvl3SearchDiscussions', function(searchText, limit){
     return Posts.find(
       { postType: 'discussion',
         $or: [
           {name: new RegExp(searchText,'i')}, 
           {body: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit:limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
   });
-  Meteor.publish('superSearchFiles', function(searchText, limit){
+  Meteor.publish('lvl3SearchFiles', function(searchText, limit){
     return Posts.find(
       { postType: 'file',
         $or: [
           {name: new RegExp(searchText,'i')}, 
           {file: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit:limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
+  });
+  Meteor.publish('singlePost', function(postId) {
+    return postId && Posts.find(postId);
   });
 
 
@@ -98,11 +164,20 @@ getBubbleId =  function(userId) {
 
 
 // Bubbles Related Publications
-  Meteor.publish('singleBubble', function(id){
-  	return id && Bubbles.find(id);
+  Meteor.publish('singleBubble', function(bubbleId){
+  	return bubbleId && Bubbles.find(bubbleId);
   });
   Meteor.publish('bubbles', function(limit) {
-    return Bubbles.find({}, {sort: {submitted: -1}, limit:limit});
+    return Bubbles.find({}, {
+      sort: {submitted: -1}, 
+      limit: limit,
+      fields: {
+        'coverPhoto': 0,
+        'retinaCoverPhoto': 0,
+        'profilePicture': 0, 
+        'retinaProfilePicture': 0
+      }
+    });
   });
   Meteor.publish('searchBubbles', function(searchText,limit) {
     return Bubbles.find(
@@ -110,20 +185,59 @@ getBubbleId =  function(userId) {
           {title: new RegExp(searchText,'i')}, 
           {description: new RegExp(searchText,'i')}
         ]
-      }, {sort: {submitted: -1}, limit:limit});
+      }, {
+        sort: {submitted: -1}, 
+        limit: limit,
+        fields: {
+          'coverPhoto': 0,
+          'retinaCoverPhoto': 0,
+          'profilePicture': 0, 
+          'retinaProfilePicture': 0
+        }
+      });
   });
   Meteor.publish('joinedBubbles', function(userId, limit) {
-    return Bubbles.find({$or: [{'users.members': userId},{'users.admins': userId}]}, {sort: {submitted: -1}, limit});
+    return Bubbles.find({
+      $or: [{
+        'users.members': userId}, 
+        {'users.admins': userId}
+        ]}, {
+      sort: {submitted: -1}, 
+      limit: limit,
+      fields: {
+        'coverPhoto': 0,
+        'retinaCoverPhoto': 0,
+        'profilePicture': 0, 
+        'retinaProfilePicture': 0
+      }
+    });
   });
   Meteor.publish('invitedBubbles', function(userId, limit) {
-    return Bubbles.find({'users.invitees':userId}, {limit: limit});
-  });
-  Meteor.publish('allBubbles', function(){
-    return Bubbles.find({}, {fields: {'title': 1, 'category': 1, 'bubbleType': 1, 'users': 1}});
+    return Bubbles.find({'users.invitees':userId}, {
+      sort: {submitted: -1}, 
+      limit: limit,
+      fields: {
+        'coverPhoto': 0,
+        'retinaCoverPhoto': 0,
+        'profilePicture': 0, 
+        'retinaProfilePicture': 0,
+        'profilePicture': 0
+      }
+    });
   });
 
-
-// Meteor Users Related Publications 
+// Meteor Users Related Publications
+  Meteor.publish('allUsers', function(){
+    //var user = Meteor.users.findOne({_id: UserId});
+    return Meteor.users.find({}, {
+      fields: {
+       'username': 1,
+       'emails': 1,
+       'userType': 1,
+       'lastActionTimestamp': 1
+      }
+    });
+  }); 
   Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
     if (!usernameList) {
       usernameList = [];
@@ -145,51 +259,48 @@ getBubbleId =  function(userId) {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'profilePicture': -1,
-       'lastActionTimestamp': new Date().getTime()
+         'lastActionTimestamp': 1
         }
       });
     }
   });
-
   Meteor.publish("findUsersByName", function(username, limit) {
     var search_name = new RegExp(username,'i');
-    var search_query = {username: search_name};
-      
+    var search_query = {username: search_name, userType: {$nin: ['4']}};
     return Meteor.users.find(search_query, {
       fields: {
        'username': 1,
        'emails': 1,
        'userType': 1,
-       'profilePicture': -1,
-       'lastActionTimestamp': new Date().getTime()
+       'lastActionTimestamp': 1
       }
     });
   });
-
-  Meteor.publish('userData', function(userIdList) {
+  Meteor.publish('findUsersById', function(userIdList) {
     if(userIdList){
-      //Remove null from the userIdList 
-      userIdList = _.reject(userIdList, function(userId){
-        return null;
-      });
-      
       return Meteor.users.find({_id: {$in: userIdList}}, {
         fields: {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'profilePicture': -1,
-         'lastActionTimestamp': new Date().getTime()
+         'lastActionTimestamp': 1
         }
       });
     }
   });
-
-
-  Meteor.publish('allUsers', function(){
-    //var user = Meteor.users.findOne({_id: UserId});
-    return Meteor.users.find({}, {fields: {'_id': 1, 'username': 1, 'lastActionTimestamp': 1}});
+  Meteor.publish('singleUser', function(userId) { 
+    return Meteor.users.find({_id: userId}, {
+      fields: {
+       'username': 1,
+       'emails': 1,
+       'userType': 1,
+       'lastActionTimestamp': 1,
+       'phone': 1,
+       'profilePicture': 1,
+       'retinaProfilePicture': 1,
+       'lastUpdated': 1
+      }
+    });
   });
 
 

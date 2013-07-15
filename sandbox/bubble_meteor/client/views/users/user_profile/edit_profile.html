@@ -21,10 +21,11 @@
 	              <input name="email" type="text" value="{{getEmail}}"/>
 	          </div>
 	      </div>
-				{{#if hasPermission}}
+				{{#if hasLevel4Permission}}
 		      <select name="userType">
-	          <option {{checkUserType 'user'}} value="user">Normal User</option>
-	          <option {{checkUserType 'superuser'}} value="superuser">Super User</option>
+	          <option {{checkUserType '1'}} value="1">{{getUserTypeName 1}}</option>
+	          <option {{checkUserType '2'}} value="2">{{getUserTypeName 2}}</option>
+	          <option {{checkUserType '3'}} value="3">{{getUserTypeName 3}}</option>
 		    	</select>
 		      <hr />
 	     	{{/if}}

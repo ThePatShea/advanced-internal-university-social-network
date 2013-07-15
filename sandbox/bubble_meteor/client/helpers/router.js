@@ -139,13 +139,8 @@ Meteor.Router.filters({
     }
   },
   'belongToBubble': function(page) {
-    if(page.toString().match('bubble') || 
-      page.toString().match('post') || 
-      page.toString().match('discussion') || 
-      page.toString().match('edit') || 
-      page.toString().match('file')){
-
-      if(Meteor.user() && Meteor.user().userType != 'superuser'){
+    if(window.location.pathname.match('mybubbles')) {
+      if(Meteor.user() && Meteor.user().userType != '3'){
         var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
         if(bubble) {
           if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
@@ -168,7 +163,7 @@ Meteor.Router.filters({
   },
   'hasSuperBubblePermissions': function(page) {
     if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType){
-      if('superuser' == Meteor.user().userType){
+      if('2' == Meteor.user().userType || '3' == Meteor.user().userType){
         return page;
       }else{
         Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
@@ -182,8 +177,8 @@ Meteor.Router.filters({
     Meteor.call('incViewCount', Session.get('currentPostId'));
     return page;
   },
-  'superuserPermissions': function(page){
-    if(Meteor.user() && Meteor.user().userType == 'superuser') {
+  'level3Permissions': function(page){
+    if(Meteor.user() && Meteor.user().userType == '3') {
       return page;
     }
     return '/';
@@ -196,11 +191,10 @@ Meteor.Router.filters({
   }
 });
 
-Meteor.Router.filter('belongToBubble');
-//Add superuser-only pages here
-Meteor.Router.filter('superuserPermissions', {only: ['flagsList']});
-//Add megauser-only pages here
-Meteor.Router.filter('megauserPermissions', {only: ['userlog']});
+//Partially filter pages that are not bubble related
+Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents',  'searchFiles', 'bubbleSubmit']});
+//Add Lvl 3 pages here
+Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('checkLoginStatus');
 //Ensures that user is routed to either the mybubbles page or search bubbles page

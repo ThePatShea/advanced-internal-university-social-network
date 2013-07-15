@@ -3,12 +3,12 @@ ownsUpdate = function(userId, doc) {
 }
 
 ownsProfile = function(userId, profile) {
-	return 'megauser' == Meteor.user().userType || userId === profile._id;
+	return '4' == Meteor.user().userType || userId === profile._id;
 }
 
 ownsPost = function(userId, doc) {
 	var bubble = Bubbles.findOne(doc.bubbleId);
-	return ('superuser' == Meteor.user().userType 
+	return ('3' == Meteor.user().userType 
 		|| doc.author == Meteor.user().username
 		|| _.contains(bubble.users.admins,Meteor.userId()));
 }
