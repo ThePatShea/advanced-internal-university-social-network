@@ -1,22 +1,19 @@
 <template name="updateItem">
-  <div class="post-item">
-    <div style="width:300px" class="post-content">
+  <div class="post-item update-item">
+    <div class="pull-left post-content">
       {{invokerName}}
     </div>
-    <div style="width:200px" class="post-content">
-      {{updateType}}
-      <br />
-      {{submittedText submitted}}
+    <div class="pull-left post-content">
+      <div>{{updateType}}</div>
+      <div>{{submittedText submitted}}</div>
     </div>
 
-    <div style="width:100px" class="post-content">
-      <a href="{{url}}">
-        {{getContentTitle}}
-      </a>
+    <div class="pull-left post-content">
+      {{getContentTitle}}
     </div>
     
     {{#if isPost}}
-      <div style="width: 100px;" class="pull-right">
+      <div class="pull-right">
         <p style="line-height: 10px;">Number of New Comments</p>
         <div class="badgeCenter">
           <span class="badge badge-inverse">

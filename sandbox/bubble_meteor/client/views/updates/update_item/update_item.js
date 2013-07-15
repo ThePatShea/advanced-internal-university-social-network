@@ -32,7 +32,8 @@ userId: Meteor.userId(), Template.updateItem.helpers({
 });
 
 Template.updateItem.events({
-  'click a': function() {	
-  	Meteor.call('setRead', this);
+  'click .update-item': function() {	
+    Meteor.Router.to(this.url, this.bubbleId, this._id);
+    Meteor.call('setRead', this);
   }
 });
