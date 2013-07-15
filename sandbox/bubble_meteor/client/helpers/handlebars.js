@@ -51,7 +51,30 @@ Handlebars.registerHelper('postProperties', {
       , word1      : 'upcoming'
     }
   , file       : {
-        posts      : function() { return getPosts('file'); }
+        posts      : function() {
+          var posts = getPosts('file');
+          
+          // Updates missing fields, if necessary
+          _.each(posts, function(post) {
+            if (!post.numDownloads || !post.lastDownloadTime) {
+              if (!post.lastDownloadTime)
+                post.lastDownloadTime = new Date().getTime();
+                
+              if (!post.numDownloads)
+                post.numDownloads = 0;
+
+              Posts.update(
+                  {_id : post._id}
+                , {$set: {
+                      lastDownloadTime : post.lastDownloadTime
+                    , numDownloads     : post.numDownloads
+                  } 
+              });
+            }
+          });
+
+          return posts;
+        }
       , postType   : 'file'
       , word1      : 'latest'
     }

@@ -134,7 +134,7 @@ Template.updatesList.helpers({
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
       });  
-      return updateList;
+      return updateList.reverse();
     }
   }
 });

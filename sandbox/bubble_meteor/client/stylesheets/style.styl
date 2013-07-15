@@ -750,19 +750,6 @@ std-btn-xdark(n)
   fontize(main, medium, uppercase, 12px, 100%)
   &:hover
     colorize(auto, main-xdark)
- 
-/*****     im-going     *****/
-.im-going
-  .hover-words
-    display                none
-  .main-words
-    display                inline
-  &:hover
-    .hover-words
-      display                inline
-    .main-words
-      display                none
-/*****     im-going     *****/
 /**********     Buttons     **********/
 
 
@@ -862,8 +849,12 @@ align-with-post-item(n)
     .file-type
       colorize(main-light, auto, main-light)
     .post-name
-      text-decoration        underline
       main-light-color       0
+      .name-text
+        text-decoration        underline
+      .cb-icon-attachment
+        path
+          fill                   main-light
     .attribute-items
       display                none
     .post-action
@@ -927,6 +918,14 @@ align-with-post-item(n)
       margin-right           post-item-attributes-width-minus-30
     @media (max-width: 767px)
       margin-right           0
+    .cb-icon-attachment
+      padding                0 0 0 10px
+      position               relative
+      top                    -2px
+      path
+        fill                     white-xdark
+      svg
+        vertical-align           middle
   .post-item-attributes
     width                    post-item-attributes-width
     height                   post-item-height
@@ -949,6 +948,9 @@ align-with-post-item(n)
           vertical-align         middle
           width                  20px
           height                 12px
+        &.icon-views
+          svg
+            width                  12px
       .post-item-lbl
         padding                0 10px 0 2px
         position               relative
@@ -1306,10 +1308,11 @@ section-icon(n)
   @media (max-width: 767px)
     padding              25px 0
   .bubble-list
+    overflow             hidden
     @media (min-width: 768px)
       margin                 0 0 100px 0
     @media (max-width: 767px)
-      margin                 0 0 50px 0
+      margin                 0 0 30px 0
     .bubble-list-heading
       text-transform         capitalize
       overflow               hidden
@@ -1337,6 +1340,7 @@ section-icon(n)
         @media (max-width: 767px)
           font-size              24px
         .word1
+          margin-left            5px
           @media (min-width: 768px)
             display                inline
           @media (max-width: 767px)
@@ -1351,9 +1355,9 @@ section-icon(n)
           top                      5px
     .more-posts
       @media (min-width: 768px)
-        margin                 20px 30px
+        margin                 20px 0 0 30px
       @media (max-width: 767px)
-        margin                 10px 20px
+        margin                 10px 0 0 20px
 /**********        bubble-page        **********/
 
 /***************  Single-Purpose Elements  ***************/
