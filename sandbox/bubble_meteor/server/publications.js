@@ -256,7 +256,8 @@ getBubbleId =  function(userId) {
        'username': 1,
        'emails': 1,
        'userType': 1,
-       'lastActionTimestamp': 1
+       'lastActionTimestamp': 1,
+       'profilePicture': 1
       }
     });
   }); 
@@ -281,7 +282,8 @@ getBubbleId =  function(userId) {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'lastActionTimestamp': 1
+         'lastActionTimestamp': 1,
+         'profilePicture': 1
         }
       });
     }
@@ -294,7 +296,8 @@ getBubbleId =  function(userId) {
        'username': 1,
        'emails': 1,
        'userType': 1,
-       'lastActionTimestamp': 1
+       'lastActionTimestamp': 1,
+       'profilePicture': 1
       }
     });
   });
@@ -305,7 +308,8 @@ getBubbleId =  function(userId) {
          'username': 1,
          'emails': 1,
          'userType': 1,
-         'lastActionTimestamp': 1
+         'lastActionTimestamp': 1,
+         'profilePicture': 1
         }
       });
     }

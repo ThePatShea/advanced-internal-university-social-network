@@ -103,6 +103,10 @@ Meteor.methods({
         $pull: {attendees:username}
       });
     }
+  },
+  getNumOfEvents: function(bubbleId, postType ) {
+    console.log(Posts.find({bubbleId: bubbleId, postType: postType}).count());
+    return Posts.find({bubbleId: bubbleId, postType: postType}).count();
   }
 });
 

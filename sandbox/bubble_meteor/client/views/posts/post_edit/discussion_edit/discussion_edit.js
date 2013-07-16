@@ -71,7 +71,9 @@ Template.discussionEdit.events({
     console.log('newChildren: ', newChildren)
 
     var updatedPostProperties = {
-      children: newChildren
+      children: newChildren,
+      name: $(e.target).find('[name=name]').val(),
+      body: $(e.target).find('[name=body]').val()
     };
 
     Posts.update(currentPostId, {$set: updatedPostProperties}, function(error){

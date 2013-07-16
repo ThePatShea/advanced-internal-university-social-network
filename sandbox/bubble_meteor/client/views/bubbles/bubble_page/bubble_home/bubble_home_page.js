@@ -5,7 +5,8 @@ Template.bubblePage.helpers({
 
   //Get posts assigned to this bubble
   eventsCount: function() {
-    return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event', dateTime: {$gt: referenceDateTime}}).count() - 3;
+    console.log(Meteor.call('getNumOfEvents',Session.get('currentBubbleId'),'event'));
+    return Meteor.call('getNumOfEvents','event');
   },
   discussionsCount: function() {
     return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
