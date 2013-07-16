@@ -882,12 +882,20 @@ align-with-post-item(n)
     margin                 0 10px 0 0
     .profile-pic
       border-color           white-xdark
+    @media (min-width: 768px)
+      display                block
+    @media (max-width: 767px)
+      display                none
   .update-time
     margin                 0 10px 0 0
     width                  60px
     line-height            1em
     font-main-tiny-gray    0
     colorize(white-xdark)
+    @media (min-width: 768px)
+      display                block
+    @media (max-width: 767px)
+      display                none
   .update-icon-container
     fill                   white-xdark
     margin                 0 0 0 0
@@ -950,12 +958,15 @@ align-with-post-item(n)
   .post-name
     margin                 0 0 0 55px
     color                  #333
-    font-size              16px
     align-with-post-item   0
     font-alt-regular       0
     @media (min-width: 768px)
       margin-right           post-item-attributes-width-minus-30
+      font-size              16px
+      &.update-name
+        margin-right           40px
     @media (max-width: 767px)
+      font-size              14px
       margin-right           0
     .cb-icon-attachment
       padding                0 0 0 10px
@@ -973,6 +984,8 @@ align-with-post-item(n)
     border-box               0
     right                    0
     top                      0
+    &.updates-comments
+      width                    50px
     @media (min-width: 768px)
       display                  block
     @media (max-width: 767px)

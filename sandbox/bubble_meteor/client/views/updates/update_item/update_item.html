@@ -21,20 +21,20 @@
       </div>
     </div>
 
-    <h4 class="post-name">
+    <h4 class="post-name update-name">
       <span class="name-text">{{decodeURI getDisplayInfo.name}}</span>
     </h4>
     
-    {{#if isPost}}
-      <div class="pull-right">
-        <p style="line-height: 10px;">Number of New Comments</p>
-        <div class="badgeCenter">
-          <span class="badge badge-inverse">
-            {{getNewCommentsCount}}
-          </span>
+    <div class="post-item-attributes updates-comments">
+      <div class="v-middle">
+        <div class="v-inner">
+          <div class="num-in-bubble comments-count">
+            <span class="cb-icon">{{> icon-bubble-big}}</span>
+            <span class="lbl">{{getNewCommentsCount}}</span>
+          </div>
         </div>
-      </div>
-    {{/if}}
+      <div class="v-inner">
+    </div>
   </div>
 </template>
 
