@@ -1,5 +1,5 @@
 Template.googleAnalytics.rendered = function() {
-    new GA('UA-42338800-1');
+    new GA('UA-26105700-1');
 }
  
 GA = function(code) {
