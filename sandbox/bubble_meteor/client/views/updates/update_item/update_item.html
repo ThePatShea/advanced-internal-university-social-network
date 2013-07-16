@@ -1,16 +1,29 @@
 <template name="updateItem">
   <div class="post-item update-item">
-    <div class="pull-left post-content">
-      {{invokerName}}
+    <div class="pull-left profile-pic-container">
+      <img class="pic-circle profile-pic" src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800150.jpg"/>
     </div>
-    <div class="pull-left post-content">
-      <div>{{updateType}}</div>
-      <div>{{submittedText submitted}}</div>
+    <div class="pull-left v-middle update-time">
+      <div class="v-inner">
+        <div class="lbl">{{updateType}}</div>
+        <div class="lbl">{{submittedText submitted}}</div>
+      </div>
     </div>
 
-    <div class="pull-left post-content">
-      {{getContentTitle}}
+    <div class="pull-left v-middle update-icon-container">
+      <div class="v-inner">
+        {{#with getDisplayInfo}}
+          <span class="visible-{{matchPostType 'discussion'}} cb-icon-discussion">{{> icon-discussion}}</span>
+          <span class="visible-{{matchPostType 'member'}} cb-icon-member">{{> icon-member}}</span>      
+          <span class="visible-{{matchPostType 'event'}} cb-icon-event">{{> icon-event}}</span>
+          <span class="visible-{{matchPostType 'file'}} cb-icon-file">{{> icon-file}}</span>      
+        {{/with}}
+      </div>
     </div>
+
+    <h4 class="post-name">
+      <span class="name-text">{{decodeURI getDisplayInfo.name}}</span>
+    </h4>
     
     {{#if isPost}}
       <div class="pull-right">

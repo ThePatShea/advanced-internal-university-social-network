@@ -765,6 +765,12 @@ svg
 
 .cb-icon-xlight
   main-xlight-fill       0
+
+.pic-circle
+  border                 2px solid white-xdark
+  border-radius          35px
+  height                 35px
+  width                  35px
 /**********      Icons      **********/
 
 
@@ -841,6 +847,11 @@ align-with-post-item(n)
   &:hover
     cursor                 pointer
     background             white
+    .profile-pic-container
+      .profile-pic
+        border-color           main-light
+    .update-icon-container
+      fill                   main-light
     .post-date
       main-light-border      0
       main-light-color       0
@@ -867,6 +878,34 @@ align-with-post-item(n)
     padding                post-item-padding-vertical 30px
   @media (max-width: 767px)
     padding                post-item-padding-vertical 20px
+  .profile-pic-container
+    margin                 0 10px 0 0
+    .profile-pic
+      border-color           white-xdark
+  .update-time
+    margin                 0 10px 0 0
+    width                  60px
+    line-height            1em
+    font-main-tiny-gray    0
+    colorize(white-xdark)
+  .update-icon-container
+    fill                   white-xdark
+    margin                 0 0 0 0
+    width                  50px
+    .cb-icon-discussion
+      svg
+        height                 20px
+    .cb-icon-member
+      position               relative
+      left                   -5px
+      svg
+        height                 18px
+    .cb-icon-event
+      svg
+        height                 18px
+    .cb-icon-file
+      svg
+        height                 18px
   .post-date
     text-transform         uppercase
     padding                7px 0 0 0
