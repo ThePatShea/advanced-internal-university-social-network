@@ -1,30 +1,40 @@
 <template name="updateItem">
-  <div class="post-item">
-    <div style="width:300px" class="post-content">
-      {{invokerName}}
+  <div class="post-item update-item">
+    <div class="pull-left profile-pic-container">
+      <img class="pic-circle profile-pic" src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800150.jpg"/>
     </div>
-    <div style="width:200px" class="post-content">
-      {{updateType}}
-      <br />
-      {{submittedText submitted}}
+    <div class="pull-left v-middle update-time">
+      <div class="v-inner">
+        <div class="lbl">{{updateType}}</div>
+        <div class="lbl">{{submittedText submitted}}</div>
+      </div>
     </div>
 
-    <div style="width:100px" class="post-content">
-      <a href="{{url}}">
-        {{getContentTitle}}
-      </a>
-    </div>
-    
-    {{#if isPost}}
-      <div style="width: 100px;" class="pull-right">
-        <p style="line-height: 10px;">Number of New Comments</p>
-        <div class="badgeCenter">
-          <span class="badge badge-inverse">
-            {{getNewCommentsCount}}
-          </span>
-        </div>
+    <div class="pull-left v-middle update-icon-container">
+      <div class="v-inner">
+        {{#with getDisplayInfo}}
+          <span class="visible-{{matchPostType 'discussion'}} cb-icon-discussion">{{> icon-discussion}}</span>
+          <span class="visible-{{matchPostType 'member'}} cb-icon-member">{{> icon-member}}</span>      
+          <span class="visible-{{matchPostType 'event'}} cb-icon-event">{{> icon-event}}</span>
+          <span class="visible-{{matchPostType 'file'}} cb-icon-file">{{> icon-file}}</span>      
+        {{/with}}
       </div>
-    {{/if}}
+    </div>
+
+    <h4 class="post-name update-name">
+      <span class="name-text">{{decodeURI getDisplayInfo.name}}</span>
+    </h4>
+    
+    <div class="post-item-attributes updates-comments">
+      <div class="v-middle">
+        <div class="v-inner">
+          <div class="num-in-bubble comments-count">
+            <span class="cb-icon">{{> icon-bubble-big}}</span>
+            <span class="lbl">{{getNewCommentsCount}}</span>
+          </div>
+        </div>
+      <div class="v-inner">
+    </div>
   </div>
 </template>
 
