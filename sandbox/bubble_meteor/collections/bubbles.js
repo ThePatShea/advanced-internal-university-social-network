@@ -48,6 +48,13 @@ Meteor.methods({
         $addToSet: {'users.invitees': {$each: userList}}
       }); 
     }
+  },
+
+  removeInvitee: function(bubbleId, userId){
+    Bubbles.update({_id:bubbleId},
+    {
+      $pull: {'users.invitees': userId}
+    });
   }
 
 });

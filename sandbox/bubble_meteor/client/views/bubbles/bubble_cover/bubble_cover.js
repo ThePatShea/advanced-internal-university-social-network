@@ -3,15 +3,7 @@ Template.bubbleCover.helpers({
 		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
 		return _.contains(this.users.applicants, Meteor.userId());
 	},
-	getLongCategory: function() {
-		var currentCat = this.category;
-		var category =  _.find(categories, function(cat) {
-			return currentCat == cat.name_short;
-		});
-		if(category) {
-			return category.name_long;
-		}
-	},
+
 	hasJoinedBubble: function() {
 		return _.contains(this.users.members, Meteor.userId())
 					|| _.contains(this.users.admins, Meteor.userId());

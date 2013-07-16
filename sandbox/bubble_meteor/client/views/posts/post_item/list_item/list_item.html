@@ -20,13 +20,46 @@
         </div>
       </div>
     </div>
-    <h4 class="post-name">
+    <div class="visible-{{matchObjectType 'bubble'}} v-middle pull-left bubble-icon-container">
+      <div class="v-inner">
+        <span class="category-{{category}}-fill">
+          {{> icon-bubble}}
+        </span>
+      </div>
+    </div>
+    <h4 class="post-name visible-{{matchObjectType 'post'}}">
       <span class="name-text">{{decodeURI name}}</span>
       <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
     </h4>
+    <div class="bubble-name-and-description visible-{{matchObjectType 'bubble'}} v-middle">
+      <div class="v-inner">
+        <h4 class="bubble-name">
+          <span class="name-text">{{title}}</span>
+        </h4>
+        <h6 class="bubble-description">{{description}}</h6>
+      </div>
+    </div>
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
         <div class="v-inner">
+          <span class="visible-{{matchObjectType 'bubble'}} attribute-items">
+            <span class="attribute">
+              <div class="pull-right post-item-lbl going-{{isGoing}} category-{{category}}-color">
+                <span class="post-item-icon">
+                  <span class="category-{{category}}-fill">
+                    {{> icon-bubble}}
+                  </span>
+                </span>
+                {{category}}
+              </div>
+            </span>
+            <span class="attribute">
+              <div class="pull-right post-item-lbl going-{{isGoing}}">
+                <span class="post-item-icon">{{> icon-member}}</span>
+                {{numOfMembers}}
+              </div>
+            </span>
+          </span>
           <span class="visible-{{matchPostType 'event'}} attribute-items">
             <span class="attribute">
               <div class="pull-right post-item-lbl">
@@ -79,6 +112,7 @@
             <span class="visible-{{matchPostType 'event'}}">{{> imGoing}}</span>
             <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
             <span class="visible-{{matchPostType 'file'}}">{{> download}}</span>
+            <span class="visible-{{matchObjectType 'bubble'}}">{{> connectBubble}}</span>
           </span>
         </div>
       </div>

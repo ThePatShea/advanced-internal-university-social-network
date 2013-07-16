@@ -84,6 +84,36 @@ Handlebars.registerHelper('matchPostType', function(inputPostType) {
   return this.postType == inputPostType;
 });
 
+Handlebars.registerHelper('matchObjectType', function(inputObjectType){
+  if(inputObjectType == 'post'){
+    if(typeof this.postType != 'undefined'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else if(inputObjectType == 'bubble'){
+    if(typeof this.category != 'undefined'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else if(inputObjectType == 'user'){
+    if(typeof this.userType != 'undefined'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else{
+    return false;
+  }
+});
+
 Handlebars.registerHelper('getCurrentBubble', function() {
   return Bubbles.findOne(Session.get('currentBubbleId'));
 });
@@ -106,6 +136,18 @@ Handlebars.registerHelper('belongsToBubble', function() {
   }
   return  Meteor.user().userType == '3' || false;
 }); 
+
+
+
+Handlebars.registerHelper('hasAppliedToBubble', function() {
+    // var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
+    return _.contains(this.users.applicants, Meteor.userId());
+});
+
+Handlebars.registerHelper('isInvitedToBubble', function() {
+    // var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
+    return _.contains(this.users.invitees, Meteor.userId());
+});
 
 Handlebars.registerHelper('ownsPost', function() {
  var bubble = Bubbles.findOne(this.bubbleId);
@@ -137,7 +179,21 @@ Handlebars.registerHelper('timestampToFromNow', function(dateTime){
 });
 
 Handlebars.registerHelper('numOfAttendees', function(){
-  return this.attendees.length;
+  if(typeof this.attendees != 'undefined'){
+    return this.attendees.length;
+  }
+  else{
+    return -1;
+  }
+});
+
+Handlebars.registerHelper('numOfMembers', function(){
+  if(typeof this.users != 'undefined'){
+    return (this.users.members.length + this.users.admins.length);
+  }
+  else{
+    return -1;
+  }
 });
 
 Handlebars.registerHelper('toUpperCase', function(text){
@@ -174,6 +230,16 @@ Handlebars.registerHelper('getBubbleUsersCount',function() {
 
   var users = bubble.users.admins.concat(bubble.users.members);
   return users.length;
+});
+
+Handlebars.registerHelper('getLongCategory', function() {
+    var currentCat = this.category;
+    var category =  _.find(categories, function(cat) {
+      return currentCat == cat.name_short;
+    });
+    if(category) {
+      return category.name_long;
+    }
 });
 
 Handlebars.registerHelper('convertSpacesToDashes',function(word) {

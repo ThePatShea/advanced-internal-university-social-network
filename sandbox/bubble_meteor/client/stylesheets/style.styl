@@ -870,6 +870,8 @@ align-with-post-item(n)
       display                none
     .post-action
       display                block
+      &.visible-false
+        display                none
   &:nth-child(even)
     std-white-dark-bg      0
     &:hover
@@ -878,6 +880,14 @@ align-with-post-item(n)
     padding                post-item-padding-vertical 30px
   @media (max-width: 767px)
     padding                post-item-padding-vertical 20px
+  .bubble-icon-container
+    margin                 0 20px 0 0
+  .bubble-name-and-description
+    .bubble-name
+      fontize(alt, regular, auto, 18px, auto, auto)
+    .bubble-description
+      fontize(alt, regular, auto, 13px, auto, auto)
+      colorize(white-xdark)
   .profile-pic-container
     margin                 0 10px 0 0
     .profile-pic
@@ -960,6 +970,7 @@ align-with-post-item(n)
     color                  #333
     align-with-post-item   0
     font-alt-regular       0
+    
     @media (min-width: 768px)
       margin-right           post-item-attributes-width-minus-30
       font-size              16px
@@ -1016,6 +1027,12 @@ align-with-post-item(n)
   .post-action
     display                  none
     std-btn-xdark            0
+    &.accept-invite-true
+      position                 relative
+      right                    100px
+    &.deny-invite
+      position                 absolute
+      right                    20px
 /**********      post-item       **********/
 
 /**********        navbar        **********/
