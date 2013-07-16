@@ -1,9 +1,3 @@
-Template.bubbleSubmit.helpers({
-  'isLevel2User': function() {
-    return '2' == Meteor.user().userType;
-  }
-});
-
 Template.bubbleSubmit.events({
   'submit form': function(event) {
     event.preventDefault();
