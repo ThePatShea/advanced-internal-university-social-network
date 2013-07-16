@@ -3,7 +3,7 @@ Template.updateItem.helpers({
     	return Posts.findOne(this.postId);
     }
   , getNewCommentsCount: function() {
-    	return (Updates.find({postId:this.postId, updateType:'replied', read:false}).count()) / 2;
+    	return Updates.find({postId:this.postId, updateType:'replied', userId: Meteor.userId(), read:false}).count();
     }
   , getBubble: function() {
     	return Bubbles.findOne(this.bubbleId);
@@ -40,11 +40,17 @@ Template.updateItem.helpers({
       } else {
         var object = { };
         object.name      =  this.invokerName;
+
         object.postType  =  'member';
 
         return object;
       }
     }
+  ,	getProfilePicture: function() {
+  	var user = Meteor.users.findOne(this.invokerId);
+  	// console.log(this.invokerId);
+  	return user && user.profilePicture;
+  }
 });
 
 Template.updateItem.events({
