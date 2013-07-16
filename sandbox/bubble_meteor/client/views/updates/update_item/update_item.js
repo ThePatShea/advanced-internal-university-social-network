@@ -3,7 +3,7 @@ Template.updateItem.helpers({
     	return Posts.findOne(this.postId);
     }
   , getNewCommentsCount: function() {
-    	return Updates.find({postId:this.postId, updateType:'REPLIED', read:false}).count();
+    	return (Updates.find({postId:this.postId, updateType:'replied', read:false}).count()) / 2;
     }
   , getBubble: function() {
     	return Bubbles.findOne(this.bubbleId);
