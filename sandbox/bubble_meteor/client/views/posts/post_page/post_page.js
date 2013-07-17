@@ -1,8 +1,18 @@
+Template.postPage.helpers({
+    isFlagged: function() {
+      if (this.flagged)
+        return true;
+      else
+        return false;
+    }
+});
+
 Template.postPage.events({
-  'click .flag': function() {
+  'click .btn-flag': function() {
     //Google Analytics
     _gaq.push(['_trackEvent', 'Flagging', 'Flag', +this.name]);
-    if (confirm("Flag this post?")) {
+
+    if (confirm("Flagging a post will report it to Bubble moderators as inappropriate. Are you sure you want to flag this post?")) {
       var flagAttributes = {
         postId: this._id,
         bubbleId: this.bubbleId,

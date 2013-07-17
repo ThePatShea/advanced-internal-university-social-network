@@ -13,24 +13,23 @@
           </button>
         </a>
 
-        {{#if flagged}}
-          <span class="pull-right label label-important">Post Is Flagged</span>
-        {{else}}
-          <button class='pull-right btn btn-small flag'>Flag here!</button>
-        {{/if}}
+        <button class="pull-right std-btn-light btn-flag">
+          <span>{{> icon-flag}}</span>
+          <span class="flag-text visible-{{isFlagged}}">flagged</span>
+        </button>
 
         <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-right std-btn-light with-left-icon">
+          <button class="pull-right std-btn-light with-left-icon btn-edit">
             <span class="left-icon">{{> icon-edit}}</span>
             <span>edit</span>
           </button>
+        </a>
 
         <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-right std-btn-light with-left-icon">
+          <button class="pull-right std-btn-light with-left-icon btn-delete">
             <span class="left-icon">{{> icon-cancel}}</span>
             <span>delete</span>
           </button>
-        </a>
         </a>
       </div>
 
