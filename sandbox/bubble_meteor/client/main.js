@@ -1,4 +1,3 @@
-
 // Bubble Related Subscriptions
   mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 20);
 
