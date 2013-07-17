@@ -1439,7 +1439,9 @@ section-icon(n)
 /**********         post-page         **********/
 .post-page
   .top-btns
-    positionize(auto, auto, 0 30px 40px 30px)
+    positionize(auto, auto, 0 30px 35px 30px, auto, auto, auto, auto, auto, hidden)
+    .btn-back
+      move-position(relative, auto, auto, auto, 7px)
     .btn-delete
       positionize(auto, auto, auto, 0 15px 0 0)
     .btn-edit
@@ -1450,6 +1452,14 @@ section-icon(n)
       .flag-text
         positionize(auto, auto, auto, 0 0 0 2px)
         move-position(relative, 2px)
+  .post-heading
+    positionize(auto, auto, 0 30px 15px 30px)
+    .name
+      fontize(alt, light, auto, 28px)
+      colorize(main-light)
+    .subtitle
+      fontize(main, medium, uppercase, 11px)
+      colorize(main-xlight)
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/
