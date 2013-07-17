@@ -7,34 +7,38 @@
     <div class="bubble-page-content post-page">
       <div class="top-btns">
         <a href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-left std-btn-light with-left-icon">
+          <button class="pull-left std-btn-light with-left-icon btn-back">
             <span class="left-icon">{{> icon-back}}</span>
             <span>back to {{postType}}s</span>
           </button>
         </a>
 
-        {{#if flagged}}
-          <span class="pull-right label label-important">Post Is Flagged</span>
-        {{else}}
-          <button class='pull-right btn btn-small flag'>Flag here!</button>
-        {{/if}}
+        <button class="pull-right std-btn-light btn-flag">
+          <span>{{> icon-flag}}</span>
+          <span class="flag-text visible-{{isFlagged}}">flagged</span>
+        </button>
 
         <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-right std-btn-light with-left-icon">
+          <button class="pull-right std-btn-light with-left-icon btn-edit">
             <span class="left-icon">{{> icon-edit}}</span>
             <span>edit</span>
           </button>
+        </a>
 
-        <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-right std-btn-light with-left-icon">
-            <span class="left-icon">{{> icon-cancel}}</span>
-            <span>delete</span>
-          </button>
-        </a>
-        </a>
+        <button class="visible-{{isAdmin}} pull-right std-btn-light with-left-icon btn-delete">
+          <span class="left-icon">{{> icon-cancel}}</span>
+          <span>delete</span>
+        </button>
+      </div>
+      <div class="post-heading">
+        <div class="author-pic">
+          <img class="pic-circle author-circle" src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800150.jpg"/>
+        </div>
+        <div class="name">{{name}}</div>
+        <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
       </div>
 
-      {{> postAttributes}}    
+      {{> postAttributes}}
       {{> commentsList}}
 
       {{#if isEvent}}
