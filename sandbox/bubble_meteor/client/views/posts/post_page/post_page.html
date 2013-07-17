@@ -25,19 +25,20 @@
           </button>
         </a>
 
-        <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-right std-btn-light with-left-icon btn-delete">
-            <span class="left-icon">{{> icon-cancel}}</span>
-            <span>delete</span>
-          </button>
-        </a>
+        <button class="visible-{{isAdmin}} pull-right std-btn-light with-left-icon btn-delete">
+          <span class="left-icon">{{> icon-cancel}}</span>
+          <span>delete</span>
+        </button>
       </div>
       <div class="post-heading">
+        <div class="author-pic">
+          <img class="pic-circle author-circle" src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800150.jpg"/>
+        </div>
         <div class="name">{{name}}</div>
         <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
       </div>
 
-      {{> postAttributes}}    
+      {{> postAttributes}}
       {{> commentsList}}
 
       {{#if isEvent}}

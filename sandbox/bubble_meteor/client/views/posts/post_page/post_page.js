@@ -22,7 +22,7 @@ Template.postPage.events({
         Meteor.call('createFlag',flagAttributes);
       }
     }
-  , 'click .delete': function(e) {
+  , 'click .btn-delete': function(e) {
       //Google Analytics
         _gaq.push(['_trackEvent', 'Post', 'Delete Discussion', this.name]);
 
