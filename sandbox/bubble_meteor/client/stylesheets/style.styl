@@ -65,6 +65,7 @@ body
 
 /***************  Multi-Purpose Elements   ***************/
 /**********  Color Palette  **********/
+white-xxdark  =  #333333
 white-xdark   =  #ACB6BE
 white-dark    =  #EEF0F0
 white-light   =  #F7F8F8
@@ -800,6 +801,8 @@ svg
     border               1px solid #ccc
     background           white
     min-height           300px
+    img
+      float                left
 /**********     WYSIWYG     **********/
 
 
@@ -987,7 +990,7 @@ align-with-post-item(n)
       bottom               2px
   .post-name
     margin                 0 0 0 55px
-    color                  #333
+    color                  white-xxdark
     align-with-post-item   0
     font-alt-regular       0
     
@@ -1482,10 +1485,12 @@ section-icon(n)
   .post-main
     border-top        1px solid #DFE1E1
     positionize(auto, auto, 30px)
-    colorize(#333, white-dark)
+    colorize(white-xxdark, white-dark)
     .post-body
-      positionize(auto, auto, auto, 0 0 40px 0)
-      fontize(alt, regular, auto, 15px)
+      positionize(auto, auto, auto, 0 0 40px 0, auto, auto, auto, auto, hidden)
+      fontize(alt, regular, auto, 15px, 27px)
+      img
+        float           left
     .attachments-heading
       fontize(main, bold, uppercase, 12px)
       colorize(main-light)
