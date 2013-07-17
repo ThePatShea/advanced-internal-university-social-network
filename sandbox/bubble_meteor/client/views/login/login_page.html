@@ -3,7 +3,13 @@
     <h1>Login<h1>
     <div class="control-group">
         <div class="controls">
-            <input name="username" type="text" placeholder="Username or Email"/>
+            <input name="username" type="text" placeholder="Username"/>
+        </div>
+    </div>
+
+    <div class="control-group" style="display:{{isSignup}}">
+        <div class="controls">
+            <input name="email" type="text" placeholder="Email"/>
         </div>
     </div>
 
@@ -15,8 +21,10 @@
 
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Submit" class="btn btn-primary"/>
+            <input type="submit" value="{{getSubmitText}}" class="btn btn-primary"/>
+            <button class="btn signup">{{getSignupText}}</button>
         </div>
+
     </div>
   </form>
 </template>
