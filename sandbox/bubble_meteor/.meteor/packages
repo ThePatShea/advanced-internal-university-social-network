@@ -6,7 +6,6 @@
 insecure
 preserve-inputs
 router
-accounts-ui-bootstrap-dropdown
 accounts-password
 paginated-subscription
 spin

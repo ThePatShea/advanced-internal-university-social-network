@@ -33,7 +33,7 @@ Template.eventEdit.events({
         // display the error to the user
         throwError(error.reason);
       } else {
-        createEditEventUpdate(currentPostId);
+        createEditEventUpdate(Meteor.userId(), currentPostId);
         Meteor.Router.to('postPage', currentBubbleId, currentPostId);
       }
     });

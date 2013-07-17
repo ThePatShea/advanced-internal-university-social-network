@@ -84,7 +84,7 @@ createPostUpdate = function(post) {
 }
 
 //For everyone attending
-createEditEventUpdate = function(postId) {
+createEditEventUpdate = function(userId, postId) {
   //Removes previous updates that shows post is edited
   var oldUpdates = Updates.find({read: false, postId: postId, updateType: 'edited post'}).fetch();
   _.each(oldUpdates, function(update) {
@@ -95,9 +95,10 @@ createEditEventUpdate = function(postId) {
   var bubble = Bubbles.findOne(post.bubbleId);
   var attendees = post.attendees;
   //Remove post owner from list of attendees
-  var index = attendees.indexOf(Meteor.user().username);
-  attendees.splice(index,1);
-
+  var index = attendees.indexOf(Meteor.users.findOne(userId).username);
+  if(index>0){
+    attendees.splice(index,1);
+  }
   _.each(attendees, function(username){
     var user = Meteor.users.findOne({username:username});
     Meteor.call('update',{

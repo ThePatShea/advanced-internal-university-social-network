@@ -5,7 +5,6 @@
   },
   "packages": {
     "router": {},
-    "accounts-ui-bootstrap-dropdown": {},
     "spin": {},
     "paginated-subscription": {},
     "pagination": {},
@@ -15,6 +14,7 @@
     "moment": {},
     "bootstrap-wysiwyg": {},
     "jquery-jcrop": {},
-    "headly": {}
+    "headly": {},
+    "accounts-ui-bootstrap-dropdown": {}
   }
 }
