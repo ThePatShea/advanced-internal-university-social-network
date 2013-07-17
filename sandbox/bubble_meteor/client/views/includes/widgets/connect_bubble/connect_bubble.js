@@ -1,18 +1,21 @@
 Template.connectBubble.helpers({
     connectWords : function() {
-      if (_.contains(this.users.admins, Meteor.userId()) || _.contains(this.users.members, Meteor.userId())){
-        return "view bubble";
+      if (this.users) {
+        if (_.contains(this.users.admins, Meteor.userId()) || _.contains(this.users.members, Meteor.userId())){
+          return "view bubble";
+        }
+        else if(_.contains(this.users.applicants, Meteor.userId())){
+            return "cancel application";
+        }
+        else if(_.contains(this.users.invitees, Meteor.userId())){
+          return "accept invite";
+        }
+        else{
+          return "join bubble";
+        }
+      } else {
+        return -1;
       }
-      else if(_.contains(this.users.applicants, Meteor.userId())){
-          return "cancel application";
-      }
-      else if(_.contains(this.users.invitees, Meteor.userId())){
-        return "accept invite";
-      }
-      else{
-        return "join bubble";
-      }
-      
     }
 });
 

@@ -146,7 +146,10 @@ Handlebars.registerHelper('hasAppliedToBubble', function() {
 
 Handlebars.registerHelper('isInvitedToBubble', function() {
     // var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-    return _.contains(this.users.invitees, Meteor.userId());
+    if (this.users)
+      return _.contains(this.users.invitees, Meteor.userId());
+    else
+      return -1;
 });
 
 Handlebars.registerHelper('ownsPost', function() {
