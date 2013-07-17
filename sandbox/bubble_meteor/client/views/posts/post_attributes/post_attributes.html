@@ -1,12 +1,12 @@
 <template name="postAttributes">
-<script language="JavaScript" src="js/pdfobject.js"></script>
-<script language="JavaScript" src="js/FileSaver.js"></script>
-  <div class="main">
-    <img src="{{eventPhoto}}" />
-    <p><b><u>{{submittedText dateTime}}</u></b></p>
-    <p>{{location}}</p>
-    {{> fileObject}}
-    <pre>{{{body}}}</pre>
+  <script language="JavaScript" src="js/pdfobject.js"></script>
+  <script language="JavaScript" src="js/FileSaver.js"></script>
+
+  <div class="post-main">
+    <pre class="post-body">{{{body}}}</pre>
     {{> postAttachments}}
   </div>
+  <img src="{{eventPhoto}}" />
+  <p>{{location}}</p>
+  {{> fileObject}}
 </template>

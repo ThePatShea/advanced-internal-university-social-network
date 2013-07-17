@@ -9,6 +9,13 @@ button
   background             none
   border                 0
 
+pre
+  border-radius          0
+  background             0
+  padding                0
+  margin                 0
+  border                 0
+
 a:visited,
 a:hover,
 a
@@ -30,6 +37,7 @@ section,
 button,
 input,
 div,
+pre,
 a
   border-box             0
 
@@ -629,7 +637,7 @@ border-spin(size-top, size-right, size-bottom, size-left, color-top, color-right
   border-left       size-left solid color-left
   border-top        size-top solid color-top
 
-move-position(val-position = relative, val-top = 0, val-right = 0, val-bottom = 0, val-left = 0)
+move-position(val-position = relative, val-top = auto, val-right = auto, val-bottom = auto, val-left = auto)
   position          val-position
   bottom            val-bottom
   right             val-right
@@ -1455,8 +1463,15 @@ section-icon(n)
   .post-heading
     positionize(auto, auto, 0 30px 15px 30px)
     .author-pic
-      positionize(auto, auto, auto, 0 15px 0 0)
+      positionize(auto, auto, auto, 0 15px 0 0, auto, left)
+      move-position(relative, -2px)
+      .bubble-bg
+        fill          white-xdark
+        svg
+          height        42px
+          width         42px
       .author-circle
+        move-position(absolute, 3px, auto, auto, 3px)
         border        0
     .name
       fontize(alt, light, auto, 28px)
@@ -1464,6 +1479,16 @@ section-icon(n)
     .subtitle
       fontize(main, medium, uppercase, 11px)
       colorize(main-xlight)
+  .post-main
+    border-top        1px solid #DFE1E1
+    positionize(auto, auto, 30px)
+    colorize(#333, white-dark)
+    .post-body
+      positionize(auto, auto, auto, 0 0 40px 0)
+      fontize(alt, regular, auto, 15px)
+    .attachments-heading
+      fontize(main, bold, uppercase, 12px)
+      colorize(main-light)
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/

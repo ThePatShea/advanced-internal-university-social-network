@@ -32,7 +32,8 @@
       </div>
       <div class="post-heading">
         <div class="author-pic">
-          <img class="pic-circle author-circle" src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800150.jpg"/>
+          <div class="bubble-bg">{{> icon-bubble}}</div>
+          <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
         </div>
         <div class="name">{{name}}</div>
         <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
