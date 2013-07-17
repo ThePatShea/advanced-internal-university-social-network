@@ -11,6 +11,11 @@ getBubbleId =  function(userId) {
 
 
 // Posts Related Publications 
+  Meteor.publish('updatedPosts', function(userId) {
+    var updates = Updates.find({userId: userId, read: false}).fetch();
+    var postsList = _.pluck(updates,'postId');
+    return Posts.find({_id: {$in: postsList}});
+  });
   Meteor.publish('events', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'event'}, {
       sort: {submitted: -1},
@@ -180,8 +185,8 @@ getBubbleId =  function(userId) {
 
 
 // Updates Related Publications 
-  Meteor.publish('updates', function(limit) {
-    return Updates.find({read: false}, {sort: {submitted:1}, limit: limit});
+  Meteor.publish('updates', function(userId) {
+    return Updates.find({userId: userId, read: false}, {sort: {submitted:1}});
   });
 
 

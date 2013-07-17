@@ -5,7 +5,6 @@ Template.bubblePage.helpers({
 
   //Get posts assigned to this bubble
   eventsCount: function() {
-    console.log(Meteor.call('getNumOfEvents',Session.get('currentBubbleId'),'event'));
     return Meteor.call('getNumOfEvents','event');
   },
   discussionsCount: function() {
@@ -44,5 +43,11 @@ Template.bubblePage.helpers({
   // return only latest 3 posts
   filePosts: function() {
     return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'},{limit: 3}).fetch();
+  }
+});
+
+Template.bubblePage.events({
+  'btn .clear-updates': function() {
+    Meteor.call('clearUpdates', Session.get('currentBubbleId'));
   }
 });

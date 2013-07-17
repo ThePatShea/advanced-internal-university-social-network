@@ -1,16 +1,5 @@
-
 // Bubble Related Subscriptions
   mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 20);
-
-
-// Updates Related Subscriptions
-  mainUpdatesHandle = Meteor.subscribeWithPagination('updates',50);
-
-
-// Flags Related Subscriptions
-	solvedFlagsHandle = Meteor.subscribeWithPagination('solvedFlags', 10);
-	unsolvedFlagsHandle = Meteor.subscribeWithPagination('unsolvedFlags', 10);
-	mainFlagsHandle = Meteor.subscribeWithPagination('allFlags', 10);
 
 Deps.autorun(function() {
 
@@ -52,6 +41,7 @@ Deps.autorun(function() {
 
 
 	// Retrieves searched Posts
+		Meteor.subscribe('updatedPosts', Meteor.userId());
 		if( Meteor.user() && '3' == Meteor.user().userType){
 			searchEventsHandle = Meteor.subscribeWithPagination('megaSearchEvents', Session.get('searchText'), 10);
 			searchDiscussionsHandle = Meteor.subscribeWithPagination('megaSearchDiscussions', Session.get('searchText'), 10);
@@ -67,5 +57,17 @@ Deps.autorun(function() {
 		currentUserLogsHandle = Meteor.subscribeWithPagination('currentUserlogs', Meteor.userId(), 10);
 		if(Meteor.user() && 'megauser' == Meteor.user().userType) {
 			mainUserLogsHandle = Meteor.subscribeWithPagination('allUserlogs', 10);
+		}
+
+
+	// Updates Related Subscriptions
+	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+
+
+	// Flags Related Subscriptions
+		if(Meteor.user() && Meteor.user().userType == '3'){
+			solvedFlagsHandle = Meteor.subscribeWithPagination('solvedFlags', 10);
+			unsolvedFlagsHandle = Meteor.subscribeWithPagination('unsolvedFlags', 10);
+			mainFlagsHandle = Meteor.subscribeWithPagination('allFlags', 10);
 		}
 });
