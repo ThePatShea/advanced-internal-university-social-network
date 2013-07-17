@@ -1,17 +1,15 @@
 <template name="filePreview">
-  <div class="file-preview">
     {{#if isPDF}}
-      <a href="{{this.file}}" download="{{this.name}}">{{decodeURI this.name}}</a>
+        <div class="pdf-icon"><a href="{{this.file}}" download="{{this.name}}">{{this.name}}</a></div>
     {{else}}
-      {{#if isImage}}
-        <a href="{{this.file}}"><img src="{{file}}" class="previewthumb" title="{{this.name}}" download="{{this.name}}"></a>
-      {{else}}
-        {{#if isDoc}}
-          <div class="word-icon"><a href="{{this.file}}" download="{{this.name}}>{{this.name}}"</a></div>
-        {{else}}
-          <div><a href="{{this.file}}" download="{{this.name}}">{{this.name}}</a></div>
-        {{/if}}
-      {{/if}}
+	    {{#if isImage}}
+	        <a href="{{this.file}}"><img src="{{file}}" class="previewthumb" title="{{this.name}}" download="{{this.name}}"></a>
+	    {{else}}
+		    {{#if isDoc}}
+			    <div class="word-icon"><a href="{{this.file}}" download="{{this.name}}>{{this.name}}"</a></div>
+			{{else}}
+				<div><a href="{{this.file}}" download="{{this.name}}">{{this.name}}</a></div>
+			{{/if}}
+		{{/if}}
     {{/if}}
-  </div>
 </template>

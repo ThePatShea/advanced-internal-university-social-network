@@ -587,7 +587,7 @@ font-alt-light(n)
 /**********  Font Palette   **********/
 
 /**********    Functions    **********/
-fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto)
+fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto, val-text-decoration = auto)
   if family == main
     font-family    'brandon-grotesque', Arial, Sans-Serif
   else if family == alt
@@ -604,6 +604,7 @@ fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val
     font-weight    300
   else if weight == thin
     font-weight    100
+  text-decoration    val-text-decoration
   letter-spacing     val-letter-spacing
   line-height        val-line-height
   text-transform     val-transform
@@ -796,13 +797,17 @@ svg
 
 
 /**********     WYSIWYG     **********/
+wysiwyg-image(n)
+  margin               15px 25px 15px 0
+  float                left
+
 .wysiwyg_group
   .wysiwyg
     border               1px solid #ccc
     background           white
     min-height           300px
     img
-      float                left
+      wysiwyg-image        0
 /**********     WYSIWYG     **********/
 
 
@@ -823,6 +828,19 @@ svg
     position               absolute
 /**********  num-in-bubble  **********/
 
+/**********    file-type    **********/
+.file-type
+  colorize(white-xdark, auto, white-xdark)
+  fontize(alt, medium, uppercase, 7px)
+  position               relative
+  height                 23px
+  left                   6px
+  .lbl
+    position             absolute
+    text-align           center
+    width                20px
+    bottom               2px
+/**********    file-type    **********/
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -977,17 +995,6 @@ align-with-post-item(n)
       text-align             center
       width                  24px
       top                    2px
-  .file-type
-    colorize(white-xdark, auto, white-xdark)
-    fontize(alt, medium, uppercase, 7px)
-    position               relative
-    height                 23px
-    left                   6px
-    .lbl
-      position             absolute
-      text-align           center
-      width                20px
-      bottom               2px
   .post-name
     margin                 0 0 0 55px
     color                  white-xxdark
@@ -1490,10 +1497,27 @@ section-icon(n)
       positionize(auto, auto, auto, 0 0 40px 0, auto, auto, auto, auto, hidden)
       fontize(alt, regular, auto, 15px, 27px)
       img
-        float           left
-    .attachments-heading
-      fontize(main, bold, uppercase, 12px)
-      colorize(main-light)
+        wysiwyg-image        0
+    .post-attachments
+      .attachments-heading
+        fontize(main, bold, uppercase, 12px)
+        positionize(auto, auto, 0 0 10px 0)
+        colorize(main-light)
+      .attachment
+        positionize(45px)
+        colorize(white-xxdark)
+        &:hover
+          fontize(auto, auto, auto, auto, auto, auto, underline)
+          colorize(main-light, white)
+          .file-type-attachment
+            colorize(main-light, auto, main-light)
+        .file-type-attachment
+          positionize(auto, auto, auto, 0 10px 0 0)
+          move-position(auto, auto, 0)
+          .lbl
+            move-position(absolute, 7px)
+        .attachment-name
+          fontize(alt, regular, auto, 16px, 45px)
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/
