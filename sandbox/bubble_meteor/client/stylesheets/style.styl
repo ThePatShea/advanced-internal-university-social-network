@@ -711,11 +711,14 @@ border-radius(n)
 /**********     Buttons     **********/
 std-btn(n)
   text-transform         uppercase
+  position               relative
   padding                8px 10px
   border-radius          15px
   font-size              11px
   line-height            100%
   main-xlight-border     0
+  &.with-left-icon
+    padding-left           15px
 
 .btn-tiny
   padding                6px 15px
@@ -732,6 +735,11 @@ std-btn(n)
   std-btn                0
   &:hover
     background             white
+  .left-icon
+    fill                     main-light
+    position                 absolute
+    left                     -7px
+    top                      5px
 
 .std-btn-dark
   background             rgba(0,0,0,.35)
@@ -1417,16 +1425,17 @@ section-icon(n)
       .btn-add
         position                 relative
         padding-left             15px
-        .cb-icon-add
-          fill                     main-light
-          position                 absolute
-          left                     -7px
-          top                      5px
     .more-posts
       @media (min-width: 768px)
         margin                 20px 0 0 30px
       @media (max-width: 767px)
         margin                 10px 0 0 20px
 /**********        bubble-page        **********/
+
+/**********         post-page         **********/
+.post-page
+  .top-btns
+    positionize(auto,auto, 0 30px 40px 30px)
+/**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/

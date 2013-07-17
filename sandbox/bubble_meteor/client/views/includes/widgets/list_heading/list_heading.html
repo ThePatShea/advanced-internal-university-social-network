@@ -13,7 +13,7 @@
       {{#if hasLevel2Permissions}}
         <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
           <button class="std-btn-light pull-right btn-add">
-            <span class="cb-icon-add">{{> icon-add}}</span>
+            <span class="left-icon cb-icon-add">{{> icon-add}}</span>
             <span>add new {{postType}}</span>
           </button>
         </a>
@@ -21,7 +21,7 @@
     {{else}}
       <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
         <button class="std-btn-light pull-right btn-add">
-          <span class="cb-icon-add">{{> icon-add}}</span>
+          <span class="left-icon cb-icon-add">{{> icon-add}}</span>
           <span>add new {{postType}}</span>
         </button>
       </a>
