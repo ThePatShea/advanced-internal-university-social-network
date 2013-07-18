@@ -9,12 +9,13 @@ Template.fileSubmit.events({
       var reader = new FileReader();
       reader.onload = (function(f){
         return function(e) {
-          console.log(f.type);
+          console.log(f.type, f.size);
           
           createPost({
             name: escape(f.name),
             file: e.target.result,
             fileType: f.type,
+            fileSize: f.size,
             postType: 'file',
             numDownloads: 0,
             lastDownloadTime: new Date().getTime(),
