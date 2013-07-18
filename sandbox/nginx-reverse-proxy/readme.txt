@@ -1,5 +1,11 @@
 The following configuration options are for Ubuntu 10.4
 
+Chain the talkchool.net.crt and gd_bundle.crt certificates:
+
+cat talkschool.net.crt gd_bundle.crt > talkschool.net.chained.crt
+
+This puts the talkschool.net server certificate first, and then the go-daddy
+authority cert, into one file.
 
 ----------------------------------------------------------------------
 Edit /etc/nginx/nginx.conf and set:
