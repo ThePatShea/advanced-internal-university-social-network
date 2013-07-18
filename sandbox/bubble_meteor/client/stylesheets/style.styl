@@ -1504,16 +1504,24 @@ attachment-height  =  75px
     border-top        1px solid #DFE1E1
     positionize(auto, auto, 30px 0)
     colorize(white-xxdark, white-dark)
+    &.post-type-event
+      positionize(auto, auto, 0 0 30px 0)
     &.post-type-file
       positionize(auto, auto, 0)
+    .event-controls
+      border-bottom     1px solid #DFE1E1
+      overflow          hidden
+      .left
+        positionize(auto, auto, 20px 20px 20px 30px)
+        border-right      1px solid #DFE1E1
     .post-body
-      positionize(auto, auto, auto, 0 30px 30px 30px, auto, auto, auto, auto, hidden)
+      positionize(auto, auto, auto, 0 30px, auto, auto, auto, auto, hidden)
       fontize(alt, regular, auto, 15px, 27px)
       img
         wysiwyg-image        0
     .post-attachments
       .attachments-heading
-        positionize(auto, auto, 0 0 10px 30px)
+        positionize(auto, auto, 40px 0 10px 30px)
         fontize(main, bold, uppercase, 12px)
         colorize(main-light)
     .attachment

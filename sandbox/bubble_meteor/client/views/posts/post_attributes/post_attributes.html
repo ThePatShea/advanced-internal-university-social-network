@@ -3,6 +3,10 @@
   <script language="JavaScript" src="js/FileSaver.js"></script>
 
   <div class="post-main post-type-{{postType}}">
+    <div class="visible-{{matchPostType 'event'}} event-controls">
+      <div class="pull-left left"><img src="{{eventPhoto}}"/></div>
+    </div>
+
     <pre class="invisible-{{matchPostType 'file'}} post-body">{{{body}}}</pre>
     <span class="visible-{{hasChildren}}">{{> postAttachments}}</span>
 
