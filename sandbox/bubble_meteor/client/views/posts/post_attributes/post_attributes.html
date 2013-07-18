@@ -47,4 +47,20 @@
       </a>
     </div>
   </div>
+
+  <div class="visible-{{matchPostType 'event'}} bubble-list people-going">
+    <div class="bubble-list-heading">
+      <h3 class="section-name pull-left">{{pluralize numOfAttendees "person" ""}} going</h3>
+      <span class="pull-right">{{> imGoingSmall}}</span>
+    </div>
+    <div class="people-list">
+      {{#each reverseAttendees}}
+        <div class="author-pic person-going">
+          <div class="bubble-bg">{{> icon-bubble}}</div>
+          <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this}}"/>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+
 </template>

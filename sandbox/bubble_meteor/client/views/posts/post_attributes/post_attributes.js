@@ -5,4 +5,7 @@ Template.postAttributes.helpers({
       else
         return false;
     }
+  , reverseAttendees: function() {
+      return this.attendees.reverse();
+    }
 });

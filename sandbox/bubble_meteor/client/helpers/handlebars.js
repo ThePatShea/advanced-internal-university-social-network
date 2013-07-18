@@ -37,6 +37,11 @@ Handlebars.registerHelper('getUserTypeName', function(userType){
   return userTypes[userType];
 });
 
+Handlebars.registerHelper('getSelectedUserProfilePic', function(userId) {
+  var user = Meteor.users.findOne(userId);
+  return user && user.profilePicture;
+});
+
 Handlebars.registerHelper('postProperties', {
     discussion : {
         posts      : function() { return getPosts('discussion'); }
