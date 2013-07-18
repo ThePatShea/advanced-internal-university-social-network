@@ -1467,13 +1467,13 @@ attachment-height  =  75px
 
 .post-page
   .small-heading
-    positionize(12px, auto, auto, 0 0 30px 0)
+    positionize(auto, auto, auto, 0 0 30px 0)
     fontize(main, bold, uppercase, 12px)
     colorize(main-light)
     &.event-body-heading
-      positionize(12px, auto, auto, 20px 30px)
+      positionize(auto, auto, auto, 15px 30px 10px 30px)
     &.attribute-going
-      positionize(12px, auto, auto, 0 0 15px 0)
+      positionize(16px, auto, auto, 0 0 15px 0)
     .cb-icon
       positionize(auto, auto, auto, 0 10px 0 0)
       fill                  main-light
@@ -1487,9 +1487,13 @@ attachment-height  =  75px
         left                  0
         svg
           width                 16px
-    .lbl-member
-      position              relative
-      left                  -2px
+    &.attribute
+      .lbl
+        position              relative
+        top                   8px
+        line-height           1em
+        &.lbl-member
+          left                  -2px
   .top-btns
     positionize(auto, auto, 0 30px 35px 30px, auto, auto, auto, auto, auto, hidden)
     .btn-back
@@ -1540,12 +1544,32 @@ attachment-height  =  75px
       border-bottom     1px solid #DFE1E1
       overflow          hidden
       .left
-        positionize(auto, auto, 20px 20px 20px 30px)
-        border-right      1px solid #DFE1E1
+        position          relative
+        @media (min-width: 768px)
+          positionize(auto, auto, 20px 20px 20px 30px, 0 20px 0 0)
+          border-right      1px solid #DFE1E1
+          float             left
+        @media (max-width: 767px)
+          positionize(240px, 100%)
+          border-bottom     1px solid #DFE1E1
+          float             none
+        img
+          @media (min-width: 768px)
+            move-position(auto)
+          @media (max-width: 767px)
+            positionize(auto, 300px, auto, 0 0 0 -150px)
+            move-position(absolute, 20px, 0, 0, 50%)
       .right
-        positionize(auto, auto, 20px 0 0 0)
-        position        relative
-        left            20px
+        @media (min-width: 768px)
+          positionize(auto, auto, 20px 0 0 0, 0 20px 0 0)
+          float             none
+        @media (max-width: 767px)
+          positionize(100%, auto, 0, 10px 0)
+        .right-controls
+          @media (min-width: 768px)
+            width             auto
+          @media (max-width: 767px)
+            positionize(auto, 260px, auto, 10px auto)
     .post-body
       positionize(auto, auto, auto, 0 30px, auto, auto, auto, auto, hidden)
       fontize(alt, regular, auto, 15px, 27px)
