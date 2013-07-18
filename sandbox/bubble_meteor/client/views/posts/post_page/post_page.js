@@ -5,6 +5,10 @@ Template.postPage.helpers({
       else
         return false;
     }
+  , getAuthorProfilePicture: function() {
+    var user = Meteor.users.findOne(this.userId);
+    return user && user.profilePicture;
+  }
 });
 
 Template.postPage.events({

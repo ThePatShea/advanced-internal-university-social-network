@@ -73,7 +73,7 @@ Template.discussionEdit.events({
     var updatedPostProperties = {
       children: newChildren,
       name: $(e.target).find('[name=name]').val(),
-      body: $(e.target).find('[name=body]').val()
+      body: $(e.target).find('.wysiwyg').html()
     };
 
     Posts.update(currentPostId, {$set: updatedPostProperties}, function(error){

@@ -6,10 +6,11 @@
   {{#with getCurrentPost}}
     <div class="bubble-page-content post-page">
       <div class="top-btns">
-        <a href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
+        <a href="/mybubbles/{{bubbleId}}/{{postType}}">
           <button class="pull-left std-btn-light with-left-icon btn-back">
             <span class="left-icon">{{> icon-back}}</span>
-            <span>back to {{postType}}s</span>
+            <span>back</span>
+            <span class="to-post-types">to {{postType}}s</span>
           </button>
         </a>
 
@@ -32,9 +33,10 @@
       </div>
       <div class="post-heading">
         <div class="author-pic">
-          <img class="pic-circle author-circle" src="http://thumbs.dreamstime.com/z/emoticon-smiley-face-6800150.jpg"/>
+          <div class="bubble-bg">{{> icon-bubble}}</div>
+          <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
         </div>
-        <div class="name">{{name}}</div>
+        <div class="name">{{decodeURI name}}</div>
         <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
       </div>
 

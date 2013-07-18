@@ -9,6 +9,15 @@ button
   background             none
   border                 0
 
+pre
+  word-break             normal
+  word-wrap              normal
+  border-radius          0
+  background             0
+  padding                0
+  margin                 0
+  border                 0
+
 a:visited,
 a:hover,
 a
@@ -30,6 +39,7 @@ section,
 button,
 input,
 div,
+pre,
 a
   border-box             0
 
@@ -57,6 +67,7 @@ body
 
 /***************  Multi-Purpose Elements   ***************/
 /**********  Color Palette  **********/
+white-xxdark  =  #333333
 white-xdark   =  #ACB6BE
 white-dark    =  #EEF0F0
 white-light   =  #F7F8F8
@@ -578,7 +589,7 @@ font-alt-light(n)
 /**********  Font Palette   **********/
 
 /**********    Functions    **********/
-fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto)
+fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto, val-text-decoration = auto)
   if family == main
     font-family    'brandon-grotesque', Arial, Sans-Serif
   else if family == alt
@@ -595,6 +606,7 @@ fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val
     font-weight    300
   else if weight == thin
     font-weight    100
+  text-decoration    val-text-decoration
   letter-spacing     val-letter-spacing
   line-height        val-line-height
   text-transform     val-transform
@@ -629,7 +641,7 @@ border-spin(size-top, size-right, size-bottom, size-left, color-top, color-right
   border-left       size-left solid color-left
   border-top        size-top solid color-top
 
-move-position(val-position = relative, val-top = 0, val-right = 0, val-bottom = 0, val-left = 0)
+move-position(val-position = relative, val-top = auto, val-right = auto, val-bottom = auto, val-left = auto)
   position          val-position
   bottom            val-bottom
   right             val-right
@@ -762,6 +774,9 @@ std-btn-xdark(n)
   fontize(main, medium, uppercase, 12px, 100%)
   &:hover
     colorize(auto, main-xdark)
+
+.std-btn-xdark
+  std-btn-xdark          0
 /**********     Buttons     **********/
 
 
@@ -787,11 +802,17 @@ svg
 
 
 /**********     WYSIWYG     **********/
+wysiwyg-image(n)
+  margin               25px
+  float                left
+
 .wysiwyg_group
   .wysiwyg
     border               1px solid #ccc
     background           white
     min-height           300px
+    img
+      wysiwyg-image        0
 /**********     WYSIWYG     **********/
 
 
@@ -812,6 +833,18 @@ svg
     position               absolute
 /**********  num-in-bubble  **********/
 
+/**********    file-type    **********/
+.file-type
+  colorize(white-xdark, auto, white-xdark)
+  fontize(alt, medium, uppercase, 7px)
+  position               relative
+  height                 23px
+  left                   6px
+  .lbl
+    move-position(absolute, 7px)
+    text-align           center
+    width                20px
+/**********    file-type    **********/
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -884,6 +917,8 @@ align-with-post-item(n)
       display                block
       &.visible-false
         display                none
+  &:nth-child(odd)
+    std-white-light-bg      0
   &:nth-child(even)
     std-white-dark-bg      0
     &:hover
@@ -966,20 +1001,9 @@ align-with-post-item(n)
       text-align             center
       width                  24px
       top                    2px
-  .file-type
-    colorize(white-xdark, auto, white-xdark)
-    fontize(alt, medium, uppercase, 7px)
-    position               relative
-    height                 23px
-    left                   6px
-    .lbl
-      position             absolute
-      text-align           center
-      width                20px
-      bottom               2px
   .post-name
     margin                 0 0 0 55px
-    color                  #333
+    color                  white-xxdark
     align-with-post-item   0
     font-alt-regular       0
     
@@ -1038,13 +1062,15 @@ align-with-post-item(n)
           height                 20px
   .post-action
     display                  none
-    std-btn-xdark            0
-    &.accept-invite-true
-      position                 relative
-      right                    100px
-    &.deny-invite
-      position                 absolute
-      right                    20px
+
+.post-action
+  std-btn-xdark            0
+  &.accept-invite-true
+    position                 relative
+    right                    100px
+  &.deny-invite
+    position                 absolute
+    right                    20px
 /**********      post-item       **********/
 
 /**********        navbar        **********/
@@ -1437,11 +1463,42 @@ section-icon(n)
 /**********        bubble-page        **********/
 
 /**********         post-page         **********/
+attachment-height  =  75px
+
 .post-page
+  .small-heading
+    positionize(12px, auto, auto, 0 0 30px 0)
+    fontize(main, bold, uppercase, 12px)
+    colorize(main-light)
+    &.event-body-heading
+      positionize(12px, auto, auto, 20px 30px)
+    &.attribute-going
+      positionize(12px, auto, auto, 0 0 15px 0)
+    .cb-icon
+      positionize(auto, auto, auto, 0 10px 0 0)
+      fill                  main-light
+      position              relative
+      top                   -2px
+      left                  2px
+      svg
+        vertical-align        middle
+        width                 12px
+      &.cb-icon-member
+        left                  0
+        svg
+          width                 16px
+    .lbl-member
+      position              relative
+      left                  -2px
   .top-btns
     positionize(auto, auto, 0 30px 35px 30px, auto, auto, auto, auto, auto, hidden)
     .btn-back
       move-position(relative, auto, auto, auto, 7px)
+      .to-post-types
+        @media (min-width: 768px)
+          display          inline
+        @media (max-width: 767px)
+          display          none
     .btn-delete
       positionize(auto, auto, auto, 0 15px 0 0)
     .btn-edit
@@ -1455,8 +1512,15 @@ section-icon(n)
   .post-heading
     positionize(auto, auto, 0 30px 15px 30px)
     .author-pic
-      positionize(auto, auto, auto, 0 15px 0 0)
+      positionize(auto, auto, auto, 0 15px 0 0, auto, left)
+      move-position(relative, -2px)
+      .bubble-bg
+        fill          white-xdark
+        svg
+          height        42px
+          width         42px
       .author-circle
+        move-position(absolute, 3px, auto, auto, 3px)
         border        0
     .name
       fontize(alt, light, auto, 28px)
@@ -1464,6 +1528,51 @@ section-icon(n)
     .subtitle
       fontize(main, medium, uppercase, 11px)
       colorize(main-xlight)
+  .post-main
+    border-top        1px solid #DFE1E1
+    positionize(auto, auto, 30px 0)
+    colorize(white-xxdark, white-dark)
+    &.post-type-event
+      positionize(auto, auto, 0 0 30px 0)
+    &.post-type-file
+      positionize(auto, auto, 0)
+    .event-controls
+      border-bottom     1px solid #DFE1E1
+      overflow          hidden
+      .left
+        positionize(auto, auto, 20px 20px 20px 30px)
+        border-right      1px solid #DFE1E1
+      .right
+        positionize(auto, auto, 20px 0 0 0)
+        position        relative
+        left            20px
+    .post-body
+      positionize(auto, auto, auto, 0 30px, auto, auto, auto, auto, hidden)
+      fontize(alt, regular, auto, 15px, 27px)
+      &.post-body-event
+        fontize(alt, regular, auto, 14px, 22px)
+        colorize(#929292)
+      img
+        wysiwyg-image        0
+    .post-attachments
+      .attachments-heading
+        positionize(auto, auto, 40px 0 10px 30px)
+    .attachment
+      positionize(attachment-height, auto, 0 180px 0 30px, auto, auto, auto, auto, auto, hidden)
+      move-position(relative)
+      colorize(white-xxdark)
+      &:hover
+        fontize(auto, auto, auto, auto, auto, auto, underline)
+        colorize(main-light, white)
+        .file-type-attachment
+          colorize(main-light, auto, main-light)
+      .file-type-attachment
+        positionize(auto, auto, auto, 0 10px 0 0)
+        move-position(auto, auto, 0)
+      .attachment-name
+        fontize(alt, regular, auto, 16px, attachment-height)
+      .post-action
+        move-position(absolute, 13px, 20px)
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/

@@ -1,14 +1,11 @@
 <template name="postAttachments">
-<script language="JavaScript" src="js/pdfobject.js"></script>
-<script language="JavaScript" src="js/FileSaver.js"></script>
-
-<div class="main">
-  <ul>
-  {{#each attachmentList}}
-    <ul>
-      {{> filePreview}}
-    </ul>
-  {{/each}}
-  </ul>
-</div>
+  <script language="JavaScript" src="js/pdfobject.js"></script>
+  <script language="JavaScript" src="js/FileSaver.js"></script>
+  
+  <div class="post-attachments">
+    <h4 class="small-heading attachments-heading">attachments:</h4>
+    {{#each attachmentList}}
+      {{> listItem}}
+    {{/each}}
+  </div>
 </template>
