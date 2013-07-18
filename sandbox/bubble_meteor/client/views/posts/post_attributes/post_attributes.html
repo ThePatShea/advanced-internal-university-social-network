@@ -55,10 +55,13 @@
     </div>
     <div class="people-list">
       {{#each reverseAttendees}}
-        <div class="author-pic person-going">
-          <div class="bubble-bg">{{> icon-bubble}}</div>
-          <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this}}"/>
-        </div>
+        <a href="{{userProfilePath this}}">
+          <div class="author-pic person-going">
+            <div class="bubble-bg">{{> icon-bubble}}</div>
+            <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this}}"/>
+            <div class="user-name">{{getSelectedUserName this}}</div>
+          </div>
+        </a>
       {{/each}}
     </div>
   </div>

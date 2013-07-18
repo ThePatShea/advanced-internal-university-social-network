@@ -589,7 +589,7 @@ font-alt-light(n)
 /**********  Font Palette   **********/
 
 /**********    Functions    **********/
-fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto, val-text-decoration = auto)
+fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto, val-text-decoration = auto, val-text-align = auto)
   if family == main
     font-family    'brandon-grotesque', Arial, Sans-Serif
   else if family == alt
@@ -609,6 +609,7 @@ fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val
   text-decoration    val-text-decoration
   letter-spacing     val-letter-spacing
   line-height        val-line-height
+  text-align         val-text-align
   text-transform     val-transform
   font-size          val-size
 
@@ -1592,12 +1593,23 @@ attachment-height  =  75px
         move-position(absolute, 13px, 20px)
   .people-going
     .people-list
-      positionize(80px, auto, 0 30px, auto, auto, auto, auto, auto, hidden)
+      positionize(100px, auto, 0 30px, auto, auto, auto, auto, auto, hidden)
       colorize(auto, white-dark)
       overflow        hidden
       .person-going
-        positionize(auto, auto, auto, 20px 15px 20px 0)
+        positionize(auto, auto, auto, 30px 25px 0 0)
         move-position(relative, 0)
+        &:hover
+          .bubble-bg
+            fill           main-light
+          .user-name
+            display        block
+        .user-name
+          fontize(alt, bold, auto, 12px, 1em, auto, auto, center)
+          move-position(absolute, 43px)
+          positionize(auto, 45px)
+          colorize(main-light)
+          display        none
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/
