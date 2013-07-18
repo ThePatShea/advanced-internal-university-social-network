@@ -5,6 +5,23 @@
   <div class="post-main post-type-{{postType}}">
     <div class="visible-{{matchPostType 'event'}} event-controls">
       <div class="pull-left left"><img src="{{eventPhoto}}"/></div>
+      <div class="pull-left right">
+        <div class="attributes">
+          <div class="small-heading attribute">
+            <span class="cb-icon">{{> icon-time}}</span>
+            <span class="lbl">{{dateTime}} | {{dateTime}}</span>
+          </div>
+          <div class="small-heading attribute">
+            <span class="cb-icon">{{> icon-location}}</span>
+            <span class="lbl">{{location}}</span>
+          </div>
+          <div class="small-heading attribute attribute-going">
+            <span class="cb-icon cb-icon-member">{{> icon-member}}</span>
+            <span class="lbl lbl-member">{{numOfAttendees}} people going</span>
+          </div>
+        </div>
+        <div>{{> imGoing}}</div>
+      </div>
     </div>
 
     <pre class="invisible-{{matchPostType 'file'}} post-body">{{{body}}}</pre>

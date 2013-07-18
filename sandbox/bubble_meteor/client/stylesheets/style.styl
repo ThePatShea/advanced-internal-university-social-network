@@ -1060,13 +1060,15 @@ align-with-post-item(n)
           height                 20px
   .post-action
     display                  none
-    std-btn-xdark            0
-    &.accept-invite-true
-      position                 relative
-      right                    100px
-    &.deny-invite
-      position                 absolute
-      right                    20px
+
+.post-action
+  std-btn-xdark            0
+  &.accept-invite-true
+    position                 relative
+    right                    100px
+  &.deny-invite
+    position                 absolute
+    right                    20px
 /**********      post-item       **********/
 
 /**********        navbar        **********/
@@ -1462,6 +1464,28 @@ section-icon(n)
 attachment-height  =  75px
 
 .post-page
+  .attribute
+    positionize(12px, auto, auto, 0 0 30px 0)
+    fontize(main, bold, uppercase, 12px)
+    colorize(main-light)
+    &.attribute-going
+      positionize(12px, auto, auto, 0 0 15px 0)
+    .cb-icon
+      positionize(auto, auto, auto, 0 10px 0 0)
+      fill                  main-light
+      position              relative
+      top                   -2px
+      left                  2px
+      svg
+        vertical-align        middle
+        width                 12px
+      &.cb-icon-member
+        left                  0
+        svg
+          width                 16px
+    .lbl-member
+      position              relative
+      left                  -2px
   .top-btns
     positionize(auto, auto, 0 30px 35px 30px, auto, auto, auto, auto, auto, hidden)
     .btn-back
@@ -1514,6 +1538,10 @@ attachment-height  =  75px
       .left
         positionize(auto, auto, 20px 20px 20px 30px)
         border-right      1px solid #DFE1E1
+      .right
+        positionize(auto, auto, 20px 0 0 0)
+        .attributes
+          positionize(auto, auto, auto, 0 0 0 10px)
     .post-body
       positionize(auto, auto, auto, 0 30px, auto, auto, auto, auto, hidden)
       fontize(alt, regular, auto, 15px, 27px)
@@ -1522,8 +1550,6 @@ attachment-height  =  75px
     .post-attachments
       .attachments-heading
         positionize(auto, auto, 40px 0 10px 30px)
-        fontize(main, bold, uppercase, 12px)
-        colorize(main-light)
     .attachment
       positionize(attachment-height, auto, 0 180px 0 30px, auto, auto, auto, auto, auto, hidden)
       move-position(relative)
