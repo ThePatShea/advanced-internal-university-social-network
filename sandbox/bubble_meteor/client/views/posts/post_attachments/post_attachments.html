@@ -5,20 +5,7 @@
   <div class="post-attachments">
     <h4 class="attachments-heading">attachments:</h4>
     {{#each attachmentList}}
-      <a href="{{file}}" download="{{decodeURI name}}">
-        <div class="attachment">
-          <div class="pull-left v-middle">
-            <div class="v-inner">
-              <div class="file-type file-type-attachment">
-                <span class="cb-icon">{{> icon-file-type}}</span>
-                <span class="lbl">{{getTextAfterSlash fileType}}</span>
-              </div>
-            </div>
-          </div>
-          <span class="attachment-name">{{decodeURI this.name}}</span>
-          <button class="std-btn-xdark post-action">download</button>
-        </div>
-      </a>
+      {{> listItem}}
     {{/each}}
   </div>
 </template>

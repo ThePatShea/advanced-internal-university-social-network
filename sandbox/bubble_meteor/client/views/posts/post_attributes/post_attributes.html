@@ -2,11 +2,25 @@
   <script language="JavaScript" src="js/pdfobject.js"></script>
   <script language="JavaScript" src="js/FileSaver.js"></script>
 
-  <div class="post-main">
-    <pre class="post-body">{{{body}}}</pre>
-    {{> postAttachments}}
+  <div class="post-main post-type-{{postType}}">
+    <pre class="invisible-{{matchPostType 'file'}} post-body">{{{body}}}</pre>
+    <span class="visible-{{hasChildren}}">{{> postAttachments}}</span>
+
+    <div class="visible-{{matchPostType 'file'}}">
+      <a href="{{file}}" download="{{decodeURI name}}">
+        <div class="attachment">
+          <div class="pull-left v-middle">
+            <div class="v-inner">
+              <div class="file-type file-type-attachment">
+                <span class="cb-icon">{{> icon-file-type}}</span>
+                <span class="lbl">{{getTextAfterSlash fileType}}</span>
+              </div>
+            </div>
+          </div>
+          <span class="attachment-name">{{decodeURI this.name}}</span>
+          <button class="std-btn-xdark post-action">download</button>
+        </div>
+      </a>
+    </div>
   </div>
-  <img src="{{eventPhoto}}" />
-  <p>{{location}}</p>
-  {{> fileObject}}
 </template>

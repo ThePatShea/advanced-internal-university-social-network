@@ -801,7 +801,7 @@ svg
 
 /**********     WYSIWYG     **********/
 wysiwyg-image(n)
-  margin               15px 25px 15px 0
+  margin               25px
   float                left
 
 .wysiwyg_group
@@ -915,6 +915,8 @@ align-with-post-item(n)
       display                block
       &.visible-false
         display                none
+  &:nth-child(odd)
+    std-white-light-bg      0
   &:nth-child(even)
     std-white-dark-bg      0
     &:hover
@@ -1457,11 +1459,18 @@ section-icon(n)
 /**********        bubble-page        **********/
 
 /**********         post-page         **********/
+attachment-height  =  75px
+
 .post-page
   .top-btns
     positionize(auto, auto, 0 30px 35px 30px, auto, auto, auto, auto, auto, hidden)
     .btn-back
       move-position(relative, auto, auto, auto, 7px)
+      .to-post-types
+        @media (min-width: 768px)
+          display          inline
+        @media (max-width: 767px)
+          display          none
     .btn-delete
       positionize(auto, auto, auto, 0 15px 0 0)
     .btn-edit
@@ -1495,6 +1504,8 @@ section-icon(n)
     border-top        1px solid #DFE1E1
     positionize(auto, auto, 30px 0)
     colorize(white-xxdark, white-dark)
+    &.post-type-file
+      positionize(auto, auto, 0)
     .post-body
       positionize(auto, auto, auto, 0 30px 30px 30px, auto, auto, auto, auto, hidden)
       fontize(alt, regular, auto, 15px, 27px)
@@ -1505,26 +1516,22 @@ section-icon(n)
         positionize(auto, auto, 0 0 10px 30px)
         fontize(main, bold, uppercase, 12px)
         colorize(main-light)
-      .attachment
-        positionize(45px, auto, 0 30px, auto, auto, auto, auto, auto, hidden)
-        move-position(relative)
-        colorize(white-xxdark)
-        &:hover
-          positionize(45px, auto, 0 180px 0 30px, auto, auto, auto, auto, auto, hidden)
-          fontize(auto, auto, auto, auto, auto, auto, underline)
-          colorize(main-light, white)
-          .file-type-attachment
-            colorize(main-light, auto, main-light)
-          .post-action
-            display          block
+    .attachment
+      positionize(attachment-height, auto, 0 180px 0 30px, auto, auto, auto, auto, auto, hidden)
+      move-position(relative)
+      colorize(white-xxdark)
+      &:hover
+        fontize(auto, auto, auto, auto, auto, auto, underline)
+        colorize(main-light, white)
         .file-type-attachment
-          positionize(auto, auto, auto, 0 10px 0 0)
-          move-position(auto, auto, 0)
-        .attachment-name
-          fontize(alt, regular, auto, 16px, 45px)
-        .post-action
-          move-position(absolute, 0, 20px)
-          display          none
+          colorize(main-light, auto, main-light)
+      .file-type-attachment
+        positionize(auto, auto, auto, 0 10px 0 0)
+        move-position(auto, auto, 0)
+      .attachment-name
+        fontize(alt, regular, auto, 16px, attachment-height)
+      .post-action
+        move-position(absolute, 13px, 20px)
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/
