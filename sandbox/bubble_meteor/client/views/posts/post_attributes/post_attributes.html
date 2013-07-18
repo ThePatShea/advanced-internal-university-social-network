@@ -24,7 +24,8 @@
       </div>
     </div>
 
-    <pre class="invisible-{{matchPostType 'file'}} post-body">{{{body}}}</pre>
+    <div class="visible-{{matchPostType 'event'}} small-heading event-body-heading">details:</div>
+    <pre class="invisible-{{matchPostType 'file'}} post-body post-body-{{postType}}">{{{body}}}</pre>
     <span class="visible-{{hasChildren}}">{{> postAttachments}}</span>
 
     <div class="visible-{{matchPostType 'file'}}">
