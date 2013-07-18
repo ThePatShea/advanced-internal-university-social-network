@@ -13,13 +13,13 @@ Template.postAttributes.helpers({
     		var fileSizeMegaBytes = this.fileSize/1000000;
     		var fileSizeGigaBytes = this.fileSize/1000000000;
     		if(fileSizeGigaBytes >= 1){
-    			return Math.round(fileSizeGigaBytes*100)/100 + ' GB'; 
+    			return Math.round(fileSizeGigaBytes*100)/100 + ' gb'; 
     		}
     		else if(fileSizeMegaBytes >= 1){
-    			return Math.round(fileSizeMegaBytes*100)/100 + ' MB';
+    			return Math.round(fileSizeMegaBytes*100)/100 + ' mb';
     		}
     		else{
-    			return Math.round(fileSizeKiloBytes*100)/100 + ' KB';
+    			return Math.round(fileSizeKiloBytes*100)/100 + ' kb';
     		}
     	}
     	else{
