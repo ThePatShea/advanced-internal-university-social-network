@@ -1,11 +1,20 @@
 Template.searchUsers.helpers({
   getSearchedUsers: function() {
   	Session.set('selectedUsername',Session.get('searchText'));
-  	return Meteor.users.find(
+    var searchedUsers = Meteor.users.find(
       {
         username:new RegExp(Session.get('searchText'),'i'),
         _id: {$nin: [Meteor.userId()]}
       },{limit: usersListHandle.limit()});
+    var userList = searchedUsers.fetch();
+    var userIds = [];
+    for(var i=0; i < userList.length; i++){
+      userIds.push(userList[i]._id);
+    };
+
+    Meteor.subscribe('findUsersById', userIds);
+
+    return searchedUsers;
   },
 });
 

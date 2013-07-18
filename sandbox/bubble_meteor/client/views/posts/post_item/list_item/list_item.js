@@ -7,15 +7,37 @@ Template.listItem.helpers({
         return true;
       else
         return false;
+    },
+
+    membershipCount: function(){
+      var currentUserId = this._id;
+      if(typeof this.userType != 'undefined'){
+        return Bubbles.find({$or: [{'users.members': currentUserId}, {'users.admins': currentUserId}]}).count();
+      }
+      else{
+        return -1;
+      }
     }
 });
 
 Template.listItem.events({
     'click .post-item' : function() {
       // Links to parent post if the post is a file attachment. Otherwise, links to the post itself.
-        if (this.postType == 'file' && this.parent)
+        if (this.postType == 'file' && this.parent){
           Meteor.Router.to('postPage', this.bubbleId, this.parent);
-        else
+        }
+        else if(typeof this.postType != 'undefined'){
           Meteor.Router.to('postPage', this.bubbleId, this._id);
+        }
+        else if(typeof this.userType != 'undefined'){
+          Meteor.Router.to('userProfile', this._id);
+        }
+        else if(typeof this.category != 'undefined'){
+          Meteor.Router.to('bubblePage', this._id);
+        }
+        else{
+          Meteor.Router.to('404NotFoundPage');
+        }
+
     }
 });
