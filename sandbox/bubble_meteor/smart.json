@@ -13,8 +13,6 @@
     "glDatePicker": {},
     "moment": {},
     "bootstrap-wysiwyg": {},
-    "jquery-jcrop": {},
-    "headly": {},
-    "accounts-ui-bootstrap-dropdown": {}
+    "jquery-jcrop": {}
   }
 }

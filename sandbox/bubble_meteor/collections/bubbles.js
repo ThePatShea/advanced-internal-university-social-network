@@ -2,7 +2,7 @@ Bubbles = new Meteor.Collection('bubbles');
 
 Bubbles.allow({
    update: ownsBubble,
-   remove: ownsBubble
+   remove: bubbleAdmin
  });
 
 Meteor.methods({

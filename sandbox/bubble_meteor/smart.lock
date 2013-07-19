@@ -2,7 +2,7 @@
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master",
-    "commit": "9bb2b5447e845c4f483df5e9b42a2c1de5ab909b"
+    "commit": "e8af79e15196f0be29698038c3e1f393239b5da2"
   },
   "dependencies": {
     "basePackages": {
@@ -15,9 +15,7 @@
       "glDatePicker": {},
       "moment": {},
       "bootstrap-wysiwyg": {},
-      "jquery-jcrop": {},
-      "headly": {},
-      "accounts-ui-bootstrap-dropdown": {}
+      "jquery-jcrop": {}
     },
     "packages": {
       "router": {
@@ -69,16 +67,6 @@
         "git": "https://github.com/waltyuyu/meteor-jquery-jcrop.git",
         "tag": "v0.0.3",
         "commit": "45a62562f3d13cbc72a7710472a76cf9c3c589cd"
-      },
-      "headly": {
-        "git": "https://github.com/ayal/headly",
-        "tag": "v0.0.42",
-        "commit": "47d3aa3784b8b55a61c96611c19a0d6f23b6d55f"
-      },
-      "accounts-ui-bootstrap-dropdown": {
-        "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
-        "tag": "v0.1.5",
-        "commit": "e12b128f140caa2797720cbd5fae084de7810c6a"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

@@ -18,3 +18,9 @@ ownsBubble = function(userId, doc, onChange) {
 	//Feature is currently on hold
 	// return ('superuser' == Meteor.user().userType || _.contains(doc.users.admins, Meteor.user().username));
 }
+
+bubbleAdmin = function(userId, doc) {
+  var bubble = Bubbles.findOne(doc.bubbleId);
+  return ('3' == Meteor.user().userType 
+    || _.contains(bubble.users.admins, Meteor.userId()));
+}

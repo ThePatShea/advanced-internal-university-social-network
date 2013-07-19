@@ -12,7 +12,8 @@ Meteor.methods({
       'userId', 'postId', 'commentId', 'bubbleId', 'invokerId',
       'invokerName', 'updateType', 'content', 'url'), {
       submitted: new Date().getTime(),
-      read: false
+      read: false,
+      emailed: false
     });
     var updateId = Updates.insert(update);
     return updateId;
