@@ -7,7 +7,11 @@
           <span class="left">emory</span><span class="right">bubble</span>
         </span>
       </a>
-      
+      <ul class="nav visible-all pull-right">
+        <li class="dropdown">
+          {{> logoutDropdown}}
+        </li>
+      </ul>
       <ul class="nav pull-right">
         {{#if currentUser}}
           <li class="{{activeRouteClass 'analytics'}} visible-{{checkUserType '3'}}">
@@ -21,9 +25,6 @@
           </li>
           <li class="dropdown">
             {{> updatesDropdown}}
-          </li>
-          <li class="dropdown">
-            {{> logoutDropdown}}
           </li>
         {{/if}}
       </ul>

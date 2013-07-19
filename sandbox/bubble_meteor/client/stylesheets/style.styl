@@ -34,6 +34,7 @@ a
   border-box             0
 
 body
+  overflow-y hidden
   @media (max-width: 767px)
     padding 0
 
@@ -1099,6 +1100,11 @@ navbar-height        =  60px
         display                    block
       @media (max-width: 767px)
         display                    none
+      &.visible-all
+        @media (min-width: 768px)
+          display                    block
+        @media (max-width: 767px)
+          display                    block
       & > li
         border-right               1px solid navbar-border-color
         line-height                navbar-height 
