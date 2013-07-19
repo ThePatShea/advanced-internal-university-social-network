@@ -8,7 +8,9 @@ import android.os.RemoteException;
 import com.urbanairship.Logger;
 import com.urbanairship.UAirship;
 import com.urbanairship.location.UALocationManager;
-import io.cordova.hellocordova.HelloCordova;
+
+import io.cordova.emorybubble.EmoryBubble;
+
 import com.urbanairship.push.PushManager;
 import com.urbanairship.util.ServiceNotBoundException;
 
@@ -78,7 +80,7 @@ public class PushNotificationPluginIntentReceiver extends BroadcastReceiver {
 
             Intent launch = new Intent(Intent.ACTION_MAIN);
             launch.setClass(UAirship.shared().getApplicationContext(),
-                    HelloCordova.class);
+                    EmoryBubble.class);
             launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
             PushNotificationPlugin.incomingAlert = alert;
