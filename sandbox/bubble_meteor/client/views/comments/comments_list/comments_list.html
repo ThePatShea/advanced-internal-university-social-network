@@ -1,11 +1,6 @@
 <template name="commentsList">
   <ul id="comments" class="comments">
-    {{#if currentUser}}
-      {{> commentSubmit}}
-    {{else}}
-      <p>Please log in to leave a comment.</p>
-    {{/if}}
-    
+    {{> commentSubmit}}
     {{#each comments}}
       {{> commentItem}}
     {{/each}}

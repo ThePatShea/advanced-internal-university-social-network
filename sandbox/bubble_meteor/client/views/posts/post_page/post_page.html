@@ -32,10 +32,12 @@
         </button>
       </div>
       <div class="post-heading">
-        <div class="author-pic">
-          <div class="bubble-bg">{{> icon-bubble}}</div>
-          <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
-        </div>
+        <a href="{{userProfilePath this.userId}}">
+          <div class="author-pic">
+            <div class="bubble-bg">{{> icon-bubble}}</div>
+            <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
+          </div>
+        </a>
         <div class="name">{{decodeURI name}}</div>
         <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
       </div>

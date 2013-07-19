@@ -1,12 +1,20 @@
 <template name="commentItem">
-  <li>
-    <h4>
-      <a href="{{userProfilePath userId}}">{{author}}</a>
-      <span class="date">{{submittedText submitted}}</span>
-    </h4>
-    <p>{{body}}</p>
-    {{#if allowDelete}}
-    	<button class="btn btn-small btn-danger delete-comment" type="button">Delete</button>
-    {{/if}}
+  <li class="comment-item">
+    <div>
+      <a href="{{userProfilePath this.userId}}">
+        <div class="author-pic">
+          <div class="bubble-bg">{{> icon-bubble}}</div>
+          <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this.userId}}"/>
+        </div>
+      </a>
+      <a href="{{userProfilePath userId}}">
+        <span class="user-name">{{author}}</span>
+      </a>
+      <span class="small-heading comment-time">{{submittedText submitted}}</span>
+    </div>
+    <pre class="comment-body">{{body}}</pre>
+    <button class="visible-{{allowDelete}} post-action delete-comment">
+      <span>delete</span>
+    </button>
   </li>
 </template>

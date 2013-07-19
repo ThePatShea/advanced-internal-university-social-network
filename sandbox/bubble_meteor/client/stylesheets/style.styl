@@ -1467,6 +1467,11 @@ section-icon(n)
 attachment-height  =  75px
 
 .post-page
+  a
+    .author-pic
+      &:hover
+        .bubble-bg
+          fill           main-light
   .author-pic
     positionize(auto, auto, auto, 0 15px 0 0, auto, left)
     move-position(relative, -2px)
@@ -1610,6 +1615,29 @@ attachment-height  =  75px
           positionize(auto, 45px)
           colorize(main-light)
           display        none
+  .comments
+    .comment-item
+      positionize(auto, auto, 15px 30px)
+      position        relative
+      &:hover
+        background        white
+        .delete-comment
+          display        block
+          &.visible-false
+            display        none
+      .user-name
+        positionize(auto, auto, auto, 0 20px 0 0)
+        fontize(alt, regular, auto, 16px, 42px)
+        colorize(white-xxdark)
+      .comment-time
+        font-size        11px
+      .comment-body
+        fontize(alt, regular, auto, 14px, 22px)
+        positionize(auto, auto, 0 0 0 58px)
+        colorize(#929292)
+      .delete-comment
+        move-position(absolute, 10px, 10px)
+        display        none
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/

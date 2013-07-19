@@ -13,6 +13,22 @@ ownsPost = function(userId, doc) {
 		|| _.contains(bubble.users.admins,Meteor.userId()));
 }
 
+ownsComment = function(userId, doc) {
+  var post = Posts.findOne(doc.postId);
+  var bubble = Bubbles.findOne(post.bubbleId);
+  if (bubble) {
+    var admins = bubble.users.admins;
+    if(Meteor.userId()) {
+      var userId = Meteor.userId();
+      if(userId == post.userId || userId == doc.userId || _.contains(admins, userId)) {
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
+}
+
 ownsBubble = function(userId, doc, onChange) {
 	return true;
 	//Feature is currently on hold
