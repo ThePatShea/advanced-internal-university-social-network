@@ -13,7 +13,7 @@ Template.eventSubmit.events({
       body: $(event.target).find('[name=body]').val(),
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
-      attendees: [Meteor.user().username],
+      attendees: [Meteor.userId()],
       eventPhoto: $(event.target).find('[id=eventphoto_preview]').attr('src'),
       retinaEventPhoto: $(event.target).find('[id=eventphoto_retina]').attr('src')
     });

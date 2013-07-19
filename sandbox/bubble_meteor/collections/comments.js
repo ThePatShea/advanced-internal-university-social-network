@@ -1,8 +1,8 @@
 Comments = new Meteor.Collection('comments');
 
 Comments.allow({
-   update: ownsPost,
-   remove: ownsPost
+   update: ownsComment,
+   remove: ownsComment
  });
 
 Meteor.methods({

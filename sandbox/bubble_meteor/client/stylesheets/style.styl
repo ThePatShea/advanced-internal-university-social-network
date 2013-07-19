@@ -35,6 +35,11 @@ h6
   line-height            100%
   margin                 0
 
+textarea
+  resize                 none
+  border-radius          0
+  border-box             0
+
 section,
 button,
 input,
@@ -586,6 +591,9 @@ font-alt-regular(n)
 font-alt-light(n)
   font-weight            300
   font-alt               0
+font-alt-thin(n)
+  font-weight            100
+  font-alt               0
 /*****  Alternate Font  *****/
 /**********  Font Palette   **********/
 
@@ -734,7 +742,6 @@ std-btn(n)
   border-radius          15px
   font-size              11px
   line-height            100%
-  main-xlight-border     0
   &.with-left-icon
     padding-left           15px
 
@@ -748,6 +755,7 @@ std-btn(n)
     background             white
 
 .std-btn-light
+  main-xlight-border     0
   main-light-color       0
   font-main-bold         0
   std-btn                0
@@ -761,6 +769,7 @@ std-btn(n)
 
 .std-btn-dark
   background             rgba(0,0,0,.35)
+  main-xlight-border     0
   main-xlight-color      0
   font-main-black        0
   std-btn                0
@@ -769,6 +778,14 @@ std-btn(n)
     main-xlight-bg         0
     svg
       fill                   black
+
+.std-btn-form
+  border                 1px solid main-light
+  color                  white-light
+  font-main-bold         0
+  std-btn                0
+  &:hover
+    background             main-light
 
 std-btn-xdark(n)
   positionize(auto, auto, 8px 30px, 10px, 14px)
@@ -847,6 +864,40 @@ wysiwyg-image(n)
     text-align           center
     width                20px
 /**********    file-type    **********/
+
+/**********     cb-form     **********/
+.cb-form
+  colorize(white-light, main-dark)
+  position       relative
+  padding        0 30px
+  margin         0
+  textarea
+    border-spin(1px, 0, 1px, 0, main-light, main-light, main-light, main-light)
+    positionize(auto, 100%, 10px 0, 0 auto 10px auto, auto, auto, auto, block)
+    fontize(alt, light, auto, 15px)
+    colorize(white-light, main-dark)
+    box-shadow             0 0
+    &::-webkit-input-placeholder
+      color            white-light
+    &:-ms-input-placeholder
+      color            white-light
+    &::-moz-placeholder
+      color            white-light
+    &:-moz-placeholder
+      color            white-light
+  .cb-submit-container
+    padding          30px 0 0 0
+    .cb-submit
+      position         relative
+      top              -30px
+  .lbl
+    positionize(auto, auto, auto, 0 0 10px 0)
+    fontize(alt, thin, auto, 23px)
+    colorize(white-light)
+    &.first
+      margin-top       25px
+/**********     cb-form     **********/
+
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -855,7 +906,6 @@ wysiwyg-image(n)
 /**********      Base Divs       **********/
 .comments li:nth-child(odd),
 .post:nth-child(odd),
-.comment-form,
 .grid-block,
 .main,
 body
@@ -1427,6 +1477,8 @@ section-icon(n)
       margin                 0 0 100px 0
     @media (max-width: 767px)
       margin                 0 0 30px 0
+    &.comments-heading
+      margin-bottom        0
     .bubble-list-heading
       text-transform         capitalize
       overflow               hidden
@@ -1473,6 +1525,11 @@ section-icon(n)
 attachment-height  =  75px
 
 .post-page
+  a
+    .author-pic
+      &:hover
+        .bubble-bg
+          fill           main-light
   .author-pic
     positionize(auto, auto, auto, 0 15px 0 0, auto, left)
     move-position(relative, -2px)
@@ -1546,7 +1603,7 @@ attachment-height  =  75px
     &.post-type-event
       padding        0 0 30px 0
     &.post-type-file
-      positionize(auto, auto, 0)
+      positionize(auto, auto, 0, 0 0 60px 0)
     .event-controls
       border-bottom     1px solid #DFE1E1
       overflow          hidden
@@ -1598,6 +1655,7 @@ attachment-height  =  75px
       .post-action
         move-position(absolute, 13px, 20px)
   .people-going
+    positionize(auto, auto, auto, 0 0 80px 0)
     .people-list
       positionize(100px, auto, 0 30px, auto, auto, auto, auto, auto, hidden)
       colorize(auto, white-dark)
@@ -1616,6 +1674,30 @@ attachment-height  =  75px
           positionize(auto, 45px)
           colorize(main-light)
           display        none
+  .comments-list
+    .comments
+      .comment-item
+        positionize(auto, auto, 15px 30px)
+        position        relative
+        &:hover
+          background        white
+          .delete-comment
+            display        block
+            &.visible-false
+              display        none
+        .user-name
+          positionize(auto, auto, auto, 0 20px 0 0)
+          fontize(alt, regular, auto, 16px, 42px)
+          colorize(white-xxdark)
+        .comment-time
+          font-size        11px
+        .comment-body
+          fontize(alt, regular, auto, 14px, 22px)
+          positionize(auto, auto, 0 0 0 58px)
+          colorize(#929292)
+        .delete-comment
+          move-position(absolute, 10px, 10px)
+          display        none
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/
@@ -1623,10 +1705,10 @@ attachment-height  =  75px
 
 /***************Added by Xavier **************************/
 .attachment-size
+  fontize(main, bold, uppercase, auto)
+  color                  main-light
   position               absolute
   right                  180px
   bottom                 27px
-  fontize(main, bold, uppercase, auto)
-  color                  main-light
 /*********************************************************/
 

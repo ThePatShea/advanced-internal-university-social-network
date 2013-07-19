@@ -1,15 +1,9 @@
 <template name="commentSubmit">
-  <form name="comment" class="comment-form">
-    <div class="control-group">
-        <div class="controls">
-            <label for="body">Comment on this post</label>
-            <textarea name="body"></textarea>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn add-comment">Add Comment</button>
-        </div>
+  <form name="comment" class="collapse out cb-form comment-form" id="cb-form-comment">
+    <div class="lbl first">Have your say</div>
+    <textarea name="body" placeholder="Type here..."></textarea>
+    <div class="cb-submit-container">
+      <button type="submit" class="pull-right std-btn-form cb-submit add-comment">submit</button>
     </div>
   </form>
 </template>

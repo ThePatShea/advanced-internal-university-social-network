@@ -1,14 +1,19 @@
 <template name="commentsList">
-  <ul id="comments" class="comments">
-    {{#if currentUser}}
+  <div class="comments-list">
+    <div class="bubble-list comments-heading">
+      <div class="bubble-list-heading">
+        <h3 class="section-name pull-left">{{pluralize commentsCount "comment" ""}}</h3>
+        <button class="std-btn-light pull-right btn-add" data-toggle="collapse" data-target="#cb-form-comment">
+          <span class="left-icon cb-icon-add">{{> icon-add}}</span>
+          <span>add new comment</span>
+        </button>
+      </div>
+    </div>
+    <ul id="comments" class="comments">
       {{> commentSubmit}}
-    {{else}}
-      <p>Please log in to leave a comment.</p>
-    {{/if}}
-    
-    {{#each comments}}
-      {{> commentItem}}
-    {{/each}}
-  </ul>
-  
+      {{#each comments}}
+        {{> commentItem}}
+      {{/each}}
+    </ul>
+  </div>
 </template>
