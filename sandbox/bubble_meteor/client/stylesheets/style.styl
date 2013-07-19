@@ -589,7 +589,7 @@ font-alt-light(n)
 /**********  Font Palette   **********/
 
 /**********    Functions    **********/
-fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto, val-text-decoration = auto)
+fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val-line-height = auto, val-letter-spacing = auto, val-text-decoration = auto, val-text-align = auto)
   if family == main
     font-family    'brandon-grotesque', Arial, Sans-Serif
   else if family == alt
@@ -609,6 +609,7 @@ fontize(family = auto, weight = auto, val-transform = auto, val-size = auto, val
   text-decoration    val-text-decoration
   letter-spacing     val-letter-spacing
   line-height        val-line-height
+  text-align         val-text-align
   text-transform     val-transform
   font-size          val-size
 
@@ -1466,14 +1467,25 @@ section-icon(n)
 attachment-height  =  75px
 
 .post-page
+  .author-pic
+    positionize(auto, auto, auto, 0 15px 0 0, auto, left)
+    move-position(relative, -2px)
+    .bubble-bg
+      fill          white-xdark
+      svg
+        height        42px
+        width         42px
+    .author-circle
+      move-position(absolute, 3px, auto, auto, 3px)
+      border        0
   .small-heading
-    positionize(12px, auto, auto, 0 0 30px 0)
+    positionize(auto, auto, auto, 0 0 30px 0)
     fontize(main, bold, uppercase, 12px)
     colorize(main-light)
     &.event-body-heading
-      positionize(12px, auto, auto, 20px 30px)
+      positionize(auto, auto, auto, 15px 30px 10px 30px)
     &.attribute-going
-      positionize(12px, auto, auto, 0 0 15px 0)
+      positionize(16px, auto, auto, 0 0 15px 0)
     .cb-icon
       positionize(auto, auto, auto, 0 10px 0 0)
       fill                  main-light
@@ -1487,9 +1499,13 @@ attachment-height  =  75px
         left                  0
         svg
           width                 16px
-    .lbl-member
-      position              relative
-      left                  -2px
+    &.attribute
+      .lbl
+        position              relative
+        top                   8px
+        line-height           1em
+        &.lbl-member
+          left                  -2px
   .top-btns
     positionize(auto, auto, 0 30px 35px 30px, auto, auto, auto, auto, auto, hidden)
     .btn-back
@@ -1511,17 +1527,6 @@ attachment-height  =  75px
         move-position(relative, 2px)
   .post-heading
     positionize(auto, auto, 0 30px 15px 30px)
-    .author-pic
-      positionize(auto, auto, auto, 0 15px 0 0, auto, left)
-      move-position(relative, -2px)
-      .bubble-bg
-        fill          white-xdark
-        svg
-          height        42px
-          width         42px
-      .author-circle
-        move-position(absolute, 3px, auto, auto, 3px)
-        border        0
     .name
       fontize(alt, light, auto, 28px)
       colorize(main-light)
@@ -1530,22 +1535,35 @@ attachment-height  =  75px
       colorize(main-xlight)
   .post-main
     border-top        1px solid #DFE1E1
-    positionize(auto, auto, 30px 0)
+    positionize(auto, auto, 30px 0, 0 0 60px 0)
     colorize(white-xxdark, white-dark)
     &.post-type-event
-      positionize(auto, auto, 0 0 30px 0)
+      padding        0 0 30px 0
     &.post-type-file
       positionize(auto, auto, 0)
     .event-controls
       border-bottom     1px solid #DFE1E1
       overflow          hidden
       .left
-        positionize(auto, auto, 20px 20px 20px 30px)
-        border-right      1px solid #DFE1E1
+        position          relative
+        @media (min-width: 820px)
+          positionize(auto, auto, 20px 20px 20px 30px, 0 20px 0 0)
+          border-right      1px solid #DFE1E1
+          float             left
+        @media (max-width: 819px)
+          positionize(auto, auto, 20px 20px 20px 30px, 0)
+          border-bottom     1px solid #DFE1E1
+          float             none
+        img
+          @media (min-width: 820px)
+            move-position(auto)
+          @media (max-width: 819px)
+            positionize(auto, 300px)
       .right
-        positionize(auto, auto, 20px 0 0 0)
-        position        relative
-        left            20px
+        @media (min-width: 820px)
+          positionize(auto, auto, 20px 0 0 0, 0 20px 0 0)
+        @media (max-width: 819px)
+          positionize(100%, auto, 0, 10px 30px)
     .post-body
       positionize(auto, auto, auto, 0 30px, auto, auto, auto, auto, hidden)
       fontize(alt, regular, auto, 15px, 27px)
@@ -1573,6 +1591,25 @@ attachment-height  =  75px
         fontize(alt, regular, auto, 16px, attachment-height)
       .post-action
         move-position(absolute, 13px, 20px)
+  .people-going
+    .people-list
+      positionize(100px, auto, 0 30px, auto, auto, auto, auto, auto, hidden)
+      colorize(auto, white-dark)
+      overflow        hidden
+      .person-going
+        positionize(auto, auto, auto, 30px 25px 0 0)
+        move-position(relative, 0)
+        &:hover
+          .bubble-bg
+            fill           main-light
+          .user-name
+            display        block
+        .user-name
+          fontize(alt, bold, auto, 12px, 1em, auto, auto, center)
+          move-position(absolute, 43px)
+          positionize(auto, 45px)
+          colorize(main-light)
+          display        none
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/

@@ -26,4 +26,7 @@ Template.postAttributes.helpers({
     		return -1;
     	}
     }
+  , reverseAttendees: function() {
+      return this.attendees.reverse();
+    }
 });

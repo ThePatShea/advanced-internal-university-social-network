@@ -218,11 +218,11 @@ createNewAttendeeUpdate = function(postId) {
 
   //Remove user from list of attendees
   var attendees = post.attendees;
-  var index = attendees.indexOf(Meteor.user().username);
+  var index = attendees.indexOf( Meteor.userId() );
   attendees.splice(index,1);
 
-  _.each(attendees, function(username){
-    var user = Meteor.users.findOne({username:username});
+  _.each(attendees, function(userId){
+    var user = Meteor.users.findOne(userId);
     Meteor.call('update',{
       userId: user._id,
       postId: postId,

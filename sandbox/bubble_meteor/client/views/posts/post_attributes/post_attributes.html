@@ -4,23 +4,25 @@
 
   <div class="post-main post-type-{{postType}}">
     <div class="visible-{{matchPostType 'event'}} event-controls">
-      <div class="pull-left left"><img src="{{eventPhoto}}"/></div>
+      <div class="left"><img src="{{eventPhoto}}"/></div>
       <div class="right">
-        <div class="attributes">
-          <div class="small-heading attribute">
-            <span class="cb-icon">{{> icon-time}}</span>
-            <span class="lbl">{{dateTime}} | {{dateTime}}</span>
+        <div class="right-controls">
+          <div class="attributes">
+            <div class="small-heading attribute">
+              <div class="pull-left cb-icon">{{> icon-time}}</div>
+              <div class="lbl">{{timestampToTime dateTime}} | {{timestampToDateLong dateTime}}</div>
+            </div>
+            <div class="small-heading attribute">
+              <div class="pull-left cb-icon">{{> icon-location}}</div>
+              <div class="lbl">{{location}}</div>
+            </div>
+            <div class="small-heading attribute attribute-going">
+              <div class="pull-left cb-icon cb-icon-member">{{> icon-member}}</div>
+              <div class="lbl lbl-member">{{pluralize numOfAttendees "person" ""}} going</div>
+            </div>
           </div>
-          <div class="small-heading attribute">
-            <span class="cb-icon">{{> icon-location}}</span>
-            <span class="lbl">{{location}}</span>
-          </div>
-          <div class="small-heading attribute attribute-going">
-            <span class="cb-icon cb-icon-member">{{> icon-member}}</span>
-            <span class="lbl lbl-member">{{numOfAttendees}} people going</span>
-          </div>
+          <div>{{> imGoing}}</div>
         </div>
-        <div>{{> imGoing}}</div>
       </div>
     </div>
 
@@ -46,4 +48,23 @@
       </a>
     </div>
   </div>
+
+  <div class="visible-{{matchPostType 'event'}} bubble-list people-going">
+    <div class="bubble-list-heading">
+      <h3 class="section-name pull-left">{{pluralize numOfAttendees "person" ""}} going</h3>
+      <span class="pull-right">{{> imGoingSmall}}</span>
+    </div>
+    <div class="people-list">
+      {{#each reverseAttendees}}
+        <a href="{{userProfilePath this}}">
+          <div class="author-pic person-going">
+            <div class="bubble-bg">{{> icon-bubble}}</div>
+            <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this}}"/>
+            <div class="user-name">{{getSelectedUserName this}}</div>
+          </div>
+        </a>
+      {{/each}}
+    </div>
+  </div>
+
 </template>

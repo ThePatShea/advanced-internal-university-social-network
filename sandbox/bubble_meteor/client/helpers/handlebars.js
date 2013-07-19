@@ -2,20 +2,18 @@ Handlebars.registerHelper('pluralize', function(n, thing, between) {
   if (between == undefined)
     between = ''
 
-  thing = between + ' ' + thing
-
   // Fairly simple pluralizer
   if(thing == 'person'){
     if (n === 1) {
-      return '1 ' + 'person';
+      return '1' + ' ' + between + ' ' + 'person';
     } else {
-      return n + ' people';
+      return n + ' ' + between + ' ' + 'people';
     }
   }else{
     if (n === 1) {
-      return '1 ' + thing;
+      return '1' + ' ' + between + ' ' + thing;
     } else {
-      return n + ' ' + thing + 's';
+      return n + ' ' + between + ' ' + thing + 's';
     }
   }
 });
@@ -37,6 +35,16 @@ var getPosts = function(inputPostType) {
 
 Handlebars.registerHelper('getUserTypeName', function(userType){
   return userTypes[userType];
+});
+
+Handlebars.registerHelper('getSelectedUserProfilePic', function(userId) {
+  var user = Meteor.users.findOne(userId);
+  return user && user.profilePicture;
+});
+
+Handlebars.registerHelper('getSelectedUserName', function(userId) {
+  var user = Meteor.users.findOne(userId);
+  return user && user.username;
 });
 
 Handlebars.registerHelper('postProperties', {
@@ -171,6 +179,10 @@ Handlebars.registerHelper('timestampToMonthShort', function(dateTime){
 
 Handlebars.registerHelper('timestampToDayLong', function(dateTime){
   return moment(new Date(dateTime).toString()).format('DD');
+});
+
+Handlebars.registerHelper('timestampToDateLong', function(dateTime){
+  return moment(new Date(dateTime).toString()).format('dddd, MMMM D, YYYY');
 });
 
 Handlebars.registerHelper('timestampToTime', function(dateTime){
