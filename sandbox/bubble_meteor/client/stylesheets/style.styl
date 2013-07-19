@@ -590,6 +590,9 @@ font-alt-regular(n)
 font-alt-light(n)
   font-weight            300
   font-alt               0
+font-alt-thin(n)
+  font-weight            100
+  font-alt               0
 /*****  Alternate Font  *****/
 /**********  Font Palette   **********/
 
@@ -870,7 +873,7 @@ wysiwyg-image(n)
   textarea
     border-spin(1px, 0, 1px, 0, main-light, main-light, main-light, main-light)
     positionize(auto, 100%, 10px 0, 0 auto 10px auto, auto, auto, auto, block)
-    fontize(alt, regular, auto, 15px)
+    fontize(alt, light, auto, 15px)
     colorize(white-light, main-dark)
     box-shadow             0 0
   .cb-submit-container
@@ -880,7 +883,7 @@ wysiwyg-image(n)
       top              -30px
   .lbl
     positionize(auto, auto, auto, 0 0 10px 0)
-    fontize(alt, light, auto, 23px)
+    fontize(alt, thin, auto, 23px)
     colorize(white-light)
     &.first
       margin-top       25px
