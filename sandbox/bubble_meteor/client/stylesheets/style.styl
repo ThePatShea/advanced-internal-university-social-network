@@ -733,7 +733,6 @@ std-btn(n)
   border-radius          15px
   font-size              11px
   line-height            100%
-  main-xlight-border     0
   &.with-left-icon
     padding-left           15px
 
@@ -747,6 +746,7 @@ std-btn(n)
     background             white
 
 .std-btn-light
+  main-xlight-border     0
   main-light-color       0
   font-main-bold         0
   std-btn                0
@@ -760,6 +760,7 @@ std-btn(n)
 
 .std-btn-dark
   background             rgba(0,0,0,.35)
+  main-xlight-border     0
   main-xlight-color      0
   font-main-black        0
   std-btn                0
@@ -768,6 +769,14 @@ std-btn(n)
     main-xlight-bg         0
     svg
       fill                   black
+
+.std-btn-form
+  border                 1px solid main-light
+  color                  white-light
+  font-main-bold         0
+  std-btn                0
+  &:hover
+    background             main-light
 
 std-btn-xdark(n)
   positionize(auto, auto, 8px 30px, 10px, 14px)
@@ -846,6 +855,22 @@ wysiwyg-image(n)
     text-align           center
     width                20px
 /**********    file-type    **********/
+
+/**********     cb-form     **********/
+.cb-form
+  colorize(white-light, main-dark)
+  position       relative
+  padding        0
+  margin         0
+  textarea
+    border-spin(1px, 0, 1px, 0, main-light, main-light, main-light, main-light)
+    colorize(white-light, main-dark)
+    margin           0 auto
+    display          block
+    resize           none
+    width            90%
+/**********     cb-form     **********/
+
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -854,7 +879,6 @@ wysiwyg-image(n)
 /**********      Base Divs       **********/
 .comments li:nth-child(odd),
 .post:nth-child(odd),
-.comment-form,
 .grid-block,
 .main,
 body
