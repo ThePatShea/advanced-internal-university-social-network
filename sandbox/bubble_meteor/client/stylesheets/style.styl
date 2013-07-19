@@ -1421,6 +1421,8 @@ section-icon(n)
       margin                 0 0 100px 0
     @media (max-width: 767px)
       margin                 0 0 30px 0
+    &.comments-heading
+      margin-bottom        0
     .bubble-list-heading
       text-transform         capitalize
       overflow               hidden
@@ -1616,29 +1618,30 @@ attachment-height  =  75px
           positionize(auto, 45px)
           colorize(main-light)
           display        none
-  .comments
-    .comment-item
-      positionize(auto, auto, 15px 30px)
-      position        relative
-      &:hover
-        background        white
+  .comments-list
+    .comments
+      .comment-item
+        positionize(auto, auto, 15px 30px)
+        position        relative
+        &:hover
+          background        white
+          .delete-comment
+            display        block
+            &.visible-false
+              display        none
+        .user-name
+          positionize(auto, auto, auto, 0 20px 0 0)
+          fontize(alt, regular, auto, 16px, 42px)
+          colorize(white-xxdark)
+        .comment-time
+          font-size        11px
+        .comment-body
+          fontize(alt, regular, auto, 14px, 22px)
+          positionize(auto, auto, 0 0 0 58px)
+          colorize(#929292)
         .delete-comment
-          display        block
-          &.visible-false
-            display        none
-      .user-name
-        positionize(auto, auto, auto, 0 20px 0 0)
-        fontize(alt, regular, auto, 16px, 42px)
-        colorize(white-xxdark)
-      .comment-time
-        font-size        11px
-      .comment-body
-        fontize(alt, regular, auto, 14px, 22px)
-        positionize(auto, auto, 0 0 0 58px)
-        colorize(#929292)
-      .delete-comment
-        move-position(absolute, 10px, 10px)
-        display        none
+          move-position(absolute, 10px, 10px)
+          display        none
 /**********         post-page         **********/
 
 /***************  Single-Purpose Elements  ***************/
