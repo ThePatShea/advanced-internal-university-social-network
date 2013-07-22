@@ -183,6 +183,10 @@ getBubbleId =  function(userId) {
     return Comments.find({postId: postId}, {sort: {submitted:-1}, limit: limit});
   });
 
+  Meteor.publish('userComments', function(userId){
+    return Comments.find({'userId': userId});
+  });
+
 
 // Updates Related Publications 
   Meteor.publish('updates', function(userId) {

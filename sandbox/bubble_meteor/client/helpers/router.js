@@ -95,6 +95,9 @@ Meteor.Router.add({
 
   // Analytics Related Routes
     '/analytics': 'userlog',
+
+  // Dashboard
+    '/dashboard': 'dashboard',
   
 
   // Etc Routes
