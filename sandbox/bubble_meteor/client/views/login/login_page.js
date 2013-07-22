@@ -87,4 +87,22 @@ Template.loginPage.rendered = function(){
   // }else{
   //   Session.set('signup', 'none');
   // }
+  if(Session.get('secret') && Session.get('secret') != null){
+    var secret = Session.get('secret');
+    setTimeout(function(){
+      var authenticatedUser = Meteor.users.findOne({'secret': secret});
+      var authenticatedUsername = authenticatedUser.username;
+      //console.log(secret, authenticatedUsername);
+      Meteor.loginWithPassword(authenticatedUsername, secret, function(err){
+        if(err){
+          //Error
+          console.log(err);
+        }
+        else{
+          Session.set('secret', null);
+          Meteor.Router.to('searchBubbles');
+        }
+      });
+    }, 100);
+  }
 }

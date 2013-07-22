@@ -23,10 +23,12 @@ Deps.autorun(function() {
 		Meteor.subscribe('singleUser', Meteor.userId());
 		Meteor.subscribe('singleUser', Session.get('selectedUserId'));
 		Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+		Meteor.subscribe('authenticatedUser', Session.get('secret'));
 		//Mega users need to have access to all users for analytics
 		if(Meteor.user() && Meteor.user().userType == 'megauser'){
 			mainUsersHandle = Meteor.subscribeWithPagination('allUsers');
 		};
+
 
 
 

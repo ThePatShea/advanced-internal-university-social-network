@@ -78,6 +78,11 @@ Meteor.Router.add({
       to: 'userProfileEdit',
       and: function(id) { Session.set('selectedUserId',id)}
     },
+
+    '/authenticateduser/:secret': {
+      to: 'loginPage',
+      and: function(secret) { Session.set('secret', secret)}
+    },
  
 
   // Search Related Routes

@@ -333,6 +333,14 @@ getBubbleId =  function(userId) {
       }
     });
   });
+  Meteor.publish('authenticatedUser', function(secret){
+    return Meteor.users.find({'secret': secret}, {
+      fields: {
+        'username': 1,
+        'secret': 1
+      }
+    });
+  });
 
 
 // Flags Related Publications
