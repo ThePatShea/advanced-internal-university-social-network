@@ -1,0 +1,14 @@
+<template name="bubbleMembersHeading">
+  <div class="bubble-list-heading">
+    <h3 class="section-name pull-left">
+      <span>{{> icon-member}}</span>
+      <span>Members</span>
+    </h3>
+    <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
+      <button class="std-btn-light pull-right btn-add">
+        <span class="left-icon cb-icon-add">{{> icon-add}}</span>
+        <span>add new {{postType}}</span>
+      </button>
+    </a>
+  </div>
+</template>
