@@ -4,6 +4,10 @@ Meteor.Router.add('/usersecret','PUT',function(){
 	return [307, {'Location': 'http://127.0.0.1:8000/bubbleList'}, 'testbody'];
 });
 
-Meteor.Router.add('/user/:username/:secret', 'GET', function(username, secret){
-	return [200, 'Username: ' + username + '\nSecret: ' + secret];
+Meteor.Router.add('/authenticateduser/:secret', 'GET', function(secret){
+	return [200, 'Secret: ' + secret];
+});
+
+Meteor.Router.add('/authenticateduser', 'POST', function(){
+	console.log(this.request.body.username, this.request.body.secret);
 });
