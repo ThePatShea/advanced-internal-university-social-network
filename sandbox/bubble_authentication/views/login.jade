@@ -3,7 +3,7 @@ extends layout
 block content
   body
   .row
-    form#loginform.form-horizontal(action='/trylogin', method='get', accept-charset='utf-8')
+    form#loginform.form-horizontal(action='/testlogin', method='post', accept-charset='utf-8')
       .control-group
         .controls
           input#name(name='username', id='username', placeholder='Username or Email', type='text', value='')

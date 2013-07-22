@@ -13,8 +13,8 @@ var express = require('express')
   , passport = require('passport')
   , BasicStrategy = require('passport-http').BasicStrategy
   , SamlStrategy = require('passport-saml').Strategy
-  , mongoose = require('mongoose')
-  , fs = require('fs');
+  , mongoose = require('mongoose'), crypto = require('crypto')
+  , fs = require('fs'), querystring = require('querystring');
 
 mongoose.connect('mongodb://localhost:27017/test');
 
@@ -161,6 +161,56 @@ app.get('/login',
     res.redirect('/home');
   }
 );
+
+
+app.get('/testlogin', function(req, res){
+  res.render('login');
+});
+
+app.post('/testlogin', function(req, res){
+  console.log(req.body.username, req.body.password);
+  var seed = crypto.randomBytes(20);
+  var secret = crypto.createHash('sha1').update(seed).digest('hex');
+
+  var data = querystring.stringify({
+      username: req.body.username,
+      password: req.body.password,
+      'secret': secret
+    });
+
+  var options = {
+    host: 'localhost',
+    port: 80,
+    path: '/authenticateduser',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': data.length
+    }
+  };
+
+  var req = http.request(options, function(response) {
+    console.log('Post sent');
+    res.header('location', 'authenticateduser/' + secret);
+    res.send(302, null);
+  });
+
+  req.write(data);
+  req.end();
+
+});
+
+
+app.get('/authenticateduser/:id', function(req, res){
+  console.log('User redirect secret: ', req.params.id);
+  res.send(req.headers);
+});
+
+app.post('/authenticateduser', function(req, res){
+  console.log('Post: ', req.body.username, req.body.password, req.body.secret);
+  res.send('Secret received');
+});
+
 
 app.post('/login/samlcallback',
   passport.authenticate('saml', { failureRedirect: '/fail', failureFlash: true }),
