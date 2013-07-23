@@ -1,10 +1,16 @@
 <template name="commentSubmit">
-  <form name="comment" class="collapse cb-form comment-form" id="cb-form-comment">
-    <div class="lbl first">Have your say</div>
-    <hr class="break">
-    <textarea name="body" placeholder="Type here..."></textarea>
-    <div class="cb-submit-container">
-      <button type="submit" class="pull-right std-btn-form cb-submit add-comment">submit</button>
+  <div class="collapse cb-form-container" id="cb-form-container-comment">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-  </form>
+    <form class="cb-form comment-form" name="comment">
+      <div class="lbl first">Have your say</div>
+      <hr class="break-bottom">
+      <textarea name="body" placeholder="Type here..."></textarea>
+      <hr class="break-top">
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment">submit</button>
+      </div>
+    </form>
+  </div>
 </template>
