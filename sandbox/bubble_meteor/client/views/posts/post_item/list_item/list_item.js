@@ -22,7 +22,6 @@ Template.listItem.helpers({
 
     isMe: function(){
      return(this._id == Meteor.userId());
-     alert(this._id);
     },
 
     inBubble: function(){

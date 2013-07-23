@@ -56,6 +56,6 @@ Template.searchAll.helpers({
 Template.searchAll.rendered = function() {
   //To set header as active
   Session.set('searchCategory','all');
-
+  Session.set('currentBubbleId','');
   
 }
