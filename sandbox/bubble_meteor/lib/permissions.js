@@ -36,7 +36,7 @@ ownsBubble = function(userId, doc, onChange) {
 }
 
 bubbleAdmin = function(userId, doc) {
-  var bubble = Bubbles.findOne(doc.bubbleId);
+  var bubble = Bubbles.findOne(doc._id);
   return ('3' == Meteor.user().userType 
     || _.contains(bubble.users.admins, Meteor.userId()));
 }

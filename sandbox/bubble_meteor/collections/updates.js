@@ -354,7 +354,7 @@ createNewApplicantUpdate = function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
 
   //Clears duplicated updates
-  var oldUpdates = Updates.find({read: false, invokerId: userId, bubbleId: bubble._id, updateType: 'new applicant'}).fetch();
+  var oldUpdates = Updates.find({read: false, invokerId: Meteor.userId(), bubbleId: bubble._id, updateType: 'new applicant'}).fetch();
   _.each(oldUpdates, function(update) {
     Meteor.call('setRead', update);
   });

@@ -1,20 +1,23 @@
 <template name="adminActions">
 
-  <button class="visible-{{getApplicantStatus}} pull-right post-action">
+  <button class="visible-{{getApplicantStatus}} pull-right post-action deny">
     <span>deny</span>
   </button>
-  <button class="visible-{{getApplicantStatus}} pull-right post-action left-action">
+  <button class="visible-{{getApplicantStatus}} pull-right post-action left-action accept">
     <span>accept</span>
   </button>
 
-   <button class="invisible-{{getApplicantStatus}} pull-right post-action remove-admin">
+   <button class="visible-{{getAdminStatus}} pull-right post-action remove-admin">
     <span>remove</span>
   </button>
   <button class="visible-{{getAdminStatus}} pull-right post-action left-action demote-admin">
     <span>demote</span>
   </button>
 
-  <button class="visible-{{getMemberStatus}} pull-right post-action left-action">
+  <button class="visible-{{getMemberStatus}} pull-right post-action left-action remove-member">
+    <span>remove</span>
+  </button>
+  <button class="visible-{{getMemberStatus}} pull-right post-action left-action promote-member">
     <span>promote</span>
   </button>
 </template>
