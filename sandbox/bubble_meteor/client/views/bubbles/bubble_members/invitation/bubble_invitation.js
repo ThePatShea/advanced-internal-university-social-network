@@ -27,6 +27,12 @@ Template.bubbleInvitation.helpers({
   },
   hasSearchText: function() {
     return Session.get('selectedUsername');
+  },
+  inIfSearching: function() {
+    if ( Session.get('currentlySearching') )
+      return 'in';
+    else
+      return '';
   }
 });
 
@@ -54,6 +60,8 @@ Template.bubbleInvitation.events({
   },
   'click .add-users': function(event){
     event.preventDefault();
+
+    Session.set('currentlySearching', undefined);  // Keeps the add-members form collapsed
 
     //convert usernameList into userIdList
     usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
@@ -92,6 +100,8 @@ Template.bubbleInvitation.events({
 Template.bubbleInvitation.rendered = function() {
 
   $(".search-text").bind("propertychange keyup input paste", function (event) {
+    Session.set('currentlySearching', 'true');  // Keeps the add-members form open, not collapsed
+
     var searchText = $(".search-text").val();
     if (searchText == ""){
       Session.set('selectedUsername',undefined);
