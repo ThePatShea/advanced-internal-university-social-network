@@ -1,0 +1,25 @@
+<template name="bubbleMembersPage">
+    {{#with getCurrentBubble}}
+      {{> bubbleCover}}
+      {{> bubbleSectionSelector}}
+      <div class="bubble-page-content bubble-members">
+        {{> bubbleMembersHeading}}
+    	  {{> bubbleInvitation}}
+
+        {{#unless isSuperBubble this}}
+          {{#if applicantsHasMembers}}
+            {{> bubbleApplicantsList}}
+          {{/if}}
+        {{/unless}}
+        {{#if adminsHasMembers}}
+          {{> bubbleAdminsList}}
+        {{/if}}
+        {{#if membersHasMembers}}
+          {{> bubbleMembersList}}
+        {{/if}}
+        {{#if inviteesHasMembers}}
+          {{> bubbleInviteesList}}
+        {{/if}}
+      </div>
+    {{/with}}
+</template>
