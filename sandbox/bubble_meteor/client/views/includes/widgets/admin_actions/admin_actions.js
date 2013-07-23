@@ -9,6 +9,10 @@ Template.adminActions.helpers({
 
   getMemberStatus: function() {
 	 return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
+  },
+
+  getInviteeStatus: function() {
+   return Bubbles.find({'users.invitees': this._id, '_id': Session.get('currentBubbleId')}).count();
   }
 });
 
@@ -122,6 +126,20 @@ Template.adminActions.events({
 
     if(this._id != Meteor.userId()){
       //Create update for member who is removed from bubble
+      createRemoveMemberUpdate(this._id);
+    }
+  },
+
+    'click .uninvite': function() {
+    event.stopPropagation();
+    Bubbles.update({_id:Session.get('currentBubbleId')},
+    {
+      $pull: {'users.invitees': this._id}
+    });
+    Session.set(Session.get('currentBubbleId')+this._id,undefined);
+
+    if(this._id != Meteor.userId()){
+      //CREATE NEW UPDATE FUNCTION FOR UNINVITE
       createRemoveMemberUpdate(this._id);
     }
   }

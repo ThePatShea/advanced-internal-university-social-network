@@ -18,5 +18,55 @@ Template.bubbleMembersPage.rendered = function () {
 	{
 		userIdArray.push(userId);
 	});
+	_.each(bubble.users.invitees, function(userId)
+	{
+		userIdArray.push(userId);
+	});
 	Session.set("selectedUserIdList",userIdArray);
 };
+
+Template.bubbleMembersPage.helpers({
+	applicantsHasMembers: function() {
+		if(this.users.applicants.length == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	},
+
+	adminsHasMembers: function() {
+		if(this.users.admins.length == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	},
+
+	membersHasMembers: function() {
+		if(this.users.members.length == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	},
+
+	inviteesHasMembers: function() {
+		if(this.users.invitees.length == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+});

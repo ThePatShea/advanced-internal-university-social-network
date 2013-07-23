@@ -14,10 +14,14 @@
     <span>demote</span>
   </button>
 
-  <button class="visible-{{getMemberStatus}} pull-right post-action left-action remove-member">
+  <button class="visible-{{getMemberStatus}} pull-right post-action remove-member">
     <span>remove</span>
   </button>
   <button class="visible-{{getMemberStatus}} pull-right post-action left-action promote-member">
     <span>promote</span>
+  </button>
+
+  <button class="visible-{{getInviteeStatus}} pull-right post-action uninvite">
+    <span>uninvite</span>
   </button>
 </template>
