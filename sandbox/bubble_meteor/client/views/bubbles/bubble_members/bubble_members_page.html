@@ -7,13 +7,10 @@
     	  {{> bubbleInvitation}}
 
         {{#unless isSuperBubble this}}
-          {{> bubbleInviteesList}}
+          {{> bubbleApplicantsList}}
         {{/unless}}
         {{> bubbleAdminsList}}
         {{> bubbleMembersList}}
-        {{#unless isSuperBubble this}}
-          {{> bubbleApplicantsList}}
-        {{/unless}}
       </div>
     {{/with}}
 </template>
