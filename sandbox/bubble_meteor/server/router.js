@@ -8,6 +8,8 @@ Meteor.Router.add('/user/:username/:secret', 'GET', function(username, secret){
 	return [200, 'Username: ' + username + '\nSecret: ' + secret];
 });
 
+/*
 Meteor.Router.add('/','GET', function(){
 	return [307, {'Location': 'http://main.campusbubble.jit.su'}, 'null'];
 });
+*/
