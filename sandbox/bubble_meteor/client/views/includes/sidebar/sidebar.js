@@ -50,6 +50,8 @@ Template.sidebar.events({
 }); 
 
 Template.sidebar.rendered = function() {
+  // Make textareas in forms resize automatically when the user inputs a lot of text
+    $('textarea').autoResize();
 
   // Ensure that the sidebar has a scroll bar whenever it has more buttons than can fit on it
     var resizeMainBtns = function() {

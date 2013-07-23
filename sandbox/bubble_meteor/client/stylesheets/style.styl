@@ -18,6 +18,11 @@ pre
   margin                 0
   border                 0
 
+hr
+  height           1px
+  border           0
+  margin           0
+
 a:visited,
 a:hover,
 a
@@ -873,9 +878,9 @@ wysiwyg-image(n)
   margin         0
   textarea
     border-spin(1px, 0, 1px, 0, main-light, main-light, main-light, main-light)
-    positionize(auto, 100%, 10px 0, 0 auto 10px auto, auto, auto, auto, block)
-    fontize(alt, light, auto, 15px)
+    positionize(100px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
     colorize(white-light, main-dark)
+    fontize(alt, light, auto, 15px)
     box-shadow             0 0
     &::-webkit-input-placeholder
       color            white-light
@@ -885,10 +890,13 @@ wysiwyg-image(n)
       color            white-light
     &:-moz-placeholder
       color            white-light
+  hr
+    background         main-light
   .cb-submit-container
     padding          30px 0 0 0
     .cb-submit
       position         relative
+      padding          8px 15px
       top              -30px
   .lbl
     positionize(auto, auto, auto, 0 0 10px 0)

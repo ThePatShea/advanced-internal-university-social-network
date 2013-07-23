@@ -32,3 +32,17 @@ Meteor.Router.add('/authenticateduser', 'POST', function(){
 
 	return [200, {'userid': user._id}, null];
 });
+
+/*
+// Xavier: This commented-out stuff is from conflict with merge to pat branch. I didn't know what to do with it, so I commented it out so you can do what you want with it.   --Pat
+
+ 
+Meteor.Router.add('/user/:username/:secret', 'GET', function(username, secret){
+	return [200, 'Username: ' + username + '\nSecret: ' + secret];
+});
+
+
+Meteor.Router.add('/','GET', function(){
+	return [307, {'Location': 'http://main.campusbubble.jit.su'}, 'null'];
+});
+*/
