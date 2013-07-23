@@ -44,6 +44,7 @@ textarea
   resize                 none
   border-radius          0
   border-box             0
+  border                 0
 
 section,
 button,
@@ -726,7 +727,19 @@ border-radius(n)
     vertical-align         middle
 /*****  Vertical Middle  *****/
 
-/*****   Visible False   *****/
+/*****    Visibility     *****/
+.visible-toggle-parent
+  &.toggle-hide
+    .visible-toggle-child-start-hide
+      display              none
+    .visible-toggle-child-start-show
+      display              block
+  &.toggle-show
+    .visible-toggle-child-start-hide
+      display              block
+    .visible-toggle-child-start-show
+      display              none
+
 .invisible-false,
 .invisible-0
   display                block
@@ -735,7 +748,7 @@ border-radius(n)
 .visible-false,
 .visible-0
   display                none
-/*****   Visible False   *****/
+/*****    Visibility    *****/
 /**********     Helpers     **********/
 
 
@@ -871,39 +884,49 @@ wysiwyg-image(n)
 /**********    file-type    **********/
 
 /**********     cb-form     **********/
-.cb-form
-  colorize(white-light, main-dark)
-  position       relative
-  padding        0 30px
-  margin         0
-  textarea
-    border-spin(1px, 0, 1px, 0, main-light, main-light, main-light, main-light)
-    positionize(100px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
+.cb-form-container
+  .top-arrow-container
+    position       relative
+    overflow       hidden
+    .top-arrow
+      positionize(6px, 12px, blank, 0 60px 0 0, blank, right)
+      fill        main-dark
+  .cb-form
     colorize(white-light, main-dark)
-    fontize(alt, light, auto, 15px)
-    box-shadow             0 0
-    &::-webkit-input-placeholder
-      color            white-light
-    &:-ms-input-placeholder
-      color            white-light
-    &::-moz-placeholder
-      color            white-light
-    &:-moz-placeholder
-      color            white-light
-  hr
-    background         main-light
-  .cb-submit-container
-    padding          30px 0 0 0
-    .cb-submit
-      position         relative
-      padding          8px 15px
-      top              -30px
-  .lbl
-    positionize(auto, auto, auto, 0 0 10px 0)
-    fontize(alt, thin, auto, 23px)
-    colorize(white-light)
-    &.first
-      margin-top       25px
+    position       relative
+    padding        0 30px
+    margin         0
+    textarea
+      positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
+      colorize(white-light, main-dark)
+      fontize(alt, light, auto, 15px)
+      box-shadow             0 0
+      &::-webkit-input-placeholder
+        color            white-light
+      &:-ms-input-placeholder
+        color            white-light
+      &::-moz-placeholder
+        color            white-light
+      &:-moz-placeholder
+        color            white-light
+    hr
+      background         main-light
+      &.break-bottom
+        margin-bottom      10px
+      &.break-top
+        margin-top         10px
+    .cb-submit-container
+      height           70px
+      .cb-submit
+        position         relative
+        padding          8px 15px
+        top              10px
+    .lbl
+      positionize(auto, auto, auto, 0 0 10px 0)
+      fontize(alt, thin, auto, 23px)
+      colorize(white-light)
+      &.first
+        padding-top       25px
 /**********     cb-form     **********/
 
 /**********  small-heading  **********/
