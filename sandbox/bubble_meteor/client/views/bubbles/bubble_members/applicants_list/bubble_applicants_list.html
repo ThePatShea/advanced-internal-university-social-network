@@ -1,0 +1,12 @@
+<template name="bubbleApplicantsList">
+  <div class="heading-container">
+    <div class="small-heading member-list-heading">
+    	applicants
+    </div>
+  </div>
+  <div>
+	  {{#each getApplicants}}
+	    {{> listItem}}
+	  {{/each}}
+  </div>
+</template>

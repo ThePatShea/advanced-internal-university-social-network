@@ -12,8 +12,9 @@ Deps.autorun(function() {
 
 
 	// Comments Related Subscriptions
-	  Meteor.subscribe('comments', Session.get('currentPostId'));
+		Meteor.subscribe('comments', Session.get('currentPostId'));
 		commentsHandle = Meteor.subscribeWithPagination('comments', Session.get('currentPostId'), Meteor.userId(), 10);
+		Meteor.subscribe('userComments',Meteor.userId());
 
 
 	// Meteor Users Related Subscriptions 

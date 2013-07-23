@@ -1,12 +1,21 @@
-Template.bubbleAdminsList.helpers({
-	getAdmins: function() {
-    var adminIds = this.users.admins;
-    return Meteor.users.find({_id: {$in: adminIds}}).fetch();
+Template.adminActions.helpers({
+  getAdminStatus: function() {
+    return Bubbles.find({'users.admins': this._id, '_id': Session.get('currentBubbleId')}).count();
+  },
+
+  getApplicantStatus: function() {
+	return Bubbles.find({'users.applicants': this._id, '_id': Session.get('currentBubbleId')}).count();
+  },
+
+  getMemberStatus: function() {
+	return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
   }
 });
 
 Template.bubbleAdminsList.events({
 	'click .demote-admin': function(){
+	// Disable the parent button
+    event.stopPropagation();
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
     var admins = bubble.users.admins;
 
@@ -23,15 +32,10 @@ Template.bubbleAdminsList.events({
     }
     
   },
-  'click .activate': function() {
-    if (Session.get(Session.get('currentBubbleId')+this.toString())){
-      Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
-    }else{
-      Session.set(Session.get('currentBubbleId')+this.toString(),this.toString());
-    }
-  },
   //This happens when admin leaves the bubble
   'click .remove-admin': function() {
+  	// Disable the parent button
+    event.stopPropagation();
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
     var admins = bubble.users.admins;
     var members = bubble.users.members;

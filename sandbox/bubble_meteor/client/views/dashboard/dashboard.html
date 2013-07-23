@@ -1,0 +1,14 @@
+<template name="dashboard">
+	<div>
+	<p>
+		Bubbles: {{numBubbles}}<br />
+		Invites: {{numInvites}}<br />
+		Updates: {{numUpdates}}<br />
+		Comments: {{numComments}}
+	</p>
+	</div>
+
+	{{#each getUpdates}}
+		{{> updateItem}}
+	{{/each}}
+</template>

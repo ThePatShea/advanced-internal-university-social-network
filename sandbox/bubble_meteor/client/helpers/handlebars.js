@@ -122,6 +122,10 @@ Handlebars.registerHelper('matchObjectType', function(inputObjectType){
   }
 });
 
+Handlebars.registerHelper('matchSectionType', function() {
+  
+});
+
 Handlebars.registerHelper('getCurrentBubble', function() {
   return Bubbles.findOne(Session.get('currentBubbleId'));
 });
@@ -132,7 +136,14 @@ Handlebars.registerHelper('getCurrentPost', function() {
 
 Handlebars.registerHelper('isAdmin', function() {  
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-  return (Meteor.user().userType == '3') || _.contains(bubble.users.admins, Meteor.userId());
+  if(bubble)
+  {
+    return (Meteor.user().userType == '3') || _.contains(bubble.users.admins, Meteor.userId());
+  }
+  else
+  {
+    return -1;
+  }
 });
 
 Handlebars.registerHelper('belongsToBubble', function() {

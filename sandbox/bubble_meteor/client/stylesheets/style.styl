@@ -898,6 +898,13 @@ wysiwyg-image(n)
       margin-top       25px
 /**********     cb-form     **********/
 
+/**********  small-heading  **********/
+.small-heading
+  positionize(auto, auto, auto, 0 0 30px 0)
+  fontize(main, bold, uppercase, 12px)
+  colorize(main-light)
+/**********  small-heading  **********/
+
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -969,6 +976,14 @@ align-with-post-item(n)
       display                block
       &.visible-false
         display                none
+      &.visible-0
+        display                none
+      &.invisible-0
+        display                block
+      &.invisible-1
+        display                none
+      &.left-action
+        margin-right           0
   &:nth-child(odd)
     std-white-light-bg      0
   &:nth-child(even)
@@ -1542,9 +1557,6 @@ attachment-height  =  75px
       move-position(absolute, 3px, auto, auto, 3px)
       border        0
   .small-heading
-    positionize(auto, auto, auto, 0 0 30px 0)
-    fontize(main, bold, uppercase, 12px)
-    colorize(main-light)
     &.event-body-heading
       positionize(auto, auto, auto, 15px 30px 10px 30px)
     &.attribute-going
@@ -1699,6 +1711,16 @@ attachment-height  =  75px
           move-position(absolute, 10px, 10px)
           display        none
 /**********         post-page         **********/
+
+/**********       bubble-members      **********/
+.bubble-members
+  .heading-container
+    padding        0 30px 20px 30px
+    .small-heading
+      &.member-list-heading
+        margin        0
+
+/**********       bubble-members      **********/
 
 /***************  Single-Purpose Elements  ***************/
 

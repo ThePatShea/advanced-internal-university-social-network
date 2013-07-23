@@ -134,7 +134,10 @@
             <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
             <span class="visible-{{matchPostType 'file'}}">{{> download}}</span>
             <span class="visible-{{matchObjectType 'bubble'}}">{{> connectBubble}}</span>
-            <span class="visible-{{matchObjectType 'user'}}">{{> viewProfile}}</span>
+            <span class="visible-{{matchObjectType 'user'}}">
+              <span class="invisible-{{isAdmin}}">{{> viewProfile}}</span>
+              <span class="visible-{{isAdmin}}">{{> adminActions}}</span>
+            </span>
           </span>
         </div>
       </div>

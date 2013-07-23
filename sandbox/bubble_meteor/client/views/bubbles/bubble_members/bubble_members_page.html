@@ -1,21 +1,16 @@
 <template name="bubbleMembersPage">
-  {{#with getCurrentBubble}}
-    {{> bubbleCover}}
-    {{> bubbleSectionSelector}}
-  	{{> bubbleInvitation}}
+    {{#with getCurrentBubble}}
+      {{> bubbleCover}}
+      {{> bubbleSectionSelector}}
+      <div class="bubble-page-content bubble-members">
+        {{> bubbleMembersHeading}}
+    	  {{> bubbleInvitation}}
 
-    {{#unless isSuperBubble this}}
-    	<hr>
-      {{> bubbleInviteesList}}
-    {{/unless}}
-    <hr>
-    {{> bubbleAdminsList}}
-    <hr>
-    {{> bubbleMembersList}}
-    {{#unless isSuperBubble this}}
-      <hr>
-      {{> bubbleApplicantsList}}
-    {{/unless}}
-
-  {{/with}}
+        {{#unless isSuperBubble this}}
+          {{> bubbleApplicantsList}}
+        {{/unless}}
+        {{> bubbleAdminsList}}
+        {{> bubbleMembersList}}
+      </div>
+    {{/with}}
 </template>

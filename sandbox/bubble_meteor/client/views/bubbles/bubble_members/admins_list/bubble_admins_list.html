@@ -1,33 +1,10 @@
 <template name="bubbleAdminsList">
-	This is admin list
-	<br />
+  <div class="heading-container">
+    <div class="small-heading member-list-heading">
+    	admins
+    </div>
+  </div>
   {{#each getAdmins}}
-    {{#if isSuperBubble}}
-      {{getUsername this}}
-    {{else}}
-
-      {{#if isAdmin}}
-        <button class="btn btn-small activate" type="button">
-          {{getUsername this}}
-        </button>
-        {{#if isUser this}}
-          {{#if chosen}}
-            <button class="btn btn-small btn-inverse remove-admin" type="button">Leave Bubble</button>
-            <button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
-          {{/if}}
-        {{else}}
-          {{#if chosen}}
-            <button class="btn btn-small btn-inverse demote-admin" type="button">Demote to Member</button>
-          {{/if}}
-        {{/if}} 
-      {{else}}
-        {{getUsername this}}
-      {{/if}}  
-    {{/if}}
-
-    <br />    
+    {{> listItem}}
   {{/each}}
-
-
-  
 </template>
