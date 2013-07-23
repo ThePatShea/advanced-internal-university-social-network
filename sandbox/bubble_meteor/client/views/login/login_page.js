@@ -103,6 +103,6 @@ Template.loginPage.rendered = function(){
           Meteor.Router.to('searchBubbles');
         }
       });
-    }, 100);
+    }, 1000);
   }
 }

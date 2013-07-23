@@ -168,7 +168,7 @@ app.get('/testlogin', function(req, res){
 });
 
 app.post('/testlogin', function(req, res){
-  //console.log(req.body.username, req.body.password);
+  console.log(req.body.username, req.body.password);
   var seed = crypto.randomBytes(20);
   var secret = crypto.createHash('sha1').update(seed).digest('hex');
 
@@ -179,8 +179,8 @@ app.post('/testlogin', function(req, res){
     });
 
   var options = {
-    host: 'localhost',
-    port: 3000,
+    host: 'talkschool.net',
+    port: 443,
     path: '/authenticateduser',
     method: 'POST',
     headers: {
@@ -189,16 +189,21 @@ app.post('/testlogin', function(req, res){
     }
   };
 
-  var req = http.request(options, function(response) {
+  var req = https.request(options, function(response) {
     //var userid = response.get('userid');
     //console.log('Post sent');
     res.on('data', function(chunk){
         console.log("body: " + chunk);
     });
-    res.header('location', 'http://localhost:3000/authenticateduser/' + secret);
+    res.header('location', 'https://talkschool.net/authenticateduser/' + secret);
     res.send(302, null);
   });
 
+  req.on('error', function(err){
+    console.log('Error seidning POST: ', err);
+  });
+
+  console.log('Sending...');
   req.write(data);
   req.end();
 
