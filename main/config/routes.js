@@ -193,7 +193,7 @@ module.exports = function (app, passport, auth) {
     app.post('/users'                    ,  users.create)
     app.get('/login'                     ,  users.login)
     app.get('/beta'                      ,  function(req,res){ res.redirect('/') } )
-    app.get('/preview'                   ,  function(req,res){ res.redirect('https://projects.invisionapp.com/share/2WFURTP4#/screens') } )
+    app.get('/preview'                   ,  function(req,res){ res.redirect('https://projects.invisionapp.com/share/H9G2EXZU#/screens') } )
     app.get('/cabinet'                   ,  function(req,res){ res.redirect('http://lonick.wwwsr1.supercp.com/emory/cabinet') } )
     app.get('/pitch'                     ,  function(req,res){ res.redirect('http://lonick.wwwsr1.supercp.com/emory') } )
 
