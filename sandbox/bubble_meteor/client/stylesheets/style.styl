@@ -727,7 +727,19 @@ border-radius(n)
     vertical-align         middle
 /*****  Vertical Middle  *****/
 
-/*****   Visible False   *****/
+/*****    Visibility     *****/
+.visible-toggle-parent
+  &.toggle-hide
+    .visible-toggle-child-start-hide
+      display              none
+    .visible-toggle-child-start-show
+      display              block
+  &.toggle-show
+    .visible-toggle-child-start-hide
+      display              block
+    .visible-toggle-child-start-show
+      display              none
+
 .invisible-false,
 .invisible-0
   display                block
@@ -736,7 +748,7 @@ border-radius(n)
 .visible-false,
 .visible-0
   display                none
-/*****   Visible False   *****/
+/*****    Visibility    *****/
 /**********     Helpers     **********/
 
 

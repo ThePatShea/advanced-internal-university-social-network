@@ -50,6 +50,12 @@ Template.sidebar.events({
 }); 
 
 Template.sidebar.rendered = function() {
+  // Handles the cancel button for forms
+    $('.visible-toggle-parent').click(function() {
+      $(this).removeClass('toggle-hide');
+      $(this).addClass('toggle-show');
+    });
+
   // Make textareas in forms resize automatically when the user inputs a lot of text
     $('textarea').autoResize();
 
