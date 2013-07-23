@@ -4,11 +4,11 @@ Template.adminActions.helpers({
   },
 
   getApplicantStatus: function() {
-	return Bubbles.find({'users.applicants': this._id, '_id': Session.get('currentBubbleId')}).count();
+	 return Bubbles.find({'users.applicants': this._id, '_id': Session.get('currentBubbleId')}).count();
   },
 
   getMemberStatus: function() {
-	return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
+	 return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
   }
 });
 
@@ -46,9 +46,9 @@ Template.adminActions.events({
       });
 
       //If no more admins are left, the earliest member will be an admin
-      if(confirm('If you remove yourself, the earliest member of the bubble will be promoted to admin.  Are you sure you want to remove yourself from this bubble?'))
-      {
-        if(admins.length == 1){
+      if(admins.length == 1){
+        if(confirm('If you remove yourself, the earliest member of the bubble will be promoted to admin.  Are you sure you want to remove yourself from this bubble?'))
+        {
           Bubbles.update({_id:Session.get('currentBubbleId')},
           {
             $addToSet: {'users.admins': members[0]},
@@ -56,7 +56,6 @@ Template.adminActions.events({
           });
         }
       }
-
     }else{
       if(confirm("You are the last remaining member.  Removing yourself will delete this bubble.  Are you sure you want to delete this bubble?"))
       {

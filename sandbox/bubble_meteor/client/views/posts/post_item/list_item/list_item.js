@@ -1,8 +1,9 @@
 Template.listItem.helpers({
     isGoing : function() {
       return _.contains(this.attendees,Meteor.user().username)
-    }
-  , hasChildren : function() {
+    },
+
+    hasChildren : function() {
       if (this.children != undefined && this.children != "")
         return true;
       else
@@ -17,6 +18,15 @@ Template.listItem.helpers({
       else{
         return -1;
       }
+    },
+
+    isMe: function(){
+     return(this._id == Meteor.userId());
+     alert(this._id);
+    },
+
+    inBubble: function(){
+      return(Session.get("currentBubbleId"));
     }
 });
 
