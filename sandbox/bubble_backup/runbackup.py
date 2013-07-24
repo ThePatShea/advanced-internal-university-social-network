@@ -2,15 +2,28 @@
 
 import datetime
 import os
-import subprocess
+import re
 
 
+
+bubble_url = 'bubble.meteor.com'
 current_backup_path = '~/bubblebackup_data/'
-mongodump_username = 'client'
-mongodump_password = '569e356f-148a-f982-e429-ed09521ee2b3'
-mongodump_host = 'production-db-a1.meteor.io:27017'
-mongodump_port = '27017'
-mongodump_database = 'bubble_meteor_com'
+
+os.system('meteor mongo --url ' + bubble_url + ' > tmp')
+tempfile = open('tmp', 'r')
+tempfile.readline()
+mongostring = tempfile.readline()
+tempfile.close()
+os.system('rm tmp')
+
+match = re.search("(\w+)\:\/\/(\w+)\:([\w+\-]+)\@([\w\.\-]+)\:([0-9]+)\/(\w+)", mongostring)
+
+mongodump_username = match.group(2)
+mongodump_password = match.group(3)
+mongodump_host = match.group(4)
+mongodump_port = match.group(5)
+mongodump_database = match.group(6)
+
 
 current_datetime = datetime.datetime.now()
 current_backup_foldername = 'mongodump-' + current_datetime.strftime('%Y-%m-%d--%H_%M_%S')
