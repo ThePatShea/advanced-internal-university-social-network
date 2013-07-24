@@ -719,6 +719,12 @@ border-radius(n)
   -ms-border-radius      n
   -o-border-radius       n
   border-radius          n
+
+opacity(n)
+  filter                 unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
+  opacity                n
+  zoom                   1
+
 /**********   Properties    **********/
 
 
@@ -896,50 +902,102 @@ wysiwyg-image(n)
     .top-arrow
       positionize(6px, 12px, blank, 0 60px 0 0, blank, right)
       fill        main-dark
+  .bottom-arrow-container
+    .bottom-arrow
+      positionize(6px, 12px, blank, 0 0 0 30px)
+      fill        main-dark
   .cb-form
     colorize(white-light, main-dark)
     position       relative
     padding        0 30px
     margin         0
+    &.cb-form-container-search
+      margin-bottom  -12px
+    .attach-files
+      padding-top     30px
+      .drop-zone
+        border-spin(1px, 0, 1px, 0, main-light, blank, main-light, blank)
+        position        relative
+        @media (min-width: 768px)
+          padding         60px 0
+        @media (max-width: 767px)
+          padding         40px 0
+        .dz-title
+          fontize(main, bold, uppercase, 78px, 1em, blank, blank, center)
+          font-style        italic
+          colorize(main-xdark)
+        .dz-subtitle
+          fontize(main, light, lowercase, 21px, 1em, blank, blank, center)
+          colorize(main-light)
+        .file-chooser-invisible
+          move-position(absolute, 0, 0)
+          cursor            pointer
+          height            100%
+          width             100%
+          opacity           0
+      .attachments-list
+        move-position(absolute, 0)
+        .previewthumb,
+        .thumb
+          colorize(main-light, main-dark)
+          height            90%
+          width             90%
+          margin            5%
+          border-radius     6px
+          border-box        0
     .nav-tabs
       border         0
       &.small-boxes
         padding       10px 0 40px 0
+        margin        0
         li
-          background     main-dark
-          border         1px solid main-light
           positionize(75px, 75px, 0, 0 10px 10px 0)
+          fontize(main, bold, uppercase, 10px)
+          colorize(main-xlight)
+          border         1px solid main-light
+          background     main-dark
+          overflow       hidden
           border-radius  6px
+          .add-padding
+            padding        10px
           a
-            border-box     0
             height         100%
             width          100%
             padding        10px
             display        block
-            colorize(main-xlight)
             fontize(main, bold, uppercase, 10px)
+            colorize(main-xlight)
+            border-box     0
+          svg
+            fill           main-xlight
+          .cb-icon
+            margin         0 auto
             svg
-              fill           main-xlight
-            .cb-icon
-              margin         0 auto
-              svg
-                width          100%
-              &.cb-icon-bubble
-                width          40px
-              &.cb-icon-member
-                width          40px
-              &.cb-icon-event
-                width          31px
-              &.cb-icon-discussion
-                width          32px
-              &.cb-icon-file
-                width          32px
-            .cb-icon-lbl
-              text-align     center
-              margin         2px 0 0 0
+              width          100%
+            &.cb-icon-bubble
+              width          40px
+            &.cb-icon-member
+              width          40px
+            &.cb-icon-event
+              width          31px
+            &.cb-icon-discussion
+              width          32px
+            &.cb-icon-file
+              width          32px
+          .cb-icon-lbl
+            margin         10px 0 0 0
+            text-align     center
+            line-height    1em
+            &.file-name
+              margin         8px 0 0 0
+              overflow       hidden
+              height         20px
+              width          55px
+          .lbl-all-container
+            width          100%
             .lbl-all
               fontize(main, bold, uppercase, 25px, auto, auto, auto, center)
-              width          55px
+              width          100%
           &:hover,
           &.active
             background     main-light
@@ -951,11 +1009,13 @@ wysiwyg-image(n)
                 fill            main-dark
                 height          30px
     input
-      fontize(alt, light, auto, 23px)
-      colorize(white-light, main-dark)
-      border         0
       border-bottom  1px solid main-light
+      colorize(white-light, main-dark)
+      fontize(alt, light, auto, 23px)
       box-shadow     0 0
+      border-right   0
+      border-left    0
+      border-top     0
       border-radius  0
       &.search-text
         width          100%
@@ -1000,6 +1060,16 @@ wysiwyg-image(n)
   fontize(main, bold, uppercase, 12px)
   colorize(main-light)
 /**********  small-heading  **********/
+
+/**********     errors      **********/
+.errors
+  fontize(alt, regular, auto, 14px)
+  position        fixed
+  width           100%
+  z-index         100
+  left            0
+  top             0
+/**********     errors      **********/
 
 /***************  Multi-Purpose Elements   ***************/
 
@@ -1571,7 +1641,10 @@ bubble-section-selector-height-small  =  75px
 
 /**********        bubble-page        **********/
 section-icon(n)
+  section-icon-no-fill   0
   main-light-fill        0
+
+section-icon-no-fill(n)
   @media (min-width: 768px)
     display                inline
   @media (max-width: 767px)
@@ -1580,6 +1653,8 @@ section-icon(n)
 .bubble-page-content
   @media (min-width: 768px)
     padding              50px 0
+    &.bubble-page-content-search
+      padding            30px 0 50px 0
   @media (max-width: 767px)
     padding              25px 0
   .bubble-list
@@ -1614,6 +1689,14 @@ section-icon(n)
         section-icon           0
         svg
           height                 27px 
+      .section-icon-search
+        margin-right           5px
+        section-icon-no-fill   0
+        path
+          stroke                   main-light
+        svg
+          height                 25px 
+          width                  22px
       .section-name
         main-light-color       0
         font-alt-light         0

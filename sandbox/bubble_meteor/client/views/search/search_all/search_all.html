@@ -1,40 +1,11 @@
 <template name="searchAll">
-  {{> searchPage}}
-
-  {{#if hasSearchText}}
-    <b>Results for Bubbles</b>
-    <a href="{{searchBubblesPath}}"><button class="btn btn-mini btn-warning" type="button">SEE ALL</button> <br /></a>
-    {{#each getSearchedBubbles}}
-    	{{> bubbleItem}}
-    {{/each}}
-
-    <hr>
-    <b>Results for Discussions</b>
-    <a href="{{searchDiscussionsPath}}"><button class="btn btn-mini btn-warning" type="button">SEE ALL</button> <br /></a>
-    {{#each getSearchedDiscussions}}
-  		{{> postItem}}
-    {{/each}}
-
-    <hr>
-    <b>Results for Events</b>
-    <a href="{{searchEventsPath}}"><button class="btn btn-mini btn-warning" type="button">SEE ALL</button> <br /></a>
-    {{#each getSearchedEvents}}
-  		{{> postItem}}
-    {{/each}}
-
-    <hr>
-    <b>Results for File Posts</b>
-    <a href="{{searchFilesPath}}"><button class="btn btn-mini btn-warning" type="button">SEE ALL</button> <br /></a>
-    {{#each getSearchedFiles}}
-  		{{> postItem}}
-    {{/each}}
-
-    <hr>
-    <b>Results for Users</b>
-    <a href="{{searchUsersPath}}"><button class="btn btn-mini btn-warning" type="button">SEE ALL</button> <br /></a>
-    {{#each getSearchedUsers}}
-      <a href="{{userProfilePath _id}}"<button class="btn btn-small btn-info" type="button">{{username}}</button></a> <br />
-    {{/each}}
-  {{/if}}
-
+  <div class="bubble-page-content bubble-page-content-search">
+    {{> searchPage}}
+  
+    {{#if hasSearchText}}
+      {{#each getSearchedAll}}
+        {{> listItem}}
+      {{/each}}
+    {{/if}}
+  </div>
 </template>

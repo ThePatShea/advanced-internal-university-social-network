@@ -11,13 +11,13 @@ Meteor.methods({
     var post = Posts.findOne(commentAttributes.postId);
     // ensure the user is logged in
     if (!user)
-      throw new Meteor.Error(401, "You need to login to make comments");
+      throw new Meteor.Error(401, "Please sign in to make comment");
       
     if (!commentAttributes.body)
-      throw new Meteor.Error(422, 'Please write some content');
+      throw new Meteor.Error(422, 'Please type a message before submitting your comment');
       
     if (!commentAttributes.postId)
-      throw new Meteor.Error(422, 'You must comment on a post');
+      throw new Meteor.Error(422, 'Please comment on a post');
     
     currentTime = new Date().getTime();
 

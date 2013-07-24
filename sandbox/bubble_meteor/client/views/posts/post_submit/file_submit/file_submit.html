@@ -1,28 +1,20 @@
 <template name="fileSubmit">
-  {{#with getCurrentBubble}}
-    {{> bubbleCover}}
-    {{> bubbleSectionSelector}}
-  {{/with}}
-  <section class="main">
-    {{> selectPostType}}
-    <style>
-    #drop_zone{border:2px dashed #bbb;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:25px;text-align:center;font: 20pt bold 'Vollkorn';color:#bbb}
-    .thumb {
-    height: 75px;
-    border: 1px solid #000;
-    margin: 10px 5px 0 0;
-  }
-    </style>
-
-    <form>
-    <div id="drop_zone" class="dropzone">Drop files here</div>
-    <input name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
-    <output id="list"></output>
-    <hr />
-    <div class="control-group">
-          <div class="controls">
-              <input type="submit" value="Submit" class="btn btn-primary"/>
-          </div>
+  <div class="cb-form-container" id="cb-form-container-comment">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form">
+      <div class="attach-files">
+        <div id="drop_zone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+        </div>
       </div>
-  </section>
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+      </div>
+    </form>
+  </div>
 </template>
