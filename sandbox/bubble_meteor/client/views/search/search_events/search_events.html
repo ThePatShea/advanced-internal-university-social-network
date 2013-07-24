@@ -1,9 +1,8 @@
 <template name="searchEvents">
-  {{> searchPage}}
-
-  <b>Results for Events</b>
-  {{#each getSearchedEvents}}
-		{{> listItem}}
-  {{/each}}
-
+  <div class="bubble-page-content bubble-page-content-search">
+    {{> searchPage}}
+    {{#each getSearchedEvents}}
+  		{{> listItem}}
+    {{/each}}
+  </div>
 </template>

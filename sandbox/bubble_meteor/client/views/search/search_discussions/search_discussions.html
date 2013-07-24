@@ -1,10 +1,8 @@
 <template name="searchDiscussions">
-
-  {{> searchPage}}
-
-  <b>Results for Discussions</b>
-  {{#each getSearchedDiscussions}}
-		{{> listItem}}
-  {{/each}}
-
+  <div class="bubble-page-content bubble-page-content-search">
+    {{> searchPage}}
+    {{#each getSearchedDiscussions}}
+  		{{> listItem}}
+    {{/each}}
+  </div>
 </template>

@@ -1,9 +1,8 @@
 <template name="searchFiles">
-  {{> searchPage}}
-
-  <b>Results for File Posts</b>
-  {{#each getSearchedFiles}}
-		{{> listItem}}
-  {{/each}}
-
+  <div class="bubble-page-content bubble-page-content-search">
+    {{> searchPage}}
+    {{#each getSearchedFiles}}
+  		{{> listItem}}
+    {{/each}}
+  </div>
 </template>
