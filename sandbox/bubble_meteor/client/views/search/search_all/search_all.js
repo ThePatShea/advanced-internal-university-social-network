@@ -27,7 +27,7 @@ Template.searchAll.helpers({
         {title: new RegExp(Session.get('searchText'),'i')},
         {description: new RegExp(Session.get('searchText'),'i')}
         ]
-      }, {limit:2}).fetch();
+      }, {limit:searchBubblesHandle.limit()}).fetch();
 
     var searchedDiscussions = Posts.find(
       { postType: 'discussion',
@@ -35,7 +35,7 @@ Template.searchAll.helpers({
         {name: new RegExp(Session.get('searchText'),'i')},
         {body: new RegExp(Session.get('searchText'),'i')}
         ]
-      }, {limit:2}).fetch();
+      }, {limit: searchDiscussionsHandle.limit()}).fetch();
 
     var searchedEvents = Posts.find(
       { postType: 'event',
@@ -44,12 +44,12 @@ Template.searchAll.helpers({
         {body: new RegExp(Session.get('searchText'),'i')},
         {location: new RegExp(Session.get('searchText'),'i')}
         ]
-      }, {limit:2}).fetch();
+      }, {limit: searchEventsHandle.limit()}).fetch();
 
     var posts =  Posts.find(
       { postType: 'file',
         name: new RegExp(Session.get('searchText'),'i')
-      }, {limit: 2}).fetch();
+      }, {limit: searchFilesHandle.limit()}).fetch();
 
     // return posts where searchText is not similar to file extension
     if(posts) {
@@ -66,11 +66,10 @@ Template.searchAll.helpers({
       {
         username:new RegExp(Session.get('searchText'),'i'),
         _id: {$nin: [Meteor.userId()]}
-      }, {limit: 3}).fetch();
+      }, {limit: usersListHandle.limit()}).fetch();
 
     
     var searchedAll  =  searchedBubbles.concat(searchedDiscussions, searchedEvents, searchedFiles, searchedUsers);
-    searchedAll      =  searchedAll.sort(searchCompare);
 
     return searchedAll;
   },
@@ -129,8 +128,21 @@ Template.searchAll.helpers({
 });
 
 Template.searchAll.rendered = function() {
-  //To set header as active
+  // To set header as active
   Session.set('searchCategory','all');
   Session.set('currentBubbleId','');
-  
+ 
+
+  // For infinite scroll
+  $(window).scroll(function(){
+    if ($(window).scrollTop() == $(document).height() - $(window).height()){
+      if(Meteor.Router._page == 'searchAll'){
+        this.searchBubblesHandle.loadNextPage();
+        this.searchDiscussionsHandle.loadNextPage();
+        this.searchEventsHandle.loadNextPage();
+        this.searchFilesHandle.loadNextPage();
+        this.usersListHandle.loadNextPage();
+      }
+    }
+  }); 
 }
