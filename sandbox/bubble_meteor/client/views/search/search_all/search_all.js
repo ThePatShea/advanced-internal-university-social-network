@@ -64,8 +64,7 @@ Template.searchAll.helpers({
     Session.set('selectedUsername',Session.get('searchText'));
     var searchedUsers = Meteor.users.find(
       {
-        username:new RegExp(Session.get('searchText'),'i'),
-        _id: {$nin: [Meteor.userId()]}
+        username:new RegExp(Session.get('searchText'),'i')
       }, {limit: usersListHandle.limit()}).fetch();
 
     

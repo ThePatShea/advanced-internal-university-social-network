@@ -19,25 +19,37 @@ Template.connectBubble.helpers({
     }
 });
 
-Template.imGoing.events({
-    'click .connect-bubble': function(event) {
+Template.connectBubble.events({
+    'click .connect-bubble': function() {
       // Disable the parent button
         event.stopPropagation();
 
       // Add/remove the user to/from list of attendees
         //Meteor.call('attendEvent',this._id,Meteor.user().username);
 
-      if (_.contains(this.users.admins, Meteor.userId()) || _.contains(this.users.members, Meteor.userId())){ //User belongs to bubble
-        //Meteor.call('attendEvent',this._id,Meteor.user().username);
+      if(_.contains(this.users.admins, Meteor.userId()) || _.contains(this.users.members, Meteor.userId())){
+        Meteor.Router.to('/mybubbles/'+this._id+'/home');
       }
       else if(_.contains(this.users.applicants, Meteor.userId())){ //User has applied to bubble
-          return "cancel application";
+        Bubbles.update({_id:this._id},
+        {
+          $pull: {'users.applicants': Meteor.userId()}
+        });
       }
       else if(_.contains(this.users.invitees, Meteor.userId())){ //User has been invited to bubble
-        return "accept invite";
+        Bubbles.update({_id:this._id},
+        {
+          $addToSet: {'users.members': Meteor.userId()},
+          $pull: {'users.invitees': Meteor.userId()}
+        });
+        createNewMemberUpdate(Meteor.userId());
       }
       else{
-        return "join bubble";
+        Bubbles.update({_id:this._id},
+        {
+          $addToSet: {'users.applicants': Meteor.userId()}
+        });
+        createNewApplicantUpdate();
       }
       
     
