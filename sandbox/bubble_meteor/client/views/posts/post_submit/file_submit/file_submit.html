@@ -1,10 +1,4 @@
 <template name="fileSubmit">
-  {{#with getCurrentBubble}}
-    {{> bubbleCover}}
-    {{> bubbleSectionSelector}}
-  {{/with}}
-  <section class="main">
-    {{> selectPostType}}
     <style>
     #drop_zone{border:2px dashed #bbb;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;padding:25px;text-align:center;font: 20pt bold 'Vollkorn';color:#bbb}
     .thumb {
@@ -18,11 +12,25 @@
     <div id="drop_zone" class="dropzone">Drop files here</div>
     <input name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
     <output id="list"></output>
-    <hr />
     <div class="control-group">
           <div class="controls">
               <input type="submit" value="Submit" class="btn btn-primary"/>
           </div>
       </div>
-  </section>
+    </form>
+
+  <div class="cb-form-container" id="cb-form-container-comment">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form comment-form" name="comment">
+      <div class="lbl first">Have your say</div>
+      <hr class="break-bottom">
+      <textarea name="body" placeholder="Type here..."></textarea>
+      <hr class="break-top">
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+      </div>
+    </form>
+  </div>
 </template>
