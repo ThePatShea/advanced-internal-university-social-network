@@ -907,6 +907,23 @@ wysiwyg-image(n)
     margin         0
     &.cb-form-container-search
       margin-bottom  -12px
+    .attach-files
+      padding-top     30px
+      .drop-zone
+        border-spin(1px, 0, 1px, 0, main-light, blank, main-light, blank)
+        @media (min-width: 768px)
+          padding         60px 0
+        @media (max-width: 767px)
+          padding         30px 0
+        .dz-title
+          fontize(main, bold, uppercase, 78px, 1em, blank, blank, center)
+          colorize(main-xdark)
+        .dz-subtitle
+          fontize(main, light, lowercase, 21px, 1em, blank, blank, center)
+          colorize(main-light)
+      .attachments-list
+        .previewthumb
+          height         75px
     .nav-tabs
       border         0
       &.small-boxes
