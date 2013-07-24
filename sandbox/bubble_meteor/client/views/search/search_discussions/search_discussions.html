@@ -1,8 +1,10 @@
 <template name="searchDiscussions">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
-    {{#each getSearchedDiscussions}}
-  		{{> listItem}}
-    {{/each}}
+    {{#if hasSearchText}}
+      {{#each getSearchedDiscussions}}
+        {{> listItem}}
+      {{/each}}
+    {{/if}}
   </div>
 </template>

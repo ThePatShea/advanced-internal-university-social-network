@@ -1,8 +1,10 @@
 <template name="searchEvents">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
-    {{#each getSearchedEvents}}
-  		{{> listItem}}
-    {{/each}}
+    {{#if hasSearchText}}
+      {{#each getSearchedEvents}}
+        {{> listItem}}
+      {{/each}}
+    {{/if}}
   </div>
 </template>
