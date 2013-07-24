@@ -951,11 +951,13 @@ wysiwyg-image(n)
                 fill            main-dark
                 height          30px
     input
-      fontize(alt, light, auto, 23px)
-      colorize(white-light, main-dark)
-      border         0
       border-bottom  1px solid main-light
+      colorize(white-light, main-dark)
+      fontize(alt, light, auto, 23px)
       box-shadow     0 0
+      border-right   0
+      border-left    0
+      border-top     0
       border-radius  0
       &.search-text
         width          100%
@@ -1581,7 +1583,10 @@ bubble-section-selector-height-small  =  75px
 
 /**********        bubble-page        **********/
 section-icon(n)
+  section-icon-no-fill   0
   main-light-fill        0
+
+section-icon-no-fill(n)
   @media (min-width: 768px)
     display                inline
   @media (max-width: 767px)
@@ -1624,6 +1629,14 @@ section-icon(n)
         section-icon           0
         svg
           height                 27px 
+      .section-icon-search
+        margin-right           5px
+        section-icon-no-fill   0
+        path
+          stroke                   main-light
+        svg
+          height                 25px 
+          width                  22px
       .section-name
         main-light-color       0
         font-alt-light         0
