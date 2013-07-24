@@ -1,4 +1,54 @@
+function searchCompare(a,b) {
+  if (a.title)
+    a.word = a.title
+  else if (a.username)
+    a.word = a.username
+  else if (a.name)
+    a.word = a.name
+
+  if (b.title)
+    b.word = b.title
+  else if (b.username)
+    b.word = b.username
+  else if (b.name)
+    b.word = b.name
+
+  if (a.word < b.word)
+     return -1;
+  if (a.word > b.word)
+    return 1;
+  return 0;
+}
+
 Template.searchAll.helpers({
+  getSearchedAll: function() {
+    var searchedBubbles = Bubbles.find(
+      { $or: [
+        {title: new RegExp(Session.get('searchText'),'i')},
+        {description: new RegExp(Session.get('searchText'),'i')}
+        ]
+      }, {limit:2}).fetch();
+
+    var searchedPosts = Posts.find(
+      { $or: [
+        {name: new RegExp(Session.get('searchText'),'i')},
+        {body: new RegExp(Session.get('searchText'),'i')}
+        ]
+      }, {limit:2}).fetch();
+
+    Session.set('selectedUsername',Session.get('searchText'));
+    var searchedUsers = Meteor.users.find(
+      {
+        username:new RegExp(Session.get('searchText'),'i'),
+        _id: {$nin: [Meteor.userId()]}
+      }, {limit: 3}).fetch();
+
+    
+    var searchedAll  =  searchedBubbles.concat(searchedPosts, searchedUsers);
+    searchedAll      =  searchedAll.sort(searchCompare);
+
+    return searchedAll;
+  },
   getSearchedBubbles: function() {
     return Bubbles.find(
       { $or: [
