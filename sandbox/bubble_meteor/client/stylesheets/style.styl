@@ -921,7 +921,7 @@ wysiwyg-image(n)
         @media (min-width: 768px)
           padding         60px 0
         @media (max-width: 767px)
-          padding         30px 0
+          padding         40px 0
         .dz-title
           fontize(main, bold, uppercase, 78px, 1em, blank, blank, center)
           font-style        italic
@@ -939,51 +939,65 @@ wysiwyg-image(n)
         move-position(absolute, 0)
         .previewthumb,
         .thumb
-          border            1px solid main-light
-          margin            10px
-          border-radius     12px
-          height            75px
-          width             100px
+          colorize(main-light, main-dark)
+          height            90%
+          width             90%
+          margin            5%
+          border-radius     6px
+          border-box        0
     .nav-tabs
       border         0
       &.small-boxes
         padding       10px 0 40px 0
         margin        0
         li
-          background     main-dark
-          border         1px solid main-light
           positionize(75px, 75px, 0, 0 10px 10px 0)
+          fontize(main, bold, uppercase, 10px)
+          colorize(main-xlight)
+          border         1px solid main-light
+          background     main-dark
+          overflow       hidden
           border-radius  6px
+          .add-padding
+            padding        10px
           a
-            border-box     0
             height         100%
             width          100%
             padding        10px
             display        block
-            colorize(main-xlight)
             fontize(main, bold, uppercase, 10px)
+            colorize(main-xlight)
+            border-box     0
+          svg
+            fill           main-xlight
+          .cb-icon
+            margin         0 auto
             svg
-              fill           main-xlight
-            .cb-icon
-              margin         0 auto
-              svg
-                width          100%
-              &.cb-icon-bubble
-                width          40px
-              &.cb-icon-member
-                width          40px
-              &.cb-icon-event
-                width          31px
-              &.cb-icon-discussion
-                width          32px
-              &.cb-icon-file
-                width          32px
-            .cb-icon-lbl
-              text-align     center
-              margin         2px 0 0 0
+              width          100%
+            &.cb-icon-bubble
+              width          40px
+            &.cb-icon-member
+              width          40px
+            &.cb-icon-event
+              width          31px
+            &.cb-icon-discussion
+              width          32px
+            &.cb-icon-file
+              width          32px
+          .cb-icon-lbl
+            margin         10px 0 0 0
+            text-align     center
+            line-height    1em
+            &.file-name
+              margin         8px 0 0 0
+              overflow       hidden
+              height         20px
+              width          55px
+          .lbl-all-container
+            width          100%
             .lbl-all
               fontize(main, bold, uppercase, 25px, auto, auto, auto, center)
-              width          55px
+              width          100%
           &:hover,
           &.active
             background     main-light
