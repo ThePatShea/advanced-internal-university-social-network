@@ -29,12 +29,37 @@ Template.searchAll.helpers({
         ]
       }, {limit:2}).fetch();
 
-    var searchedPosts = Posts.find(
-      { $or: [
+    var searchedDiscussions = Posts.find(
+      { postType: 'discussion',
+        $or: [
         {name: new RegExp(Session.get('searchText'),'i')},
         {body: new RegExp(Session.get('searchText'),'i')}
         ]
       }, {limit:2}).fetch();
+
+    var searchedEvents = Posts.find(
+      { postType: 'event',
+        $or: [
+        {name: new RegExp(Session.get('searchText'),'i')},
+        {body: new RegExp(Session.get('searchText'),'i')},
+        {location: new RegExp(Session.get('searchText'),'i')}
+        ]
+      }, {limit:2}).fetch();
+
+    var posts =  Posts.find(
+      { postType: 'file',
+        name: new RegExp(Session.get('searchText'),'i')
+      }, {limit: 2}).fetch();
+
+    // return posts where searchText is not similar to file extension
+    if(posts) {
+      var searchedFiles = _.reject(posts, function(post) {
+        nameList = post.name.split('.');
+        if(nameList.length>1) {
+          return nameList[nameList.length-1].match(new RegExp(Session.get('searchText'), 'i'));
+        }
+      });
+    }
 
     Session.set('selectedUsername',Session.get('searchText'));
     var searchedUsers = Meteor.users.find(
@@ -44,7 +69,7 @@ Template.searchAll.helpers({
       }, {limit: 3}).fetch();
 
     
-    var searchedAll  =  searchedBubbles.concat(searchedPosts, searchedUsers);
+    var searchedAll  =  searchedBubbles.concat(searchedDiscussions, searchedEvents, searchedFiles, searchedUsers);
     searchedAll      =  searchedAll.sort(searchCompare);
 
     return searchedAll;
