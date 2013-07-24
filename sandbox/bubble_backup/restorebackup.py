@@ -2,12 +2,15 @@
 
 import datetime
 import os
+import sys
 import re
 
 
 
 bubble_url = 'bubble.meteor.com'
 current_backup_path = '~/bubblebackup_data/'
+
+current_backup_path = sys.argv[1]
 
 os.system('meteor mongo --url ' + bubble_url + ' > tmp')
 tempfile = open('tmp', 'r')
@@ -32,6 +35,6 @@ current_backup_path = os.path.join(current_backup_path, current_backup_foldernam
 print current_backup_path
 
 
-mongodump_exec_string = 'mongodump -u ' + mongodump_username + ' -h ' + mongodump_host +  ' -d ' + mongodump_database + ' -p ' + mongodump_password +   ' --out ' + current_backup_path
+mongorestore_exec_string = 'mongorestore -u ' + mongodump_username + ' -h ' + mongodump_host +  ' -d ' + mongodump_database + ' -p ' + mongodump_password +   ' ' + current_backup_path
 print mongodump_exec_string
 os.system(mongodump_exec_string)
