@@ -50,6 +50,7 @@ Template.sidebar.events({
 }); 
 
 Template.sidebar.rendered = function() {
+
   // Handles the cancel button for forms
     $('.visible-toggle-parent').click(function() {
       if ($(this).hasClass('toggle-hide')) {
