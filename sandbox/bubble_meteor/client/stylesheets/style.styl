@@ -896,11 +896,17 @@ wysiwyg-image(n)
     .top-arrow
       positionize(6px, 12px, blank, 0 60px 0 0, blank, right)
       fill        main-dark
+  .bottom-arrow-container
+    .bottom-arrow
+      positionize(6px, 12px, blank, 0 0 0 30px)
+      fill        main-dark
   .cb-form
     colorize(white-light, main-dark)
     position       relative
     padding        0 30px
     margin         0
+    &.cb-form-container-search
+      margin-bottom  -12px
     .nav-tabs
       border         0
       &.small-boxes
