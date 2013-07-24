@@ -1047,6 +1047,16 @@ wysiwyg-image(n)
         position         relative
         padding          8px 15px
         top              10px
+        .words-main
+          display          inline
+        .words-error
+          display          none
+        &.ready-false
+          &:hover
+            .words-main
+              display          none
+            .words-error
+              display          inline
     .lbl
       positionize(auto, auto, auto, 0 0 10px 0)
       fontize(alt, thin, auto, 23px)
