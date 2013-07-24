@@ -12,6 +12,20 @@ Template.commentSubmit.events({
     
     Meteor.call('comment', comment, function(error, commentId) {
       error && throwError(error.reason);
+
+      if (!error) {
+        $('html, body').animate({
+          scrollTop: 700
+        }, 2000);
+      }
     });
   }
 });
+
+Template.commentSubmit.rendered = function() {
+  $('.submit-comment').click(function() {
+    $('#main').animate({
+      scrollTop: $('#main').prop('scrollHeight')
+    }, 2000);
+  });
+}
