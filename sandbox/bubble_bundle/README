@@ -1,0 +1,19 @@
+To create the latest bundle:
+
+1. cd sandbox/bubble_meteor
+2. mrt remove force-ssl
+3. meteor bundle bubble_bundle.tgz
+4. mv bubble_bundle ../bubble_bundle/
+
+
+To setup a bundle:
+
+1. cd sandbox/bubble_bundle
+2. ./setup_bundle.sh
+
+
+To start running the bundled Bubble application:
+
+1. cd sandbox/bubble_bundle/bundle
+2. ./start_bubble.sh
+
