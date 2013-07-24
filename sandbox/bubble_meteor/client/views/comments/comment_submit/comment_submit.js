@@ -33,7 +33,7 @@ Template.commentSubmit.rendered = function() {
           scrollTop: $('#main').prop('scrollHeight')
         }, 2000);
       }
-    },500)
+    },500);
   });
 
 
@@ -45,8 +45,6 @@ Template.commentSubmit.rendered = function() {
        if( $(this).val() === '' && $(this).attr("name") != undefined) {
          count++;
        }
-
-       //alert('count and name: ' + count + ' ' + $(this).attr("name") );
 
         if(count == 0){
           $('.cb-submit').prop('disabled', false);
