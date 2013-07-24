@@ -40,6 +40,11 @@ h6
   line-height            100%
   margin                 0
 
+input
+  border                 0
+  border-radius          0
+  border-box             0
+
 textarea
   resize                 none
   border-radius          0
@@ -896,11 +901,71 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
+    .nav-tabs
+      border         0
+      &.small-boxes
+        padding       10px 0 40px 0
+        li
+          background     main-dark
+          border         1px solid main-light
+          positionize(75px, 75px, 0, 0 10px 10px 0)
+          border-radius  6px
+          a
+            border-box     0
+            height         100%
+            width          100%
+            padding        10px
+            display        block
+            colorize(main-xlight)
+            fontize(main, bold, uppercase, 10px)
+            svg
+              fill           main-xlight
+            .cb-icon
+              margin         0 auto
+              svg
+                width          100%
+              &.cb-icon-bubble
+                width          40px
+              &.cb-icon-member
+                width          40px
+              &.cb-icon-event
+                width          31px
+              &.cb-icon-discussion
+                width          32px
+              &.cb-icon-file
+                width          32px
+            .cb-icon-lbl
+              text-align     center
+              margin         2px 0 0 0
+            .lbl-all
+              fontize(main, bold, uppercase, 25px, auto, auto, auto, center)
+              width          55px
+          &:hover,
+          &.active
+            background     main-light
+            a
+              colorize(main-dark)
+              background      0
+              border          0
+              svg
+                fill            main-dark
+                height          30px
+    input
+      fontize(alt, light, auto, 23px)
+      colorize(white-light, main-dark)
+      border         0
+      border-bottom  1px solid main-light
+      box-shadow     0 0
+      border-radius  0
+      &.search-text
+        width          100%
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
       colorize(white-light, main-dark)
       fontize(alt, light, auto, 15px)
       box-shadow             0 0
+    textarea,
+    input
       &::-webkit-input-placeholder
         color            white-light
       &:-ms-input-placeholder
@@ -925,8 +990,8 @@ wysiwyg-image(n)
       positionize(auto, auto, auto, 0 0 10px 0)
       fontize(alt, thin, auto, 23px)
       colorize(white-light)
-      &.first
-        padding-top       25px
+    .first
+      padding-top       25px
 /**********     cb-form     **********/
 
 /**********  small-heading  **********/
