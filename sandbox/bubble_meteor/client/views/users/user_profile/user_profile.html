@@ -15,43 +15,48 @@
 				    </a>
 				</div>
 			</div>
-			<div class="profile-content">
-			    <div class="bubble-cover">
-					<img class="cover-pic" src="{{coverPhoto}}"/>
-					<div class="cover-mask"></div>
-					<div class="v-middle pull-left">
-						<div class="v-inner">
-							<div class="profile-pic-container">
-								<span class="profile-fill profile-pic-bg">{{> icon-bubble-big}}</span>
-								<img src="{{profilePicture}}" class="profile-pic">
-							</div>
+		    <div class="profile-content bubble-cover">
+				<img class="cover-pic" src="{{coverPhoto}}"/>
+				<div class="v-middle pull-left">
+					<div class="v-inner">
+						<div class="profile-pic-container">
+							<span class="profile-fill profile-pic-bg">{{> icon-bubble-big}}</span>
+							<img src="{{profilePicture}}" class="profile-pic">
 						</div>
 					</div>
-						<div class="v-middle bubble-name-and-subtitle">
-							<div class="v-inner">
-								<h1 class="profile-name">{{username}}</h1>
-								<h2 class="profile-subtitle">
-									<span>{{pluralize numComments " comment" ""}}</span>
-									<span> | {{pluralize numBubbles " bubble" ""}}</span>
-								</h2>
-			        		</div>
-			    		</div>
-					</div>
+				</div>
+					<div class="v-middle bubble-name-and-subtitle">
+						<div class="v-inner">
+							<h1 class="profile-name">{{username}}</h1>
+							<h2 class="profile-subtitle">
+								<span>{{pluralize numBubbles " bubble" ""}}</span>
+								<span> | {{pluralize numPosts " post" ""}}</span>
+							</h2>
+		        		</div>
+		    		</div>
 				</div>
 			</div>
 			{{#if numAdmins}}
-				<div class="profile-list-header small-heading">
-					admin of {{pluralize numAdmins " bubble" ""}}
+				<div class="bubble-list member-heading">
+			    	<div class="bubble-list-heading">
+						<h3 class="section-name pull-left">
+						admin of {{pluralize numAdmins " bubble" ""}}
+						</h3>
+					</div>
 				</div>
 			    {{#each getBubblesAdminList}}
 					{{> listItem}}
 				{{/each}}
 			{{/if}}
 			{{#if numMembers}}
-				<div class="profile-list-header small-heading">
-					member of of {{pluralize numMembers " bubble" ""}}
+				<div class="profile-list-header bubble-list member-heading">
+			    	<div class="bubble-list-heading">
+						<h3 class="section-name pull-left">
+							member of {{pluralize numMembers " bubble" ""}}
+						</h3>
+					</div>
 				</div>
-			    {{#each getBubblesMembersList}}
+			    {{#each getBubblesMemberList}}
 					{{> listItem}}
 				{{/each}}
 			{{/if}}

@@ -41,12 +41,12 @@ Template.userProfile.helpers({
 		return numBubbles;
 	},
 
-	numComments: function() {
+	numPosts: function() {
 		var uid = Meteor.userId();
-		var numComments = Comments.find({'userId': uid}).count();
-		return numComments;
+		var numPosts = Posts.find({'userId': uid}).count();
+		return numPosts;
 	},
-	
+
 	getEmail: function() {
 		return this.emails[0].address;
 	},
