@@ -1,93 +1,118 @@
 Template.wysiwyg.rendered = function() {
-  files = [];
-  removed = [];
-  $('.wysiwyg').wysiwyg();
-
-  var maxwidth = 300;
-  var maxheight = 300;
-
-  /*Two handlers are bound to the DOMSubtreeModified event
-  dom_modified_findimages looks for new images and marks them as unparsed.
-  dom_modified_parseimages looks for unparsed images, changes their width
-  and height, and then marks them as parsed.
-  */
+  $(".wysiwyg").wysiwyg();
 
 
-  dom_modified_findimages = function(e){
-  	images = $(e.srcElement).find('img');
-  	for(var i = 0; i < images.length; i++){
-  		var image = images[i];
-  		if($(image).attr('class') != 'parsed'){
-  			$(image).attr('class', 'unparsed');
-  		}
-  	}
-  };
 
-  dom_modified_parseimages = function(e){
-  	//console.log(e);
-  	images = $(e.srcElement).find('img');
-  	for(var i = 0; i < images.length; i++){
-  		var image = images[i];
-  		if($(image).attr('class') != 'parsed'){
-  			$(image).attr('class', 'parsed');
 
-  			//The height and width of each image is checked, and if either
-  			//are greater than the maxwidth or maxheight, then the image is
-  			//drawn on an HTML5 canvas element and re-scaled. This keeps small
-  			//images untouched, while shrinking larger images.
-  			//Aspect ratio is preserved.
-    		$(image).load(function(){
-    			var mycanvas = document.createElement('canvas');
-		  		width = $(this).width();
-		  		height = $(this).height();
-		  		var ratio = 1;
-		  		if(width > maxwidth){
-		  			ratio = maxwidth / width;
-		  		}
-		  		else if(height > maxheight){
-		  			ratio = maxheight / height;
-		  		}
 
-		  		mycanvas.width = width*ratio;
-		  		mycanvas.height = height*ratio;
-
-		  		console.log(width, height);
-		  		if(width > maxwidth || height > maxheight){
-			  		var context = mycanvas.getContext('2d');
-			  		context.drawImage(this, 0, 0, mycanvas.width, mycanvas.height);
-			  		var imagedata = mycanvas.toDataURL();
-			  		$(this).attr("src", imagedata);
-		  		}
-		  	});
-
-  		}
-  	}
-  };
-
-  $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_findimages);
-  $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_parseimages);
 
   $("#fileuploadtool").slideToggle();
 
 
 
-  var currentPostId = Session.get('currentPostId');
-  if(currentPostId){
-    console.log('Editing');
-    var post = Posts.findOne({_id: currentPostId});
-    var attachments = [];
-    for(var i = 0; i < post.children.length; i++){
-      var attachment = Posts.findOne({_id: post.children[i]});
-      if(attachment.fileType.match('image.*')){
-        $("#list").append('<li><img class="previewthumb" src="' + attachment.file + '"/></li>');
-      }
-      else {
-        $("#list").append("<div class='add-padding'><div class='cb-icon cb-icon-file'> <svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32.041px' height='31.966px' viewBox='0 0 32.041 31.966' enable-background='new 0 0 32.041 31.966' xml:space='preserve'> <path fill-rule='evenodd' clip-rule='evenodd' d='M30,7V6H12V2H2v8h10h18V7z M2,17v13h2h6h20V12H7H4H2V17z M31,32H13H7H1 c-0.55,0-1-0.45-1-1V1c0-0.55,0.45-1,1-1h12c0.55,0,1,0.45,1,1v3h17c0.549,0,1,0.45,1,1v26C32,31.55,31.549,32,31,32z'/></svg></div><div class='cb-icon-lbl file-name'>" + theFile.name + "</div></div>");
-      }
+
+
+
+  // Initalizes variables
+    var maxheight  =  300;
+    var maxwidth   =  300;
+    removed        =  [];
+    files          =  [];
+
+
+  // Initializes controls for each file type
+    var fileTypeControls  =  {
+        other : {
+            html  : "<div class='add-padding'><div class='cb-icon cb-icon-file'> <svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32.041px' height='31.966px' viewBox='0 0 32.041 31.966' enable-background='new 0 0 32.041 31.966' xml:space='preserve'> <path fill-rule='evenodd' clip-rule='evenodd' d='M30,7V6H12V2H2v8h10h18V7z M2,17v13h2h6h20V12H7H4H2V17z M31,32H13H7H1 c-0.55,0-1-0.45-1-1V1c0-0.55,0.45-1,1-1h12c0.55,0,1,0.45,1,1v3h17c0.549,0,1,0.45,1,1v26C32,31.55,31.549,32,31,32z'/></svg></div><div class='cb-icon-lbl file-name'>" + theFile.name + "</div></div>"
+          , check : function(attachment) {
+              return attachment.fileType.match('msword.*') || attachment.fileType.match('ms-excel.*') || attachment.fileType.match('officedocument.*');
+            }
+        }
+      , img : {
+            html  : "<li><img class='previewthumb' src='" + attachment.file + "'/></li>"
+          , check : function(attachment) {
+              return attachment.fileType.match("image.*");
+            }
+        }
+    };
+     
+    var getFileTypeControls  =  function(attachment) {
+      if      ( fileTypeControls.other.check(attachment) )
+        return attachment.other
+      else if ( fileTypeControls.img.check(attachment)   )
+        return attachment.img
     }
-  }
-  else{
-    console.log('Creating');
+
+
+  // Looks for new images and marks them as unparsed
+    dom_modified_findimages = function(e){
+    	images = $(e.srcElement).find('img');
+    	for(var i = 0; i < images.length; i++){
+    		var image = images[i];
+    		if($(image).attr('class') != 'parsed'){
+    			$(image).attr('class', 'unparsed');
+    		}
+    	}
+    };
+
+
+  // Looks for unparsed images, changes their width and height, and then marks them as parsed
+    dom_modified_parseimages = function(e){
+    	images = $(e.srcElement).find('img');
+    	for(var i = 0; i < images.length; i++){
+    		var image = images[i];
+    		if($(image).attr('class') != 'parsed'){
+    			$(image).attr('class', 'parsed');
+  
+    			//The height and width of each image is checked, and if either
+    			//are greater than the maxwidth or maxheight, then the image is
+    			//drawn on an HTML5 canvas element and re-scaled. This keeps small
+    			//images untouched, while shrinking larger images.
+    			//Aspect ratio is preserved.
+      		$(image).load(function(){
+      			var mycanvas = document.createElement('canvas');
+  		  		width = $(this).width();
+  		  		height = $(this).height();
+  		  		var ratio = 1;
+  		  		if(width > maxwidth){
+  		  			ratio = maxwidth / width;
+  		  		}
+  		  		else if(height > maxheight){
+  		  			ratio = maxheight / height;
+  		  		}
+  
+  		  		mycanvas.width = width*ratio;
+  		  		mycanvas.height = height*ratio;
+  
+  		  		console.log(width, height);
+  		  		if(width > maxwidth || height > maxheight){
+  			  		var context = mycanvas.getContext('2d');
+  			  		context.drawImage(this, 0, 0, mycanvas.width, mycanvas.height);
+  			  		var imagedata = mycanvas.toDataURL();
+  			  		$(this).attr("src", imagedata);
+  		  		}
+  		  	});
+  
+    		}
+    	}
+    };
+
+  $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_parseimages);
+  $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_findimages);
+
+
+
+
+  var currentPostId  =  Session.get("currentPostId");
+
+  if (currentPostId) {
+    var post  =  Posts.findOne({_id: currentPostId});
+    var fileList;
+
+    for (var i = 0; i < post.children.length; i++)
+      fileList  +=  getFileTypeControls( Posts.findOne({_id: post.children[i]}) ).html;
+     
+    $("#list").append(fileList);
   }
 
 };
