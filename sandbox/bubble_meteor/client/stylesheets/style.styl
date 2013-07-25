@@ -936,6 +936,13 @@ wysiwyg-image(n)
           height            100%
           width             100%
           opacity           0
+      &.in-post
+        padding-top       0
+        .drop-zone
+          @media (min-width: 768px)
+            padding         40px 0
+          @media (max-width: 767px)
+            padding         20px 0
       .attachments-list
         move-position(absolute, 0)
         .previewthumb,
