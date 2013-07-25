@@ -1012,13 +1012,14 @@ wysiwyg-image(n)
     input
       border-bottom  1px solid main-light
       colorize(white-light, main-dark)
-      fontize(alt, light, auto, 23px)
+      fontize(alt, thin, auto, 23px)
       box-shadow     0 0
       border-right   0
       border-left    0
       border-top     0
       border-radius  0
-      &.search-text
+      &.search-text,
+      &.width-full
         width          100%
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
