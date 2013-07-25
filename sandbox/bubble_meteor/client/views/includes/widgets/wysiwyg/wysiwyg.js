@@ -79,7 +79,7 @@ Template.wysiwyg.rendered = function() {
     for(var i = 0; i < post.children.length; i++){
       var attachment = Posts.findOne({_id: post.children[i]});
       if(attachment.fileType.match('image.*')){
-        $("#list").append('<div><img class="previewthumb" src="' + attachment.file + '"/>' + attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a>'+ '</div>');
+        $("#list").append('<li><img class="previewthumb" src="' + attachment.file + '"/></li>');
       }
       else if(attachment.fileType.match('pdf.*')){
         $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
@@ -242,7 +242,7 @@ Template.wysiwyg.events({
         if(removeIt == false){
           var attachment = Posts.findOne({_id: post.children[i]});
           if(attachment.fileType.match('image.*')){
-            $("#list").append('<div><img class="previewthumb" src="' + attachment.file + '"/>' + attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a>'+ '</div>');
+            $("#list").append('<li><img class="previewthumb" src="' + attachment.file + '"/></li>');
           }
           else if(attachment.fileType.match('pdf.*')){
             $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
@@ -269,10 +269,11 @@ Template.wysiwyg.events({
         return function(e) {
         // Render thumbnail.
         var fname = theFile.name;
-        var span = document.createElement('span');
-        span.innerHTML = ['<img class="previewthumb" src="', e.target.result,
-                        '" title="', fname, '"/>', ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>'].join('');
-        document.getElementById('list').insertBefore(span, null);
+
+        var li = document.createElement('li');
+        li.innerHTML = ['<img class="previewthumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+        document.getElementById('list').insertBefore(li, null);
         };
         })(f);
 
@@ -369,7 +370,7 @@ Template.wysiwyg.events({
         if(removeIt == false){
           var attachment = Posts.findOne({_id: post.children[i]});
           if(attachment.fileType.match('image.*')){
-            $("#list").append('<div><img class="previewthumb" src="' + attachment.file + '"/>' + attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a>'+ '</div>');
+            $("#list").append('<li><img class="previewthumb" src="' + attachment.file + '"/></li>');
           }
           else if(attachment.fileType.match('pdf.*')){
             $("#list").append('<div class="pdf-icon">'+ attachment.name+ '<a class="saved-remove btn btn-danger" id="'+ attachment._id+'">Remove</a></div>');
@@ -396,10 +397,10 @@ Template.wysiwyg.events({
         return function(e) {
         // Render thumbnail.
         var fname = theFile.name;
-        var span = document.createElement('span');
-        span.innerHTML = ['<img class="previewthumb" src="', e.target.result,
-                        '" title="', fname, '"/>', ' <a class="unsaved-remove btn btn-danger" id="', fname,'">Remove</a>'].join('');
-        document.getElementById('list').insertBefore(span, null);
+        var li = document.createElement('li');
+        li.innerHTML = ['<img class="previewthumb" src="', e.target.result,
+                        '" title="', escape(theFile.name), '"/>'].join('');
+        document.getElementById('list').insertBefore(li, null);
         };
         })(f);
 
