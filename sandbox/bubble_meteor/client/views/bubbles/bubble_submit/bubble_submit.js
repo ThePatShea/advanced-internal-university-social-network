@@ -13,6 +13,37 @@ Template.bubbleSubmit.events({
       profilePicture: $(event.target).find('[id=profilepicture_preview]').attr('src'),
       retinaProfilePicture: $(event.target).find('[id=profilepicture_retina]').attr('src'),
       bubbleType: $(event.target).find('[name=bubbleType]').val()
+    };
+
+
+
+    if(bubble.coverPhoto.length == 0){
+      var covercanvas = document.createElement('canvas');
+      var retinacovercanvas = document.createElement('canvas');
+      covercanvas.width = 1280;
+      covercanvas.height = 150;
+      retinacovercanvas.width = 2560;
+      retinacovercanvas.height = 300;
+      var covercontext = covercanvas.getContext('2d');
+      var retinacovercontext = retinacovercanvas.getContext('2d');
+      covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
+      retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
+      bubble.coverPhoto = covercanvas.toDataURL();
+      bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();
+    }
+    if(bubble.profilePicture.length == 0){
+      var profilecanvas = document.createElement('canvas');
+      var retinaprofilecanvas = document.createElement('canvas');
+      profilecanvas.width = 300;
+      profilecanvas.height = 300;
+      retinaprofilecanvas.width = 600;
+      retinaprofilecanvas.height = 600;
+      var profilecontext = profilecanvas.getContext('2d');
+      var retinaprofilecontext = retinaprofilecanvas.getContext('2d');
+      profilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 300, 300);
+      retinaprofilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 600, 600);
+      bubble.profilePicture = profilecanvas.toDataURL();
+      bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
     }
     
     Meteor.call('bubble', bubble, function(error, bubbleId) {
@@ -703,5 +734,7 @@ Template.bubbleSubmit.rendered = function(){
   $("#coverphoto_retina").hide();
   $("#profilepicture_preview").hide();
   $("#coverphoto_preview").hide();
+  $("#tempbubbleprofile").hide();
+  $("#tempbubblecoverphoto").hide();
 }
 

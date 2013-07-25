@@ -33,6 +33,10 @@ Template.loginPage.events({
       var email = $(event.target).find('[name=email]').val();
       var tempcanvas = document.createElement('canvas');
       var retinacanvas = document.createElement('canvas');
+      tempcanvas.width = 160;
+      tempcanvas.height = 160;
+      retinacanvas.width = 320;
+      retinacanvas.height = 320;
       var tempcontext = tempcanvas.getContext('2d');
       var retinacontext = retinacanvas.getContext('2d');
       //$(document).append('<img src="/img/letterprofiles/a.jpg" id="tempprofile">');
