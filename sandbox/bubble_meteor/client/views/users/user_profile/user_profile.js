@@ -7,8 +7,44 @@ Template.userProfile.helpers({
 		return Session.get('selectedUserId');
 	},
 
-	getBubblesList: function() {
+	getBubblesAdminList: function() {
 		return Bubbles.find({'users.admins':this._id});
+	},
+
+	getBubblesMemberList: function() {
+		return Bubbles.find({'users.members':this._id});
+	},
+
+	getBubbleAdminsCount: function() {
+		var bubbles = Bubbles.find({'users.admins':this._id});
+		return bubbles.count();
+	},
+
+	numBubbles: function() {
+		var uid = Meteor.userId();
+		var numBubbles = Bubbles.find({$or:
+			[{'users.admins': {$in: [uid]}},
+			{'users.members': {$in: [uid]}}
+			]}).count();
+		return numBubbles;
+	},
+
+	numAdmins: function() {
+		var uid = Meteor.userId();
+		var numBubbles = Bubbles.find({'users.admins': {$in: [uid]}}).count();
+		return numBubbles;
+	},
+
+	numMembers: function() {
+		var uid = Meteor.userId();
+		var numBubbles = Bubbles.find({'users.members': {$in: [uid]}}).count();
+		return numBubbles;
+	},
+
+	numPosts: function() {
+		var uid = Meteor.userId();
+		var numPosts = Posts.find({'userId': uid}).count();
+		return numPosts;
 	},
 
 	getEmail: function() {
@@ -32,5 +68,4 @@ Template.userProfile.helpers({
 	getUserType: function() {
 		return Meteor.users.findOne({_id:Session.get('selectedUserId')}).userType;
 	}
-
 });

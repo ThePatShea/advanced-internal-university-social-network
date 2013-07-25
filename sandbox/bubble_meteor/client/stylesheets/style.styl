@@ -1398,7 +1398,7 @@ body
   margin                   0
 
 #main
-  overflow-y               scroll
+  overflow-y               auto
 
 .sidebar-collapse
   line-height              navbar-height
@@ -1508,7 +1508,7 @@ body
         .lbl
           text-decoration              underline
   .main-btns
-    overflow-y               scroll
+    overflow-y               auto
     .main-btn
       box-shadow                 0 1px #386C8B
       padding                    0 0 0 15px
@@ -1617,7 +1617,7 @@ bubble-section-selector-height-small  =  75px
     height                   bubble-section-selector-height-small
 
 .bubble-section-selector
-  overflow-x             scroll
+  overflow-x             hidden
   overflow-y             hidden
   .opacity-wrapper
     std-white-light-bg       0
@@ -1895,6 +1895,28 @@ attachment-height  =  75px
           move-position(absolute, 10px, 10px)
           display        none
 /**********         post-page         **********/
+
+/**********        profile-page       **********/
+.profile-content
+  border-top        1px solid #DFE1E1
+  positionize(auto, auto, 30px 0, 0 0 40px 0)
+  colorize(white-xxdark, white-dark)
+  height        130px
+  overflow      hidden
+  padding       0 0 0 30px
+  .profile-fill
+    fill                   main-xlight
+  .profile-name
+    fontize(alt, light, auto, 28px)
+    colorize(main-xdark)
+    margin-bottom        5px
+  .profile-subtitle
+    fontize(main, medium, uppercase, 11px)
+    colorize(main-light)
+.profile-list-header
+  padding        30px 0 0 0
+
+/**********        profile-page       **********/
 
 /**********       bubble-members      **********/
 .bubble-members

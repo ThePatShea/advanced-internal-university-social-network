@@ -25,7 +25,7 @@ Template.listItem.helpers({
     },
 
     inBubble: function(){
-      return(Session.get("currentBubbleId"));
+      return(Meteor.Router.page() == "bubbleMembersPage");
     }
 });
 

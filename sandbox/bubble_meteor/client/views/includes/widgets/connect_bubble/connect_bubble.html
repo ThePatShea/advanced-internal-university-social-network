@@ -1,8 +1,8 @@
 <template name="connectBubble">
-  <button class="pull-right post-action connect-bubble visible-{{isInvitedToBubble}} deny-invite">
+  <button class="pull-right post-action visible-{{isInvitedToBubble}} deny-invite">
     <span>deny</span>
   </button>
-  <button class="pull-right post-action accept-invite-{{isInvitedToBubble}}">
+  <button class="pull-right post-action accept-invite-{{isInvitedToBubble}} connect-bubble">
     <span>{{connectWords}}</span>
   </button>
 </template>
