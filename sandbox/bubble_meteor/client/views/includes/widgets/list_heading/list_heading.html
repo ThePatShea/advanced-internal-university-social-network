@@ -18,7 +18,6 @@
     </button>
 
   </div>
-  {{#if matchPostType 'file'}}
-    {{> fileSubmit}}
-  {{/if}}
+  {{#if matchPostType 'discussion'}} {{> discussionSubmit}} {{/if}}
+  {{#if matchPostType 'file'}} {{> fileSubmit}} {{/if}}
 </template>
