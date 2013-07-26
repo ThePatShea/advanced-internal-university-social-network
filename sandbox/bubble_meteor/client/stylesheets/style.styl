@@ -886,6 +886,7 @@ wysiwyg-image(n)
   colorize(white-xdark, auto, white-xdark)
   fontize(alt, medium, uppercase, 7px)
   position               relative
+  overflow               hidden
   height                 23px
   left                   6px
   .lbl
@@ -934,17 +935,26 @@ wysiwyg-image(n)
           cursor            pointer
           height            100%
           width             100%
+          z-index           20
           opacity           0
       .attachments-list
         move-position(absolute, 0)
+        z-index             30
         .previewthumb,
         .thumb
           colorize(main-light, main-dark)
+          border-radius     6px
           height            90%
           width             90%
           margin            5%
-          border-radius     6px
           border-box        0
+      &.in-post
+        padding-top       0
+        .drop-zone
+          @media (min-width: 768px)
+            padding         40px 0
+          @media (max-width: 767px)
+            padding         20px 0
     .nav-tabs
       border         0
       &.small-boxes
@@ -1011,13 +1021,14 @@ wysiwyg-image(n)
     input
       border-bottom  1px solid main-light
       colorize(white-light, main-dark)
-      fontize(alt, light, auto, 23px)
+      fontize(alt, thin, auto, 23px)
       box-shadow     0 0
       border-right   0
       border-left    0
       border-top     0
       border-radius  0
-      &.search-text
+      &.search-text,
+      &.width-full
         width          100%
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
@@ -1046,10 +1057,24 @@ wysiwyg-image(n)
         position         relative
         padding          8px 15px
         top              10px
+        .words-main
+          display          inline
+        .words-error
+          display          none
+        &.ready-false
+          &:hover
+            word-spacing     2px
+            background       0
+            .words-main
+              display          none
+            .words-error
+              display          inline
     .lbl
       positionize(auto, auto, auto, 0 0 10px 0)
       fontize(alt, thin, auto, 23px)
       colorize(white-light)
+      &.have-your-say
+        colorize(main-xlight)
     .first
       padding-top       25px
 /**********     cb-form     **********/

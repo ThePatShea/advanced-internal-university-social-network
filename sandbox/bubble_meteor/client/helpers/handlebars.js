@@ -276,6 +276,14 @@ Handlebars.registerHelper('decodeURI',function(uri) {
   return decodeURI(uri);
 });
 
+Handlebars.registerHelper('getTextAfterDot',function(inputText) {
+  if (inputText) {
+    return inputText.substr(inputText.lastIndexOf('.') + 1, inputText.length); 
+  } else {
+    return -1;
+  }
+});
+
 Handlebars.registerHelper('getTextAfterSlash',function(inputText) {
   if (inputText) {
     var textAfterSlash = inputText.split('/');

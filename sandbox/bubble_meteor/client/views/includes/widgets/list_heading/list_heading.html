@@ -9,25 +9,15 @@
       <span class="word1">{{word1}}</span>
       <span class="word2">{{postType}}s</span>
     </h3>
-    {{#if isSuperBubble}}
-      {{#if hasLevel2Permissions}}
-        <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
-          <button class="std-btn-light pull-right btn-add">
-            <span class="left-icon cb-icon-add">{{> icon-add}}</span>
-            <span>add new {{postType}}</span>
-          </button>
-        </a>
-      {{/if}}
-    {{else}}
-      <a class="visible-{{hasSuperPermissions}}" href="/mybubbles/{{getCurrentBubble._id}}/create/{{postType}}">
-        <button class="std-btn-light pull-right btn-add">
-          <span class="left-icon cb-icon-add">{{> icon-add}}</span>
-          <span>add new {{postType}}</span>
-        </button>
-      </a>
-    {{/if}}
+
+    <button class="visible-toggle-parent toggle-hide std-btn-light pull-right btn-add" data-toggle="collapse" data-target="#cb-form-container-{{postType}}">
+      <span class="visible-toggle-child-start-show left-icon cb-icon-add">{{> icon-add}}</span>
+      <span class="visible-toggle-child-start-hide left-icon">{{> icon-cancel}}</span>
+      <span class="visible-toggle-child-start-show">add new {{postType}}</span>
+      <span class="visible-toggle-child-start-hide">cancel</span>
+    </button>
+
   </div>
-  {{#if matchPostType 'file'}}
-    {{> fileSubmit}}
-  {{/if}}
+  {{#if matchPostType 'discussion'}} {{> discussionSubmit}} {{/if}}
+  {{#if matchPostType 'file'}} {{> fileSubmit}} {{/if}}
 </template>

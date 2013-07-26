@@ -1,78 +1,60 @@
 <template name="searchPage">
-
-	<!--<div class="control-group">
-    <label class="control-label" for="title">Search</label>
-    <div class="controls">
-      <input class="search-text" name="searchText" type="text" placeholder="Name, description, file names etc..."/>
+  <div class="bubble-list member-heading">
+    <div class="bubble-list-heading">
+      <h3 class="section-name pull-left">
+        <span class="section-icon-search">{{> icon-search}}</span>
+        <span>Search</span>
+      </h3>
     </div>
   </div>
-
-	<ul class="nav nav-tabs">
-	  <li class="{{isActive 'all'}} all"> <a href='{{searchAllPath}}' class="all">All</a></li>
-    <li class="{{isActive 'bubbles'}} bubbles"> <a href='{{searchBubblesPath}}' class="bubbles">Bubbles</a></li>
-    <li class="{{isActive 'users'}} users"> <a href='{{searchUsersPath}}' class="users">Users</a></li>
-    <li class="{{isActive 'discussions'}} discussions"> <a href='{{searchDiscussionsPath}}' class="discussions">Discussions</a></li>
-    <li class="{{isActive 'events'}} events"> <a href='{{searchEventsPath}}' class="events">Events</a></li>
-    <li class="{{isActive 'files'}} files"> <a href='{{searchFilesPath}}' class="files">Files</a></li>
-	</ul>-->
-
-    <div class="bubble-list member-heading">
-      <div class="bubble-list-heading">
-        <h3 class="section-name pull-left">
-          <span class="section-icon-search">{{> icon-search}}</span>
-          <span>Search</span>
-        </h3>
-      </div>
-    </div>
   
-    <div class="cb-form-container cb-form-container-search">
-      <form class="cb-form comment-form">
-        <input class="search-text first" name="searchText" type="text" placeholder="Start typing..."/>
-          <ul class="nav nav-tabs small-boxes">
-              <li class="{{isActive 'all'}} all">
-                  <a href='{{searchAllPath}}' class="all">
-                      <div class="v-middle lbl-all-container">
-                          <div class="v-inner">
-                              <div class="lbl-all">all</div>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li class="{{isActive 'bubbles'}} bubbles">
-                  <a href='{{searchBubblesPath}}' class="bubbles">
-                      <div class="cb-icon cb-icon-bubble">{{> icon-member}}</div>
-                      <div class="cb-icon-lbl">bubbles</div>
-                  </a>
-              </li>
-              <li class="{{isActive 'users'}} users">
-                  <a href='{{searchUsersPath}}' class="users">
-                      <div class="cb-icon cb-icon-member">{{> icon-member}}</div>
-                      <div class="cb-icon-lbl">users</div>
-                  </a>
-              </li>
-              <li class="{{isActive 'events'}} events">
-                  <a href='{{searchEventsPath}}' class="events">
-                      <div class="cb-icon cb-icon-event">{{> icon-event}}</div>
-                      <div class="cb-icon-lbl">events</div>
-                  </a>
-              </li>
-              <li class="{{isActive 'discussions'}} discussions">
-                  <a href='{{searchDiscussionsPath}}' class="discussions">
-                      <div class="cb-icon cb-icon-discussion">{{> icon-discussion}}</div>
-                      <div class="cb-icon-lbl">threads</div>
-                  </a>
-              </li>
-              <li class="{{isActive 'files'}} files">
-                  <a href='{{searchFilesPath}}' class="files">
-                      <div class="cb-icon cb-icon-file">{{> icon-file}}</div>
-                      <div class="cb-icon-lbl">files</div>
-                  </a>
-              </li>
-          </ul>
-      </form>
-      <div class="bottom-arrow-container">
-        <div class="bottom-arrow">{{> icon-arrow-down}}</div>
-      </div>
+  <div class="cb-form-container cb-form-container-search">
+    <form class="cb-form comment-form">
+      <input class="search-text first" name="searchText" type="text" placeholder="Start typing..." autofocus/>
+        <ul class="nav nav-tabs small-boxes">
+            <li class="{{isActive 'all'}} all">
+                <a href='{{searchAllPath}}' class="all">
+                    <div class="v-middle lbl-all-container">
+                        <div class="v-inner">
+                            <div class="lbl-all">all</div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li class="{{isActive 'bubbles'}} bubbles">
+                <a href='{{searchBubblesPath}}' class="bubbles">
+                    <div class="cb-icon cb-icon-bubble">{{> icon-member}}</div>
+                    <div class="cb-icon-lbl">bubbles</div>
+                </a>
+            </li>
+            <li class="{{isActive 'users'}} users">
+                <a href='{{searchUsersPath}}' class="users">
+                    <div class="cb-icon cb-icon-member">{{> icon-member}}</div>
+                    <div class="cb-icon-lbl">users</div>
+                </a>
+            </li>
+            <li class="{{isActive 'events'}} events">
+                <a href='{{searchEventsPath}}' class="events">
+                    <div class="cb-icon cb-icon-event">{{> icon-event}}</div>
+                    <div class="cb-icon-lbl">events</div>
+                </a>
+            </li>
+            <li class="{{isActive 'discussions'}} discussions">
+                <a href='{{searchDiscussionsPath}}' class="discussions">
+                    <div class="cb-icon cb-icon-discussion">{{> icon-discussion}}</div>
+                    <div class="cb-icon-lbl">threads</div>
+                </a>
+            </li>
+            <li class="{{isActive 'files'}} files">
+                <a href='{{searchFilesPath}}' class="files">
+                    <div class="cb-icon cb-icon-file">{{> icon-file}}</div>
+                    <div class="cb-icon-lbl">files</div>
+                </a>
+            </li>
+        </ul>
+    </form>
+    <div class="bottom-arrow-container">
+      <div class="bottom-arrow">{{> icon-arrow-down}}</div>
     </div>
-
+  </div>
 </template>
