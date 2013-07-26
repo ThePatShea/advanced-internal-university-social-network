@@ -1,7 +1,6 @@
 Template.wysiwyg.created = function () {
   this.currentPostId  =  Session.get('currentPostId');
   this.addToDropZone  =  function(attachment) {
-    $("#list").append(this.getFileTypeControls(attachment).html);
 
   /* 
     var fileList;
@@ -11,10 +10,9 @@ Template.wysiwyg.created = function () {
          
     $("#list").append(fileList);
   */
-  } 
 
   // Initializes controls for each file type
-    this.fileTypeControls  =  {
+    var fileTypeControls  =  {
         other : {
             html  : function(attachment) {
               return "<div class='add-padding'><div class='cb-icon cb-icon-file'> <svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32.041px' height='31.966px' viewBox='0 0 32.041 31.966' enable-background='new 0 0 32.041 31.966' xml:space='preserve'> <path fill-rule='evenodd' clip-rule='evenodd' d='M30,7V6H12V2H2v8h10h18V7z M2,17v13h2h6h20V12H7H4H2V17z M31,32H13H7H1 c-0.55,0-1-0.45-1-1V1c0-0.55,0.45-1,1-1h12c0.55,0,1,0.45,1,1v3h17c0.549,0,1,0.45,1,1v26C32,31.55,31.549,32,31,32z'/></svg></div><div class='cb-icon-lbl file-name'>" + attachment.name + "</div></div>";
@@ -33,14 +31,17 @@ Template.wysiwyg.created = function () {
         }
     };
      
-    this.getFileTypeControls  =  function(attachment) {
-      if      ( this.fileTypeControls.other.check(attachment) )
-        return attachment.other;
-      else if ( this.fileTypeControls.img.check(attachment)   )
-        return attachment.img;
+    var getFileTypeControls  =  function(attachment) {
+      if      ( fileTypeControls.other.check(attachment) )
+        return fileTypeControls.other;
+      else if ( fileTypeControls.img.check(attachment)   )
+        return fileTypeControls.img;
       else
         return false;
     }
+
+    $("#list").append( getFileTypeControls(attachment).html(attachment) );
+  } 
 }
 
 
