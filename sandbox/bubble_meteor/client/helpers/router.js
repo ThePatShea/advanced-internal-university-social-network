@@ -67,6 +67,8 @@ Meteor.Router.add({
     },
     '/mybubbles/create/bubble': 'bubbleSubmit',
 
+    '/settings/invites': 'invitationsPage',
+
 
   // User Profile Related Routes
     '/userprofile/:id': {
