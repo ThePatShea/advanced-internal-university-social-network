@@ -1,0 +1,62 @@
+<template name="exploreEdit">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    <form class="main">
+      <div class="control-group">
+          <label class="control-label" for="title">Title</label>
+          <div class="controls">
+              <input name="title" type="text" value="{{title}}" placeholder="Title of Bubble"/>
+          </div>
+      </div>
+      <div class="control-group">
+          <label class="control-label" for="description">Description</label>
+          <div class="controls">
+              <input name="description" type="text" value="{{description}}" placeholder="Description of Bubble"/>
+          </div>
+      </div>
+
+      <div class="control-group">
+          <div id="bubble_image">
+                  <img id="coverphoto_upload" src="" />
+                  <img id="coverphoto_preview" src="{{coverPhoto}}" />
+                  <img id="coverphoto_retina" src="" />
+                  <a href="#" class="btn btn-danger delete" id="change_coverphoto">Change</a>
+              <div id="cover_dropzone" class="dropzone">Drop cover photo here.</div>
+              <input name="filesToUpload[]" id="coverfilesToUpload" type="file">
+          </div>
+      </div>
+
+      <div class="control-group">
+          <div id="bubble_profile">
+                 <img id="profilepicture_upload" src="" />
+                  <img id="profilepicture_preview" src="{{profilePicture}}" />
+                  <img id="profilepicture_retina" src="" />
+                  <a href="#" class="btn btn-danger delete" id="change_profilepicture">Change</a>
+              <div id="profile_dropzone" class="dropzone">Drop bubble profile picture here.</div>
+              <input name="filesToUpload[]" id="profilefilesToUpload" type="file">
+          </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="category">Category</label>
+        <div class="controls">
+            {{> categorySelector}}
+        </div>
+      </div>
+
+      <hr>
+      <div class="control-group">
+          <div class="controls">
+              <input type="submit" value="Submit" class="btn btn-primary submit"/>
+          </div>
+      </div>
+
+      <hr/>
+      <div class="control-group">
+          <div class="controls">
+              <a class="btn btn-danger delete" id="delete_bubble" href="#">Delete Bubble</a>
+          </div>
+      </div>
+    </form>
+  {{/with}}
+</template>

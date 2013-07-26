@@ -1,0 +1,18 @@
+<template name="exploreEventPage">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+    <div class="bubble-page-content">
+      <div class="bubble-list">
+        {{#with postProperties.event}}
+          {{> listHeading}}
+        {{/with}}
+        {{#each getEventPosts}}
+          {{> listItem}}
+        {{else}}
+          No events yet.
+        {{/each}}
+      </div>
+    </div>
+  {{/with}}
+</template>

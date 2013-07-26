@@ -40,3 +40,13 @@ bubbleAdmin = function(userId, doc) {
   return ('3' == Meteor.user().userType 
     || _.contains(bubble.users.admins, Meteor.userId()));
 }
+
+
+ownsExplore = function(userId, doc){
+  return true;
+}
+
+exploreAdmin = function(userId, doc){
+  var explore = Explore.findOne(doc._id);
+  return ('3' == Meteor.user().userType);
+}

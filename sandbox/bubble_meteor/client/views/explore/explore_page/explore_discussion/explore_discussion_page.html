@@ -1,0 +1,18 @@
+<template name="exploreDiscussionPage">
+  {{#with getCurrentBubble}}
+    {{> bubbleCover}}
+    {{> bubbleSectionSelector}}
+    <div class="bubble-page-content">
+      <div class="bubble-list">
+        {{#with postProperties.discussion}}
+          {{> listHeading}}
+        {{/with}}
+        {{#each getDiscussionPosts}}
+          {{> listItem}}
+        {{else}}
+          No discussions yet.
+        {{/each}}
+      </div>
+    </div>
+  {{/with}}
+</template>
