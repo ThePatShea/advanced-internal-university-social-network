@@ -92,6 +92,7 @@ Template.userProfile.rendered = function() {
 
 	$('#crop').imgAreaSelect({aspectRatio: '1:1', minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '160', y2: '160', onSelectChange: preview, handles: true });
 */
+var cropArea;
 };
 
 //Preview functionality for crop tool
@@ -114,6 +115,9 @@ function preview(img, selection) {
 
 Template.userProfile.events({
 	'click .loadCropTool': function() {
-		$('#crop').imgAreaSelect({aspectRatio: '1:1', minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '160', y2: '160', onSelectChange: preview, handles: true });
+		cropArea = $('#crop').imgAreaSelect({instance: true, aspectRatio: '1:1', minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '160', y2: '160', onSelectChange: preview, handles: true });
+	},
+	'click .removeCropTool': function() {
+		cropArea.cancelSelection();
 	}
 });
