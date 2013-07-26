@@ -23,7 +23,7 @@ Template.wysiwyg.created = function () {
         }
       , img : {
             html  : function(attachment) {
-              return "<li><img class='previewthumb' src='" + attachment.file + "'/></li>"
+              return "<li><img name='" + attachment.name + "' class='previewthumb' src='" + attachment.file + "'/></li>";
             }
           , check : function(attachment) {
               return attachment.fileType.match("image.*");
@@ -42,7 +42,7 @@ Template.wysiwyg.created = function () {
 
     var currentControls = getFileTypeControls(attachment);
 
-    if (currentControls)
+    if (currentControls && $("#list").html().indexOf(attachment.name) == -1)
       $("#list").append( currentControls.html(attachment) );
   } 
 }
@@ -166,11 +166,6 @@ Template.wysiwyg.events({
       }
     }
 
-    l = document.getElementById('list');
-    while(l.hasChildNodes()){
-      l.removeChild(l.lastChild);
-    };
-
     if (this.currentPostId) {
       var post = Posts.findOne({_id: this.currentPostId});
       var attachments = [];
@@ -228,11 +223,6 @@ Template.wysiwyg.events({
         files.push(evt.target.files[i]);
       }
     }
-
-    l = document.getElementById('list');
-    while(l.hasChildNodes()){
-      l.removeChild(l.lastChild);
-    };
 
     if(this.currentPostId){
       console.log('Editing');
