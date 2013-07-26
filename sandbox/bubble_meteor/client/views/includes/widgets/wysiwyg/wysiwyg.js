@@ -38,9 +38,11 @@ Template.wysiwyg.rendered = function() {
      
     var getFileTypeControls  =  function(attachment) {
       if      ( fileTypeControls.other.check(attachment) )
-        return attachment.other
+        return attachment.other;
       else if ( fileTypeControls.img.check(attachment)   )
-        return attachment.img
+        return attachment.img;
+      else
+        return false;
     }
 
 
@@ -97,23 +99,30 @@ Template.wysiwyg.rendered = function() {
     	}
     };
 
-  $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_parseimages);
-  $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_findimages);
 
 
 
+  // Calls functions when the page is rendered
+    $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_parseimages);
+    $('.wysiwyg').bind('DOMSubtreeModified', dom_modified_findimages);
 
-  var currentPostId  =  Session.get("currentPostId");
 
-  if (currentPostId) {
-    var post  =  Posts.findOne({_id: currentPostId});
-    var fileList;
+  // If the user is modifying an existing post, it puts that post's existing attachments in the drop zone
+    var currentPostId  =  Session.get("currentPostId");
 
-    for (var i = 0; i < post.children.length; i++)
-      fileList  +=  getFileTypeControls( Posts.findOne({_id: post.children[i]}) ).html;
-     
-    $("#list").append(fileList);
-  }
+    if (currentPostId)
+      addToDropZone( Posts.findOne({_id: currentPostId}) );
+
+
+  // Adds a graphical representation of files into the drop zone
+    var addToDropZone = function(post) {
+      var fileList;
+       
+      for (var i = 0; i < post.children.length; i++)
+        fileList  +=  getFileTypeControls( Posts.findOne({_id: post.children[i]}) ).html;
+       
+      $("#list").append(fileList);
+    }
 
 };
 
@@ -125,26 +134,21 @@ Template.wysiwyg.events({
 
 
   'dragover #drop_zone': function(evt){
-    console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy';
   },
 
   'drop #drop_zone': function(evt){
-    console.log(evt.dataTransfer.files);
-
     evt.stopPropagation();
     evt.preventDefault();
-
-
-    if(typeof files == 'undefined'){
+     
+    if (typeof files == 'undefined') {
       files = [];
       for(var i = 0, f; f=evt.dataTransfer.files[i]; i++){
         files.push(evt.target.files[i]);
       }
-    }
-    else{
+    } else {
       for(var i = 0, f; f=evt.dataTransfer.files[i]; i++){
         files.push(evt.dataTransfer.files[i]);
       }
@@ -155,9 +159,7 @@ Template.wysiwyg.events({
       l.removeChild(l.lastChild);
     };
 
-    var currentPostId = Session.get('currentPostId');
-    if(currentPostId){
-      console.log('Editing');
+    if ( Session.get('currentPostId') ) {
       var post = Posts.findOne({_id: currentPostId});
       var attachments = [];
       for(var i = 0; i < post.children.length; i++){
