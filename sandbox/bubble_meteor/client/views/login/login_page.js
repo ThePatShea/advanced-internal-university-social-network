@@ -39,14 +39,13 @@ Template.loginPage.events({
       retinacanvas.height = 320;
       var tempcontext = tempcanvas.getContext('2d');
       var retinacontext = retinacanvas.getContext('2d');
-      //$(document).append('<img src="/img/letterprofiles/a.jpg" id="tempprofile">');
+      $('#tempprofile').show();
       $('#tempprofile').hide();
+      console.log($("#tempprofile")[0]);
       tempcontext.drawImage($('#tempprofile')[0], 0, 0, 160, 160);
       retinacontext.drawImage($('#tempprofile')[0], 0, 0, 320, 320);
       var profilePictureData = tempcanvas.toDataURL();
       var retinaProfilePictureData = retinacanvas.toDataURL();
-      //$(document).append('<img src="" id="profilePicture">');
-      //$(document).append('<img src="" id="retinaProfilePicture">');
       $('#profilePicture').hide();
       $('#retinaProfilePicture').hide()
       $('#profilePicture').attr('src', profilePictureData);
@@ -108,6 +107,16 @@ Template.loginPage.events({
     }else{
       Session.set('signup', 'none');
     }
+  },
+
+  'change #username': function(event){
+    //console.log(event.target.value);
+    var username = event.target.value;
+    var usernameLetter = username[0].toLowerCase();
+    var image_tag = '<img src="/img/letterprofiles/' + usernameLetter + '.jpg" id="tempprofile">';
+    //console.log(image_tag);
+    $('form').append(image_tag);
+    $('#tempprofile').hide();
   }
 });
 
