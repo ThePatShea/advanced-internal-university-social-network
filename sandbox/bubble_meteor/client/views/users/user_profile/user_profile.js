@@ -69,3 +69,55 @@ Template.userProfile.helpers({
 		return Meteor.users.findOne({_id:Session.get('selectedUserId')}).userType;
 	}
 });
+
+//Crop selection
+Template.userProfile.rendered = function() {
+/*
+	function preview(img, selection) {
+	    var scaleX = 67 / (selection.width || 1);
+	    var scaleY = 67 / (selection.height || 1);
+	  
+	  	$('.profile-pic-preview').attr('src','http://odyniec.net/projects/imgareaselect/ferret.jpg');
+	    $('.profile-pic-preview').css({
+	        width: Math.round(scaleX * img.width) + 'px',
+	        height: Math.round(scaleY * img.height) + 'px',
+	        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+	        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px',
+	        'max-width': 'none',
+	        'border-radius': '0'
+	    });
+		console.log(Math.round(scaleX * img.width));
+		console.log(Math.round(scaleY * img.height));
+	};
+
+	$('#crop').imgAreaSelect({aspectRatio: '1:1', minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '160', y2: '160', onSelectChange: preview, handles: true });
+*/
+var cropArea;
+};
+
+//Preview functionality for crop tool
+function preview(img, selection) {
+    var scaleX = 67 / (selection.width || 1);
+    var scaleY = 67 / (selection.height || 1);
+  
+  	$('.profile-pic-preview').attr('src','http://odyniec.net/projects/imgareaselect/ferret.jpg');
+    $('.profile-pic-preview').css({
+        width: Math.round(scaleX * img.width) + 'px',
+        height: Math.round(scaleY * img.height) + 'px',
+        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px',
+        'max-width': 'none',
+        'border-radius': '0'
+    });
+	console.log(Math.round(scaleX * img.width));
+	console.log(Math.round(scaleY * img.height));
+};
+
+Template.userProfile.events({
+	'click .loadCropTool': function() {
+		cropArea = $('#crop').imgAreaSelect({instance: true, aspectRatio: '1:1', minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '160', y2: '160', onSelectChange: preview, handles: true });
+	},
+	'click .removeCropTool': function() {
+		cropArea.cancelSelection();
+	}
+});
