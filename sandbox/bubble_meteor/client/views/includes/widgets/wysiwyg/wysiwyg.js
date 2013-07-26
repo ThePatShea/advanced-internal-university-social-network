@@ -40,7 +40,10 @@ Template.wysiwyg.created = function () {
         return false;
     }
 
-    $("#list").append( getFileTypeControls(attachment).html(attachment) );
+    var currentControls = getFileTypeControls(attachment);
+
+    if (currentControls)
+      $("#list").append( currentControls.html(attachment) );
   } 
 }
 
