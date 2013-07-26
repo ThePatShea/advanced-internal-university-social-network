@@ -143,7 +143,7 @@ Template.wysiwyg.events({
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'drop #drop_zone': function(evt, tmpl){
+  'drop #drop_zone': function(evt){
     evt.stopPropagation();
     evt.preventDefault();
      
@@ -163,20 +163,10 @@ Template.wysiwyg.events({
       l.removeChild(l.lastChild);
     };
 
-
-// TESTING
-var inputObject = tmpl.data;
-
-var output = '';
-for (property in inputObject) {
-  output += property + ': ' + inputObject[property]+'; ';
-}
-alert(output);
-// TESTING
      
-
-    if ( tmpl.helpers.currentPostId ) {
-      var post = Posts.findOne({_id: tmpl.helpers.currentPostId});
+     
+    if ( Template.wysiwyg.helpers.currentPostId ) {
+      var post = Posts.findOne({_id: Template.wysiwyg.helpers.currentPostId});
       var attachments = [];
       for(var i = 0; i < post.children.length; i++){
         var removeIt = false;
