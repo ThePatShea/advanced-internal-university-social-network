@@ -1,3 +1,8 @@
+Template.wysiwyg.helpers({
+    currentPostId:  Session.get('currentPostId')
+});
+
+
 Template.wysiwyg.rendered = function() {
   $(".wysiwyg").wysiwyg();
 
@@ -14,7 +19,6 @@ Template.wysiwyg.rendered = function() {
 
 
   // Initalizes variables
-    var currentPostId  =  Session.get('currentPostId');
     var maxheight      =  300;
     var maxwidth       =  300;
     removed            =  [];
@@ -139,7 +143,7 @@ Template.wysiwyg.events({
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'drop #drop_zone': function(evt){
+  'drop #drop_zone': function(evt, tmpl){
     evt.stopPropagation();
     evt.preventDefault();
      
@@ -159,10 +163,20 @@ Template.wysiwyg.events({
       l.removeChild(l.lastChild);
     };
 
+
+// TESTING
+var inputObject = tmpl.data;
+
+var output = '';
+for (property in inputObject) {
+  output += property + ': ' + inputObject[property]+'; ';
+}
+alert(output);
+// TESTING
      
-     
-    if ( Session.get('currentPostId') ) {
-      var post = Posts.findOne({_id: currentPostId});
+
+    if ( tmpl.helpers.currentPostId ) {
+      var post = Posts.findOne({_id: tmpl.helpers.currentPostId});
       var attachments = [];
       for(var i = 0; i < post.children.length; i++){
         var removeIt = false;
