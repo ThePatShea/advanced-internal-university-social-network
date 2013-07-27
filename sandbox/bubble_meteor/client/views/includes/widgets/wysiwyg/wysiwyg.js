@@ -32,6 +32,7 @@ Template.wysiwyg.created = function () {
     };
      
     var getFileTypeControls  =  function(attachment) {
+      console.log("getFileTypeControls ran");  // TESTING
       if      ( fileTypeControls.other.check(attachment) )
         return fileTypeControls.other;
       else if ( fileTypeControls.img.check(attachment)   )
