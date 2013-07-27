@@ -11,6 +11,12 @@ Template.wysiwyg.created = function () {
     $("#list").append(fileList);
   */
 
+
+
+
+
+ /* //OLD Function
+
   // Initializes controls for each file type
     var fileTypeControls  =  {
         other : {
@@ -23,7 +29,7 @@ Template.wysiwyg.created = function () {
         }
       , img : {
             html  : function(attachment) {
-              return "<li><img class='previewthumb' src='" + attachment.file + "'/></li>"
+              return "<li><img name='" + attachment.name + "' class='previewthumb' src='" + attachment.file + "'/></li>";
             }
           , check : function(attachment) {
               return attachment.fileType.match("image.*");
@@ -32,6 +38,7 @@ Template.wysiwyg.created = function () {
     };
      
     var getFileTypeControls  =  function(attachment) {
+      console.log("getFileTypeControls ran");  // TESTING
       if      ( fileTypeControls.other.check(attachment) )
         return fileTypeControls.other;
       else if ( fileTypeControls.img.check(attachment)   )
@@ -42,8 +49,26 @@ Template.wysiwyg.created = function () {
 
     var currentControls = getFileTypeControls(attachment);
 
-    if (currentControls)
+    if (currentControls && $("#list").html().indexOf(attachment.name) == -1)
       $("#list").append( currentControls.html(attachment) );
+ //*/
+
+
+
+
+
+
+
+
+
+// New Function
+    if ( attachment.fileType.match('image.*') || attachment.fileType.match('pdf.*') || attachment.fileType.match('msword.*') || attachment.fileType.match('ms-excel.*') || attachment.fileType.match('officedocument.*') )
+      $("#list").append("<li><div class='add-padding'><div class='cb-icon cb-icon-file'> <svg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='32.041px' height='31.966px' viewBox='0 0 32.041 31.966' enable-background='new 0 0 32.041 31.966' xml:space='preserve'> <path fill-rule='evenodd' clip-rule='evenodd' d='M30,7V6H12V2H2v8h10h18V7z M2,17v13h2h6h20V12H7H4H2V17z M31,32H13H7H1 c-0.55,0-1-0.45-1-1V1c0-0.55,0.45-1,1-1h12c0.55,0,1,0.45,1,1v3h17c0.549,0,1,0.45,1,1v26C32,31.55,31.549,32,31,32z'/></svg></div><div class='cb-icon-lbl file-name'>" + attachment.name + "</div></div></li>");
+
+
+
+
+
   } 
 }
 
@@ -166,11 +191,6 @@ Template.wysiwyg.events({
       }
     }
 
-    l = document.getElementById('list');
-    while(l.hasChildNodes()){
-      l.removeChild(l.lastChild);
-    };
-
     if (this.currentPostId) {
       var post = Posts.findOne({_id: this.currentPostId});
       var attachments = [];
@@ -228,11 +248,6 @@ Template.wysiwyg.events({
         files.push(evt.target.files[i]);
       }
     }
-
-    l = document.getElementById('list');
-    while(l.hasChildNodes()){
-      l.removeChild(l.lastChild);
-    };
 
     if(this.currentPostId){
       console.log('Editing');
