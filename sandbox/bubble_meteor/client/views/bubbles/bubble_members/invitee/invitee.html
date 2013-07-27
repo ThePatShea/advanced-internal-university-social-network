@@ -1,0 +1,23 @@
+<template name="invitee">
+	<span>
+		<div class="invitee-container">
+			<div class="profile-pic-container" style="position: relative; float: left; margin-top: -1px; margin-left: -1px;">
+				<span class="fill">{{> icon-bubble-big}}</span>
+				<div class="pic-preview-wrapper-outer">
+					<div class="pic-preview-wrapper-middle">
+						<div class="pic-preview-wrapper-inner">
+							<img src="{{profilePicture}}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="v-middle">
+				<div class="v-inner">
+					<div class="pull-left">
+						{{username}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</span>
+</template>

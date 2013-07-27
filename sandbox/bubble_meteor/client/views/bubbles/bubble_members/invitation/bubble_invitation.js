@@ -33,6 +33,15 @@ Template.bubbleInvitation.helpers({
       return 'in';
     else
       return '';
+  },
+
+  returnFalse: function() {
+    return false;
+  },
+
+  getProfilePicture: function(){
+    var user = Meteor.users.findOne({_id:Session.get(this._id)});
+    return user.profilePicture;
   }
 });
 

@@ -1,43 +1,47 @@
 <template name="bubbleInvitation">
-  <div class="collapse {{inIfSearching}} cb-form cb-form-add-members" id="cb-form-add-members">
-    <div class="control-group">
-      <label class="control-label" for="title">Search Friends</label>
-      <div class="controls">
-          <input class="search-text" name="searchText" type="text" placeholder="Friend's Name"/>
-      </div>
+  <div class="collapse {{inIfSearching}} cb-form-container" id="cb-form-container-add-members">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-  
-    <hr>
-    Search Field
-    <br />
-    {{#if hasSearchText}}
-      {{#each findUsers}}
-        <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
-      {{/each}}
-      <br/>
-    {{/if}}
-  
-    <hr>
-    {{#if isSuperBubble this}}
-      Potential Members List
-    {{else}}
-      Potential Invitee List
-    {{/if}}
-    <br />
-    {{#each potentialInvitees}}
-      <button class="btn btn-small btn-danger remove-invitee" type="button">{{this}}</button>
+    <div class="cb-form cb-form-add-members">
+      <div class="control-group">
+        <div class="controls">
+            <input class="search-text" name="searchText" type="text" placeholder="Start typing..."/>
+        </div>
+      </div>
+      {{#if hasSearchText}}
+        {{#each findUsers}}
+          {{> invitee}}
+          {{#if returnFalse}}
+            <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
+          {{/if}}
+        {{/each}}
+        <br/>
+      {{/if}}
+    {{#if returnFalse}}
+      <hr>
+      {{#if isSuperBubble this}}
+        Potential Members List
+      {{else}}
+        Potential Invitee List
+      {{/if}}
       <br />
-    {{/each}}
-    <br />
-    {{#if potentialInvitees}}
-      <button class="btn btn-small add-users" type="button">
-        {{#if isSuperBubble this}}
-          Add to Members List
-        {{else}}
-          Add to Invitee List
-        {{/if}}
-      </button>
+      {{#each potentialInvitees}}
+        <button class="btn btn-small btn-danger remove-invitee" type="button">{{this}}</button>
+        <br />
+      {{/each}}
+      <br />
+      {{#if potentialInvitees}}
+        <button class="btn btn-small add-users" type="button">
+          {{#if isSuperBubble this}}
+            Add to Members List
+          {{else}}
+            Add to Invitee List
+          {{/if}}
+        </button>
+      {{/if}}
     {{/if}}
+    </div>
   </div>
 </template>
 
