@@ -856,11 +856,16 @@ wysiwyg-image(n)
 
 .wysiwyg_group
   .wysiwyg
-    border               1px solid #ccc
-    background           white
+    border-bottom        1px solid main-light
+    border-top           1px solid main-light
+    padding              10px 0
     min-height           300px
+    border-right         0
+    border-left          0
     img
       wysiwyg-image        0
+    &:focus
+      outline              0
   .wysiwyg-row
     position             relative
     overflow             hidden
@@ -1061,6 +1066,13 @@ wysiwyg-image(n)
               svg
                 fill            main-dark
                 height          30px
+    .wysiwyg-row
+      .wysiwyg-label
+        margin         15px 0 10px 0
+        color          main-xlight
+        cursor         default
+        padding        0
+        border         0
     label
       padding-top    4px
       padding-bottom 11px
@@ -1072,6 +1084,8 @@ wysiwyg-image(n)
       colorize(white-light, main-dark)
       fontize(alt, thin, auto, 23px)
       box-shadow     0 0
+      padding-left   0
+      padding-right  0
       border-right   0
       border-left    0
       border-top     0
