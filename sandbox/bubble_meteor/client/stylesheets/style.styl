@@ -1488,14 +1488,33 @@ navbar-height        =  60px
   float              left
   .pane
     float              left
+    .btn-nav
+      width            100%
     &.section
       background         main-light
       width              100px
       height             100%
+      .btn-nav
+        fontize(main, medium, uppercase, 10px)
+        border-bottom      1px solid #436C88
+        color              main-xlight
+        height             80px
     &.subsection
       background         main-xlight
       width              210px
       height             100%
+      .heading
+        border-bottom      1px solid #89A5B8
+        padding            0 15px
+        height             60px
+        .section-name
+          fontize(main, bold, uppercase, 13px, 60px)
+          color              main-light
+      .btn-nav
+        fontize(alt, semibold, blank, 14px, blank, blank, blank, left)
+        border-bottom      1px solid #89A5B8
+        color              main-light
+        height             50px
 
 /*****   sidebar-new        *****/
 

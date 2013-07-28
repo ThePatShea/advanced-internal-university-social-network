@@ -4,10 +4,19 @@
       <div class="navbar-inner"></div>
     </div>
     <div class="pane section">
-      <button>my bubbles</button>
+      <button class="btn-nav">my bubbles</button>
+      <a href="{{searchAllPath}}">
+        <button class="btn-nav">search</button>
+      </a>
+      <button class="btn-nav">settings</button>
     </div>
     <div class="pane subsection">
-      <button>Aplha Epsilon Pi</button>
+      <div class="heading">
+        <div class="section-name">my bubbles</div>
+      </div>
+      {{#each userBubbles}}
+        <button class="btn-nav">{{title}}</button>
+      {{/each}}
     </div>
   </div>
 </template>
