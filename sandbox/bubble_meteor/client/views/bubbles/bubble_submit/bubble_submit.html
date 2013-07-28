@@ -1,12 +1,12 @@
 <template name="bubbleSubmit">
 <head>
-<style>
+<!--<style>
 .thumb {
 height: 75px;
 border: 1px solid #000;
 margin: 10px 5px 0 0;
 }
-</style>
+</style>-->
 </head>
 
   <form class="main">
@@ -65,6 +65,146 @@ margin: 10px 5px 0 0;
         </div>
     </div>
   </form>
+
+
+
+  <div class="cb-form-container" id="cb-form-container-event">
+    
+    <form class="cb-form">
+      <!--<div class="attach-files">
+        <div id="eventphoto_dropzone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+        </div>
+      </div>-->
+        <div class="cb-form-row first">
+          <input class="half-width column-one" name="name" type="text" value="" placeholder="Name*"/> 
+          <input class="half-width column-two" name="description" type="text" placeholder="Description?*"/>
+        </div>
+
+
+        <div class="cb-form-row">
+            <div class="bubble-category">
+                <label name="picture" type="label">Category*</label>
+                <ul class="nav nav-tabs large-boxes">
+                    <li class="{{isSelected 'all'}} all">
+                        <a href='{{searchAllPath}}' class="all">
+                            <div class="large-box-title club">
+                                <div>student</div>
+                                <div>organization</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">Student started groups; chartered or not, well-organized or not, virtual or real.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'bubbles'}} bubbles">
+                        <a href='{{searchBubblesPath}}' class="bubbles">
+                            <div class="large-box-title greek">
+                                <div>greek</div>
+                                <div>organization</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'users'}} users">
+                        <a href='{{searchUsersPath}}' class="users">
+                            <div class="large-box-title arts-entertainment">
+                                <div>arts and</div>
+                                <div>entertainment</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'events'}} events">
+                        <a href='{{searchEventsPath}}' class="events">
+                            <div class="large-box-title athletics">
+                                <div>athletics and</div>
+                                <div>recreation</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'discussions'}} discussions">
+                        <a href='{{searchDiscussionsPath}}' class="discussions">
+                            <div class="large-box-title academic">
+                                <div>academic</div>
+                                <div>department</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'files'}} files">
+                        <a href="#" class="files">
+                            <div class="large-box-title administrative">
+                                <div>administrative</div>
+                                <div>office</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'files'}} files">
+                        <a href="#" class="files">
+                            <div class="large-box-title community">
+                                <div>community</div>
+                                <div>service/resource</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'files'}} files">
+                        <a href="#" class="files">
+                            <div class="large-box-title class">
+                                class
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'files'}} files">
+                        <a href="#" class="files">
+                            <div class="large-box-title residence">
+                                <div>residence</div>
+                                <div>hall</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="{{isSelected 'files'}} files">
+                        <a href="#" class="files">
+                            <div class="large-box-title custom">custom</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cb-form-row">
+          <div class="attach-files">
+            <label class="dropzone-label" name="picture" type="label">Add profile photo?</label>
+            <div id="drop_zone" class="drop-zone">
+              <div class="dz-title">drag and drop</div>
+              <div class="dz-subtitle">or click here</div>
+              <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+              <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="cb-form-row last">
+          <div class="attach-files">
+            <label class="dropzone-label" name="picture" type="label">Add cover photo?</label>
+            <div id="drop_zone" class="drop-zone">
+              <div class="dz-title">drag and drop</div>
+              <div class="dz-subtitle">or click here</div>
+              <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+              <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+            </div>
+          </div>
+      </div>
+
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+      </div>
+    </form>
+  </div>
+
   <img src="/img/Bubble-Profile.jpg" id="tempbubbleprofile" />
   <img src="/img/Bubble-Coverphoto.jpg" id="tempbubblecoverphoto" />
 </template>

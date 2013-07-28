@@ -918,6 +918,8 @@ wysiwyg-image(n)
       margin          0 0 45px 0
       clear           both
       overflow        hidden
+      &.last
+        margin-bottom 0
       .half-width
         border-box      0
         width           48%
@@ -1054,6 +1056,56 @@ wysiwyg-image(n)
               svg
                 fill            main-dark
                 height          30px
+      &.large-boxes
+        padding       10px 0 40px 0
+        margin        0
+        li
+          positionize(143px, 143px, 0, 0 10px 10px 0)
+          fontize(main, bold, uppercase, 10px)
+          colorize(main-xlight)
+          border         1px solid main-light
+          background     main-dark
+          overflow       hidden
+          border-radius  6px
+          .add-padding
+            padding        0
+          a
+            height         100%
+            width          100%
+            padding        0
+            display        block
+            fontize(main, bold, uppercase, 10px)
+            colorize(main-xlight)
+            border-box     0
+            border         none
+            border-top-left-radius                5px
+            border-top-right-radius               5px
+            .large-box-title
+              border-top-left-radius                5px
+              border-top-right-radius               5px
+              height                                48px
+              width                                 100%
+              fontize(auto, auto, capitlize, auto, auto, auto, auto, center)
+              &.club
+                colorize(white-light, color-club)
+              &.greek
+                colorize(white-light, color-greek)
+              &.athletics
+                colorize(white-light, color-sport)
+              &.arts-entertainment
+                colorize(white-light, color-art)
+              &.academic
+                colorize(white-light, color-study)
+              &.administrative
+                colorize(white-light, color-office)
+              &.community
+                colorize(white-light, color-service)
+              &.class
+                colorize(white-light, color-major)
+              &.residence
+                colorize(white-light, color-dorm)
+              &.custom
+                colorize(white-light, color-custom)
     label
       padding-top    4px
       padding-bottom 11px
@@ -1072,6 +1124,9 @@ wysiwyg-image(n)
       &.search-text,
       &.width-full
         width          100%
+      &.dropzone-label
+        border-bottom  0px
+        padding-bottom 8px
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
       colorize(white-light, main-dark)
