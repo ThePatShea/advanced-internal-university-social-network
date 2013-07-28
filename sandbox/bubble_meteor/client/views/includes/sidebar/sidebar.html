@@ -15,7 +15,9 @@
         <div class="section-name">my bubbles</div>
       </div>
       {{#each userBubbles}}
-        <button class="btn-nav">{{title}}</button>
+        <a href="{{bubblePagePath this}}">
+          <button class="btn-nav">{{title}}</button>
+        </a>
       {{/each}}
     </div>
   </div>
