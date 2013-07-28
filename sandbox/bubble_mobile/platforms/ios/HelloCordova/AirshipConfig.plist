@@ -4,8 +4,8 @@
 		"bubble.meteor.com",
 	);
 	"APP_STORE_OR_AD_HOC_BUILD" = NO;
-	"DEVELOPMENT_APP_KEY" = "Yepttx8IQ4iBzg9HZD97NA";
-	"DEVELOPMENT_APP_SECRET" = "Rnx6dAAESXqOF_Pl3QqrqQ";
+	"DEVELOPMENT_APP_KEY" = "M6oTTgCDSMeut2gd_otuPw";
+	"DEVELOPMENT_APP_SECRET" = "Uqsut-XRT1axMge09Uvt8g";
 	"PRODUCTION_APP_KEY" = "Your Production App Key";
 	"PRODUCTION_APP_SECRET" = "Your Production App Secret";
 }

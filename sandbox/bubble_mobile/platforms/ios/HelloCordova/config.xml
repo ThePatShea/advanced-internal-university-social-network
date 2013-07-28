@@ -66,8 +66,7 @@
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
     <plugins>
-        <plugin name="PushPlugin" value="PushPlugin" />
-        <plugin name="PushNotificationPlugin" onload="true" value="PushNotificationPlugin" />
+        <plugin name="PushNotificationPlugin" value="PushNotificationPlugin" onload="true"/>
     </plugins>
     <access origin="*" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
