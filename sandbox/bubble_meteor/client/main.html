@@ -34,24 +34,19 @@
 </head>
 <body>
   {{> googleAnalytics}}
+
   <div class="viewport">
     <div class="frame">
-
       {{#if isLoggedIn}}
-      <button class="sidebar-collapse" data-toggle="collapse" data-target="#menu">
-        <span class="sidebar-arrow-right">{{> icon-sidebar-arrow-right}}</span>
-        <span class="sidebar-arrow-left">{{> icon-sidebar-arrow-left}}</span>
-      </button>
-        <div id="menu" class="menu nav-collapse collapse width">
-          {{> sidebarOld}}
-        </div>
+        <button class="sidebar-collapse" data-toggle="collapse" data-target="#menu">
+          <span class="sidebar-arrow-right">{{> icon-sidebar-arrow-right}}</span>
+          <span class="sidebar-arrow-left">{{> icon-sidebar-arrow-left}}</span>
+        </button>
+        {{> sidebar}}
       {{/if}}
-
       <div class="view">
-        {{#if isLoggedIn}}
-          {{> header}}
-        {{/if}}
         <div id="main" class="row-fluid">
+          {{#if isLoggedIn}} {{> header}} {{/if}}
           {{> errors}}
           {{renderPage}}
         </div>
