@@ -3,16 +3,18 @@
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
     <div class="bubble-page-content">
-      <div class="bubble-list">
-        <div class="bubble-list-heading">
-          <h3 class="section-name pull-left"># updates</h3>
-          <a href="">
+      {{#if compressedUpdates}}
+        <div class="bubble-list">
+          <div class="bubble-list-heading">
+            <h3 class="section-name pull-left">updates</h3>
+          <!--
             <button class="std-btn-light pull-right">see all</button>
-          </a>
-          <button class="std-btn-light pull-right clear-updates">clear all</button> 
+            <button class="std-btn-light pull-right clear-updates">clear all</button> 
+          -->
+          </div>
+          {{> updatesList}}
         </div>
-        {{> updatesList}}
-      </div>
+      {{/if}}
   
       <div class="bubble-list">
         {{#with postProperties.event}}
@@ -20,7 +22,14 @@
           {{#each posts}}
             {{> listItem}}
           {{else}}
-            There are no {{postType}}s yet. Add one now!
+            <div></div>
+            <div class="post-item">
+              <div class="v-middle">
+                <div class="v-inner">
+                  No events yet. Schedule meetings and other members-only events here!
+                </div>
+              </div>
+            </div>
           {{/each}}
           <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath getCurrentBubble._id}}">
             <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount postType 'more'}}</button>
@@ -34,7 +43,14 @@
           {{#each posts}}
             {{> listItem}}
           {{else}}
-            There are no {{postType}}s yet. Add one now!
+            <div></div>
+            <div class="post-item">
+              <div class="v-middle">
+                <div class="v-inner">
+                  No discussions? Start discussions for any topic here!
+                </div>
+              </div>
+            </div>
           {{/each}}
           <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
             <button class="pull-left btn-tiny more-posts">+ {{pluralize discussionsCount postType 'more'}}</button>
@@ -48,7 +64,14 @@
           {{#each posts}}
             {{> listItem}}
           {{else}}
-            There are no {{postType}}s yet. Add one now!
+            <div></div>
+            <div class="post-item">
+              <div class="v-middle">
+                <div class="v-inner">
+                  No files? Add some here!
+                </div>
+              </div>
+            </div>
           {{/each}}
           <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath getCurrentBubble._id}}">
             <button class="pull-left btn-tiny more-posts">+ {{pluralize filesCount postType 'more'}}</button>
