@@ -23,7 +23,6 @@
           {{#each posts}}
             {{> listItem}}
           {{else}}
-            <div></div>
             <div class="post-item">
               <div class="v-middle">
                 <div class="v-inner">
@@ -45,7 +44,6 @@
           {{#each posts}}
             {{> listItem}}
           {{else}}
-            <div></div>
             <div class="post-item">
               <div class="v-middle">
                 <div class="v-inner">
@@ -62,12 +60,11 @@
   
       <div class="bubble-list">
         {{#with postProperties.file}}
-          {{> listHeading}}
           <div></div>
+          {{> listHeading}}
           {{#each posts}}
             {{> listItem}}
           {{else}}
-            <div></div>
             <div class="post-item">
               <div class="v-middle">
                 <div class="v-inner">
