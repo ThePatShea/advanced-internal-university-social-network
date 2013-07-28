@@ -855,24 +855,26 @@ wysiwyg-image(n)
   float                left
 
 .wysiwyg_group
+  .btns-formatting
+    .btn-wysiwyg
+      padding              5px 10px
+      position             relative
+      top                  5px
   .wysiwyg
     border-bottom        1px solid main-light
     border-top           1px solid main-light
+    fontize(alt, regular, blank, 15px)
     padding              10px 0
     min-height           300px
+    clear                both
     border-right         0
     border-left          0
     img
       wysiwyg-image        0
     &:focus
       outline              0
-  .wysiwyg-row
-    position             relative
-    overflow             hidden
-  .btns-formatting
-    color red // TE
-
-
+      .wysiwyg-placeholder
+        display              none
 /**********     WYSIWYG     **********/
 
 
