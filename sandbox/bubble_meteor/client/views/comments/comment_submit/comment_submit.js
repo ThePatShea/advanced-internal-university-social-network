@@ -78,9 +78,4 @@ Template.commentSubmit.rendered = function() {
    $('.cb-submit').prop('disabled', true);
    $('.cb-submit').addClass('ready-false');
    inspectAllInputFields();
- /*  
-   $('.required').change(function() {
-      inspectAllInputFields();
-   });
- */
 }

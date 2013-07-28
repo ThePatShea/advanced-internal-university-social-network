@@ -40,8 +40,8 @@
         </div>
       </div>
     -->
-      <div class="wysiwyg">
-        {{#unless hasText}}
+      <div name="body" class="required wysiwyg">
+        {{#unless body}}
           <span class="wysiwyg-placeholder">Type here...</span>
         {{/unless}}
         {{{body}}}

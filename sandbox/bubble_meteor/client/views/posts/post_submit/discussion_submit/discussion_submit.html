@@ -4,10 +4,13 @@
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
     <form class="cb-form">
-      <input class="width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
+      <input class="required width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
       {{> wysiwyg}}
       <div class="cb-submit-container">
-        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
+          <span class="words-main">submit</span>
+          <span class="words-error">please type a message before submitting</span>
+        </button>
       </div>
     </form>
   </div>
