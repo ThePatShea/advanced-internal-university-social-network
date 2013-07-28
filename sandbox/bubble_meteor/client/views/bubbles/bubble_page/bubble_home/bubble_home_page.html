@@ -18,6 +18,7 @@
   
       <div class="bubble-list">
         {{#with postProperties.event}}
+          <div></div>
           {{> listHeading}}
           {{#each posts}}
             {{> listItem}}
@@ -39,6 +40,7 @@
 
       <div class="bubble-list">
         {{#with postProperties.discussion}}
+          <div></div>
           {{> listHeading}}
           {{#each posts}}
             {{> listItem}}
@@ -61,6 +63,7 @@
       <div class="bubble-list">
         {{#with postProperties.file}}
           {{> listHeading}}
+          <div></div>
           {{#each posts}}
             {{> listItem}}
           {{else}}
