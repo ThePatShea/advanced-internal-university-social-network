@@ -30,24 +30,40 @@
       </a>
     </div>
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
-      <div class="heading">
-        <div class="pull-left section-name">my bubbles</div>
-        <div class="pull-right v-middle">
-          <div class="v-inner">
-            <a href="{{bubbleSubmitPath}}">
-              <button class="btn-heading">
-                <span class="cb-icon-add">{{> icon-add}}</span>
-                <span>new</span>
-              </button>
-            </a>
+      <div class="visible-{{selectedSection 'mybubbles'}}">
+        <div class="heading">
+          <div class="pull-left section-name">my bubbles</div>
+          <div class="pull-right v-middle">
+            <div class="v-inner">
+              <a href="{{bubbleSubmitPath}}">
+                <button class="btn-heading">
+                  <span class="cb-icon-add">{{> icon-add}}</span>
+                  <span>new</span>
+                </button>
+              </a>
+            </div>
           </div>
         </div>
+        {{#each userBubbles}}
+          <a href="{{bubblePagePath this}}">
+            <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsection}}">{{title}}</button>
+          </a>
+        {{/each}}
       </div>
-      {{#each userBubbles}}
-        <a href="{{bubblePagePath this}}">
-          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsection}}">{{title}}</button>
+      <div class="visible-{{selectedSection 'settings'}}">
+        <div class="heading">
+          <div class="pull-left section-name">
+            <span class="cb-icon-settings">{{> icon-settings-big}}</span>
+            <span class="lbl">settings</span>
+          </div>
+        </div>
+        <a href="{{userProfilePath Meteor.userId}}">
+          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsectionName 'userprofile'}}">Profile</button>
         </a>
-      {{/each}}
+        <a href="{{invitationsPagePath}}">
+          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsectionName 'invites'}}">Invitations</button>
+        </a>
+      </div>
     </div>
   </div>
 </template>
