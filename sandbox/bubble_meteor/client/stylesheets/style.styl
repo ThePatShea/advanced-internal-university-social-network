@@ -1956,6 +1956,9 @@ attachment-height  =  75px
 .pic-preview-wrapper-inner
   height 67px
   width 67px
+.pic-preview-wrapper-inner-invitee
+  height 50px
+  width 50px
 
 /**********        profile-page       **********/
 
@@ -1966,18 +1969,64 @@ attachment-height  =  75px
     .small-heading
       &.member-list-heading
         margin        0
-.fill
-    fill                   main-xlight
-.invitee-container
-  height              70px
-  border              1px solid main-xlight
-  border-radius       36px
-  overflow            hidden
-  width               40%
-  float               left
-  margin 0 10px 0 10px
-.cb-form-add-members
-  min-height              500px
+  .searchResults
+    overflow          auto
+    min-height        100px
+  .fill
+   fill                   main-light
+  .cb-icon-bubble-big
+    svg
+      height          56px
+      width           56px
+  .invitee-container
+    height              54px
+    border              1px solid main-light
+    border-radius       28px
+    overflow            hidden
+    width               40%
+    float               left
+    margin              10px;
+    padding             0 10px 0 0;
+    &:hover
+      background-color  main-xlight
+      cursor            pointer
+    .invitee-text
+      margin              0 0 0 10px
+      fontize(alt,light,capitalize,15px,auto,auto,auto,auto)
+  .cb-form-add-members
+    min-height          200px
+  .num-posts
+    margin              0 0 0 5px
+    color               main-light
+    fontize(alt,semibold,uppercase,12px,auto,auto,auto,auto)
+  .cancel-invitee-container
+    border-top          1px solid main-light
+    border-bottom       1px solid main-light
+    overflow            auto
+    margin              15px 0
+  .cancel-invitee
+    margin              15px
+    cursor              pointer
+    float               left
+    .cancel-invitee-icon
+      svg
+        fill            #b0606d
+        rect
+          fill          main-dark
+    margin              0 20px 0 0
+      svg
+        fill            #b0606d
+        rect
+          fill          main-dark
+    .cancel-invitee-text
+      fontize(alt,medium,capitalize,15px,auto,auto,auto,auto)
+  .add-invitees
+    fontize(alt,light,auto,15px,30px,auto,auto,auto)
+    padding 5px 0 20px 0;
+    overflow auto
+    .add-invitees-text
+      margin 0 15px 0 0
+
 
 /**********       bubble-members      **********/
 

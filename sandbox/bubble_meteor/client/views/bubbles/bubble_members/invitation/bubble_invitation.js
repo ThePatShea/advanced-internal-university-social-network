@@ -42,6 +42,13 @@ Template.bubbleInvitation.helpers({
   getProfilePicture: function(){
     var user = Meteor.users.findOne({_id:Session.get(this._id)});
     return user.profilePicture;
+  },
+
+  getNumSelected: function(){
+    if(Session.get('inviteeList'+Session.get('currentBubbleId')))
+      return Session.get('inviteeList'+Session.get('currentBubbleId')).length;
+    else
+      return 0;
   }
 });
 
@@ -101,7 +108,7 @@ Template.bubbleInvitation.events({
     
     //Reset Session objects
     Session.set('selectedUsername',undefined);
-    Session.set('inviteeList'+Session.get('currentBubbleId'),undefined);
+    Session.set('inviteeList'+Session.get('currentBubbleId'),[]);
     Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   }
 });

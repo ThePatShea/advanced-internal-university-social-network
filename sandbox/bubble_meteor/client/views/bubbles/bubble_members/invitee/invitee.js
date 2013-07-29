@@ -1,5 +1,8 @@
 Template.invitee.helpers({
-	userName: function() {
-		return Meteor.userId();
+	numPosts: function() {
+		var uid = this._id;
+		var numPosts = Posts.find({'userId': uid}).count();
+		return numPosts;
 	}
 });
+

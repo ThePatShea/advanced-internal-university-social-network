@@ -9,38 +9,39 @@
             <input class="search-text" name="searchText" type="text" placeholder="Start typing..."/>
         </div>
       </div>
-      {{#if hasSearchText}}
-        {{#each findUsers}}
-          {{> invitee}}
-          {{#if returnFalse}}
-            <button class="btn btn-small btn-info shortlist-invitee" type="button">{{username}}</button>
-          {{/if}}
-        {{/each}}
-        <br/>
-      {{/if}}
-    {{#if returnFalse}}
-      <hr>
-      {{#if isSuperBubble this}}
-        Potential Members List
-      {{else}}
-        Potential Invitee List
-      {{/if}}
-      <br />
-      {{#each potentialInvitees}}
-        <button class="btn btn-small btn-danger remove-invitee" type="button">{{this}}</button>
-        <br />
-      {{/each}}
-      <br />
+      <div class="searchResults">
+        {{#if hasSearchText}}
+          {{#each findUsers}}
+            <div class="invitee shortlist-invitee">
+              {{> invitee}}
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
       {{#if potentialInvitees}}
-        <button class="btn btn-small add-users" type="button">
-          {{#if isSuperBubble this}}
-            Add to Members List
-          {{else}}
-            Add to Invitee List
-          {{/if}}
-        </button>
+        <div class="cancel-invitee-container">
+          {{#each potentialInvitees}}
+              <div class="cancel-invitee remove-invitee">
+                <span class="cancel-invitee-icon">{{> icon-cancel}}</span>
+                <span class="cancel-invitee-text">{{this}}</span>
+              </div>
+          {{/each}}
+        </div>
       {{/if}}
-    {{/if}}
+      <div class="add-invitees">
+        <span class="add-invitees-btn">
+          {{#if getNumSelected}}
+            <button class="std-btn-dark pull-right add-users" type="button">
+              invite
+            </button>
+          {{else}}
+            <button class="std-btn-dark pull-right" type="button">
+              search for and select at least 1 user to invite
+            </button>
+          {{/if}}
+        </span>
+        <span class="pull-right add-invitees-text">{{pluralize getNumSelected "person" ""}} selected</span>
+      </div>
     </div>
   </div>
 </template>
