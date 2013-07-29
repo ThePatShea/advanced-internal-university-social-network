@@ -58,10 +58,16 @@
           </div>
         </div>
         <a href="{{userProfilePath Meteor.userId}}">
-          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsectionName 'userprofile'}}">Profile</button>
+          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsectionName 'userprofile'}}">
+            <span class="cb-icon">{{> icon-user}}</span>
+            <span class="lbl">Profile</span>
+          </button>
         </a>
         <a href="{{invitationsPagePath}}">
-          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsectionName 'invites'}}">Invitations</button>
+          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsectionName 'invites'}}">
+            <span class="cb-icon">{{> icon-invite}}</span>
+            <span class="lbl">Invitations</span>
+          </button>
         </a>
       </div>
     </div>
