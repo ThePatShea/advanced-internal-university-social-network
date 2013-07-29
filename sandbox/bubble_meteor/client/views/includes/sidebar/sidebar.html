@@ -5,10 +5,20 @@
     </div>
     <div class="pane section">
       <a href="{{myBubblesLink}}">
-        <button class="btn-nav active-{{selectedSection 'mybubbles'}}">my bubbles</button>
+        <button class="btn-nav active-{{selectedSection 'mybubbles'}}">
+          <div class="inner">
+            <div class="cb-icon">{{> icon-two-bubbles}}</div>
+            <div class="lbl">my bubbles</div>
+          </div>
+        </button>
       </a>
       <a href="{{searchAllPath}}">
-        <button class="btn-nav active-{{selectedSection 'search'}}">search</button>
+        <button class="btn-nav active-{{selectedSection 'search'}}">
+          <div class="inner">
+            <div class="cb-icon">{{> icon-search-thin}}</div>
+            <div class="lbl">search</div>
+          </div>
+        </button>
       </a>
       <button class="btn-nav active-{{selectedSection 'settings'}}">settings</button>
     </div>
