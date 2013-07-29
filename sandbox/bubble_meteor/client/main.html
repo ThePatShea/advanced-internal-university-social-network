@@ -45,8 +45,8 @@
         {{> sidebar}}
       {{/if}}
       <div class="view">
+        {{#if isLoggedIn}} {{> header}} {{/if}}
         <div id="main" class="row-fluid">
-          {{#if isLoggedIn}} {{> header}} {{/if}}
           {{> errors}}
           {{renderPage}}
         </div>
