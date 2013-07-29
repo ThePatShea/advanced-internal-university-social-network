@@ -204,8 +204,8 @@ category-club-bg(n)
 .category-club-bg-opacity-60
   background             rgba(176,96,109,.60)
 
-.category-club-border-left-3
-  border-left            3px solid color-club
+.category-club-border-right-3
+  border-right           3px solid color-club
 .category-club-border-top-4
   border-top             4px solid color-club
 .category-club-border
@@ -240,8 +240,8 @@ category-sport-bg(n)
 .category-sport-bg-opacity-60
   background             rgba(255,107,83,.60)
 
-.category-sport-border-left-3
-  border-left            3px solid color-sport
+.category-sport-border-right-3
+  border-right           3px solid color-sport
 .category-sport-border-top-4
   border-top             4px solid color-sport
 .category-sport-border
@@ -276,8 +276,8 @@ category-greek-bg(n)
 .category-greek-bg-opacity-60
   background             rgba(112,200,137,.60)
 
-.category-greek-border-left-3
-  border-left            3px solid color-greek
+.category-greek-border-right-3
+  border-right           3px solid color-greek
 .category-greek-border-top-4
   border-top             4px solid color-greek
 .category-greek-border
@@ -312,8 +312,8 @@ category-study-bg(n)
 .category-study-bg-opacity-60
   background             rgba(249,193,72,.60)
 
-.category-study-border-left-3
-  border-left            3px solid color-study
+.category-study-border-right-3
+  border-right           3px solid color-study
 .category-study-border-top-4
   border-top             4px solid color-study
 .category-study-border
@@ -349,8 +349,8 @@ category-major-bg(n)
 .category-major-bg-opacity-60
   background             rgba(103,54,83,.60)
 
-.category-major-border-left-3
-  border-left            3px solid color-major
+.category-major-border-right-3
+  border-right           3px solid color-major
 .category-major-border-top-4
   border-top             4px solid color-major
 .category-major-border
@@ -385,8 +385,8 @@ category-office-bg(n)
 .category-office-bg-opacity-60
   background             rgba(222,130,117,.60)
 
-.category-office-border-left-3
-  border-left            3px solid color-office
+.category-office-border-right-3
+  border-right           3px solid color-office
 .category-office-border-top-4
   border-top             4px solid color-office
 .category-office-border
@@ -421,8 +421,8 @@ category-service-bg(n)
 .category-service-bg-opacity-60
   background             rgba(107,182,161,.60)
 
-.category-service-border-left-3
-  border-left            3px solid color-service
+.category-service-border-right-3
+  border-right           3px solid color-service
 .category-service-border-top-4
   border-top             4px solid color-service
 .category-service-border
@@ -457,8 +457,8 @@ category-dorm-bg(n)
 .category-dorm-bg-opacity-60
   background             rgba(109,195,186,.60)
 
-.category-dorm-border-left-3
-  border-left            3px solid color-dorm
+.category-dorm-border-right-3
+  border-right           3px solid color-dorm
 .category-dorm-border-top-4
   border-top             4px solid color-dorm
 .category-dorm-border
@@ -493,8 +493,8 @@ category-art-bg(n)
 .category-art-bg-opacity-60
   background             rgba(255,138,84,.60)
 
-.category-art-border-left-3
-  border-left            3px solid color-art
+.category-art-border-right-3
+  border-right           3px solid color-art
 .category-art-border-top-4
   border-top             4px solid color-art
 .category-art-border
@@ -529,8 +529,8 @@ category-custom-bg(n)
 .category-custom-bg-opacity-60
   background             rgba(70,36,70,.60)
 
-.category-custom-border-left-3
-  border-left            3px solid color-custom
+.category-custom-border-right-3
+  border-right           3px solid color-custom
 .category-custom-border-top-4
   border-top             4px solid color-custom
 .category-custom-border
@@ -855,19 +855,26 @@ wysiwyg-image(n)
   float                left
 
 .wysiwyg_group
+  .btns-formatting
+    .btn-wysiwyg
+      padding              5px 10px
+      position             relative
+      top                  5px
   .wysiwyg
-    border               1px solid #ccc
-    background           white
+    border-bottom        1px solid main-light
+    border-top           1px solid main-light
+    fontize(alt, light, blank, 15px)
+    padding              10px 0
     min-height           300px
+    clear                both
+    border-right         0
+    border-left          0
     img
       wysiwyg-image        0
-  .wysiwyg-row
-    position             relative
-    overflow             hidden
-  .btns-formatting
-    color red // TE
-
-
+    &:focus
+      outline              0
+      .wysiwyg-placeholder
+        display              none
 /**********     WYSIWYG     **********/
 
 
@@ -1115,6 +1122,13 @@ wysiwyg-image(n)
                 colorize(white-light, color-custom)
             .large-box-info
               fontize(alt, regular, capitlize, 13px, auto, auto, auto, center)
+    .wysiwyg-row
+      .wysiwyg-label
+        margin         15px 0 10px 0
+        color          main-xlight
+        cursor         default
+        padding        0
+        border         0
     label
       padding-top    4px
       padding-bottom 11px
@@ -1126,6 +1140,8 @@ wysiwyg-image(n)
       colorize(white-light, main-dark)
       fontize(alt, thin, auto, 23px)
       box-shadow     0 0
+      padding-left   0
+      padding-right  0
       border-right   0
       border-left    0
       border-top     0
@@ -1283,6 +1299,8 @@ align-with-post-item(n)
         margin-right           0
   &:nth-child(odd)
     std-white-light-bg      0
+    &:hover
+      background             white
   &:nth-child(even)
     std-white-dark-bg      0
     &:hover
@@ -1520,6 +1538,53 @@ navbar-height        =  60px
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
+/*****   sidebar-new        *****/
+.sidebar-new
+  max-width          310px
+  height             100%
+  float              left
+  .pane
+    float              left
+    .btn-nav
+      width            100%
+    &.section
+      background         main-light
+      width              100px
+      height             100%
+      .btn-nav
+        fontize(main, medium, uppercase, 10px)
+        border-bottom      1px solid #436C88
+        color              main-xlight
+        height             80px
+        &.active-true,
+        &:hover
+          color              white-light
+          background         #274B61
+    &.subsection
+      background         main-xlight
+      width              210px
+      height             100%
+      .heading,
+      .btn-nav
+        padding            0 15px
+      .heading
+        border-bottom      1px solid #89A5B8
+        height             60px
+        .section-name
+          fontize(main, bold, uppercase, 13px, 60px)
+          color              main-light
+      .btn-nav
+        fontize(alt, semibold, blank, 14px, blank, blank, blank, left)
+        border-bottom      1px solid #89A5B8
+        color              main-light
+        height             50px
+        &.active-true,
+        &:hover
+          background         #89A5B8
+
+/*****   sidebar-new        *****/
+
+
 /*****   sidebar-collapse   *****/
 body
   position                 absolute

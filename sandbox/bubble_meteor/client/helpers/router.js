@@ -88,12 +88,12 @@ Meteor.Router.add({
  
 
   // Search Related Routes
-    '/mybubbles/search/all': 'searchAll',
-    '/mybubbles/search/users': 'searchUsers',
-    '/mybubbles/search/bubbles': 'searchBubbles',
-    '/mybubbles/search/discussions': 'searchDiscussions',
-    '/mybubbles/search/events': 'searchEvents',
-    '/mybubbles/search/files': 'searchFiles',
+    '/search/all': 'searchAll',
+    '/search/users': 'searchUsers',
+    '/search/bubbles': 'searchBubbles',
+    '/search/discussions': 'searchDiscussions',
+    '/search/events': 'searchEvents',
+    '/search/files': 'searchFiles',
 
 
   // Flags Related Routes

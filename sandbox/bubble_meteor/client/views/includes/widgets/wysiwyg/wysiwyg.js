@@ -1,3 +1,10 @@
+Template.wysiwyg.events({
+    'click .wysiwyg': function() {
+      $('.wysiwyg').children('.wysiwyg-placeholder').remove();
+    }
+});
+
+
 Template.wysiwyg.created = function () {
   this.currentPostId  =  Session.get('currentPostId');
   this.addToDropZone  =  function(attachment) {
@@ -76,6 +83,9 @@ Template.wysiwyg.created = function () {
 Template.wysiwyg.rendered = function() {
   $(".wysiwyg").wysiwyg();
 
+  $('.btn-add-discussion').click(function() {
+    $('[name=name]').focus();
+  });
 
 
 
