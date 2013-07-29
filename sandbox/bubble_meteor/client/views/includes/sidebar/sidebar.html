@@ -14,7 +14,14 @@
     </div>
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
       <div class="heading">
-        <div class="section-name">my bubbles</div>
+        <div class="pull-left section-name">my bubbles</div>
+        <div class="pull-right v-middle">
+          <div class="v-inner">
+            <a href="{{bubbleSubmitPath}}">
+              <button class="btn-heading">new</button>
+            </a>
+          </div>
+        </div>
       </div>
       {{#each userBubbles}}
         <a href="{{bubblePagePath this}}">
