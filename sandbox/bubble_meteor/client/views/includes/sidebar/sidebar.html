@@ -4,11 +4,13 @@
       <div class="navbar-inner"></div>
     </div>
     <div class="pane section">
-      <button class="btn-nav">my bubbles</button>
-      <a href="{{searchAllPath}}">
-        <button class="btn-nav">search</button>
+      <a href="{{myBubblesLink}}">
+        <button class="btn-nav active-{{selectedSection 'mybubbles'}}">my bubbles</button>
       </a>
-      <button class="btn-nav">settings</button>
+      <a href="{{searchAllPath}}">
+        <button class="btn-nav active-{{selectedSection 'search'}}">search</button>
+      </a>
+      <button class="btn-nav active-{{selectedSection 'settings'}}">settings</button>
     </div>
     <div class="pane subsection">
       <div class="heading">

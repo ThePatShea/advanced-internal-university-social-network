@@ -1,11 +1,25 @@
 Template.sidebar.helpers({
-    selectedSubsection: function() {
+    myBubblesLink: function() {
+      var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
+      if(bubbles.length > 0) {
+        return '/mybubbles/' + bubbles[0]._id + '/home';
+      }else {
+        return '/mybubbles/create/bubble';
+      }
+    }
+  , selectedSection    : function(inputSection) {
+      var currentUrl  =  window.location.pathname;
+      var urlArray    =  currentUrl.split("/");
+
+      return urlArray[1] == inputSection;
+    }
+  , selectedSubsection : function() {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
        
       return urlArray[2] == this._id;
     }
-  , userBubbles: function() {
+  , userBubbles        : function() {
       return Bubbles.find({
         $or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},
         {sort: {'users.members': -1, 'users.admins': -1, 'submitted': -1}
