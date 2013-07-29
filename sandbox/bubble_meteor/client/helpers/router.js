@@ -71,7 +71,7 @@ Meteor.Router.add({
 
 
   // User Profile Related Routes
-    '/userprofile/:id': {
+    '/settings/userprofile/:id': {
       to: 'userProfile',
       and: function(id) { Session.set('selectedUserId',id); }
     },

@@ -20,12 +20,14 @@
           </div>
         </button>
       </a>
-      <button class="btn-nav active-{{selectedSection 'settings'}}">
+      <a href="{{userProfilePath Meteor.userId}}">
+        <button class="btn-nav active-{{selectedSection 'settings'}}">
           <div class="inner">
             <div class="cb-icon-settings">{{> icon-settings-big}}</div>
             <div class="lbl">settings</div>
           </div>
-      </button>
+        </button>
+      </a>
     </div>
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
       <div class="heading">
