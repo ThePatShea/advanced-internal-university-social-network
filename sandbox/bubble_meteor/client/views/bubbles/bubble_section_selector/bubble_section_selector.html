@@ -1,11 +1,31 @@
 <template name="bubbleSectionSelector">
-  <div class="bubble-section-selector category-{{category}}-border-top-4 category-{{category}}-bg-opacity-60">
+  <div class="bubble-section-selector category-{{category}}-border-top-4 category-{{category}}-bg-opacity-80">
     <div class="opacity-wrapper">
-      <a href="{{bubblePagePath this}}"><button class="btn-bubble-section category-{{category}}-fill">{{> icon-home}}</button></a>
-      <a href="{{bubbleEventPagePath this}}"><button class="btn-bubble-section category-{{category}}-bg-opacity-100">{{> icon-event}}</button></a>
-      <a href="{{bubbleDiscussionPagePath this}}"><button class="btn-bubble-section category-{{category}}-bg-opacity-90">{{> icon-discussion}}</button></a>
-      <a href="{{bubbleFilePagePath this}}"><button class="btn-bubble-section category-{{category}}-bg-opacity-80">{{> icon-file}}</button></a>
-      <a href="{{bubbleMembersPagePath this}}"><button class="btn-bubble-section category-{{category}}-bg-opacity-70">{{> icon-member}}</button></a>
+      <a href="{{bubblePagePath this}}">
+        <button class="active-{{isSelected 'home'}} btn-bubble-section category-{{category}}-bg-opacity-100 category-{{category}}-hover-fill">
+          <span>{{> icon-home}}</span>
+        </button>
+      </a>
+      <a href="{{bubbleEventPagePath this}}">
+        <button class="active-{{isSelected 'event'}} btn-bubble-section category-{{category}}-bg-opacity-80 category-{{category}}-hover-fill">
+          <span>{{> icon-event}}</span>
+        </button>
+      </a>
+      <a href="{{bubbleDiscussionPagePath this}}">
+        <button class="active-{{isSelected 'discussion'}} btn-bubble-section category-{{category}}-bg-opacity-100 category-{{category}}-hover-fill">
+          <span>{{> icon-discussion}}</span>
+        </button>
+      </a>
+      <a href="{{bubbleFilePagePath this}}">
+        <button class="active-{{isSelected 'file'}} btn-bubble-section category-{{category}}-bg-opacity-80 category-{{category}}-hover-fill">
+          <span>{{> icon-file}}</span>
+        </button>
+      </a>
+      <a href="{{bubbleMembersPagePath this}}">
+        <button class="active-{{isSelected 'members'}} btn-bubble-section category-{{category}}-bg-opacity-100 category-{{category}}-hover-fill">
+          <span>{{> icon-member}}</span>
+        </button>
+      </a>
     </div>
   </div>
 </template>
