@@ -1598,9 +1598,9 @@ navbar-height        =  60px
             position           relative
             left               -2px
           .selected-arrow
-            move-position(absolute, 28px, -5px, blank, blank)
             display            block
         .selected-arrow
+          move-position(absolute, 28px, -5px, blank, blank)
           fill               #274B61
           display            none
         .cb-icon
@@ -1616,6 +1616,7 @@ navbar-height        =  60px
     &.subsection
       background         main-xlight
       position           relative
+      overflow           visible
       width              210px
       height             100%
       z-index            20
@@ -1656,10 +1657,22 @@ navbar-height        =  60px
         fontize(alt, semibold, blank, 14px, 50px, blank, blank, left)
         border-bottom      1px solid #89A5B8
         color              main-light
+        position           relative
         height             50px
+        &.active-true
+          .selected-arrow
+            display            block
         &.active-true,
         &:hover
           background         #89A5B8
+        .selected-arrow
+          move-position(absolute, -2px, -5px, blank, blank)
+          fill               #89A5B8
+          display            none
+          svg
+            vertical-align     middle
+          &.section-mybubbles
+            right              -8px
         .cb-icon-other
           position           relative
           top                -2px
