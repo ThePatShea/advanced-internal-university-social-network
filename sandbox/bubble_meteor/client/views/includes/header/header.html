@@ -1,8 +1,9 @@
 <template name="header">
   <header class="navbar navbar-main">
     <div class="navbar-inner">
-      <button class="sidebar-collapse-new">sidebar</button>
-
+      <button class="sidebar-collapse-new">
+        <span class="cb-icon">{{> icon-sidebar-collapse}}</span>
+      </button>
       <a href="{{getMyBubblesUrlPath}}" class="brand">
         <span class="logo-main">{{> icon-logo-main}}</span>
         <span class="logo-words">
