@@ -46,7 +46,15 @@
         </div>
         {{#each userBubbles}}
           <a href="{{bubblePagePath this}}">
-            <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsection}}">{{title}}</button>
+            <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsection}}">
+              {{#if compressedUpdatesCount this._id}}
+                <div class="pull-left num-in-bubble updates-count">
+                  <span class="cb-icon cb-icon-bubble">{{> icon-bubble}}</span>
+                  <span class="num category-{{category}}-color">{{compressedUpdatesCount this._id}}</span>
+                </div>
+              {{/if}}
+              <div class="pull-left lbl">{{title}}</div>
+            </button>
           </a>
         {{/each}}
       </div>
