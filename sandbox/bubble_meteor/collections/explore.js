@@ -25,7 +25,7 @@ Meteor.methods({
         bubbleWithSameName._id);
     }
 
-    var explore = _.extend(_.pick(exploreAttributes, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto'), {
+    var explore = _.extend(_.pick(exploreAttributes, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName'), {
     	submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       /*users: {

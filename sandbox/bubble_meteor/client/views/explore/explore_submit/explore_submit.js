@@ -287,5 +287,12 @@ Template.exploreSubmit.rendered = function(){
   $("#coverphoto_preview").hide();
   $("#tempbubbleprofile").hide();
   $("#tempbubblecoverphoto").hide();
-}
+};
+
+
+Template.exploreSubmit.helpers({
+  hasLevel4Permission: function(){
+      return ('4' == Meteor.user().userType && this.userType != '4');
+    }
+});
 

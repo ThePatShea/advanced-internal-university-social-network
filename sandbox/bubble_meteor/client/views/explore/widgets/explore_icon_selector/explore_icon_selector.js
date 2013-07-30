@@ -1,4 +1,4 @@
-Template.exploreCategorySelector.helpers({
+Template.exploreIconSelector.helpers({
   checkSelected: function(category) {
     if(Meteor.Router.page() != 'bubbleSubmit') {
       var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
@@ -11,6 +11,6 @@ Template.exploreCategorySelector.helpers({
     return false;
   },
   getCategories: function() {
-    return exploreCategories;
+    return exploreProfileIcons;
   }
 });

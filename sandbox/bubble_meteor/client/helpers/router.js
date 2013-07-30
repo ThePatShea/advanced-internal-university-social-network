@@ -96,6 +96,10 @@ Meteor.Router.add({
     '/search/files': 'searchFiles',
 
 
+  //Explore Related Routes
+    '/explore/create': 'exploreSubmit',
+
+
   // Flags Related Routes
     '/flags/all': 'flagsList',
 

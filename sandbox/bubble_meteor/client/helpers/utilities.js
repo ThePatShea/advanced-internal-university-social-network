@@ -20,3 +20,19 @@ userTypes = {
   4 : "Level 4"
 }
 
+
+exploreCategories = [
+        {name_long: 'events', name_short: 'events'},
+        {name_long: 'discussions', name_long: 'discussions'}
+]
+
+
+exploreProfileIcons = [
+       {name_long: 'announcements', name_short: 'announcements'},
+       {name_long: 'campus events', name_short: 'campus events'},
+       {name_long: 'classifieds', name_short: 'classifieds'},
+       {name_long: 'professor reviews', name_short: 'professor reviews'},
+       {name_long: 'controversial topics', name_short: 'controversial topics'},
+       {name_long: 'student deals', name_short: 'student deals'},
+       {name_short: 'nightlife', name_long: 'nightlife'}
+];
