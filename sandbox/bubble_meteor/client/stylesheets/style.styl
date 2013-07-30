@@ -1572,12 +1572,16 @@ navbar-height        =  60px
       width            100%
     &.section
       background         main-light
+      position           relative
+      overflow           visible
       width              100px
       height             100%
+      z-index            30
       .btn-nav
         fontize(main, medium, uppercase, 10px)
         border-bottom      1px solid #436C88
         color              main-xlight
+        position           relative
         height             80px
         &.active-true,
         &:hover
@@ -1593,6 +1597,12 @@ navbar-height        =  60px
           .inner
             position           relative
             left               -2px
+          .selected-arrow
+            move-position(absolute, 28px, -5px, blank, blank)
+            display            block
+        .selected-arrow
+          fill               #274B61
+          display            none
         .cb-icon
           margin             0 0 5px 0
           path
@@ -1605,8 +1615,10 @@ navbar-height        =  60px
             width              25px
     &.subsection
       background         main-xlight
+      position           relative
       width              210px
       height             100%
+      z-index            20
       .heading,
       .btn-nav
         padding            0 15px
