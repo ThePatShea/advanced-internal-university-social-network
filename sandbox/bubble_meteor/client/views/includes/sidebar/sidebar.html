@@ -1,59 +1,33 @@
 <template name="sidebar">
-  <header class="navbar">
-    <div class="navbar-inner"></div>
-  </header>
- 
-  <section class="sidebar">
-    <div class="top-btns">
-        <a href="{{getSearchUrl}}">
-        <button class="top-btn left">
-          <span class="cb-icon-light-stroke">{{> icon-search}}</span>
-          <span class="lbl">search</span>
-        </button>
-      </a>
-      <a href="{{bubbleSubmitPath}}">
-        <button class="top-btn right">
-          <span class="cb-icon-light-fill">{{> icon-bubble-create}}</span>
-          <span class="lbl">create</span>
-        </button>
-      </a>
+  <div class="sidebar-new">
+    <div class="navbar">
+      <div class="navbar-inner"></div>
     </div>
-
-
-    <div class="main-btns">
-      {{#each getSidebarBubbles}} 
+    <div class="pane section">
+      <a href="{{myBubblesLink}}">
+        <button class="btn-nav active-{{selectedSection 'mybubbles'}}">my bubbles</button>
+      </a>
+      <a href="{{searchAllPath}}">
+        <button class="btn-nav active-{{selectedSection 'search'}}">search</button>
+      </a>
+      <button class="btn-nav active-{{selectedSection 'settings'}}">settings</button>
+    </div>
+    <div class="pane subsection visible-{{subsectionPaneVisible}}">
+      <div class="heading">
+        <div class="pull-left section-name">my bubbles</div>
+        <div class="pull-right v-middle">
+          <div class="v-inner">
+            <a href="{{bubbleSubmitPath}}">
+              <button class="btn-heading">new</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      {{#each userBubbles}}
         <a href="{{bubblePagePath this}}">
-          <button class="main-btn category-{{category}}-border-left-3">
-            {{#if compressedUpdatesCount this._id}}
-              <span class="badge badge-inverse">
-                {{compressedUpdatesCount this._id}} 
-              </span>
-            {{/if}}
-            {{title}}
-          </button>
+          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsection}}">{{title}}</button>
         </a>
       {{/each}}
-      {{#if hasInvitations}}
-        <div class="row">
-          <div class="span9"> 
-            <span class="label label-success">
-              YOU HAVE INVITATIONS 
-            </span>
-          </div>
-          {{#each getInvitations}}
-            <div class="span2">
-              <a href="{{bubblePagePath this}}">
-                {{title}}
-              </a>
-            </div>
-            <div class="span1">
-            <a class="btn btn-mini btn-alert pull-right accept-invitation">accept</a>
-            <a class="btn btn-mini btn-alert pull-right reject-invitation">reject</a>
-            </div>
-          {{/each}}
-        </div>
-      {{/if}}
-      <div id="getsat-widget-6125"></div>
     </div>
-  </section>
+  </div>
 </template>

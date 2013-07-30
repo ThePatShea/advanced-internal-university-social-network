@@ -1,23 +1,39 @@
 Template.bubbleSubmit.events({
-  'submit form': function(event) {
+  'click .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
     // _gaq.push(['_trackEvent', 'Bubble', 'Create Bubble', $(event.target).find('[name=title]').val()]);
 
     var bubble = {
-      title: $(event.target).find('[name=title]').val(),
-      description: $(event.target).find('[name=description]').val(),
-      category: $(event.target).find('[name=category]').val(),
-      coverPhoto: $(event.target).find('[id=coverphoto_preview]').attr('src'),
-      retinaCoverPhoto: $(event.target).find('[id=coverphoto_retina]').attr('src'),
-      profilePicture: $(event.target).find('[id=profilepicture_preview]').attr('src'),
-      retinaProfilePicture: $(event.target).find('[id=profilepicture_retina]').attr('src'),
-      bubbleType: $(event.target).find('[name=bubbleType]').val()
+      title: $('.cb-form').find('[name=title]').val(),
+      description: $('.cb-form').find('[name=description]').val(),
+      //category: $(event.target).find('[name=category]').val(),
+      'category': category,
+      coverPhoto: $('.cb-form').find('[id=coverphoto_preview]').attr('src'),
+      retinaCoverPhoto: $('.cb-form').find('[id=coverphoto_retina]').attr('src'),
+      profilePicture: $('.cb-form').find('[id=profilepicture_preview]').attr('src'),
+      retinaProfilePicture: $('.cb-form').find('[id=profilepicture_retina]').attr('src'),
+      bubbleType: $('.cb-form').find('[name=bubbleType]').val()
     };
 
 
-
-    if(bubble.coverPhoto.length == 0){
+    if(bubble.coverPhoto){
+      if(bubble.coverPhoto.length == 0){
+        var covercanvas = document.createElement('canvas');
+        var retinacovercanvas = document.createElement('canvas');
+        covercanvas.width = 1280;
+        covercanvas.height = 150;
+        retinacovercanvas.width = 2560;
+        retinacovercanvas.height = 300;
+        var covercontext = covercanvas.getContext('2d');
+        var retinacovercontext = retinacovercanvas.getContext('2d');
+        covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
+        retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
+        bubble.coverPhoto = covercanvas.toDataURL();
+        bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();
+      }
+    }
+    else{
       var covercanvas = document.createElement('canvas');
       var retinacovercanvas = document.createElement('canvas');
       covercanvas.width = 1280;
@@ -29,9 +45,26 @@ Template.bubbleSubmit.events({
       covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
       retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
       bubble.coverPhoto = covercanvas.toDataURL();
-      bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();
+      bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();  
+    };
+
+    if(bubble.profilePicture){
+      if(bubble.profilePicture.length == 0){
+        var profilecanvas = document.createElement('canvas');
+        var retinaprofilecanvas = document.createElement('canvas');
+        profilecanvas.width = 300;
+        profilecanvas.height = 300;
+        retinaprofilecanvas.width = 600;
+        retinaprofilecanvas.height = 600;
+        var profilecontext = profilecanvas.getContext('2d');
+        var retinaprofilecontext = retinaprofilecanvas.getContext('2d');
+        profilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 300, 300);
+        retinaprofilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 600, 600);
+        bubble.profilePicture = profilecanvas.toDataURL();
+        bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
+      }
     }
-    if(bubble.profilePicture.length == 0){
+    else{
       var profilecanvas = document.createElement('canvas');
       var retinaprofilecanvas = document.createElement('canvas');
       profilecanvas.width = 300;
@@ -68,7 +101,7 @@ Template.bubbleSubmit.events({
         evt.stopPropagation();
     evt.preventDefault();
 
-    files = evt.dataTransfer.files;
+    var files = evt.dataTransfer.files;
 
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -394,7 +427,7 @@ Template.bubbleSubmit.events({
         evt.stopPropagation();
     evt.preventDefault();
 
-    files = evt.dataTransfer.files;
+    var files = evt.dataTransfer.files;
 
     //If more than one file dropped on the dropzone then throw an error to the user
     if(files.length > 1){
@@ -552,6 +585,7 @@ Template.bubbleSubmit.events({
   },
 
   'change #profilefilesToUpload': function(evt){
+    console.log(evt.target);
 
     var files = evt.target.files;
 
@@ -724,12 +758,84 @@ Template.bubbleSubmit.events({
       }
     }
 
+  },
+
+  'click #club': function(evt){
+    evt.stopPropagation();
+    category = "club";
+    $(".nav-tabs li").removeClass('active');
+    $("#club").addClass('active');
+  },
+
+  'click #greek': function(evt){
+    evt.stopPropagation();
+    category = "greek";
+    $(".nav-tabs li").removeClass('active');
+    $("#greek").addClass('active');
+  },
+
+  'click #arts': function(evt){
+    evt.stopPropagation();
+    category = "arts";
+    $(".nav-tabs li").removeClass('active');
+    $("#arts").addClass('active');
+  },
+
+  'click #athletics': function(evt){
+    evt.stopPropagation();
+    category ="athletics";
+    $(".nav-tabs li").removeClass('active');
+    $("#athletics").addClass('active');
+  },
+
+  'click #academic': function(evt){
+    evt.stopPropagation();
+    category = "academic";
+    $(".nav-tabs li").removeClass('active');
+    $("#academic").addClass('active');
+  },
+
+  'click #administrative': function(evt){
+    evt.stopPropagation();
+    category   = "administrative";
+    $(".nav-tabs li").removeClass('active');
+    $("#administrative").addClass('active');
+  },
+
+  'click #community': function(evt){
+    evt.stopPropagation();
+    category = "community";
+    $(".nav-tabs li").removeClass('active');
+    $("#community").addClass('active');
+  },
+
+  'click #class': function(evt){
+    evt.stopPropagation();
+    category = "class";
+    $(".nav-tabs li").removeClass('active');
+    $("#class").addClass('active');
+  },
+
+  'click #residence': function(evt){
+    evt.stopPropagation();
+    category = "residence";
+    $(".nav-tabs li").removeClass('active');
+    $("#residence").addClass('active');
+  },
+
+  'click #custom': function(evt){
+    evt.stopPropagation();
+    category = "custom";
+    $(".nav-tabs li").removeClass('active');
+    $("#custom").addClass('active');
   }
 
 });
 
 
 Template.bubbleSubmit.rendered = function(){
+  //$("#club").addClass('active');
+  category = null;
   $("#profilepicture_retina").hide();
   $("#coverphoto_retina").hide();
   $("#profilepicture_preview").hide();

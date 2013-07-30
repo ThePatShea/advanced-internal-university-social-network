@@ -10,7 +10,7 @@
       <span class="word2">{{postType}}s</span>
     </h3>
 
-    <button class="visible-toggle-parent toggle-hide std-btn-light pull-right btn-add" data-toggle="collapse" data-target="#cb-form-container-{{postType}}">
+    <button class="visible-toggle-parent toggle-hide std-btn-light pull-right btn-add btn-add-{{postType}}" data-toggle="collapse" data-target="#cb-form-container-{{postType}}">
       <span class="visible-toggle-child-start-show left-icon cb-icon-add">{{> icon-add}}</span>
       <span class="visible-toggle-child-start-hide left-icon">{{> icon-cancel}}</span>
       <span class="visible-toggle-child-start-show">add new {{postType}}</span>
@@ -20,4 +20,5 @@
   </div>
   {{#if matchPostType 'discussion'}} {{> discussionSubmit}} {{/if}}
   {{#if matchPostType 'file'}} {{> fileSubmit}} {{/if}}
+  {{#if matchPostType 'event'}} {{> eventSubmit}} {{/if}}
 </template>

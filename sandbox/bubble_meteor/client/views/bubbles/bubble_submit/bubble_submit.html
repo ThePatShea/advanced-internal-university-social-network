@@ -1,70 +1,186 @@
 <template name="bubbleSubmit">
-<head>
-<style>
-.thumb {
-height: 75px;
-border: 1px solid #000;
-margin: 10px 5px 0 0;
-}
-</style>
-</head>
 
-  <form class="main">
-    {{#if hasLevel2Permissions}}
-      <select name="bubbleType">
-      <option value="normal">Normal Bubble</option>
-      <option value="super">Super Bubble</option>
-        </select>
-      <hr />
-    {{/if}}
+  
 
-    <div class="control-group">
-        <label class="control-label" for="title">Title</label>
-        <div class="controls">
-            <input name="title" type="text" value="" placeholder="Title of Bubble"/>
+
+
+  <div class="cb-form-container" id="cb-form-container-event">
+    
+    <form class="cb-form">
+      <!--<div class="attach-files">
+        <div id="eventphoto_dropzone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
         </div>
-    </div>
-
-    <div class="control-group">
-        <label class="control-label" for="description">Description</label>
-        <div class="controls">
-            <input name="description" type="text" value="" placeholder="Description of Bubble"/>
+      </div>-->
+        <div class="cb-form-row first">
+          <input class="half-width column-one" name="title" type="text" value="" placeholder="Name*"/> 
+          <input class="half-width column-two" name="description" type="text" placeholder="Description?*"/>
         </div>
-    </div>
 
-    <div class="control-group">
-        <div id="bubble_image">
-            <div id="cover_dropzone" class="dropzone">Drop cover photo here.</div>
-            <input name="filesToUpload[]" id="coverfilesToUpload" type="file">
-                <img id="coverphoto_upload" src="" />
-                <img id="coverphoto_preview" src="" />
-        </div>
-    </div>
 
-    <div class="control-group">
-        <div id="bubble_profile">
-            <div id="profile_dropzone" class="dropzone">Drop bubble profile picture here.</div>
-            <input name="filesToUpload[]" id="profilefilesToUpload" type="file">
-                <img id="profilepicture_upload" src="" />
-                <img id="profilepicture_preview" src="" />
-                <img id="profilepicture_retina" src="" />
+        <div class="cb-form-row">
+            <div class="bubble-category">
+                <label name="picture" type="label">Category*</label>
+                <ul class="nav nav-tabs large-boxes">
+                    <li id="club">
+                        <a href='#'>
+                            <div class="large-box-title club">
+                                <div>student</div>
+                                <div>organization</div>
+                            </div>
+                            <div class="v-middle">
+                                <div class="v-inner">
+                                    <div class="large-box-info">Student started groups; chartered or not, well-organized or not, virtual or real.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="greek">
+                        <a href='#'>
+                            <div class="large-box-title greek">
+                                <div>greek</div>
+                                <div>organization</div>
+                            </div>
+                            <div class="v-middle">
+                                <div class="v-inner">
+                                    <div class="large-box-info">fraternities, sororities, and anything related to greek life at Emory.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="arts">
+                        <a href='#'>
+                            <div class="large-box-title arts-entertainment">
+                                <div>arts and</div>
+                                <div>entertainment</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">groups related music, arts, theatre, nightlife, the weekend, spring break, etc.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="athletics">
+                        <a href='#'>
+                            <div class="large-box-title athletics">
+                                <div>athletics and</div>
+                                <div>recreation</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">from varsity teams, club sports, and intramurals to jogging groups and kickabouts.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="academic">
+                        <a href='#'>
+                            <div class="large-box-title academic">
+                                <div>academic</div>
+                                <div>department</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">e.g., History department, BBA, Law School, Phi Sigma Tau, Stipe Scholarship, etc.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="administrative">
+                        <a href="#">
+                            <div class="large-box-title administrative">
+                                <div>administrative</div>
+                                <div>office</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">e.g., Deans, OUE, Sustaniability Office, Admissions, faculty committees, etc.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="community">
+                        <a href="#">
+                            <div class="large-box-title community">
+                                <div>community</div>
+                                <div>service/resource</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">e.g., Library, EPD, Dining, Career Center, Student Health, Religious Life, LGBT, etc.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li id="class">
+                        <a href="#">
+                            <div class="large-box-title class">
+                                class
+                            </div>
+                        </a>
+                    </li>
+                    <li id="residence">
+                        <a href="#">
+                            <div class="large-box-title residence">
+                                <div>residence</div>
+                                <div>hall</div>
+                            </div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">e.g., Harris Hall, FYE, Turman Fourth, Clairmont campus, etc.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="large-box-title custom">custom</div>
+                            <div class="v-middle lbl-all-container">
+                                <div class="v-inner">
+                                    <div class="lbl-all">For all your uncategorizable Bubble needs.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="control-group">
-        <label class="control-label" for="category">Category</label>
-        <div class="controls">
-            {{> categorySelector}}
+        <div class="cb-form-row">
+          <div class="attach-files">
+            <label class="dropzone-label" name="picture" type="label">Add profile photo?</label>
+            <div id="drop_zone" class="drop-zone">
+              <div class="dz-title">drag and drop</div>
+              <div class="dz-subtitle">or click here</div>
+              <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+              <input class="file-chooser-invisible" name="filesToUpload[]" id="profilefilesToUpload" type="file" multiple="">
+            </div>
+          </div>
         </div>
-    </div>
 
-    <hr>
-    <div class="control-group">
-        <div class="controls">
-            <input type="submit" value="Submit" class="btn btn-primary"/>
-        </div>
-    </div>
-  </form>
+
+        <div class="cb-form-row last">
+          <div class="attach-files">
+            <label class="dropzone-label" name="picture" type="label">Add cover photo?</label>
+            <div id="drop_zone" class="drop-zone">
+              <div class="dz-title">drag and drop</div>
+              <div class="dz-subtitle">or click here</div>
+              <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+              <input class="file-chooser-invisible" name="filesToUpload[]" id="coverfilesToUpload" type="file" multiple="">
+            </div>
+          </div>
+      </div>
+
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
+      </div>
+    </form>
+  </div>
+
   <img src="/img/Bubble-Profile.jpg" id="tempbubbleprofile" />
   <img src="/img/Bubble-Coverphoto.jpg" id="tempbubblecoverphoto" />
 </template>

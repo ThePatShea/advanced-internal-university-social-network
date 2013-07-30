@@ -14,6 +14,7 @@ To setup a bundle:
 
 To start running the bundled Bubble application:
 
-1. cd sandbox/bubble_bundle/bundle
-2. ./start_bubble.sh
+1. sudo cp upstart_config/bubble.conf /etc/init/bubble.conf
+2. sudo stop bubble
+3. sudo start bubble
 

@@ -1,45 +1,55 @@
-Template.sidebar.helpers({
-    subsectionPaneVisible : function() {
-      var currentSection = window.location.pathname.split("/")[1];
-
-      if (currentSection == 'search')
-        return false;
-      else
-        return true;
+Template.sidebarOld.helpers({
+  getSidebarBubbles: function(){
+    return Bubbles.find({
+      $or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}, 
+      {sort: {'users.members': -1, 'users.admins': -1, 'submitted': -1}
+    });
+  },
+  getInvitations: function() {
+    invitees = [Meteor.userId()];
+    var bubbles =  Bubbles.find({'users.invitees': Meteor.userId()});
+    return bubbles;
+  },
+  hasInvitations: function() {
+    var bubbles =  Bubbles.find({'users.invitees': Meteor.userId()});
+    if(bubbles.count() >0){
+      return true;
     }
-  , myBubblesLink         : function() {
-      var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
-      if(bubbles.length > 0) {
-        return '/mybubbles/' + bubbles[0]._id + '/home';
-      }else {
-        return '/mybubbles/create/bubble';
-      }
+    return false;
+  },
+  getSearchUrl: function() {
+    Session.set('searchText',undefined);
+    if(Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).count() > 0){
+      return '/mybubbles/search/all';
+    }else{
+      return '/mybubbles/search/bubbles';
     }
-  , selectedSection       : function(inputSection) {
-      var currentUrl  =  window.location.pathname;
-      var urlArray    =  currentUrl.split("/");
-
-      return urlArray[1] == inputSection;
-    }
-  , selectedSubsection    : function() {
-      var currentUrl  =  window.location.pathname;
-      var urlArray    =  currentUrl.split("/");
-       
-      return urlArray[2] == this._id;
-    }
-  , userBubbles           : function() {
-      return Bubbles.find({
-        $or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},
-        {sort: {'users.members': -1, 'users.admins': -1, 'submitted': -1}
-      });
-    }
+  }
 });
 
+Template.sidebarOld.events({
+  'click .accept-invitation': function(){
+    Bubbles.update({_id:this._id},
+    {
+      $addToSet: {'users.members': Meteor.userId()},
+      $pull: {'users.invitees': Meteor.userId()}
+    });
 
+    //Create new user notification
+    createNewMemberUpdate(Meteor.userId(), this._id);
+    Meteor.call('setRead', Updates.findOne({userId:Meteor.userId(), bubbleId:this._id, updateType:"INVITATION"}));
+  },
+  'click .reject-invitation': function(){
+    if (confirm("Reject this invitation?")) {
+      Bubbles.update({_id:this._id},
+      {
+        $pull: {'users.invitees': Meteor.userId()}
+      });
+    }
+  }
+}); 
 
-
-
-Template.sidebar.rendered = function() {
+Template.sidebarOld.rendered = function() {
 
   // Handles the cancel button for forms
     $('.visible-toggle-parent').click(function() {
