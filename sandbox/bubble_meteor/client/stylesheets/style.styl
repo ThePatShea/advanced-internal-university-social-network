@@ -1475,6 +1475,16 @@ navbar-height        =  60px
   letter-spacing         1px
   svg
     vertical-align           middle
+  &.navbar-main
+    position                 relative
+    z-index                  100
+    .sidebar-collapse-new
+      position               absolute
+      background  red  // TESTING
+      @media (min-width: 768px)
+        display                none
+      @media (max-width: 767px)
+        display                block
   .navbar-inner
     height                   60px
     main-xdark-bg            0
@@ -1491,8 +1501,7 @@ navbar-height        =  60px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
-        z-index                    100
-        left                       25%
+        left                       50%
       .logo-main
         margin                     0 5px 0 0
       .logo-words
@@ -1550,7 +1559,10 @@ navbar-height        =  60px
     float              left
   @media (max-width: 767px)
     position           absolute
+    display            none
     z-index            90
+    &.sidebar-visible
+      display          block
   .pane
     overflow-y         auto
     float              left

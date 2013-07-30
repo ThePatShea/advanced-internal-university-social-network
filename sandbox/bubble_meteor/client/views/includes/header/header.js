@@ -23,3 +23,12 @@ Template.header.helpers({
     return Meteor.user().userType == userType;
   }
 });
+
+
+Template.header.rendered = function() {
+  $('.sidebar-collapse-new').click(function() {
+    //$('.sidebar-new').addClass('sidebar-visible');
+    $('#sidebar-new').addClass('sidebar-visible');
+    //$('.sidebar-new').hide();
+  });
+}
