@@ -27,8 +27,11 @@ Template.header.helpers({
 
 Template.header.rendered = function() {
   $('.sidebar-collapse-new').click(function() {
-    //$('.sidebar-new').addClass('sidebar-visible');
-    $('#sidebar-new').addClass('sidebar-visible');
-    //$('.sidebar-new').hide();
+    if ( $('#sidebar-new').hasClass('sidebar-visible') ) {
+      $('#sidebar-new').removeClass('sidebar-visible');
+    } else {
+      $('#sidebar-new').addClass('sidebar-visible');
+      alert("else!");
+    }
   });
 }

@@ -46,6 +46,17 @@ Template.sidebar.helpers({
 
 
 Template.sidebar.rendered = function() {
+  console.log("sidebar template rendered");
+
+
+
+
+
+  // Controls the new sidebar's visibility
+    var controlSidebarVisibility = function() {
+      if ($(window).width() >= 768)
+        $('#sidebar-new').removeClass('sidebar-visible');
+    }
 
   // Handles the cancel button for forms
     $('.visible-toggle-parent').click(function() {
@@ -106,6 +117,7 @@ Template.sidebar.rendered = function() {
 
   // Run these functions on load and on window resize
     var adjustInterface = function() {
+      //controlSidebarVisibility();
       resizeMainBtns();
       adjustSidebar();
       adjustMain();
