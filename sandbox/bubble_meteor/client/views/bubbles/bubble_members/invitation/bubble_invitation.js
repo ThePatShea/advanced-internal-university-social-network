@@ -8,7 +8,7 @@ Template.bubbleInvitation.helpers({
         return Meteor.users.findOne({username:username})._id;
       }
     });
-    rejectList = rejectList.concat(users.invitees, inviteeIdList, users.admins, users.members, users.invitees, users.applicants); 
+    rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
 
     rejectList.push(Meteor.userId());
     //The regular expression is used here again to prevent showing 
@@ -33,6 +33,38 @@ Template.bubbleInvitation.helpers({
       return 'in';
     else
       return '';
+  },
+
+  returnFalse: function() {
+    return false;
+  },
+
+  getProfilePicture: function(){
+    var user = Meteor.users.findOne({_id:Session.get(this._id)});
+    return user.profilePicture;
+  },
+
+  getNumSelected: function(){
+    if(Session.get('inviteeList'+Session.get('currentBubbleId')))
+      return Session.get('inviteeList'+Session.get('currentBubbleId')).length;
+    else
+      return 0;
+  },
+  selected: function(){
+    inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
+      if(Meteor.users.findOne({username:username})) {
+        return Meteor.users.findOne({username:username})._id;
+      }
+    });
+    return(_.contains(inviteeIdList,this._id));
+  },
+    numPosts: function() {
+    var uid = this._id;
+    var numPosts = Posts.find({'userId': uid}).count();
+    return numPosts;
+  },
+  userId: function() {
+    return this._id;
   }
 });
 
@@ -46,6 +78,7 @@ Template.bubbleInvitation.events({
     }
     if(!_.contains(usernameList, this.username)) {
       usernameList.push(this.username);
+      $('#'+this._id).addClass('selected');
     }
     Session.set('inviteeList'+Session.get('currentBubbleId'),usernameList);
   },
@@ -92,7 +125,7 @@ Template.bubbleInvitation.events({
     
     //Reset Session objects
     Session.set('selectedUsername',undefined);
-    Session.set('inviteeList'+Session.get('currentBubbleId'),undefined);
+    Session.set('inviteeList'+Session.get('currentBubbleId'),[]);
     Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   }
 });

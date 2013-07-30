@@ -1,6 +1,6 @@
 Handlebars.registerHelper('pluralize', function(n, thing, between) {
   if (between == undefined)
-    between = ''
+    between = '';
 
   // Fairly simple pluralizer
   if(thing == 'person'){
