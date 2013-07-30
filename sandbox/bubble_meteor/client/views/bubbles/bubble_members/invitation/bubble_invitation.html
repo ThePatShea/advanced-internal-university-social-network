@@ -12,8 +12,32 @@
       <div class="searchResults">
         {{#if hasSearchText}}
           {{#each findUsers}}
-            <div class="invitee shortlist-invitee">
-              {{> invitee}}
+            <div class="invitee shortlist-invitee select">
+                <span>
+                  <div class="invitee-container {{#if selected}}selected{{/if}}">
+                    <div class="invitee-pic-container">
+                      <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
+                      <div class="pic-preview-wrapper-outer">
+                        <div class="pic-preview-wrapper-middle">
+                          <div class="pic-preview-wrapper-inner-invitee">
+                            <span class="visible-{{selected}} cb-icon-check">{{> icon-check}}</span>
+                            <span class="invisibile-{{selected}}"><img src="{{profilePicture}}"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="v-middle">
+                      <div class="v-inner">
+                        <span class="pull-left invitee-text">
+                          {{username}}
+                        </span>
+                        <span class="num-posts">
+                          {{pluralize numPosts "post" ""}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </span>
             </div>
           {{/each}}
         {{/if}}

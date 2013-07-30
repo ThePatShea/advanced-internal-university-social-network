@@ -1985,20 +1985,61 @@ attachment-height  =  75px
     overflow            hidden
     width               40%
     float               left
-    margin              10px;
-    padding             0 10px 0 0;
+    margin              10px
+    padding             0 10px 0 0
+    position            relative
     &:hover
       background-color  main-xlight
       cursor            pointer
+    .invitee-pic-container
+      position          relative
+      float             left
+      margin            -1px 0 0 -2px
     .invitee-text
       margin              0 0 0 10px
       fontize(alt,light,capitalize,15px,auto,auto,auto,auto)
+    &.selected
+      background-color  main-light
+      border 1px solid main-dark
+      .invitee-text
+        fontize(alt,regular,capitalize,15px,auto,auto,auto,auto)
+        color main-xdark
+      .num-posts
+        color main-xlight
+        fontize(alt,bold,uppercase,12px,auto,auto,auto,auto)
+      .cb-icon-bubble-big
+        svg
+          height 0
+          width 0
+      .pic-preview-wrapper-middle
+        border 1px solid dark
+        border-radius 50%
+        overflow hidden
+        background-color main-dark
+      .invitee-pic-container
+        height 56px
+        width 56px
+        border-radius 50%
+        background-color main-dark
+        position relative
+        float left
+      .pic-preview-wrapper-inner-invitee
+        background-color main-light
+      .cb-icon-check
+        position absolute
+        left 15px
+        bottom 10px
+        svg
+          height          26px
+          width           26px
+        fill main-dark
+
   .cb-form-add-members
     min-height          200px
   .num-posts
     margin              0 0 0 5px
     color               main-light
-    fontize(alt,semibold,uppercase,12px,auto,auto,auto,auto)
+    fontize(alt,bold,uppercase,12px,auto,auto,auto,auto)
   .cancel-invitee-container
     border-top          1px solid main-light
     border-bottom       1px solid main-light
