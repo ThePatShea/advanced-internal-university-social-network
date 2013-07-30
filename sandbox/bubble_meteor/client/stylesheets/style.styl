@@ -1478,6 +1478,9 @@ navbar-height        =  60px
   .navbar-inner
     height                   60px
     main-xdark-bg            0
+    .user-dropdown
+      position                 relative
+      z-index                  100
     .brand
       line-height              navbar-height 
       height                   navbar-height
@@ -1488,6 +1491,7 @@ navbar-height        =  60px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
+        z-index                    100
         left                       25%
       .logo-main
         margin                     0 5px 0 0
@@ -1542,7 +1546,11 @@ navbar-height        =  60px
 .sidebar-new
   max-width          310px
   height             100%
-  float              left
+  @media (min-width: 768px)
+    float              left
+  @media (max-width: 767px)
+    position           absolute
+    z-index            90
   .pane
     overflow-y         auto
     float              left
