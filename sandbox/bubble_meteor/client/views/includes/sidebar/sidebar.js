@@ -45,6 +45,12 @@ Template.sidebar.helpers({
 });
 
 
+Template.sidebar.events({
+    'click .btn-nav-subsection' : function() {
+      Session.set('sidebarOpen', false);
+    }
+});
+
 
 
 
