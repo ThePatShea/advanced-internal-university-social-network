@@ -1,3 +1,7 @@
+Template.header.created = function() {
+  Session.set('sidebarOpen', false);
+}
+
 Template.header.helpers({
   activeRouteClass: function(routeName) {
     var pathname = window.location.pathname.split('/')[1];
@@ -25,13 +29,13 @@ Template.header.helpers({
 });
 
 
-Template.header.rendered = function() {
-  $('.sidebar-collapse-new').click(function() {
-    if ( $('#sidebar-new').hasClass('sidebar-visible') ) {
-      $('#sidebar-new').removeClass('sidebar-visible');
-    } else {
-      $('#sidebar-new').addClass('sidebar-visible');
-      alert("else!");
-    }
-  });
-}
+Template.header.events({
+  'click .sidebar-collapse-new' : function() {
+    var sidebarOpen = Session.get('sidebarOpen');
+
+    if (sidebarOpen == false)
+      Session.set('sidebarOpen', true);
+    else
+      Session.set('sidebarOpen', false);
+  }
+});

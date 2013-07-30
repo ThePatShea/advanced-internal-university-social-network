@@ -1,5 +1,8 @@
 Template.sidebar.helpers({
-    subsectionPaneVisible  : function() {
+    sidebarOpen            : function() {
+      return Session.get('sidebarOpen');
+    }
+  , subsectionPaneVisible  : function() {
       var currentSection = window.location.pathname.split("/")[1];
 
       if (currentSection == 'search')
@@ -46,16 +49,10 @@ Template.sidebar.helpers({
 
 
 Template.sidebar.rendered = function() {
-  console.log("sidebar template rendered");
-
-
-
-
-
   // Controls the new sidebar's visibility
     var controlSidebarVisibility = function() {
       if ($(window).width() >= 768)
-        $('#sidebar-new').removeClass('sidebar-visible');
+        Session.set('sidebarOpen', false);
     }
 
   // Handles the cancel button for forms
@@ -117,7 +114,7 @@ Template.sidebar.rendered = function() {
 
   // Run these functions on load and on window resize
     var adjustInterface = function() {
-      //controlSidebarVisibility();
+      controlSidebarVisibility();
       resizeMainBtns();
       adjustSidebar();
       adjustMain();
