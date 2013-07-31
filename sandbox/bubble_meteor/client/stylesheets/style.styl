@@ -856,10 +856,26 @@ wysiwyg-image(n)
 
 .wysiwyg_group
   .btns-formatting
-    .btn-wysiwyg
-      padding              5px 10px
-      position             relative
-      top                  5px
+    .btn-group
+      margin-left          10px
+      &.justify
+        .btn-wysiwyg
+          stroke               main-light
+          &.hover
+            stroke               main-dark
+      .btn-wysiwyg
+        fill                 main-light
+        padding              5px 10px
+        position             relative
+        display              block
+        float                right
+        width                35px
+        margin-left          3px
+        top                  5px
+        border-box           0
+        &:hover
+          fill                 main-dark
+          cursor               pointer
   .wysiwyg
     border-bottom        1px solid main-light
     border-top           1px solid main-light
