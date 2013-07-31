@@ -18,13 +18,12 @@
 
 <template name="formElementsBubbleCreate">
   <div class="cb-form-row first">
-    <input class="half-width column-one" name="title" type="text" value="" placeholder="Name*"/>
-    <input class="half-width column-two" name="description" type="text" placeholder="Description?*"/>
+    <input class="required width-full" name="title" type="text" value="" placeholder="Name*"/>
   </div>
 
   <div class="cb-form-row">
     <div class="bubble-category">
-      <label>Category*</label>
+      <label class="no-typing">Category*</label>
       <ul class="nav nav-tabs large-boxes">
         {{#each systemCategory.categories}}
           <li id="{{nameShort}}">
@@ -43,4 +42,6 @@
       </ul>
     </div>
   </div>
+
+  {{> wysiwyg}}
 </template>
