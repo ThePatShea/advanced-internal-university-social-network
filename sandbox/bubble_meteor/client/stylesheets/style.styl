@@ -1648,9 +1648,20 @@ navbar-height        =  60px
           colorize(main-xlight, main-light)
           padding              10px 4px
         .btn-about
+          fontize(main, regular, uppercase, 11px, 40px)
           colorize(main-xlight, main-xdark)
           height               40px
           width                100%
+          &:hover
+            background             main-dark
+          .cb-icon
+            margin                 0 5px 0 0
+            position               relative
+            top                    -2px
+            svg
+              vertical-align       middle
+              height               22px
+              width                22px
     &.subsection
       background         main-xlight
       position           relative
