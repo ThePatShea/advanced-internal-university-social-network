@@ -1084,6 +1084,20 @@ wysiwyg-image(n)
           border-radius  6px
           .add-padding
             padding        0
+          &:hover
+            a
+              color               white-light
+              background          main-light
+              .large-box-info
+                color               main-dark
+          &.active
+            a
+              background          main-dark
+              .large-box-info
+                .cb-icon-check
+                  display             block
+                .body
+                  display             none
           a
             height         100%
             width          100%
@@ -1107,6 +1121,18 @@ wysiwyg-image(n)
               fontize(alt, regular, none, 13px, 1.2em, auto, auto, center)
               colorize(main-xlight)
               padding                   10px
+              .cb-icon-check
+                background                main-light
+                fill                      main-dark
+                margin                    0 auto
+                display                   none
+                height                    65px
+                width                     65px
+                border-radius             50%
+                svg
+                  move-position(relative, 22px, blank, blank, blank)
+                  height                    23px
+                  width                     29px
     .wysiwyg-row
       .wysiwyg-label
         margin         15px 0 10px 0

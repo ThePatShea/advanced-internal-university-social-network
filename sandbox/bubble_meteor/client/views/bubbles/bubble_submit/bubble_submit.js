@@ -16,7 +16,7 @@ Template.bubbleSubmit.events({
       bubbleType: $('.cb-form').find('[name=bubbleType]').val()
     };
 
-
+/*
     if(bubble.coverPhoto){
       if(bubble.coverPhoto.length == 0){
         var covercanvas = document.createElement('canvas');
@@ -78,7 +78,7 @@ Template.bubbleSubmit.events({
       bubble.profilePicture = profilecanvas.toDataURL();
       bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
     }
-    
+//*/    
     Meteor.call('bubble', bubble, function(error, bubbleId) {
       if (error) {
         // display the error to the user
@@ -774,53 +774,53 @@ Template.bubbleSubmit.events({
     $("#greek").addClass('active');
   },
 
-  'click #arts': function(evt){
+  'click #art': function(evt){
     evt.stopPropagation();
-    category = "arts";
+    category = "art";
     $(".nav-tabs li").removeClass('active');
-    $("#arts").addClass('active');
+    $("#art").addClass('active');
   },
 
-  'click #athletics': function(evt){
+  'click #sport': function(evt){
     evt.stopPropagation();
-    category ="athletics";
+    category ="sport";
     $(".nav-tabs li").removeClass('active');
-    $("#athletics").addClass('active');
+    $("#sport").addClass('active');
   },
 
-  'click #academic': function(evt){
+  'click #major': function(evt){
     evt.stopPropagation();
-    category = "academic";
+    category = "major";
     $(".nav-tabs li").removeClass('active');
-    $("#academic").addClass('active');
+    $("#major").addClass('active');
   },
 
-  'click #administrative': function(evt){
+  'click #office': function(evt){
     evt.stopPropagation();
-    category   = "administrative";
+    category   = "office";
     $(".nav-tabs li").removeClass('active');
-    $("#administrative").addClass('active');
+    $("#office").addClass('active');
   },
 
-  'click #community': function(evt){
+  'click #service': function(evt){
     evt.stopPropagation();
-    category = "community";
+    category = "service";
     $(".nav-tabs li").removeClass('active');
-    $("#community").addClass('active');
+    $("#service").addClass('active');
   },
 
-  'click #class': function(evt){
+  'click #study': function(evt){
     evt.stopPropagation();
-    category = "class";
+    category = "study";
     $(".nav-tabs li").removeClass('active');
-    $("#class").addClass('active');
+    $("#study").addClass('active');
   },
 
-  'click #residence': function(evt){
+  'click #dorm': function(evt){
     evt.stopPropagation();
-    category = "residence";
+    category = "dorm";
     $(".nav-tabs li").removeClass('active');
-    $("#residence").addClass('active');
+    $("#dorm").addClass('active');
   },
 
   'click #custom': function(evt){
