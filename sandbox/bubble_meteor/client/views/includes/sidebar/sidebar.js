@@ -4,6 +4,7 @@ Template.sidebar.helpers({
     }
   , subsectionPaneVisible  : function() {
       var currentSection = window.location.pathname.split("/")[1];
+      //console.log(currentSection);
 
       if (currentSection == 'search')
         return false;
@@ -21,6 +22,7 @@ Template.sidebar.helpers({
   , selectedSection        : function(inputSection) {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
+      console.log(inputSection, urlArray[1] == inputSection);
 
       return urlArray[1] == inputSection;
     }
@@ -41,6 +43,9 @@ Template.sidebar.helpers({
         $or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},
         {sort: {'users.members': -1, 'users.admins': -1, 'submitted': -1}
       });
+    },
+    hasLevel4Permission: function(){
+      return ('4' == Meteor.user().userType && this.userType != '4');
     }
 });
 
