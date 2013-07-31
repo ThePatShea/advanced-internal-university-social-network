@@ -10,6 +10,7 @@ Handlebars.registerHelper("systemForm", {
               , isCollapsed    : "collapse-false"
               , objectNameDash : "bubble-create"
               , wysiwygHeading : "Description"
+              , arrowVisible   : "false"
             }
         }
     }

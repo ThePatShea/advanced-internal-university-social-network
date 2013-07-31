@@ -1,7 +1,19 @@
 <template name="bubbleSubmit">
-  {{#with systemForm.formParams.bubble.create}}
-    {{> generateForm}}
-  {{/with}}
+  <div class="bubble-page-content bubble-page-content-search">
+     
+    <div class="bubble-list member-heading">
+      <div class="bubble-list-heading">
+        <h3 class="section-name pull-left">
+          <span class="section-icon-bubble-create">{{> icon-bubble-create}}</span>
+          <span>create a bubble</span>
+        </h3>
+      </div>
+    </div>
+     
+    {{#with systemForm.formParams.bubble.create}}
+      {{> generateForm}}
+    {{/with}}
+  </div>
 
 <!--
   <div class="cb-form-container" id="cb-form-container-event">

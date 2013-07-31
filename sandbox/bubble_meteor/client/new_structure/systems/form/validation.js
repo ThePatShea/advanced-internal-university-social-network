@@ -1,4 +1,4 @@
-//TODO: Make it so you can't submit a bubble create form that has no category
+//TODO: Fix the bug where selecting the category last keeps the form invalid until you click again
 
 Template.generateForm.created = function () {
   this.validateForm = function() {
