@@ -1,3 +1,7 @@
+Template.header.created = function() {
+  Session.set('sidebarOpen', false);
+}
+
 Template.header.helpers({
   activeRouteClass: function(routeName) {
     var pathname = window.location.pathname.split('/')[1];
@@ -21,5 +25,17 @@ Template.header.helpers({
   },
   checkUserType: function(userType) {
     return Meteor.user().userType == userType;
+  }
+});
+
+
+Template.header.events({
+  'click .sidebar-collapse-new' : function() {
+    var sidebarOpen = Session.get('sidebarOpen');
+
+    if (sidebarOpen == false)
+      Session.set('sidebarOpen', true);
+    else
+      Session.set('sidebarOpen', false);
   }
 });

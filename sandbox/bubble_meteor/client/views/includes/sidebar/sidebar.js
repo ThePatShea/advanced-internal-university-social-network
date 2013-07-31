@@ -1,5 +1,8 @@
 Template.sidebar.helpers({
-    subsectionPaneVisible : function() {
+    sidebarOpen            : function() {
+      return Session.get('sidebarOpen');
+    }
+  , subsectionPaneVisible  : function() {
       var currentSection = window.location.pathname.split("/")[1];
 
       if (currentSection == 'search')
@@ -7,7 +10,7 @@ Template.sidebar.helpers({
       else
         return true;
     }
-  , myBubblesLink         : function() {
+  , myBubblesLink          : function() {
       var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
       if(bubbles.length > 0) {
         return '/mybubbles/' + bubbles[0]._id + '/home';
@@ -15,19 +18,25 @@ Template.sidebar.helpers({
         return '/mybubbles/create/bubble';
       }
     }
-  , selectedSection       : function(inputSection) {
+  , selectedSection        : function(inputSection) {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
 
       return urlArray[1] == inputSection;
     }
-  , selectedSubsection    : function() {
+  , selectedSubsectionName : function(inputName) {
+      var currentUrl  =  window.location.pathname;
+      var urlArray    =  currentUrl.split("/");
+       
+      return urlArray[2] == inputName;
+    }
+  , selectedSubsection     : function() {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
        
       return urlArray[2] == this._id;
     }
-  , userBubbles           : function() {
+  , userBubbles            : function() {
       return Bubbles.find({
         $or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},
         {sort: {'users.members': -1, 'users.admins': -1, 'submitted': -1}
@@ -36,10 +45,21 @@ Template.sidebar.helpers({
 });
 
 
+Template.sidebar.events({
+    'click .btn-nav-subsection' : function() {
+      Session.set('sidebarOpen', false);
+    }
+});
+
 
 
 
 Template.sidebar.rendered = function() {
+  // Controls the new sidebar's visibility
+    var controlSidebarVisibility = function() {
+      if ($(window).width() >= 768)
+        Session.set('sidebarOpen', false);
+    }
 
   // Handles the cancel button for forms
     $('.visible-toggle-parent').click(function() {
@@ -100,6 +120,7 @@ Template.sidebar.rendered = function() {
 
   // Run these functions on load and on window resize
     var adjustInterface = function() {
+      controlSidebarVisibility();
       resizeMainBtns();
       adjustSidebar();
       adjustMain();

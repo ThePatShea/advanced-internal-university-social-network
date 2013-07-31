@@ -1,13 +1,16 @@
 <template name="header">
-  <header class="navbar">
+  <header class="navbar navbar-main">
     <div class="navbar-inner">
+      <button class="sidebar-collapse-new">
+        <span class="cb-icon">{{> icon-sidebar-collapse}}</span>
+      </button>
       <a href="{{getMyBubblesUrlPath}}" class="brand">
         <span class="logo-main">{{> icon-logo-main}}</span>
         <span class="logo-words">
           <span class="left">emory</span><span class="right">bubble</span>
         </span>
       </a>
-      <ul class="nav visible-all pull-right">
+      <ul class="nav visible-all pull-right user-dropdown">
         <li class="dropdown">
           {{> logoutDropdown}}
         </li>

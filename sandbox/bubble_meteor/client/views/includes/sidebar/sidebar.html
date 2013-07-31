@@ -1,33 +1,91 @@
 <template name="sidebar">
-  <div class="sidebar-new">
+  <div class="sidebar-new sidebar-visible-{{sidebarOpen}}" id="sidebar-new">
     <div class="navbar">
       <div class="navbar-inner"></div>
     </div>
     <div class="pane section">
       <a href="{{myBubblesLink}}">
-        <button class="btn-nav active-{{selectedSection 'mybubbles'}}">my bubbles</button>
+        <button class="btn-nav btn-nav-section active-{{selectedSection 'mybubbles'}}">
+          <div class="inner">
+            <div class="cb-icon">{{> icon-two-bubbles}}</div>
+            <div class="lbl">my bubbles</div>
+          </div>
+          <div class="selected-arrow">{{> icon-arrow-right}}</div>
+        </button>
       </a>
       <a href="{{searchAllPath}}">
-        <button class="btn-nav active-{{selectedSection 'search'}}">search</button>
+        <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectedSection 'search'}}">
+          <div class="inner">
+            <div class="cb-icon">{{> icon-search-thin}}</div>
+            <div class="lbl">search</div>
+          </div>
+          <div class="selected-arrow">{{> icon-arrow-right}}</div>
+        </button>
       </a>
-      <button class="btn-nav active-{{selectedSection 'settings'}}">settings</button>
+      <a href="{{userProfilePath Meteor.userId}}">
+        <button class="btn-nav btn-nav-section active-{{selectedSection 'settings'}}">
+          <div class="inner">
+            <div class="cb-icon-settings">{{> icon-settings-big}}</div>
+            <div class="lbl">settings</div>
+          </div>
+          <div class="selected-arrow">{{> icon-arrow-right}}</div>
+        </button>
+      </a>
     </div>
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
-      <div class="heading">
-        <div class="pull-left section-name">my bubbles</div>
-        <div class="pull-right v-middle">
-          <div class="v-inner">
-            <a href="{{bubbleSubmitPath}}">
-              <button class="btn-heading">new</button>
-            </a>
+      <div class="visible-{{selectedSection 'mybubbles'}}">
+        <div class="heading">
+          <div class="pull-left section-name">my bubbles</div>
+          <div class="pull-right v-middle">
+            <div class="v-inner">
+              <a href="{{bubbleSubmitPath}}">
+                <button class="btn-heading">
+                  <span class="cb-icon-add">{{> icon-add}}</span>
+                  <span>new</span>
+                </button>
+              </a>
+            </div>
           </div>
         </div>
+        {{#each userBubbles}}
+          <a href="{{bubblePagePath this}}">
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}}">
+              {{#if compressedUpdatesCount this._id}}
+                <div class="pull-left num-in-bubble updates-count">
+                  <span class="cb-icon cb-icon-bubble">{{> icon-bubble}}</span>
+                  <span class="num category-{{category}}-color">{{compressedUpdatesCount this._id}}</span>
+                </div>
+              {{/if}}
+              <div class="pull-left lbl">{{title}}</div>
+              <div class="selected-arrow section-mybubbles">
+                <span class="category-{{category}}-fill">{{> icon-arrow-right}}</span>
+              </div>
+            </button>
+          </a>
+        {{/each}}
       </div>
-      {{#each userBubbles}}
-        <a href="{{bubblePagePath this}}">
-          <button class="btn-nav category-{{category}}-border-right-3 active-{{selectedSubsection}}">{{title}}</button>
+      <div class="visible-{{selectedSection 'settings'}}">
+        <div class="heading">
+          <div class="pull-left section-name">
+            <span class="cb-icon-settings">{{> icon-settings-big}}</span>
+            <span class="lbl">settings</span>
+          </div>
+        </div>
+        <a href="{{userProfilePath Meteor.userId}}">
+          <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsectionName 'userprofile'}}">
+            <span class="cb-icon cb-icon-other">{{> icon-user}}</span>
+            <span class="lbl">Profile</span>
+            <div class="selected-arrow">{{> icon-arrow-right}}</div>
+          </button>
         </a>
-      {{/each}}
+        <a href="{{invitationsPagePath}}">
+          <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsectionName 'invites'}}">
+            <span class="cb-icon cb-icon-other">{{> icon-invite}}</span>
+            <span class="lbl">Invitations</span>
+            <div class="selected-arrow">{{> icon-arrow-right}}</div>
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </template>

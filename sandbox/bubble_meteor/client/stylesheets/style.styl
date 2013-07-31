@@ -1477,9 +1477,24 @@ navbar-height        =  60px
   letter-spacing         1px
   svg
     vertical-align           middle
+  &.navbar-main
+    position                 relative
+    z-index                  100
+    .sidebar-collapse-new
+      position               absolute
+      padding                20px 0
+      @media (min-width: 768px)
+        display                none
+      @media (max-width: 767px)
+        display                block
+      .cb-icon
+        fill                   main-xlight
   .navbar-inner
     height                   60px
     main-xdark-bg            0
+    .user-dropdown
+      position                 relative
+      z-index                  100
     .brand
       line-height              navbar-height 
       height                   navbar-height
@@ -1490,7 +1505,7 @@ navbar-height        =  60px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
-        left                       25%
+        left                       50%
       .logo-main
         margin                     0 5px 0 0
       .logo-words
@@ -1544,28 +1559,69 @@ navbar-height        =  60px
 .sidebar-new
   max-width          310px
   height             100%
-  float              left
+  @media (min-width: 768px)
+    float              left
+  @media (max-width: 767px)
+    position           absolute
+    display            none
+    z-index            90
+    &.sidebar-visible-true
+      display          block
   .pane
+    overflow-y         auto
     float              left
     .btn-nav
       width            100%
     &.section
       background         main-light
+      position           relative
+      overflow           visible
       width              100px
       height             100%
+      z-index            30
       .btn-nav
         fontize(main, medium, uppercase, 10px)
         border-bottom      1px solid #436C88
         color              main-xlight
+        position           relative
         height             80px
         &.active-true,
         &:hover
           color              white-light
           background         #274B61
+          .cb-icon
+            path
+              stroke             white-light
+          .cb-icon-settings
+            fill               white-light
+        &.active-true
+          border-left        3px solid #7090A3
+          .inner
+            position           relative
+            left               -2px
+          .selected-arrow
+            display            block
+        .selected-arrow
+          move-position(absolute, 28px, -5px, blank, blank)
+          fill               #274B61
+          display            none
+        .cb-icon
+          margin             0 0 5px 0
+          path
+            stroke             main-xlight
+        .cb-icon-settings
+          fill               main-xlight
+          margin             0 0 5px 0
+          svg
+            height             25px
+            width              25px
     &.subsection
       background         main-xlight
+      position           relative
+      overflow           visible
       width              210px
       height             100%
+      z-index            20
       .heading,
       .btn-nav
         padding            0 15px
@@ -1575,6 +1631,15 @@ navbar-height        =  60px
         .section-name
           fontize(main, bold, uppercase, 13px, 60px)
           color              main-light
+          .cb-icon-settings
+            margin               0 10px 0 0
+            fill                 main-light
+            position             relative
+            top                  -2px
+            svg
+              vertical-align     middle
+              height             22px
+              width              22px
         .btn-heading
           fontize(main, bold, uppercase, 11px)
           colorize(main-xlight, main-light)
@@ -1582,15 +1647,50 @@ navbar-height        =  60px
           border-radius    15px
           &:hover
             background       main-dark
+            .cb-icon-add
+              rect
+                fill             main-dark
+          .cb-icon-add
+            fill             main-xlight
+            margin           0 3px 0 0
+            rect
+              fill             main-light
       .btn-nav
-        fontize(alt, semibold, blank, 14px, blank, blank, blank, left)
+        fontize(alt, semibold, blank, 14px, 50px, blank, blank, left)
         border-bottom      1px solid #89A5B8
         color              main-light
+        position           relative
         height             50px
+        &.active-true
+          .selected-arrow
+            display            block
         &.active-true,
         &:hover
           background         #89A5B8
-
+        .selected-arrow
+          move-position(absolute, -2px, -5px, blank, blank)
+          fill               #89A5B8
+          display            none
+          svg
+            vertical-align     middle
+          &.section-mybubbles
+            right              -8px
+        .cb-icon-other
+          position           relative
+          top                -2px
+        .cb-icon
+          margin             0 5px 0 0
+          fill               main-light
+          svg
+            vertical-align     middle
+        .updates-count
+          margin             0 10px 0 0
+          position           relative
+          height             50px
+          width              20px
+          .num
+            move-position(absolute,1px,blank,blank,6px)
+            font-size        13px
 /*****   sidebar-new        *****/
 
 
@@ -1842,6 +1942,29 @@ bubble-section-selector-height-small  =  75px
           width                    20%
           svg
             height                   25px
+        &.active-true,
+        &:hover
+          background               white-light
+          &.category-club-hover-fill
+            fill                     color-club
+          &.category-sport-hover-fill
+            fill                     color-sport
+          &.category-greek-hover-fill
+            fill                     color-greek
+          &.category-study-hover-fill
+            fill                     color-study
+          &.category-major-hover-fill
+            fill                     color-major
+          &.category-office-hover-fill
+            fill                     color-office
+          &.category-service-hover-fill
+            fill                     color-service
+          &.category-dorm-hover-fill
+            fill                     color-dorm
+          &.category-art-hover-fill
+            fill                     color-art
+          &.category-custom-hover-fill
+            fill                     color-custom
 /**********  bubble-section-selector  **********/
 
 /**********        bubble-page        **********/
