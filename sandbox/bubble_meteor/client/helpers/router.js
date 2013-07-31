@@ -97,6 +97,7 @@ Meteor.Router.add({
 
 
   //Explore Related Routes
+    '/explore':  'exploreAll',
     '/explore/create': 'exploreSubmit',
 
 
