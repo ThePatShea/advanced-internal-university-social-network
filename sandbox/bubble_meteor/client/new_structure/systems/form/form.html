@@ -5,7 +5,6 @@
     </div>
     <form class="cb-form {{objectNameDash}}" name="{{objectNameDash}}">
       {{{systemForm.formElements templateName}}}
-      <hr class="break-top">
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
           <span class="words-main">submit</span>
@@ -16,9 +15,32 @@
   </div>
 </template>
 
+
 <template name="formElementsBubbleCreate">
   <div class="cb-form-row first">
     <input class="half-width column-one" name="title" type="text" value="" placeholder="Name*"/>
     <input class="half-width column-two" name="description" type="text" placeholder="Description?*"/>
+  </div>
+
+  <div class="cb-form-row">
+    <div class="bubble-category">
+      <label>Category*</label>
+      <ul class="nav nav-tabs large-boxes">
+        {{#each systemCategory.categories}}
+          <li id="{{nameShort}}">
+            <a href='#'>
+              <div class="large-box-title category-{{nameShort}}-bg">{{nameLong}}</div>
+              <div class="v-middle">
+                <div class="v-inner">
+                  <div class="large-box-info">
+                    {{body}}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
   </div>
 </template>

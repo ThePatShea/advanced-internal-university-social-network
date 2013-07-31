@@ -12,10 +12,6 @@ Handlebars.registerHelper("systemForm", {
         }
     }
   , formElements : function(templateName) {
-      var elements = Template[templateName]();
-     
-      console.log(elements); //TEST
-
-      return elements;
+      return Template[templateName]();
     }
 });
