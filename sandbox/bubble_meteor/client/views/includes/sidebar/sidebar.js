@@ -34,7 +34,6 @@ Template.sidebar.helpers({
   , selectedSubsection     : function() {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
-       
       return urlArray[2] == this._id;
     }
   , userBubbles            : function() {
@@ -44,7 +43,11 @@ Template.sidebar.helpers({
       });
     }
   , publicExplores         : function() {
-      return Explores.find().fetch();
+      return Explores.find({}).fetch();
+  }
+  , selectedExploreSubsection : function(exploreId){
+      var currentExploreId = Session.get('currentExplore');
+      return (currentExploreId == exploreId);
   },
     hasLevel4Permission: function(){
       return ('4' == Meteor.user().userType && this.userType != '4');
