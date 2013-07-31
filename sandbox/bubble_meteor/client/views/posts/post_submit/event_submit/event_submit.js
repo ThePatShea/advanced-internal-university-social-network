@@ -18,6 +18,9 @@ Template.eventSubmit.events({
       retinaEventPhoto: $(event.target).find('[id=eventphoto_retina]').attr('src')
     };
 
+
+    console.log("event attributes: " + JSON.stringify(eventAttributes) );
+/*
     if(eventAttributes.eventPhoto.length == 0){
       var eventphotocanvas = document.createElement('canvas');
       var retinaeventphotocanvas = document.createElement('canvas');
@@ -33,7 +36,7 @@ Template.eventSubmit.events({
       eventAttributes.retinaEventPhoto = retinaeventphotocanvas.toDataURL();
       console.log($('#tempeventphoto')[0]);
     }
-    
+*/    
     createPost(eventAttributes);
   },
 
