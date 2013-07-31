@@ -8,24 +8,24 @@ Explores.allow({
 Meteor.methods({
 	explore: function(exploreAttributes){
 		var user = Meteor.user(),
-			bubbleWithSameName = Bubbles.findOne({title:bubbleAttributes.title});
+			exploreWithSameName = Explores.findOne({title:exploreAttributes.title});
 
 		// ensure the user is logged in
     if (!user)
       throw new Meteor.Error(401, "You need to login to post new stories");
     
     // ensure the post has a title
-    if (!bubbleAttributes.title)
+    if (!exploreAttributes.title)
       throw new Meteor.Error(422, 'Please fill in a headline');
 
     // check that there are no previous bubbles with the same title
-    if (bubbleAttributes.title && bubbleWithSameName) {
+    if (exploreAttributes.title && exploreWithSameName) {
       throw new Meteor.Error(302, 
-        'This bubble has already been created', 
-        bubbleWithSameName._id);
+        'This explore has already been created', 
+        exploreWithSameName._id);
     }
 
-    var explore = _.extend(_.pick(exploreAttributes, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName'), {
+    var explore = _.extend(_.pick(exploreAttributes, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName', 'exploreIcon'), {
     	submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       /*users: {

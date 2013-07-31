@@ -257,6 +257,20 @@ getBubbleId =  function(userId) {
     });
   });
 
+// Meteor Explores Related Publications
+  Meteor.publish('allExplores', function(){
+    return Explores.find({}, {fields:
+      {
+        'title': 1,
+        'description': 1,
+        'exploreIcon': 1,
+        'category': 1,
+        'coverPhoto': 1, 
+        'retunaCoverPhoto': 1
+      }
+    });
+  });
+
 // Meteor Users Related Publications
   Meteor.publish('allUsers', function(){
     //var user = Meteor.users.findOne({_id: UserId});

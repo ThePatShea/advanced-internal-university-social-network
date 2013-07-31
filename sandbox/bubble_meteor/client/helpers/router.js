@@ -97,8 +97,13 @@ Meteor.Router.add({
 
 
   //Explore Related Routes
-    '/explore':  'exploreAll',
     '/explore/create': 'exploreSubmit',
+    '/explore/:id': {
+      to: 'explorePage',
+      and: function(id){Session.set('currentExplore', id);}
+    },
+    '/explore':  'exploreAll',
+
 
 
   // Flags Related Routes

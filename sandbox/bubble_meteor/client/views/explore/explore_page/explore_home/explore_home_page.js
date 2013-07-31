@@ -2,6 +2,11 @@
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.explorePage.helpers({ 
+  currentExplore: function(){
+    var currentExploreId = Session.get('currentExplore');
+    var currentExplore = Explores.findOne({_id: currentExploreId});
+    return currentExplore;
+  },
 
   //Get posts assigned to this bubble
   eventsCount: function() {

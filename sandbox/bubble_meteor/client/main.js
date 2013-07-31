@@ -10,6 +10,9 @@ Deps.autorun(function() {
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
 		// Meteor.subscribe('allBubbles', Meteor.userId());
 
+	// Bubble Related Subscriptions
+	    Meteor.subscribe('allExplores');
+
 
 	// Comments Related Subscriptions
 		Meteor.subscribe('comments', Session.get('currentPostId'));

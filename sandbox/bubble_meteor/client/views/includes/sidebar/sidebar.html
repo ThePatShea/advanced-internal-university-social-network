@@ -94,6 +94,16 @@
             </div>
           {{/if}}
         </div>
+        {{#each publicExplores}}
+          <a href="{{explorePagePath this}}">
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}}">
+              <div class="pull-left lbl">{{title}}</div>
+              <div class="selected-arrow section-mybubbles">
+                <span class="category-{{category}}-fill">{{> icon-arrow-right}}</span>
+              </div>
+            </button>
+          </a>
+        {{/each}}
       </div>
       <div class="visible-{{selectedSection 'settings'}}">
         <div class="heading">

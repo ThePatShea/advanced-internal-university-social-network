@@ -6,6 +6,7 @@ Template.exploreSubmit.events({
 
     var exploreProperties = {
       title: $(event.target).find('[name=title]').val(),
+      'exploreIcon': $(event.target).find('[name=exploreIcon]').val(),
       description: $(event.target).find('[name=description]').val(),
       category: $(event.target).find('[name=category]').val(),
       coverPhoto: $(event.target).find('[id=coverphoto_preview]').attr('src'),
@@ -14,7 +15,7 @@ Template.exploreSubmit.events({
 
 
 
-    if(explore.coverPhoto.length == 0){
+    if(exploreProperties.coverPhoto.length == 0){
       var covercanvas = document.createElement('canvas');
       var retinacovercanvas = document.createElement('canvas');
       covercanvas.width = 1280;
@@ -25,8 +26,8 @@ Template.exploreSubmit.events({
       var retinacovercontext = retinacovercanvas.getContext('2d');
       covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
       retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
-      bubble.coverPhoto = covercanvas.toDataURL();
-      bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();
+      exploreProperties.coverPhoto = covercanvas.toDataURL();
+      exploreProperties.retinaCoverPhoto = retinacovercanvas.toDataURL();
     }
 
     
@@ -35,7 +36,9 @@ Template.exploreSubmit.events({
         // display the error to the user
         throwError(error.reason);
       } else {
-        Meteor.Router.to('explorePage', exploreId);
+        console.log(exploreId);
+        var createdExplore = Explores.findOne({_id: exploreId});
+        Meteor.Router.to('explorePage', createdExplore);
       }
     });
   },
