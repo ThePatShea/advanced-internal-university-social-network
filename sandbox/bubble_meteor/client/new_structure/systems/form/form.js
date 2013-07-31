@@ -1,12 +1,13 @@
-/*
-Handlebars.registerHelper('formSystem', {
-  generateForm : function() {
-    Meteor.render("<b>form goes here</b>"); 
-  }
-});
-*/
+Handlebars.registerHelper("systemForm", {
+    formParams : {
 
-
-Handlebars.registerHelper('formSystem', {
-  return "<b>form goes here</b>"; 
+    }
+  , formData   : {
+        bubble : {
+            create : {
+                isCollapsed : "collapse-false"
+              , objectName  : "bubble-create"
+            }
+        }
+    }
 });

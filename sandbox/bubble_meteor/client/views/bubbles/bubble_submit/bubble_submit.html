@@ -1,6 +1,11 @@
 <template name="bubbleSubmit">
 
-  <div class="newForm">{{{formSystem}}}</div>
+  <div class="newForm">
+  {{#with systemForm.formData.bubble.create}}
+    {{> generateForm}}
+  {{/with}}
+
+  </div>
 
 
 
