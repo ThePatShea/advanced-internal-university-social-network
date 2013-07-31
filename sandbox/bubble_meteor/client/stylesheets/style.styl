@@ -943,12 +943,20 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
+    .date-picker
+      cursor          pointer
     &.cb-form-container-search
       margin-bottom  -12px
     .cb-form-row
       margin          0 0 45px 0
       clear           both
       overflow        hidden
+      &.third-width-container
+        position        relative
+        @media (min-width: 768px)
+          height          45px
+        @media (max-width: 767px)
+          height          auto
       &.last
         margin-bottom 0
       .half-width
@@ -969,15 +977,22 @@ wysiwyg-image(n)
         border-box       0
         width            28%
         height           auto
-        float            left
         @media (min-width: 768px)
-          margin           0 30px 0 0
+          &.column-first
+            position         absolute
+            left             0
+          &.column-second
+            position         absolute
+            margin-left      -14%
+            left             50%
+          &.column-third
+            position         absolute
+            right            0
         @media (max-width: 767px)
           width           100%
-          &.column-first
-            margin          0 0 45px 0
+          &.column-first,
           &.column-second
-            margin          0 0 45px 0
+            margin          0 0 55px 0
           &.column-third
             margin          0
       .full-width
