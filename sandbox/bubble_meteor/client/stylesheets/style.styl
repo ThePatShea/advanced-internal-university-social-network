@@ -1577,7 +1577,6 @@ navbar-height        =  60px
                 color             main-light
                 display           block
                 border-bottom     0
-            
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
@@ -1641,6 +1640,17 @@ navbar-height        =  60px
           svg
             height             25px
             width              25px
+      .grouping-about
+        move-position(absolute, blank, blank, 60px, blank)
+        .txt-about
+          fontize(alt, regular, uppercase, 10px, 1em, 0, blank, center)
+          border-top           1px solid main-xlight
+          colorize(main-xlight, main-light)
+          padding              10px 4px
+        .btn-about
+          colorize(main-xlight, main-xdark)
+          height               40px
+          width                100%
     &.subsection
       background         main-xlight
       position           relative
