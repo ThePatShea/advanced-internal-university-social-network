@@ -200,7 +200,7 @@ createInvitationUpdate = function(userList) {
       invokerId: Meteor.userId(),
       invokerName: Meteor.user().username,
       updateType: "invitation",
-      url: '/mybubbles/'+bubble._id+"/home",
+      url: '/settings/invites',
       content: Meteor.user().username + " invited you to " + bubble.title
     });
   });
