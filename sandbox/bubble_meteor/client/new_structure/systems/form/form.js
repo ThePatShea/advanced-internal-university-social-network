@@ -5,7 +5,8 @@ Handlebars.registerHelper("systemForm", {
   , formParams   : {
         bubble : {
             create : {
-                templateName    : "formElementsBubbleCreate"
+                validate        : ["title", "category", "body"]
+              , templateName    : "formElementsBubbleCreate"
               , isCollapsed     : "collapse-false"
               , objectNameDash  : "bubble-create"
             }

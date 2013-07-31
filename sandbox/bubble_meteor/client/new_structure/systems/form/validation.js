@@ -2,9 +2,22 @@
 
 Template.generateForm.created = function () {
   this.validateForm = function() {
-    var count = 0;
+    var validate  =  this.data.validate;
+    var count     =  0;
 
-    $('.required').each(function(i) {
+    for (var i = 0; i < validate.length; i++) {
+      var inputValue = $("[name=" + validate[i] + "]").val();
+      console.log(inputValue);
+    }
+
+
+
+
+
+
+
+/*
+    $(this.data.validate).each(function(i) {
       if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
         count++;
       } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
@@ -19,6 +32,9 @@ Template.generateForm.created = function () {
         $('.cb-submit').addClass('ready-false');
       }
     });
+*/
+
+
   }
 }
 
