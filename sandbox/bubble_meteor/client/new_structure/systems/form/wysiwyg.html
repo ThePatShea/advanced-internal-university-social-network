@@ -1,0 +1,51 @@
+<template name="wysiwyg2">
+  <div class="controls wysiwyg_group">
+      <div class="wysiwyg-row">
+        <label class="pull-left wysiwyg-label">{{wysiwygHeading}}</label>
+        <div class="pull-right btn-toolbar btns-formatting" data-role="editor-toolbar" data-target=".wysiwyg">
+          <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              <li><a data-edit="fontSize 5"><font size="5">Large</font></a></li>
+              <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+              <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+              </ul>
+          </div>
+          <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+          </div>
+          <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+          </div>
+          <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+          <!--  <a class="std-btn-form btn-wysiwyg" title="Attachments" id="fileattachments"><i class="icon-paperclip"></i></a> -->
+          </div>
+        </div>
+      </div>
+    <!--
+      <div id="fileuploadtool">
+        <div class="attach-files in-post">
+          <div id="drop_zone" class="drop-zone">
+            <div class="dz-title">drag and drop</div>
+            <div class="dz-subtitle">or click here</div>
+            <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+            <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+          </div>
+        </div>
+      </div>
+    -->
+      <div name="body" class="wysiwyg">
+        {{#unless body}}
+          <span class="wysiwyg-placeholder">Type here...</span>
+        {{/unless}}
+        {{{body}}}
+      </div>
+    <!--  <output id="list"></output>  -->
+  </div>
+</template>

@@ -17,34 +17,37 @@
 
 
 <template name="formElementsBubbleCreate">
-  <div class="cb-form-row first">
-    <input class="required width-full" name="title" type="text" value="" placeholder="Name*"/>
-  </div>
-
-  <div class="cb-form-row">
-    <div class="bubble-category">
-      <label class="no-typing">Category*</label>
-      <ul class="nav nav-tabs large-boxes">
-        {{#each systemCategory.categories}}
-          <li id="{{nameShort}}">
-            <a>
-              <div class="large-box-title category-{{nameShort}}-bg">
-                <div class="v-middle">
-                  <div class="v-inner">
-                    <div class="lbl-large-box">{{nameLong}}</div>
+  {{#with systemForm.formParams.bubble.create}}
+    <div class="cb-form-row first">
+      <input class="required width-full" name="title" type="text" value="" placeholder="Name*"/>
+    </div>
+  
+    <div class="cb-form-row">
+      <div class="bubble-category">
+        <label class="no-typing">Category*</label>
+        <ul class="nav nav-tabs large-boxes">
+          <input name="category" type="hidden"/>
+          {{#each systemCategory.categories}}
+            <li id="{{nameShort}}">
+              <a>
+                <div class="large-box-title category-{{nameShort}}-bg">
+                  <div class="v-middle">
+                    <div class="v-inner">
+                      <div class="lbl-large-box">{{nameLong}}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="large-box-info">
-                <div class="body">{{body}}</div>
-                <div class="cb-icon-check">{{> icon-check}}</div>
-              </div>
-            </a>
-          </li>
-        {{/each}}
-      </ul>
+                <div class="large-box-info">
+                  <div class="body">{{body}}</div>
+                  <div class="cb-icon-check">{{> icon-check}}</div>
+                </div>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
     </div>
-  </div>
-
-  {{> wysiwyg}}
+  
+    {{> wysiwyg2}}
+  {{/with}}
 </template>

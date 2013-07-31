@@ -6,8 +6,11 @@ Template.generateForm.created = function () {
     var count     =  0;
 
     for (var i = 0; i < validate.length; i++) {
-      var inputValue = $("[name=" + validate[i] + "]").val();
-      console.log(inputValue);
+      var currentInput  =  $("[name=" + validate[i] + "]");
+      var inputHtml     =  currentInput.html();
+      var inputVal      =  currentInput.val();
+
+      console.log( currentInput.prop('tagName') + " -- " + inputVal );
     }
 
 
@@ -45,7 +48,7 @@ Template.generateForm.rendered = function () {
 
 
 Template.generateForm.events({
-    'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+    'keyup, propertychange, input, paste': function(evt, tmpl) {
       tmpl.validateForm();
     }
 });

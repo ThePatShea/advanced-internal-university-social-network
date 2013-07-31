@@ -5,10 +5,11 @@ Handlebars.registerHelper("systemForm", {
   , formParams   : {
         bubble : {
             create : {
-                validate        : ["title", "category", "body"]
-              , templateName    : "formElementsBubbleCreate"
-              , isCollapsed     : "collapse-false"
-              , objectNameDash  : "bubble-create"
+                validate       : ["title", "category", "body"]
+              , templateName   : "formElementsBubbleCreate"
+              , isCollapsed    : "collapse-false"
+              , objectNameDash : "bubble-create"
+              , wysiwygHeading : "Description"
             }
         }
     }

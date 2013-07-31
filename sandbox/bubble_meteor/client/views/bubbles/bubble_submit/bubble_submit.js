@@ -6,7 +6,7 @@ Template.bubbleSubmit.events({
 
     var bubble = {
       title: $('.cb-form').find('[name=title]').val(),
-      description: $('.cb-form').find('[name=description]').val(),
+      description: $('.cb-form').find('[name=body]').html(),
       //category: $(event.target).find('[name=category]').val(),
       'category': category,
       coverPhoto: $('.cb-form').find('[id=coverphoto_preview]').attr('src'),
@@ -765,6 +765,7 @@ Template.bubbleSubmit.events({
     category = "club";
     $(".nav-tabs li").removeClass('active');
     $("#club").addClass('active');
+    $("[name=category]").val("club");
   },
 
   'click #greek': function(evt){
@@ -772,6 +773,7 @@ Template.bubbleSubmit.events({
     category = "greek";
     $(".nav-tabs li").removeClass('active');
     $("#greek").addClass('active');
+    $("[name=category]").val("greek");
   },
 
   'click #art': function(evt){
@@ -779,6 +781,7 @@ Template.bubbleSubmit.events({
     category = "art";
     $(".nav-tabs li").removeClass('active');
     $("#art").addClass('active');
+    $("[name=category]").val("art");
   },
 
   'click #sport': function(evt){
@@ -786,6 +789,7 @@ Template.bubbleSubmit.events({
     category ="sport";
     $(".nav-tabs li").removeClass('active');
     $("#sport").addClass('active');
+    $("[name=category]").val("sport");
   },
 
   'click #major': function(evt){
@@ -793,6 +797,7 @@ Template.bubbleSubmit.events({
     category = "major";
     $(".nav-tabs li").removeClass('active');
     $("#major").addClass('active');
+    $("[name=category]").val("major");
   },
 
   'click #office': function(evt){
@@ -800,6 +805,7 @@ Template.bubbleSubmit.events({
     category   = "office";
     $(".nav-tabs li").removeClass('active');
     $("#office").addClass('active');
+    $("[name=category]").val("office");
   },
 
   'click #service': function(evt){
@@ -807,6 +813,7 @@ Template.bubbleSubmit.events({
     category = "service";
     $(".nav-tabs li").removeClass('active');
     $("#service").addClass('active');
+    $("[name=category]").val("service");
   },
 
   'click #study': function(evt){
@@ -814,6 +821,7 @@ Template.bubbleSubmit.events({
     category = "study";
     $(".nav-tabs li").removeClass('active');
     $("#study").addClass('active');
+    $("[name=category]").val("study");
   },
 
   'click #dorm': function(evt){
@@ -821,6 +829,7 @@ Template.bubbleSubmit.events({
     category = "dorm";
     $(".nav-tabs li").removeClass('active');
     $("#dorm").addClass('active');
+    $("[name=category]").val("dorm");
   },
 
   'click #custom': function(evt){
@@ -828,6 +837,7 @@ Template.bubbleSubmit.events({
     category = "custom";
     $(".nav-tabs li").removeClass('active');
     $("#custom").addClass('active');
+    $("[name=category]").val("custom");
   }
 
 });
