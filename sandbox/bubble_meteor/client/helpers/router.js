@@ -69,6 +69,8 @@ Meteor.Router.add({
 
     '/settings/invites': 'invitationsPage',
 
+    '/settings/about': 'about',
+
 
   // User Profile Related Routes
     '/settings/userprofile/:id': {
