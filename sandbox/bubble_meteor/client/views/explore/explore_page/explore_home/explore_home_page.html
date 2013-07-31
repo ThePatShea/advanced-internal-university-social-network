@@ -1,59 +1,17 @@
 <template name="explorePage">
   {{#with currentExplore}}
     {{> exploreCover}}
-    <div class="bubble-page-content">
-      <div class="bubble-list">
-        <div class="bubble-list-heading">
-          <h3 class="section-name pull-left"># updates</h3>
-          <a href="">
-            <button class="std-btn-light pull-right">see all</button>
-          </a>
-          <button class="std-btn-light pull-right clear-updates">clear all</button> 
-        </div>
-        {{> updatesList}}
-      </div>
+    <div class="explore-page-content">
   
       <div class="bubble-list">
-        {{#with postProperties.event}}
-          {{> listHeading}}
-          {{#each posts}}
-            {{> listItem}}
-          {{else}}
-            There are no {{postType}}s yet. Add one now!
-          {{/each}}
-          <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath getCurrentBubble._id}}">
-            <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount postType 'more'}}</button>
-          </a>
-        {{/with}}
+        {{#each posts}}
+          {{> listItem}}
+        {{else}}
+          There are no posts yet. Add one now!
+        {{/each}}
       </div>
 
-      <div class="bubble-list">
-        {{#with postProperties.discussion}}
-          {{> listHeading}}
-          {{#each posts}}
-            {{> listItem}}
-          {{else}}
-            There are no {{postType}}s yet. Add one now!
-          {{/each}}
-          <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
-            <button class="pull-left btn-tiny more-posts">+ {{pluralize discussionsCount postType 'more'}}</button>
-          </a>
-        {{/with}}
-      </div>
-  
-      <div class="bubble-list">
-        {{#with postProperties.file}}
-          {{> listHeading}}
-          {{#each posts}}
-            {{> listItem}}
-          {{else}}
-            There are no {{postType}}s yet. Add one now!
-          {{/each}}
-          <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath getCurrentBubble._id}}">
-            <button class="pull-left btn-tiny more-posts">+ {{pluralize filesCount postType 'more'}}</button>
-          </a>
-        {{/with}}
-      </div>
+
     </div>
   {{/with}}
 </template>

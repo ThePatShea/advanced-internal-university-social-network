@@ -1,20 +1,31 @@
 <template name="exploreCover">
-    <div class="bubble-cover">
+    <div class="explore-cover">
       <img class="cover-pic" src="{{coverPhoto}}"/>
       <div class="cover-mask"></div>
 
       <div class="v-middle pull-left">
         <div class="v-inner">
-          <div class="profile-pic-container">
-            <span class="category-{{category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
-            <img src="{{profilePicture}}" class="profile-pic">
+          <div class="profile-icon-container">
+            <span class="cb-profile-icon">{{{getExploreIcon this}}}</span>
           </div>
         </div>
       </div>
 
-      <div class="v-middle bubble-name-and-subtitle">
+      <div class="v-middle explore-name-and-subtitle">
         <div class="v-inner">
-          <h1 class="bubble-name">{{title}}</h1>
+          <h1 class="explore-name">{{title}}</h1>
+          <h2 class="explore-subtitle">{{description}}</h2>
+        </div>
+      </div>
+
+      <div class="v-middle cover-btns">
+        <div class="v-inner">
+            <a href="{{bubbleEditPath this}}">
+              <button class="std-btn-dark cover-btn">
+                <span class="cb-icon-xlight cb-icon-settings">{{> icon-add}}</span>
+                <span class="lbl">post</span>
+              </button>
+            </a>
         </div>
       </div>
 

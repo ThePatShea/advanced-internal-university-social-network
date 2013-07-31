@@ -2503,5 +2503,92 @@ attachment-height  =  75px
   position               absolute
   right                  180px
   bottom                 27px
+
+
+
+/**********        explore-cover       **********/
+cover-btns-width-large  =  150px
+cover-btns-width-small  =  130px
+
+.explore-cover
+  position               relative
+  overflow               hidden
+  padding                0 30px
+  outline                5px solid main-xlight
+  @media (min-width: 768px)
+    height                   107px
+  @media (max-width: 767px)
+    height                   100px
+  .cover-mask,
+  .cover-pic
+    position                   absolute
+    min-height                 100%
+    min-width                  100%
+    left                       0
+    top                        0
+  .cover-mask
+    background                 rgba(0, 7, 13, .75)
+    height                     100%
+    width                      100%
+    z-index                    -10
+  .cover-pic
+    z-index                    -20
+  .profile-icon-container
+    margin                     0 0 0 0
+    position                   relative
+    height                     50px
+    width                      50px
+    .cb-profile-icon
+      svg
+        margin                     5px 0 0 0
+        fill                       main-xlight
+        width                      30px
+        height                     40px
+    @media (min-width: 768px)
+      display                  block
+    @media (max-width: 767px)
+      display                  none
+  .explore-name-and-subtitle
+    @media (min-width: 768px)
+      margin-right             cover-btns-width-large
+    @media (max-width: 767px)
+      margin-right             cover-btns-width-small
+    .explore-name
+      fontize(alt, light, uppercase, 37px)
+      colorize(#f7f8f8)
+      @media (min-width: 768px)
+        font-size                37px
+      @media (max-width: 767px)
+        font-size                25px
+    .explore-subtitle
+      fontize(main, bold, uppercase, 12px)
+      colorize(main-xlight)
+      padding                  0 0 0 0
+      @media (min-width: 768px)
+        font-size                12px
+      @media (max-width: 767px)
+        font-size                11px
+  .cover-btns
+    position                 absolute
+    top                      0
+    @media (min-width: 768px)
+      width                    cover-btns-width-large
+      right                    30px
+    @media (max-width: 767px)
+      width                    cover-btns-width-small
+      right                    10px
+    .cover-btn
+      margin                   5px 0
+      float                    right
+      clear                    right
+      .cb-icon-settings
+        svg
+          margin                    -3px 0
+          rect
+            fill                      black
+      .lbl
+        padding                    0 0 0 5px
+/**********        explore-cover       **********/
+
 /*********************************************************/
 
