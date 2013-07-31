@@ -3,6 +3,7 @@
       <div class="wysiwyg-row">
         <label class="pull-left wysiwyg-label">Discussion body*</label>
         <div class="pull-right btn-toolbar btns-formatting" data-role="editor-toolbar" data-target=".wysiwyg">
+        <!--
           <div class="btn-group">
             <a class="std-btn-form btn-wysiwyg" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -11,21 +12,23 @@
               <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
               </ul>
           </div>
+        -->
           <div class="btn-group">
-            <a class="std-btn-form btn-wysiwyg" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
-            <a class="std-btn-form btn-wysiwyg" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
-            <a class="std-btn-form btn-wysiwyg" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="underline" title="Underline (Ctrl/Cmd+U)">{{> icon-wysiwyg-underline}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="italic" title="Italic (Ctrl/Cmd+I)">{{> icon-wysiwyg-italic}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="bold" title="Bold (Ctrl/Cmd+B)">{{> icon-wysiwyg-bold}}</a>
           </div>
           <div class="btn-group">
-            <a class="std-btn-form btn-wysiwyg" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
-            <a class="std-btn-form btn-wysiwyg" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="insertorderedlist" title="Number list">{{> icon-wysiwyg-list-numbered}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="insertunorderedlist" title="Bullet list">{{> icon-wysiwyg-list-bulleted}}</a>
           </div>
-          <div class="btn-group">
-            <a class="std-btn-form btn-wysiwyg" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
-            <a class="std-btn-form btn-wysiwyg" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
-            <a class="std-btn-form btn-wysiwyg" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+          <div class="btn-group justify">
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">{{> icon-wysiwyg-justify-right}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">{{> icon-wysiwyg-justify-center}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">{{> icon-wysiwyg-justify-left}}</a>
           <!--  <a class="std-btn-form btn-wysiwyg" title="Attachments" id="fileattachments"><i class="icon-paperclip"></i></a> -->
           </div>
+
         </div>
       </div>
     <!--
