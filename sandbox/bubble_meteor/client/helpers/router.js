@@ -2,9 +2,6 @@ Meteor.Router.add({
   //Login from authentication system
   '/login': 'loginPage',
 
-  // Static pages
-    '/pdf/:_id': '/public/pdf/:_id',
-
   // Bubbles Related Routes
     '/mybubbles/:_id/home': {
       to: 'bubblePage', 
