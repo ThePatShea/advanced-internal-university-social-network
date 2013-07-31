@@ -12,7 +12,7 @@ Template.generateForm.created = function () {
       if (currentTag == "INPUT")
         var inputTest   =  currentInput.val();
       else if (currentTag == "DIV")
-        var inputTest   =  currentInput.html();
+        var inputTest   =  currentInput.html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','');
       else
         var inputTest   =  "";
 
@@ -29,31 +29,6 @@ Template.generateForm.created = function () {
 
       console.log( validate[i] + " -- " + inputTest + " -- " + count );  // TESTING
     }
-
-
-
-
-
-
-
-/*
-    $(this.data.validate).each(function(i) {
-      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
-        count++;
-      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
-        count++;
-      }
-
-      if (count == 0) {
-        $('.cb-submit').prop('disabled', false);
-        $('.cb-submit').removeClass('ready-false');
-      } else {
-        $('.cb-submit').prop('disabled', true);
-        $('.cb-submit').addClass('ready-false');
-      }
-    });
-*/
-
 
   }
 }
