@@ -1,25 +1,16 @@
 <template name="bubbleSubmit">
 
   <div class="newForm">
-  {{#with systemForm.formData.bubble.create}}
+  {{#with systemForm.formParams.bubble.create}}
     {{> generateForm}}
   {{/with}}
-
   </div>
 
-
+<br><br><br>
 
   <div class="cb-form-container" id="cb-form-container-event">
     
     <form class="cb-form">
-      <!--<div class="attach-files">
-        <div id="eventphoto_dropzone" class="drop-zone">
-          <div class="dz-title">drag and drop</div>
-          <div class="dz-subtitle">or click here</div>
-          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
-        </div>
-      </div>-->
         <div class="cb-form-row first">
           <input class="half-width column-one" name="title" type="text" value="" placeholder="Name*"/> 
           <input class="half-width column-two" name="description" type="text" placeholder="Description?*"/>

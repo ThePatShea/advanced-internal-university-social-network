@@ -1,13 +1,21 @@
 Handlebars.registerHelper("systemForm", {
-    formParams : {
+    formData     : {
 
     }
-  , formData   : {
+  , formParams   : {
         bubble : {
             create : {
-                isCollapsed : "collapse-false"
-              , objectName  : "bubble-create"
+                templateName    : "formElementsBubbleCreate"
+              , isCollapsed     : "collapse-false"
+              , objectNameDash  : "bubble-create"
             }
         }
+    }
+  , formElements : function(templateName) {
+      var elements = Template[templateName]();
+     
+      console.log(elements); //TEST
+
+      return elements;
     }
 });
