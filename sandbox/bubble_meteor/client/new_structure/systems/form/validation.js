@@ -7,10 +7,27 @@ Template.generateForm.created = function () {
 
     for (var i = 0; i < validate.length; i++) {
       var currentInput  =  $("[name=" + validate[i] + "]");
-      var inputHtml     =  currentInput.html();
-      var inputVal      =  currentInput.val();
+      var currentTag    =  currentInput.prop('tagName');
 
-      console.log( currentInput.prop('tagName') + " -- " + inputVal );
+      if (currentTag == "INPUT")
+        var inputTest   =  currentInput.val();
+      else if (currentTag == "DIV")
+        var inputTest   =  currentInput.html();
+      else
+        var inputTest   =  "";
+
+      if (inputTest == "")
+        count++;
+
+      if (count == 0) {
+        $('.cb-submit').prop('disabled', false);
+        $('.cb-submit').removeClass('ready-false');
+      } else {
+        $('.cb-submit').prop('disabled', true);
+        $('.cb-submit').addClass('ready-false');
+      }
+
+      console.log( validate[i] + " -- " + inputTest + " -- " + count );  // TESTING
     }
 
 
@@ -48,7 +65,7 @@ Template.generateForm.rendered = function () {
 
 
 Template.generateForm.events({
-    'keyup, propertychange, input, paste': function(evt, tmpl) {
+    'keyup, propertychange, input, paste, click': function(evt, tmpl) {
       tmpl.validateForm();
     }
 });
