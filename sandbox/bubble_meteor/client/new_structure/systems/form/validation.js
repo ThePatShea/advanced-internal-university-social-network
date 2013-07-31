@@ -1,5 +1,3 @@
-//TODO: Fix the bug where selecting the category last keeps the form invalid until you click again
-
 Template.generateForm.created = function () {
   this.validateForm = function() {
     var validate  =  this.data.validate;
@@ -26,8 +24,6 @@ Template.generateForm.created = function () {
         $('.cb-submit').prop('disabled', true);
         $('.cb-submit').addClass('ready-false');
       }
-
-      console.log( validate[i] + " -- " + inputTest + " -- " + count );  // TESTING
     }
 
   }
@@ -40,7 +36,7 @@ Template.generateForm.rendered = function () {
 
 
 Template.generateForm.events({
-    'keyup, propertychange, input, paste, click': function(evt, tmpl) {
+    'keyup, propertychange, input, paste, click, mouseout li': function(evt, tmpl) {
       tmpl.validateForm();
     }
 });
