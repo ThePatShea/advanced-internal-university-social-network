@@ -1,6 +1,6 @@
 Handlebars.registerHelper("systemForm", {
     formData     : {
-
+      // For edit forms
     }
   , formParams   : {
         bubble : {
@@ -39,9 +39,11 @@ Template.generateForm.created = function () {
   }
 }
 
+
 Template.generateForm.rendered = function () {
   this.validateForm();
 }
+
 
 Template.generateForm.events({
     'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
