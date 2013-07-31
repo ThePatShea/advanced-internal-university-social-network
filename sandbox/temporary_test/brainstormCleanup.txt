@@ -8,6 +8,7 @@ IDEAS:
 - Make something similar to the team roles and grand vision for the whole company, not just for the product team. Talk about how we're self-organizing, constantly evolving, and that we manage ourselves and each other. We have no CEO. We're a 21st century team. The "rule" about needing a CEO doesn't apply to us. We're special.
 - Sometimes an effective/necessary way to grow the technology is: expand freely -> remove waste -> expand freely -> remove waste
 - Account for the fact that some modules have both client-side and server-side components
+-- I think that any folder named 'server' will be run server-side. That means our top-level division can be by systems instead of by client/server. Each system can have its own client folder and its own server folder inside it
 - Each system contains a javascript file that contains a call to all of its functions. It's functions can be written in other files but they are all written here.
 - Come up with conventions for spacing/comments/documentation/naming/etc.
 
