@@ -48,6 +48,30 @@ Template.sidebar.helpers({
   , selectedExploreSubsection : function(exploreId){
       var currentExploreId = Session.get('currentExplore');
       return (currentExploreId == exploreId);
+  }
+  , getExploreIcon: function(exploreObject){
+      var iconName = exploreObject.exploreIcon;
+      if(iconName == 'announcements'){
+        return Template['icon-official']();
+      }
+      else if(iconName == 'campus events'){
+        return Template['icon-events']();
+      }
+      else if(iconName == 'classifieds'){
+        return Template['icon-classifieds']();
+      }
+      else if(iconName == 'professor reviews'){
+        return Template['icon-professorreviews']();
+      }
+      else if(iconName == 'controversial topics'){
+        return Template['icon-controversial']();
+      }
+      else if(iconName == 'student deals'){
+        return Template['icon-deals']();
+      }
+      else if(iconName == 'nightlife'){
+        return Template['icon-nightlife']();
+      }
   },
     hasLevel4Permission: function(){
       return ('4' == Meteor.user().userType && this.userType != '4');

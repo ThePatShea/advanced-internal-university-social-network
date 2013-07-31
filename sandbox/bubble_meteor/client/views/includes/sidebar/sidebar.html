@@ -97,7 +97,14 @@
         {{#each publicExplores}}
           <a href="{{explorePagePath this._id}}">
             <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this._id}}">
-              <div class="pull-left lbl">{{title}}</div>
+
+            <span class="cb-icon cb-icon-other">
+              {{{getExploreIcon this}}}
+            </span>
+
+            <span class="lbl">{{title}}</span>
+
+              <!--<div class="pull-left lbl">{{title}}</div>-->
               <div class="selected-arrow section-mybubbles">
                 <span class="category-{{category}}-fill">{{> icon-arrow-right}}</span>
               </div>
