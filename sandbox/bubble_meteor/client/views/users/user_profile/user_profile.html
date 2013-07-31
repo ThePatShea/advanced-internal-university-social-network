@@ -7,20 +7,42 @@
 			        	<span class="section-icon-member">{{> icon-member}}</span>
 			        	<span>Profile</span>
 			        </h3>
-				        <button class="std-btn-light pull-right btn-add loadCropTool">
+				        <button class="std-btn-light pull-right btn-add" data-toggle="collapse" data-target="#cb-form-container-edit-profile">
 				        	<span class="left-icon cb-icon-add">{{> icon-edit}}</span>
 				        	<span>edit</span>
 				      	</button>
-				      	<button class="removeCropTool std-btn-light pull-right btn-add" style="margin-right: 20px;">
-				      		cancel
-				      	</button>
 				</div>
 			</div>
-			<div id="profile-editor" class="">
-				<p style="text-align: center;">
-					<img id="crop" src="http://odyniec.net/projects/imgareaselect/ferret.jpg"></img>
-				</p>
-
+			<canvas id="main-canvas" width="160" height="160" class="visible-0"></canvas>
+			<canvas id="retina-canvas" width="320" height="320" class="visible-0"></canvas>
+			<div class="collapse cb-form-container" id="cb-form-container-edit-profile">
+			    <div class="top-arrow-container">
+			    	<div class="top-arrow">{{> icon-arrow-up}}</div>
+			    </div>
+			    <form class="cb-form">
+			      <div class="attach-files">
+			        <div id="drop_zone" class="drop-zone">
+			          <div class="dz-title">drag and drop</div>
+			          <div class="dz-subtitle">or click here</div>
+			          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+			          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+			        </div>
+			      	</div>
+					<div class="crop-container" style="text-align: center;">
+			      		<img class="crop"></img>
+			      	</div>
+			      	{{#if hasLevel4Permission}}
+				      <select name="userType">
+			          <option {{checkUserType '1'}} value="1">{{getUserTypeName 1}}</option>
+			          <option {{checkUserType '2'}} value="2">{{getUserTypeName 2}}</option>
+			          <option {{checkUserType '3'}} value="3">{{getUserTypeName 3}}</option>
+				    	</select>
+				      <hr />
+			     	{{/if}}
+			      <div class="cb-submit-container">
+			        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+			      </div>
+			    </form>
 			</div>
 		    <div class="profile-content bubble-cover">
 				<img class="cover-pic" src="{{coverPhoto}}"/>
@@ -75,5 +97,6 @@
 			{{/if}}
 	    {{/with}}
 	</div>
+	<img id="testImage"></img>
 </template>
 
