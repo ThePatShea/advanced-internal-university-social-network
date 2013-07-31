@@ -1,155 +1,23 @@
 <template name="bubbleSubmit">
+  <div class="bubble-page-content bubble-page-content-search">
+     
+    <div class="bubble-list member-heading">
+      <div class="bubble-list-heading">
+        <h3 class="section-name pull-left">
+          <span class="section-icon-bubble-create">{{> icon-bubble-create}}</span>
+          <span>create a bubble</span>
+        </h3>
+      </div>
+    </div>
+     
+    {{#with systemForm.formParams.bubble.create}}
+      {{> generateForm}}
+    {{/with}}
+  </div>
 
-  
-
-
-
+<!--
   <div class="cb-form-container" id="cb-form-container-event">
-    
     <form class="cb-form">
-      <!--<div class="attach-files">
-        <div id="eventphoto_dropzone" class="drop-zone">
-          <div class="dz-title">drag and drop</div>
-          <div class="dz-subtitle">or click here</div>
-          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
-        </div>
-      </div>-->
-        <div class="cb-form-row first">
-          <input class="half-width column-one" name="title" type="text" value="" placeholder="Name*"/> 
-          <input class="half-width column-two" name="description" type="text" placeholder="Description?*"/>
-        </div>
-
-
-        <div class="cb-form-row">
-            <div class="bubble-category">
-                <label name="picture" type="label">Category*</label>
-                <ul class="nav nav-tabs large-boxes">
-                    <li id="club">
-                        <a href='#'>
-                            <div class="large-box-title club">
-                                <div>student</div>
-                                <div>organization</div>
-                            </div>
-                            <div class="v-middle">
-                                <div class="v-inner">
-                                    <div class="large-box-info">Student started groups; chartered or not, well-organized or not, virtual or real.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="greek">
-                        <a href='#'>
-                            <div class="large-box-title greek">
-                                <div>greek</div>
-                                <div>organization</div>
-                            </div>
-                            <div class="v-middle">
-                                <div class="v-inner">
-                                    <div class="large-box-info">fraternities, sororities, and anything related to greek life at Emory.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="arts">
-                        <a href='#'>
-                            <div class="large-box-title arts-entertainment">
-                                <div>arts and</div>
-                                <div>entertainment</div>
-                            </div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">groups related music, arts, theatre, nightlife, the weekend, spring break, etc.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="athletics">
-                        <a href='#'>
-                            <div class="large-box-title athletics">
-                                <div>athletics and</div>
-                                <div>recreation</div>
-                            </div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">from varsity teams, club sports, and intramurals to jogging groups and kickabouts.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="academic">
-                        <a href='#'>
-                            <div class="large-box-title academic">
-                                <div>academic</div>
-                                <div>department</div>
-                            </div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">e.g., History department, BBA, Law School, Phi Sigma Tau, Stipe Scholarship, etc.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="administrative">
-                        <a href="#">
-                            <div class="large-box-title administrative">
-                                <div>administrative</div>
-                                <div>office</div>
-                            </div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">e.g., Deans, OUE, Sustaniability Office, Admissions, faculty committees, etc.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="community">
-                        <a href="#">
-                            <div class="large-box-title community">
-                                <div>community</div>
-                                <div>service/resource</div>
-                            </div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">e.g., Library, EPD, Dining, Career Center, Student Health, Religious Life, LGBT, etc.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li id="class">
-                        <a href="#">
-                            <div class="large-box-title class">
-                                class
-                            </div>
-                        </a>
-                    </li>
-                    <li id="residence">
-                        <a href="#">
-                            <div class="large-box-title residence">
-                                <div>residence</div>
-                                <div>hall</div>
-                            </div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">e.g., Harris Hall, FYE, Turman Fourth, Clairmont campus, etc.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <div class="large-box-title custom">custom</div>
-                            <div class="v-middle lbl-all-container">
-                                <div class="v-inner">
-                                    <div class="lbl-all">For all your uncategorizable Bubble needs.</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
         <div class="cb-form-row">
           <div class="attach-files">
             <label class="dropzone-label" name="picture" type="label">Add profile photo?</label>
@@ -175,12 +43,11 @@
           </div>
       </div>
 
-      <div class="cb-submit-container">
-        <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
-      </div>
     </form>
   </div>
 
   <img src="/img/Bubble-Profile.jpg" id="tempbubbleprofile" />
   <img src="/img/Bubble-Coverphoto.jpg" id="tempbubblecoverphoto" />
+-->
+
 </template>

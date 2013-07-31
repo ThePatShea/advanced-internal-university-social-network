@@ -6,7 +6,7 @@ Template.bubbleSubmit.events({
 
     var bubble = {
       title: $('.cb-form').find('[name=title]').val(),
-      description: $('.cb-form').find('[name=description]').val(),
+      description: $('.cb-form').find('[name=body]').html(),
       //category: $(event.target).find('[name=category]').val(),
       'category': category,
       coverPhoto: $('.cb-form').find('[id=coverphoto_preview]').attr('src'),
@@ -16,7 +16,7 @@ Template.bubbleSubmit.events({
       bubbleType: $('.cb-form').find('[name=bubbleType]').val()
     };
 
-
+/*
     if(bubble.coverPhoto){
       if(bubble.coverPhoto.length == 0){
         var covercanvas = document.createElement('canvas');
@@ -78,7 +78,7 @@ Template.bubbleSubmit.events({
       bubble.profilePicture = profilecanvas.toDataURL();
       bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
     }
-    
+//*/    
     Meteor.call('bubble', bubble, function(error, bubbleId) {
       if (error) {
         // display the error to the user
@@ -765,6 +765,7 @@ Template.bubbleSubmit.events({
     category = "club";
     $(".nav-tabs li").removeClass('active');
     $("#club").addClass('active');
+    $("[name=category]").val("club");
   },
 
   'click #greek': function(evt){
@@ -772,55 +773,63 @@ Template.bubbleSubmit.events({
     category = "greek";
     $(".nav-tabs li").removeClass('active');
     $("#greek").addClass('active');
+    $("[name=category]").val("greek");
   },
 
-  'click #arts': function(evt){
+  'click #art': function(evt){
     evt.stopPropagation();
-    category = "arts";
+    category = "art";
     $(".nav-tabs li").removeClass('active');
-    $("#arts").addClass('active');
+    $("#art").addClass('active');
+    $("[name=category]").val("art");
   },
 
-  'click #athletics': function(evt){
+  'click #sport': function(evt){
     evt.stopPropagation();
-    category ="athletics";
+    category ="sport";
     $(".nav-tabs li").removeClass('active');
-    $("#athletics").addClass('active');
+    $("#sport").addClass('active');
+    $("[name=category]").val("sport");
   },
 
-  'click #academic': function(evt){
+  'click #major': function(evt){
     evt.stopPropagation();
-    category = "academic";
+    category = "major";
     $(".nav-tabs li").removeClass('active');
-    $("#academic").addClass('active');
+    $("#major").addClass('active');
+    $("[name=category]").val("major");
   },
 
-  'click #administrative': function(evt){
+  'click #office': function(evt){
     evt.stopPropagation();
-    category   = "administrative";
+    category   = "office";
     $(".nav-tabs li").removeClass('active');
-    $("#administrative").addClass('active');
+    $("#office").addClass('active');
+    $("[name=category]").val("office");
   },
 
-  'click #community': function(evt){
+  'click #service': function(evt){
     evt.stopPropagation();
-    category = "community";
+    category = "service";
     $(".nav-tabs li").removeClass('active');
-    $("#community").addClass('active');
+    $("#service").addClass('active');
+    $("[name=category]").val("service");
   },
 
-  'click #class': function(evt){
+  'click #study': function(evt){
     evt.stopPropagation();
-    category = "class";
+    category = "study";
     $(".nav-tabs li").removeClass('active');
-    $("#class").addClass('active');
+    $("#study").addClass('active');
+    $("[name=category]").val("study");
   },
 
-  'click #residence': function(evt){
+  'click #dorm': function(evt){
     evt.stopPropagation();
-    category = "residence";
+    category = "dorm";
     $(".nav-tabs li").removeClass('active');
-    $("#residence").addClass('active');
+    $("#dorm").addClass('active');
+    $("[name=category]").val("dorm");
   },
 
   'click #custom': function(evt){
@@ -828,6 +837,7 @@ Template.bubbleSubmit.events({
     category = "custom";
     $(".nav-tabs li").removeClass('active');
     $("#custom").addClass('active');
+    $("[name=category]").val("custom");
   }
 
 });

@@ -34,7 +34,12 @@
               {{#if hasApplied}}
                 <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
               {{else}}
-                <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
+                {{#if hasBeenInvited}}
+                  <button class="std-btn-dark cover-btn invite-accept">accept invite</button>
+                  <button class="std-btn-dark cover-btn invite-deny">deny invite</button>
+                {{else}}
+                  <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
+                {{/if}}
               {{/if}}
             {{/unless}}
           {{/unless}}

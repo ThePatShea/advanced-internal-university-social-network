@@ -40,6 +40,13 @@
           <div class="selected-arrow">{{> icon-arrow-right}}</div>
         </button>
       </a>
+      <div class="grouping-about">
+        <div class="txt-about">licensed by emory university</div>
+        <div class="btn-about">
+          <span class="cb-icon">{{> icon-logo-main}}</span>
+          <span class="lbl">© 2013</span>
+        </div>
+      </div>
     </div>
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
       <div class="visible-{{selectedSection 'mybubbles'}}">
@@ -123,6 +130,20 @@
           <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsectionName 'invites'}}">
             <span class="cb-icon cb-icon-other">{{> icon-invite}}</span>
             <span class="lbl">Invitations</span>
+            <div class="selected-arrow">{{> icon-arrow-right}}</div>
+          </button>
+        </a>
+        <a href="{{aboutPath}}">
+          <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsectionName 'about'}}">
+            <span class="cb-icon cb-icon-other">{{> icon-about}}</span>
+            <span class="lbl">About</span>
+            <div class="selected-arrow">{{> icon-arrow-right}}</div>
+          </button>
+        </a>
+        <a href="http://support.emorybubble.com" target="_blank">
+          <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3">
+            <span class="cb-icon cb-icon-other">{{> icon-support}}</span>
+            <span class="lbl">Support & Feedback</span>
             <div class="selected-arrow">{{> icon-arrow-right}}</div>
           </button>
         </a>

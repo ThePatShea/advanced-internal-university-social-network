@@ -856,10 +856,27 @@ wysiwyg-image(n)
 
 .wysiwyg_group
   .btns-formatting
-    .btn-wysiwyg
-      padding              5px 10px
-      position             relative
-      top                  5px
+    .btn-group
+      margin-left          10px
+      &.justify
+        .btn-wysiwyg
+          stroke               main-light
+          &.hover
+            stroke               main-dark
+      .btn-wysiwyg
+        fill                 main-light
+        padding              5px 10px
+        position             relative
+        text-align           center
+        display              block
+        float                right
+        width                35px
+        margin-left          3px
+        top                  5px
+        border-box           0
+        &:hover
+          fill                 main-dark
+          cursor               pointer
   .wysiwyg
     border-bottom        1px solid main-light
     border-top           1px solid main-light
@@ -1073,57 +1090,67 @@ wysiwyg-image(n)
                 fill            main-dark
                 height          30px
       &.large-boxes
-        padding       10px 0 40px 0
+        padding       10px 0 0 0
         margin        0
         li
-          positionize(145px, 145px, 0, 0 10px 10px 0)
-          fontize(main, bold, uppercase, 10px)
+          positionize(140px, 135px, 0, 0 20px 20px 0)
           colorize(main-xlight)
           border         1px solid main-light
           background     main-dark
+          cursor         pointer
           overflow       hidden
           border-radius  6px
           .add-padding
             padding        0
+          &:hover
+            a
+              color               white-light
+              background          main-light
+              .large-box-info
+                color               main-dark
+          &.active
+            a
+              background          main-dark
+              .large-box-info
+                .cb-icon-check
+                  display             block
+                .body
+                  display             none
           a
             height         100%
             width          100%
             padding        0
             display        block
-            fontize(main, bold, uppercase, 10px)
-            colorize(main-xlight)
             border-box     0
             border         none
-            border-top-left-radius                5px
-            border-top-right-radius               5px
+            border-top-left-radius    5px
+            border-top-right-radius   5px
             .large-box-title
-              border-top-left-radius                5px
-              border-top-right-radius               5px
-              height                                48px
-              width                                 100%
-              fontize(auto, auto, capitlize, auto, auto, auto, auto, center)
-              &.club
-                colorize(white-light, color-club)
-              &.greek
-                colorize(white-light, color-greek)
-              &.athletics
-                colorize(white-light, color-sport)
-              &.arts-entertainment
-                colorize(white-light, color-art)
-              &.academic
-                colorize(white-light, color-study)
-              &.administrative
-                colorize(white-light, color-office)
-              &.community
-                colorize(white-light, color-service)
-              &.class
-                colorize(white-light, color-major)
-              &.residence
-                colorize(white-light, color-dorm)
-              &.custom
-                colorize(white-light, color-custom)
+              fontize(main, bold, uppercase, 12px, 1.2em, auto, auto, center)
+              colorize(white-light)
+              border-bottom             1px solid main-light
+              padding                   0 10px
+              height                    48px
+              width                     100%
+              border-box                0
+              .lbl-large-box
+                width                     115px
             .large-box-info
-              fontize(alt, regular, capitlize, 13px, auto, auto, auto, center)
+              fontize(alt, regular, none, 13px, 1.2em, auto, auto, center)
+              colorize(main-xlight)
+              padding                   10px
+              .cb-icon-check
+                background                main-light
+                fill                      main-dark
+                margin                    0 auto
+                display                   none
+                height                    65px
+                width                     65px
+                border-radius             50%
+                svg
+                  move-position(relative, 22px, blank, blank, blank)
+                  height                    23px
+                  width                     29px
     .wysiwyg-row
       .wysiwyg-label
         margin         15px 0 10px 0
@@ -1136,6 +1163,8 @@ wysiwyg-image(n)
       padding-bottom 11px
       padding-left   4px
       padding-right  4px
+      &.no-typing
+        color          main-xlight
     label,
     input
       border-bottom  1px solid main-light
@@ -1551,7 +1580,35 @@ navbar-height        =  60px
           svg
             position                       relative
             top                            -2px
-            
+      .dropdown-menu
+        box-shadow        0 0
+      .cb-updates-dropdown
+        .badge-inverse
+          background        main-xlight
+          color             white-xxdark
+        .dropdown-menu
+          background        main-xlight
+          width             270px
+          top               50px
+          li
+            a
+              fontize(alt, bold, none, 14px)
+              color             white-light
+              border-bottom     1px solid #89A5B8
+              padding           10px 20px
+              &:hover
+                background        none
+            li
+              border-bottom     1px solid #89A5B8
+              background        main-xlight
+              &:hover
+                background        #89A5B8
+              a
+                fontize(alt, medium, none, 13px, 1em)
+                color             main-light
+                display           block
+                padding           5px 20px
+                border-bottom     0
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
@@ -1621,6 +1678,28 @@ navbar-height        =  60px
           svg
             height             25px
             width              25px
+      .grouping-about
+        move-position(absolute, blank, blank, 60px, blank)
+        .txt-about
+          fontize(alt, regular, uppercase, 9px, 1em, 0, blank, center)
+          border-top           1px solid #436C88
+          colorize(main-xlight, main-light)
+          padding              10px 4px
+        .btn-about
+          fontize(main, regular, uppercase, 11px, 40px)
+          colorize(main-xlight, main-xdark)
+          padding-left         15px
+          height               40px
+          width                100%
+          border-box           0
+          .cb-icon
+            margin                 0 5px 0 0
+            position               relative
+            top                    -2px
+            svg
+              vertical-align       middle
+              height               22px
+              width                22px
     &.subsection
       background         main-xlight
       position           relative
@@ -2037,6 +2116,9 @@ section-icon-no-fill(n)
         svg
           height                 25px 
           width                  22px
+      .section-icon-bubble-create
+        move-position(relative, 2px, blank, blank, blank)
+        fill                   main-light
       .section-name
         main-light-color       0
         font-alt-light         0
@@ -2383,6 +2465,17 @@ attachment-height  =  75px
 
 
 /**********       bubble-members      **********/
+
+/**********       about-content       **********/
+.about-content
+  fontize(alt, regular, blank, 15px)
+  colorize(white-xxdark)
+  padding            20px 30px
+  height             auto
+  a
+    &:hover
+      text-decoration    underline
+/**********       about-content       **********/
 
 /***************  Single-Purpose Elements  ***************/
 
