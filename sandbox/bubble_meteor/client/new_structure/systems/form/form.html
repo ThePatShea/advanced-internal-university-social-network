@@ -49,5 +49,39 @@
     </div>
   
     {{> wysiwyg2}}
+
+    <canvas id="profile-canvas" width="300" height="300" class="visible-0"></canvas>
+    <canvas id="profile-retina-canvas" width="600" height="600" class="visible-0"></canvas>    <canvas id="cover-canvas" width="1280" height="150" class="visible-0"></canvas>
+    <canvas id="cover-retina-canvas" width="2560" height="300" class="visible-0"></canvas>
+
+    <div class="cb-form-row">
+      <div class="attach-files">
+        <label class="dropzone-label" name="picture" type="label">Add profile photo?</label>
+        <div id="profile_drop_zone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="profilefilesToUpload" type="file" multiple="">
+        </div>
+        <div class="crop-profile-container" style="text-align: center;">
+          <img class="crop" id="crop-profile"></img>
+        </div>
+      </div>
+    </div>
+
+    <div class="cb-form-row last">
+      <div class="attach-files">
+        <label class="dropzone-label" name="picture" type="label">Add cover photo?</label>
+        <div id="cover_drop_zone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="coverfilesToUpload" type="file" multiple="">
+        </div>
+        <div class="crop-cover-container" style="text-align: center;">
+          <img class="crop" id="crop-cover"></img>
+        </div>
+      </div>
+    </div>
   {{/with}}
 </template>

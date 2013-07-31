@@ -9,14 +9,12 @@
         </h3>
       </div>
     </div>
-     
     {{#with systemForm.formParams.bubble.create}}
       {{> generateForm}}
     {{/with}}
-  </div>
 
-<!--
-  <div class="cb-form-container" id="cb-form-container-event">
+
+<!--  <div class="cb-form-container" id="cb-form-container-event">
     <form class="cb-form">
         <div class="cb-form-row">
           <div class="attach-files">
@@ -44,10 +42,12 @@
       </div>
 
     </form>
-  </div>
+  </div>-->
 
-  <img src="/img/Bubble-Profile.jpg" id="tempbubbleprofile" />
-  <img src="/img/Bubble-Coverphoto.jpg" id="tempbubblecoverphoto" />
--->
+  <img src="/img/Bubble-Profile.jpg" class="visible-0" id="profilePhoto" />
+  <img src="/img/Bubble-Profile.jpg" class="visible-0" id="profileRetinaPhoto" />
+  <img src="/img/Bubble-Coverphoto.jpg" class="visible-0" id="coverPhoto" />
+  <img src="/img/Bubble-Coverphoto.jpg" class="visible-0" id="coverRetinaPhoto" />
+</div>
 
 </template>
