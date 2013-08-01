@@ -16,8 +16,8 @@ Template.eventSubmit.events({
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
       attendees: [Meteor.userId()],
-      eventPhoto: mainURL,
-      retinaEventPhoto: retinaURL
+      eventPhoto: $("#eventPhoto").attr("src"),
+      retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
     };
 
 
@@ -43,31 +43,32 @@ Template.eventSubmit.events({
         f = files[0];
         //If the file dropped on the dropzone is an image then start processing it
         if (f.type.match('image.*')) {
-            var reader = new FileReader();
+          var reader = new FileReader();
+          var mainCanvas = document.getElementById('event-main-canvas');
+          var retinaCanvas = document.getElementById('event-retina-canvas');
+          var mainContext = mainCanvas.getContext('2d');
+          var retinaContext = retinaCanvas.getContext('2d');
+          var profileImage = new Image();
 
-        var mainCanvas = document.getElementById('event-main-canvas');
-        var retinaCanvas = document.getElementById('event-retina-canvas');
-        var mainContext = mainCanvas.getContext('2d');
-        var retinaContext = retinaCanvas.getContext('2d');
-        var profileImage = new Image();
-        var mainURL = "/img/Event.jpg";
-        var retinaURL = "/img/Event.jpg";
-
-            // Closure to capture the file information.
-            reader.onload = (function(theFile) {
-              return function(e) {
-                  $("#event_drop_zone").hide();
-                  $(".crop").attr("src", e.target.result);
-                  profileImage.src = e.target.result;
-                  cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '170', minHeight: '115', x1: '10', y1: '10', x2: '180', y2: '125', parent: "#add-picture", handles: true, onSelectChange: function(img, selection) {
-                    mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
-                    retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
-                    mainURL = mainCanvas.toDataURL();
-                    retinaURL = retinaCanvas.toDataURL();
-                  }});
-              };
-            })(f);
-            reader.readAsDataURL(f);
+          // Closure to capture the file information.
+          reader.onload = (function(theFile) {
+            return function(e) {
+                $("#event_drop_zone").hide();
+                $(".crop").attr("src", e.target.result);
+                profileImage.src = e.target.result;
+                cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '170', minHeight: '115', x1: '10', y1: '10', x2: '180', y2: '125', parent: "#add-picture", handles: true, onSelectChange: function(img, selection) {
+                  mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                  retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                  $("#eventPhoto").attr("src",mainCanvas.toDataURL());
+                  $("#eventRetinaPhoto").attr("src",retinaCanvas.toDataURL());
+                }});
+            };
+          })(f);
+          reader.readAsDataURL(f);
+        }
+        else{
+          error = new Meteor.Error(422, 'Please choose a valid image.');
+          throwError(error.reason);
         }
       }
   }
