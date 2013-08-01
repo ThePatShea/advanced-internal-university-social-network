@@ -927,6 +927,36 @@ wysiwyg-image(n)
 /**********    file-type    **********/
 
 /**********     cb-form     **********/
+.gldp-flatwhite
+  background     main-xlight
+  width          225px
+  border-radius  7px
+  padding-left   4px
+  border-box     0
+  .core
+    fontize(main, bold, uppercase, 13px)
+    background   main-xlight
+    border       0
+    &.title
+      font-size    13px !important
+      color        main-light
+    &.monyear
+      height             30px !important
+      line-height        30px !important
+      border-radius      7px
+      border-box         0
+      .prev-arrow,
+      .next-arrow
+        color              main-light
+        font-size          12px
+        text-shadow        0 0
+    &.dow
+      fontize(main, bold, uppercase, 11px)
+      border-bottom     1px solid #7C9CAF
+      border-top        1px solid #7C9CAF
+      color             white-light
+    
+
 .cb-form-container
   .crop
     max-height     500px
@@ -945,12 +975,20 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
+    .date-picker
+      cursor          pointer
     &.cb-form-container-search
       margin-bottom  -12px
     .cb-form-row
       margin          0 0 45px 0
       clear           btoh
       overflow        hidden
+      &.third-width-container
+        position        relative
+        @media (min-width: 768px)
+          height          45px
+        @media (max-width: 767px)
+          height          auto
       &.last
         margin-bottom 0
       .half-width
@@ -971,15 +1009,22 @@ wysiwyg-image(n)
         border-box       0
         width            28%
         height           auto
-        float            left
         @media (min-width: 768px)
-          margin           0 30px 0 0
+          &.column-first
+            position         absolute
+            left             0
+          &.column-second
+            position         absolute
+            margin-left      -14%
+            left             50%
+          &.column-third
+            position         absolute
+            right            0
         @media (max-width: 767px)
           width           100%
-          &.column-first
-            margin          0 0 45px 0
+          &.column-first,
           &.column-second
-            margin          0 0 45px 0
+            margin          0 0 55px 0
           &.column-third
             margin          0
       .full-width
