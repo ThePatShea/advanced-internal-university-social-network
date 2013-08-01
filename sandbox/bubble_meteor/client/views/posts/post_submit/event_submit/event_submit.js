@@ -22,27 +22,10 @@ Template.eventSubmit.events({
 
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
-/*
-    if(eventAttributes.eventPhoto.length == 0){
-      var eventphotocanvas = document.createElement('canvas');
-      var retinaeventphotocanvas = document.createElement('canvas');
-      eventphotocanvas.width = 340;
-      eventphotocanvas.height = 230;
-      retinaeventphotocanvas.width = 680;
-      retinaeventphotocanvas.height = 460;
-      var eventphotocontext = eventphotocanvas.getContext('2d');
-      var retinaeventphotocontext = retinaeventphotocanvas.getContext('2d');
-      eventphotocontext.drawImage($('#tempeventphoto')[0], 0, 0, 340, 230, 0, 0, 340, 230);
-      retinaeventphotocontext.drawImage($('#tempeventphoto')[0], 0, 0, 680, 460, 0, 0, 680, 460);
-      eventAttributes.eventPhoto = eventphotocanvas.toDataURL();
-      eventAttributes.retinaEventPhoto = retinaeventphotocanvas.toDataURL();
-      console.log($('#tempeventphoto')[0]);
-    }
-*/    
     createPost(eventAttributes);
   },
 
-    'dragover .dropzone': function(evt){
+  'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();
@@ -92,9 +75,6 @@ Template.eventSubmit.events({
 });
 
 Template.eventSubmit.rendered = function() {
-  $("#eventphoto_retina").hide();
-  $("#tempeventphoto").hide();
-
   $(".date-picker").glDatePicker(
     {
       cssName: 'flatwhite',

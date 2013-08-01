@@ -1,62 +1,33 @@
-<template name="eventSubmit">
-
-    <!--<form>
-    
-        <div id="eventphoto_image">
-            <div id="eventphoto_dropzone" class="dropzone">Drop event photo here.</div>
-            <input name="filesToUpload[]" id="eventfilesToUpload" type="file">
-                <img id="eventphoto_upload" src="" />
-                <img id="eventphoto_preview" src="" />
-                <img id="eventphoto_retina" src="" />
-        </div>
-    
-    
-
-    
-              <textarea name="body" type="text" placeholder="Describe your event"></textarea>  Change this to an input from a textarea
-         
-    </form>-->
-    
-
+<template name="eventSubmit"> 
 
   <div class="collapse cb-form-container" id="cb-form-container-event">
     <div class="top-arrow-container">
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
     <form class="cb-form">
-      <!--<div class="attach-files">
-        <div id="eventphoto_dropzone" class="drop-zone">
+      <div class="cb-form-row first">
+        <input class="half-width column-one" name="name" type="text" value="" placeholder="Event title*"/> 
+        <input class="half-width column-two" name="location" type="text" placeholder="Where?*"/>
+      </div>
+      <div class="cb-form-row third-width-container">
+        <input class="third-width column-first date-picker" name="date" type="text" placeholder="Date?*"/>
+        <input class="third-width column-second" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
+        <label class="third-width column-third" name="picture" type="label" data-toggle="collapse" data-target="#add-picture">Add picture?</label>
+      </div>
+      <canvas id="event-main-canvas" width="340" height="230" class="visible-0"></canvas>
+      <canvas id="event-retina-canvas" width="680" height="460" class="visible-0"></canvas>
+      <div class="collapse attach-files" id="add-picture">
+        <div id="event_drop_zone" class="drop-zone">
           <div class="dz-title">drag and drop</div>
           <div class="dz-subtitle">or click here</div>
           <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="eventFilesToUpload" type="file" multiple="">
         </div>
-      </div>-->
-      <img id="tempeventphoto" src="/img/Event.jpg" />
-        <div class="cb-form-row first">
-          <input class="half-width column-one" name="name" type="text" value="" placeholder="Event title*"/> 
-          <input class="half-width column-two" name="location" type="text" placeholder="Where?*"/>
+        <div class="crop-container" style="text-align: center;">
+          <img class="crop"></img>
         </div>
-        <div class="cb-form-row third-width-container">
-          <input class="third-width column-first date-picker" name="date" type="text" placeholder="Date?*"/>
-          <input class="third-width column-second" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
-          <label class="third-width column-third" name="picture" type="label" data-toggle="collapse" data-target="#add-picture">Add picture?</label>
-        </div>
-        <canvas id="event-main-canvas" width="340" height="230" class="visible-0"></canvas>
-        <canvas id="event-retina-canvas" width="680" height="460" class="visible-0"></canvas>
-        <div class="collapse attach-files" id="add-picture">
-          <div id="event_drop_zone" class="drop-zone">
-            <div class="dz-title">drag and drop</div>
-            <div class="dz-subtitle">or click here</div>
-            <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-            <input class="file-chooser-invisible" name="filesToUpload[]" id="eventFilesToUpload" type="file" multiple="">
-          </div>
-          <div class="crop-container" style="text-align: center;">
-            <img class="crop"></img>
-          </div>
-        </div>
-          
-          <input class="search-text full-width" name="body" type="text" placeholder="Details" />
+      </div> 
+      <input class="search-text full-width" name="body" type="text" placeholder="Details" />
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
       </div>
