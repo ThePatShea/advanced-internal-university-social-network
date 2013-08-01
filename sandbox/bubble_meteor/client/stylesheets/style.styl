@@ -929,13 +929,14 @@ wysiwyg-image(n)
 /**********     cb-form     **********/
 .gldp-flatwhite
   background     main-xlight
-  width          225px
   border-radius  7px
   padding-left   4px
   border-box     0
+  border         0
   .core
     fontize(main, bold, uppercase, 13px)
     background   main-xlight
+    color        main-light
     border       0
     &.title
       font-size    13px !important
@@ -955,6 +956,17 @@ wysiwyg-image(n)
       border-bottom     1px solid #7C9CAF
       border-top        1px solid #7C9CAF
       color             white-light
+    &.outday
+      color             #678CA5 !important
+    &.sat,
+    &.sun
+      color             #CCD9E0 !important
+    &.selected
+      colorize(main-xlight, main-light)
+      border-radius     50%
+    &.today
+      colorize(main-light, white-light)
+      border-radius     50%
     
 
 .cb-form-container

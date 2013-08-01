@@ -10,11 +10,11 @@ Template.discussionSubmit.created = function () {
       }
 
       if (count == 0) {
-        $('.cb-submit').prop('disabled', false);
-        $('.cb-submit').removeClass('ready-false');
+        $('#cb-form-container-discussion .cb-submit').prop('disabled', false);
+        $('#cb-form-container-discussion .cb-submit').removeClass('ready-false');
       } else {
-        $('.cb-submit').prop('disabled', true);
-        $('.cb-submit').addClass('ready-false');
+        $('#cb-form-container-discussion .cb-submit').prop('disabled', true);
+        $('#cb-form-container-discussion .cb-submit').addClass('ready-false');
       }
     });
   }
