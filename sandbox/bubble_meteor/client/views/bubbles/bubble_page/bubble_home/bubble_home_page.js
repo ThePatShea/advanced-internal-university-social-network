@@ -1,6 +1,15 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
+Template.bubblePage.created = function() {
+ var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+
+ if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
+   Meteor.Router.to('bubblePublicPage', bubble._id);
+ }
+}
+
+
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
