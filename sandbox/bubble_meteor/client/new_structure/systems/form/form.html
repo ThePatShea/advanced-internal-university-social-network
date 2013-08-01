@@ -18,12 +18,10 @@
 
 <template name="formElementsBubbleCreate">
   {{#with systemForm.formParams.bubble.create}}
-    <div class="visible-{{hasLevel2Permissions}}">
-      <label class="first no-typing">Bubble Type*</label>
-      <select class="selectBubbleType" name="bubbleType">
-        <option value="normal">Normal Bubble</option>
-        <option value="super">Super Bubble</option>
-      </select>
+    <div class="visible-{{hasLevel2Permissions}} select-bubble-type">
+      <label class="first no-typing select-bubble-type-label">Bubble Type*</label>
+      <button class="active-{{isSelectedBubbleType 'super'}} pull-left btn-bubble-type std-btn-form super">super bubble</button>
+      <button class="active-{{isSelectedBubbleType 'normal'}} pull-left btn-bubble-type std-btn-form normal">normal bubble</button>
     </div>
 
 

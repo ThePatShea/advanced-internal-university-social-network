@@ -987,8 +987,15 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
-    .selectBubbleType
-      colorize(white-light, main-light)
+    .select-bubble-type
+      overflow        hidden
+      margin-bottom   30px
+      .select-bubble-type-label
+        margin-bottom    10px
+      .btn-bubble-type
+        margin           0 10px 0 0
+        &.active-true
+          background       main-light
     .date-picker
       cursor          pointer
     &.cb-form-container-search
