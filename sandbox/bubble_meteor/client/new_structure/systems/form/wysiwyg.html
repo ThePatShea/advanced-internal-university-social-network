@@ -43,10 +43,10 @@
       </div>
     -->
       <div name="body" class="wysiwyg">
-        {{#unless body}}
+        {{#unless systemBubble.selectedBubble.description}}
           <span class="wysiwyg-placeholder">Type here...</span>
         {{/unless}}
-        {{{body}}}
+        {{{systemBubble.selectedBubble.description}}}
       </div>
     <!--  <output id="list"></output>  -->
   </div>
