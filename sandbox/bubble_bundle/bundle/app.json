@@ -72,22 +72,22 @@
   ],
   "manifest": [
     {
-      "path": "static_cacheable/05ea691e0430f995cd8e1e462bf18bb001e85f9d.js",
+      "path": "static_cacheable/d81bc1d62579c0cb73844bd8f4d63bfb1549cf41.js",
       "where": "client",
       "type": "js",
       "cacheable": true,
-      "url": "/05ea691e0430f995cd8e1e462bf18bb001e85f9d.js",
-      "size": 967717,
-      "hash": "05ea691e0430f995cd8e1e462bf18bb001e85f9d"
+      "url": "/d81bc1d62579c0cb73844bd8f4d63bfb1549cf41.js",
+      "size": 966921,
+      "hash": "d81bc1d62579c0cb73844bd8f4d63bfb1549cf41"
     },
     {
-      "path": "static_cacheable/e6fe34a4d3c42723436850f8e3a577b4058470bc.css",
+      "path": "static_cacheable/ada0def129ddf384d5a2f0ea3011374614f3ea74.css",
       "where": "client",
       "type": "css",
       "cacheable": true,
-      "url": "/e6fe34a4d3c42723436850f8e3a577b4058470bc.css",
-      "size": 287049,
-      "hash": "e6fe34a4d3c42723436850f8e3a577b4058470bc"
+      "url": "/ada0def129ddf384d5a2f0ea3011374614f3ea74.css",
+      "size": 288536,
+      "hash": "ada0def129ddf384d5a2f0ea3011374614f3ea74"
     },
     {
       "path": "static/img/Bubble-Coverphoto.fw.png",
@@ -794,7 +794,7 @@
     {
       "path": "app.html",
       "where": "internal",
-      "hash": "1855a7ae7045a55d91f284dd6bd0a7eb9f3e958e"
+      "hash": "c654f69a7960c7386f7d186bb7324f4d33830574"
     }
   ],
   "release": "0.6.4"
