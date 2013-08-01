@@ -4,6 +4,8 @@ Template.eventSubmit.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
+    alert('SUBMIT!');
+
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
 
     var eventAttributes = { 
@@ -14,8 +16,8 @@ Template.eventSubmit.events({
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
       attendees: [Meteor.userId()],
-      eventPhoto: $(event.target).find('[id=eventphoto_preview]').attr('src'),
-      retinaEventPhoto: $(event.target).find('[id=eventphoto_retina]').attr('src')
+      eventPhoto: mainURL,
+      retinaEventPhoto: retinaURL
     };
 
 
@@ -47,164 +49,44 @@ Template.eventSubmit.events({
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'drop .dropzone': function(evt){
-    console.log('Drop');
-        evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files;
-
-    //If more than one file dropped on the dropzone then throw an error to the user.
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 340;
-            var coverphoto_height = 230;
-            var retina_width = 680;
-            var retina_height = 460;
-            $("#eventphoto_dropzone").hide();
-            $("#eventfilesToUpload").hide();
-            $("#eventphoto_upload").attr("src", e.target.result);
-            $("#eventphoto_preview").attr("src", e.target.result);
-            $("#eventphoto_upload").attr("title", escape(theFile.name));
-            $("#eventphoto_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = coverphoto_width;
-                  mycanvas.height = coverphoto_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
-                  retinacontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#eventphoto_preview").attr("src", imagedata);
-                  $("#eventphoto_preview").attr("width", coverphoto_width/2);
-                  $("#eventphoto_preview").attr("height", coverphoto_height/2);
-                  $("#eventphoto_retina").attr("src", retinaImageData);
-                };
-
-                $('#eventphoto_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
-                  aspectRatio: coverphoto_width/coverphoto_height
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
+  'change #eventFilesToUpload': function(evt){
+      files = evt.target.files;
+      //If more than one file dropped on the dropzone then throw an error to the user.
+      if(files.length > 1){
+        error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
         throwError(error.reason);
       }
-    }
-
-  },
-
-
-  'change #eventfilesToUpload': function(evt){
-    var files = evt.target.files;
-
-    //If more than one file dropped on the dropzone then throw an error to the user.
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 340;
-            var coverphoto_height = 230;
-            var retina_width = 680;
-            var retina_height = 460;
-            $("#eventphoto_dropzone").hide();
-            $("#eventfilesToUpload").hide();
-            $("#eventphoto_upload").attr("src", e.target.result);
-            $("#eventphoto_preview").attr("src", e.target.result);
-            $("#eventphoto_upload").attr("title", escape(theFile.name));
-            $("#eventphoto_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = coverphoto_width;
-                  mycanvas.height = coverphoto_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
-                  retinacontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#eventphoto_preview").attr("src", imagedata);
-                  $("#eventphoto_preview").attr("width", coverphoto_width/2);
-                  $("#eventphoto_preview").attr("height", coverphoto_height/2);
-                  $("#eventphoto_retina").attr("src", retinaImageData);
-                };
-
-                $('#eventphoto_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
-                  aspectRatio: coverphoto_width/coverphoto_height
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
       else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
-        throwError(error.reason);
+        f = files[0];
+        //If the file dropped on the dropzone is an image then start processing it
+        if (f.type.match('image.*')) {
+            var reader = new FileReader();
+
+        var mainCanvas = document.getElementById('event-main-canvas');
+        var retinaCanvas = document.getElementById('event-retina-canvas');
+        var mainContext = mainCanvas.getContext('2d');
+        var retinaContext = retinaCanvas.getContext('2d');
+        var profileImage = new Image();
+        var mainURL = "/img/Event.jpg";
+        var retinaURL = "/img/Event.jpg";
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+              return function(e) {
+                  $("#event_drop_zone").hide();
+                  $(".crop").attr("src", e.target.result);
+                  profileImage.src = e.target.result;
+                  cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '170', minHeight: '115', x1: '10', y1: '10', x2: '180', y2: '125', parent: "#add-picture", handles: true, onSelectChange: function(img, selection) {
+                    mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+                    retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+                    mainURL = mainCanvas.toDataURL();
+                    retinaURL = retinaCanvas.toDataURL();
+                  }});
+              };
+            })(f);
+            reader.readAsDataURL(f);
+        }
       }
-    }
   }
 
 });
