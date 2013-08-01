@@ -1,4 +1,49 @@
-Template.eventSubmit.events({
+Template.editEvent.rendered = function(){
+	console.log(this.data);
+	var event = this.data;
+	var currentDatetime = new Date(event.dateTime);
+	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
+	var date = currentDatetime.getMonth()+"/"+currentDatetime.getDay()+"/"+currentDatetime.getFullYear();
+	$("input[name='name']").val(event.name);
+	$("input[name='location']").val(event.location);
+	$("input[name='date']").val(date);
+	$("input[name='body']").val(event.body);
+    if (time) {
+      var firstAlphabet  = parseInt(time[0]);
+
+      if (time.length > 9 || (!firstAlphabet)){
+        $("[name=time]").val("");
+      }else{
+        formatedTime = moment(time,"h:mm a").format("h:mm a");
+        $("[name=time]").val(formatedTime);
+      }
+    }
+
+	$(".date-picker").glDatePicker(
+    {
+      cssName: 'flatwhite',
+      allowMonthSelect: false,
+      allowYearSelect: false
+    });
+
+  //Format the time when the textbox is changed
+  $("[name=time]").change(function(){
+    var time = $("[name=time]").val();
+    if (time) {
+      var firstAlphabet  = parseInt(time[0]);
+
+      if (time.length > 9 || (!firstAlphabet)){
+        $("[name=time]").val("");
+      }else{
+        formatedTime = moment(time,"h:mm a").format("h:mm a");
+        $("[name=time]").val(formatedTime);
+      }
+
+    }
+  });
+};
+
+Template.editEvent.events({
   'submit form': function(event) {
     event.preventDefault();
     //Google Analytics
@@ -11,16 +56,24 @@ Template.eventSubmit.events({
       location: $(event.target).find('[name=location]').val(),
       name: $(event.target).find('[name=name]').val(),
       body: $(event.target).find('[name=body]').val(),
-      postType: 'event',
-      bubbleId: Session.get('currentBubbleId'),
-      attendees: [Meteor.userId()],
       eventPhoto: $("#eventPhoto").attr("src"),
       retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
     };
 
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
-    createPost(eventAttributes);
+    
+    var currentPostId = Session.get('currentPostId');
+    var currentBubbleId = Session.get('currentBubbleId');
+    Posts.update(currentPostId, {$set: eventAttributes}, function(error) {
+      if (error) {
+        // display the error to the user
+        throwError(error.reason);
+      } else {
+        createEditEventUpdate(Meteor.userId(), currentPostId);
+        Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+      }
+    });
   },
 
   'dragover .dropzone': function(evt){
@@ -72,30 +125,3 @@ Template.eventSubmit.events({
   }
 
 });
-
-Template.eventSubmit.rendered = function() {
-  $(".date-picker").glDatePicker(
-    {
-      cssName: 'flatwhite',
-      allowMonthSelect: false,
-      allowYearSelect: false
-    }
-  );
-
-  //Format the time when the textbox is changed
-  $("[name=time]").change(function(){
-    var time = $("[name=time]").val();
-    if (time) {
-      var firstAlphabet  = parseInt(time[0]);
-
-      if (time.length > 9 || (!firstAlphabet)){
-        $("[name=time]").val("");
-      }else{
-        formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $("[name=time]").val(formatedTime);
-      }
-
-    }
-  });
-
-}

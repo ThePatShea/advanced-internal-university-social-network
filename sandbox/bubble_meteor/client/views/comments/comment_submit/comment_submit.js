@@ -47,11 +47,11 @@ Template.commentSubmit.rendered = function() {
        }
 
         if(count == 0){
-          $('.cb-submit').prop('disabled', false);
-          $('.cb-submit').removeClass('ready-false');
+          $('#cb-form-container-comment .cb-submit').prop('disabled', false);
+          $('#cb-form-container-comment .cb-submit').removeClass('ready-false');
         }else {
-          $('.cb-submit').prop('disabled', true);
-          $('.cb-submit').addClass('ready-false');
+          $('#cb-form-container-comment .cb-submit').prop('disabled', true);
+          $('#cb-form-container-comment .cb-submit').addClass('ready-false');
         }
      });
    }
@@ -75,7 +75,7 @@ Template.commentSubmit.rendered = function() {
       });
     });
 
-   $('.cb-submit').prop('disabled', true);
-   $('.cb-submit').addClass('ready-false');
+   $('#cb-form-container-comment .cb-submit').prop('disabled', true);
+   $('#cb-form-container-comment .cb-submit').addClass('ready-false');
    inspectAllInputFields();
 }
