@@ -1,0 +1,20 @@
+<template name="editFile">
+  <div class="cb-form-container" id="cb-form-container-upload-file" style="margin-bottom: 20px;">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form">
+      <div class="attach-files">
+        <div id="drop_zone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+        </div>
+      </div>
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+      </div>
+    </form>
+  </div>
+</template>
