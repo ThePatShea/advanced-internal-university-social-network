@@ -32,9 +32,9 @@ Template.sidebar.helpers({
       return urlArray[2] == inputName;
     }
   , selectedSubsection     : function() {
-      var currentUrl  =  window.location.pathname;
-      var urlArray    =  currentUrl.split("/");
-      return urlArray[2] == this._id;
+   //   var currentUrl  =  window.location.pathname;
+   //   var urlArray    =  currentUrl.split("/");
+      return Session.get('currentBubbleId') == this._id;
     }
   , userBubbles            : function() {
       return Bubbles.find({

@@ -104,16 +104,16 @@ Template.eventSubmit.rendered = function() {
   );
 
   //Format the time when the textbox is changed
-  $(".input-small").change(function(){
-    var time = $(".input-small").val();
+  $("[name=time]").change(function(){
+    var time = $("[name=time]").val();
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $(".input-small").val("");
+        $("[name=time]").val("");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $(".input-small").val(formatedTime);
+        $("[name=time]").val(formatedTime);
       }
 
     }

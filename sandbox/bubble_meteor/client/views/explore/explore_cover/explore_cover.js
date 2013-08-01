@@ -1,13 +1,54 @@
 Template.exploreCover.helpers({
-	hasApplied: function() {
-		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-		return _.contains(this.users.applicants, Meteor.userId());
-	},
+  getExploreIcon: function(exploreObject){
+      var iconName = exploreObject.exploreIcon;
+      if(iconName == 'announcements'){
+        return Template['icon-official']();
+      }
+      else if(iconName == 'campus events'){
+        return Template['icon-events']();
+      }
+      else if(iconName == 'classifieds'){
+        return Template['icon-classifieds']();
+      }
+      else if(iconName == 'professor reviews'){
+        return Template['icon-professorreviews']();
+      }
+      else if(iconName == 'controversial topics'){
+        return Template['icon-controversial']();
+      }
+      else if(iconName == 'student deals'){
+        return Template['icon-deals']();
+      }
+      else if(iconName == 'nightlife'){
+        return Template['icon-nightlife']();
+      }
+  },
 
-	hasJoinedBubble: function() {
-		return _.contains(this.users.members, Meteor.userId())
-					|| _.contains(this.users.admins, Meteor.userId());
-	}
+  getExploreIconName: function(exploreObject){
+      var iconName = exploreObject.exploreIcon;
+      if(iconName == 'announcements'){
+        return 'icon-official';
+      }
+      else if(iconName == 'campus events'){
+        return 'icon-events';
+      }
+      else if(iconName == 'classifieds'){
+        return 'icon-classifieds';
+      }
+      else if(iconName == 'professor reviews'){
+        return 'icon-professorreviews';
+      }
+      else if(iconName == 'controversial topics'){
+        return 'icon-controversial';
+      }
+      else if(iconName == 'student deals'){
+        return 'icon-deals';
+      }
+      else if(iconName == 'nightlife'){
+        return 'icon-nightlife';
+      }
+  }
+
 });
 
 Template.bubbleCover.events({
