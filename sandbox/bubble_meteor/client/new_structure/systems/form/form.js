@@ -10,7 +10,6 @@ Handlebars.registerHelper("systemForm", {
               , isCollapsed        : "collapse-false"
               , objectNameDash     : "bubble-create"
               , wysiwygHeading     : "Description"
-              , selectedBubbleType : "normal"
               , arrowVisible       : "false"
             }
         }
@@ -22,23 +21,18 @@ Handlebars.registerHelper("systemForm", {
 
 
 Template.formElementsBubbleCreate.events({
-  'click .select-bubble-type > .normal': function(evt, tmpl) {
+  'click .select-bubble-type > .normal': function(evt) {
     evt.preventDefault();
-    systemForm.formParams.bubble.create.selectedBubbleType = "normal";
+    $("input[name=bubbleType]").val("normal");
+    selectedBubbleType = "normal";
+    $(".select-bubble-type > .super").removeClass("active-true");
+    $(".select-bubble-type > .normal").addClass("active-true");
+  }
+, 'click .select-bubble-type > .super': function(evt) {
+    evt.preventDefault();
+    $("input[name=bubbleType]").val("super");
+    $(".select-bubble-type > .normal").removeClass("active-true");
+    $(".select-bubble-type > .super").addClass("active-true");
   }
 
- , 'click .select-bubble-type > .super': function(evt, tmpl) {
-    evt.preventDefault();
-    systemForm.formParams.bubble.create.selectedBubbleType = "super";
-  }
-});
-
-
-Template.formElementsBubbleCreate.helpers({
-    isSelectedBubbleType: function(inputBubbleType) {
-      if (inputBubbleType == this.selectedBubbleType)
-        return true;
-      else
-        return false;
-    }
 });
