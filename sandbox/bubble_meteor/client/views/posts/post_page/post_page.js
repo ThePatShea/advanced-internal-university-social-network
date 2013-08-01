@@ -8,6 +8,10 @@ Template.postPage.helpers({
   , getAuthorProfilePicture: function() {
     var user = Meteor.users.findOne(this.userId);
     return user && user.profilePicture;
+  },
+
+  returnFalse: function() {
+    return false;
   }
 });
 

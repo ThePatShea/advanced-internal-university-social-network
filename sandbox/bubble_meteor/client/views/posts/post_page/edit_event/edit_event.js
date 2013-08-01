@@ -8,6 +8,8 @@ Template.editEvent.rendered = function(){
 	$("input[name='location']").val(event.location);
 	$("input[name='date']").val(date);
 	$("input[name='body']").val(event.body);
+	$("#eventPhoto").attr("src",this.eventPhoto);
+	$("eventRetinaPhoto").attr("src",this.eventRetinaPhoto);
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
