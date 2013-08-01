@@ -18,6 +18,14 @@
 
 <template name="formElementsBubbleCreate">
   {{#with systemForm.formParams.bubble.create}}
+    <div class="visible-{{hasLevel2Permissions}}">
+      <select name="bubbleType">
+        <option value="normal">Normal Bubble</option>
+        <option value="super">Super Bubble</option>
+      </select>
+    </div>
+
+
     <div class="cb-form-row first">
       <input class="required width-full" name="title" type="text" value="" placeholder="Name*"/>
     </div>
