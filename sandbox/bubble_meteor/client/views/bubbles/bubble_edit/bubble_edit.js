@@ -9,14 +9,28 @@ Template.bubbleEdit.events({
     
     var bubbleProperties = {
       title: $(e.target).find('[name=title]').val(),
-      description: $(e.target).find('[name=description]').val(),
+      description: $(e.target).find('[name=body]').html(),
       category: $(e.target).find('[name=category]').val(),
-      coverPhoto: $(event.target).find('[id=coverphoto_preview]').attr('src'),
-      retinaCoverPhoto: $(event.target).find('[id=coverphoto_retina]').attr('src'),
-      profilePicture: $(event.target).find('[id=profilepicture_preview]').attr('src'),
-      retinaProfilePicture: $(event.target).find('[id=profilepicture_retina]').attr('src'),
       lastUpdated: new Date().getTime()
     }
+
+
+    var profilePictureNew        =  $(event.target).find('[id=profilepicture_preview]').attr('src');
+    var retinaProfilePictureNew  =  $(event.target).find('[id=profilepicture_retina]').attr('src');
+    var coverPhotoNew            =  $(event.target).find('[id=coverphoto_preview]').attr('src');
+    var retinaCoverPhotoNew      =  $(event.target).find('[id=coverphoto_retina]').attr('src');
+
+
+    if (profilePictureNew != "")
+      bubbleProperties.profilePicture  =  profilePictureNew;
+    if (retinaProfilePictureNew != "")
+      bubbleProperties.retinaProfilePicture  =  retinaProfilePictureNew;
+    if (coverPhotoNew != "")
+      bubbleProperties.coverPhoto  =  coverPhotoNew;
+    if (retinaCoverPhotoNew != "")
+      bubbleProperties.retinaCoverPhoto  =  retinaCoverPhotoNew;
+    
+
     
     Bubbles.update(currentBubbleId, {$set: bubbleProperties}, function(error) {
       if (error) {
