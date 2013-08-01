@@ -19,7 +19,8 @@
 <template name="formElementsBubbleCreate">
   {{#with systemForm.formParams.bubble.create}}
     <div class="visible-{{hasLevel2Permissions}}">
-      <select name="bubbleType">
+      <label class="first no-typing">Bubble Type*</label>
+      <select class="selectBubbleType" name="bubbleType">
         <option value="normal">Normal Bubble</option>
         <option value="super">Super Bubble</option>
       </select>
