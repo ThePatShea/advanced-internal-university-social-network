@@ -929,13 +929,14 @@ wysiwyg-image(n)
 /**********     cb-form     **********/
 .gldp-flatwhite
   background     main-xlight
-  width          225px
   border-radius  7px
   padding-left   4px
   border-box     0
+  border         0
   .core
     fontize(main, bold, uppercase, 13px)
     background   main-xlight
+    color        main-light
     border       0
     &.title
       font-size    13px !important
@@ -955,6 +956,17 @@ wysiwyg-image(n)
       border-bottom     1px solid #7C9CAF
       border-top        1px solid #7C9CAF
       color             white-light
+    &.outday
+      color             #678CA5 !important
+    &.sat,
+    &.sun
+      color             #CCD9E0 !important
+    &.selected
+      colorize(main-xlight, main-light)
+      border-radius     50%
+    &.today
+      colorize(main-light, white-light)
+      border-radius     50%
     
 
 .cb-form-container
@@ -975,6 +987,15 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
+    .select-bubble-type
+      overflow        hidden
+      margin-bottom   30px
+      .select-bubble-type-label
+        margin-bottom    10px
+      .btn-bubble-type
+        margin           0 10px 0 0
+        &.active-true
+          background       main-light
     .date-picker
       cursor          pointer
     &.cb-form-container-search
@@ -1104,6 +1125,11 @@ wysiwyg-image(n)
               width          100%
             &.cb-icon-bubble
               width          40px
+              svg
+                height         30px
+                width          40px
+                path
+                  stroke         main-xlight
             &.cb-icon-member
               width          40px
             &.cb-icon-event
@@ -1136,6 +1162,10 @@ wysiwyg-image(n)
               svg
                 fill            main-dark
                 height          30px
+              .cb-icon-bubble
+                svg
+                  path
+                    stroke        main-dark
       &.large-boxes
         padding       10px 0 0 0
         margin        0
