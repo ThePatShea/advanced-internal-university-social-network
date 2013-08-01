@@ -1,0 +1,16 @@
+<template name="editDiscussion">
+  <div class="cb-form-container" id="cb-form-container-edit-discussion" style="margin-bottom: 20px;">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form" id="edit-discussion-form">
+      <input class="width-full first" name="name" id="discussionName" type="text" value="" placeholder="Discussion title*"/>
+      {{> wysiwyg}}
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
+          <span>submit</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</template>

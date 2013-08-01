@@ -1,5 +1,4 @@
 Template.editEvent.rendered = function(){
-	console.log(this.data);
 	var event = this.data;
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
