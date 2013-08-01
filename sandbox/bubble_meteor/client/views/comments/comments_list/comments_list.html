@@ -15,6 +15,14 @@
       {{> commentSubmit}}
       {{#each comments}}
         {{> commentItem}}
+      {{else}}
+        <div class="post-item">
+          <div class="v-middle">
+            <div class="v-inner">
+              No comments yet. Be the first to comment!
+            </div>
+          </div>
+        </div>
       {{/each}}
     </ul>
   </div>
