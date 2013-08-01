@@ -1,8 +1,8 @@
 Template.editDiscussion.rendered = function () {
   this.validateForm();
   var discussion = this.data;
-  $("#discussionName").val(event.name);
-  $("#discussionBody").html();
+  $(event.target).find("[name=name]").val(event.name);
+  $(event.target).find("[name=body]").html();
 }
 
 Template.editDiscussion.events({
@@ -12,8 +12,8 @@ Template.editDiscussion.events({
     _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
     var discussionAttributes = {
-      name: $("#discussionName").val(),
-      body: $("#discussionBody").html()
+      name: $(event.target).find("[name=name]").val(),
+      body: $(event.target).find("[name=body]").html()
     };
 
     console.log(discussionAttributes);
