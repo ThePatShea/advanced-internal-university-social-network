@@ -1,0 +1,17 @@
+<template name="exploreEventSubmit">
+  <div class="collapse cb-form-container" id="cb-form-container-event">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form">
+      <input class="required width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
+      {{> wysiwyg}}
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
+          <span class="words-main">submit</span>
+          <span class="words-error">please fill in a title and body before submitting</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
