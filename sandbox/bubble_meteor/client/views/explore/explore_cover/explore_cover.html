@@ -32,10 +32,10 @@
       </div>
     </div>
 
-    {{#if isExploreType 'events'}}
+    {{#if isExploreType 'discussions'}}
       {{> exploreDiscussionSubmit}}
     {{else}}
-      {{#if isExplore 'discussions'}}
+      {{#if isExploreType 'events'}}
         {{> exploreEventSubmit}}
       {{/if}}
     {{/if}}

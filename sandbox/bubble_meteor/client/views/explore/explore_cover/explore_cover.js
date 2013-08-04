@@ -47,6 +47,17 @@ Template.exploreCover.helpers({
       else if(iconName == 'nightlife'){
         return 'icon-nightlife';
       }
+  },
+
+  isExploreType: function(exploretype){
+    if(this.exploreType == exploretype){
+      console.log(exploretype, this.exploreType == exploretype);
+      return true;
+    }
+    else{
+      console.log(exploretype, this.exploreType == exploretype)
+      return false;
+    }
   }
 
 });
