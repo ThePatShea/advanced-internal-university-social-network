@@ -20,11 +20,11 @@ Template.exploreDiscussionSubmit.created = function () {
   }
 }
 
-Template.discussionSubmit.rendered = function () {
+Template.exploreDiscussionSubmit.rendered = function () {
   this.validateForm();
 }
 
-Template.discussionSubmit.events({
+Template.exploreDiscussionSubmit.events({
     'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
       tmpl.validateForm();
     }
@@ -37,7 +37,7 @@ Template.discussionSubmit.events({
         name: $(event.target).find('[name=name]').val(),
         body: $(event.target).find('.wysiwyg').html(),
         postType: 'discussion',
-        bubbleId: Session.get('currentBubbleId'),
+        exploreId: Session.get('currentExploreId'),
         children: []
       }, files);
       

@@ -61,23 +61,3 @@ Template.exploreCover.helpers({
   }
 
 });
-
-Template.bubbleCover.events({
-	'click .join-apply': function() {
-    //Google Analytics
-    _gaq.push(['_trackEvent', 'Bubble', 'Join Bubble', this.title]);
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $addToSet: {'users.applicants': Meteor.userId()}
-    });
-    createNewApplicantUpdate();
-  },
-  'click .cancel-apply': function() {
-    //Google Analytics
-    _gaq.push(['_trackEvent', 'Bubble', 'Cancel Application', this.title]);
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $pull: {'users.applicants': Meteor.userId()}
-    });
-  }
-});
