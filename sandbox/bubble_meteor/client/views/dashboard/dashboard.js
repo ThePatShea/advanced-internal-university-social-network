@@ -32,8 +32,8 @@ Template.dashboard.helpers({
 		return numComments;
 	},
 
-	getUpdates: function() {
+	getUpdates: function(limit) {
 		var uid = Meteor.userId();
-		return Updates.find({userId: uid}).fetch();
+		return Updates.find({userId: uid},{limit: limit}).fetch();
 	}
 });

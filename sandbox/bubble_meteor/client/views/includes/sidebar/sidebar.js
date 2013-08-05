@@ -6,7 +6,7 @@ Template.sidebar.helpers({
       var currentSection = window.location.pathname.split("/")[1];
       //console.log(currentSection);
 
-      if (currentSection == 'search')
+      if ((currentSection == 'search') || (currentSection == 'dashboard'))
         return false;
       else
         return true;

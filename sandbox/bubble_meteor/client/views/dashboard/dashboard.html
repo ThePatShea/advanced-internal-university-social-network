@@ -1,14 +1,55 @@
 <template name="dashboard">
-	<div>
-	<p>
-		Bubbles: {{numBubbles}}<br />
-		Invites: {{numInvites}}<br />
-		Updates: {{numUpdates}}<br />
-		Comments: {{numComments}}
-	</p>
+	<div class="dashboard-cover">
+		<div class="dashboard-cover-text-1">
+			Find or create a Bubble.
+		</div>
+		<div class="dashboard-cover-text-2a">
+			welcome to bubble
+		</div>
+		<div class="dashboard-cover-text-2b">
+			Get involved.  Stay on top of your groups.  Collaborate.
+		</div>
 	</div>
 
-	{{#each getUpdates}}
-		{{> updateItem}}
-	{{/each}}
+	<div class="dashboard-item-container">
+		<div class="dashboard-item-container-inner">
+			<div class="pull-left v-middle dashboard-item item-1">
+				<div class="v-inner">
+					fix me later
+				</div>
+			</div>
+			<div class="pull-left v-middle dashboard-item item-2">
+				<div class="v-inner">
+					<div class="number">{{numUpdates}}</div>
+					<div class="word">updates</div>
+				</div>
+			</div>
+			<div class="pull-left v-middle dashboard-item item-3">
+				<div class="v-inner">
+					<div class="number">{{numBubbles}}</div>
+					<div class="word">bubbles</div>
+				</div>
+			</div>
+			<div class="pull-left v-middle dashboard-item item-4">
+				<div class="v-inner">
+					<div class="number">{{numInvites}}</div>
+					<div class="word">invites</div>
+				</div>
+			</div>
+			<div class="pull-left v-middle dashboard-item item-5">
+				<div class="v-inner">
+					<div class="number">{{numComments}}</div>
+					<div class="word">comments</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="margin-top: 20px">
+		Updates:
+	</div>
+	<div style="width: 100%">
+		{{#each getUpdates 3}}
+			{{> updateItem}}
+		{{/each}}
+	</div>
 </template>
