@@ -264,7 +264,7 @@ getBubbleId =  function(userId) {
         'title': 1,
         'description': 1,
         'exploreIcon': 1,
-        'category': 1,
+        'exploreType': 1,
         'coverPhoto': 1, 
         'retunaCoverPhoto': 1
       }

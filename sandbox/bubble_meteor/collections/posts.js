@@ -15,7 +15,13 @@ Posts.deny({
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
-    var postWithSameName = Posts.findOne({name: postAttributes.name, bubbleId: postAttributes.bubbleId});
+
+    if(typeof postAttributes.bubbleId != 'undefined'){
+      var postWithSameName = Posts.findOne({name: postAttributes.name, bubbleId: postAttributes.bubbleId});
+    }
+    else{
+      var postWithSameName = Posts.findOne({name: postAttributes.name, exploreId: postAttributes.exploreId}); 
+    }
     
     // ensure the user is logged in
     if (!user)
@@ -42,7 +48,7 @@ Meteor.methods({
     }
 
     // pick out the whitelisted keys
-    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'dateTime', 'location', 'bubbleId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'), {
+    var post = _.extend(_.pick(postAttributes, 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'dateTime', 'location', 'bubbleId', 'exploreId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'), {
       userId: user._id,
       author: user.username, 
       submitted: new Date().getTime(),
@@ -139,9 +145,15 @@ createPostWithAttachments = function(postAttributes, fileList){
               postType: 'file',
               numDownloads: 0,
               lastDownloadTime: new Date().getTime(),
-              bubbleId: Session.get('currentBubbleId'),
+              //bubbleId: Session.get('currentBubbleId'),
               parent: post._id   //This needs to be set to the ID of the post created above.
             };
+            if(typeof postAttributes.bubbleId != 'undefined'){
+              attributes.bubbleId = postAttributes.bubbleId;
+            }
+            else{
+              attributes.exploreId = postAttributes.exploreId;
+            }
             var parentid = post._id;
             Meteor.call('post', attributes, function(error, newPost){
               if(error){
@@ -171,7 +183,12 @@ createPostWithAttachments = function(postAttributes, fileList){
         reader.readAsDataURL(f);
       }
 
-      Meteor.Router.to('postPage', post.bubbleId, post._id);
+      if(typeof postAttributes.bubbleId != 'undefined'){
+        Meteor.Router.to('postPage', post.bubbleId, post._id);
+      }
+      else{
+        Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+      }
 
     }
   });

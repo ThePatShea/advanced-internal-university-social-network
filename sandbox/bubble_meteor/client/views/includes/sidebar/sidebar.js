@@ -46,7 +46,7 @@ Template.sidebar.helpers({
       return Explores.find({}).fetch();
   }
   , selectedExploreSubsection : function(exploreId){
-      var currentExploreId = Session.get('currentExplore');
+      var currentExploreId = Session.get('currentExploreId');
       return (currentExploreId == exploreId);
   }
   , getExploreIcon: function(exploreObject){
