@@ -1,0 +1,44 @@
+<template name="generateForm">
+  <div class="{{isCollapsed}} cb-form-container" id="cb-form-container-{{objectNameDash}}">
+    <div class="visible-{{arrowVisible}} top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form {{objectNameDash}}" name="{{objectNameDash}}">
+      {{{formElements templateName}}}
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit">
+          <span class="words-main">submit</span>
+          <span class="words-error">please fill in all fields before submitting</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+
+<template name="formBubbleCreate">
+  {{#with systemForm.formParams.bubble.create}}
+    {{> generateForm}}
+  {{/with}}
+</template>
+
+
+<template name="formBubbleEdit">
+  {{#with systemForm.formParams.bubble.edit}}
+    {{> generateForm}}
+  {{/with}}
+</template>
+
+
+<template name="formFileCreate">
+  {{#with systemForm.formParams.file.create}}
+    {{> generateForm}}
+  {{/with}}
+</template>
+
+
+<template name="formFileEdit">
+  {{#with systemForm.formParams.file.edit}}
+    {{> generateForm}}
+  {{/with}}
+</template>

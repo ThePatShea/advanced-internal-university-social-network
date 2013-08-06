@@ -1,21 +1,3 @@
-<template name="generateForm">
-  <div class="{{isCollapsed}} cb-form-container" id="cb-form-container-{{objectNameDash}}">
-    <div class="visible-{{arrowVisible}} top-arrow-container">
-      <div class="top-arrow">{{> icon-arrow-up}}</div>
-    </div>
-    <form class="cb-form {{objectNameDash}}" name="{{objectNameDash}}">
-      {{{systemForm.formElements templateName}}}
-      <div class="cb-submit-container">
-        <button type="submit" class="pull-right std-btn-form cb-submit">
-          <span class="words-main">submit</span>
-          <span class="words-error">please fill in all fields before submitting</span>
-        </button>
-      </div>
-    </form>
-  </div>
-</template>
-
-
 <template name="formElementsBubbleCreate">
   {{#with systemForm.formParams.bubble.create}}
     <div class="visible-{{hasLevel2Permissions}} select-bubble-type">
@@ -29,7 +11,7 @@
     <div class="cb-form-row first">
       <input class="required width-full" name="title" type="text" value="{{systemBubble.selectedBubble.title}}" placeholder="Name*"/>
     </div>
-  
+
     <div class="cb-form-row">
       <div class="bubble-category">
         <label class="no-typing">Category*</label>
@@ -55,7 +37,7 @@
         </ul>
       </div>
     </div>
-  
+
     {{> wysiwyg2}}
 
     <canvas id="profile-canvas" width="300" height="300" class="visible-0"></canvas>
