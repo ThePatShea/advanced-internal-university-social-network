@@ -3,18 +3,24 @@
     <div class="top-arrow-container">
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-    <form class="cb-form">
-      <div class="attach-files">
-        <div id="drop_zone" class="drop-zone">
-          <div class="dz-title">drag and drop</div>
-          <div class="dz-subtitle">or click here</div>
-          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+    {{#with getFileUploadAttributes}}
+      <form class="cb-form">
+        <div class="attach-files dropzone1">
+          <!--<div id="drop_zone" class="drop-zone">
+            <div class="dz-title">drag and drop</div>
+            <div class="dz-subtitle">or click here</div>
+            <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+            <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+          </div>-->
+          {{> dropZone}}
         </div>
-      </div>
-      <div class="cb-submit-container">
-        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
-      </div>
-    </form>
+        <div class="attach-files dropzone2">
+          {{> dropZone}}
+        </div>
+        <div class="cb-submit-container">
+          <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+        </div>
+      </form>
+    {{/with}}
   </div>
 </template>
