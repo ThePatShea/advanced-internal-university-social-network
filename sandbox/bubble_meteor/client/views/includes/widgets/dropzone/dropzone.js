@@ -13,10 +13,11 @@ Template.dropZone.events({
 
 
     var files = evt.dataTransfer.files;
-    console.log(this);
+    //console.log(this.fileArray);
     
     for (var i = 0, f; f = files[i]; i++) {
       //this.files.append(files[i]);
+      this.fileArray.push(files[i]);
 
 
       //If it is an image then render a thumbnail
@@ -57,6 +58,8 @@ Template.dropZone.events({
         reader.readAsDataURL(f);
       }
     }
+
+    console.log(this.fileArray);
   },
 
   'change .file-chooser-invisible': function(evt, parent){
@@ -72,6 +75,7 @@ Template.dropZone.events({
 
     for (var i = 0, f; f = files[i]; i++) {
       //this.files.append(files[i]);
+      this.fileArray.push(files[i]);
 
 
       //If it is an image then render a thumbnail
@@ -112,6 +116,8 @@ Template.dropZone.events({
         reader.readAsDataURL(f);
       }
     }
+
+    console.log(this.fileArray);
   }
 
 });

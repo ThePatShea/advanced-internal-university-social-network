@@ -1,3 +1,7 @@
 <template name="formElementsFileCreate">
-  File elements go here
+	{{#with systemForm.formParams.file.create}}
+		<div class="attach-files">
+		  {{> dropZone}}
+		</div>
+	{{/with}}
 </template>
