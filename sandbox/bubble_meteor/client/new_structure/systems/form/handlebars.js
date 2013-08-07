@@ -28,9 +28,9 @@ Handlebars.registerHelper("systemForm", {
         fileArray      : [],
         submit         : function(){
           console.log(this.fileArray);
-          /*e.preventDefault();
+          //e.preventDefault();
           //Google Analytics
-          _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);*/
+          _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);
 
           var files = this.fileArray;
           
