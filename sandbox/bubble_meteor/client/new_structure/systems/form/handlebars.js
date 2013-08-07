@@ -16,6 +16,25 @@ Handlebars.registerHelper("systemForm", {
         objectNameDash : "bubble-edit",
         wysiwygHeading : "Description",
         arrowVisible   : "false",
+        submit         : function() {
+          var currentBubbleId = Meteor.call("systemBubble.selectedBubble");
+      
+          var bubbleProperties = {
+            category    : $(event.target).find('[name=category]').val(),
+            title       : $(event.target).find('[name=title]').val(),
+            description : $(event.target).find('[name=body]').html(),
+            lastUpdated : new Date().getTime()
+          }
+      
+          Bubbles.update(currentBubbleId, {$set: bubbleProperties}, function(error) {
+            if (error) {
+              throwError(error.reason);
+            } else {
+              createBubbleEditUpdate();
+              Meteor.Router.to('bubblePage', currentBubbleId);
+            }
+          });
+        }
       }
     },
     discussion : {
