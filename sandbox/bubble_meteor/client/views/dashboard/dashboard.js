@@ -32,8 +32,12 @@ Template.dashboard.helpers({
 		return numComments;
 	},
 
-	getUpdates: function(limit) {
+	getUpdates: function(myLimit) {
 		var uid = Meteor.userId();
-		return Updates.find({userId: uid},{limit: limit}).fetch();
+		return Updates.find({userId: uid},{limit: myLimit}).fetch();
 	}
 });
+
+Template.dashboard.rendered = function () {
+	$('.carousel').carousel();
+};

@@ -2666,38 +2666,119 @@ cover-btns-width-small  =  130px
 /**********        explore-cover       **********/
 
 /**********          dashbaord         **********/
+.carousel-indicators
+  padding           185px 0 0 0
+.item-inner
+  position         relative
+  width            100%
+  min-height       225px
+  overflow         hidden
+  display          inline-block
+#slide-1
+  background       url('/img/dashboard1.jpg') no-repeat center
+  background-size  cover
+#slide-2
+  background       url('/img/dashboard2.jpg') no-repeat center
+  background-size  cover
+#slide-3
+  background       url('/img/dashboard3.jpg') no-repeat center
+  background-size  cover
 .dashboard-cover
   height           225px
   width            100%
   border-bottom    5px solid main-xlight
   overflow         hidden
   margin           0px 0px 25px 0px
-  .dashboard-cover-text-1
+  .dashboard-cover-text-1a
+    text-align     center
+    fontize(main,medium,uppercase,2.75em,1em,5px)
+    color          white
+    @media (min-width: 768px)
+      padding      90px 0 0 0
+    @media (max-width: 767px)
+      padding      40px 10px 0 10px
+  .dashboard-cover-text-1b
+    text-align     center
     fontize(main,auto,auto,1.75em)
     color          main-xlight
-    margin         25px
-  .dashboard-cover-text-2a
-    text-align     center
-    fontize(main,medium,uppercase,3.5em,auto,10px)
-    color          white
-    padding        25px 0  20px 0
-  .dashboard-cover-text-2b
-    text-align     center
-    fontize(main,auto,auto,2em)
-    color          main-xlight
+  .dashboard-cover-text-1c
+    @media (min-width: 768px)
+      position       absolute
+      bottom         20px
+      left           20px
+      fontize(alt,light,auto,1.25em, 1.25em)
+      color          main-xlight
+      svg
+        fill         main-xlight
+        height       20px
+        width        20px
+    @media (max-width: 767px)
+      display        none
+  .dashboard-cover-text-1d
+    @media (min-width: 768px)
+      position       absolute
+      top            20px
+      right          30px
+      fontize(alt,light,auto,1.25em, 1.25em)
+      color          main-xlight 
+      svg
+        fill         main-xlight
+        height       20px
+        width        20px
+    @media (max-width: 767px)
+      display        none
+.dashboard-icon-container
+  @media (min-width: 768px)
+    text-align       center
+    &:hover
+      svg
+        fill         white
+  @media (max-width: 767px)
+    display          none
+  .dashboard-icon
+    svg
+      fill           main-xlight
+      height         40px
+      width          40px
+    fontize(alt,light,auto,auto,auto,1px)
+    text-align       center
+    color            main-xlight
+    &:hover
+      cursor         pointer
+      svg
+        fill         white
+      color          white
+    .dashboard-icon-text
+      margin           10px 0 0 0
+  #dashboard-icon-3a
+    position         absolute
+    top              90px
+    left             30px
+  #dashboard-icon-3b
+    position         absolute
+    top              90px
+    left             100px
+  #dashboard-icon-3c
+    position         absolute
+    top              90px
+    right            150px
+  #dashboard-icon-3d
+    position         absolute
+    top              90px
+    right            30px
 .dashboard-item-container
   width            100%
   height           auto
-  overflow         hidden
+  overflow         auto
   background-color #eef0f0
   .dashboard-item-container-inner
     margin         0 auto
-    width          ((95+25+8)*5)px
+    width          ((95+24+8)*5)px
     .dashboard-item
       height           95px
       width            95px
       border-radius    50%
-      margin           25px 0px 25px 25px
+      margin           25px 12px
       text-align       center
       .number
         fontize(main,bold,auto,4em,.75em)

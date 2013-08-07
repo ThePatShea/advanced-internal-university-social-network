@@ -1,13 +1,72 @@
 <template name="dashboard">
 	<div class="dashboard-cover">
-		<div class="dashboard-cover-text-1">
-			Find or create a Bubble.
-		</div>
-		<div class="dashboard-cover-text-2a">
-			welcome to bubble
-		</div>
-		<div class="dashboard-cover-text-2b">
-			Get involved.  Stay on top of your groups.  Collaborate.
+		<div id="carousel-dashboard" class="carousel slide">
+		  <!-- Indicators -->
+		  <ol class="carousel-indicators">
+		    <li data-target="#carousel-dashboard" data-slide-to="0" class="active"></li>
+		    <li data-target="#carousel-dashboard" data-slide-to="1"></li>
+		    <li data-target="#carousel-dashboard" data-slide-to="2"></li>
+		  </ol>
+
+		  <!-- Wrapper for slides -->
+		  <div class="carousel-inner">
+		    <div class="item active">
+		    	<div class="item-inner" id="slide-1">
+					<div class="dashboard-cover-text-1a">
+						welcome to bubble
+					</div>
+					<div class="dashboard-cover-text-1b">
+						Get involved.  Stay on top of your groups.  Collaborate.
+					</div>
+		    		<div class="dashboard-cover-text-1c">
+		    			<div class="pull-left" style="margin-right: 5px;">{{> icon-small-reply-left}}</div>
+						<div class="pull-left">Find and<br>create your<br>Bubbles</div>
+					</div>
+					<div class="dashboard-cover-text-1d">
+						<div class="pull-left" style="margin-right: 5px;">{{> icon-small-reply-top}}</div>
+						<div class="pull-left">Get updates from your<br>Bubbles (on your phone too!)</div>
+					</div>
+		    	</div>
+		    </div>
+		    <div class="item">
+		    	<div class="item-inner" id="slide-2">
+		    		<div class="dashboard-cover-text-1a">
+						go mobile
+					</div>
+					<div class="dashboard-cover-text-1b">
+						Download the free EB app on your phone
+					</div>
+		    	</div>
+		    </div>
+		    <div class="item">
+		    	<div class="item-inner" id="slide-3">
+		    		<div class="dashboard-cover-text-1a">
+						explore emory
+					</div>
+					<div class="dashboard-cover-text-1b">
+						Check out professor reviews, classifieds, and more
+					</div>
+					<div class="v-middle dashboard-icon-container">
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3a">
+							<div>{{> icon-official}}</div>
+							<div class="dashboard-icon-text">Official<br>Events</div>
+						</div>
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3b">
+							<div>{{> icon-classifieds}}</div>
+							<div class="dashboard-icon-text">Classifieds</div>
+						</div>
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3c">
+							<div>{{> icon-professorreviews}}</div>
+							<div class="dashboard-icon-text">Professor<br>Reviews</div>
+						</div>
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3d">
+							<div>{{> icon-controversial}}</div>
+							<div class="dashboard-icon-text">Controversial<br>Topics</div>
+						</div>
+					</div>
+		    	</div>
+		    </div>
+		  </div>
 		</div>
 	</div>
 
@@ -47,7 +106,7 @@
 	<div style="margin-top: 20px">
 		Updates:
 	</div>
-	<div style="width: 100%">
+	<div style="width: 100%; height: 300px;">
 		{{#each getUpdates 3}}
 			{{> updateItem}}
 		{{/each}}
