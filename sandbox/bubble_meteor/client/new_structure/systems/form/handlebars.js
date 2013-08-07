@@ -7,7 +7,7 @@ Handlebars.registerHelper("systemForm", {
         isCollapsed    : "collapse-false",
         objectNameDash : "bubble-create",
         wysiwygHeading : "Description",
-        arrowVisible   : "false"
+        arrowVisible   : "false",
       },
       edit   : {
         validate       : ["title", "category", "body"],
@@ -18,7 +18,17 @@ Handlebars.registerHelper("systemForm", {
         arrowVisible   : "false",
       }
     },
-    file   : {
+    discussion : {
+      create : {
+        validate       : ["name", "body"],
+        templateName   : "formElementsDiscussionCreate",
+        isCollapsed    : "collapse-true",
+        objectNameDash : "discussion-create",
+        wysiwygHeading : "Discussion body",
+        arrowVisible   : "true",
+      }
+    },
+    file       : {
       create : {
         validate       : [],
         templateName   : "formElementsFileCreate",
