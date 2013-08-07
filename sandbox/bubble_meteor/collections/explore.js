@@ -25,7 +25,7 @@ Meteor.methods({
         exploreWithSameName._id);
     }
 
-    var explore = _.extend(_.pick(exploreAttributes, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName', 'exploreIcon'), {
+    var explore = _.extend(_.pick(exploreAttributes, 'title', 'description', 'exploreType', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName', 'exploreIcon'), {
     	submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       /*users: {

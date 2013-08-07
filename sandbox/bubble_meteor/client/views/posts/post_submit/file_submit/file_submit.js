@@ -4,6 +4,8 @@ Template.fileSubmit.events({
     e.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);
+
+    var files = this.files;
     
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
@@ -27,7 +29,7 @@ Template.fileSubmit.events({
     }
   },
 
-  'dragover #drop_zone': function(evt){
+  /*'dragover #drop_zone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();
@@ -126,9 +128,20 @@ Template.fileSubmit.events({
       }
     }
 
-}
+}*/
 
 
 
+});
+
+
+Template.fileSubmit.helpers({
+  getFileUploadAttributes: function(){
+    var fileUploadAttributes = {
+      'fileArray': []
+    };
+
+    return fileUploadAttributes;
+  }
 });
 

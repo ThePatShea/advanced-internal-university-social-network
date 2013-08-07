@@ -1728,6 +1728,7 @@ navbar-height        =  60px
               stroke             white-light
             &.explore
               path
+                stroke             none
                 fill               #f7f8f8
           .cb-icon-settings
             fill               white-light
@@ -1748,6 +1749,7 @@ navbar-height        =  60px
             stroke             main-xlight
           &.explore
             path
+              stroke             none
               fill               main-xlight
         .cb-icon-settings
           fill               main-xlight
@@ -2656,13 +2658,38 @@ cover-btns-width-small  =  130px
       margin                   5px 0
       float                    right
       clear                    right
+      &:hover
+        .cb-icon-add
+          svg
+            rect
+              fill               white-light
+      &.explore-btn
+        padding                  0
       .cb-icon-settings
         svg
           margin                    -3px 0
           rect
             fill                      black
-      .lbl
-        padding                    0 0 0 5px
+      .cb-icon-add
+        float                       left
+        margin                      7px 0 8px 7px
+        svg
+          padding                   0
+          float                     left
+          rect
+            fill                      black
+      .cb-icon-cancel
+        float                       left
+        margin                      7px 0 8px 7px
+      .cb-lbl-add
+        float                      left
+        margin                     10px 15px 0 10px
+      .cb-lbl-cancel
+        float                      left
+        margin                     10px 15px 0 10px
+.top-arrow-container
+  &.explore
+    height                         4px
 /**********        explore-cover       **********/
 
 /**********          dashbaord         **********/

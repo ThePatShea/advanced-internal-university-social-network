@@ -21,9 +21,9 @@ userTypes = {
 }
 
 
-exploreCategories = [
-        {name_long: 'events', name_short: 'events'},
-        {name_long: 'discussions', name_long: 'discussions'}
+exploreTypes = [
+        {name_long: 'events', name_short: 'event'},
+        {name_long: 'discussions', name_short: 'discussion'}
 ]
 
 

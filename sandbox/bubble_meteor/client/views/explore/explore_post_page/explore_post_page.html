@@ -1,0 +1,63 @@
+<template name="explorePostPage">
+  {{#with currentExplore}}
+    {{> exploreCover}}
+  {{/with}}
+  {{#with getCurrentPost}}
+    <div class="bubble-page-content post-page">
+      <div class="top-btns">
+        <a href="/explore/{{exploreId}}">
+          <button class="pull-left std-btn-light with-left-icon btn-back">
+            <span class="left-icon">{{> icon-back}}</span>
+            <span>back</span>
+            <span class="to-post-types">to {{postExploreParentName}}</span>
+          </button>
+        </a>
+
+        <button class="pull-right std-btn-light btn-flag">
+          <span>{{> icon-flag}}</span>
+          <span class="flag-text visible-{{isFlagged}}">flagged</span>
+        </button>
+
+        <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
+          <button class="pull-right std-btn-light with-left-icon btn-edit">
+            <span class="left-icon">{{> icon-edit}}</span>
+            <span>edit</span>
+          </button>
+        </a>
+
+        <button class="visible-{{isAdmin}} pull-right std-btn-light with-left-icon btn-delete">
+          <span class="left-icon">{{> icon-cancel}}</span>
+          <span>delete</span>
+        </button>
+      </div>
+      <div class="post-heading">
+        <a href="{{userProfilePath this.userId}}">
+          <div class="author-pic">
+            <div class="bubble-bg">{{> icon-bubble}}</div>
+            <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
+          </div>
+        </a>
+        <div class="name">{{decodeURI name}}</div>
+        <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
+      </div>
+
+      {{> postAttributes}}
+      {{> commentsList}}
+
+      {{#if isEvent}}
+        <h4>{{pluralize numOfAttendees "person"}}  going</h4>
+        </br>
+        {{#if notAttending}}
+          <button class="btn btn-small btn-success attending" type="button">I'M GOING</button>
+        {{/if}}
+        {{#if isAttending}}
+          <button class="btn btn-small btn-success attending" type="button">I'M NOT GOING</button>
+        {{/if}}
+        {{#with attendees}}
+          <br />
+          {{this}}
+        {{/with}}
+      {{/if}}
+    </div>
+  {{/with}}
+</template>

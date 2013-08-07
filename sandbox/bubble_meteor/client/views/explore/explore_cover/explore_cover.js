@@ -47,26 +47,17 @@ Template.exploreCover.helpers({
       else if(iconName == 'nightlife'){
         return 'icon-nightlife';
       }
-  }
-
-});
-
-Template.bubbleCover.events({
-	'click .join-apply': function() {
-    //Google Analytics
-    _gaq.push(['_trackEvent', 'Bubble', 'Join Bubble', this.title]);
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $addToSet: {'users.applicants': Meteor.userId()}
-    });
-    createNewApplicantUpdate();
   },
-  'click .cancel-apply': function() {
-    //Google Analytics
-    _gaq.push(['_trackEvent', 'Bubble', 'Cancel Application', this.title]);
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $pull: {'users.applicants': Meteor.userId()}
-    });
+
+  isExploreType: function(exploretype){
+    if(this.exploreType == exploretype){
+      console.log(exploretype, this.exploreType == exploretype);
+      return true;
+    }
+    else{
+      console.log(exploretype, this.exploreType == exploretype)
+      return false;
+    }
   }
+
 });
