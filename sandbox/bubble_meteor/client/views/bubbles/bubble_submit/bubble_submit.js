@@ -1,5 +1,5 @@
 Template.bubbleSubmit.events({
-  'click .cb-submit': function(event, tmpl) {
+/*  'click .cb-submit': function(event, tmpl) {
     event.preventDefault();
     //Google Analytics
     // _gaq.push(['_trackEvent', 'Bubble', 'Create Bubble', $(event.target).find('[name=title]').val()]);
@@ -16,69 +16,6 @@ Template.bubbleSubmit.events({
       bubbleType: $('.cb-form').find('[name=bubbleType]').val()
     };
 
-/*
-    if(bubble.coverPhoto){
-      if(bubble.coverPhoto.length == 0){
-        var covercanvas = document.createElement('canvas');
-        var retinacovercanvas = document.createElement('canvas');
-        covercanvas.width = 1280;
-        covercanvas.height = 150;
-        retinacovercanvas.width = 2560;
-        retinacovercanvas.height = 300;
-        var covercontext = covercanvas.getContext('2d');
-        var retinacovercontext = retinacovercanvas.getContext('2d');
-        covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
-        retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
-        bubble.coverPhoto = covercanvas.toDataURL();
-        bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();
-      }
-    }
-    else{
-      var covercanvas = document.createElement('canvas');
-      var retinacovercanvas = document.createElement('canvas');
-      covercanvas.width = 1280;
-      covercanvas.height = 150;
-      retinacovercanvas.width = 2560;
-      retinacovercanvas.height = 300;
-      var covercontext = covercanvas.getContext('2d');
-      var retinacovercontext = retinacovercanvas.getContext('2d');
-      covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
-      retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
-      bubble.coverPhoto = covercanvas.toDataURL();
-      bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();  
-    };
-
-    if(bubble.profilePicture){
-      if(bubble.profilePicture.length == 0){
-        var profilecanvas = document.createElement('canvas');
-        var retinaprofilecanvas = document.createElement('canvas');
-        profilecanvas.width = 300;
-        profilecanvas.height = 300;
-        retinaprofilecanvas.width = 600;
-        retinaprofilecanvas.height = 600;
-        var profilecontext = profilecanvas.getContext('2d');
-        var retinaprofilecontext = retinaprofilecanvas.getContext('2d');
-        profilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 300, 300);
-        retinaprofilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 600, 600);
-        bubble.profilePicture = profilecanvas.toDataURL();
-        bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
-      }
-    }
-    else{
-      var profilecanvas = document.createElement('canvas');
-      var retinaprofilecanvas = document.createElement('canvas');
-      profilecanvas.width = 300;
-      profilecanvas.height = 300;
-      retinaprofilecanvas.width = 600;
-      retinaprofilecanvas.height = 600;
-      var profilecontext = profilecanvas.getContext('2d');
-      var retinaprofilecontext = retinaprofilecanvas.getContext('2d');
-      profilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 300, 300);
-      retinaprofilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 600, 600);
-      bubble.profilePicture = profilecanvas.toDataURL();
-      bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
-    }
-//*/    
     Meteor.call('bubble', bubble, function(error, bubbleId) {
       if (error) {
         // display the error to the user
@@ -88,7 +25,7 @@ Template.bubbleSubmit.events({
       }
     });
   },
-
+*/
   'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();

@@ -3,22 +3,71 @@ Handlebars.registerHelper("systemForm", {
     bubble : {
       create : {
         validate       : ["title", "category", "body"],
-        templateName   : "formElementsBubbleCreate",
+        templateName   : "formElementsBubble",
         isCollapsed    : "collapse-false",
         objectNameDash : "bubble-create",
         wysiwygHeading : "Description",
-        arrowVisible   : "false"
+        arrowVisible   : "false",
+        submit         : function() {
+          var bubble = {
+            category             : $(event.target).find('[name=category]').val(),
+            bubbleType           : $('.cb-form').find('[name=bubbleType]').val(),
+            description          : $('.cb-form').find('[name=body]').html(),
+            title                : $('.cb-form').find('[name=title]').val(),
+            retinaProfilePicture : $('#profileRetinaPhoto').attr('src'),
+            retinaCoverPhoto     : $('#coverRetinaPhoto').attr('src'),
+            profilePicture       : $('#profilePhoto').attr('src'),
+            coverPhoto           : $('#coverPhoto').attr('src'),
+          };
+
+          Meteor.call('bubble', bubble, function(error, bubbleId) {
+            if (error) {
+              throwError(error.reason);
+            } else {
+              Meteor.Router.to('bubblePage', bubbleId);
+            }
+          });
+        },
       },
       edit   : {
         validate       : ["title", "category", "body"],
-        templateName   : "formElementsBubbleCreate",
+        templateName   : "formElementsBubble",
         isCollapsed    : "collapse-true",
         objectNameDash : "bubble-edit",
         wysiwygHeading : "Description",
         arrowVisible   : "false",
+        submit         : function() {
+          var currentBubbleId = Meteor.call("systemBubble.selectedBubble");
+      
+          var bubbleProperties = {
+            category    : $(event.target).find('[name=category]').val(),
+            title       : $(event.target).find('[name=title]').val(),
+            description : $(event.target).find('[name=body]').html(),
+            lastUpdated : new Date().getTime()
+          }
+      
+          Bubbles.update(currentBubbleId, {$set: bubbleProperties}, function(error) {
+            if (error) {
+              throwError(error.reason);
+            } else {
+              createBubbleEditUpdate();
+              Meteor.Router.to('bubblePage', currentBubbleId);
+            }
+          });
+        }
       }
     },
-    file   : {
+    discussion : {
+      create : {
+        validate       : ["name", "body"],
+        templateName   : "formElementsDiscussionCreate",
+        isCollapsed    : "collapse-true",
+        objectNameDash : "discussion-create",
+        wysiwygHeading : "Discussion body",
+        arrowVisible   : "true",
+      }
+    },
+    file       : {
       create : {
         validate       : [],
         templateName   : "formElementsFileCreate",
