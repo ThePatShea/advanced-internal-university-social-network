@@ -8,6 +8,26 @@ Handlebars.registerHelper("systemForm", {
         objectNameDash : "bubble-create",
         wysiwygHeading : "Description",
         arrowVisible   : "false",
+        submit         : function() {
+          var bubble = {
+            category             : $(event.target).find('[name=category]').val(),
+            bubbleType           : $('.cb-form').find('[name=bubbleType]').val(),
+            description          : $('.cb-form').find('[name=body]').html(),
+            title                : $('.cb-form').find('[name=title]').val(),
+            retinaProfilePicture : $('#profileRetinaPhoto').attr('src'),
+            retinaCoverPhoto     : $('#coverRetinaPhoto').attr('src'),
+            profilePicture       : $('#profilePhoto').attr('src'),
+            coverPhoto           : $('#coverPhoto').attr('src'),
+          };
+
+          Meteor.call('bubble', bubble, function(error, bubbleId) {
+            if (error) {
+              throwError(error.reason);
+            } else {
+              Meteor.Router.to('bubblePage', bubbleId);
+            }
+          });
+        },
       },
       edit   : {
         validate       : ["title", "category", "body"],
