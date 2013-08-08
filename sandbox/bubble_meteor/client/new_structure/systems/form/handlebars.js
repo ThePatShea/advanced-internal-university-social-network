@@ -3,7 +3,7 @@ Handlebars.registerHelper("systemForm", {
     bubble : {
       create : {
         validate       : ["title", "category", "body"],
-        templateName   : "formElementsBubble",
+        templateName   : "formElementsBubbleCreate",
         isCollapsed    : "collapse-false",
         objectNameDash : "bubble-create",
         wysiwygHeading : "Description",
@@ -31,11 +31,12 @@ Handlebars.registerHelper("systemForm", {
       },
       edit   : {
         validate       : ["title", "category", "body"],
-        templateName   : "formElementsBubble",
+        templateName   : "formElementsBubbleEdit",
         isCollapsed    : "collapse-true",
         objectNameDash : "bubble-edit",
         wysiwygHeading : "Description",
         arrowVisible   : "false",
+        wysiwygBubble  : "true",
         submit         : function() {
           var currentBubbleId = Meteor.call("systemBubble.selectedBubble");
       

@@ -17,8 +17,6 @@ Template.generateForm.created = function () {
       if (inputTest == "")
         count++;
 
-      alert("validation: " + count);  // TESTING
-
       if (count == 0) {
         $('.cb-submit').prop('disabled', false);
         $('.cb-submit').removeClass('ready-false');
