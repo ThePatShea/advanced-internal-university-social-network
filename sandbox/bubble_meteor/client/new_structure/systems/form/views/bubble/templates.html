@@ -1,4 +1,4 @@
-<template name="formElementsBubbleCreate">
+<template name="formElementsBubble">
   {{#with systemForm.formParams.bubble.create}}
     <div class="visible-{{hasLevel2Permissions}} select-bubble-type">
       <input type="hidden" name="bubbleType" value="normal"/>
@@ -7,7 +7,6 @@
       <button class="active-true pull-left btn-bubble-type std-btn-form normal">normal bubble</button>
     </div>
 
-
     <div class="cb-form-row first">
       <input class="required width-full" name="title" type="text" value="{{systemBubble.selectedBubble.title}}" placeholder="Name*"/>
     </div>
@@ -15,10 +14,10 @@
     <div class="cb-form-row">
       <div class="bubble-category">
         <label class="no-typing">Category*</label>
-        <input name="category" type="hidden"/>
+        <input name="category" type="hidden" value="{{systemBubble.selectedBubble.category}}"/>
         <ul class="nav nav-tabs large-boxes">
           {{#each systemCategory.categories}}
-            <li id="{{nameShort}}">
+            <li class="categoryBox" name="{{nameShort}}">
               <a>
                 <div class="large-box-title category-{{nameShort}}-bg">
                   <div class="v-middle">
@@ -40,38 +39,5 @@
 
     {{> wysiwyg2}}
 
-    <canvas id="profile-canvas" width="300" height="300" class="visible-0"></canvas>
-    <canvas id="profile-retina-canvas" width="600" height="600" class="visible-0"></canvas>    <canvas id="cover-canvas" width="1280" height="150" class="visible-0"></canvas>
-    <canvas id="cover-retina-canvas" width="2560" height="300" class="visible-0"></canvas>
-
-    <div class="cb-form-row">
-      <div class="attach-files">
-        <label class="dropzone-label" name="picture" type="label">Add profile photo?</label>
-        <div id="profile_drop_zone" class="drop-zone">
-          <div class="dz-title">drag and drop</div>
-          <div class="dz-subtitle">or click here</div>
-          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="profilefilesToUpload" type="file" multiple="">
-        </div>
-        <div class="crop-profile-container" style="text-align: center;">
-          <img class="crop" id="crop-profile"></img>
-        </div>
-      </div>
-    </div>
-
-    <div class="cb-form-row last">
-      <div class="attach-files">
-        <label class="dropzone-label" name="picture" type="label">Add cover photo?</label>
-        <div id="cover_drop_zone" class="drop-zone">
-          <div class="dz-title">drag and drop</div>
-          <div class="dz-subtitle">or click here</div>
-          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="coverfilesToUpload" type="file" multiple="">
-        </div>
-        <div class="crop-cover-container" style="text-align: center;">
-          <img class="crop" id="crop-cover"></img>
-        </div>
-      </div>
-    </div>
   {{/with}}
 </template>
