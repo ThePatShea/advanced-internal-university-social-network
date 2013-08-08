@@ -2692,5 +2692,38 @@ cover-btns-width-small  =  130px
     height                         4px
 /**********        explore-cover       **********/
 
+
+/*********         Paperclip Attachments **********************************************/
+.paperclip-attach-files
+  position       relative
+  width          150px
+  height         50px
+  .paperclip-attach
+    padding-top     30px
+    .file-chooser-invisible
+      move-position(absolute, 0, 0)
+      cursor            pointer
+      height            100%
+      width             100%
+      z-index           20
+      opacity           0
+    .attachments-list
+      move-position(absolute, 0)
+      z-index             30
+      .previewthumb,
+      .thumb
+        colorize(main-light, main-dark)
+        border-radius     6px
+        height            90%
+        width             90%
+        margin            5%
+        border-box        0
+    &.in-post
+      padding-top       0
+    
+
+/********************************************************************************/
+
+
 /*********************************************************/
 

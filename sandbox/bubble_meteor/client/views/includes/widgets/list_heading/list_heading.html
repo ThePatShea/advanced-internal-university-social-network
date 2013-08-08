@@ -18,7 +18,7 @@
     </button>
 
   </div>
-  {{#if matchPostType 'discussion'}} {{> formDiscussionCreate}} {{/if}}
-  {{#if matchPostType 'file'}} {{> formFileCreate}} {{/if}}
+  {{#if matchPostType 'discussion'}} {{> discussionSubmit}} {{/if}}
+  {{#if matchPostType 'file'}} {{> fileSubmit}} {{/if}}
   {{#if matchPostType 'event'}} {{> eventSubmit}} {{/if}}
 </template>
