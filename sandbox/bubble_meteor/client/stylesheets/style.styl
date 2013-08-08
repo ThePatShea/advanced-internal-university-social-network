@@ -2777,6 +2777,20 @@ cover-btns-width-small  =  130px
       color          white
     .dashboard-icon-text
       margin           10px 0 0 0
+  #dashboard-icon-2a
+    position         absolute
+    top              60px
+    left             30px
+    border           1px solid main-xlight
+    border-radius    10px
+    padding          20px
+  #dashboard-icon-2b
+    position         absolute
+    top              60px
+    right            30px
+    border           1px solid main-xlight
+    border-radius    10px
+    padding          20px
   #dashboard-icon-3a
     position         absolute
     top              90px
@@ -2799,33 +2813,81 @@ cover-btns-width-small  =  130px
   overflow         auto
   background-color #eef0f0
   .dashboard-item-container-inner
-    margin         0 auto
-    width          ((95+24+8)*5)px
-    .dashboard-item
-      height           95px
-      width            95px
-      border-radius    50%
-      margin           25px 12px
-      text-align       center
-      .number
-        fontize(main,bold,auto,4em,.75em)
-      .word
-        fontize(main,bold,uppercase,1em)
-    .item-1
-      border           4px solid main-xlight
-      color            main-xlight
-    .item-2
-      border           4px solid main-light
-      color            main-light
-    .item-3
-      border           4px solid main-dark
-      color            main-dark
-    .item-4
-      border           4px solid main-xdark
-      color            main-xdark
-    .item-5
-      border           4px solid main-xdark
-      color            main-xdark
+    min-width      (((95+8+20)*6)+100)px
+    height         auto
+    overflow       auto
+    .dashboard-item-spacer
+      height         auto
+      width          7.65%
+      min-width      10px
+      float          left
+    .dashboard-item-outer
+      height         150px
+      width          15.3%
+      min-width      123px
+      float          left
+      .dashboard-item
+        height           95px
+        width            95px
+        border-radius    50%
+        margin           25px auto
+        text-align       center
+        .number
+          fontize(main,bold,auto,4em,.75em)
+        .word
+          fontize(main,bold,uppercase,1em)
+        .dashboard-item-icon
+          svg
+            fill           main-xlight
+            height         20px
+            width          20px
+      .item-1
+        border           4px solid main-xlight
+        color            main-xlight
+      .item-2
+        border           4px solid main-light
+        color            main-light
+      .item-3
+        border           4px solid main-xdark
+        color            main-xdark
+      .item-4
+        border           4px solid main-xdark
+        color            main-xdark
+      .item-5
+        border           4px solid main-light
+        color            main-light
+      .item-6
+        border           4px solid main-xlight
+        color            main-xlight
+.dashboard-section-header
+  margin               20px 35px
+  fontize(alt, light, capitalize, 2em, auto)
+  color                main-light
+  svg
+    fill              main-light
+    height            20px
+    width             20px
+.dashboard-updates
+  width               100%
+  height              (75*4)px
+  .dashboard-more-updates
+    padding             2px 10px
+    color               main-xlight
+    fontize(alt,light,uppercase,1em)
+    border              1px main-xlight solid
+    border-radius       20px
+    width               200px
+    text-align          center
+    margin              10px 30px
+    &:hover
+      color             white
+      border            1px white solid
+      background-color  main-light
+      cursor            pointer
+.preload-icons
+  height              0
+  width               0
+  overflow            hidden
 
 /**********          dashbaord         **********/
 

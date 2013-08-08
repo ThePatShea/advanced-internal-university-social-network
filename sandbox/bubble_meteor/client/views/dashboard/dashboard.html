@@ -1,5 +1,9 @@
 <template name="dashboard">
-	<div class="dashboard-cover">
+
+	<div class="preload-icons">
+		{{> icon-iOS}} {{> icon-android}} 
+	</div>
+	<div class="dashboard-cover">		
 		<div id="carousel-dashboard" class="carousel slide">
 		  <!-- Indicators -->
 		  <ol class="carousel-indicators">
@@ -36,6 +40,18 @@
 					<div class="dashboard-cover-text-1b">
 						Download the free EB app on your phone
 					</div>
+					<div class="v-middle dashboard-icon-container">
+						<div class="v-inner dashboard-icon" id="dashboard-icon-2a">
+							<div>{{> icon-android}}</div>
+							<div class="dashboard-icon-text">Android</div>
+						</div>
+					</div>
+					<div class="v-middle dashboard-icon-container">
+						<div class="v-inner dashboard-icon" id="dashboard-icon-2b">
+							<div>{{> icon-iOS}}</div>
+							<div class="dashboard-icon-text">iOS</div>
+						</div>
+					</div>
 		    	</div>
 		    </div>
 		    <div class="item">
@@ -70,45 +86,81 @@
 		</div>
 	</div>
 
+	<div class="dashboard-section-header">
+		{{> icon-dashboard-big}} dashboard
+	</div> 
+
 	<div class="dashboard-item-container">
 		<div class="dashboard-item-container-inner">
-			<div class="pull-left v-middle dashboard-item item-1">
-				<div class="v-inner">
-					fix me later
+			<div class="dashboard-item-spacer">
+				&nbsp;
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-1">
+					<div class="v-inner">
+						<div class="dashboard-item-icon">{{> icon-small-reply-left}}</div>
+						<div class="word">Select<br>Bubble</div>
+					</div>
 				</div>
 			</div>
-			<div class="pull-left v-middle dashboard-item item-2">
-				<div class="v-inner">
-					<div class="number">{{numUpdates}}</div>
-					<div class="word">updates</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-2">
+					<div class="v-inner">
+						<div class="number">{{numUpdates}}</div>
+						<div class="word">updates</div>
+					</div>
 				</div>
 			</div>
-			<div class="pull-left v-middle dashboard-item item-3">
-				<div class="v-inner">
-					<div class="number">{{numBubbles}}</div>
-					<div class="word">bubbles</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-3">
+					<div class="v-inner">
+						<div class="number">{{numBubbles}}</div>
+						<div class="word">bubbles</div>
+					</div>
 				</div>
 			</div>
-			<div class="pull-left v-middle dashboard-item item-4">
-				<div class="v-inner">
-					<div class="number">{{numInvites}}</div>
-					<div class="word">invites</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-4">
+					<div class="v-inner">
+						<div class="number">{{numInvites}}</div>
+						<div class="word">invites</div>
+					</div>
 				</div>
 			</div>
-			<div class="pull-left v-middle dashboard-item item-5">
-				<div class="v-inner">
-					<div class="number">{{numComments}}</div>
-					<div class="word">comments</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-5">
+					<div class="v-inner">
+						<div class="number">{{numComments}}</div>
+						<div class="word">comments</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-6">
+					<div class="v-inner">
+						<div class="number">{{numPosts}}</div>
+						<div class="word">posts</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div style="margin-top: 20px">
-		Updates:
+	<div class="dashboard-section-header">
+		{{numUpdates}} Updates
 	</div>
-	<div style="width: 100%; height: 300px;">
-		{{#each getUpdates 3}}
-			{{> updateItem}}
-		{{/each}}
+	<div class="dashboard-updates">
+		<div class="threeUpdates">
+			{{#each getUpdates 3}}
+				{{> updateItem}}
+			{{/each}}
+		</div>
+		<div class="allUpdates visible-0">
+			{{#each getUpdates 0}}
+				{{> updateItem}}
+			{{/each}}
+		</div>
+		<div class="dashboard-more-updates">
+			+{{pluralize numUpdatesMinusThree "update" "more"}}
+		</div>
 	</div>
 </template>
