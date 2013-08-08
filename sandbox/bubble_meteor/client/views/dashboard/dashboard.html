@@ -98,8 +98,8 @@
 			<div class="dashboard-item-outer">
 				<div class="pull-left v-middle dashboard-item item-1">
 					<div class="v-inner">
-						<div class="dashboard-item-icon">{{> icon-small-reply-left}}</div>
-						<div class="word">Select<br>Bubble</div>
+						<div class="number">{{numEvents}}</div>
+						<div class="word">events</div>
 					</div>
 				</div>
 			</div>
@@ -159,8 +159,10 @@
 				{{> updateItem}}
 			{{/each}}
 		</div>
-		<div class="dashboard-more-updates">
-			+{{pluralize numUpdatesMinusThree "update" "more"}}
-		</div>
+		{{#if showMoreUpdates}}
+			<div class="dashboard-more-updates">
+				+{{pluralize numUpdatesMinusThree "update" "more"}}
+			</div>
+		{{/if}}
 	</div>
 </template>

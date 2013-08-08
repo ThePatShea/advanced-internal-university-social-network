@@ -44,6 +44,7 @@ Deps.autorun(function() {
 		if(Meteor.user() && '3' == Meteor.user().userType){
 			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
+		Meteor.subscribe('attendingEvents', Meteor.userId());
 
 
 	// Retrieves searched Posts

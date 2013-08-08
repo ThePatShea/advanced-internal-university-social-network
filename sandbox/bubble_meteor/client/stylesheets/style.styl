@@ -2694,7 +2694,10 @@ cover-btns-width-small  =  130px
 
 /**********          dashbaord         **********/
 .carousel-indicators
-  padding           185px 0 0 0
+  padding           175px 0 0 0
+  margin            0 20px 0 0
+  li
+    margin          0 8px
 .item-inner
   position         relative
   width            100%
@@ -2731,7 +2734,7 @@ cover-btns-width-small  =  130px
   .dashboard-cover-text-1c
     @media (min-width: 768px)
       position       absolute
-      bottom         20px
+      top            20px
       left           20px
       fontize(alt,light,auto,1.25em, 1.25em)
       color          main-xlight
@@ -2860,13 +2863,13 @@ cover-btns-width-small  =  130px
         border           4px solid main-xlight
         color            main-xlight
 .dashboard-section-header
-  margin               20px 35px
-  fontize(alt, light, capitalize, 2em, auto)
+  margin               35px 0 20px 35px
+  fontize(alt, light, capitalize, 2em, 1em)
   color                main-light
   svg
     fill              main-light
-    height            20px
-    width             20px
+    height            25px
+    width             25px
 .dashboard-updates
   width               100%
   height              (75*4)px

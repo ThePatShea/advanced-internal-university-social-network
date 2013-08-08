@@ -33,6 +33,18 @@ Template.dashboard.helpers({
 		return (numUpdates-3);
 	},
 
+	showMoreUpdates: function() {
+		var uid = Meteor.userId();
+		var numUpdates = Updates.find({
+			userId: uid
+		}).count();
+
+		if(numUpdates > 0)
+			return true;
+		else
+			return false;
+	},
+
 	numComments: function() {
 		var uid = Meteor.userId();
 		var numComments = Comments.find({
@@ -47,6 +59,19 @@ Template.dashboard.helpers({
 			userId: uid
 		}).count();
 		return numPosts;
+	},
+
+	numFiles: function() {
+		var uid = Meteor.userId();
+		var numFiles = Files.find({
+			userId: uid
+		}).count();
+		return numFiles;
+	},
+
+	numEvents: function() {
+		var uid = Meteor.userId();
+		return Posts.find({'attendees': {$in: [Meteor.userId()]}}).count();
 	},
 
 	getUpdates: function(myLimit) {

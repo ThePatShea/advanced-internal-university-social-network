@@ -10,7 +10,7 @@ getBubbleId =  function(userId) {
 }
 
 
-// Posts Related Publications 
+// Posts Related Publications
   Meteor.publish('updatedPosts', function(userId) {
     var updates = Updates.find({userId: userId, read: false}).fetch();
     var postsList = _.pluck(updates,'postId');
@@ -174,6 +174,17 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('singlePost', function(postId) {
     return postId && Posts.find(postId);
+  });
+  Meteor.publish('attendingEvents', function(userId) {
+    return Posts.find({
+        'attendees': {$in: [userId]}
+      },{
+      fields: {
+        '_id': 1,
+        'attendees': 1,
+        'userId': 1
+      }
+    });
   });
 
 
