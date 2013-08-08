@@ -1260,6 +1260,11 @@ wysiwyg-image(n)
       &.dropzone-label
         border-bottom  0px
         padding-bottom 8px
+    input
+      &:hover
+        border-bottom  1px solid white-light
+      &:focus
+        color          white-light
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
       colorize(white-light, main-dark)
@@ -1268,13 +1273,13 @@ wysiwyg-image(n)
     textarea,
     input
       &::-webkit-input-placeholder
-        color            white-light
+        color            main-xlight
       &:-ms-input-placeholder
-        color            white-light
+        color            main-xlight
       &::-moz-placeholder
-        color            white-light
+        color            main-xlight
       &:-moz-placeholder
-        color            white-light
+        color            main-xlight
     hr
       background         main-light
       &.break-bottom
