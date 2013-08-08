@@ -65,6 +65,15 @@ Handlebars.registerHelper("systemForm", {
         objectNameDash : "discussion-create",
         wysiwygHeading : "Discussion body",
         arrowVisible   : "true",
+        submit         : function() {
+          createPostWithAttachments({
+            bubbleId: Meteor.call("systemBubble.selectedBubble"),
+            body: $(event.target).find('[name=body]').html(),
+            name: $(event.target).find('[name=name]').val(),
+            postType: 'discussion',
+            children: [],
+          }, files);
+        }
       }
     },
     file       : {

@@ -1,5 +1,6 @@
 <template name="formElementsDiscussionCreate">
   {{#with systemForm.formParams.discussion.create}}
-    [discussion create form goes here]
+    <input class="required width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
+    {{> wysiwyg2}}
   {{/with}}
 </template>
