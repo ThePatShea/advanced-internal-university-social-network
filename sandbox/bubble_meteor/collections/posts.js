@@ -133,7 +133,7 @@ createPostWithAttachments = function(postAttributes, fileList){
       throwError(error.reason);
     } else {
       var filepostIds = [];
-      for (var i = 0, f; f = files[i]; i++) {
+      for (var i = 0, f; f = fileList[i]; i++) {
         var reader = new FileReader();
         reader.onload = (function(f){
           return function(e) {
@@ -193,3 +193,4 @@ createPostWithAttachments = function(postAttributes, fileList){
     }
   });
 }
+
