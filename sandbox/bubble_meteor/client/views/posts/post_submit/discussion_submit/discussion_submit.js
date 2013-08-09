@@ -79,6 +79,7 @@ function processAttachmentSelections(fileAttachments){
           $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list > li > #file-'+i).click(function(){
             console.log('Remove attachment: ', files[i].name);
             deleted_file_indices.push(i);
+            $(this).parent().remove();
           });
         };
         })(f, files, i);
