@@ -1004,6 +1004,52 @@ wysiwyg-image(n)
       margin          0 0 45px 0
       clear           btoh
       overflow        hidden
+      &.paperclip-attach-files
+        margin         0 0 20px 0
+        position       relative
+        margin         20px 0 20px 0
+        /*height         33px*/
+        padding-bottom 0
+        width          100%
+        border-bottom  1px solid main-light
+        .paperclip-attach
+          .attachments-list
+          &.nav
+            margin-bottom        7px
+          &.nav-tabs
+            padding       10px 0 40px 0
+            ul
+              margin-bottom     20px
+              li
+                border          0
+          .attachment-list-filename
+            fontize(alt, semibold, auto, 17px)
+            colorize(white-xlight)
+            margin-right    30px
+          .attachment-cancel-icon
+            margin-right    10px
+            svg
+              fill            #B0606D
+              rect
+                fill            main-xdark
+          .cb-paperclip-lbl
+            fontize(main, bold, uppercase, 18px)
+            colorize(main-light)
+          .cb-icon-attachment
+            move-position(absolute, 2px, 0)
+            svg
+              width           20px
+              height          20px
+              fill            main-light
+          .file-chooser-invisible
+            move-position(absolute, 0, 0)
+            cursor            pointer
+            height            100%
+            width             100%
+            z-index           20
+            opacity           0
+          &.in-post
+            padding-top       0
       &.third-width-container
         position        relative
         @media (min-width: 768px)
@@ -1053,42 +1099,6 @@ wysiwyg-image(n)
         height          auto
     .search-text
       padding        30px 0 0 0
-    .paperclip-attach-files
-      position       relative
-      margin         20px 0 20px 0
-      height         33px
-      width          100%
-      border-bottom  1px solid main-light
-      .paperclip-attach
-        .cb-paperclip-lbl
-          fontize(main, bold, uppercase, 18px)
-          colorize(main-light)
-        .cb-icon-attachment
-          move-position(absolute, 5px, 0)
-          svg
-            width           18px
-            height          18px
-            fill            main-light
-        .file-chooser-invisible
-          move-position(absolute, 0, 0)
-          cursor            pointer
-          height            100%
-          width             100%
-          z-index           20
-          opacity           0
-        .attachments-list
-          move-position(absolute, 0)
-          z-index             30
-          .previewthumb,
-          .thumb
-            colorize(main-light, main-dark)
-            border-radius     6px
-            height            90%
-            width             90%
-            margin            5%
-            border-box        0
-        &.in-post
-          padding-top       0
     .attach-files
       padding-top     30px
       .drop-zone
@@ -2727,48 +2737,6 @@ cover-btns-width-small  =  130px
   &.explore
     height                         4px
 /**********        explore-cover       **********/
-
-
-/*********         Paperclip Attachments **********************************************/
-/*.paperclip-attach-files
-  position       relative
-  margin         20px 0 0 0
-  height         33px
-  width          100%
-  border-bottom  1px solid main-light
-  .paperclip-attach
-    .cb-paperclip-lbl
-      fontize(main, bold, uppercase, 18px)
-      colorize(main-light)
-    .cb-icon-attachment
-      move-position(absolute, 5px, 0)
-      svg
-        width           18px
-        height          18px
-        fill            main-light
-    .file-chooser-invisible
-      move-position(absolute, 0, 0)
-      cursor            pointer
-      height            100%
-      width             100%
-      z-index           20
-      opacity           0
-    .attachments-list
-      move-position(absolute, 0)
-      z-index             30
-      .previewthumb,
-      .thumb
-        colorize(main-light, main-dark)
-        border-radius     6px
-        height            90%
-        width             90%
-        margin            5%
-        border-box        0
-    &.in-post
-      padding-top       0*/
-    
-
-/********************************************************************************/
 
 /**********          dashbaord         **********/
 .carousel-indicators

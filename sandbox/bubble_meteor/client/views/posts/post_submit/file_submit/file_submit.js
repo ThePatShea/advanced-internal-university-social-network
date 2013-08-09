@@ -12,7 +12,7 @@ Template.fileSubmit.events({
           console.log(f.type, f.size);
           
           createPost({
-            name: escape(f.name),
+            name: escape(f.name).replace(/%20/g, '_'),
             file: e.target.result,
             fileType: f.type,
             fileSize: f.size,
