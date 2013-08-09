@@ -3,9 +3,18 @@
     <div class="top-arrow-container">
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-    <form class="cb-form" id="edit-discussion-form">
-      <input class="width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
-      {{> wysiwyg}}
+    <form class="cb-form cb-editDiscussion-form" id="edit-discussion-form">
+      <input class="width-full first discussionTitle" name="name" type="text" value="" placeholder="Discussion title*"/>
+      {{> wysiwyg2}}
+
+      <div class="cb-form-row discussion-attachments">
+        {{> discussionAttachments}}
+      </div>
+
+      <div class="cb-form-row paperclip-attach-files">
+        {{> paperclipAttachments}}
+      </div>
+
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
           <span>submit</span>
