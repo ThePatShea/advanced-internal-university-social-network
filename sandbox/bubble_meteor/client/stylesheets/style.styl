@@ -1236,19 +1236,17 @@ wysiwyg-image(n)
         padding        0
         border         0
     label
+      fontize(main, bold, uppercase, 18px, blank, 2px)
       color          main-light
-      text-transform uppercase
-      padding-bottom 11px
+      padding-bottom 6px
       padding-top    4px
       padding-left   4px
       padding-right  4px
       &.no-typing
-        color          main-xlight
+        color          main-light
     label,
     input
       border-bottom  1px solid main-light
-      colorize(white-light, main-dark)
-      fontize(alt, thin, auto, 23px)
       box-shadow     0 0
       padding-left   0
       padding-right  0
@@ -1263,6 +1261,8 @@ wysiwyg-image(n)
         border-bottom  0px
         padding-bottom 8px
     input
+      colorize(white-light, main-dark)
+      fontize(alt, thin, auto, 23px)
       &:hover,
       &:focus
         border-bottom  1px solid white-light
