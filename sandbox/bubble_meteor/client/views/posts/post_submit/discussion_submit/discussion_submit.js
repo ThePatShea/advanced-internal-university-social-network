@@ -1,6 +1,6 @@
 Template.discussionSubmit.created = function () {
-  files = [];
-  deleted_file_indices = [];
+  discussionFiles = [];
+  discussionDeletedFileIndices = [];
   this.validateForm = function() {
     var count = 0;
 
@@ -57,15 +57,15 @@ Template.discussionSubmit.events({
 function processAttachmentSelections(fileAttachments){
   //cpnsole.log(fileAttachments);
 
-    files = fileAttachments;
-    if(files.length > 0){
+    discussionFiles = fileAttachments;
+    if(discussionFiles.length > 0){
       $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-paperclip-lbl').hide();
       $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-icon-attachment').hide();
       $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible').width(1);
       $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible').height(1);
     }
     
-    for (var i = 0, f; f = files[i]; i++) {
+    for (var i = 0, f; f = discussionFiles[i]; i++) {
 
 
       //If it is an image then render a thumbnail
@@ -73,16 +73,15 @@ function processAttachmentSelections(fileAttachments){
         var reader = new FileReader();
 
         // Closure to capture the file information.
-        reader.onload = (function(theFile, files, i) {
+        reader.onload = (function(theFile, discussionFiles, i) {
         return function(e) {
           $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list').append('<li><span class="attachment-cancel-icon" id="file-' + i + '"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><circle fill-rule="evenodd" clip-rule="evenodd" cx="8" cy="8" r="8"/><g><rect x="7.001" y="4" transform="matrix(-0.7151 -0.699 0.699 -0.7151 8.1297 19.3133)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" width="2" height="8"/><rect x="7" y="4" transform="matrix(-0.6989 0.7152 -0.7152 -0.6989 19.3134 7.869)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" width="2" height="8"/></g></span><span class="attachment-list-filename">' + escape(theFile.name).replace(/%20/g, '_') +'</span></li>');
           $('.cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list > li > #file-'+i).click(function(){
-            console.log('Remove attachment: ', files[i].name);
-            deleted_file_indices.push(i);
+            discussionDeletedFileIndices.push(i);
             $(this).parent().remove();
           });
         };
-        })(f, files, i);
+        })(f, discussionFiles, i);
 
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
@@ -114,9 +113,9 @@ function makeDiscussionPost(){
 
   var newFiles = [];
 
-  for(var i=0; i < files.length; i++){
-    if(deleted_file_indices.indexOf(i) == -1){
-      newFiles.push(files[i]);
+  for(var i=0; i < discussionFiles.length; i++){
+    if(discussionDeletedFileIndices.indexOf(i) == -1){
+      newFiles.push(discussionFiles[i]);
     }
   }
   
