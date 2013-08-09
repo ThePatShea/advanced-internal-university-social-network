@@ -30,7 +30,7 @@ Template.discussionSubmit.events({
     'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
       tmpl.validateForm();
     }
-  , 'submit form': function(event) {
+  , 'click .cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-submit-container > .cb-submit': function(event) {
       event.preventDefault();
       //Google Analytics
       _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
