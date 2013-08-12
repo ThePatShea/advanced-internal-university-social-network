@@ -13,8 +13,14 @@ Template.bubblePage.created = function() {
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
-  bubbleLoading: function() {
-    Session.get('bubbleLoading');
+  isLoading: function() {
+    var bubbleLoading = Session.get('bubbleLoading');
+
+    if (bubbleLoading == 'true') {
+      return true;
+    } else {
+      return false;
+    }
   },
   eventsCount: function() {
     return Meteor.call('getNumOfEvents','event');
