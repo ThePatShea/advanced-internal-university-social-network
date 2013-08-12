@@ -1434,6 +1434,22 @@ wysiwyg-image(n)
 /**********     errors      **********/
 
 /**********   gif-loader    **********/
+animation(args...)
+  -webkit-animation      args
+  animation              args
+
+transform(args...)
+  -webkit-transform      args
+  -ms-transform          args
+  transform              args
+
+@keyframes rotate
+  0%
+    transform rotateZ(0deg)
+  100%
+    transform rotateZ(360deg)
+
+
 .gif-loader-container
   background        rgba(1,17,38,.8)
   position          relative
@@ -1463,12 +1479,6 @@ wysiwyg-image(n)
       opacity         0.7
       box-shadow      rgba(255, 255, 255, 0.6) -4px -5px 3px -3px
       animation       rotate 1s infinite linear
-
-@keyframes rotate
-  0%
-    transform rotateZ(0deg)
-  100%
-    transform rotateZ(360deg)
 /**********   gif-loader    **********/
 
 
