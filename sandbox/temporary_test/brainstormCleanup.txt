@@ -1,0 +1,163 @@
+IDEAS:
+- Each of the systems listed below should have a single js file with a single object that contains all of its
+- This is the grand vision for how we want it to be. We don't need to reach this destination any time soon and our grand vision will constantly evolve, but it's what guides us. We will evolutionarily iterate toward this grand vision.
+- Global styles that can be pulled in by other stylesheets
+- Make a list of front-end systems too (lists, listItems, forms, headings, sidebar)
+- Every system is independent, and can be called by the other systems by calling functions from a javascript object for that system which contains all of that system's functions
+- Try to make this for forms first
+- Make something similar to the team roles and grand vision for the whole company, not just for the product team. Talk about how we're self-organizing, constantly evolving, and that we manage ourselves and each other. We have no CEO. We're a 21st century team. The "rule" about needing a CEO doesn't apply to us. We're special.
+- Sometimes an effective/necessary way to grow the technology is: expand freely -> remove waste -> expand freely -> remove waste
+- Account for the fact that some modules have both client-side and server-side components
+-- I think that any folder named 'server' will be run server-side. That means our top-level division can be by systems instead of by client/server. Each system can have its own client folder and its own server folder inside it
+- Each system contains a javascript file that contains a call to all of its functions. It's functions can be written in other files but they are all written here.
+- Come up with conventions for spacing/comments/documentation/naming/etc.
+
+
+
+
+TEAM ROLES:
+- (Description): We are a self-organizing, constantly evolving team. Our roles adapt to the ever-changing needs of the product, our customers, available technology, our evolving individual skillsets, and all other external factors. We don't have titles. These responsiblities are a provisional starting point and a default to fall back on. They are not a limitation. Everyone is free to have as much input as they'd like into other teammate's responsibilities. We have no titles. We all manage ourselves and each other. Every role has last-resort veto power over his areas of responsibility. We always strive to reach consensus. Our goal is to never need to use our veto power. But once in a while, particularly in urgent situations, we may each need to exercise our veto power. If one person seems to be abusing his veto power, then if the rest of the team members unanimously vote to transfer his veto power to another member of the team, then his veto power is transferred to the new person. We always strive to improve ourselves and also help each other improve.
+- Gio: Manages the grand vision of where the product is going. Features/what users want/business needs/etc.
+- Pat: Manages the grand vision of where the technology is going. Looks at the big picture architecture of the technology and makes sure everything fits together properly. Moves us toward the long-term grand vision of our ideal product architecture. Prevents the growth of spaghetti code. As of now, does most of the front-end.
+- Xavier: Manages the day-to-day of keeping everyone on task, on schedule, and on budget. Makes sure everyone follows the correct processes and uses our systems correctly (Makes sure people use Target Process correctly, etc). Teaches our ways to new hires. Helps take stuff off Pat's plate so Pat can focus on the grand technology vision.
+- Taggart: 
+- Junhao: 
+
+
+
+
+SYSTEMS (CONTAIN BACK-END AND FRONT-END):
+- FERPA
+- LDAP
+- Users
+- User levels
+- Permissions
+- Forms
+- Updates
+- Google Analytics
+- Bubble Analytics
+- Flags
+- Bubbles
+- Posts
+- Comments
+- Explore
+- Authentication
+- Dashboard
+- Settings
+- Images (loading and retina)
+- Loading speeds
+- Security
+- Membership (member, applicant, invitee, admin, creator)
+- Navigation (navbar, sidebar)
+- Load balancing
+- Site backups
+-- Database backups
+-- File backups
+- Automated unit testing
+- Mobile
+-- HTML5 responsive site
+-- Android App
+-- iOS App
+- Rendering (making certain elements render independent of other elements)
+- Search
+-- Overall search
+-- Search within bubbles
+-- Search for users while inviting members to a bubble
+-- 404 Not Found
+-- Download file
+-- Upload file
+---- Crop image
+-- Errors
+-- WYSIWYG
+-- SEO
+-- Legal documents (Privacy Policy, Terms of Service)
+
+
+
+FRONT-END SYSTEMS (SOME ONLY-FRONT-END, AND SOME FRONT-AND-BACK-END):
+- list
+-- listItem
+- form
+- color palette
+- font palette
+- position palette (handles default padding-margins)
+- sectionHeading
+
+-- Ideas for front-end:
+---- Make a mixin for default padding, default color, default font, etc.
+---- Use lots of mixins to make things dynamic/connected/elegant/consistent
+---- Improve my fontize, colorize, and positionize functions. Re-name them with a consistent naming scheme.
+
+
+
+
+
+ELEMENTS:
+
+
+
+
+
+MODULES:
+- Permissions
+- Forms
+
+
+
+GENERATORS:
+
+
+
+
+
+TEMPLATES:
+
+
+
+
+
+
+RULES:
+- (Description): There's an exception to every rule. These rules are tight guidelines that we should rarely break. If you have a compelling reason to break a certain rule for a certain module, explain your reason to the rest of the team before acting on it. The team will either approve of your decision or help you devise an alternative method.
+- No ids ever. Only classes.
+- No styling on elements. Only styling on classes.
+- No bootstrap. It messes with our CSS too much. Any bootstrap elements we like, we can re-make ourselves. It's not hard.
+- Heavy CSS reset so all elements start out with no special styling.
+- Session variables?
+- Router?
+- Each front end module is in a folder that has a .html file and a .styl file. The styles are not all in one stylesheet.
+
+
+
+SUGGESTIONS:
+- Try to keep every file under 100 lines of code
+
+
+
+PHILOSOPHIES:
+- The whole site is made up of self-contained modules.
+-- These modules can be
+- This system should be extremely modular and adaptable.
+- Optimizing loading speeds is paramount
+- Team members are free to use whatever tools they want, provided they make an effort to make their output compatible with other team members' tools
+
+
+
+STRUCTURES:
+
+
+
+
+OTHER:
+- Template.created/destroyed/helpers/events
+
+
+
+
+TO DO:
+- Get Xavier/Taggart's input to help architect this
+- Read the book "Javascript: The Good Parts"
+- Read the entire Javascript Documentation
+- Read the entire Node.js Documentation
+- Read the entire Meteor Documentation
+- Read everything on meteorhacks.com

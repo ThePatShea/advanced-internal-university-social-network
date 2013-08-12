@@ -635,3 +635,7 @@ Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
     return updateList.length;
   }
 });
+
+Handlebars.registerHelper('codeComment', function() {
+  return "";
+});

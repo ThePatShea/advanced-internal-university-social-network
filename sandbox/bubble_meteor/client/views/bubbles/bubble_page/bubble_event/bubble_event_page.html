@@ -10,7 +10,14 @@
         {{#each getEventPosts}}
           {{> listItem}}
         {{else}}
-          No events yet.
+          <div></div>
+          <div class="post-item">
+            <div class="v-middle">
+              <div class="v-inner">
+                No events yet. Schedule meetings and other members-only events here!
+              </div>
+            </div>
+          </div>
         {{/each}}
       </div>
     </div>

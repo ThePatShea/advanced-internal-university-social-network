@@ -1,16 +1,11 @@
 <template name="fileSubmit">
-  <div class="collapse cb-form-container" id="cb-form-container-file">
+  <div class="collapse cb-form-container" id="cb-form-container-file-create">
     <div class="top-arrow-container">
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-    <form class="cb-form">
+    <form class="cb-form cb-fileSubmit-form">
       <div class="attach-files">
-        <div id="drop_zone" class="drop-zone">
-          <div class="dz-title">drag and drop</div>
-          <div class="dz-subtitle">or click here</div>
-          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
-        </div>
+        {{> dropZone}}
       </div>
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>

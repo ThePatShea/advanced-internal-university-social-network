@@ -10,7 +10,14 @@
         {{#each getFilePosts}}
           {{> listItem}}
         {{else}}
-          No Files yet.
+          <div></div>
+          <div class="post-item">
+            <div class="v-middle">
+              <div class="v-inner">
+                No files? Add some here!
+              </div>
+            </div>
+          </div>
         {{/each}}
       </div>
     </div>

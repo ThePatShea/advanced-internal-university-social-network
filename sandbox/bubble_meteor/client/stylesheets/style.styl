@@ -856,10 +856,27 @@ wysiwyg-image(n)
 
 .wysiwyg_group
   .btns-formatting
-    .btn-wysiwyg
-      padding              5px 10px
-      position             relative
-      top                  5px
+    .btn-group
+      margin-left          10px
+      &.justify
+        .btn-wysiwyg
+          stroke               main-light
+          &.hover
+            stroke               main-dark
+      .btn-wysiwyg
+        fill                 main-light
+        padding              5px 10px
+        position             relative
+        text-align           center
+        display              block
+        float                right
+        width                35px
+        margin-left          3px
+        top                  5px
+        border-box           0
+        &:hover
+          fill                 main-dark
+          cursor               pointer
   .wysiwyg
     border-bottom        1px solid main-light
     border-top           1px solid main-light
@@ -910,7 +927,51 @@ wysiwyg-image(n)
 /**********    file-type    **********/
 
 /**********     cb-form     **********/
+.gldp-flatwhite
+  background     main-xlight
+  border-radius  7px
+  padding-left   4px
+  border-box     0
+  border         0
+  .core
+    fontize(main, bold, uppercase, 13px)
+    background   main-xlight
+    color        main-light
+    border       0
+    &.title
+      font-size    13px !important
+      color        main-light
+    &.monyear
+      height             30px !important
+      line-height        30px !important
+      border-radius      7px
+      border-box         0
+      .prev-arrow,
+      .next-arrow
+        color              main-light
+        font-size          12px
+        text-shadow        0 0
+    &.dow
+      fontize(main, bold, uppercase, 11px)
+      border-bottom     1px solid #7C9CAF
+      border-top        1px solid #7C9CAF
+      color             white-light
+    &.outday
+      color             #678CA5 !important
+    &.sat,
+    &.sun
+      color             #CCD9E0 !important
+    &.selected
+      colorize(main-xlight, main-light)
+      border-radius     50%
+    &.today
+      colorize(main-light, white-light)
+      border-radius     50%
+    
+
 .cb-form-container
+  .crop
+    max-height     500px
   .top-arrow-container
     position       relative
     overflow       hidden
@@ -926,12 +987,121 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
+    .select-bubble-type
+      overflow        hidden
+      margin-bottom   30px
+      .select-bubble-type-label
+        margin-bottom    10px
+      .btn-bubble-type
+        margin           0 10px 0 0
+        &.active-true
+          background       main-light
+    .date-picker
+      cursor          pointer
     &.cb-form-container-search
       margin-bottom  -12px
     .cb-form-row
       margin          0 0 45px 0
-      clear           both
+      clear           btoh
       overflow        hidden
+      &.paperclip-attach-files
+        margin         0 0 20px 0
+        position       relative
+        margin         20px 0 20px 0
+        /*height         33px*/
+        padding-bottom 0
+        width          100%
+        border-bottom  1px solid main-light
+        .paperclip-attach
+          .attachments-list
+          &.nav
+            margin-bottom        7px
+          &.nav-tabs
+            padding       10px 0 40px 0
+            ul
+              margin-bottom     20px
+              li
+                border          0
+          .attachment-list-filename
+            fontize(alt, semibold, auto, 17px)
+            colorize(white-xlight)
+            margin-right    30px
+          .attachment-cancel-icon
+            margin-right    10px
+            svg
+              fill            #B0606D
+              rect
+                fill            main-xdark
+          .cb-paperclip-lbl
+            fontize(main, bold, uppercase, 18px)
+            colorize(main-light)
+          .cb-icon-attachment
+            move-position(absolute, 2px, 0)
+            svg
+              width           20px
+              height          20px
+              fill            main-light
+          .file-chooser-invisible
+            move-position(absolute, 0, 0)
+            cursor            pointer
+            height            100%
+            width             100%
+            z-index           20
+            opacity           0
+          &.in-post
+            padding-top       0
+      &.discussion-attachments
+        margin         0 0 20px 0
+        position       relative
+        margin         20px 0 20px 0
+        /*height         33px*/
+        padding-bottom 0
+        width          100%
+        border-bottom  1px solid main-light
+        .paperclip-attach
+          .attachments-list
+          &.nav
+            margin-bottom        7px
+          &.nav-tabs
+            padding       10px 0 40px 0
+            ul
+              margin-bottom     20px
+              li
+                border          0
+          .attachment-list-filename
+            fontize(alt, semibold, auto, 17px)
+            colorize(white-xlight)
+            margin-right    30px
+          .attachment-cancel-icon
+            margin-right    10px
+            svg
+              fill            #B0606D
+              rect
+                fill            main-xdark
+          .cb-paperclip-lbl
+            fontize(main, bold, uppercase, 18px)
+            colorize(main-light)
+          .cb-icon-attachment
+            move-position(absolute, 2px, 0)
+            svg
+              width           20px
+              height          20px
+              fill            main-light
+          .file-chooser-invisible
+            move-position(absolute, 0, 0)
+            cursor            pointer
+            height            100%
+            width             100%
+            z-index           20
+            opacity           0
+          &.in-post
+            padding-top       0
+      &.third-width-container
+        position        relative
+        @media (min-width: 768px)
+          height          45px
+        @media (max-width: 767px)
+          height          auto
       &.last
         margin-bottom 0
       .half-width
@@ -952,22 +1122,29 @@ wysiwyg-image(n)
         border-box       0
         width            28%
         height           auto
-        float            left
         @media (min-width: 768px)
-          margin           0 30px 0 0
+          &.column-first
+            position         absolute
+            left             0
+          &.column-second
+            position         absolute
+            margin-left      -14%
+            left             50%
+          &.column-third
+            position         absolute
+            right            0
         @media (max-width: 767px)
           width           100%
-          &.column-first
-            margin          0 0 45px 0
+          &.column-first,
           &.column-second
-            margin          0 0 45px 0
+            margin          0 0 55px 0
           &.column-third
             margin          0
       .full-width
         border-box      0
         height          auto
     .search-text
-      padding        30px 0 0 0
+      padding        30px 0 4px 0
     .attach-files
       padding-top     30px
       .drop-zone
@@ -1040,6 +1217,11 @@ wysiwyg-image(n)
               width          100%
             &.cb-icon-bubble
               width          40px
+              svg
+                height         30px
+                width          40px
+                path
+                  stroke         main-xlight
             &.cb-icon-member
               width          40px
             &.cb-icon-event
@@ -1072,58 +1254,72 @@ wysiwyg-image(n)
               svg
                 fill            main-dark
                 height          30px
+              .cb-icon-bubble
+                svg
+                  path
+                    stroke        main-dark
       &.large-boxes
-        padding       10px 0 40px 0
+        padding       10px 0 0 0
         margin        0
         li
-          positionize(145px, 145px, 0, 0 10px 10px 0)
-          fontize(main, bold, uppercase, 10px)
+          positionize(140px, 135px, 0, 0 20px 20px 0)
           colorize(main-xlight)
           border         1px solid main-light
           background     main-dark
+          cursor         pointer
           overflow       hidden
           border-radius  6px
           .add-padding
             padding        0
+          &:hover
+            a
+              color               white-light
+              background          main-light
+              .large-box-info
+                color               main-dark
+          &.active
+            a
+              background          main-dark
+              .large-box-info
+                .cb-icon-check
+                  display             block
+                .body
+                  display             none
           a
             height         100%
             width          100%
             padding        0
             display        block
-            fontize(main, bold, uppercase, 10px)
-            colorize(main-xlight)
             border-box     0
             border         none
-            border-top-left-radius                5px
-            border-top-right-radius               5px
+            border-top-left-radius    5px
+            border-top-right-radius   5px
             .large-box-title
-              border-top-left-radius                5px
-              border-top-right-radius               5px
-              height                                48px
-              width                                 100%
-              fontize(auto, auto, capitlize, auto, auto, auto, auto, center)
-              &.club
-                colorize(white-light, color-club)
-              &.greek
-                colorize(white-light, color-greek)
-              &.athletics
-                colorize(white-light, color-sport)
-              &.arts-entertainment
-                colorize(white-light, color-art)
-              &.academic
-                colorize(white-light, color-study)
-              &.administrative
-                colorize(white-light, color-office)
-              &.community
-                colorize(white-light, color-service)
-              &.class
-                colorize(white-light, color-major)
-              &.residence
-                colorize(white-light, color-dorm)
-              &.custom
-                colorize(white-light, color-custom)
+              fontize(main, bold, uppercase, 12px, 1.2em, auto, auto, center)
+              colorize(white-light)
+              border-bottom             1px solid main-light
+              padding                   0 10px
+              height                    48px
+              width                     100%
+              border-box                0
+              .lbl-large-box
+                width                     115px
             .large-box-info
-              fontize(alt, regular, capitlize, 13px, auto, auto, auto, center)
+              fontize(alt, regular, none, 13px, 1.2em, auto, auto, center)
+              colorize(main-xlight)
+              padding                   10px
+              .cb-icon-check
+                background                main-light
+                fill                      main-dark
+                margin                    0 auto
+                display                   none
+                height                    65px
+                width                     65px
+                border-radius             50%
+                svg
+                  move-position(relative, 22px, blank, blank, blank)
+                  height                    23px
+                  width                     29px
     .wysiwyg-row
       .wysiwyg-label
         margin         15px 0 10px 0
@@ -1132,15 +1328,17 @@ wysiwyg-image(n)
         padding        0
         border         0
     label
+      fontize(main, bold, uppercase, 18px, blank, 2px)
+      color          main-light
+      padding-bottom 6px
       padding-top    4px
-      padding-bottom 11px
       padding-left   4px
       padding-right  4px
+      &.no-typing
+        color          main-light
     label,
     input
       border-bottom  1px solid main-light
-      colorize(white-light, main-dark)
-      fontize(alt, thin, auto, 23px)
       box-shadow     0 0
       padding-left   0
       padding-right  0
@@ -1154,6 +1352,14 @@ wysiwyg-image(n)
       &.dropzone-label
         border-bottom  0px
         padding-bottom 8px
+    input
+      colorize(white-light, main-dark)
+      fontize(alt, thin, auto, 23px)
+      &:hover,
+      &:focus
+        border-bottom  1px solid white-light
+      &:focus
+        color          white-light
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
       colorize(white-light, main-dark)
@@ -1162,13 +1368,13 @@ wysiwyg-image(n)
     textarea,
     input
       &::-webkit-input-placeholder
-        color            white-light
+        color            main-xlight
       &:-ms-input-placeholder
-        color            white-light
+        color            main-xlight
       &::-moz-placeholder
-        color            white-light
+        color            main-xlight
       &:-moz-placeholder
-        color            white-light
+        color            main-xlight
     hr
       background         main-light
       &.break-bottom
@@ -1551,7 +1757,35 @@ navbar-height        =  60px
           svg
             position                       relative
             top                            -2px
-            
+      .dropdown-menu
+        box-shadow        0 0
+      .cb-updates-dropdown
+        .badge-inverse
+          background        main-xlight
+          color             white-xxdark
+        .dropdown-menu
+          background        main-xlight
+          width             270px
+          top               50px
+          li
+            a
+              fontize(alt, bold, none, 14px)
+              color             white-light
+              border-bottom     1px solid #89A5B8
+              padding           10px 20px
+              &:hover
+                background        none
+            li
+              border-bottom     1px solid #89A5B8
+              background        main-xlight
+              &:hover
+                background        #89A5B8
+              a
+                fontize(alt, medium, none, 13px, 1em)
+                color             main-light
+                display           block
+                padding           5px 20px
+                border-bottom     0
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
@@ -1594,6 +1828,7 @@ navbar-height        =  60px
               stroke             white-light
             &.explore
               path
+                stroke             none
                 fill               #f7f8f8
           .cb-icon-settings
             fill               white-light
@@ -1614,6 +1849,7 @@ navbar-height        =  60px
             stroke             main-xlight
           &.explore
             path
+              stroke             none
               fill               main-xlight
         .cb-icon-settings
           fill               main-xlight
@@ -1621,6 +1857,28 @@ navbar-height        =  60px
           svg
             height             25px
             width              25px
+      .grouping-about
+        move-position(absolute, blank, blank, 60px, blank)
+        .txt-about
+          fontize(alt, regular, uppercase, 9px, 1em, 0, blank, center)
+          border-top           1px solid #436C88
+          colorize(main-xlight, main-light)
+          padding              10px 4px
+        .btn-about
+          fontize(main, regular, uppercase, 11px, 40px)
+          colorize(main-xlight, main-xdark)
+          padding-left         15px
+          height               40px
+          width                100%
+          border-box           0
+          .cb-icon
+            margin                 0 5px 0 0
+            position               relative
+            top                    -2px
+            svg
+              vertical-align       middle
+              height               22px
+              width                22px
     &.subsection
       background         main-xlight
       position           relative
@@ -1693,6 +1951,20 @@ navbar-height        =  60px
         .cb-icon
           margin             0 5px 0 0
           fill               main-light
+          &.icon-official
+            margin             0 16px 0 0
+          &.icon-events
+            margin             0 15px 0 0
+          &.icon-classifieds
+            margin             0 15px 0 0
+          &.icon-professorreviews
+            margin             0 15px 0 0
+          &.icon-controversial
+            margin             0 15px 0 0
+          &.icon-deals
+            margin             0 15px 0 0
+          &.icon-nightlife
+            margin             0 15px 0 0
           svg
             vertical-align     middle
         .updates-count
@@ -2037,6 +2309,9 @@ section-icon-no-fill(n)
         svg
           height                 25px 
           width                  22px
+      .section-icon-bubble-create
+        move-position(relative, 2px, blank, blank, blank)
+        fill                   main-light
       .section-name
         main-light-color       0
         font-alt-light         0
@@ -2384,6 +2659,17 @@ attachment-height  =  75px
 
 /**********       bubble-members      **********/
 
+/**********       about-content       **********/
+.about-content
+  fontize(alt, regular, blank, 15px)
+  colorize(white-xxdark)
+  padding            20px 30px
+  height             auto
+  a
+    &:hover
+      text-decoration    underline
+/**********       about-content       **********/
+
 /***************  Single-Purpose Elements  ***************/
 
 
@@ -2394,5 +2680,319 @@ attachment-height  =  75px
   position               absolute
   right                  180px
   bottom                 27px
+
+
+
+/**********        explore-cover       **********/
+cover-btns-width-large  =  150px
+cover-btns-width-small  =  130px
+
+.explore-cover
+  position               relative
+  overflow               hidden
+  padding                0 30px
+  outline                5px solid main-xlight
+  @media (min-width: 768px)
+    height                   107px
+  @media (max-width: 767px)
+    height                   100px
+  .cover-mask,
+  .cover-pic
+    position                   absolute
+    min-height                 100%
+    min-width                  100%
+    left                       0
+    top                        0
+  .cover-mask
+    background                 rgba(0, 7, 13, .75)
+    height                     100%
+    width                      100%
+    z-index                    -10
+  .cover-pic
+    z-index                    -20
+  .profile-icon-container
+    margin                     0 0 0 0
+    position                   relative
+    height                     50px
+    width                      50px
+    .cb-profile-icon
+      svg
+        margin                     5px 0 0 0
+        fill                       main-xlight
+        width                      30px
+        height                     40px
+    @media (min-width: 768px)
+      display                  block
+    @media (max-width: 767px)
+      display                  none
+  .explore-name-and-subtitle
+    @media (min-width: 768px)
+      margin-right             cover-btns-width-large
+    @media (max-width: 767px)
+      margin-right             cover-btns-width-small
+    .explore-name
+      fontize(alt, light, uppercase, 37px)
+      colorize(#f7f8f8)
+      @media (min-width: 768px)
+        font-size                37px
+      @media (max-width: 767px)
+        font-size                25px
+    .explore-subtitle
+      fontize(main, bold, uppercase, 12px)
+      colorize(main-xlight)
+      padding                  0 0 0 0
+      @media (min-width: 768px)
+        font-size                12px
+      @media (max-width: 767px)
+        font-size                11px
+  .cover-btns
+    position                 absolute
+    top                      0
+    @media (min-width: 768px)
+      width                    cover-btns-width-large
+      right                    30px
+    @media (max-width: 767px)
+      width                    cover-btns-width-small
+      right                    10px
+    .cover-btn
+      margin                   5px 0
+      float                    right
+      clear                    right
+      &:hover
+        .cb-icon-add
+          svg
+            rect
+              fill               white-light
+      &.explore-btn
+        padding                  0
+      .cb-icon-settings
+        svg
+          margin                    -3px 0
+          rect
+            fill                      black
+      .cb-icon-add
+        float                       left
+        margin                      7px 0 8px 7px
+        svg
+          padding                   0
+          float                     left
+          rect
+            fill                      black
+      .cb-icon-cancel
+        float                       left
+        margin                      7px 0 8px 7px
+      .cb-lbl-add
+        float                      left
+        margin                     10px 15px 0 10px
+      .cb-lbl-cancel
+        float                      left
+        margin                     10px 15px 0 10px
+.top-arrow-container
+  &.explore
+    height                         4px
+/**********        explore-cover       **********/
+
+/**********          dashbaord         **********/
+.carousel-indicators
+  padding           175px 0 0 0
+  margin            0 20px 0 0
+  li
+    margin          0 8px
+.item-inner
+  position         relative
+  width            100%
+  min-height       225px
+  overflow         hidden
+  display          inline-block
+#slide-1
+  background       url('/img/dashboard1.jpg') no-repeat center
+  background-size  cover
+#slide-2
+  background       url('/img/dashboard2.jpg') no-repeat center
+  background-size  cover
+#slide-3
+  background       url('/img/dashboard3.jpg') no-repeat center
+  background-size  cover
+.dashboard-cover
+  height           225px
+  width            100%
+  border-bottom    5px solid main-xlight
+  overflow         hidden
+  margin           0px 0px 25px 0px
+  .dashboard-cover-text-1a
+    text-align     center
+    fontize(main,medium,uppercase,2.75em,1em,5px)
+    color          white
+    @media (min-width: 768px)
+      padding      90px 0 0 0
+    @media (max-width: 767px)
+      padding      40px 10px 0 10px
+  .dashboard-cover-text-1b
+    text-align     center
+    fontize(main,auto,auto,1.75em)
+    color          main-xlight
+  .dashboard-cover-text-1c
+    @media (min-width: 768px)
+      position       absolute
+      top            20px
+      left           20px
+      fontize(alt,light,auto,1.25em, 1.25em)
+      color          main-xlight
+      svg
+        fill         main-xlight
+        height       20px
+        width        20px
+    @media (max-width: 767px)
+      display        none
+  .dashboard-cover-text-1d
+    @media (min-width: 768px)
+      position       absolute
+      top            20px
+      right          30px
+      fontize(alt,light,auto,1.25em, 1.25em)
+      color          main-xlight 
+      svg
+        fill         main-xlight
+        height       20px
+        width        20px
+    @media (max-width: 767px)
+      display        none
+.dashboard-icon-container
+  @media (min-width: 768px)
+    text-align       center
+    &:hover
+      svg
+        fill         white
+  @media (max-width: 767px)
+    display          none
+  .dashboard-icon
+    svg
+      fill           main-xlight
+      height         40px
+      width          40px
+    fontize(alt,light,auto,auto,auto,1px)
+    text-align       center
+    color            main-xlight
+    &:hover
+      cursor         pointer
+      svg
+        fill         white
+      color          white
+    .dashboard-icon-text
+      margin           10px 0 0 0
+  #dashboard-icon-2a
+    position         absolute
+    top              60px
+    left             30px
+    border           1px solid main-xlight
+    border-radius    10px
+    padding          20px
+  #dashboard-icon-2b
+    position         absolute
+    top              60px
+    right            30px
+    border           1px solid main-xlight
+    border-radius    10px
+    padding          20px
+  #dashboard-icon-3a
+    position         absolute
+    top              90px
+    left             30px
+  #dashboard-icon-3b
+    position         absolute
+    top              90px
+    left             100px
+  #dashboard-icon-3c
+    position         absolute
+    top              90px
+    right            150px
+  #dashboard-icon-3d
+    position         absolute
+    top              90px
+    right            30px
+.dashboard-item-container
+  width            100%
+  height           auto
+  overflow         auto
+  background-color #eef0f0
+  .dashboard-item-container-inner
+    min-width      (((95+8+20)*6)+100)px
+    height         auto
+    overflow       auto
+    .dashboard-item-spacer
+      height         auto
+      width          7.65%
+      min-width      10px
+      float          left
+    .dashboard-item-outer
+      height         150px
+      width          15.3%
+      min-width      123px
+      float          left
+      .dashboard-item
+        height           95px
+        width            95px
+        border-radius    50%
+        margin           25px auto
+        text-align       center
+        .number
+          fontize(main,bold,auto,4em,.75em)
+        .word
+          fontize(main,bold,uppercase,1em)
+        .dashboard-item-icon
+          svg
+            fill           main-xlight
+            height         20px
+            width          20px
+      .item-1
+        border           4px solid main-xlight
+        color            main-xlight
+      .item-2
+        border           4px solid main-light
+        color            main-light
+      .item-3
+        border           4px solid main-xdark
+        color            main-xdark
+      .item-4
+        border           4px solid main-xdark
+        color            main-xdark
+      .item-5
+        border           4px solid main-light
+        color            main-light
+      .item-6
+        border           4px solid main-xlight
+        color            main-xlight
+.dashboard-section-header
+  margin               35px 0 20px 35px
+  fontize(alt, light, capitalize, 2em, 1em)
+  color                main-light
+  svg
+    fill              main-light
+    height            25px
+    width             25px
+.dashboard-updates
+  width               100%
+  height              (75*4)px
+  .dashboard-more-updates
+    padding             2px 10px
+    color               main-xlight
+    fontize(alt,light,uppercase,1em)
+    border              1px main-xlight solid
+    border-radius       20px
+    width               200px
+    text-align          center
+    margin              10px 30px
+    &:hover
+      color             white
+      border            1px white solid
+      background-color  main-light
+      cursor            pointer
+.preload-icons
+  height              0
+  width               0
+  overflow            hidden
+
+/**********          dashbaord         **********/
+
 /*********************************************************/
 

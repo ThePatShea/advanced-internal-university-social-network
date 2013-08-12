@@ -1,0 +1,32 @@
+<template name="exploreEventSubmit">
+  <div class="collapse cb-form-container" id="cb-form-container-event">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form">
+      <!--<div class="attach-files">
+        <div id="eventphoto_dropzone" class="drop-zone">
+          <div class="dz-title">drag and drop</div>
+          <div class="dz-subtitle">or click here</div>
+          <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+        </div>
+      </div>-->
+      <img id="tempeventphoto" src="/img/Event.jpg" />
+        <div class="cb-form-row first">
+          <input class="half-width column-one" name="name" type="text" value="" placeholder="Event title*"/> 
+          <input class="half-width column-two" name="location" type="text" placeholder="Where?*"/>
+        </div>
+        <div class="cb-form-row third-width-container">
+          <input class="third-width column-first date-picker" name="date" type="text" placeholder="Date?*"/>
+          <input class="third-width column-second" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
+          <label class="third-width column-third" name="picture" type="label">Add picture?</label>
+        </div>
+          
+          <input class="search-text full-width" name="body" type="text" placeholder="Details" />
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">submit</button>
+      </div>
+    </form>
+  </div>
+</template>

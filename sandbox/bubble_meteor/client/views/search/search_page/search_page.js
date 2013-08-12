@@ -18,4 +18,8 @@ Template.searchPage.rendered = function() {
       Session.set('searchText', searchText);
     }
   });
+
+  if ( !Session.get('searchText') )
+    Session.set('searchText', ' ');
+
 }

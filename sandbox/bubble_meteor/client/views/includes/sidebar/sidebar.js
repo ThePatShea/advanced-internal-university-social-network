@@ -6,7 +6,7 @@ Template.sidebar.helpers({
       var currentSection = window.location.pathname.split("/")[1];
       //console.log(currentSection);
 
-      if (currentSection == 'search')
+      if ((currentSection == 'search') || (currentSection == 'dashboard'))
         return false;
       else
         return true;
@@ -32,10 +32,9 @@ Template.sidebar.helpers({
       return urlArray[2] == inputName;
     }
   , selectedSubsection     : function() {
-      var currentUrl  =  window.location.pathname;
-      var urlArray    =  currentUrl.split("/");
-       
-      return urlArray[2] == this._id;
+   //   var currentUrl  =  window.location.pathname;
+   //   var urlArray    =  currentUrl.split("/");
+      return Session.get('currentBubbleId') == this._id;
     }
   , userBubbles            : function() {
       return Bubbles.find({
@@ -44,7 +43,60 @@ Template.sidebar.helpers({
       });
     }
   , publicExplores         : function() {
-      return Explores.find().fetch();
+      return Explores.find({}).fetch();
+  }
+  , selectedExploreSubsection : function(exploreId){
+      var currentExploreId = Session.get('currentExploreId');
+      return (currentExploreId == exploreId);
+  }
+  , getExploreIcon: function(exploreObject){
+      var iconName = exploreObject.exploreIcon;
+      if(iconName == 'announcements'){
+        return Template['icon-official']();
+      }
+      else if(iconName == 'campus events'){
+        return Template['icon-events']();
+      }
+      else if(iconName == 'classifieds'){
+        return Template['icon-classifieds']();
+      }
+      else if(iconName == 'professor reviews'){
+        return Template['icon-professorreviews']();
+      }
+      else if(iconName == 'controversial topics'){
+        return Template['icon-controversial']();
+      }
+      else if(iconName == 'student deals'){
+        return Template['icon-deals']();
+      }
+      else if(iconName == 'nightlife'){
+        return Template['icon-nightlife']();
+      }
+  }
+  ,
+  getExploreIconName: function(exploreObject){
+      var iconName = exploreObject.exploreIcon;
+      if(iconName == 'announcements'){
+        return 'icon-official';
+      }
+      else if(iconName == 'campus events'){
+        return 'icon-events';
+      }
+      else if(iconName == 'classifieds'){
+        return 'icon-classifieds';
+      }
+      else if(iconName == 'professor reviews'){
+        return 'icon-professorreviews';
+      }
+      else if(iconName == 'controversial topics'){
+        return 'icon-controversial';
+      }
+      else if(iconName == 'student deals'){
+        return 'icon-deals';
+      }
+      else if(iconName == 'nightlife'){
+        return 'icon-nightlife';
+      }
   },
     hasLevel4Permission: function(){
       return ('4' == Meteor.user().userType && this.userType != '4');

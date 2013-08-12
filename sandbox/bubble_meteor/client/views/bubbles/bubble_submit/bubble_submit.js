@@ -1,84 +1,21 @@
 Template.bubbleSubmit.events({
-  'click .cb-submit': function(event) {
+/*  'click .cb-submit': function(event, tmpl) {
     event.preventDefault();
     //Google Analytics
     // _gaq.push(['_trackEvent', 'Bubble', 'Create Bubble', $(event.target).find('[name=title]').val()]);
 
     var bubble = {
       title: $('.cb-form').find('[name=title]').val(),
-      description: $('.cb-form').find('[name=description]').val(),
+      description: $('.cb-form').find('[name=body]').html(),
       //category: $(event.target).find('[name=category]').val(),
       'category': category,
-      coverPhoto: $('.cb-form').find('[id=coverphoto_preview]').attr('src'),
-      retinaCoverPhoto: $('.cb-form').find('[id=coverphoto_retina]').attr('src'),
-      profilePicture: $('.cb-form').find('[id=profilepicture_preview]').attr('src'),
-      retinaProfilePicture: $('.cb-form').find('[id=profilepicture_retina]').attr('src'),
+      coverPhoto: $('#coverPhoto').attr('src'),
+      retinaCoverPhoto: $('#coverRetinaPhoto').attr('src'),
+      profilePicture: $('#profilePhoto').attr('src'),
+      retinaProfilePicture: $('#profileRetinaPhoto').attr('src'),
       bubbleType: $('.cb-form').find('[name=bubbleType]').val()
     };
 
-
-    if(bubble.coverPhoto){
-      if(bubble.coverPhoto.length == 0){
-        var covercanvas = document.createElement('canvas');
-        var retinacovercanvas = document.createElement('canvas');
-        covercanvas.width = 1280;
-        covercanvas.height = 150;
-        retinacovercanvas.width = 2560;
-        retinacovercanvas.height = 300;
-        var covercontext = covercanvas.getContext('2d');
-        var retinacovercontext = retinacovercanvas.getContext('2d');
-        covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
-        retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
-        bubble.coverPhoto = covercanvas.toDataURL();
-        bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();
-      }
-    }
-    else{
-      var covercanvas = document.createElement('canvas');
-      var retinacovercanvas = document.createElement('canvas');
-      covercanvas.width = 1280;
-      covercanvas.height = 150;
-      retinacovercanvas.width = 2560;
-      retinacovercanvas.height = 300;
-      var covercontext = covercanvas.getContext('2d');
-      var retinacovercontext = retinacovercanvas.getContext('2d');
-      covercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 1280, 150);
-      retinacovercontext.drawImage($('#tempbubblecoverphoto')[0], 0, 0, 1280, 150, 0, 0, 2560, 300);
-      bubble.coverPhoto = covercanvas.toDataURL();
-      bubble.retinaCoverPhoto = retinacovercanvas.toDataURL();  
-    };
-
-    if(bubble.profilePicture){
-      if(bubble.profilePicture.length == 0){
-        var profilecanvas = document.createElement('canvas');
-        var retinaprofilecanvas = document.createElement('canvas');
-        profilecanvas.width = 300;
-        profilecanvas.height = 300;
-        retinaprofilecanvas.width = 600;
-        retinaprofilecanvas.height = 600;
-        var profilecontext = profilecanvas.getContext('2d');
-        var retinaprofilecontext = retinaprofilecanvas.getContext('2d');
-        profilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 300, 300);
-        retinaprofilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 600, 600);
-        bubble.profilePicture = profilecanvas.toDataURL();
-        bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
-      }
-    }
-    else{
-      var profilecanvas = document.createElement('canvas');
-      var retinaprofilecanvas = document.createElement('canvas');
-      profilecanvas.width = 300;
-      profilecanvas.height = 300;
-      retinaprofilecanvas.width = 600;
-      retinaprofilecanvas.height = 600;
-      var profilecontext = profilecanvas.getContext('2d');
-      var retinaprofilecontext = retinaprofilecanvas.getContext('2d');
-      profilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 300, 300);
-      retinaprofilecontext.drawImage($('#tempbubbleprofile')[0], 0, 0, 600, 600);
-      bubble.profilePicture = profilecanvas.toDataURL();
-      bubble.retinaProfilePicture = retinaprofilecanvas.toDataURL();
-    }
-    
     Meteor.call('bubble', bubble, function(error, bubbleId) {
       if (error) {
         // display the error to the user
@@ -88,7 +25,7 @@ Template.bubbleSubmit.events({
       }
     });
   },
-
+*/
   'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
@@ -96,13 +33,8 @@ Template.bubbleSubmit.events({
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'drop #cover_dropzone': function(evt){
-    console.log('Drop');
-        evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files;
-
+  'change #profilefilesToUpload': function(evt){
+    files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
       error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
@@ -114,157 +46,33 @@ Template.bubbleSubmit.events({
       if (f.type.match('image.*')) {
         var reader = new FileReader();
 
-        // Closure to capture the file information.
-        /*reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 1280;
-            var coverphoto_height = 150;
-            var retina_width = 2560;
-            var retina_height = 300;
-            $("#cover_dropzone").hide();
-            $("#coverfilesToUpload").hide();
-            $("#coverphoto_upload").attr("src", e.target.result);
-            $("#coverphoto_preview").attr("src", e.target.result);
-            $("#coverphoto_upload").attr("title", escape(theFile.name));
-            $("#coverphoto_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = coverphoto_width;
-                  mycanvas.height = coverphoto_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#coverphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
-                  retinacontext.drawImage($("#coverphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#coverphoto_preview").attr("src", imagedata);
-                  $("#coverphoto_preview").attr("width", coverphoto_width/2);
-                  $("#coverphoto_preview").attr("height", coverphoto_height/2);
-                  $("#coverphoto_retina").attr("src", retinaImageData);
-                };
-
-                $('#coverphoto_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
-                  aspectRatio: coverphoto_width/coverphoto_height
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);*/
+        var profileCanvas = document.getElementById('profile-canvas');
+        var profileRetinaCanvas = document.getElementById('profile-retina-canvas');
+        var profileContext = profileCanvas.getContext('2d');
+        var profileRetinaContext = profileRetinaCanvas.getContext('2d');
+        var profileImage = new Image();
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            var coverphoto_width = 1280;
-            var coverphoto_height = 150;
-            var retina_width = 2560;
-            var retina_height = 300;
-            $("#cover_dropzone").hide();
-            $("#coverfilesToUpload").hide();
-            $("#coverphoto_upload").attr("src", e.target.result);
-            $("#coverphoto_preview").attr("src", e.target.result);
-            $("#coverphoto_upload").attr("title", escape(theFile.name));
-            $("#coverphoto_upload").show();
-            $(document).ready(function(){
-              // Apply jrac on some image.
-              var tempcanvas = document.createElement('canvas');
-              var tempcontext = tempcanvas.getContext('2d');
-              var mycanvas = document.createElement('canvas');
-              var retinacanvas = document.createElement('canvas');
-              var mycontext = mycanvas.getContext('2d');
-              var retinacontext = retinacanvas.getContext('2d');
-              mycanvas.width = coverphoto_width;
-              mycanvas.height = coverphoto_height;
-              retinacanvas.width = retina_width;
-              retinacanvas.height = retina_height;
-              var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-              cropwidth = 640;
-              cropheight = 75;
-              var img = $("#coverphoto_upload")[0]; // Get my img elem
-              var pic_real_width, pic_real_height;
-              $("<img/>") // Make in memory copy of image to avoid css issues
-                  .attr("src", $(img).attr("src"))
-                  .load(function() {
-                      imagewidth = this.width;   // Note: $(this).width() will not
-                      imageheight = this.height; // work for in memory images.
-                      $('#coverphoto_upload').jrac({'crop_width': cropwidth, 'crop_height': cropheight, 'image_width': imagewidth, 'image_height': imageheight, 'viewport_width': imagewidth, 'viewport_height': imageheight, 'viewport_onload': function(){
-                                        console.log('Viewport loaded.');
-                                        $(".jrac_zoom_slider").hide();
-                                        $(".ui-resizable-handle").hide();
-                                           var $viewport = this;
-                                           $viewport.observator.register('jrac_crop_x', $(document), function(element, event_name, value){
-                                              cropx = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#coverphoto_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              retinacontext.drawImage($("#coverphoto_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, retina_width, retina_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#coverphoto_preview").attr("src", imagedata);
-                                              $("#coverphoto_preview").attr("width", coverphoto_width/2);
-                                              $("#coverphoto_preview").attr("height", coverphoto_height/2);
-                                              $("#coverphoto_retina").attr("src", retinaImageData);
-                                            });
-                                           $viewport.observator.register('jrac_crop_y', $(document), function(element, event_name, value){
-                                              cropy = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#coverphoto_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#coverphoto_preview").attr("src", imagedata);
-                                              $("#coverphoto_preview").attr("width", coverphoto_width/2);
-                                              $("#coverphoto_preview").attr("height", coverphoto_height/2);
-                                              $("#coverphoto_retina").attr("src", retinaImageData);
-                                            });
-                                      }
-                      });
-                  });
-              
-
-
-
-            });
-
+            $("#profile_drop_zone").hide();
+            $("#crop-profile").attr("src", e.target.result);
+            profileImage.src = e.target.result;
+            profileCropArea = $('#crop-profile').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '100', minHeight: '100', x1: '10', y1: '10', x2: '110', y2: '110', parent: ".bubble-create", handles: true, onSelectChange: function(img, selection) {
+              profileContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 300, 300);
+              profileRetinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 600, 600);
+              $('#profilePhoto').attr('src',profileCanvas.toDataURL());
+              $('#profileRetinaPhoto').attr('src',profileRetinaCanvas.toDataURL());
+            }});
           };
         })(f);
-
-        // Read in the image file as a data URL.
         reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
-        throwError(error.reason);
       }
     }
   },
-
 
   'change #coverfilesToUpload': function(evt){
-
-
-    var files = evt.target.files;
-
-
+    files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
       error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
@@ -276,488 +84,29 @@ Template.bubbleSubmit.events({
       if (f.type.match('image.*')) {
         var reader = new FileReader();
 
-        // Closure to capture the file information.
-        /*reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 1280;
-            var coverphoto_height = 150;
-            var retina_width = 2560;
-            var retina_height = 300;
-            $("#cover_dropzone").hide();
-            $("#coverfilesToUpload").hide();
-            $("#coverphoto_upload").attr("src", e.target.result);
-            $("#coverphoto_preview").attr("src", e.target.result);
-            $("#coverphoto_upload").attr("title", escape(theFile.name));
-            $("#coverphoto_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = coverphoto_width;
-                  mycanvas.height = coverphoto_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#coverphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
-                  retinacontext.drawImage($("#coverphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#coverphoto_preview").attr("src", imagedata);
-                  $("#coverphoto_preview").attr("width", coverphoto_width/2);
-                  $("#coverphoto_preview").attr("height", coverphoto_height/2);
-                  $("#coverphoto_retina").attr("src", retinaImageData);
-                };
-
-                $('#coverphoto_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
-                  aspectRatio: coverphoto_width/coverphoto_height
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);*/
-
-        // Read in the image file as a data URL.
+        var coverCanvas = document.getElementById('cover-canvas');
+        var coverRetinaCanvas = document.getElementById('cover-retina-canvas');
+        var coverContext = coverCanvas.getContext('2d');
+        var coverRetinaContext = coverRetinaCanvas.getContext('2d');
+        var coverImage = new Image();
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            var coverphoto_width = 1280;
-            var coverphoto_height = 150;
-            var retina_width = 2560;
-            var retina_height = 300;
-            $("#cover_dropzone").hide();
-            $("#coverfilesToUpload").hide();
-            $("#coverphoto_upload").attr("src", e.target.result);
-            $("#coverphoto_preview").attr("src", e.target.result);
-            $("#coverphoto_upload").attr("title", escape(theFile.name));
-            $("#coverphoto_upload").show();
-            $(document).ready(function(){
-              // Apply jrac on some image.
-              var tempcanvas = document.createElement('canvas');
-              var tempcontext = tempcanvas.getContext('2d');
-              var mycanvas = document.createElement('canvas');
-              var retinacanvas = document.createElement('canvas');
-              var mycontext = mycanvas.getContext('2d');
-              var retinacontext = retinacanvas.getContext('2d');
-              mycanvas.width = coverphoto_width;
-              mycanvas.height = coverphoto_height;
-              retinacanvas.width = retina_width;
-              retinacanvas.height = retina_height;
-              var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-              cropwidth = 640;
-              cropheight = 75;
-              var img = $("#coverphoto_upload")[0]; // Get my img elem
-              var pic_real_width, pic_real_height;
-              $("<img/>") // Make in memory copy of image to avoid css issues
-                  .attr("src", $(img).attr("src"))
-                  .load(function() {
-                      imagewidth = this.width;   // Note: $(this).width() will not
-                      imageheight = this.height; // work for in memory images.
-                      $('#coverphoto_upload').jrac({'crop_width': cropwidth, 'crop_height': cropheight, 'image_width': imagewidth, 'image_height': imageheight, 'viewport_width': imagewidth, 'viewport_height': imageheight, 'viewport_onload': function(){
-                                        console.log('Viewport loaded.');
-                                        $(".jrac_zoom_slider").hide();
-                                        $(".ui-resizable-handle").hide();
-                                           var $viewport = this;
-                                           $viewport.observator.register('jrac_crop_x', $(document), function(element, event_name, value){
-                                              cropx = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#coverphoto_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              retinacontext.drawImage($("#coverphoto_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, retina_width, retina_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#coverphoto_preview").attr("src", imagedata);
-                                              $("#coverphoto_preview").attr("width", coverphoto_width/2);
-                                              $("#coverphoto_preview").attr("height", coverphoto_height/2);
-                                              $("#coverphoto_retina").attr("src", retinaImageData);
-                                            });
-                                           $viewport.observator.register('jrac_crop_y', $(document), function(element, event_name, value){
-                                              cropy = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#coverphoto_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#coverphoto_preview").attr("src", imagedata);
-                                              $("#coverphoto_preview").attr("width", coverphoto_width/2);
-                                              $("#coverphoto_preview").attr("height", coverphoto_height/2);
-                                              $("#coverphoto_retina").attr("src", retinaImageData);
-                                            });
-                                      }
-                      });
-                  });
-              
-
-
-
-            });
-
+            $("#cover_drop_zone").hide();
+            $("#crop-cover").attr("src", e.target.result);
+            coverImage.src = e.target.result;
+            coverCropArea = $('#crop-cover').imgAreaSelect({instance: true, aspectRatio: '128:15', imageHeight: coverImage.height, imageWidth: coverImage.width, minWidth: '256', minHeight: '30', x1: '10', y1: '10', x2: '266', y2: '40', parent: ".bubble-create", handles: true, onSelectChange: function(img, selection) {
+              coverContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 1280, 150);
+              coverRetinaContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 2560, 300);
+              $('#coverPhoto').attr('src',coverCanvas.toDataURL());
+              $('#coverRetinaPhoto').attr('src',coverRetinaCanvas.toDataURL());
+            }});
           };
         })(f);
-
         reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
-        throwError(error.reason);
       }
     }
-
-  },
-
-  'drop #profile_dropzone': function(evt){
-    console.log('Drop');
-        evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files;
-
-    //If more than one file dropped on the dropzone then throw an error to the user
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        /*reader.onload = (function(theFile) {
-          return function(e) {
-            var profilepicture_width = 300;
-            var profilepicture_height = 300;
-            var retina_width = 600;
-            var retina_height = 600;
-            $("#profile_dropzone").hide();
-            $("#profilefilesToUpload").hide();
-            $("#profilepicture_upload").attr("src", e.target.result);
-            $("#profilepicture_preview").attr("src", e.target.result);
-            $("#profilepicture_upload").attr("title", escape(theFile.name));
-            $("#profilepicture_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = profilepicture_width;
-                  mycanvas.height = profilepicture_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#profilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, profilepicture_width, profilepicture_height);
-                  retinacontext.drawImage($("#profilepicture_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#profilepicture_preview").attr("src", imagedata);
-                  $("#profilepicture_preview").attr("width", profilepicture_width);
-                  $("#profilepicture_preview").attr("height", profilepicture_height);
-                  $("#profilepicture_retina").attr("src", retinaImageData);
-                };
-
-                $('#profilepicture_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, profilepicture_width, profilepicture_height ],
-                  aspectRatio: 1
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);*/
-
-        // Read in the image file as a data URL.
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 300;
-            var coverphoto_height = 300;
-            var retina_width = 600;
-            var retina_height = 600;
-            $("#profilepicture_dropzone").hide();
-            $("#profilepicture_upload").attr("src", e.target.result);
-            $("#profilepicture_preview").attr("src", e.target.result);
-            $("#profilepicture_upload").attr("title", escape(theFile.name));
-            $("#profilepicture_upload").show();
-            $(document).ready(function(){
-              // Apply jrac on some image.
-              var tempcanvas = document.createElement('canvas');
-              var tempcontext = tempcanvas.getContext('2d');
-              var mycanvas = document.createElement('canvas');
-              var retinacanvas = document.createElement('canvas');
-              var mycontext = mycanvas.getContext('2d');
-              var retinacontext = retinacanvas.getContext('2d');
-              mycanvas.width = coverphoto_width;
-              mycanvas.height = coverphoto_height;
-              retinacanvas.width = retina_width;
-              retinacanvas.height = retina_height;
-              var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-              cropwidth = 150;
-              cropheight = 150;
-              var img = $("#profilepicture_upload")[0]; // Get my img elem
-              var pic_real_width, pic_real_height;
-              $("<img/>") // Make in memory copy of image to avoid css issues
-                  .attr("src", $(img).attr("src"))
-                  .load(function() {
-                      imagewidth = this.width;   // Note: $(this).width() will not
-                      imageheight = this.height; // work for in memory images.
-                      $('#profilepicture_upload').jrac({'crop_width': cropwidth, 'crop_height': cropheight, 'image_width': imagewidth, 'image_height': imageheight, 'viewport_width': imagewidth, 'viewport_height': imageheight, 'viewport_onload': function(){
-                                        console.log('Viewport loaded.');
-                                        $(".jrac_zoom_slider").hide();
-                                        $(".ui-resizable-handle").hide();
-                                           var $viewport = this;
-                                           $viewport.observator.register('jrac_crop_x', $(document), function(element, event_name, value){
-                                              cropx = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              retinacontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, retina_width, retina_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#profilepicture_preview").attr("src", imagedata);
-                                              $("#profilepicture_preview").attr("width", coverphoto_width/2);
-                                              $("#profilepicture_preview").attr("height", coverphoto_height/2);
-                                              $("#profilepicture_retina").attr("src", retinaImageData);
-                                            });
-                                           $viewport.observator.register('jrac_crop_y', $(document), function(element, event_name, value){
-                                              cropy = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#profilepicture_preview").attr("src", imagedata);
-                                              $("#profilepicture_preview").attr("width", coverphoto_width/2);
-                                              $("#profilepicture_preview").attr("height", coverphoto_height/2);
-                                              $("#profilepicture_retina").attr("src", retinaImageData);
-                                            });
-                                      }
-                      });
-                  });
-              
-
-
-
-            });
-
-          };
-        })(f);
-
-        reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
-        throwError(error.reason);
-      }
-    }
-  },
-
-  'change #profilefilesToUpload': function(evt){
-    console.log(evt.target);
-
-    var files = evt.target.files;
-
-    //If more than one file dropped on the dropzone then throw an error to the user
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        /*reader.onload = (function(theFile) {
-          return function(e) {
-            var profilepicture_width = 300;
-            var profilepicture_height = 300;
-            var retina_width = 600;
-            var retina_height = 600;
-            var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-            cropwidth = 150;
-            cropheight = 150;
-            $("#profile_dropzone").hide();
-            $("#profilefilesToUpload").hide();
-            $("#profilepicture_upload").attr("src", e.target.result);
-            $("#profilepicture_preview").attr("src", e.target.result);
-            $("#profilepicture_upload").attr("title", escape(theFile.name));
-            $("#profilepicture_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = profilepicture_width;
-                  mycanvas.height = profilepicture_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  //console.log(coords);
-                  console.log(cropx, cropy);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, profilepicture_width, profilepicture_height);
-                  retinacontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#profilepicture_preview").attr("src", imagedata);
-                  $("#profilepicture_preview").attr("width", profilepicture_width);
-                  $("#profilepicture_preview").attr("height", profilepicture_height);
-                  $("#profilepicture_retina").attr("src", retinaImageData);
-                };
-
-                $("<img/>") // Make in memory copy of image to avoid css issues
-                  .attr("src", $(img).attr("src"))
-                  .load(function() {
-                      imagewidth = this.width;   // Note: $(this).width() will not
-                      imageheight = this.height; // work for in memory images.
-                      $('#profileprofilepicture_upload').jrac({'crop_width': cropwidth, 'crop_height': cropheight, 'image_width': imagewidth, 'image_height': imageheight, 'viewport_width': imagewidth, 'viewport_height': imageheight, 'viewport_onload': function(){
-                                        console.log('Viewport loaded.');
-                                        $(".jrac_zoom_slider").hide();
-                                        $(".ui-resizable-handle").hide();
-                                           var $viewport = this;
-                                           $viewport.observator.register('jrac_crop_x', $(document), function(element, event_name, value){
-                                              cropx = value;
-                                              showPreview();
-                                            });
-                                           $viewport.observator.register('jrac_crop_y', $(document), function(element, event_name, value){
-                                              cropy = value;
-                                              showPreview();
-                                            });
-                                      }
-                      });
-                  });
-              });
-              
-            });
-          }
-        })(f);*/
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 300;
-            var coverphoto_height = 300;
-            var retina_width = 600;
-            var retina_height = 600;
-            $("#profilepicture_dropzone").hide();
-            $("#profilepicture_upload").attr("src", e.target.result);
-            $("#profilepicture_preview").attr("src", e.target.result);
-            $("#profilepicture_upload").attr("title", escape(theFile.name));
-            $("#profilepicture_upload").show();
-            $(document).ready(function(){
-              // Apply jrac on some image.
-              var tempcanvas = document.createElement('canvas');
-              var tempcontext = tempcanvas.getContext('2d');
-              var mycanvas = document.createElement('canvas');
-              var retinacanvas = document.createElement('canvas');
-              var mycontext = mycanvas.getContext('2d');
-              var retinacontext = retinacanvas.getContext('2d');
-              mycanvas.width = coverphoto_width;
-              mycanvas.height = coverphoto_height;
-              retinacanvas.width = retina_width;
-              retinacanvas.height = retina_height;
-              var cropx, cropy, cropwidth, cropheight, imagewidth, imageheight;
-              cropwidth = 150;
-              cropheight = 150;
-              var img = $("#profilepicture_upload")[0]; // Get my img elem
-              var pic_real_width, pic_real_height;
-              $("<img/>") // Make in memory copy of image to avoid css issues
-                  .attr("src", $(img).attr("src"))
-                  .load(function() {
-                      imagewidth = this.width;   // Note: $(this).width() will not
-                      imageheight = this.height; // work for in memory images.
-                      $('#profilepicture_upload').jrac({'crop_width': cropwidth, 'crop_height': cropheight, 'image_width': imagewidth, 'image_height': imageheight, 'viewport_width': imagewidth, 'viewport_height': imageheight, 'viewport_onload': function(){
-                                        console.log('Viewport loaded.');
-                                        $(".jrac_zoom_slider").hide();
-                                        $(".ui-resizable-handle").hide();
-                                           var $viewport = this;
-                                           $viewport.observator.register('jrac_crop_x', $(document), function(element, event_name, value){
-                                              cropx = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              retinacontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, retina_width, retina_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#profilepicture_preview").attr("src", imagedata);
-                                              $("#profilepicture_preview").attr("width", coverphoto_width/2);
-                                              $("#profilepicture_preview").attr("height", coverphoto_height/2);
-                                              $("#profilepicture_retina").attr("src", retinaImageData);
-                                            });
-                                           $viewport.observator.register('jrac_crop_y', $(document), function(element, event_name, value){
-                                              cropy = value;
-                                              console.log("x, y: ", cropx, cropy);
-                                              mycontext.drawImage($("#profilepicture_upload")[0], cropx, cropy, cropwidth, cropheight, 0, 0, coverphoto_width, coverphoto_height);
-                                              //var tempimagedata = tempcanvas.toDataURL();
-                                              //$("#userprofilepicture_preview").attr("src", tempimagedata);
-                                              //console.log($(".jrac_crop_drag_handler").position());
-                                              var imagedata = mycanvas.toDataURL();
-                                              var retinaImageData = retinacanvas.toDataURL();
-                                              $("#profilepicture_preview").attr("src", imagedata);
-                                              $("#profilepicture_preview").attr("width", coverphoto_width/2);
-                                              $("#profilepicture_preview").attr("height", coverphoto_height/2);
-                                              $("#profilepicture_retina").attr("src", retinaImageData);
-                                            });
-                                      }
-                      });
-                  });
-              
-
-
-
-            });
-
-          };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
-        throwError(error.reason);
-      }
-    }
-
   },
 
   'click #club': function(evt){
@@ -765,6 +114,7 @@ Template.bubbleSubmit.events({
     category = "club";
     $(".nav-tabs li").removeClass('active');
     $("#club").addClass('active');
+    $("[name=category]").val("club");
   },
 
   'click #greek': function(evt){
@@ -772,55 +122,63 @@ Template.bubbleSubmit.events({
     category = "greek";
     $(".nav-tabs li").removeClass('active');
     $("#greek").addClass('active');
+    $("[name=category]").val("greek");
   },
 
-  'click #arts': function(evt){
+  'click #art': function(evt){
     evt.stopPropagation();
-    category = "arts";
+    category = "art";
     $(".nav-tabs li").removeClass('active');
-    $("#arts").addClass('active');
+    $("#art").addClass('active');
+    $("[name=category]").val("art");
   },
 
-  'click #athletics': function(evt){
+  'click #sport': function(evt){
     evt.stopPropagation();
-    category ="athletics";
+    category ="sport";
     $(".nav-tabs li").removeClass('active');
-    $("#athletics").addClass('active');
+    $("#sport").addClass('active');
+    $("[name=category]").val("sport");
   },
 
-  'click #academic': function(evt){
+  'click #major': function(evt){
     evt.stopPropagation();
-    category = "academic";
+    category = "major";
     $(".nav-tabs li").removeClass('active');
-    $("#academic").addClass('active');
+    $("#major").addClass('active');
+    $("[name=category]").val("major");
   },
 
-  'click #administrative': function(evt){
+  'click #office': function(evt){
     evt.stopPropagation();
-    category   = "administrative";
+    category   = "office";
     $(".nav-tabs li").removeClass('active');
-    $("#administrative").addClass('active');
+    $("#office").addClass('active');
+    $("[name=category]").val("office");
   },
 
-  'click #community': function(evt){
+  'click #service': function(evt){
     evt.stopPropagation();
-    category = "community";
+    category = "service";
     $(".nav-tabs li").removeClass('active');
-    $("#community").addClass('active');
+    $("#service").addClass('active');
+    $("[name=category]").val("service");
   },
 
-  'click #class': function(evt){
+  'click #study': function(evt){
     evt.stopPropagation();
-    category = "class";
+    category = "study";
     $(".nav-tabs li").removeClass('active');
-    $("#class").addClass('active');
+    $("#study").addClass('active');
+    $("[name=category]").val("study");
   },
 
-  'click #residence': function(evt){
+  'click #dorm': function(evt){
     evt.stopPropagation();
-    category = "residence";
+    category = "dorm";
     $(".nav-tabs li").removeClass('active');
-    $("#residence").addClass('active');
+    $("#dorm").addClass('active');
+    $("[name=category]").val("dorm");
   },
 
   'click #custom': function(evt){
@@ -828,6 +186,7 @@ Template.bubbleSubmit.events({
     category = "custom";
     $(".nav-tabs li").removeClass('active');
     $("#custom").addClass('active');
+    $("[name=category]").val("custom");
   }
 
 });

@@ -14,202 +14,66 @@ Template.eventSubmit.events({
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
       attendees: [Meteor.userId()],
-      eventPhoto: $(event.target).find('[id=eventphoto_preview]').attr('src'),
-      retinaEventPhoto: $(event.target).find('[id=eventphoto_retina]').attr('src')
+      eventPhoto: $("#eventPhoto").attr("src"),
+      retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
     };
 
-    if(eventAttributes.eventPhoto.length == 0){
-      var eventphotocanvas = document.createElement('canvas');
-      var retinaeventphotocanvas = document.createElement('canvas');
-      eventphotocanvas.width = 340;
-      eventphotocanvas.height = 230;
-      retinaeventphotocanvas.width = 680;
-      retinaeventphotocanvas.height = 460;
-      var eventphotocontext = eventphotocanvas.getContext('2d');
-      var retinaeventphotocontext = retinaeventphotocanvas.getContext('2d');
-      eventphotocontext.drawImage($('#tempeventphoto')[0], 0, 0, 340, 230, 0, 0, 340, 230);
-      retinaeventphotocontext.drawImage($('#tempeventphoto')[0], 0, 0, 680, 460, 0, 0, 680, 460);
-      eventAttributes.eventPhoto = eventphotocanvas.toDataURL();
-      eventAttributes.retinaEventPhoto = retinaeventphotocanvas.toDataURL();
-      console.log($('#tempeventphoto')[0]);
-    }
-    
+
+    console.log("event attributes: " + JSON.stringify(eventAttributes) );
     createPost(eventAttributes);
   },
 
-    'dragover .dropzone': function(evt){
+  'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'drop .dropzone': function(evt){
-    console.log('Drop');
-        evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files;
-
-    //If more than one file dropped on the dropzone then throw an error to the user.
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 340;
-            var coverphoto_height = 230;
-            var retina_width = 680;
-            var retina_height = 460;
-            $("#eventphoto_dropzone").hide();
-            $("#eventfilesToUpload").hide();
-            $("#eventphoto_upload").attr("src", e.target.result);
-            $("#eventphoto_preview").attr("src", e.target.result);
-            $("#eventphoto_upload").attr("title", escape(theFile.name));
-            $("#eventphoto_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = coverphoto_width;
-                  mycanvas.height = coverphoto_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
-                  retinacontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#eventphoto_preview").attr("src", imagedata);
-                  $("#eventphoto_preview").attr("width", coverphoto_width/2);
-                  $("#eventphoto_preview").attr("height", coverphoto_height/2);
-                  $("#eventphoto_retina").attr("src", retinaImageData);
-                };
-
-                $('#eventphoto_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
-                  aspectRatio: coverphoto_width/coverphoto_height
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
+  'change #eventFilesToUpload': function(evt){
+      files = evt.target.files;
+      //If more than one file dropped on the dropzone then throw an error to the user.
+      if(files.length > 1){
+        error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
         throwError(error.reason);
       }
-    }
-
-  },
-
-
-  'change #eventfilesToUpload': function(evt){
-    var files = evt.target.files;
-
-    //If more than one file dropped on the dropzone then throw an error to the user.
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var coverphoto_width = 340;
-            var coverphoto_height = 230;
-            var retina_width = 680;
-            var retina_height = 460;
-            $("#eventphoto_dropzone").hide();
-            $("#eventfilesToUpload").hide();
-            $("#eventphoto_upload").attr("src", e.target.result);
-            $("#eventphoto_preview").attr("src", e.target.result);
-            $("#eventphoto_upload").attr("title", escape(theFile.name));
-            $("#eventphoto_upload").show();
-            $(document).ready( function(){
-              $(function(){
-                function showPreview(coords){
-                  var mycanvas = document.createElement('canvas');
-                  var retinacanvas = document.createElement('canvas');
-                  mycanvas.width = coverphoto_width;
-                  mycanvas.height = coverphoto_height;
-                  retinacanvas.width = retina_width;
-                  retinacanvas.height = retina_height;
-                  console.log(coords);
-                  var mycontext = mycanvas.getContext('2d');
-                  var retinacontext = retinacanvas.getContext('2d');
-                  mycontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, coverphoto_width, coverphoto_height);
-                  retinacontext.drawImage($("#eventphoto_upload")[0], coords.x, coords.y, (coords.x2 - coords.x), (coords.y2 - coords.y), 0, 0, retina_width, retina_height);
-                  var imagedata = mycanvas.toDataURL();
-                  var retinaImageData = retinacanvas.toDataURL();
-                  $("#eventphoto_preview").attr("src", imagedata);
-                  $("#eventphoto_preview").attr("width", coverphoto_width/2);
-                  $("#eventphoto_preview").attr("height", coverphoto_height/2);
-                  $("#eventphoto_retina").attr("src", retinaImageData);
-                };
-
-                $('#eventphoto_upload').Jcrop({
-                  onChange: showPreview,
-                  onSelect: showPreview,
-                  setSelect:   [ 50, 50, coverphoto_width, coverphoto_height ],
-                  aspectRatio: coverphoto_width/coverphoto_height
-                }, function(){
-                  jcrop_api = this;
-                  jcrop_api.setOptions({ allowResize: false });
-                });
-
-              });
-            });
-          };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f);
-
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
       else{
-        error = new Meteor.Error(422, 'Please choose a valid image.');
-        throwError(error.reason);
+        f = files[0];
+        //If the file dropped on the dropzone is an image then start processing it
+        if (f.type.match('image.*')) {
+          var reader = new FileReader();
+          var mainCanvas = document.getElementById('event-main-canvas');
+          var retinaCanvas = document.getElementById('event-retina-canvas');
+          var mainContext = mainCanvas.getContext('2d');
+          var retinaContext = retinaCanvas.getContext('2d');
+          var profileImage = new Image();
+
+          // Closure to capture the file information.
+          reader.onload = (function(theFile) {
+            return function(e) {
+                $("#event_drop_zone").hide();
+                $(".crop").attr("src", e.target.result);
+                profileImage.src = e.target.result;
+                cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '170', minHeight: '115', x1: '10', y1: '10', x2: '180', y2: '125', parent: "#add-picture", handles: true, onSelectChange: function(img, selection) {
+                  mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                  retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                  $("#eventPhoto").attr("src",mainCanvas.toDataURL());
+                  $("#eventRetinaPhoto").attr("src",retinaCanvas.toDataURL());
+                }});
+            };
+          })(f);
+          reader.readAsDataURL(f);
+        }
+        else{
+          error = new Meteor.Error(422, 'Please choose a valid image.');
+          throwError(error.reason);
+        }
       }
-    }
   }
 
 });
 
 Template.eventSubmit.rendered = function() {
-  $("#eventphoto_retina").hide();
-  $("#tempeventphoto").hide();
-
   $(".date-picker").glDatePicker(
     {
       cssName: 'flatwhite',
@@ -219,16 +83,16 @@ Template.eventSubmit.rendered = function() {
   );
 
   //Format the time when the textbox is changed
-  $(".input-small").change(function(){
-    var time = $(".input-small").val();
+  $("[name=time]").change(function(){
+    var time = $("[name=time]").val();
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $(".input-small").val("");
+        $("[name=time]").val("");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $(".input-small").val(formatedTime);
+        $("[name=time]").val(formatedTime);
       }
 
     }

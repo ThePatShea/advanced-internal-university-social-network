@@ -10,7 +10,14 @@
         {{#each getDiscussionPosts}}
           {{> listItem}}
         {{else}}
-          No discussions yet.
+          <div></div>
+          <div class="post-item">
+            <div class="v-middle">
+              <div class="v-inner">
+                No discussions? Start discussions for any topic here!
+              </div>
+            </div>
+          </div>
         {{/each}}
       </div>
     </div>

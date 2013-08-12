@@ -8,7 +8,8 @@ Template.exploreSubmit.events({
       title: $(event.target).find('[name=title]').val(),
       'exploreIcon': $(event.target).find('[name=exploreIcon]').val(),
       description: $(event.target).find('[name=description]').val(),
-      category: $(event.target).find('[name=category]').val(),
+      //exploreType: $(event.target).find('[name=category]').val(),
+      exploreType: selectedExploreType,
       coverPhoto: $(event.target).find('[id=coverphoto_preview]').attr('src'),
       retinaCoverPhoto: $(event.target).find('[id=coverphoto_retina]').attr('src')
     };

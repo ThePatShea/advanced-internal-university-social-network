@@ -1,0 +1,7 @@
+<template name="exploreTypeSelector">
+    <select name="category" class="exploretypeselector">
+        {{#each getExploreTypes}}
+          <option value="{{name_short}}" id="{{name_short}}">{{name_long}}</option>
+        {{/each}}
+    </select>
+</template>

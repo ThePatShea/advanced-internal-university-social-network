@@ -3,7 +3,7 @@ referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.explorePage.helpers({ 
   currentExplore: function(){
-    var currentExploreId = Session.get('currentExplore');
+    var currentExploreId = Session.get('currentExploreId');
     var currentExplore = Explores.findOne({_id: currentExploreId});
     return currentExplore;
   },
@@ -48,6 +48,11 @@ Template.explorePage.helpers({
   // return only latest 3 posts
   filePosts: function() {
     return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'},{limit: 3}).fetch();
+  },
+
+  posts: function() {
+    var explore = Explores.findOne(Session.get('currentExploreId'));
+    return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType})
   }
 });
 

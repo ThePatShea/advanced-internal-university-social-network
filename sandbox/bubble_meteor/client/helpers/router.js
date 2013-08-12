@@ -69,6 +69,8 @@ Meteor.Router.add({
 
     '/settings/invites': 'invitationsPage',
 
+    '/settings/about': 'about',
+
 
   // User Profile Related Routes
     '/settings/userprofile/:id': {
@@ -100,7 +102,14 @@ Meteor.Router.add({
     '/explore/create': 'exploreSubmit',
     '/explore/:id': {
       to: 'explorePage',
-      and: function(id){Session.set('currentExplore', id);}
+      and: function(id){Session.set('currentExploreId', id);}
+    },
+    '/explore/:_expId/posts/:_pId': {
+      to: 'explorePostPage',
+      and: function(expId, pId){
+        Session.set('currentExploreId', expId);
+        Session.set('currentPostId', pId);
+      }
     },
     '/explore':  'exploreAll',
 

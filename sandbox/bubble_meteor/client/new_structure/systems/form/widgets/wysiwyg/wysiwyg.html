@@ -1,0 +1,34 @@
+<template name="wysiwyg2">
+  <div class="controls wysiwyg_group">
+      <div class="wysiwyg-row">
+        <label class="pull-left wysiwyg-label">{{wysiwygHeading}}</label>
+        <div class="pull-right btn-toolbar btns-formatting" data-role="editor-toolbar" data-target=".wysiwyg">
+          <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg" data-edit="underline" title="Underline (Ctrl/Cmd+U)">{{> icon-wysiwyg-underline}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="italic" title="Italic (Ctrl/Cmd+I)">{{> icon-wysiwyg-italic}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="bold" title="Bold (Ctrl/Cmd+B)">{{> icon-wysiwyg-bold}}</a>
+          </div>
+          <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg" data-edit="insertorderedlist" title="Number list">{{> icon-wysiwyg-list-numbered}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="insertunorderedlist" title="Bullet list">{{> icon-wysiwyg-list-bulleted}}</a>
+          </div>
+          <div class="btn-group justify">
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)">{{> icon-wysiwyg-justify-right}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)">{{> icon-wysiwyg-justify-center}}</a>
+            <a class="std-btn-form btn-wysiwyg" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)">{{> icon-wysiwyg-justify-left}}</a>
+          </div>
+        </div>
+      </div>
+      <div name="body" class="wysiwyg">
+        {{#if wysiwygBubble}}
+          {{{systemBubble.selectedBubble.description}}}
+        {{else}}
+          {{#if wysiwygPost}}
+            {{{systemBubble.selectedPost.body}}}
+          {{else}}
+            <span class="wysiwyg-placeholder">Type here...</span>
+          {{/if}}
+        {{/if}}
+      </div>
+  </div>
+</template>

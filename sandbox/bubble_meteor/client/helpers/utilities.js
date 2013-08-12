@@ -3,7 +3,7 @@ categories =  [
         { name_long: 'student organization'       , name_short: 'club'    }
       , { name_long: 'athletics and recreation'   , name_short: 'sport'   }
       , { name_long: 'greek organization'         , name_short: 'greek'   }
-      , { name_long: 'study group'                , name_short: 'study'   }
+      , { name_long: 'class/study group'          , name_short: 'study'   }
       , { name_long: 'academic department'        , name_short: 'major'   }
       , { name_long: 'administrative office'      , name_short: 'office'  }
       , { name_long: 'community resource/service' , name_short: 'service' }
@@ -21,9 +21,9 @@ userTypes = {
 }
 
 
-exploreCategories = [
-        {name_long: 'events', name_short: 'events'},
-        {name_long: 'discussions', name_long: 'discussions'}
+exploreTypes = [
+        {name_long: 'events', name_short: 'event'},
+        {name_long: 'discussions', name_short: 'discussion'}
 ]
 
 

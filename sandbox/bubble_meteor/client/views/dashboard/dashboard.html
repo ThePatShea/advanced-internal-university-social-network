@@ -1,14 +1,168 @@
 <template name="dashboard">
-	<div>
-	<p>
-		Bubbles: {{numBubbles}}<br />
-		Invites: {{numInvites}}<br />
-		Updates: {{numUpdates}}<br />
-		Comments: {{numComments}}
-	</p>
+
+	<div class="preload-icons">
+		{{> icon-iOS}} {{> icon-android}} 
+	</div>
+	<div class="dashboard-cover">		
+		<div id="carousel-dashboard" class="carousel slide">
+		  <!-- Indicators -->
+		  <ol class="carousel-indicators">
+		    <li data-target="#carousel-dashboard" data-slide-to="0" class="active"></li>
+		    <li data-target="#carousel-dashboard" data-slide-to="1"></li>
+		    <li data-target="#carousel-dashboard" data-slide-to="2"></li>
+		  </ol>
+
+		  <!-- Wrapper for slides -->
+		  <div class="carousel-inner">
+		    <div class="item active">
+		    	<div class="item-inner" id="slide-1">
+					<div class="dashboard-cover-text-1a">
+						welcome to bubble
+					</div>
+					<div class="dashboard-cover-text-1b">
+						Get involved.  Stay on top of your groups.  Collaborate.
+					</div>
+		    		<div class="dashboard-cover-text-1c">
+		    			<div class="pull-left" style="margin-right: 5px;">{{> icon-small-reply-left}}</div>
+						<div class="pull-left">Find and<br>create your<br>Bubbles</div>
+					</div>
+					<div class="dashboard-cover-text-1d">
+						<div class="pull-left" style="margin-right: 5px;">{{> icon-small-reply-top}}</div>
+						<div class="pull-left">Get updates from your<br>Bubbles (on your phone too!)</div>
+					</div>
+		    	</div>
+		    </div>
+		    <div class="item">
+		    	<div class="item-inner" id="slide-2">
+		    		<div class="dashboard-cover-text-1a">
+						go mobile
+					</div>
+					<div class="dashboard-cover-text-1b">
+						Download the free EB app on your phone
+					</div>
+					<div class="v-middle dashboard-icon-container">
+						<div class="v-inner dashboard-icon" id="dashboard-icon-2a">
+							<div>{{> icon-android}}</div>
+							<div class="dashboard-icon-text">Android</div>
+						</div>
+					</div>
+					<div class="v-middle dashboard-icon-container">
+						<div class="v-inner dashboard-icon" id="dashboard-icon-2b">
+							<div>{{> icon-iOS}}</div>
+							<div class="dashboard-icon-text">iOS</div>
+						</div>
+					</div>
+		    	</div>
+		    </div>
+		    <div class="item">
+		    	<div class="item-inner" id="slide-3">
+		    		<div class="dashboard-cover-text-1a">
+						explore emory
+					</div>
+					<div class="dashboard-cover-text-1b">
+						Check out professor reviews, classifieds, and more
+					</div>
+					<div class="v-middle dashboard-icon-container">
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3a">
+							<div>{{> icon-official}}</div>
+							<div class="dashboard-icon-text">Official<br>Events</div>
+						</div>
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3b">
+							<div>{{> icon-classifieds}}</div>
+							<div class="dashboard-icon-text">Classifieds</div>
+						</div>
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3c">
+							<div>{{> icon-professorreviews}}</div>
+							<div class="dashboard-icon-text">Professor<br>Reviews</div>
+						</div>
+						<div class="v-inner dashboard-icon" id="dashboard-icon-3d">
+							<div>{{> icon-controversial}}</div>
+							<div class="dashboard-icon-text">Controversial<br>Topics</div>
+						</div>
+					</div>
+		    	</div>
+		    </div>
+		  </div>
+		</div>
 	</div>
 
-	{{#each getUpdates}}
-		{{> updateItem}}
-	{{/each}}
+	<div class="dashboard-section-header">
+		{{> icon-dashboard-big}} dashboard
+	</div> 
+
+	<div class="dashboard-item-container">
+		<div class="dashboard-item-container-inner">
+			<div class="dashboard-item-spacer">
+				&nbsp;
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-1">
+					<div class="v-inner">
+						<div class="number">{{numEvents}}</div>
+						<div class="word">events</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-2">
+					<div class="v-inner">
+						<div class="number">{{numUpdates}}</div>
+						<div class="word">updates</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-3">
+					<div class="v-inner">
+						<div class="number">{{numBubbles}}</div>
+						<div class="word">bubbles</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-4">
+					<div class="v-inner">
+						<div class="number">{{numInvites}}</div>
+						<div class="word">invites</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-5">
+					<div class="v-inner">
+						<div class="number">{{numComments}}</div>
+						<div class="word">comments</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-item-outer">
+				<div class="pull-left v-middle dashboard-item item-6">
+					<div class="v-inner">
+						<div class="number">{{numPosts}}</div>
+						<div class="word">posts</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="dashboard-section-header">
+		{{numUpdates}} Updates
+	</div>
+	<div class="dashboard-updates">
+		<div class="threeUpdates">
+			{{#each getUpdates 3}}
+				{{> updateItem}}
+			{{/each}}
+		</div>
+		<div class="allUpdates visible-0">
+			{{#each getUpdates 0}}
+				{{> updateItem}}
+			{{/each}}
+		</div>
+		{{#if showMoreUpdates}}
+			<div class="dashboard-more-updates">
+				+{{pluralize numUpdatesMinusThree "update" "more"}}
+			</div>
+		{{/if}}
+	</div>
 </template>

@@ -44,44 +44,48 @@ getEveryone = function(bubble){
 //For post owners when comment is created
 createCommentUpdate = function(comment) {
   var post = Posts.findOne(comment.postId);
-  var bubble = Bubbles.findOne(post.bubbleId);
-  var everyone = getEveryone(bubble);
-  var index = everyone.indexOf(comment.userId);
-  everyone.splice(index,1);
+  if(typeof post.bubbleId != 'undefined'){
+    var bubble = Bubbles.findOne(post.bubbleId);
+    var everyone = getEveryone(bubble);
+    var index = everyone.indexOf(comment.userId);
+    everyone.splice(index,1);
 
-  _.each(everyone, function(userId) {
-    Meteor.call('update',{
-      userId: userId,
-      postId: post._id,
-      commentId: comment._id,
-      bubbleId: post.bubbleId,
-      invokerId: comment.userId,
-      invokerName: comment.author,
-      updateType: "replied",
-      url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
-      content: " commented on " + post.name
+    _.each(everyone, function(userId) {
+      Meteor.call('update',{
+        userId: userId,
+        postId: post._id,
+        commentId: comment._id,
+        bubbleId: post.bubbleId,
+        invokerId: comment.userId,
+        invokerName: comment.author,
+        updateType: "replied",
+        url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
+        content: " commented on " + post.name
+      });
     });
-  });
+  }
 }
 
 //For bubble admins n members when post is created
 createPostUpdate = function(post) {
-  var bubble = Bubbles.findOne(post.bubbleId);
-  var everyone = getEveryone(bubble);
-  var index = everyone.indexOf(post.userId);
-  everyone.splice(index,1);
-  _.each(everyone, function(userId) {
-    Meteor.call('update',{
-      userId: userId,
-      postId: post._id,
-      bubbleId: bubble._id,
-      invokerId: post.userId,
-      invokerName: post.author,
-      updateType: "posted",
-      url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
-      content: post.author + " created a new " + post.postType + " in " + bubble.title
+  if(typeof post.bubbleId != 'undefined'){
+    var bubble = Bubbles.findOne(post.bubbleId);
+    var everyone = getEveryone(bubble);
+    var index = everyone.indexOf(post.userId);
+    everyone.splice(index,1);
+    _.each(everyone, function(userId) {
+      Meteor.call('update',{
+        userId: userId,
+        postId: post._id,
+        bubbleId: bubble._id,
+        invokerId: post.userId,
+        invokerName: post.author,
+        updateType: "posted",
+        url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
+        content: post.author + " created a new " + post.postType + " in " + bubble.title
+      });
     });
-  });
+  }
 }
 
 //For everyone attending
