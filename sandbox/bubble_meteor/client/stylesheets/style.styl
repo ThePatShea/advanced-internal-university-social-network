@@ -1455,7 +1455,10 @@ transform(args...)
   position          relative
   height            5000px
   width             100%
-  top               -300px
+  @media (min-width: 768px)
+    top               -300px
+  @media (max-width: 767px)
+    top               -250px
   .gif-loader
     position        absolute
     left            50%
