@@ -6,10 +6,13 @@ Meteor.Router.add({
     '/mybubbles/:_id/home': {
       to: 'bubblePage', 
       and: function(id) {
-        Session.set('bubbleLoading', 'true');  // Handles loading graphic
-        //alert("bubble is loading");  // TESTING
-
+        var prevBubble  =  Session.get('currentBubbleId');
         Session.set('currentBubbleId', id); 
+        var currBubble  =  Session.get('currentBubbleId');
+
+        if (currBubble != prevBubble) {
+          Session.set('bubbleLoading', 'true');  // Handles loading graphic
+        }
       }
     },
     '/mybubbles/:_id/event': {
