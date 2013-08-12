@@ -1004,6 +1004,98 @@ wysiwyg-image(n)
       margin          0 0 45px 0
       clear           btoh
       overflow        hidden
+      &.paperclip-attach-files
+        margin         0 0 20px 0
+        position       relative
+        margin         20px 0 20px 0
+        /*height         33px*/
+        padding-bottom 0
+        width          100%
+        border-bottom  1px solid main-light
+        .paperclip-attach
+          .attachments-list
+          &.nav
+            margin-bottom        7px
+          &.nav-tabs
+            padding       10px 0 40px 0
+            ul
+              margin-bottom     20px
+              li
+                border          0
+          .attachment-list-filename
+            fontize(alt, semibold, auto, 17px)
+            colorize(white-xlight)
+            margin-right    30px
+          .attachment-cancel-icon
+            margin-right    10px
+            svg
+              fill            #B0606D
+              rect
+                fill            main-xdark
+          .cb-paperclip-lbl
+            fontize(main, bold, uppercase, 18px)
+            colorize(main-light)
+          .cb-icon-attachment
+            move-position(absolute, 2px, 0)
+            svg
+              width           20px
+              height          20px
+              fill            main-light
+          .file-chooser-invisible
+            move-position(absolute, 0, 0)
+            cursor            pointer
+            height            100%
+            width             100%
+            z-index           20
+            opacity           0
+          &.in-post
+            padding-top       0
+      &.discussion-attachments
+        margin         0 0 20px 0
+        position       relative
+        margin         20px 0 20px 0
+        /*height         33px*/
+        padding-bottom 0
+        width          100%
+        border-bottom  1px solid main-light
+        .paperclip-attach
+          .attachments-list
+          &.nav
+            margin-bottom        7px
+          &.nav-tabs
+            padding       10px 0 40px 0
+            ul
+              margin-bottom     20px
+              li
+                border          0
+          .attachment-list-filename
+            fontize(alt, semibold, auto, 17px)
+            colorize(white-xlight)
+            margin-right    30px
+          .attachment-cancel-icon
+            margin-right    10px
+            svg
+              fill            #B0606D
+              rect
+                fill            main-xdark
+          .cb-paperclip-lbl
+            fontize(main, bold, uppercase, 18px)
+            colorize(main-light)
+          .cb-icon-attachment
+            move-position(absolute, 2px, 0)
+            svg
+              width           20px
+              height          20px
+              fill            main-light
+          .file-chooser-invisible
+            move-position(absolute, 0, 0)
+            cursor            pointer
+            height            100%
+            width             100%
+            z-index           20
+            opacity           0
+          &.in-post
+            padding-top       0
       &.third-width-container
         position        relative
         @media (min-width: 768px)
@@ -1052,7 +1144,7 @@ wysiwyg-image(n)
         border-box      0
         height          auto
     .search-text
-      padding        30px 0 0 0
+      padding        30px 0 4px 0
     .attach-files
       padding-top     30px
       .drop-zone
@@ -1236,17 +1328,17 @@ wysiwyg-image(n)
         padding        0
         border         0
     label
+      fontize(main, bold, uppercase, 18px, blank, 2px)
+      color          main-light
+      padding-bottom 6px
       padding-top    4px
-      padding-bottom 11px
       padding-left   4px
       padding-right  4px
       &.no-typing
-        color          main-xlight
+        color          main-light
     label,
     input
       border-bottom  1px solid main-light
-      colorize(white-light, main-dark)
-      fontize(alt, thin, auto, 23px)
       box-shadow     0 0
       padding-left   0
       padding-right  0
@@ -1260,6 +1352,14 @@ wysiwyg-image(n)
       &.dropzone-label
         border-bottom  0px
         padding-bottom 8px
+    input
+      colorize(white-light, main-dark)
+      fontize(alt, thin, auto, 23px)
+      &:hover,
+      &:focus
+        border-bottom  1px solid white-light
+      &:focus
+        color          white-light
     textarea
       positionize(85px, 100%, 0, 0 auto 10px auto, auto, auto, auto, block)
       colorize(white-light, main-dark)
@@ -1268,13 +1368,13 @@ wysiwyg-image(n)
     textarea,
     input
       &::-webkit-input-placeholder
-        color            white-light
+        color            main-xlight
       &:-ms-input-placeholder
-        color            white-light
+        color            main-xlight
       &::-moz-placeholder
-        color            white-light
+        color            main-xlight
       &:-moz-placeholder
-        color            white-light
+        color            main-xlight
     hr
       background         main-light
       &.break-bottom

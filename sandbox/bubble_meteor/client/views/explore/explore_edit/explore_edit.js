@@ -697,7 +697,7 @@ Template.exploreEdit.events({
 });
 
 
-Template.bubbleEdit.rendered = function(){
+Template.exploreEdit.rendered = function(){
   $('#coverphoto_retina').hide();
   $('#profilepicture_retina').hide();
   //$("#profilepicture_preview").hide();
