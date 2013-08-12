@@ -9,7 +9,74 @@
         </h3>
       </div>
     </div>
-    {{> formBubbleCreate}}
+
+  <div class="collapse-true cb-form-container" id="cb-form-container-bubble-create">
+    <div class="visible-false top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form bubble-create" name="bubble-create">
+
+      <div class="visible-{{hasLevel2Permissions}} select-bubble-type">
+        <input type="hidden" name="bubbleType" value="normal"/>
+        <label class="first no-typing select-bubble-type-label">Bubble Type*</label>
+        <button class="pull-left btn-bubble-type std-btn-form super">super bubble</button>
+        <button class="active-true pull-left btn-bubble-type std-btn-form normal">normal bubble</button>
+      </div>
+
+      <div class="cb-form-row first">
+        <input class="required width-full" name="title" type="text" value="{{systemBubble.selectedBubble.title}}" placeholder="Name*"/>
+      </div>
+
+      <div class="cb-form-row">
+        <div class="bubble-category">
+          <label class="no-typing">select a category</label>
+          <input name="category" type="hidden" value="{{systemBubble.selectedBubble.category}}"/>
+          <ul class="nav nav-tabs large-boxes">
+            {{#each systemCategory.categories}}
+              <li class="categoryBox" name="{{nameShort}}">
+                <a>
+                  <div class="large-box-title category-{{nameShort}}-bg">
+                    <div class="v-middle">
+                      <div class="v-inner">
+                        <div class="lbl-large-box">{{nameLong}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="large-box-info">
+                    <div class="body">{{body}}</div>
+                    <div class="cb-icon-check">{{> icon-check}}</div>
+                  </div>
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+
+      <canvas id="cover-main-canvas" width="160" height="160" class="visible-0"></canvas>
+      <canvas id="cover-retina-canvas" width="320" height="320" class="visible-0"></canvas>
+
+      <div class="attach-files attach-cover-photo">
+        {{> attachCoverPhoto}}
+      </div>
+      <div class="crop-container crop-profile" style="text-align: center;">
+        <img class="crop"></img>
+      </div>
+
+      <div class="attach-files attach-profile-picture">
+        {{> attachProfilePicture}}
+      </div>
+
+      {{> wysiwyg2}}
+
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit">
+          <span class="words-main">submit</span>
+          <span class="words-error">please fill in all fields before submitting</span>
+        </button>
+      </div>
+    </form>
+  </div>
 
 <!--  <div class="cb-form-container" id="cb-form-container-event">
     <form class="cb-form">
