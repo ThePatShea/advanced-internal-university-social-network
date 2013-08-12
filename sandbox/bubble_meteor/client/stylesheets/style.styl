@@ -1433,6 +1433,45 @@ wysiwyg-image(n)
   top             0
 /**********     errors      **********/
 
+/**********   gif-loader    **********/
+.gif-loader-container
+  background        rgba(1,17,38,.8)
+  position          relative
+  height            5000px
+  width             100%
+  top               -300px
+  .gif-loader
+    position        absolute
+    left            50%
+    top             100px
+    margin-left     -60px
+    width           100px
+    height          100px
+    border-radius   100%
+    svg
+      height          100px
+      width           100px
+    &:after
+      content         ''
+      background      trasparent
+      width           140%
+      height          140%
+      position        absolute
+      border-radius   100%
+      top             -20%
+      left            -20%
+      opacity         0.7
+      box-shadow      rgba(255, 255, 255, 0.6) -4px -5px 3px -3px
+      animation       rotate 1s infinite linear
+
+@keyframes rotate
+  0%
+    transform rotateZ(0deg)
+  100%
+    transform rotateZ(360deg)
+/**********   gif-loader    **********/
+
+
 /***************  Multi-Purpose Elements   ***************/
 
 

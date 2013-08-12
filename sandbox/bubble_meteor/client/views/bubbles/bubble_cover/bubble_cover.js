@@ -1,7 +1,8 @@
 Template.bubbleCover.rendered = function() {
   $(".cover-pic").bind('load', function() {
-    Session.set('bubbleLoading', 'false');  // Handles loading graphic
-    //alert("cover pic loaded");  // TESTING
+    setTimeout(function(){
+      Session.set('bubbleLoading', 'false');  // Handles loading graphic
+    },500)
   });
 }
 
