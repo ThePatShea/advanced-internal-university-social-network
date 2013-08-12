@@ -1,3 +1,11 @@
+Template.bubbleCover.rendered = function() {
+  $(".cover-pic").bind('load', function() {
+    Session.set('bubbleLoading', 'false');  // Handles loading graphic
+    //alert("cover pic loaded");  // TESTING
+  });
+}
+
+
 Template.bubbleCover.helpers({
         hasBeenInvited: function() {
           return _.contains(this.users.invitees, Meteor.userId());

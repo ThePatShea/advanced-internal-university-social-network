@@ -5,7 +5,12 @@ Meteor.Router.add({
   // Bubbles Related Routes
     '/mybubbles/:_id/home': {
       to: 'bubblePage', 
-      and: function(id) { Session.set('currentBubbleId', id); }
+      and: function(id) {
+        Session.set('bubbleLoading', 'true');  // Handles loading graphic
+        //alert("bubble is loading");  // TESTING
+
+        Session.set('currentBubbleId', id); 
+      }
     },
     '/mybubbles/:_id/event': {
       to: 'bubbleEventPage', 

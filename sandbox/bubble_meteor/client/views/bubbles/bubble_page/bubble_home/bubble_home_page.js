@@ -13,6 +13,9 @@ Template.bubblePage.created = function() {
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
+  bubbleLoading: function() {
+    Session.get('bubbleLoading');
+  },
   eventsCount: function() {
     return Meteor.call('getNumOfEvents','event');
   },
