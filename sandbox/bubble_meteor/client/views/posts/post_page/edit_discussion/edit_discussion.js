@@ -10,16 +10,6 @@ Template.editDiscussion.created = function(){
 
 Template.editDiscussion.rendered = function () {
 
-  //console.log('Children: ', this);
-  //console.log('Children: ', this.data.children);
-  //this.validateForm();
-  //var discussion = this.data;
-  //$(event.target).find("[name=name]").val(event.name);
-  //$(event.target).find("[name=body]").html();
-
-  //$('.cb-editDiscussion-form > .discussionTitle').val();
-  //$('.cb-editDiscussion-form > .wysiwyg_group > .wysiwyg-body').html();
-  //console.log('Rendered');
 
   $('.cb-editDiscussion-form > .discussion-attachments > .paperclip-attach > .attachments-list > li').remove();
 

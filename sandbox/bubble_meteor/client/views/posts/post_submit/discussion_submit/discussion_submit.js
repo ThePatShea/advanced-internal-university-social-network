@@ -69,7 +69,9 @@ function processAttachmentSelections(fileAttachments){
 
 
       //If it is an image then render a thumbnail
-      if (f.type.match('image.*')) {
+      //if (f.type.match('image.*')) {
+      //var img = Meteor.call('isImage', f.type);
+      if(isValidFile(f.type)){
         var reader = new FileReader();
 
         // Closure to capture the file information.
@@ -115,9 +117,33 @@ function makeDiscussionPost(){
 
   for(var i=0; i < discussionFiles.length; i++){
     if(discussionDeletedFileIndices.indexOf(i) == -1){
-      newFiles.push(discussionFiles[i]);
+      if(isValidFile(discussionFiles[i].type)){
+        newFiles.push(discussionFiles[i]);
+      }
     }
   }
   
   createPostWithAttachments(postAttributes, newFiles);
+}
+
+
+
+function isImage(typeInfo){
+  if(typeInfo.match('image.*')){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+
+function isValidFile(typeInfo){
+  console.log('File type: ', typeInfo);
+  if(typeInfo.match('vnd.*') || typeInfo.match('csv.*') || typeInfo.match('pdf.*') || typeInfo.match('zip.*') || typeInfo.match('postscript.*') || typeInfo.match('msword.*') || typeInfo.match('plain.*')){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
