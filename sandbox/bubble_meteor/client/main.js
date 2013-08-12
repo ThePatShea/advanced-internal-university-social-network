@@ -1,13 +1,25 @@
+// Handles site loading gif
+    Meteor.startup(function () {
+      Session.set('siteLoading', 'true');
+    });
+
+
+
 // Bubble Related Subscriptions
   mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 20);
 
 Deps.autorun(function() {
 
 	// Bubble Related Subscriptions
+		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', function() {
+                  setTimeout(function(){
+                    Session.set('siteLoading', 'false');  // Handles site loading gif
+                  },2000);
+                  Session.get('searchText');
+                }, 10);
 		Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
 		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
 		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
-		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
 		// Meteor.subscribe('allBubbles', Meteor.userId());
 
 	// Bubble Related Subscriptions
