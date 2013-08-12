@@ -10,4 +10,10 @@
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
+    <preference name="com.urbanairship.production_app_key" value="gDW_RChbTGWRqpqgm4KU1g" />
+	<preference name="com.urbanairship.production_app_secret" value="foQ--AD6ROeStqFL-h3u3w" />
+	<preference name="com.urbanairship.development_app_key" value="M6oTTgCDSMeut2gd_otuPw" />
+	<preference name="com.urbanairship.development_app_secret" value="Uqsut-XRT1axMge09Uvt8g" />
+	<preference name="com.urbanairship.in_production" value="false" />
+	<preference name="com.urbanairship.gcm_sender" value="847306304094" />
 </widget>

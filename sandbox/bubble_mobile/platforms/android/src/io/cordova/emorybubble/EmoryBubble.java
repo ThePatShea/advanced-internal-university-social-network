@@ -23,29 +23,16 @@ import io.cordova.emorybubble.R;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-import com.urbanairship.UAirship;
-
 public class EmoryBubble extends DroidGap
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+    	super.setIntegerProperty("splashscreen", R.drawable.splash);
         super.onCreate(savedInstanceState);
         // Set by <content src="index.html" /> in config.xml
-        super.setIntegerProperty("splashscreen", R.drawable.splash);
-        super.loadUrl(Config.getStartUrl(),5000);
+        super.loadUrl(Config.getStartUrl(), 7000);
         //super.loadUrl("file:///android_asset/www/index.html")
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        UAirship.shared().getAnalytics().activityStarted(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        UAirship.shared().getAnalytics().activityStopped(this);
-    }    
 }
 

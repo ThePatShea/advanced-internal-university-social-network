@@ -21,9 +21,6 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f050000;
     }
-    public static final class style {
-        public static final int splashScreenTheme=0x7f060000;
-    }
     public static final class xml {
         public static final int config=0x7f040000;
     }
