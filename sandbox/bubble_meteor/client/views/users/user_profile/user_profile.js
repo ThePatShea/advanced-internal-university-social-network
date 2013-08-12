@@ -161,13 +161,16 @@ Template.userProfile.events({
 				var retinaContext = retinaCanvas.getContext('2d');
 				var profileImage = new Image();
 
+				var minX = 76;
+				var minY = 76;
+
 		        // Closure to capture the file information.
 		        reader.onload = (function(theFile) {
 		        	return function(e) {
 		            	$("#drop_zone").hide();
 		            	$(".crop").attr("src", e.target.result);
 		            	profileImage.src = e.target.result;
-	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: '77', y2: '77', parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
 							if(Session.get("DisableCrop") == "1")
 							{
 								cropArea.cancelSelection();
@@ -184,14 +187,14 @@ Template.userProfile.events({
 							}
 							else
 							{
-								cropArea.setSelection(10,10,78,78);
+								cropArea.setSelection(10,10, (10+minX),(10+minY));
 								cropArea.setOptions({show: true});
 						    	cropArea.update();
 							}
 						    //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
 	            		}, onSelectEnd: function(img, selection){
-						    if(selection.width < 67)
-						    {
+						    if((selection.width < minX) || (selection.height < minY))
+						    {//CHANGE FROM HERE
 						    	if((selection.x1 > profileImage.width-67) || (selection.y1 > profileImage.height-67))
 						    	{
 						    		if(selection.x1 < 67)
