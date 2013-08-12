@@ -93,10 +93,10 @@ Template.userProfile.rendered = function() {
 		$(window).unbind('exitBreakpoint768');
 		$(window).bind('enterBreakpoint768', function() {
 			Session.set("DisableCrop","");
-			alert('enable crop');
+			//alert('enable crop');
 		});
 		Session.set("DisableCrop","1");
-		alert('disable crop');
+		//alert('disable crop');
 	});
 	$(window).unbind('enterBreakpoint768');
 };
