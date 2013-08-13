@@ -30,6 +30,15 @@ Template.postPage.helpers({
     else{
       return false;
     }
+  },
+
+  isDiscussion: function(){
+    if(this.postType = 'discussion'){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 });
 

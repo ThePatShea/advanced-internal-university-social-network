@@ -5,11 +5,11 @@
   {{#with getCurrentPost}}
     <div class="bubble-page-content post-page">
       <div class="top-btns">
-        <a href="/explore/{{exploreId}}">
+        <a href="/mybubbles/{{bubbleId}}/{{postType}}">
           <button class="pull-left std-btn-light with-left-icon btn-back">
             <span class="left-icon">{{> icon-back}}</span>
             <span>back</span>
-            <span class="to-post-types">to {{postExploreParentName}}</span>
+            <span class="to-post-types">to {{postType}}s</span>
           </button>
         </a>
 
@@ -18,18 +18,42 @@
           <span class="flag-text visible-{{isFlagged}}">flagged</span>
         </button>
 
-        <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
-          <button class="pull-right std-btn-light with-left-icon btn-edit">
-            <span class="left-icon">{{> icon-edit}}</span>
-            <span>edit</span>
-          </button>
-        </a>
+        {{#if returnFalse}}<!--This is commenting out code-->
+          <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
+            <button class="pull-right std-btn-light with-left-icon btn-edit">
+              <span class="left-icon">{{> icon-edit}}</span>
+              <span>edit</span>
+            </button>
+          </a>
+        {{/if}}
+        <button class="pull-right std-btn-light with-left-icon btn-edit" data-toggle="collapse" data-target="#edit-{{postType}}">
+          <span class="left-icon">{{> icon-edit}}</span>
+          <span>edit</span>
+        </button>
 
         <button class="visible-{{isAdmin}} pull-right std-btn-light with-left-icon btn-delete">
           <span class="left-icon">{{> icon-cancel}}</span>
           <span>delete</span>
         </button>
       </div>
+
+      <div id="edit-event" class="collapse">
+        {{> editEvent}}
+      </div>
+     {{#if notEvent}}
+        {{#if isDiscussion}}
+          <div id="edit-discussion" class="collapse">
+            {{> exploreDiscussionEdit}}
+          </div>
+        {{/if}}
+
+
+        {{#if isFile}}
+          <div id="edit-file" class="collapse">
+            {{> editFile}}
+          </div>
+        {{/if}}
+     {{/if}}
       <div class="post-heading">
         <a href="{{userProfilePath this.userId}}">
           <div class="author-pic">
@@ -45,7 +69,7 @@
       {{> commentsList}}
 
       {{#if isEvent}}
-        <h4>{{pluralize numOfAttendees "person"}}  going</h4>
+        
         </br>
         {{#if notAttending}}
           <button class="btn btn-small btn-success attending" type="button">I'M GOING</button>
@@ -55,7 +79,6 @@
         {{/if}}
         {{#with attendees}}
           <br />
-          {{this}}
         {{/with}}
       {{/if}}
     </div>

@@ -174,10 +174,14 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('singlePost', function(postId) {
     var post = Posts.findOne(postId);
-    if(post.postType == 'discussion'){
-      return postId && Posts.find({_id: {$in: post.children}});
+    //console.log('Publishing: ', post);
+    if(post != undefined){
+      if(post.postType == 'discussion'){
+        return postId && Posts.find({_id: {$in: post.children}});
+      }
     }
     return postId && Posts.find(postId);
+
   });
   Meteor.publish('attendingEvents', function(userId) {
     return Posts.find({
@@ -284,6 +288,9 @@ getBubbleId =  function(userId) {
         'retunaCoverPhoto': 1
       }
     });
+  });
+  Meteor.publish('currentExplore', function(exploreId){
+    return Posts.find({'exploreId': exploreId});
   });
 
 // Meteor Users Related Publications

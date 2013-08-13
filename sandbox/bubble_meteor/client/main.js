@@ -12,6 +12,7 @@ Deps.autorun(function() {
 
 	// Bubble Related Subscriptions
 	    Meteor.subscribe('allExplores');
+	    Meteor.subscribe('currentExplore', Session.get('currentExploreId'));
 
 
 	// Comments Related Subscriptions
