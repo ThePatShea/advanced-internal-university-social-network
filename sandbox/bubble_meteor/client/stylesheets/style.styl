@@ -71,6 +71,7 @@ body
     border                 0
     a
       text-shadow              0 0
+    .cb-logo-main,
     .brand
       padding                  0
       margin                   0
@@ -1769,17 +1770,23 @@ navbar-height        =  60px
     .user-dropdown
       position                 relative
       z-index                  100
+    .cb-logo-main,
     .brand
       line-height              navbar-height 
       height                   navbar-height
       font-size                14px
       @media (min-width: 768px)
-        position                   fixed
+        position                   absolute
         left                       15px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
         left                       50%
+      &.cb-logo-main-mobile
+        @media (min-width: 768px)
+          display                    none
+        @media (max-width: 767px)
+          display                    block
       .logo-main
         margin                     0 5px 0 0
       .logo-words
