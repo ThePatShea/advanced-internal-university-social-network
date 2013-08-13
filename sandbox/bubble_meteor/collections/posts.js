@@ -121,7 +121,12 @@ createPost = function(postAttributes){
       // display the error to the user
       throwError(error.reason);
     } else {
-      Meteor.Router.to('postPage', post.bubbleId, post._id);
+        if(typeof postAttributes.bubbleId != 'undefined'){
+          Meteor.Router.to('postPage', post.bubbleId, post._id);
+        }
+        else{
+          Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+        }
     }
   });
 }
