@@ -2293,6 +2293,7 @@ bubble-section-selector-height-small  =  75px
     a
       std-white-light-fill   0
       .btn-bubble-section
+        position                 relative
         float                    left
         @media (min-width: 768px)
           width                    bubble-section-selector-height-large
@@ -2302,6 +2303,13 @@ bubble-section-selector-height-small  =  75px
           width                    20%
           svg
             height                   25px
+        .lbl
+          fontize(main, bold, uppercase, 10px)
+          position                 absolute
+          display                  none
+          bottom                   14px
+          width                    100%
+          left                     0
         &.active-true,
         &:hover
           background               white-light
@@ -2325,6 +2333,9 @@ bubble-section-selector-height-small  =  75px
             fill                     color-art
           &.category-custom-hover-fill
             fill                     color-custom
+        &:hover
+          .lbl
+            display                  block
 /**********  bubble-section-selector  **********/
 
 /**********        bubble-page        **********/
