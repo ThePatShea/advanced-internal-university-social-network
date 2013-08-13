@@ -114,15 +114,22 @@ Template.userProfile.events({
 
 	    var currentProfileId = Session.get('selectedUserId');
 	    //var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
-	    
-	    var profileProperties = {
-	      profilePicture: mainURL,
-	      retinaProfilePicture: retinaURL,
-	      emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
-	      phone: '',
-	      lastUpdated: new Date().getTime(),
-	      userType: $(e.target).find('[name=userType]').val()
+
+		var profileProperties = {
+		    emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
+		    phone: '',
+		    lastUpdated: new Date().getTime(),
+		    userType: $(e.target).find('[name=userType]').val()
 	    };
+
+	    if(typeof mainURL != 'undefined'){
+	    	if(mainURL.length != 0){
+				profileProperties.profilePicture = mainURL;
+				profileProperties.retinaProfilePicture = retinaURL;
+	    	}
+	    }
+	    
+	    
 	    console.log('Properties to be saved: ',profileProperties);
 	    
 	    Meteor.users.update(currentProfileId, {$set: profileProperties}, function(error) {
