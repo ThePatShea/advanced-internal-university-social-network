@@ -50,9 +50,9 @@ Deps.autorun(function() {
 	// Retrieves searched Posts
 		Meteor.subscribe('updatedPosts', Meteor.userId());
 		if( Meteor.user() && '3' == Meteor.user().userType){
-			searchEventsHandle = Meteor.subscribeWithPagination('megaSearchEvents', Session.get('searchText'), 10);
-			searchDiscussionsHandle = Meteor.subscribeWithPagination('megaSearchDiscussions', Session.get('searchText'), 10);
-			searchFilesHandle = Meteor.subscribeWithPagination('megaSearchFiles', Session.get('searchText'), 10);
+			searchEventsHandle = Meteor.subscribeWithPagination('lvl3SearchEvents', Session.get('searchText'), 10);
+			searchDiscussionsHandle = Meteor.subscribeWithPagination('lvl3SearchDiscussions', Session.get('searchText'), 10);
+			searchFilesHandle = Meteor.subscribeWithPagination('lvl3SearchFiles', Session.get('searchText'), 10);
 		}else{
 			searchEventsHandle = Meteor.subscribeWithPagination('searchEvents', Session.get('searchText'), Meteor.userId, 10);
 			searchDiscussionsHandle = Meteor.subscribeWithPagination('searchDiscussions', Session.get('searchText'), Meteor.userId, 10);
