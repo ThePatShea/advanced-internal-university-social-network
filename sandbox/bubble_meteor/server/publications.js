@@ -173,6 +173,10 @@ getBubbleId =  function(userId) {
       });
   });
   Meteor.publish('singlePost', function(postId) {
+    var post = Posts.findOne(postId);
+    if(post.postType == 'discussion'){
+      return postId && Posts.find({_id: {$in: post.children}});
+    }
     return postId && Posts.find(postId);
   });
   Meteor.publish('attendingEvents', function(userId) {

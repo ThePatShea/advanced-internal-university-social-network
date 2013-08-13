@@ -26,6 +26,18 @@ Template.listItem.helpers({
 
     inBubble: function(){
       return(Meteor.Router.page() == "bubbleMembersPage");
+    },
+
+    isFile: function(){
+      if(this.postType == 'file'){
+        return true;
+      }
+    },
+
+    isDiscussion: function(){
+      if(this.postType == 'discussion'){
+        return true;
+      }
     }
 });
 
@@ -37,6 +49,7 @@ Template.listItem.events({
             Meteor.Router.to('postPage', this.bubbleId, this.parent);
           }
           else if(typeof this.postType != 'undefined'){
+            console.log(this._id);
             Meteor.Router.to('postPage', this.bubbleId, this._id);
           }
       }
@@ -54,3 +67,6 @@ Template.listItem.events({
       }
     }
 });
+
+Template.listItem.rendered = function(){
+}
