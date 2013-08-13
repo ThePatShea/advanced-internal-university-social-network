@@ -171,6 +171,11 @@ Template.userProfile.events({
 		            	$(".crop").attr("src", e.target.result);
 		            	profileImage.src = e.target.result;
 	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+							mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+						    retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+						    mainURL = mainCanvas.toDataURL();
+						    retinaURL = retinaCanvas.toDataURL();
+						    $(".profile-pic-preview").attr("src",mainURL);
 							if(Session.get("DisableCrop") == "1")
 							{
 								cropArea.cancelSelection();
