@@ -41,15 +41,15 @@
       <div id="edit-event" class="collapse">
         {{> editEvent}}
       </div>
+     {{#if notEvent}}
+        <div id="edit-discussion" class="collapse">
+          {{> editDiscussion}}
+        </div>
 
-      <div id="edit-discussion" class="collapse">
-        {{> editDiscussion}}
-      </div>
-
-      <div id="edit-file" class="collapse">
-        {{> editFile}}
-      </div>
-
+        <div id="edit-file" class="collapse">
+          {{> editFile}}
+        </div>
+     {{/if}}
       <div class="post-heading">
         <a href="{{userProfilePath this.userId}}">
           <div class="author-pic">

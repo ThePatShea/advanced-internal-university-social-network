@@ -1,16 +1,16 @@
 <template name="eventSubmit"> 
 
-  <div class="collapse cb-form-container" id="cb-form-container-event">
+  <div class="collapse cb-form-container" id="cb-form-container-event-create">
     <div class="top-arrow-container">
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-    <form class="cb-form">
+    <form class="cb-form cb-eventSubmit-form">
       <div class="cb-form-row first">
-        <input class="half-width column-one" name="name" type="text" value="" placeholder="Event title*"/> 
-        <input class="half-width column-two" name="location" type="text" placeholder="Where?*"/>
+        <input class="half-width column-one event-name" name="name" type="text" value="" placeholder="Event title*"/> 
+        <input class="half-width column-two event-location" name="location" type="text" placeholder="Where?*"/>
       </div>
       <div class="cb-form-row third-width-container">
-        <input class="third-width column-first date-picker" name="date" type="text" placeholder="Date?*"/>
+        <input class="third-width column-first" name="date" type="text" placeholder="Date?* (ex: 10/25/13)"/>
         <input class="third-width column-second" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
         <label class="third-width column-third" name="picture" type="label" data-toggle="collapse" data-target="#add-picture">Add picture?</label>
       </div>
@@ -29,7 +29,7 @@
           <img class="crop"></img>
         </div>
       </div> 
-      <input class="search-text full-width" name="body" type="text" placeholder="Details" />
+      <input class="search-text full-width event-details" name="body" type="text" placeholder="Details" />
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
       </div>
