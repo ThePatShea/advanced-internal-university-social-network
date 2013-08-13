@@ -19,6 +19,9 @@ Template.sidebar.helpers({
         return '/mybubbles/create/bubble';
       }
     }
+  , dashboardLink          : function() {
+    return '/dashboard';
+  }
   , selectedSection        : function(inputSection) {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");

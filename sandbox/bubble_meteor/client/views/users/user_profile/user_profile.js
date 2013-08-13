@@ -194,29 +194,29 @@ Template.userProfile.events({
 						    //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
 	            		}, onSelectEnd: function(img, selection){
 						    if((selection.width < minX) || (selection.height < minY))
-						    {//CHANGE FROM HERE
-						    	if((selection.x1 > profileImage.width-67) || (selection.y1 > profileImage.height-67))
+						    {
+						    	if((selection.x1 > profileImage.width-minX) || (selection.y1 > profileImage.height-minY))
 						    	{
-						    		if(selection.x1 < 67)
+						    		if(selection.x1 < minX)
 						    		{
-							    		cropArea.setSelection(0,selection.y2-67,67,selection.y2);
+							    		cropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
 							    		cropArea.update();
 							    	}
-							    	else if(selection.y1 < 67)
+							    	else if(selection.y1 < minY)
 							    	{
-							    		cropArea.setSelection(selection.x2-67,0,selection.x2,67);
+							    		cropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
 							    		cropArea.update();
 							    	}
 							    	else
 							    	{
-							    		cropArea.setSelection(selection.x2-67,selection.y2-67,selection.x2,selection.y2);
+							    		cropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
 							    		cropArea.update();
 							    	}
 
 							    }
 							    else
 							    {
-						    		cropArea.setSelection(selection.x1,selection.y1,selection.x1+67,selection.y1+67);
+						    		cropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
 						    		cropArea.update();
 						   		}
 						    }
