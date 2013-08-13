@@ -100,7 +100,7 @@ Meteor.Router.add({
 
   //Explore Related Routes
     '/explore/create': 'exploreSubmit',
-    '/explore/:id': {
+    '/explore/:id/home': {
       to: 'explorePage',
       and: function(id){Session.set('currentExploreId', id);}
     },

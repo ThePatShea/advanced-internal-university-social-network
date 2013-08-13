@@ -18,6 +18,16 @@ Template.sidebar.helpers({
       }else {
         return '/mybubbles/create/bubble';
       }
+    },
+
+    exploreLink: function(){
+      var explores = Explores.find({}).fetch();
+      if(explores.length > 0){
+        return '/explore/' + explores[0]._id + '/home';
+      }
+      else{
+        return '/explore/create';
+      }
     }
   , selectedSection        : function(inputSection) {
       var currentUrl  =  window.location.pathname;
