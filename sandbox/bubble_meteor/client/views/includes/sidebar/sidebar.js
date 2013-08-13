@@ -105,7 +105,7 @@ Template.sidebar.helpers({
 
 
 Template.sidebar.events({
-    'click .btn-nav-subsection' : function() {
+    'click .btn-nav-subsection, click .add-bubble > .btn-heading' : function() {
       Session.set('sidebarOpen', false);
     }
 });
