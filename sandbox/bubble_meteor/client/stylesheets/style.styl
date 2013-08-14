@@ -1837,15 +1837,28 @@ navbar-height        =  60px
             position                       relative
             top                            -2px
       .dropdown-menu
+        background        main-xlight
+        top               50px
         box-shadow        0 0
+        border            0
+        &::after
+          border-bottom-color        main-xlight
+        &.dropdown-logout
+          padding                    5px 0
+          li
+            color                      main-light
+            padding                    10px 20px
+            &:hover
+              cursor                   pointer
+              background               #89A5B8
+            &.view-profile
+              border-bottom              1px solid #89A5B8
       .cb-updates-dropdown
         .badge-inverse
           background        main-xlight
           color             white-xxdark
         .dropdown-menu
-          background        main-xlight
           width             270px
-          top               50px
           li
             a
               fontize(alt, bold, none, 14px)
