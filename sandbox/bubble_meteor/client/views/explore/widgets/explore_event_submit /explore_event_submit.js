@@ -4,11 +4,11 @@ Template.exploreEventSubmit.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
-    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    var dateTime = $('.cb-explore-eventSubmit-form > .cb-form-row > .date').val() + " " + $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val();
     //console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
     var eventAttributes = { 
-      dateTime: new Date().getTime(),
+      dateTime: dateTime,
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-explore-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-explore-eventSubmit-form > .event-details').val(),
@@ -85,16 +85,16 @@ Template.exploreEventSubmit.rendered = function() {
   );
 
   //Format the time when the textbox is changed
-  $("[name=time]").change(function(){
-    var time = $("[name=time]").val();
+  $('.cb-explore-eventSubmit-form > .cb-form-row > .time').change(function(){
+    var time = $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val();
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $("[name=time]").val("");
+        $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val("");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $("[name=time]").val(formatedTime);
+        $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val(formatedTime);
       }
 
     }
