@@ -1759,15 +1759,6 @@ navbar-height        =  60px
   &.navbar-main
     position                 relative
     z-index                  100
-    .sidebar-collapse-new
-      position               absolute
-      padding                20px 0
-      @media (min-width: 768px)
-        display                none
-      @media (max-width: 767px)
-        display                block
-      .cb-icon
-        fill                   main-xlight
   .navbar-inner
     height                   60px
     main-xdark-bg            0
@@ -1893,6 +1884,25 @@ navbar-height        =  60px
 
 /**********        sidebar       **********/
 /*****   sidebar-new        *****/
+.desktop-logo-container
+  position           absolute
+  width              185px
+  z-index            100
+  .cb-logo-main
+    @media (min-width: 768px)
+      display            block
+    @media (max-width: 767px)
+      display            none
+  .sidebar-collapse-new
+    position               absolute
+    padding                20px 0
+    @media (min-width: 768px)
+      display                none
+    @media (max-width: 767px)
+      display                block
+    .cb-icon
+      fill                   main-xlight
+
 .sidebar-new
   max-width          310px
   height             100%
@@ -2130,8 +2140,10 @@ body
     @media (max-width: 767px)
       width                      200%
     .view
+      position                 relative
       overflow                 hidden
       height                   100%
+      z-index                  80
       @media (min-width: 768px)
         width                      auto
       @media (max-width: 767px)
@@ -2335,9 +2347,12 @@ bubble-section-selector-height-small  =  75px
           fontize(main, bold, uppercase, 10px)
           position                 absolute
           display                  none
-          bottom                   14px
           width                    100%
           left                     0
+          @media (min-width: 768px)
+            bottom                   14px
+          @media (max-width: 767px)
+            bottom                   10px
         &.active-true,
         &:hover
           background               white-light
