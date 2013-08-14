@@ -4,7 +4,9 @@ referenceDateTime = moment().add('hours',-4).valueOf();
 Template.bubblePage.created = function() {
  var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
 
- if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
+ if(typeof bubble != "undefined" &&
+    (!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId()) )
+   ) {
    Meteor.Router.to('bubblePublicPage', bubble._id);
  }
 }
@@ -13,6 +15,15 @@ Template.bubblePage.created = function() {
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
+  isLoading: function() {
+    var bubbleLoading = Session.get('bubbleLoading');
+
+    if (bubbleLoading == 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  },
   eventsCount: function() {
     return Meteor.call('getNumOfEvents','event');
   },

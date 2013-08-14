@@ -1,3 +1,12 @@
+Template.bubbleCover.rendered = function() {
+  $(".cover-pic").bind('load', function() {
+    setTimeout(function(){
+      Session.set('bubbleLoading', 'false');  // Handles loading graphic
+    },500)
+  });
+}
+
+
 Template.bubbleCover.helpers({
         hasBeenInvited: function() {
           return _.contains(this.users.invitees, Meteor.userId());

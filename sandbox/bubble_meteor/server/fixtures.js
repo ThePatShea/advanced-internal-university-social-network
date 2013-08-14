@@ -4,6 +4,9 @@ if(!Meteor.users.findOne({username:'campusbubble'})){
 		email:'development@thecampusbubble.com',
 		password:'F302pinpulse'
 	});
+/*
+        Meteor.users.update({email: 'development@thecampusbubble.com'}, {$set: {profilePicture: '/img/letterprofiles/c.jpg'} });
+*/
 }
 // if (Meteor.isServer) {
 //   Meteor.startup(function () {

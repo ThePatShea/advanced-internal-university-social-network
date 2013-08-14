@@ -12,6 +12,7 @@ Meteor.users.deny({
 if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
 		if(user.username == 'campusbubble') {
+                        user.profilePicture = '/img/letterprofiles/c.jpg';
 			user.userType = '4';
 		}else{
 			user.userType = '1';
