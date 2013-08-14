@@ -29,11 +29,16 @@
     <link rel="stylesheet" type="text/css" href="/js/imgAreaSelect/css/imgareaselect-default.css" />
     <script type="text/javascript" src="/js/imgAreaSelect/scripts/jquery.imgareaselect.pack.js"></script>
 
+  <! Initiates Breakpoints.js !>
+    <script type="text/javascript" src="/js/breakpoints/breakpoints.js"></script>
+
   <! Arbor data visualization !>
     <script type="text/javascript" src="/js/arbor.js"></script>
 </head>
 <body>
   {{> googleAnalytics}}
+   
+  <div class="gif-loader-wrapper visible-{{siteLoading}}">{{> gifLoaderSite}}</div>
 
   <div class="viewport">
     <div class="frame">

@@ -33,7 +33,18 @@ var getPosts = function(inputPostType) {
   return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();
 }
 
-Handlebars.registerHelper('getUserTypeName', function(userType){
+Handlebars.registerHelper('siteLoading', function() {
+  var siteLoading = Session.get('siteLoading');
+
+  if (siteLoading == 'false') {
+    return false;
+  } else {
+    return true;
+  }
+});
+
+
+Handlebars.registerHelper('getUserTypeName', function(userType) {
   return userTypes[userType];
 });
 

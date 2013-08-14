@@ -5,7 +5,7 @@ IDEAS:
 - Make a list of front-end systems too (lists, listItems, forms, headings, sidebar)
 - Every system is independent, and can be called by the other systems by calling functions from a javascript object for that system which contains all of that system's functions
 - Try to make this for forms first
-- Make something similar to the team roles and grand vision for the whole company, not just for the product team. Talk about how we're self-organizing, constantly evolving, and that we manage ourselves and each other. We have no CEO. We're a 21st century team. The "rule" about needing a CEO doesn't apply to us. We're special.
+- Make something similar to the team roles and grand vision for the whole company, not just for the product team. Talk about how we're self-organizing, constantly evolving, and that we manage ourselves and each other.
 - Sometimes an effective/necessary way to grow the technology is: expand freely -> remove waste -> expand freely -> remove waste
 - Account for the fact that some modules have both client-side and server-side components
 -- I think that any folder named 'server' will be run server-side. That means our top-level division can be by systems instead of by client/server. Each system can have its own client folder and its own server folder inside it
@@ -155,7 +155,6 @@ OTHER:
 
 
 TO DO:
-- Get Xavier/Taggart's input to help architect this
 - Read the book "Javascript: The Good Parts"
 - Read the entire Javascript Documentation
 - Read the entire Node.js Documentation

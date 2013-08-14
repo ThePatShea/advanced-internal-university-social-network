@@ -26,14 +26,130 @@ Template.bubbleSubmit.events({
     });
   },
 */
-  'dragover .dropzone': function(evt){
-    console.log('Dragover');
+  'click .bubble-create > .cb-submit-container > .cb-submit': function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('Bubble Submit');
+
+    var bubble = {
+      category             : $(event.target).find('[name=category]').val(),
+      bubbleType           : $('.cb-form').find('[name=bubbleType]').val(),
+      description          : $('.cb-form').find('[name=body]').html(),
+      title                : $('.cb-form').find('[name=title]').val(),
+      retinaProfilePicture : $('#profileRetinaPhoto').attr('src'),
+      retinaCoverPhoto     : $('#coverRetinaPhoto').attr('src'),
+      profilePicture       : $('#profilePhoto').attr('src'),
+      coverPhoto           : $('#coverPhoto').attr('src'),
+    };
+
+    Meteor.call('bubble', bubble, function(error, bubbleId) {
+      if (error) {
+        throwError(error.reason);
+      } else {
+        Meteor.Router.to('bubblePage', bubbleId);
+      }
+    });
+  },
+
+  'click .select-bubble-type > .normal': function(evt) {
+    evt.preventDefault();
+    $("input[name=bubbleType]").val("normal");
+    selectedBubbleType = "normal";
+    $(".select-bubble-type > .super").removeClass("active-true");
+    $(".select-bubble-type > .normal").addClass("active-true");
+  },
+  'click .select-bubble-type > .super': function(evt) {
+    evt.preventDefault();
+    $("input[name=bubbleType]").val("super");
+    $(".select-bubble-type > .normal").removeClass("active-true");
+    $(".select-bubble-type > .super").addClass("active-true");
+  },
+  'dragover .bubble-create > .attach-cover-photo > .drop-zone': function(evt){
+    console.log('cover Dragover');
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'change #profilefilesToUpload': function(evt){
+  'drop .bubble-create > .attach-cover-photo > .drop-zone': function(evt){
+    console.log('cover drop');
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  },
+
+  'change .bubble-create > .attach-cover-photo > .drop-zone > .file-chooser-invisible': function(evt){
+
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    console.log('Dropzone cover photo change: ', evt.target.files);
+
+      files = evt.target.files;
+      //If more than one file dropped on the dropzone then throw an error to the user.
+      if(files.length > 1){
+        error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
+        throwError(error.reason);
+      }
+      else{
+        f = files[0];
+        //If the file dropped on the dropzone is an image then start processing it
+        if (f.type.match('image.*')) {
+            var reader = new FileReader();
+
+        var mainCanvas = document.getElementById('main-canvas');
+        var retinaCanvas = document.getElementById('retina-canvas');
+        var mainContext = mainCanvas.getContext('2d');
+        var retinaContext = retinaCanvas.getContext('2d');
+        var profileImage = new Image();
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+              return function(e) {
+                  $(".bubble-create > .attach-cover-photo > .drop-zone").hide();
+                  $(".bubble-create > .attach-cover-photo > .drop-zone > .file-chooser-invisible").width(1);
+                  $(".bubble-create > .attach-cover-photo > .drop-zone > .file-chooser-invisible").height(1);
+                  $(".bubble-create > .crop-profile > .crop").attr("src", e.target.result);
+                  profileImage.src = e.target.result;
+                  cropArea = $('.bubble-create > .crop-profile > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '77', y2: '77', parent: ".cb-form-container", handles: true, onSelectChange: function(img, selection) {
+                mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+                retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+                mainURL = mainCanvas.toDataURL();
+                retinaURL = retinaCanvas.toDataURL();
+                $(".profile-pic-preview").attr("src",mainURL);
+                  }});
+              };
+            })(f);
+            reader.readAsDataURL(f);
+        }
+      }
+    
+  },
+
+  'dragover .bubble-create > .attach-profile-picture > .drop-zone': function(evt){
+    console.log('profile Dragover');
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  },
+
+  'drop .bubble-create > .attach-profile-picture > .drop-zone': function(evt){
+    console.log('profile drop');
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  },
+
+  'change .bubble-create > .attach-profile-picture > .drop-zone > .file-chooser-invisible': function(evt){
+
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    console.log('Dropzone profile change: ', evt.target.files);
+    
+  },
+
+  /*'change #profilefilesToUpload': function(evt){
     files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -107,7 +223,7 @@ Template.bubbleSubmit.events({
         reader.readAsDataURL(f);
       }
     }
-  },
+  },*/
 
   'click #club': function(evt){
     evt.stopPropagation();
@@ -194,6 +310,18 @@ Template.bubbleSubmit.events({
 
 Template.bubbleSubmit.rendered = function(){
   //$("#club").addClass('active');
+
+  var currentCategory = $("[name=category]").val();
+  $("[name=" + currentCategory + "]").addClass("active");
+
+  $(".categoryBox").click(function(){
+    var newCategory = $(this).attr("name");
+    $("[name=category]").val(newCategory);
+     
+    $(".categoryBox").removeClass("active");
+    $(this).addClass("active");
+  });
+
   category = null;
   $("#profilepicture_retina").hide();
   $("#coverphoto_retina").hide();

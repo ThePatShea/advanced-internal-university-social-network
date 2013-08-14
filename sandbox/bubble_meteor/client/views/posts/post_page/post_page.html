@@ -41,15 +41,20 @@
       <div id="edit-event" class="collapse">
         {{> editEvent}}
       </div>
+     {{#if notEvent}}
+        {{#if isDiscussion}}
+          <div id="edit-discussion" class="collapse">
+            {{> editDiscussion}}
+          </div>
+        {{/if}}
 
-      <div id="edit-discussion" class="collapse">
-        {{> editDiscussion}}
-      </div>
 
-      <div id="edit-file" class="collapse">
-        {{> editFile}}
-      </div>
-
+        {{#if isFile}}
+          <div id="edit-file" class="collapse">
+            {{> editFile}}
+          </div>
+        {{/if}}
+     {{/if}}
       <div class="post-heading">
         <a href="{{userProfilePath this.userId}}">
           <div class="author-pic">
@@ -65,7 +70,7 @@
       {{> commentsList}}
 
       {{#if isEvent}}
-        <h4>{{pluralize numOfAttendees "person"}}  going</h4>
+        
         </br>
         {{#if notAttending}}
           <button class="btn btn-small btn-success attending" type="button">I'M GOING</button>
@@ -75,7 +80,6 @@
         {{/if}}
         {{#with attendees}}
           <br />
-          {{this}}
         {{/with}}
       {{/if}}
     </div>

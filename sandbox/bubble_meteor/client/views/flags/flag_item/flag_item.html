@@ -1,6 +1,6 @@
 <template name='flagItem'>
 	{{invokerName}} || Investigate Post: 
 	{{#with getPost}}
-		<a href="{{postPagePath this.bubbleId this._id}}">{{name}}</a>
+		<a href="{{postLink}}">{{name}}</a>
 	{{/with}}
 </template>

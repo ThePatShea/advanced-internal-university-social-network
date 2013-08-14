@@ -121,7 +121,12 @@ createPost = function(postAttributes){
       // display the error to the user
       throwError(error.reason);
     } else {
-      Meteor.Router.to('postPage', post.bubbleId, post._id);
+        if(typeof postAttributes.bubbleId != 'undefined'){
+          Meteor.Router.to('postPage', post.bubbleId, post._id);
+        }
+        else{
+          Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+        }
     }
   });
 }
@@ -194,3 +199,82 @@ createPostWithAttachments = function(postAttributes, fileList){
   });
 }
 
+
+
+
+updatePostWithAttachments = function(id, postAttributes, fileList){
+  var discussionPost = Posts.findOne({_id: id});
+  var newChildren = [];
+
+  for(var i=0; i < discussionPost.children.length; i++){
+    if(postAttributes.children.indexOf(discussionPost.children[i]) == -1){
+      Posts.remove({_id: discussionPost.children[i]});
+    }
+    else{
+      newChildren.push(discussionPost.children[i]);
+    }
+  }
+
+  console.log('New children after pruning: ', newChildren);
+
+  Posts.update(discussionPost._id, {$set: {'children': newChildren}}, function(error){
+    if(error){
+      throwError(error.reason);
+    }
+  });
+
+  for (var i = 0, f; f = fileList[i]; i++) {
+    var reader = new FileReader();
+    reader.onload = (function(f){
+      return function(e) {
+        
+        var attributes = {
+          name: escape(f.name),
+          file: e.target.result,
+          fileType: f.type,
+          postType: 'file',
+          numDownloads: 0,
+          lastDownloadTime: new Date().getTime(),
+          //bubbleId: Session.get('currentBubbleId'),
+          parent: discussionPost._id   //This needs to be set to the ID of the post created above.
+        };
+        if(typeof postAttributes.bubbleId != 'undefined'){
+          attributes.bubbleId = postAttributes.bubbleId;
+        }
+        else{
+          attributes.exploreId = postAttributes.exploreId;
+        }
+        var parentid = discussionPost._id;
+        Meteor.call('post', attributes, function(error, newPost){
+          if(error){
+            throwError(error.reason);
+          }
+          else{
+            //filepostIds.push(id);
+            var parentPost = Posts.findOne({_id: parentid});
+            var childPosts = parentPost.children;
+            if(childPosts == null){
+              childPosts = [];
+            }
+            childPosts.push(newPost._id);
+            console.log('Newborns: ', childPosts);
+            var updatedProperties = {
+              children: childPosts
+            };
+            Posts.update(parentid, {$set: updatedProperties}, function(error){
+              if(error){
+                console.log('Error: ', error);
+                throwError(error.reason);
+              }
+              else{
+                console.log('Successfully updated');
+              }
+            });
+          }
+        });
+      }
+    })(f);
+    reader.readAsDataURL(f);
+  }
+
+}

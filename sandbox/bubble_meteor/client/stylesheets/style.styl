@@ -71,6 +71,7 @@ body
     border                 0
     a
       text-shadow              0 0
+    .cb-logo-main,
     .brand
       padding                  0
       margin                   0
@@ -888,6 +889,13 @@ wysiwyg-image(n)
     border-left          0
     img
       wysiwyg-image        0
+    .wysiwyg-placeholder
+      color                main-xlight
+      font-weight          100
+      font-size            23px
+    &:hover
+    &:focus
+      border-color         white-light
     &:focus
       outline              0
       .wysiwyg-placeholder
@@ -1323,7 +1331,7 @@ wysiwyg-image(n)
     .wysiwyg-row
       .wysiwyg-label
         margin         15px 0 10px 0
-        color          main-xlight
+        color          main-light
         cursor         default
         padding        0
         border         0
@@ -1425,6 +1433,67 @@ wysiwyg-image(n)
   left            0
   top             0
 /**********     errors      **********/
+
+/**********   gif-loader    **********/
+animation(args...)
+  -webkit-animation      args
+  animation              args
+
+transform(args...)
+  -webkit-transform      args
+  -ms-transform          args
+  transform              args
+
+@keyframes rotate
+  0%
+    transform rotateZ(0deg)
+  100%
+    transform rotateZ(360deg)
+
+
+.gif-loader-container-site
+  background        main-xdark
+  height            5000px
+  position          fixed
+  width             100%
+  z-index           999
+  
+
+.gif-loader-container
+  background        rgba(1,17,38,.8)
+  position          relative
+  height            5000px
+  width             100%
+  @media (min-width: 768px)
+    top               -300px
+  @media (max-width: 767px)
+    top               -250px
+
+.gif-loader
+  position        absolute
+  left            50%
+  top             100px
+  margin-left     -48px
+  width           75px
+  height          75px
+  border-radius   100%
+  svg
+    height          75px
+    width           75px
+  &:after
+    content         ''
+    background      trasparent
+    width           140%
+    height          140%
+    position        absolute
+    border-radius   100%
+    top             -20%
+    left            -20%
+    opacity         0.7
+    box-shadow      rgba(255, 255, 255, 0.6) -4px -5px 3px -3px
+    animation       rotate 1s infinite linear
+/**********   gif-loader    **********/
+
 
 /***************  Multi-Purpose Elements   ***************/
 
@@ -1701,17 +1770,23 @@ navbar-height        =  60px
     .user-dropdown
       position                 relative
       z-index                  100
+    .cb-logo-main,
     .brand
       line-height              navbar-height 
       height                   navbar-height
       font-size                14px
       @media (min-width: 768px)
-        position                   fixed
+        position                   absolute
         left                       15px
       @media (max-width: 767px)
         position                   absolute
         margin-right               -16px
         left                       50%
+      &.cb-logo-main-mobile
+        @media (min-width: 768px)
+          display                    none
+        @media (max-width: 767px)
+          display                    block
       .logo-main
         margin                     0 5px 0 0
       .logo-words
@@ -1975,6 +2050,7 @@ navbar-height        =  60px
           .num
             move-position(absolute,1px,blank,blank,6px)
             font-size        13px
+            color            main-xlight
 /*****   sidebar-new        *****/
 
 
@@ -2217,6 +2293,7 @@ bubble-section-selector-height-small  =  75px
     a
       std-white-light-fill   0
       .btn-bubble-section
+        position                 relative
         float                    left
         @media (min-width: 768px)
           width                    bubble-section-selector-height-large
@@ -2226,6 +2303,13 @@ bubble-section-selector-height-small  =  75px
           width                    20%
           svg
             height                   25px
+        .lbl
+          fontize(main, bold, uppercase, 10px)
+          position                 absolute
+          display                  none
+          bottom                   14px
+          width                    100%
+          left                     0
         &.active-true,
         &:hover
           background               white-light
@@ -2249,6 +2333,9 @@ bubble-section-selector-height-small  =  75px
             fill                     color-art
           &.category-custom-hover-fill
             fill                     color-custom
+        &:hover
+          .lbl
+            display                  block
 /**********  bubble-section-selector  **********/
 
 /**********        bubble-page        **********/
@@ -2650,9 +2737,10 @@ attachment-height  =  75px
     .cancel-invitee-text
       fontize(alt,medium,capitalize,15px,auto,auto,auto,auto)
   .add-invitees
-    fontize(alt,light,auto,15px,30px,auto,auto,auto)
-    padding 5px 0 20px 0;
-    overflow auto
+    fontize(main, bold, uppercase, 18px, 30px, 2px)
+    color      main-light
+    padding    0 0 20px 0;
+    overflow   auto
     .add-invitees-text
       margin 0 15px 0 0
 
@@ -2894,6 +2982,7 @@ cover-btns-width-small  =  130px
     border           1px solid main-xlight
     border-radius    10px
     padding          20px
+    z-index          10
   #dashboard-icon-3a
     position         absolute
     top              90px
@@ -2910,6 +2999,7 @@ cover-btns-width-small  =  130px
     position         absolute
     top              90px
     right            30px
+    z-index          10
 .dashboard-item-container
   width            100%
   height           auto

@@ -5,7 +5,9 @@
   <div class="post-attachments">
     <h4 class="small-heading attachments-heading">attachments:</h4>
     {{#each attachmentList}}
-      {{> listItem}}
+      <a href="{{file}}" download="{{decodeURI name}}">
+	      {{> listItem}}
+	  </a>
     {{/each}}
   </div>
 </template>

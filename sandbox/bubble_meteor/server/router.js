@@ -46,3 +46,45 @@ Meteor.Router.add('/','GET', function(){
 	return [307, {'Location': 'http://main.campusbubble.jit.su'}, 'null'];
 });
 */
+
+Meteor.Router.add('/pushUser', 'POST', function() {
+	var email = this.request.body.email;
+	var altEmail = this.request.body.altEmail;
+	var username = this.request.body.username;
+	var ppid = this.request.body.ppid;
+	var name = this.request.body.name;
+	var code = this.request.body.code;
+	var level = this.request.body.level;
+	var firstTimeLogin = false;
+
+	var user = Meteor.users.findOne({username: this.request.body.username});
+	if(!user)
+	{
+		Accounts.createUser({'username': username});
+	}
+	else
+	{
+		console.log("User already exists: " + username);
+	}
+
+	user = Meteor.users.findOne({'username': username});
+
+	var userProperties = {
+		'ppid': ppid,
+		'emails': [{
+			'address': email,
+			'verified': false
+		}],
+		'altEmails': [{
+			'address': altEmail,
+			'verified': false
+		}],
+		'name': name,
+		'code': code,
+		'level': level,
+		'firstTimeLogin': firstTimeLogin
+	};
+	Meteor.users.update(user._id, {$set: userProperties});
+
+	return [200, {'username': username}, null];
+});

@@ -79,13 +79,29 @@ Template.userProfile.rendered = function() {
 	var cropArea;
 	var mainURL;
 	var retinaURL;
+
+	$(window).setBreakpoints({
+	// use only largest available vs use all available
+	    distinct: true, 
+	// array of widths in pixels where breakpoints
+	// should be triggered
+	    breakpoints: [
+	    	768
+	    ] 
+	});
+	$(window).bind('exitBreakpoint768',function() {
+		$(window).unbind('exitBreakpoint768');
+		$(window).bind('enterBreakpoint768', function() {
+			Session.set("DisableCrop","");
+			//alert('enable crop');
+		});
+		Session.set("DisableCrop","1");
+		//alert('disable crop');
+	});
+	$(window).unbind('enterBreakpoint768');
 };
 
 Template.userProfile.events({
-
-	'click .loadCropTool': function() {
-		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '160', y2: '160', onSelectChange: preview, handles: true });
-	},
 
 	'click .removeCropTool': function() {
 		cropArea.cancelSelection();
@@ -98,15 +114,22 @@ Template.userProfile.events({
 
 	    var currentProfileId = Session.get('selectedUserId');
 	    //var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
-	    
-	    var profileProperties = {
-	      profilePicture: mainURL,
-	      retinaProfilePicture: retinaURL,
-	      emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
-	      phone: '',
-	      lastUpdated: new Date().getTime(),
-	      userType: $(e.target).find('[name=userType]').val()
+
+		var profileProperties = {
+		    emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
+		    phone: '',
+		    lastUpdated: new Date().getTime(),
+		    userType: $(e.target).find('[name=userType]').val()
 	    };
+
+	    if(typeof mainURL != 'undefined'){
+	    	if(mainURL.length != 0){
+				profileProperties.profilePicture = mainURL;
+				profileProperties.retinaProfilePicture = retinaURL;
+	    	}
+	    }
+	    
+	    
 	    console.log('Properties to be saved: ',profileProperties);
 	    
 	    Meteor.users.update(currentProfileId, {$set: profileProperties}, function(error) {
@@ -151,12 +174,56 @@ Template.userProfile.events({
 		            	$("#drop_zone").hide();
 		            	$(".crop").attr("src", e.target.result);
 		            	profileImage.src = e.target.result;
-	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '77', y2: '77', parent: ".cb-form-container", handles: true, onSelectChange: function(img, selection) {
-						    mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
-						    retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
-						    mainURL = mainCanvas.toDataURL();
-						    retinaURL = retinaCanvas.toDataURL();
-						    $(".profile-pic-preview").attr("src",mainURL);
+	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: '77', y2: '77', parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+							if(Session.get("DisableCrop") == "1")
+							{
+								cropArea.cancelSelection();
+	            			}
+	            		}, onSelectChange: function(img, selection) {
+						    if(selection.width != 0)
+						    {
+							    mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+							    console.log(selection.y1);
+							    retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+							    mainURL = mainCanvas.toDataURL();
+							    retinaURL = retinaCanvas.toDataURL();
+							    $(".profile-pic-preview").attr("src",mainURL);
+							}
+							else
+							{
+								cropArea.setSelection(10,10,78,78);
+								cropArea.setOptions({show: true});
+						    	cropArea.update();
+							}
+						    //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+	            		}, onSelectEnd: function(img, selection){
+						    if(selection.width < 67)
+						    {
+						    	if((selection.x1 > profileImage.width-67) || (selection.y1 > profileImage.height-67))
+						    	{
+						    		if(selection.x1 < 67)
+						    		{
+							    		cropArea.setSelection(0,selection.y2-67,67,selection.y2);
+							    		cropArea.update();
+							    	}
+							    	else if(selection.y1 < 67)
+							    	{
+							    		cropArea.setSelection(selection.x2-67,0,selection.x2,67);
+							    		cropArea.update();
+							    	}
+							    	else
+							    	{
+							    		cropArea.setSelection(selection.x2-67,selection.y2-67,selection.x2,selection.y2);
+							    		cropArea.update();
+							    	}
+
+							    }
+							    else
+							    {
+						    		cropArea.setSelection(selection.x1,selection.y1,selection.x1+67,selection.y1+67);
+						    		cropArea.update();
+						   		}
+						    }
 	            		}});
 		        	};
 		        })(f);
