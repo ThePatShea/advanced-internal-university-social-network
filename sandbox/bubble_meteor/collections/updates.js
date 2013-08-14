@@ -97,26 +97,29 @@ createEditEventUpdate = function(userId, postId) {
   });
 
   var post = Posts.findOne(postId);
-  var bubble = Bubbles.findOne(post.bubbleId);
-  var attendees = post.attendees;
-  //Remove post owner from list of attendees
-  var index = attendees.indexOf(Meteor.users.findOne(userId).username);
-  if(index>0){
-    attendees.splice(index,1);
-  }
-  _.each(attendees, function(username){
-    var user = Meteor.users.findOne({username:username});
-    Meteor.call('update',{
-      userId: user._id,
-      postId: post._id,
-      bubbleId: bubble._id,
-      invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
-      updateType: "edited post",
-      url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
-      content: Meteor.user().username + " edited " + post.name
+
+  if(typeof post.bubbleId != 'undefined'){
+    var bubble = Bubbles.findOne(post.bubbleId);
+    var attendees = post.attendees;
+    //Remove post owner from list of attendees
+    var index = attendees.indexOf(Meteor.users.findOne(userId).username);
+    if(index>0){
+      attendees.splice(index,1);
+    }
+    _.each(attendees, function(username){
+      var user = Meteor.users.findOne({username:username});
+      Meteor.call('update',{
+        userId: user._id,
+        postId: post._id,
+        bubbleId: bubble._id,
+        invokerId: Meteor.userId(),
+        invokerName: Meteor.user().username,
+        updateType: "edited post",
+        url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
+        content: Meteor.user().username + " edited " + post.name
+      });
     });
-  });
+  }
 }
 
 //For users who are removed from bubble
