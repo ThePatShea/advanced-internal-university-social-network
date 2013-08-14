@@ -40,7 +40,7 @@
               </div>
             {{/each}}
             <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath getCurrentBubble._id}}">
-              <button class="pull-left btn-tiny more-posts">+ {{pluralize eventsCount postType 'more'}}</button>
+              <button class="pull-left btn-tiny more-posts">+ {{pluralize numMoreEvents 'event' 'more'}}</button>
             </a>
           {{/with}}
         </div>
@@ -61,7 +61,7 @@
               </div>
             {{/each}}
             <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
-              <button class="pull-left btn-tiny more-posts">+ {{pluralize discussionsCount postType 'more'}}</button>
+              <button class="pull-left btn-tiny more-posts">+ {{pluralize numMoreDiscussionsCount postType 'more'}}</button>
             </a>
           {{/with}}
         </div>

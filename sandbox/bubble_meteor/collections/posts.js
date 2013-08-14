@@ -111,7 +111,7 @@ Meteor.methods({
     }
   },
   getNumOfEvents: function(bubbleId, postType ) {
-    return Posts.find({bubbleId: bubbleId, postType: postType}).count();
+    return Posts.find({'bubbleId': bubbleId, 'postType': postType}).count();
   }
 });
 

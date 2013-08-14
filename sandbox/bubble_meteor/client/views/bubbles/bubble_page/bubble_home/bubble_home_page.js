@@ -43,6 +43,11 @@ Template.bubblePage.helpers({
       return false;
     }
   },
+
+  numMoreEvents: function(){
+    var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event', dateTime: {$gt: referenceDateTime}}).count() - 3;
+    return num;
+  },
   hasMoreDiscussions: function() {
     var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
     if (num > 0){
@@ -50,6 +55,10 @@ Template.bubblePage.helpers({
     }else{
       return false;
     }
+  },
+  numMoreDiscussionsCount: function(){
+    var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
+    return num;
   },
   hasMoreFiles: function() {
     var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}).count() - 3;
