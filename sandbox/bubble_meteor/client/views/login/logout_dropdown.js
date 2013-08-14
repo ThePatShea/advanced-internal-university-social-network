@@ -12,7 +12,10 @@ Template.logoutDropdown.events({
       })
     }
   },
+  'click .support': function() {
+    window.open('http://support.emorybubble.com','_blank');
+  },
   'click .view-profile': function() {
     Meteor.Router.to('userProfile',Meteor.userId());
-  }
+  },
 });
