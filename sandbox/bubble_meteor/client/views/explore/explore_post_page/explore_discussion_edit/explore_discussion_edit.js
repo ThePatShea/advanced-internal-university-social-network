@@ -177,12 +177,13 @@ function updateDiscussionPost(){
     discussionDeletedAttachmentIndices = [];
 
     var currentPostId = Session.get('currentPostId');
-    var currentBubbleId = Session.get('currentBubbleId');
+    //var currentBubbleId = Session.get('currentBubbleId');
+    var currentExploreId = Session.get('currentExploreId');
 
     var discussionAttributes = {
       name: $('.cb-explore-editDiscussion-form > .discussionTitle').val(),
       body: $('.cb-explore-editDiscussion-form > .wysiwyg_group > .wysiwyg-body').html(),
-      bubbleId: currentBubbleId,
+      exploreId: currentExploreId,
       children: newChildren
     };
 

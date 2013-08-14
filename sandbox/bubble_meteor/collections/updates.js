@@ -216,32 +216,35 @@ createInvitationUpdate = function(userList) {
 //For everyone attending
 createNewAttendeeUpdate = function(postId) {
   var post = Posts.findOne(postId);
-  var bubble = Bubbles.findOne(post.bubbleId);
 
-  //Clears multiple attendee updates
-  var oldUpdates = Updates.find({read: false, userId: Meteor.userId(), bubbleId: bubble._id, updateType: 'new attendee'}).fetch();
-  _.each(oldUpdates, function(update) {
-    Meteor.call('setRead', update);
-  });
+  if(typeof post.bubbleId != 'undefined'){
+    var bubble = Bubbles.findOne(post.bubbleId);
 
-  //Remove user from list of attendees
-  var attendees = post.attendees;
-  var index = attendees.indexOf( Meteor.userId() );
-  attendees.splice(index,1);
-
-  _.each(attendees, function(userId){
-    var user = Meteor.users.findOne(userId);
-    Meteor.call('update',{
-      userId: user._id,
-      postId: postId,
-      bubbleId: bubble._id,
-      invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
-      updateType: "new attendee",
-      url: '/mybubbles/'+bubble._id+'/members',
-      content: " is attending " + post.name
+    //Clears multiple attendee updates
+    var oldUpdates = Updates.find({read: false, userId: Meteor.userId(), bubbleId: bubble._id, updateType: 'new attendee'}).fetch();
+    _.each(oldUpdates, function(update) {
+      Meteor.call('setRead', update);
     });
-  });
+
+    //Remove user from list of attendees
+    var attendees = post.attendees;
+    var index = attendees.indexOf( Meteor.userId() );
+    attendees.splice(index,1);
+
+    _.each(attendees, function(userId){
+      var user = Meteor.users.findOne(userId);
+      Meteor.call('update',{
+        userId: user._id,
+        postId: postId,
+        bubbleId: bubble._id,
+        invokerId: Meteor.userId(),
+        invokerName: Meteor.user().username,
+        updateType: "new attendee",
+        url: '/mybubbles/'+bubble._id+'/members',
+        content: " is attending " + post.name
+      });
+    });
+  }
 }
 
 //For bubble members when a member is added

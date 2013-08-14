@@ -238,6 +238,7 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
           //bubbleId: Session.get('currentBubbleId'),
           parent: discussionPost._id   //This needs to be set to the ID of the post created above.
         };
+        console.log('Updating: ', postAttributes);
         if(typeof postAttributes.bubbleId != 'undefined'){
           attributes.bubbleId = postAttributes.bubbleId;
         }
