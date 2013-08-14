@@ -1846,14 +1846,24 @@ navbar-height        =  60px
         &.dropdown-logout
           padding                    5px 0
           li
-            color                      main-light
             padding                    10px 20px
+            overflow                   hidden
             &:hover
               cursor                   pointer
               background               #89A5B8
             &.view-profile,
             &.support
               border-bottom              1px solid #89A5B8
+            .cb-icon-dropdown
+              fill                       main-light
+              position                   relative
+              margin-right               10px
+              top                        -2px
+              svg
+                height                     20px
+                width                      20px
+            .lbl
+              color                      main-light
       .cb-updates-dropdown
         .badge-inverse
           background        main-xlight
