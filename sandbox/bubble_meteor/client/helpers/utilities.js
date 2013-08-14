@@ -14,10 +14,10 @@ categories =  [
 
 //Registers the name of the different usertypes
 userTypes = {
-  1 : "Level 1",
-  2 : "Level 2",
-  3 : "Level 3",
-  4 : "Level 4"
+  1 : "user",
+  2 : "super user",
+  3 : "campus moderator",
+  4 : "campus bubble"
 }
 
 
