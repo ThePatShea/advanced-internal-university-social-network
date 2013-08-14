@@ -5,7 +5,7 @@ Template.exploreEventSubmit.events({
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
-    console.log('Event photo: ', $("#eventPhoto").attr("src"));
+    //console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
     var eventAttributes = { 
       dateTime: new Date().getTime(),
@@ -20,7 +20,7 @@ Template.exploreEventSubmit.events({
     };
 
 
-    console.log("event attributes: ", eventAttributes );
+    //console.log("event attributes: ", eventAttributes );
     createPost(eventAttributes);
   },
 
@@ -33,7 +33,7 @@ Template.exploreEventSubmit.events({
 
   'change .cb-explore-eventSubmit-form .attach-files > .drop-zone > .file-chooser-invisible': function(evt){
       files = evt.target.files;
-      console.log('Event picture: ', files);
+      //console.log('Event picture: ', files);
       //If more than one file dropped on the dropzone then throw an error to the user.
       if(files.length > 1){
         error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
