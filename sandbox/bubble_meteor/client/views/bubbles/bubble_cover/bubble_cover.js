@@ -25,31 +25,19 @@ Template.bubbleCover.helpers({
 
 Template.bubbleCover.events({
   'click .invite-accept': function() {
-    Bubbles.update({_id:this._id},
-    {
-      $addToSet: {'users.members': Meteor.userId()},
-      $pull: {'users.invitees': Meteor.userId()}
-    });
-    createNewMemberUpdate(Meteor.userId());
+    Meteor.call('acceptInvitation', this._id);
   },
   'click .invite-deny': function() {
-    Meteor.call('removeInvitee', this._id, Meteor.userId());
+    Meteor.call('removeInvitee', this._id);
   },
   'click .join-apply': function() {
     //Google Analytics
     _gaq.push(['_trackEvent', 'Bubble', 'Join Bubble', this.title]);
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $addToSet: {'users.applicants': Meteor.userId()}
-    });
-    createNewApplicantUpdate();
+    Meteor.call('joinBubble', Session.get('currentBubbleId'));
   },
   'click .cancel-apply': function() {
     //Google Analytics
     _gaq.push(['_trackEvent', 'Bubble', 'Cancel Application', this.title]);
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $pull: {'users.applicants': Meteor.userId()}
-    });
+    Meteor.call('cancelJoinBubble', Session.get('currentBubbleId'));
   }
 });

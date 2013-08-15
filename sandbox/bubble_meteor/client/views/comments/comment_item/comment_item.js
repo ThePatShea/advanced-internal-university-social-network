@@ -20,7 +20,7 @@ Template.commentItem.events({
 	'click .delete-comment': function(event){
 		event.preventDefault();
 		if (confirm("Delete this comment?")) {
-    	Comments.remove(this._id);
+			Meteor.call('deleteComment', this._id);
     }
   }
 });

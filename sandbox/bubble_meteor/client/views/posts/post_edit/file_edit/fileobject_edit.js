@@ -46,8 +46,7 @@ Template.fileobjectEdit.events({
   'click #delete_post': function(e) {
     e.preventDefault();
     if (confirm("Delete this post?")) {
-      var currentPostId = Session.get('currentPostId');
-      Posts.remove(currentPostId);
+      Meteor.call('deletePost', Session.get('currentPostId'));
       Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
     }
   },

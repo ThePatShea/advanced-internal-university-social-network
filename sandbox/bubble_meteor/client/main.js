@@ -83,7 +83,6 @@ Deps.autorun(function() {
 	// Updates Related Subscriptions
 	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
 
-
 	// Flags Related Subscriptions
 		if(Meteor.user() && Meteor.user().userType == '3'){
 			solvedFlagsHandle = Meteor.subscribeWithPagination('solvedFlags', 10);

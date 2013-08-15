@@ -92,9 +92,8 @@ Template.discussionEdit.events({
     _gaq.push(['_trackEvent', 'Post', 'Delete Discussion', this.name]);
     e.preventDefault();
     if (confirm("Delete this post?")) {
-      var currentPostId = Session.get('currentPostId');
-      Posts.remove(currentPostId);
-      Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+      Meteor.call('deletePost', Session.get('currentPostId'));
+      Meteor.Router.to('bubblePage', Session.get('currentBubbleId'));
     }
   }
 });

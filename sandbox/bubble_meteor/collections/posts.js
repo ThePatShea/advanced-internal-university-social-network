@@ -66,6 +66,15 @@ Meteor.methods({
     return post;
   },
 
+  deletePost: function(postId) {
+    Updates.update({postId: postId}, {$set: {read: true}});
+    var post = Posts.findOne(postId);
+    Posts.remove(postId);
+    if(Meteor.userId() != post.userId) {
+      createPostDeletedUpdate(post.userId, postId);
+    }
+  },
+
   incViewCount: function(postId) {
     var user = Meteor.user();
     // ensure the user is logged in

@@ -40,7 +40,7 @@ Template.eventEdit.events({
 
   },
 
-    'dragover .dropzone': function(evt){
+  'dragover .dropzone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();

@@ -1,11 +1,13 @@
 Updates = new Meteor.Collection('updates');
 
 Updates.allow({
-  update: ownsUpdate
+  update: ownsUpdate,
+  remove: ownsUpdate
 });
 
 Meteor.methods({
   update: function(updateAttributes){
+    console.log("this ran");
     var user = Meteor.user();
    
     var update = _.extend(_.pick(updateAttributes, 
@@ -354,8 +356,8 @@ createAdminDemoteUpdate = function(userId) {
 }
 
 //For admins where there are new applicants
-createNewApplicantUpdate = function() {
-  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+createNewApplicantUpdate = function(bubbleId) {
+  var bubble = Bubbles.findOne(bubbleId);
 
   //Clears duplicated updates
   var oldUpdates = Updates.find({read: false, invokerId: Meteor.userId(), bubbleId: bubble._id, updateType: 'new applicant'}).fetch();
@@ -413,7 +415,7 @@ createPostUnflagUpdate = function(flag) {
     Meteor.call('setRead', update);
   });
 
-  var superUsers = Meteor.users.find({userType:'superuser'}).fetch();
+  var superUsers = Meteor.users.find({userType:'2'}).fetch();
   _.each(superUsers, function(user) {
     if(user._id != Meteor.userId()){
       Meteor.call('update',{
@@ -428,5 +430,38 @@ createPostUnflagUpdate = function(flag) {
       });
     }
   }); 
+}
+
+//Sends an update when bubbles are deleted
+createDeleteBubbleUpdate = function(bubbleId) {
+  var bubble = Bubbles.findOne(bubbleId);
+  var admins = bubble.users.admins;
+  var users = admins.concat(bubble.users.members);
+  _.each(users, function(userId) {
+    Meteor.call('update', {
+      userId: userId,
+      bubbleId: bubble._id,
+      invokerId: Meteor.userId(),
+      invokerName: Meteor.user().username,
+      updateType: "bubble deleted",
+      url: '/searchAll',
+      content: bubble.title + " has been deleted"
+    });
+  });
+}
+
+//Sends an update to the owner when lvl 3 users delete posts due to flags
+createPostDeletedUpdate = function(postId) {
+  var post = Posts.findOne(postId);
+  var bubble = Bubbles.findOne(post.bubbleId);
+  Meteor.call('update', {
+    userId: post.userId,
+    bubbleId: bubble._id,
+    invokerId: Meteor.userId(),
+    invokerName: Meteor.user().username,
+    updateType: "post deleted",
+    url: '/mybubbles/'+bubble._id+'/home',
+    content: post.name + " has been deleted by " + Meteor.user().username
+  });
 }
 
