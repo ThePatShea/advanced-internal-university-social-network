@@ -2590,6 +2590,16 @@ attachment-height  =  75px
     .post-attachments
       .attachments-heading
         positionize(auto, auto, 40px 0 10px 30px)
+      a
+        &:nth-child(even)
+          .post-item
+            background         white-dark
+        &:nth-child(odd)
+          .post-item
+            background         white-light
+        &:hover
+          .post-item
+            background         white-xlight
     .attachment
       positionize(attachment-height, auto, 0 180px 0 30px, auto, auto, auto, auto, auto, hidden)
       move-position(relative)
