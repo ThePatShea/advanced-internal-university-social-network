@@ -179,4 +179,66 @@ Template.bubbleEdit.rendered = function(){
     $("#profilepicture_preview").attr("src", "/img/default_bubbleprofilepicture.jpg");
   }
   */
+
+  if(this.category == 'greek'){
+    category = "greek";
+    $(".nav-tabs li").removeClass('active');
+    $("#greek").addClass('active');
+    $("[name=category]").val("greek");
+  }
+  else if(this.category == 'club'){
+    category = "club";
+    $(".nav-tabs li").removeClass('active');
+    $("#club").addClass('active');
+    $("[name=category]").val("greek");
+  }
+  else if(this.category == 'art'){
+    category = "greek";
+    $(".nav-tabs li").removeClass('active');
+    $("#greek").addClass('active');
+    $("[name=category]").val("club");
+  }
+  else if(this.category == 'sport'){
+    category = "sport";
+    $(".nav-tabs li").removeClass('active');
+    $("#sport").addClass('active');
+    $("[name=category]").val("sport");
+  }
+  else if(this.category == 'major'){
+    category = "major";
+    $(".nav-tabs li").removeClass('active');
+    $("#major").addClass('active');
+    $("[name=category]").val("major");
+  }
+  else if(this.category == 'office'){
+    category = "office";
+    $(".nav-tabs li").removeClass('active');
+    $("#office").addClass('active');
+    $("[name=category]").val("office");
+  }
+  else if(this.category == 'service'){
+    category = "service";
+    $(".nav-tabs li").removeClass('active');
+    $("#service").addClass('active');
+    $("[name=category]").val("service");
+  }
+  else if(this.category == 'study'){
+    category = "study";
+    $(".nav-tabs li").removeClass('active');
+    $("#study").addClass('active');
+    $("[name=category]").val("study");
+  }
+  else if(this.category == 'dorm'){
+    category = "dorm";
+    $(".nav-tabs li").removeClass('active');
+    $("#dorm").addClass('active');
+    $("[name=category]").val("dorm");
+  }
+  else if(this.category == 'custom'){
+    category = "custom";
+    $(".nav-tabs li").removeClass('active');
+    $("#custom").addClass('active');
+    $("[name=category]").val("custom");
+  }
+
 }
