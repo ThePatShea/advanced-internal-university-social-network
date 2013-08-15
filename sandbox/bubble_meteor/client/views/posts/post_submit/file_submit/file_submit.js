@@ -25,6 +25,8 @@ Template.fileSubmit.events({
       })(f);
       reader.readAsDataURL(f);
     }
+
+    files = [];
   },
 
   'dragover .cb-fileSubmit-form > .attach-files > .drop-zone': function(evt){
@@ -76,6 +78,8 @@ Template.fileSubmit.created = function(){
 function processAttachmentSelections(fileAttachments){
 
     files = fileAttachments;
+
+    $('.cb-fileSubmit-form > .attach-files > .drop-zone > .attachments-list').html('');
     
     for (var i = 0, f; f = files[i]; i++) {
 
