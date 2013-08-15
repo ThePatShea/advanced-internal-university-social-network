@@ -1494,6 +1494,10 @@ transform(args...)
     animation       rotate 1s infinite linear
 /**********   gif-loader    **********/
 
+/**********  bubble-users-list  **********/
+.bubble-users-list
+  margin-top      40px
+/**********  bubble-users-list  **********/
 
 /***************  Multi-Purpose Elements   ***************/
 
@@ -1755,15 +1759,6 @@ navbar-height        =  60px
   &.navbar-main
     position                 relative
     z-index                  100
-    .sidebar-collapse-new
-      position               absolute
-      padding                20px 0
-      @media (min-width: 768px)
-        display                none
-      @media (max-width: 767px)
-        display                block
-      .cb-icon
-        fill                   main-xlight
   .navbar-inner
     height                   60px
     main-xdark-bg            0
@@ -1833,15 +1828,39 @@ navbar-height        =  60px
             position                       relative
             top                            -2px
       .dropdown-menu
+        background        main-xlight
+        top               50px
         box-shadow        0 0
+        border            0
+        &::after
+          border-bottom-color        main-xlight
+        &.dropdown-logout
+          padding                    5px 0
+          li
+            padding                    10px 20px
+            overflow                   hidden
+            &:hover
+              cursor                   pointer
+              background               #89A5B8
+            &.view-profile,
+            &.support
+              border-bottom              1px solid #89A5B8
+            .cb-icon-dropdown
+              fill                       main-light
+              position                   relative
+              margin-right               10px
+              top                        -2px
+              svg
+                height                     20px
+                width                      20px
+            .lbl
+              color                      main-light
       .cb-updates-dropdown
         .badge-inverse
           background        main-xlight
           color             white-xxdark
         .dropdown-menu
-          background        main-xlight
           width             270px
-          top               50px
           li
             a
               fontize(alt, bold, none, 14px)
@@ -1865,6 +1884,25 @@ navbar-height        =  60px
 
 /**********        sidebar       **********/
 /*****   sidebar-new        *****/
+.desktop-logo-container
+  position           absolute
+  width              185px
+  z-index            100
+  .cb-logo-main
+    @media (min-width: 768px)
+      display            block
+    @media (max-width: 767px)
+      display            none
+  .sidebar-collapse-new
+    position               absolute
+    padding                20px 0
+    @media (min-width: 768px)
+      display                none
+    @media (max-width: 767px)
+      display                block
+    .cb-icon
+      fill                   main-xlight
+
 .sidebar-new
   max-width          310px
   height             100%
@@ -1957,7 +1995,7 @@ navbar-height        =  60px
     &.subsection
       background         main-xlight
       position           relative
-      overflow           visible
+      overflow           auto // make visible for subsection arrows to appear
       width              210px
       height             100%
       z-index            20
@@ -2102,8 +2140,10 @@ body
     @media (max-width: 767px)
       width                      200%
     .view
+      position                 relative
       overflow                 hidden
       height                   100%
+      z-index                  80
       @media (min-width: 768px)
         width                      auto
       @media (max-width: 767px)
@@ -2307,9 +2347,12 @@ bubble-section-selector-height-small  =  75px
           fontize(main, bold, uppercase, 10px)
           position                 absolute
           display                  none
-          bottom                   14px
           width                    100%
           left                     0
+          @media (min-width: 768px)
+            bottom                   14px
+          @media (max-width: 767px)
+            bottom                   10px
         &.active-true,
         &:hover
           background               white-light
@@ -2388,14 +2431,22 @@ section-icon-no-fill(n)
         section-icon           0
         svg
           height                 27px 
+      .section-icon-invitations
+        margin-right           5px
+        section-icon-no-fill   0
+        svg
+          fill                   main-light
+          height                 28px 
+          width                  25px
       .section-icon-search
         margin-right           5px
         section-icon-no-fill   0
         path
           stroke                   main-light
+          stroke-width             3
         svg
-          height                 25px 
-          width                  22px
+          height                 28px 
+          width                  25px
       .section-icon-bubble-create
         move-position(relative, 2px, blank, blank, blank)
         fill                   main-light
@@ -2600,6 +2651,7 @@ attachment-height  =  75px
 
 /**********        profile-page       **********/
 .profile-content
+  border-bottom     1px solid #DFE1E1
   border-top        1px solid #DFE1E1
   positionize(auto, auto, 30px 0, 0 0 40px 0)
   colorize(white-xxdark, white-dark)

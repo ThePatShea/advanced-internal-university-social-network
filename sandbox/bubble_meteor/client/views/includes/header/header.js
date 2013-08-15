@@ -27,15 +27,3 @@ Template.header.helpers({
     return Meteor.user().userType == userType;
   }
 });
-
-
-Template.header.events({
-  'click .sidebar-collapse-new' : function() {
-    var sidebarOpen = Session.get('sidebarOpen');
-
-    if (sidebarOpen == false)
-      Session.set('sidebarOpen', true);
-    else
-      Session.set('sidebarOpen', false);
-  }
-});

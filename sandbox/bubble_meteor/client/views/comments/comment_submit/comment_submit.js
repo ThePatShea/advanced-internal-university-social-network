@@ -26,7 +26,7 @@ Template.commentSubmit.events({
 });
 
 Template.commentSubmit.rendered = function() {
-  $('.submit-comment').click(function() {
+  $('.comment-form > .cb-submit-container > .submit-comment').click(function() {
     setTimeout(function(){
       if (!$('.cb-error').length) {
         $('#main').animate({
