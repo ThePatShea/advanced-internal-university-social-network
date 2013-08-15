@@ -8,14 +8,15 @@ Template.commentSubmit.helpers({
 });
 
 Template.commentSubmit.events({
-  'submit form': function(event, template) {
+  'click .comment-form > .cb-submit-container > .cb-submit': function(event, template) {
     event.preventDefault();
     
     //Google Analytics
     _gaq.push(['_trackEvent', 'Comment', 'Add', template.data._id]);
 
     var comment = {
-      body: $(event.target).find('[name=body]').val(),
+      //body: $(event.target).find('[name=body]').val(),
+      body: $($('.comment-form > .body')).val(),
       postId: template.data._id
     };
     
