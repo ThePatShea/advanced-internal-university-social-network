@@ -25,13 +25,13 @@
             </div>
 
             <div class="cb-form-row first">
-              <input class="required width-full" name="title" type="text" value="{{title}}" placeholder="Name*"/>
+              <input class="required width-full title" name="title" type="text" value="{{title}}" placeholder="Name*"/>
             </div>
 
             <div class="cb-form-row">
               <div class="bubble-category">
                 <label class="no-typing">select a category</label>
-                <input name="category" type="hidden" value="{{category}}"/>
+                <input class="category" name="category" type="hidden" value="{{category}}"/>
                 <ul class="nav nav-tabs large-boxes">
                   {{#each systemCategory.categories}}
                     <li class="categoryBox" name="{{nameShort}}">
@@ -52,6 +52,27 @@
                   {{/each}}
                 </ul>
               </div>
+            </div>
+
+            <canvas id="cover-main-canvas" width="160" height="160" class="visible-0"></canvas>
+            <canvas id="cover-retina-canvas" width="320" height="320" class="visible-0"></canvas>
+            <canvas id="profile-main-canvas" width="300" height="300" class="visible-0"></canvas>
+            <canvas id="profile-retina-canvas" width="600" height="600" class="visible-0"></canvas>
+
+            <div class="crop-container crop-coverphoto" style="text-align: center;">
+              <img class="crop"></img>
+            </div>
+
+            <div class="attach-files attach-cover-photo">
+              {{> attachCoverPhoto}}
+            </div>
+
+            <div class="crop-container crop-profile" style="text-align: center;">
+              <img class="crop"></img>
+            </div>
+
+            <div class="attach-files attach-profile-picture">
+              {{> attachProfilePicture}}
             </div>
 
             {{> wysiwyg2}}
