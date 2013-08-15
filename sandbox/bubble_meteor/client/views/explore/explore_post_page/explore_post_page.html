@@ -37,9 +37,11 @@
         </button>
       </div>
 
-      <div id="edit-event" class="collapse">
-        {{> editEvent}}
-      </div>
+      {{#if isEvent}}
+        <div id="edit-event" class="collapse">
+          {{> exploreEditEvent}}
+        </div>
+      {{/if}}
      {{#if notEvent}}
         {{#if isDiscussion}}
           <div id="edit-discussion" class="collapse">
