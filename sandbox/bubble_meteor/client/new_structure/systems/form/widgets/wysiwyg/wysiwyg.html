@@ -20,11 +20,11 @@
         </div>
       </div>
       <div name="body" class="wysiwyg">
-        {{#if wysiwygBubble}}
-          {{{systemBubble.selectedBubble.description}}}
+        {{#if isBubble}}
+          {{{description}}}
         {{else}}
-          {{#if wysiwygPost}}
-            {{{systemBubble.selectedPost.body}}}
+          {{#if isPost}}
+            {{{body}}}
           {{else}}
             <span class="wysiwyg-placeholder">Type here...</span>
           {{/if}}
