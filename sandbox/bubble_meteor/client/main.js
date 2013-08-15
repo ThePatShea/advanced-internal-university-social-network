@@ -41,8 +41,8 @@ Deps.autorun(function() {
 		Meteor.subscribe('singleUser', Session.get('selectedUserId'));
 		Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
 		Meteor.subscribe('authenticatedUser', Session.get('secret'));
-		//Mega users need to have access to all users for analytics
-		if(Meteor.user() && Meteor.user().userType == 'megauser'){
+		//Level 3 users need to have access to all users for analytics
+		if(Meteor.user() && Meteor.user().userType == '3'){
 			mainUsersHandle = Meteor.subscribeWithPagination('allUsers');
 		};
 
@@ -75,7 +75,7 @@ Deps.autorun(function() {
 
 	// UserLog Related Subscriptions
 		currentUserLogsHandle = Meteor.subscribeWithPagination('currentUserlogs', Meteor.userId(), 10);
-		if(Meteor.user() && 'megauser' == Meteor.user().userType) {
+		if(Meteor.user() && '3' == Meteor.user().userType) {
 			mainUserLogsHandle = Meteor.subscribeWithPagination('allUserlogs', 10);
 		}
 
