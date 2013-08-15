@@ -32,7 +32,8 @@ Template.bubbleSubmit.events({
     console.log('Bubble Submit');
 
     var bubble = {
-      category             : $('.cb-form').find('[name=category]').val(),
+      //category             : $('.cb-form').find('[name=category]').val(),
+      'category'           : category,
       bubbleType           : $('.cb-form').find('[name=bubbleType]').val(),
       description          : $('.cb-form').find('[name=body]').html(),
       title                : $('.cb-form').find('[name=title]').val(),

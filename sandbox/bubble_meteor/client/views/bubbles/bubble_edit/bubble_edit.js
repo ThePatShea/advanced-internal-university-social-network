@@ -179,6 +179,9 @@ Template.bubbleEdit.rendered = function(){
     $("#profilepicture_preview").attr("src", "/img/default_bubbleprofilepicture.jpg");
   }
   */
+  console.log('Edit Bubble:', this);
+
+  /*category = $("[name=category]").val();
 
   if(this.category == 'greek'){
     category = "greek";
@@ -239,6 +242,17 @@ Template.bubbleEdit.rendered = function(){
     $(".nav-tabs li").removeClass('active');
     $("#custom").addClass('active');
     $("[name=category]").val("custom");
-  }
+  }*/
+
+    var currentCategory = $("[name=category]").val();
+  $("[name=" + currentCategory + "]").addClass("active");
+
+  $(".categoryBox").click(function(){
+    var newCategory = $(this).attr("name");
+    $("[name=category]").val(newCategory);
+     
+    $(".categoryBox").removeClass("active");
+    $(this).addClass("active");
+  });
 
 }
