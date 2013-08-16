@@ -25,7 +25,7 @@ Template.userProfile.helpers({
 	},
 
 	numBubbles: function() {
-		var uid = Meteor.userId();
+		var uid = this._id;
 		var numBubbles = Bubbles.find({$or:
 			[{'users.admins': {$in: [uid]}},
 			{'users.members': {$in: [uid]}}
@@ -46,7 +46,7 @@ Template.userProfile.helpers({
 	},
 
 	numPosts: function() {
-		var uid = Meteor.userId();
+		var uid = this._id;
 		var numPosts = Posts.find({'userId': uid}).count();
 		return numPosts;
 	},
