@@ -256,6 +256,46 @@ app.post('/login/samlcallback',
     console.log('altMail: ', altMail);
     console.log('altEmail: ', altEmail);
 
+  var data = querystring.stringify({
+      'netId': netId,
+      'ppId': ppId,
+      'lastName': lastName,
+      'firstName': firstName,
+      'isFerpa': isFerpa,
+      'emoryEmail': emoryEmail,
+      'altMail': altMail,
+      'altEmail': altEmail
+    });
+
+  var options = {
+    host: 'bubbletest3.meteor.com',
+    port: 80,
+    path: '/testauth',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': data.length
+    }
+  };
+
+  var req = http.request(options, function(response) {
+    //var userid = response.get('userid');
+    //console.log('Post sent');
+    res.on('data', function(chunk){
+        console.log("body: " + chunk);
+    });
+    //res.header('location', 'http://talkschool.net/authenticateduser/' + secret);
+    //res.send(302, null);
+  });
+
+  req.on('error', function(err){
+    console.log('Error seidning POST: ', err);
+  });
+
+  console.log('Sending...');
+  req.write(data);
+  req.end();
+
     res.render('home', {username: globalprofile});
   }
 );
