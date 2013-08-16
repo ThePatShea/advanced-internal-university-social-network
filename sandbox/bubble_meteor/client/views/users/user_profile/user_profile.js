@@ -34,13 +34,13 @@ Template.userProfile.helpers({
 	},
 
 	numAdmins: function() {
-		var uid = Meteor.userId();
+		var uid = this._id;
 		var numBubbles = Bubbles.find({'users.admins': {$in: [uid]}}).count();
 		return numBubbles;
 	},
 
 	numMembers: function() {
-		var uid = Meteor.userId();
+		var uid = this._id;
 		var numBubbles = Bubbles.find({'users.members': {$in: [uid]}}).count();
 		return numBubbles;
 	},

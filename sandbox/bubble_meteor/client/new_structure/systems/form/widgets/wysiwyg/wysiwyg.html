@@ -19,12 +19,16 @@
           </div>
         </div>
       </div>
-      <div name="body" class="wysiwyg">
-        {{#if wysiwygBubble}}
-          {{{systemBubble.selectedBubble.description}}}
+      <div name="body" class="required wysiwyg">
+        {{#if isBubble}}
+          {{{description}}}
         {{else}}
-          {{#if wysiwygPost}}
-            {{{systemBubble.selectedPost.body}}}
+          {{#if isPost}}
+            {{#if body}}
+              {{{body}}}
+            {{else}}
+              <span class="wysiwyg-placeholder">Type here...</span>
+            {{/if}}
           {{else}}
             <span class="wysiwyg-placeholder">Type here...</span>
           {{/if}}

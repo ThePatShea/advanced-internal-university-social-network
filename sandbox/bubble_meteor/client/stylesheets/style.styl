@@ -1775,7 +1775,7 @@ navbar-height        =  60px
         left                       15px
       @media (max-width: 767px)
         position                   absolute
-        margin-right               -16px
+        margin-left                -16px
         left                       50%
       &.cb-logo-main-mobile
         @media (min-width: 768px)
@@ -1886,8 +1886,11 @@ navbar-height        =  60px
 /*****   sidebar-new        *****/
 .desktop-logo-container
   position           absolute
-  width              185px
   z-index            100
+  @media (min-width: 768px)
+    width              185px
+  @media (max-width: 767px)
+    width              70px
   .cb-logo-main
     @media (min-width: 768px)
       display            block

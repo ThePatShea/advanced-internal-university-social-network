@@ -1,22 +1,50 @@
+Template.exploreEditEvent.created = function(){
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-edit-event .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-edit-event .cb-submit').prop('disabled', false);
+        $('#cb-form-container-edit-event .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-edit-event .cb-submit').prop('disabled', true);
+        $('#cb-form-container-edit-event .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
+
+
 Template.exploreEditEvent.rendered = function(){
+
+  this.validateForm();
+
 	var event = this.data;
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
 	var date = (currentDatetime.getMonth()+1)+"/"+currentDatetime.getDate()+"/"+currentDatetime.getFullYear();
-	$("input[name='name']").val(event.name);
-	$("input[name='location']").val(event.location);
-	$("input[name='date']").val(date);
-	$("input[name='body']").val(event.body);
+	$('.cb-explore-edit-event-form > .first > .title').val(event.name);
+	$('.cb-explore-edit-event-form > .first > .location').val(event.location);
+	$('.cb-explore-edit-event-form > .cb-form-row > .date').val(date);
+	$('.cb-explore-edit-event-form > .body').val(event.body);
 	$("#eventPhoto").attr("src",this.eventPhoto);
 	$("eventRetinaPhoto").attr("src",this.eventRetinaPhoto);
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $("[name=time]").val("");
+        $('.cb-explore-edit-event-form > .cb-form-row > .time').val("");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $("[name=time]").val(formatedTime);
+        $('.cb-explore-edit-event-form > .cb-form-row > .time').val(formatedTime);
       }
     }
 
@@ -28,21 +56,31 @@ Template.exploreEditEvent.rendered = function(){
     });
 
   //Format the time when the textbox is changed
-  $("[name=time]").change(function(){
-    var time = $("[name=time]").val();
+  $(".cb-explore-edit-event-form > .cb-form-row > .time").change(function(){
+    console.log('Time changing...');
+    var time = $(".cb-explore-edit-event-form > .cb-form-row > .time").val();
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $("[name=time]").val("");
+        $(".cb-explore-edit-event-form > .cb-form-row > .time").val("");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $("[name=time]").val(formatedTime);
+        console.log('Formatted time: ', formatedTime);
+        $(".cb-explore-edit-event-form > .cb-form-row > .time").val(formatedTime);
       }
 
     }
   });
 };
+
+
+Template.exploreEditEvent.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
 
 Template.exploreEditEvent.events({
   'click .cb-explore-edit-event-form > .cb-submit-container > .cb-submit': function(event) {
@@ -50,16 +88,21 @@ Template.exploreEditEvent.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
-    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    var dateTime = $('.cb-explore-edit-event-form > .cb-form-row > .date').val() + " " + $('.cb-explore-edit-event-form > .cb-form-row > .time').val();
 
     var eventAttributes = { 
       dateTime: moment(dateTime).valueOf(),
-      location: $(event.target).find('[name=location]').val(),
-      name: $(event.target).find('[name=name]').val(),
-      body: $(event.target).find('[name=body]').val(),
-      eventPhoto: $("#eventPhoto").attr("src"),
-      retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
+      location: $('.cb-explore-edit-event-form > .first > .location').val(),
+      name: $('.cb-explore-edit-event-form > .first > .title').val(),
+      body: $('.cb-explore-edit-event-form > .body').val(),
+      //eventPhoto: $("#eventPhoto").attr("src"),
+      //retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
     };
+
+    if($('#eventPhoto').attr('src') != '/img/Event.jpg'){
+      eventAttributes.eventPhoto = $("#eventPhoto").attr("src");
+      eventAttributes.retinaEventPhoto = $("#eventRetinaPhoto").attr("src");
+    }
 
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );

@@ -6,12 +6,12 @@
     </div>
     <form class="cb-form cb-eventSubmit-form">
       <div class="cb-form-row first">
-        <input class="half-width column-one event-name" name="name" type="text" value="" placeholder="Event title*"/> 
-        <input class="half-width column-two event-location" name="location" type="text" placeholder="Where?*"/>
+        <input class="required half-width column-one event-name" name="name" type="text" value="" placeholder="Event title*"/> 
+        <input class="required half-width column-two event-location" name="location" type="text" placeholder="Where?*"/>
       </div>
       <div class="cb-form-row third-width-container">
-        <input class="third-width column-first" name="date" type="text" placeholder="Date?* (ex: 10/25/13)"/>
-        <input class="third-width column-second" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
+        <input class="required third-width column-first" name="date" type="text" placeholder="Date?* (ex: 10/25/13)"/>
+        <input class="required third-width column-second" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
         <label class="third-width column-third" name="picture" type="label" data-toggle="collapse" data-target="#add-picture">Add picture?</label>
       </div>
       <canvas id="event-main-canvas" width="340" height="230" class="visible-0"></canvas>
@@ -29,9 +29,12 @@
           <img class="crop"></img>
         </div>
       </div> 
-      <input class="search-text full-width event-details" name="body" type="text" placeholder="Details" />
+      <input class="required search-text full-width event-details" name="body" type="text" placeholder="Details" />
       <div class="cb-submit-container">
-        <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
+        <button type="submit" class="pull-right std-btn-form cb-submit">
+                  <span class="words-main">submit</span>
+                  <span class="words-error">please fill in all fields before submitting</span>
+        </button>
       </div>
     </form>
   </div>

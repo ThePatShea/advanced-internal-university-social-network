@@ -33,7 +33,16 @@ Template.postPage.helpers({
   },
 
   isDiscussion: function(){
-    if(this.postType = 'discussion'){
+    if(this.postType == 'discussion'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isFile: function(){
+    if(this.postType == 'file' && typeof this.parent == 'undefined'){
       return true;
     }
     else{

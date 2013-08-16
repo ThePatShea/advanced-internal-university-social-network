@@ -4,7 +4,7 @@
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
     <form class="cb-form cb-explore-editDiscussion-form" id="edit-discussion-form">
-      <input class="width-full first discussionTitle" name="name" type="text" value="" placeholder="Discussion title*"/>
+      <input class="required width-full first discussionTitle" name="name" type="text" value="{{name}}" placeholder="Discussion title*"/>
       {{> wysiwyg2}}
 
       <div class="cb-form-row discussion-attachments">
@@ -17,7 +17,8 @@
 
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
-          <span>submit</span>
+          <span class="words-main">submit</span>
+          <span class="words-error">please fill in a title and body before submitting</span>
         </button>
       </div>
     </form>

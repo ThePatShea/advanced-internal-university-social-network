@@ -16,17 +16,23 @@ Template.eventEdit.events({
     
     var currentPostId = Session.get('currentPostId');
     var currentBubbleId = Session.get('currentBubbleId');
-    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    
     
     var postProperties = {
       name: $(e.target).find('[name=name]').val(),
       body: $(e.target).find('[name=body]').val(),
-      dateTime: moment(dateTime).valueOf(),
+      //dateTime: moment(dateTime).valueOf(),
       location: $(e.target).find('[name=location]').val(),
       eventPhoto: $(e.target).find('[id=eventphoto_preview]').attr('src'),
       retinaEventPhoto: $(e.target).find('[id=eventphoto_retina]').attr('src'),
       lastUpdated: new Date().getTime()
     };
+
+    if($(event.target).find('[name=date]').val().length > 0 && $(event.target).find('[name=time]').val() > 0){
+      var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+      postProperties.dateTime = dateTime;
+    }
+
     
     Posts.update(currentPostId, {$set: postProperties}, function(error) {
       if (error) {

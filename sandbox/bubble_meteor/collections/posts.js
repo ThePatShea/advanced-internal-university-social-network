@@ -120,7 +120,7 @@ Meteor.methods({
     }
   },
   getNumOfEvents: function(bubbleId, postType ) {
-    return Posts.find({bubbleId: bubbleId, postType: postType}).count();
+    return Posts.find({'bubbleId': bubbleId, 'postType': postType}).count();
   }
 });
 
@@ -247,6 +247,7 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
           //bubbleId: Session.get('currentBubbleId'),
           parent: discussionPost._id   //This needs to be set to the ID of the post created above.
         };
+        console.log('Updating: ', postAttributes);
         if(typeof postAttributes.bubbleId != 'undefined'){
           attributes.bubbleId = postAttributes.bubbleId;
         }
@@ -268,7 +269,9 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
             childPosts.push(newPost._id);
             console.log('Newborns: ', childPosts);
             var updatedProperties = {
-              children: childPosts
+              children: childPosts,
+              body: postAttributes.body,
+              name: postAttributes.name
             };
             Posts.update(parentid, {$set: updatedProperties}, function(error){
               if(error){
@@ -284,6 +287,33 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
       }
     })(f);
     reader.readAsDataURL(f);
+  }
+
+  if(fileList.length == 0){
+    if(typeof discussionPost.bubbleId != 'undefined'){
+      Posts.update(discussionPost._id, {$set: postAttributes}, function(error){
+        if(error){
+          console.log('Error: ', error);
+          throwError(error.reason);
+        }
+        else{
+          console.log('Successfully updated');
+          Meteor.Router.to('postPage', discussionPost.bubbleId, discussionPost._id);
+        }
+      });
+    }
+    else if(typeof discussionPost.exploreId != 'undefined'){
+      Posts.update(discussionPost._id, {$set: postAttributes}, function(error){
+        if(error){
+          console.log('Error: ', error);
+          throwError(error.reason);
+        }
+        else{
+          console.log('Successfully updated');
+          Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
+        }
+      });
+    }
   }
 
 }

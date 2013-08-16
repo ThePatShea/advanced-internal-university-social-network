@@ -48,6 +48,10 @@ Template.listItem.events({
           if (this.postType == 'file' && this.parent){
             Meteor.Router.to('postPage', this.bubbleId, this.parent);
           }
+          else if(this.postType == 'file'){
+            console.log('List item click.');
+            Meteor.Router.to('postPage', this.bubbleId, this._id);
+          }
           else if(typeof this.postType != 'undefined'){
             console.log(this._id);
             Meteor.Router.to('postPage', this.bubbleId, this._id);

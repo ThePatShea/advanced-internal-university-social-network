@@ -1,3 +1,26 @@
+Template.eventSubmit.created = function(){
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-event-create .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-event-create .cb-submit').prop('disabled', false);
+        $('#cb-form-container-event-create .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-event-create .cb-submit').prop('disabled', true);
+        $('#cb-form-container-event-create .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
 Template.eventSubmit.events({
   'click .cb-eventSubmit-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
@@ -75,7 +98,20 @@ Template.eventSubmit.events({
 
 });
 
+
+
+Template.eventSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
+
 Template.eventSubmit.rendered = function() {
+  
+  this.validateForm();
+
   $(".date-picker").glDatePicker(
     {
       cssName: 'flatwhite',

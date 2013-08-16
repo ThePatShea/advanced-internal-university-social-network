@@ -1,14 +1,45 @@
+Template.exploreEventSubmit.created = function(){
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-event .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-event .cb-submit').prop('disabled', false);
+        $('#cb-form-container-event .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-event .cb-submit').prop('disabled', true);
+        $('#cb-form-container-event .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
+
+Template.exploreEventSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
 Template.exploreEventSubmit.events({
   'click .cb-explore-eventSubmit-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
-    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
-    console.log('Event photo: ', $("#eventPhoto").attr("src"));
+    var dateTime = $('.cb-explore-eventSubmit-form > .cb-form-row > .date').val() + " " + $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val();
+    //console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
     var eventAttributes = { 
-      dateTime: new Date().getTime(),
+      dateTime: dateTime,
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-explore-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-explore-eventSubmit-form > .event-details').val(),
@@ -20,7 +51,7 @@ Template.exploreEventSubmit.events({
     };
 
 
-    console.log("event attributes: ", eventAttributes );
+    //console.log("event attributes: ", eventAttributes );
     createPost(eventAttributes);
   },
 
@@ -33,7 +64,7 @@ Template.exploreEventSubmit.events({
 
   'change .cb-explore-eventSubmit-form .attach-files > .drop-zone > .file-chooser-invisible': function(evt){
       files = evt.target.files;
-      console.log('Event picture: ', files);
+      //console.log('Event picture: ', files);
       //If more than one file dropped on the dropzone then throw an error to the user.
       if(files.length > 1){
         error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
@@ -76,6 +107,9 @@ Template.exploreEventSubmit.events({
 });
 
 Template.exploreEventSubmit.rendered = function() {
+
+  this.validateForm();
+
   $(".date-picker").glDatePicker(
     {
       cssName: 'flatwhite',
@@ -85,16 +119,16 @@ Template.exploreEventSubmit.rendered = function() {
   );
 
   //Format the time when the textbox is changed
-  $("[name=time]").change(function(){
-    var time = $("[name=time]").val();
+  $('.cb-explore-eventSubmit-form > .cb-form-row > .time').change(function(){
+    var time = $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val();
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
       if (time.length > 9 || (!firstAlphabet)){
-        $("[name=time]").val("");
+        $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val("");
       }else{
         formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $("[name=time]").val(formatedTime);
+        $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val(formatedTime);
       }
 
     }
