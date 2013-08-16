@@ -1,4 +1,25 @@
 Template.exploreDiscussionEdit.created = function(){
+
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-edit-discussion .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+      if (count == 0) {
+        $('#cb-form-container-edit-discussion .cb-submit').prop('disabled', false);
+        $('#cb-form-container-edit-discussion .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-edit-discussion .cb-submit').prop('disabled', true);
+        $('#cb-form-container-edit-discussion .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+
   console.log('Children: ', this.data.children);
   console.log($('.cb-editDiscussion-form'));
   discussionAttachmentIds = this.data.children;
@@ -12,6 +33,7 @@ Template.exploreDiscussionEdit.created = function(){
 
 Template.exploreDiscussionEdit.rendered = function () {
 
+  this.validateForm();
 
   $('.cb-explore-editDiscussion-form > .discussion-attachments > .paperclip-attach > .attachments-list > li').remove();
 
@@ -27,6 +49,14 @@ Template.exploreDiscussionEdit.rendered = function () {
     });
   }
 }
+
+
+
+Template.exploreDiscussionEdit.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+    tmpl.validateForm();
+  }
+});
 
 
 Template.exploreDiscussionEdit.events({
@@ -182,8 +212,8 @@ function updateDiscussionPost(){
 
     var discussionAttributes = {
       name: $('.cb-explore-editDiscussion-form > .discussionTitle').val(),
-      body: $('.cb-explore-editDiscussion-form > .wysiwyg_group > .wysiwyg-body').html(),
-      exploreId: currentExploreId,
+      body: $('.cb-explore-editDiscussion-form > .wysiwyg_group').find('[name=body]').html(),
+      //exploreId: currentExploreId,
       children: newChildren
     };
 
@@ -199,7 +229,7 @@ function updateDiscussionPost(){
   discussionNewAttachments = [];
   discussionDeletedNewAttachmentIndices = [];
 
-  discussionAttachmentIds = Posts.findOne({_id: currentPostId});
-  discussionAttachments = Posts.find({_id: {$in: discussionAttachmentIds }}).fetch();
+  /*discussionAttachmentIds = Posts.findOne({_id: currentPostId});
+  discussionAttachments = Posts.find({_id: {$in: discussionAttachmentIds }}).fetch();*/
 
 }
