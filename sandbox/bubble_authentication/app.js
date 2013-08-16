@@ -19,6 +19,15 @@ var express = require('express')
 mongoose.connect('mongodb://localhost:27017/test');
 
 var globalprofile = '';
+var json_globalprofile = '';
+
+function parseAttribute(attributeString){
+  var i = attributeString.indexOf('":"');
+  var key = attributeString.slice(0, i+1);
+  var value = attributeString.slice(i+2, attributeString.length);
+  return [key, value];
+}
+
 //var date = new Date();
 
 
@@ -78,6 +87,7 @@ samlStrategy = new SamlStrategy(
 
   function(profile, done) {
     globalprofile = JSON.stringify(profile);
+    json_globalprofile = profile;
     User.findOne({username: profile.uid}, function (err, user) {
       if (user == null){
         user = new User({username: profile.uid, email:profile.email});
@@ -203,11 +213,55 @@ app.post('/login/samlcallback',
   passport.authenticate('saml', { failureRedirect: '/fail', failureFlash: true }),
   function(req, res) {
     //res.render('home', {username: req.user.username});
+    //console.log('Shibboleth IDP sent Attributes: ', json_globalprofile);
+    var objects = globalprofile.split(',');
+    for(var i=4; i < objects.length; i++){
+      var keyval = parseAttribute(objects[i]);
+      console.log('Object: ', objects[i]);
+      console.log('Key, Value: ', keyval[0], keyval[1]);
+      var key = keyval[0];
+      var value = keyval[1];
+      if(key == '"urn:oid:0.9.2342.19200300.100.1.1"'){
+        var netId = value.slice(1, value.length-1);
+      }
+      else if(key == '"urn:oid:2.5.4.5"'){
+        var ppId = value.slice(1, value.length-1);
+      }
+      else if(key == '"urn:oid:2.5.4.4"'){
+        var lastName = value.slice(1, value.length-1);
+      }
+      else if(key == '"urn:oid:1.3.6.1.4.1.5524.1.4"'){
+        var isFerpa = value.slice(1, value.length-1);
+      }
+      else if(key == '"urn:oid:2.5.4.42"'){
+        var firstName = value.slice(1, value.length-1);
+      }
+      else if(key == '"urn:oid:0.9.2342.19200300.100.1.3"'){
+        var emoryEmail = value.slice(1, value.length-1);
+      }
+      else if(key == '"mail"'){
+        var altMail = value.slice(1, value.length-1);
+      }
+      else if(key == '"email"'){
+        var altEmail = value.slice(1, value.length-2);
+      }
+    }
+
+    console.log('netId: ', netId);
+    console.log('ppId: ', ppId);
+    console.log('lastName: ', lastName);
+    console.log('isFerpa: ', isFerpa);
+    console.log('firstName: ', firstName);
+    console.log('emoryEmail: ', emoryEmail);
+    console.log('altMail: ', altMail);
+    console.log('altEmail: ', altEmail);
+
     res.render('home', {username: globalprofile});
   }
 );
 
 app.get('/home', function(req, res){
+  console.log('Home netId: ', req.session.netId);
   res.render('home');
 });
 
