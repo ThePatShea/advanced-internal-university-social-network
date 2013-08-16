@@ -18,3 +18,7 @@ underscore
 bootstrap-wysiwyg
 stylus
 accounts-ui
+jquery-jcrop
+jquery-ui
+page-js-ie-support
+pagination
