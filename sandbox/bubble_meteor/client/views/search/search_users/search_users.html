@@ -2,10 +2,8 @@
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
   
-    {{#if hasSearchText}}
-      {{#each getSearchedUsers}}
-        {{> listItem}}
-      {{/each}}
-    {{/if}}
+    {{#each getSearchedUsers}}
+      {{> listItem}}
+    {{/each}}
   </div>
 </template>

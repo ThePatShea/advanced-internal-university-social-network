@@ -94,3 +94,17 @@ Template.dashboard.rendered = function () {
 		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
 	});
 };
+
+Template.dashboard.events({
+	'click .test': function() {
+		Meteor.call('search_users', 'John', function(err, res) {
+			if(err) {
+		    	console.log("Search Error: " + err);
+		    	return err;
+		    } else {
+		    	console.log("Search Result: " + res);
+		    	return res;
+		    }
+		});
+	}
+})

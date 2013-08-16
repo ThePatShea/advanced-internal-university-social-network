@@ -117,12 +117,12 @@ Template.searchAll.helpers({
     }
   },
   getSearchedUsers: function() {
-    Session.set('selectedUsername',Session.get('searchText'));
+/*    Session.set('selectedUsername',Session.get('searchText'));
     return Meteor.users.find(
       {
         username:new RegExp(Session.get('searchText'),'i'),
         _id: {$nin: [Meteor.userId()]}
-      }, {limit: 3});
+      }, {limit: 3});*/
   }
 });
 

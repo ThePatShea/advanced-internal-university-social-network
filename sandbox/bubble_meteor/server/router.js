@@ -50,17 +50,20 @@ Meteor.Router.add('/','GET', function(){
 Meteor.Router.add('/pushUser', 'POST', function() {
 	var email = this.request.body.email;
 	var altEmail = this.request.body.altEmail;
-	var username = this.request.body.username;
-	var ppid = this.request.body.ppid;
 	var name = this.request.body.name;
+	var ppid = this.request.body.ppid;
+	var username = this.request.body.username;
 	var code = this.request.body.code;
 	var level = this.request.body.level;
+	var userType = this.request.body.userType;
+	var profilePicture = this.request.body.profilePicture;
+	var retinaProfilePicture = this.request.body.retinaProfilePicture;
 	var firstTimeLogin = false;
 
-	var user = Meteor.users.findOne({username: this.request.body.username});
+	var user = Meteor.users.findOne({'username': username});
 	if(!user)
 	{
-		Accounts.createUser({'username': username});
+		Meteor.users.insert({'username': username})
 	}
 	else
 	{
@@ -82,6 +85,9 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 		'name': name,
 		'code': code,
 		'level': level,
+		'userType': userType,
+		'profilePicture': profilePicture,
+		'retinaProfilePicture': retinaProfilePicture,
 		'firstTimeLogin': firstTimeLogin
 	};
 	Meteor.users.update(user._id, {$set: userProperties});
