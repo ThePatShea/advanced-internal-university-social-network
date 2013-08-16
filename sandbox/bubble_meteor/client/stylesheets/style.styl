@@ -1155,6 +1155,8 @@ wysiwyg-image(n)
       padding        30px 0 4px 0
     .attach-files
       padding-top     30px
+      &.no-padding
+        padding-top     0
       .drop-zone
         border-spin(1px, 0, 1px, 0, main-light, blank, main-light, blank)
         position        relative
@@ -1344,6 +1346,9 @@ wysiwyg-image(n)
       padding-right  4px
       &.no-typing
         color          main-light
+        &.less-formatting
+          border-bottom      0
+          margin-bottom      0
     label,
     input
       border-bottom  1px solid main-light

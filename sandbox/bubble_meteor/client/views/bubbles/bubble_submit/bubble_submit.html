@@ -58,18 +58,26 @@
       <canvas id="profile-main-canvas" width="300" height="300" class="visible-0"></canvas>
       <canvas id="profile-retina-canvas" width="600" height="600" class="visible-0"></canvas>
 
-      <div class="attach-files attach-cover-photo">
+      <label class="no-typing less-formatting">cover photo</label>
+      <div class="attach-files attach-cover-photo no-padding">
         {{> attachCoverPhoto}}
       </div>
+
       <div class="crop-container crop-profile" style="text-align: center;">
         <img class="crop"></img>
       </div>
 
-      <div class="attach-files attach-profile-picture">
+
+      <br><br><br>
+      <label class="no-typing less-formatting">profile picture</label>
+      <div class="attach-files attach-profile-picture no-padding">
         {{> attachProfilePicture}}
       </div>
 
+
+      <br><br><br>
       {{> wysiwyg2}}
+
 
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit">

@@ -1,7 +1,13 @@
 <template name="wysiwyg2">
   <div class="controls wysiwyg_group">
       <div class="wysiwyg-row">
-        <label class="pull-left wysiwyg-label">{{wysiwygHeading}}</label>
+        <label class="pull-left wysiwyg-label">
+          {{#if isPost}}
+            discussion body
+          {{else}}
+            description
+          {{/if}}
+        </label>
         <div class="pull-right btn-toolbar btns-formatting" data-role="editor-toolbar" data-target=".wysiwyg">
           <div class="btn-group">
             <a class="std-btn-form btn-wysiwyg" data-edit="underline" title="Underline (Ctrl/Cmd+U)">{{> icon-wysiwyg-underline}}</a>
