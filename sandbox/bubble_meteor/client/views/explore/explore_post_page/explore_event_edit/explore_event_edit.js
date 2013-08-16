@@ -1,4 +1,32 @@
+Template.exploreEditEvent.created = function(){
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-edit-event .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-edit-event .cb-submit').prop('disabled', false);
+        $('#cb-form-container-edit-event .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-edit-event .cb-submit').prop('disabled', true);
+        $('#cb-form-container-edit-event .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
+
+
 Template.exploreEditEvent.rendered = function(){
+
+  this.validateForm();
+
 	var event = this.data;
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
@@ -45,6 +73,14 @@ Template.exploreEditEvent.rendered = function(){
     }
   });
 };
+
+
+Template.exploreEditEvent.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
 
 Template.exploreEditEvent.events({
   'click .cb-explore-edit-event-form > .cb-submit-container > .cb-submit': function(event) {
