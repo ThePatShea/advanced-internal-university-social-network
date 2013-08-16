@@ -5,7 +5,18 @@ Template.userActions.helpers({
 
   getMemberStatus: function() {
 	 return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
-  }
+  },
+
+  isSuperBubble: function() {
+    var currentBubble  =  Bubbles.findOne({'_id': Session.get('currentBubbleId')});
+    var bubbleType     =  currentBubble.bubbleType;
+
+    if (bubbleType == "super") {
+      return true;
+    } else {
+      return false;
+    }
+  },
 });
 
 Template.userActions.events({
