@@ -616,9 +616,6 @@ Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
       }
     });
 
-    updateList = _.sortBy(updateList, function(newUpdate) {
-      return newUpdate.submitted; 
-    });  
     return updateList.length;
   }
 });

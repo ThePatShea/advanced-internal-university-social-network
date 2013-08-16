@@ -147,6 +147,7 @@
 	</div>
 	<div class="dashboard-section-header">
 		{{numUpdates}} Updates
+		<button class="std-btn-light pull-right clear-updates">clear all</button> 
 	</div>
 	<div class="dashboard-updates">
 		<div class="threeUpdates">
@@ -160,9 +161,9 @@
 				{{> updateItem}}
 			{{/each}}
 		</div>
-		{{#if showMoreUpdates}}
+		{{#if showMoreUpdates numUpdates 3}}
 			<div class="dashboard-more-updates">
-				+{{pluralize numUpdatesMinusThree "update" "more"}}
+				+{{pluralize numUpdatesLeft "update" "more"}}
 			</div>
 		{{/if}}
 	</div>
