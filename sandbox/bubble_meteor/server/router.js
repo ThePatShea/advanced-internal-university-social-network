@@ -33,6 +33,26 @@ Meteor.Router.add('/authenticateduser', 'POST', function(){
 	return [200, {'userid': user._id}, null];
 });
 
+
+Meteor.Router.add('/testauth', 'POST', function(){
+	//console.log(this.request.body.username, this.request.body.secret);
+	//var secret = this.request.body.secret;
+	//var username = this.request.body.username;
+	var netId = this.request.body.netId;
+	var ppId = this.request.body.ppId;
+	var lastName = this.request.body.lastName;
+	var firstName = this.request.body.firstName;
+	var isFerpa = this.request.body.isFerpa;
+	var emoryEmail = this.request.body.emoryEmail;
+	var altMail = this.request.body.altMail;
+	var altEmail = this.request.body.altEmail;
+
+	console.log(netId, ppId, lastName, firstName, isFerpa, emoryEmail, altMail, altEmail);
+
+
+	return [200, {'userid': user._id}, null];
+});
+
 /*
 // Xavier: This commented-out stuff is from conflict with merge to pat branch. I didn't know what to do with it, so I commented it out so you can do what you want with it.   --Pat
 
