@@ -50,7 +50,7 @@ Meteor.Router.add('/testauth', 'POST', function(){
 	console.log(netId, ppId, lastName, firstName, isFerpa, emoryEmail, altMail, altEmail);
 
 
-	return [200, {'userid': user._id}, null];
+	return [200, {'netId': netId}, null];
 });
 
 /*
