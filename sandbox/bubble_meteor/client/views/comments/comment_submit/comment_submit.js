@@ -16,7 +16,8 @@ Template.commentSubmit.events({
 
     var comment = {
       //body: $(event.target).find('[name=body]').val(),
-      body: $($('.comment-form > .body')).val(),
+      //body: $($('.comment-form > .body')).val(),
+      body: $('.comment-form').find('[name=body]').val(),
       postId: template.data._id
     };
     
