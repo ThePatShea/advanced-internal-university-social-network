@@ -9,9 +9,6 @@ package io.cordova.emorybubble;
 
 public final class Manifest {
     public static final class permission {
-        /**  This app has permission to register with GCM and receive message 
- MODIFICATION REQUIRED - Replace "com.urbanairship.phonegap.sample" with your package name 
-         */
         public static final String C2D_MESSAGE="io.cordova.emorybubble.permission.C2D_MESSAGE";
     }
 }

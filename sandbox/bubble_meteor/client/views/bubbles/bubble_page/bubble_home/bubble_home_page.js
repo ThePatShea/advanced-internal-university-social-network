@@ -4,7 +4,9 @@ referenceDateTime = moment().add('hours',-4).valueOf();
 Template.bubblePage.created = function() {
  var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
 
- if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
+ if(typeof bubble != "undefined" &&
+    (!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId()) )
+   ) {
    Meteor.Router.to('bubblePublicPage', bubble._id);
  }
 }
@@ -13,6 +15,15 @@ Template.bubblePage.created = function() {
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
+  isLoading: function() {
+    var bubbleLoading = Session.get('bubbleLoading');
+
+    if (bubbleLoading == 'true') {
+      return true;
+    } else {
+      return false;
+    }
+  },
   eventsCount: function() {
     return Meteor.call('getNumOfEvents','event');
   },
@@ -32,6 +43,11 @@ Template.bubblePage.helpers({
       return false;
     }
   },
+
+  numMoreEvents: function(){
+    var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event', dateTime: {$gt: referenceDateTime}}).count() - 3;
+    return num;
+  },
   hasMoreDiscussions: function() {
     var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
     if (num > 0){
@@ -39,6 +55,10 @@ Template.bubblePage.helpers({
     }else{
       return false;
     }
+  },
+  numMoreDiscussionsCount: function(){
+    var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
+    return num;
   },
   hasMoreFiles: function() {
     var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}).count() - 3;
@@ -56,7 +76,10 @@ Template.bubblePage.helpers({
 });
 
 Template.bubblePage.events({
-  'btn .clear-updates': function() {
-    Meteor.call('clearUpdates', Session.get('currentBubbleId'));
+  'click .clear-updates': function() {
+    var updates = Updates.find({bubbleId: Session.get('currentBubbleId'), userId: Meteor.userId(), read:false}).fetch();
+    _.each(updates, function(update) {
+      Meteor.call('setRead', update);
+    });
   }
 });

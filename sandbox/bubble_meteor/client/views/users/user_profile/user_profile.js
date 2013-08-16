@@ -34,13 +34,13 @@ Template.userProfile.helpers({
 	},
 
 	numAdmins: function() {
-		var uid = Meteor.userId();
+		var uid = this._id;
 		var numBubbles = Bubbles.find({'users.admins': {$in: [uid]}}).count();
 		return numBubbles;
 	},
 
 	numMembers: function() {
-		var uid = Meteor.userId();
+		var uid = this._id;
 		var numBubbles = Bubbles.find({'users.members': {$in: [uid]}}).count();
 		return numBubbles;
 	},
@@ -114,15 +114,22 @@ Template.userProfile.events({
 
 	    var currentProfileId = Session.get('selectedUserId');
 	    //var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
-	    
-	    var profileProperties = {
-	      profilePicture: mainURL,
-	      retinaProfilePicture: retinaURL,
-	      emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
-	      phone: '',
-	      lastUpdated: new Date().getTime(),
-	      userType: $(e.target).find('[name=userType]').val()
+
+		var profileProperties = {
+		    emails: [{'address': $(e.target).find('[name=email]').val(), 'verified': false}],
+		    phone: '',
+		    lastUpdated: new Date().getTime(),
+		    userType: $(e.target).find('[name=userType]').val()
 	    };
+
+	    if(typeof mainURL != 'undefined'){
+	    	if(mainURL.length != 0){
+				profileProperties.profilePicture = mainURL;
+				profileProperties.retinaProfilePicture = retinaURL;
+	    	}
+	    }
+	    
+	    
 	    console.log('Properties to be saved: ',profileProperties);
 	    
 	    Meteor.users.update(currentProfileId, {$set: profileProperties}, function(error) {

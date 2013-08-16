@@ -20,7 +20,10 @@ ownsComment = function(userId, doc) {
     var admins = bubble.users.admins;
     if(Meteor.userId()) {
       var userId = Meteor.userId();
-      if(userId == post.userId || userId == doc.userId || _.contains(admins, userId)) {
+      if('3' == Meteor.user().userType 
+        || userId == post.userId 
+        || userId == doc.userId 
+        || _.contains(admins, userId)) {
         return true;
       }else{
         return false;
@@ -30,15 +33,8 @@ ownsComment = function(userId, doc) {
 }
 
 ownsBubble = function(userId, doc, onChange) {
-	return true;
-	//Feature is currently on hold
-	// return ('superuser' == Meteor.user().userType || _.contains(doc.users.admins, Meteor.user().username));
-}
-
-bubbleAdmin = function(userId, doc) {
-  var bubble = Bubbles.findOne(doc._id);
-  return ('3' == Meteor.user().userType 
-    || _.contains(bubble.users.admins, Meteor.userId()));
+  return _.contains('3' == Meteor.user().userType 
+    || doc.users.admins, Meteor.userId());
 }
 
 

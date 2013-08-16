@@ -3,8 +3,18 @@
     {{getUsername}}
     {{> icon-arrow-down}}
   </a>
-  <div class="dropdown-menu" style="padding: 20px; padding-bottom: 20px;">            
-    <button class="btn btn-block btn-info view-profile">View Profile</button>  
-    <button class="btn btn-block btn-primary signout">Sign out</button>   
-  </div>
+  <ul class="dropdown-menu dropdown-logout">
+    <li class="view-profile">
+      <div class="pull-left cb-icon-dropdown">{{> icon-user}}</div>
+      <div class="pull-left lbl">profile</div>
+    </li>  
+    <li class="support">
+      <div class="pull-left cb-icon-dropdown">{{> icon-support}}</div>
+      <div class="pull-left lbl">support</div>
+    </li>  
+    <li class="signout">
+      <div class="pull-left cb-icon-dropdown">{{> icon-sign-out}}</div>
+      <div class="pull-left lbl">sign out</div>
+    </li>   
+  </ul>
 </template>

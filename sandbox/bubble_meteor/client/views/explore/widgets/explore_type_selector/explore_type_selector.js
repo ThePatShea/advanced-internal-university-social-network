@@ -13,5 +13,5 @@ Template.exploreTypeSelector.events({
 });
 
 Template.exploreTypeSelector.rendered = function(){
-  selectedExploreType = 'events';
+  selectedExploreType = 'event';
 }

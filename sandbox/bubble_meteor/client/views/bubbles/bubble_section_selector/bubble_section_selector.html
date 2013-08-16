@@ -3,27 +3,32 @@
     <div class="opacity-wrapper">
       <a href="{{bubblePagePath this}}">
         <button class="active-{{isSelected 'home'}} btn-bubble-section category-{{category}}-bg-opacity-90 category-{{category}}-hover-fill">
-          <span>{{> icon-home}}</span>
+          <div class="cb-icon">{{> icon-home}}</div>
+          <div class="category-{{category}}-color lbl">home</div>
         </button>
       </a>
       <a href="{{bubbleEventPagePath this}}">
         <button class="active-{{isSelected 'event'}} btn-bubble-section category-{{category}}-bg-opacity-80 category-{{category}}-hover-fill">
-          <span>{{> icon-event}}</span>
+          <div>{{> icon-event}}</div>
+          <div class="category-{{category}}-color lbl">events</div>
         </button>
       </a>
       <a href="{{bubbleDiscussionPagePath this}}">
         <button class="active-{{isSelected 'discussion'}} btn-bubble-section category-{{category}}-bg-opacity-90 category-{{category}}-hover-fill">
-          <span>{{> icon-discussion}}</span>
+          <div>{{> icon-discussion}}</div>
+          <div class="category-{{category}}-color lbl">discussions</div>
         </button>
       </a>
       <a href="{{bubbleFilePagePath this}}">
         <button class="active-{{isSelected 'file'}} btn-bubble-section category-{{category}}-bg-opacity-80 category-{{category}}-hover-fill">
-          <span>{{> icon-file}}</span>
+          <div>{{> icon-file}}</div>
+          <div class="category-{{category}}-color lbl">files</div>
         </button>
       </a>
       <a href="{{bubbleMembersPagePath this}}">
         <button class="active-{{isSelected 'members'}} btn-bubble-section category-{{category}}-bg-opacity-90 category-{{category}}-hover-fill">
-          <span>{{> icon-member}}</span>
+          <div>{{> icon-member}}</div>
+          <div class="category-{{category}}-color lbl">members</div>
         </button>
       </a>
     </div>

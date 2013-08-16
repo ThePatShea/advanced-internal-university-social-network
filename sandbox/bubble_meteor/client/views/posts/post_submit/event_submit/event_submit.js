@@ -1,16 +1,40 @@
+Template.eventSubmit.created = function(){
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-event-create .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-event-create .cb-submit').prop('disabled', false);
+        $('#cb-form-container-event-create .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-event-create .cb-submit').prop('disabled', true);
+        $('#cb-form-container-event-create .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
 Template.eventSubmit.events({
-  'submit form': function(event) {
+  'click .cb-eventSubmit-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
     var eventAttributes = { 
-      dateTime: moment(dateTime).valueOf(),
-      location: $(event.target).find('[name=location]').val(),
-      name: $(event.target).find('[name=name]').val(),
-      body: $(event.target).find('[name=body]').val(),
+      dateTime: new Date().getTime(),
+      location: $('.cb-eventSubmit-form > .first > .event-location').val(),
+      name: $('.cb-eventSubmit-form > .first > .event-name').val(),
+      body: $('.cb-eventSubmit-form > .event-details').val(),
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
       attendees: [Meteor.userId()],
@@ -19,19 +43,20 @@ Template.eventSubmit.events({
     };
 
 
-    console.log("event attributes: " + JSON.stringify(eventAttributes) );
+    console.log("event attributes: ", eventAttributes );
     createPost(eventAttributes);
   },
 
-  'dragover .dropzone': function(evt){
+  'dragover .cb-eventSubmit-form .attach-files > .drop-zone': function(evt){
     console.log('Dragover');
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'change #eventFilesToUpload': function(evt){
+  'change .cb-eventSubmit-form .attach-files > .drop-zone > .file-chooser-invisible': function(evt){
       files = evt.target.files;
+      console.log('Event picture: ', files);
       //If more than one file dropped on the dropzone then throw an error to the user.
       if(files.length > 1){
         error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
@@ -73,7 +98,20 @@ Template.eventSubmit.events({
 
 });
 
+
+
+Template.eventSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
+
 Template.eventSubmit.rendered = function() {
+  
+  this.validateForm();
+
   $(".date-picker").glDatePicker(
     {
       cssName: 'flatwhite',

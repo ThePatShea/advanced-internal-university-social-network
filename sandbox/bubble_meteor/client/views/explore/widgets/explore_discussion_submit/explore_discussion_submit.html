@@ -3,9 +3,14 @@
     <div class="top-arrow-container explore">
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
-    <form class="cb-form">
+    <form class="cb-form cb-explore-discussionSubmit-form">
       <input class="required width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
-      {{> wysiwyg}}
+      {{> wysiwyg2}}
+
+      <div class="cb-form-row paperclip-attach-files">
+        {{> paperclipAttachments}}
+      </div>
+
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
           <span class="words-main">submit</span>

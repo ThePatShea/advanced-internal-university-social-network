@@ -1,0 +1,26 @@
+<template name="exploreDiscussionEdit">
+  <div class="cb-form-container" id="cb-form-container-edit-discussion" style="margin-bottom: 20px;">
+    <div class="top-arrow-container">
+      <div class="top-arrow">{{> icon-arrow-up}}</div>
+    </div>
+    <form class="cb-form cb-explore-editDiscussion-form" id="edit-discussion-form">
+      <input class="required width-full first discussionTitle" name="name" type="text" value="{{name}}" placeholder="Discussion title*"/>
+      {{> wysiwyg2}}
+
+      <div class="cb-form-row discussion-attachments">
+        {{> discussionAttachments}}
+      </div>
+
+      <div class="cb-form-row paperclip-attach-files">
+        {{> paperclipAttachments}}
+      </div>
+
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
+          <span class="words-main">submit</span>
+          <span class="words-error">please fill in a title and body before submitting</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</template>

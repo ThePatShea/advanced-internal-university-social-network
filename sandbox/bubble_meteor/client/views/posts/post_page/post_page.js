@@ -12,6 +12,42 @@ Template.postPage.helpers({
 
   returnFalse: function() {
     return false;
+  },
+
+  notEvent: function(){
+    if(this.postType != 'event'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isEvent: function(){
+    if(this.postType == 'event'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isDiscussion: function(){
+    if(this.postType == 'discussion'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isFile: function(){
+    if(this.postType == 'file' && typeof this.parent == 'undefined'){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 });
 

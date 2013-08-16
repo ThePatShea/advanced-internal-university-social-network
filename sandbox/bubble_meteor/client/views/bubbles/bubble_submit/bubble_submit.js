@@ -32,7 +32,7 @@ Template.bubbleSubmit.events({
     console.log('Bubble Submit');
 
     var bubble = {
-      category             : $(event.target).find('[name=category]').val(),
+      category             : $('.cb-form').find('[name=category]').val(),
       bubbleType           : $('.cb-form').find('[name=bubbleType]').val(),
       description          : $('.cb-form').find('[name=body]').html(),
       title                : $('.cb-form').find('[name=title]').val(),
@@ -97,8 +97,8 @@ Template.bubbleSubmit.events({
         if (f.type.match('image.*')) {
             var reader = new FileReader();
 
-        var mainCanvas = document.getElementById('main-canvas');
-        var retinaCanvas = document.getElementById('retina-canvas');
+        var mainCanvas = document.getElementById('cover-main-canvas');
+        var retinaCanvas = document.getElementById('cover-retina-canvas');
         var mainContext = mainCanvas.getContext('2d');
         var retinaContext = retinaCanvas.getContext('2d');
         var profileImage = new Image();
@@ -149,7 +149,7 @@ Template.bubbleSubmit.events({
     
   },
 
-  /*'change #profilefilesToUpload': function(evt){
+  'change .bubble-create > .attach-profile-picture > .drop-zone > .file-chooser-invisible': function(evt){
     files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -162,7 +162,7 @@ Template.bubbleSubmit.events({
       if (f.type.match('image.*')) {
         var reader = new FileReader();
 
-        var profileCanvas = document.getElementById('profile-canvas');
+        var profileCanvas = document.getElementById('profile-main-canvas');
         var profileRetinaCanvas = document.getElementById('profile-retina-canvas');
         var profileContext = profileCanvas.getContext('2d');
         var profileRetinaContext = profileRetinaCanvas.getContext('2d');
@@ -171,10 +171,10 @@ Template.bubbleSubmit.events({
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-            $("#profile_drop_zone").hide();
-            $("#crop-profile").attr("src", e.target.result);
+            $(".bubble-create > .attach-profile-picture > .drop-zone").hide();
+            $(".crop-profile > .crop").attr("src", e.target.result);
             profileImage.src = e.target.result;
-            profileCropArea = $('#crop-profile').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '100', minHeight: '100', x1: '10', y1: '10', x2: '110', y2: '110', parent: ".bubble-create", handles: true, onSelectChange: function(img, selection) {
+            profileCropArea = $('.crop-profile > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '100', minHeight: '100', x1: '10', y1: '10', x2: '110', y2: '110', parent: ".bubble-create", handles: true, onSelectChange: function(img, selection) {
               profileContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 300, 300);
               profileRetinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 600, 600);
               $('#profilePhoto').attr('src',profileCanvas.toDataURL());
@@ -187,7 +187,7 @@ Template.bubbleSubmit.events({
     }
   },
 
-  'change #coverfilesToUpload': function(evt){
+  /*'change #coverfilesToUpload': function(evt){
     files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -308,8 +308,47 @@ Template.bubbleSubmit.events({
 });
 
 
+
+
+Template.bubbleSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required, mouseout li': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
+Template.bubbleSubmit.created = function(){
+  discussionFiles = [];
+  discussionDeletedFileIndices = [];
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-bubble-create .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-bubble-create .cb-submit').prop('disabled', false);
+        $('#cb-form-container-bubble-create .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-bubble-create .cb-submit').prop('disabled', true);
+        $('#cb-form-container-bubble-create .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
+
+
+
+
 Template.bubbleSubmit.rendered = function(){
-  //$("#club").addClass('active');
+  this.validateForm();
+
 
   var currentCategory = $("[name=category]").val();
   $("[name=" + currentCategory + "]").addClass("active");
@@ -322,6 +361,20 @@ Template.bubbleSubmit.rendered = function(){
     $(this).addClass("active");
   });
 
+
+  //$("#club").addClass('active');
+/*
+  var currentCategory = $("[name=category]").val();
+  $("[name=" + currentCategory + "]").addClass("active");
+
+  $(".categoryBox").click(function(){
+    var newCategory = $(this).attr("name");
+    $("[name=category]").val(newCategory);
+     
+    $(".categoryBox").removeClass("active");
+    $(this).addClass("active");
+  });
+*/
   category = null;
   $("#profilepicture_retina").hide();
   $("#coverphoto_retina").hide();

@@ -31,25 +31,13 @@ Template.connectBubble.events({
         Meteor.Router.to('/mybubbles/'+this._id+'/home');
       }
       else if(_.contains(this.users.applicants, Meteor.userId())){ //User has applied to bubble
-        Bubbles.update({_id:this._id},
-        {
-          $pull: {'users.applicants': Meteor.userId()}
-        });
+        Meteor.call('removeInvitee', this._id);
       }
       else if(_.contains(this.users.invitees, Meteor.userId())){ //User has been invited to bubble
-        Bubbles.update({_id:this._id},
-        {
-          $addToSet: {'users.members': Meteor.userId()},
-          $pull: {'users.invitees': Meteor.userId()}
-        });
-        createNewMemberUpdate(Meteor.userId());
+        Meteor.call('acceptInvitation', this._id);
       }
       else{
-        Bubbles.update({_id:this._id},
-        {
-          $addToSet: {'users.applicants': Meteor.userId()}
-        });
-        createNewApplicantUpdate();
+        Meteor.call('joinBubble', this._id);
       }
       
     

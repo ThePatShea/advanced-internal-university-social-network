@@ -2,7 +2,7 @@ Bubbles = new Meteor.Collection('bubbles');
 
 Bubbles.allow({
    update: ownsBubble,
-   remove: bubbleAdmin
+   remove: ownsBubble
  });
 
 Meteor.methods({
@@ -41,7 +41,13 @@ Meteor.methods({
     return bubbleId;
 	},
 
-  addInvitee: function(bubbleId,userList){
+  deleteBubble: function(bubbleId) {
+    Updates.update({bubbleId: bubbleId}, {$set: {read: true}});
+    createDeleteBubbleUpdate(bubbleId);
+    Bubbles.remove(bubbleId);
+  },
+
+  addInvitee: function(bubbleId,userList) {
     if(userList && bubbleId){   
       Bubbles.update({_id:bubbleId},
       {
@@ -50,11 +56,37 @@ Meteor.methods({
     }
   },
 
-  removeInvitee: function(bubbleId, userId){
+  removeInvitee: function(bubbleId){
     Bubbles.update({_id:bubbleId},
     {
-      $pull: {'users.invitees': userId}
+      $pull: {'users.invitees': Meteor.userId()}
     });
+  },
+
+  acceptInvitation: function(bubbleId) {
+    Bubbles.update({_id: bubbleId},
+    {
+      $addToSet: {'users.members': Meteor.userId()},
+      $pull: {'users.invitees': Meteor.userId()}
+    });
+    createNewMemberUpdate(Meteor.userId());
+  },
+
+  joinBubble: function(bubbleId) {
+    Bubbles.update({_id: bubbleId},
+    {
+      $addToSet: {'users.applicants': Meteor.userId()}
+    });
+    createNewApplicantUpdate(bubbleId);
+  },
+
+  cancelJoinBubble: function(bubbleId) {
+    Bubbles.update({_id:bubbleId},
+    {
+      $pull: {'users.applicants': Meteor.userId()}
+    });
+    Updates.update({bubbleId: bubbleId, updateType: 'new applicant'},
+      {$set: {read: true}});
   }
 
 });

@@ -3,9 +3,23 @@
     {{> icon-iOS}}
     {{> icon-android}}
   </div>
+  <div class="navbar desktop-logo-container">
+    <div class="navbar-inner">
+      <a href="/dashboard" class="cb-logo-main">
+        <span class="logo-main">{{> icon-logo-main}}</span>
+        <span class="logo-words">
+          <span class="left">emory</span><span class="right">bubble</span>
+        </span>
+      </a>
+      <button class="sidebar-collapse-new">
+        <span class="cb-icon">{{> icon-sidebar-collapse}}</span>
+      </button>
+    </div>
+  </div>
   <div class="sidebar-new sidebar-visible-{{sidebarOpen}}" id="sidebar-new">
     <div class="navbar">
-      <div class="navbar-inner"></div>
+      <div class="navbar-inner">
+      </div>
     </div>
     <div class="pane section">
       <a href="{{dashboardLink}}">
@@ -26,7 +40,7 @@
           <div class="selected-arrow">{{> icon-arrow-right}}</div>
         </button>
       </a>
-      <a href="{{exploreAllPath}}">
+      <a href="{{exploreLink}}">
         <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectedSection 'explore'}}">
           <div class="inner">
             <div class="cb-icon explore">{{> icon-explore}}</div>
@@ -67,7 +81,7 @@
           <div class="pull-left section-name">my bubbles</div>
           <div class="pull-right v-middle">
             <div class="v-inner">
-              <a href="{{bubbleSubmitPath}}">
+              <a class="add-bubble" href="{{bubbleSubmitPath}}">
                 <button class="btn-heading">
                   <span class="cb-icon-add">{{> icon-add}}</span>
                   <span>new</span>
@@ -82,10 +96,10 @@
               {{#if compressedUpdatesCount this._id}}
                 <div class="pull-left num-in-bubble updates-count">
                   <span class="cb-icon cb-icon-bubble">{{> icon-bubble}}</span>
-                  <span class="num category-{{category}}-color">{{compressedUpdatesCount this._id}}</span>
+                  <span class="num">{{compressedUpdatesCount this._id}}</span>
                 </div>
               {{/if}}
-              <div class="pull-left lbl">{{title}}</div>
+              <div class="lbl">{{title}}</div>
               <div class="selected-arrow section-mybubbles">
                 <span class="category-{{category}}-fill">{{> icon-arrow-right}}</span>
               </div>

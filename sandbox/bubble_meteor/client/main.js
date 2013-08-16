@@ -1,17 +1,30 @@
+// Handles site loading gif
+    Meteor.startup(function () {
+      Session.set('siteLoading', 'true');
+    });
+
+
+
 // Bubble Related Subscriptions
   mainBubblesHandle = Meteor.subscribeWithPagination('bubbles', 20);
 
 Deps.autorun(function() {
 
 	// Bubble Related Subscriptions
+		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', function() {
+                  setTimeout(function(){
+                    Session.set('siteLoading', 'false');  // Handles site loading gif
+                  },2000);
+                  Session.get('searchText');
+                }, 10);
 		Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
 		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
 		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
-		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', Session.get('searchText'), 10);
 		// Meteor.subscribe('allBubbles', Meteor.userId());
 
 	// Bubble Related Subscriptions
 	    Meteor.subscribe('allExplores');
+	    Meteor.subscribe('currentExplore', Session.get('currentExploreId'));
 
 
 	// Comments Related Subscriptions
@@ -28,8 +41,8 @@ Deps.autorun(function() {
 		Meteor.subscribe('singleUser', Session.get('selectedUserId'));
 		Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
 		Meteor.subscribe('authenticatedUser', Session.get('secret'));
-		//Mega users need to have access to all users for analytics
-		if(Meteor.user() && Meteor.user().userType == 'megauser'){
+		//Level 3 users need to have access to all users for analytics
+		if(Meteor.user() && Meteor.user().userType == '3'){
 			mainUsersHandle = Meteor.subscribeWithPagination('allUsers');
 		};
 
@@ -50,9 +63,9 @@ Deps.autorun(function() {
 	// Retrieves searched Posts
 		Meteor.subscribe('updatedPosts', Meteor.userId());
 		if( Meteor.user() && '3' == Meteor.user().userType){
-			searchEventsHandle = Meteor.subscribeWithPagination('megaSearchEvents', Session.get('searchText'), 10);
-			searchDiscussionsHandle = Meteor.subscribeWithPagination('megaSearchDiscussions', Session.get('searchText'), 10);
-			searchFilesHandle = Meteor.subscribeWithPagination('megaSearchFiles', Session.get('searchText'), 10);
+			searchEventsHandle = Meteor.subscribeWithPagination('lvl3SearchEvents', Session.get('searchText'), 10);
+			searchDiscussionsHandle = Meteor.subscribeWithPagination('lvl3SearchDiscussions', Session.get('searchText'), 10);
+			searchFilesHandle = Meteor.subscribeWithPagination('lvl3SearchFiles', Session.get('searchText'), 10);
 		}else{
 			searchEventsHandle = Meteor.subscribeWithPagination('searchEvents', Session.get('searchText'), Meteor.userId, 10);
 			searchDiscussionsHandle = Meteor.subscribeWithPagination('searchDiscussions', Session.get('searchText'), Meteor.userId, 10);
@@ -62,14 +75,13 @@ Deps.autorun(function() {
 
 	// UserLog Related Subscriptions
 		currentUserLogsHandle = Meteor.subscribeWithPagination('currentUserlogs', Meteor.userId(), 10);
-		if(Meteor.user() && 'megauser' == Meteor.user().userType) {
+		if(Meteor.user() && '3' == Meteor.user().userType) {
 			mainUserLogsHandle = Meteor.subscribeWithPagination('allUserlogs', 10);
 		}
 
 
 	// Updates Related Subscriptions
 	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
-
 
 	// Flags Related Subscriptions
 		if(Meteor.user() && Meteor.user().userType == '3'){

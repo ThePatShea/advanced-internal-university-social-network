@@ -36,6 +36,17 @@ Meteor.methods({
     createCommentUpdate(comment);
     
     return comment._id;
+  },
+
+  deleteComment: function(commentId){
+    var comment = Comments.findOne(commentId);
+    Comments.remove(commentId);
+    Posts.update({
+      _id: comment.postId
+    }, {
+      $inc: {commentsCount: -1}
+    });
+    Updates.update({commentId: commentId}, {$set: {read: true}});
   }
 });
 

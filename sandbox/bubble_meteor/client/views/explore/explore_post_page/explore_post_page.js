@@ -9,13 +9,40 @@ Template.explorePostPage.helpers({
     var user = Meteor.users.findOne(this.userId);
     return user && user.profilePicture;
   },
-  currentExplore: function(){
-    var currentexploreId = Session.get('currentExploreId');
-    return Explores.findOne(currentexploreId);
+
+  returnFalse: function() {
+    return false;
   },
-  postExploreParentName: function(){
-    var postExploreParent = Explores.findOne(this.exploreId);
-    return postExploreParent.title;
+
+  notEvent: function(){
+    if(this.postType != 'event'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isEvent: function(){
+    if(this.postType == 'event'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isDiscussion: function(){
+    if(this.postType == 'discussion'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  currentExplore: function(){
+    return Explores.findOne(Session.get('currentExploreId'));
   }
 });
 
@@ -42,7 +69,7 @@ Template.explorePostPage.events({
       if (confirm("Delete this post?")) {
         var currentPostId = Session.get('currentPostId');
         Posts.remove(currentPostId);
-        Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+        Meteor.Router.to('explorePage',Session.get('currentExploreId'));
       }
     }
 });

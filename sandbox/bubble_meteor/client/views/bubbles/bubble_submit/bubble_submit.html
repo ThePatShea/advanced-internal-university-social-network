@@ -30,7 +30,7 @@
       <div class="cb-form-row">
         <div class="bubble-category">
           <label class="no-typing">select a category</label>
-          <input name="category" type="hidden" value="{{systemBubble.selectedBubble.category}}"/>
+          <input class="required" name="category" type="hidden" value="{{systemBubble.selectedBubble.category}}"/>
           <ul class="nav nav-tabs large-boxes">
             {{#each systemCategory.categories}}
               <li class="categoryBox" name="{{nameShort}}">
@@ -55,6 +55,8 @@
 
       <canvas id="cover-main-canvas" width="160" height="160" class="visible-0"></canvas>
       <canvas id="cover-retina-canvas" width="320" height="320" class="visible-0"></canvas>
+      <canvas id="profile-main-canvas" width="300" height="300" class="visible-0"></canvas>
+      <canvas id="profile-retina-canvas" width="600" height="600" class="visible-0"></canvas>
 
       <div class="attach-files attach-cover-photo">
         {{> attachCoverPhoto}}

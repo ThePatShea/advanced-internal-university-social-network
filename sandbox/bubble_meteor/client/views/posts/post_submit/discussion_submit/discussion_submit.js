@@ -4,7 +4,7 @@ Template.discussionSubmit.created = function () {
   this.validateForm = function() {
     var count = 0;
 
-    $('.required').each(function(i) {
+    $('#cb-form-container-discussion-create .required').each(function(i) {
       if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
         count++;
       } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
@@ -12,11 +12,11 @@ Template.discussionSubmit.created = function () {
       }
 
       if (count == 0) {
-        $('#cb-form-container-discussion .cb-submit').prop('disabled', false);
-        $('#cb-form-container-discussion .cb-submit').removeClass('ready-false');
+        $('#cb-form-container-discussion-create .cb-submit').prop('disabled', false);
+        $('#cb-form-container-discussion-create .cb-submit').removeClass('ready-false');
       } else {
-        $('#cb-form-container-discussion .cb-submit').prop('disabled', true);
-        $('#cb-form-container-discussion .cb-submit').addClass('ready-false');
+        $('#cb-form-container-discussion-create .cb-submit').prop('disabled', true);
+        $('#cb-form-container-discussion-create .cb-submit').addClass('ready-false');
       }
     });
   }

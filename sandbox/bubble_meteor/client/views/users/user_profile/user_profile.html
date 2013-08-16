@@ -79,9 +79,12 @@
 						</h3>
 					</div>
 				</div>
+                          <div>
+                            <div></div>
 			    {{#each getBubblesAdminList}}
 					{{> listItem}}
 				{{/each}}
+                          </div>
 			{{/if}}
 			{{#if numMembers}}
 				<div class="profile-list-header bubble-list member-heading">
@@ -91,9 +94,12 @@
 						</h3>
 					</div>
 				</div>
+                          <div>
+                            <div></div>
 			    {{#each getBubblesMemberList}}
 					{{> listItem}}
-				{{/each}}
+			    {{/each}}
+                          </div>
 			{{/if}}
 	    {{/with}}
 	</div>

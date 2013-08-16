@@ -18,6 +18,16 @@ Template.sidebar.helpers({
       }else {
         return '/mybubbles/create/bubble';
       }
+    },
+
+    exploreLink: function(){
+      var explores = Explores.find({}).fetch();
+      if(explores.length > 0){
+        return '/explore/' + explores[0]._id + '/home';
+      }
+      else{
+        return '/explore/create';
+      }
     }
   , dashboardLink          : function() {
     return '/dashboard';
@@ -108,8 +118,16 @@ Template.sidebar.helpers({
 
 
 Template.sidebar.events({
-    'click .btn-nav-subsection' : function() {
+    'click .btn-nav-subsection, click .add-bubble > .btn-heading' : function() {
       Session.set('sidebarOpen', false);
+    },
+    'click .sidebar-collapse-new' : function() {
+      var sidebarOpen = Session.get('sidebarOpen');
+       
+      if (sidebarOpen == false)
+        Session.set('sidebarOpen', true);
+      else
+        Session.set('sidebarOpen', false);
     }
 });
 
