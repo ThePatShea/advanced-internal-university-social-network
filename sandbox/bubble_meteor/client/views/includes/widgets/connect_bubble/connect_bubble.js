@@ -37,7 +37,7 @@ Template.connectBubble.events({
         Meteor.call('acceptInvitation', this._id);
       }
       else{
-        Meteor.call('joinBubble', Session.get('currentBubbleId'));
+        Meteor.call('joinBubble', this._id);
       }
       
     

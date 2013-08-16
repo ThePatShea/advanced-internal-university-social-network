@@ -76,7 +76,10 @@ Template.bubblePage.helpers({
 });
 
 Template.bubblePage.events({
-  'btn .clear-updates': function() {
-    Meteor.call('clearUpdates', Session.get('currentBubbleId'));
+  'click .clear-updates': function() {
+    var updates = Updates.find({bubbleId: Session.get('currentBubbleId'), userId: Meteor.userId(), read:false}).fetch();
+    _.each(updates, function(update) {
+      Meteor.call('setRead', update);
+    });
   }
 });
