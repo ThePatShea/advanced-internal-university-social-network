@@ -169,7 +169,7 @@ function updateDiscussionPost(){
       }
     }
 
-    console.log(newChildren);
+    console.log('The new kids: ', newChildren);
 
     //discussionAttachmentIds = [];
     discussionAttachments = [];
@@ -180,10 +180,18 @@ function updateDiscussionPost(){
 
     var discussionAttributes = {
       name: $('.cb-editDiscussion-form > .discussionTitle').val(),
-      body: $('.cb-editDiscussion-form > .wysiwyg_group > .wysiwyg-body').html(),
-      bubbleId: currentBubbleId,
-      children: newChildren
+      body: $.trim( $('.cb-editDiscussion-form > .wysiwyg_group').find('.wysiwyg').html() ),
+      //bubbleId: currentBubbleId,
+      //children: newChildren
     };
+
+    if(newChildren.length > 0){
+      discussionAttributes.children = newChildren;
+    }
+    else{
+      discussionAttributes.children = [];
+    }
+
 
     console.log(discussionAttributes);
 
@@ -197,7 +205,8 @@ function updateDiscussionPost(){
   discussionNewAttachments = [];
   discussionDeletedNewAttachmentIndices = [];
 
-  discussionAttachmentIds = Posts.findOne({_id: currentPostId});
-  discussionAttachments = Posts.find({_id: {$in: discussionAttachmentIds }}).fetch();
+  /*discussionAttachmentIds = Posts.findOne({_id: currentPostId}).children;
+
+  discussionAttachments = Posts.find({_id: {$in: discussionAttachmentIds }}).fetch();*/
 
 }

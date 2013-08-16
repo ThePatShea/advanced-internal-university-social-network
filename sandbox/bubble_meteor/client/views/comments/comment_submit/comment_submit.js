@@ -43,7 +43,7 @@ Template.commentSubmit.rendered = function() {
  // Make the submit button disabled/grayed out if any required inputs have not been filled out
    function inspectAllInputFields(){
      var count = 0;
-     $('.required').each(function(i){
+     $('#cb-form-container-comment .required').each(function(i){
        if( $(this).val() === '' && $(this).attr("name") != undefined) {
          count++;
        }
