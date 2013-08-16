@@ -27,25 +27,25 @@ Handlebars.registerHelper("systemCategory", {
      , {
            body      : "e.g., History department, BBA, Law School, Phi Sigma Tau, Stipe Scholarship, etc."
          , nameLong  : "academic department"
-         , nameShort : "major"
+         , nameShort : "department"
        }
 
      , {
            body      : "e.g., Deans, OUE, Sustaniability Office, Admissions, faculty committees, etc."
          , nameLong  : "faculty committee"
-         , nameShort : "office"
+         , nameShort : "faculty"
        }
 
      , {
            body      : "e.g., Library, EPD, Dining, Career Center, Student Health, Religious Life, LGBT, etc."
          , nameLong  : "campus resource"
-         , nameShort : "service"
+         , nameShort : "resource"
        }
 
      , {
            body      : "e.g., Intro to Physics, Comparative Literature, Strategic Management, etc."
          , nameLong  : "class/study group"
-         , nameShort : "study"
+         , nameShort : "class"
        }
 
      , {
