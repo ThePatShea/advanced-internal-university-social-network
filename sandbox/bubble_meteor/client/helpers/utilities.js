@@ -5,8 +5,8 @@ categories =  [
       , { name_long: 'greek organization'         , name_short: 'greek'   }
       , { name_long: 'class/study group'          , name_short: 'study'   }
       , { name_long: 'academic department'        , name_short: 'major'   }
-      , { name_long: 'administrative office'      , name_short: 'office'  }
-      , { name_long: 'community resource/service' , name_short: 'service' }
+      , { name_long: 'faculty committee'          , name_short: 'office'  }
+      , { name_long: 'campus resource'            , name_short: 'service' }
       , { name_long: 'residence hall'             , name_short: 'dorm'    }
       , { name_long: 'arts and entertainment'     , name_short: 'art'     }
       , { name_long: 'custom'                     , name_short: 'custom'  }

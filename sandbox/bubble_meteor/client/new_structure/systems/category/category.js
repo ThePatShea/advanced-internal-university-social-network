@@ -32,13 +32,13 @@ Handlebars.registerHelper("systemCategory", {
 
      , {
            body      : "e.g., Deans, OUE, Sustaniability Office, Admissions, faculty committees, etc."
-         , nameLong  : "administrative office"
+         , nameLong  : "faculty committee"
          , nameShort : "office"
        }
 
      , {
            body      : "e.g., Library, EPD, Dining, Career Center, Student Health, Religious Life, LGBT, etc."
-         , nameLong  : "community resource/service"
+         , nameLong  : "campus resource"
          , nameShort : "service"
        }
 
