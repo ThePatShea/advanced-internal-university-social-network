@@ -152,7 +152,59 @@ Template.bubbleEdit.events({
 });
 
 
+
+
+
+
+
+
+
+
+Template.bubbleEdit.events({
+  'keyup .required, propertychange .required, input .required, paste .required, mouseout li': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
+Template.bubbleEdit.created = function(){
+  discussionFiles = [];
+  discussionDeletedFileIndices = [];
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-bubble-edit .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-bubble-edit .cb-submit').prop('disabled', false);
+        $('#cb-form-container-bubble-edit .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-bubble-edit .cb-submit').prop('disabled', true);
+        $('#cb-form-container-bubble-edit .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 Template.bubbleEdit.rendered = function(){
+  this.validateForm();
+  
   $('#coverphoto_retina').hide();
   $('#profilepicture_retina').hide();
   $("#profilepicture_preview").hide();

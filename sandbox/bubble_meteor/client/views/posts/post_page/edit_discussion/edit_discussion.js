@@ -1,4 +1,42 @@
+Template.editDiscussion.events({
+  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
+
+
+
+
+
+
 Template.editDiscussion.created = function(){
+  discussionFiles = [];
+  discussionDeletedFileIndices = [];
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-edit-discussion .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-edit-discussion .cb-submit').prop('disabled', false);
+        $('#cb-form-container-edit-discussion .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-edit-discussion .cb-submit').prop('disabled', true);
+        $('#cb-form-container-edit-discussion .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+
+
+
   console.log('Children: ', this.data.children);
   console.log($('.cb-editDiscussion-form'));
   discussionAttachmentIds = this.data.children;
@@ -11,6 +49,8 @@ Template.editDiscussion.created = function(){
 
 
 Template.editDiscussion.rendered = function () {
+  this.validateForm();
+
 
 
   $('.cb-editDiscussion-form > .discussion-attachments > .paperclip-attach > .attachments-list > li').remove();

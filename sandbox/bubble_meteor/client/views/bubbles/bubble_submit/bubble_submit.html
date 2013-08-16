@@ -30,7 +30,7 @@
       <div class="cb-form-row">
         <div class="bubble-category">
           <label class="no-typing">select a category</label>
-          <input name="category" type="hidden" value="{{systemBubble.selectedBubble.category}}"/>
+          <input class="required" name="category" type="hidden" value="{{systemBubble.selectedBubble.category}}"/>
           <ul class="nav nav-tabs large-boxes">
             {{#each systemCategory.categories}}
               <li class="categoryBox" name="{{nameShort}}">

@@ -308,8 +308,47 @@ Template.bubbleSubmit.events({
 });
 
 
+
+
+Template.bubbleSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required, mouseout li': function(evt, tmpl) {
+      tmpl.validateForm();
+  }
+});
+
+
+Template.bubbleSubmit.created = function(){
+  discussionFiles = [];
+  discussionDeletedFileIndices = [];
+  this.validateForm = function() {
+    var count = 0;
+
+    $('#cb-form-container-bubble-create .required').each(function(i) {
+      if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
+        count++;
+      } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
+        count++;
+      }
+
+
+      if (count == 0) {
+        $('#cb-form-container-bubble-create .cb-submit').prop('disabled', false);
+        $('#cb-form-container-bubble-create .cb-submit').removeClass('ready-false');
+      } else {
+        $('#cb-form-container-bubble-create .cb-submit').prop('disabled', true);
+        $('#cb-form-container-bubble-create .cb-submit').addClass('ready-false');
+      }
+    });
+  }
+}
+
+
+
+
+
 Template.bubbleSubmit.rendered = function(){
-  //$("#club").addClass('active');
+  this.validateForm();
+
 
   var currentCategory = $("[name=category]").val();
   $("[name=" + currentCategory + "]").addClass("active");
@@ -322,6 +361,20 @@ Template.bubbleSubmit.rendered = function(){
     $(this).addClass("active");
   });
 
+
+  //$("#club").addClass('active');
+/*
+  var currentCategory = $("[name=category]").val();
+  $("[name=" + currentCategory + "]").addClass("active");
+
+  $(".categoryBox").click(function(){
+    var newCategory = $(this).attr("name");
+    $("[name=category]").val(newCategory);
+     
+    $(".categoryBox").removeClass("active");
+    $(this).addClass("active");
+  });
+*/
   category = null;
   $("#profilepicture_retina").hide();
   $("#coverphoto_retina").hide();
