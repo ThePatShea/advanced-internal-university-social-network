@@ -46,11 +46,71 @@ Meteor.Router.add('/testauth', 'POST', function(){
 	var emoryEmail = this.request.body.emoryEmail;
 	var altMail = this.request.body.altMail;
 	var altEmail = this.request.body.altEmail;
+	var secret = this.request.body.secret;
 
 	console.log(netId, ppId, lastName, firstName, isFerpa, emoryEmail, altMail, altEmail);
 
+	var user = Meteor.users.findOne({username: this.request.body.netId});
+	if(!user){
+		Accounts.createUser({'username': this.request.body.netId, 'password': 'F302pinpulse'});
 
-	return [200, {'netId': netId}, null];
+		user = Meteor.users.findOne({username: this.request.body.netId});
+		Accounts.setPassword(user._id, 'F302pinpulse');
+
+		var letterProfile = '/img/letterprofiles' + this.request.body.netId.toLowerCase()[0] + '.jpg';
+		
+		var userProperties = {
+			'profilePicture': letterProfile,
+			'userType': 1,
+			'ppId': ppId,
+			'lastName': lastName,
+			'firstName': firstName,
+			'isFerpa': isFerpa,
+			'emoryEmail': emoryEmail,
+			'altMail': altMail,
+			'altEmail': altEmail,
+			'secret': secret
+		}
+
+		Meteor.users.update(user._id, {$set: userProperties});
+	}
+	else{
+		var updatedUserProperties = {
+			'ppId': ppId,
+			'lastName': lastName,
+			'firstName': firstName,
+			'isFerpa': isFerpa,
+			'emoryEmail': emoryEmail,
+			'altMail': altMail,
+			'altEmail': altEmail,
+			'secret': secret
+		}
+
+		Meteor.users.update(user._id, {$set: updatedUserProperties});
+	}
+
+
+	return [200, {'body': JSON.stringify(this.request.body)}, null];
+});
+
+
+Meteor.Router.add('/testauth/:secret', 'GET', function(secret){
+	var user = Meteor.users.findOne({'secret': secret});
+	if(!user){
+		if(user.secret == secret){
+			Meteor.user.loginWithPassword(username, 'F302pinpulse');
+		}
+		else{
+			return [302, {'Location': 'https://login.emorybubble.com'}];
+		}
+	}
+	else{
+		return [302, {'Location': 'https://login.emorybubble.com'}];
+	}
+
+	return [302, {'Location': 'https://test.emorybubble.com'}];
+
+	//return [200, 'Username: ' + username + '\nSecret: ' + secret];
 });
 
 /*
