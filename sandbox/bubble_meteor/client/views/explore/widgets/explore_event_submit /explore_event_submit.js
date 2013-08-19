@@ -140,6 +140,9 @@ Template.exploreEventSubmit.rendered = function() {
   $(".btn-select-post-as-bubble").click(function() {
     var postAsId = $(this).attr("name");
     $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+
 
     var bubbleTitle = $(this).children(".bubble-title").attr("name");
     $(".selected-bubble-post-as").html(bubbleTitle);
@@ -155,6 +158,11 @@ Template.exploreEventSubmit.rendered = function() {
 
 
   $(".post-as-button.me").click(function() {
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
     $(".post-as-button.bubble").removeClass("active-true");
     $(".post-as-button.bubble").addClass("active-false");
 
