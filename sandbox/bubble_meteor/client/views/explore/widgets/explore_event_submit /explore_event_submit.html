@@ -44,7 +44,7 @@
             </div>
             <div class="lbl-as">me</div>
           </button>
-          <button class="active-false post-as-button bubble">
+          <button class="active-false post-as-button bubble dropdown-toggle" data-toggle="dropdown-post-as-bubble">
             <div class="check-circle">
               <span class="cb-icon check">{{> icon-check}}</span>
               <span class="cb-icon x">{{> icon-x}}</span>
@@ -52,8 +52,30 @@
             <div class="lbl-as">Bubble Name</div>
             <div class="arrow-down">{{> icon-arrow-down}}</div>
           </button>
+
+
+
+        <li class="dropdown dropdown-post-as-bubble">
+          <ul class="dropdown-menu dropdown-logout">
+            <li class="view-profile">
+              <div class="pull-left cb-icon-dropdown">{{> icon-user}}</div>
+              <div class="pull-left lbl">profile</div>
+            </li>
+            <li class="support">
+              <div class="pull-left cb-icon-dropdown">{{> icon-support}}</div>
+              <div class="pull-left lbl">support</div>
+            </li>
+            <li class="signout">
+              <div class="pull-left cb-icon-dropdown">{{> icon-sign-out}}</div>
+              <div class="pull-left lbl">sign out</div>
+            </li>
+          </ul>
+        </li>
+
+
         </div>
       </div>
+
 
 
 
