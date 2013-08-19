@@ -137,6 +137,8 @@ Template.dashboard.helpers({
 
 	    Session.set('numUpdates', updateList.length);
 	    return updateList.length;
+	  } else {
+	  	return 0;
 	  }
 	},
 
@@ -437,6 +439,14 @@ Template.dashboard.events({
     _.each(updates, function(update) {
       Meteor.call('setRead', update);
     });
+  },
+
+  'click #dashboard-icon-2a': function() {
+	location.href="https://play.google.com/store/apps/details?id=io.cordova.emorybubble";
+  },
+
+  'click #dashboard-icon-2b': function() {
+	location.href="https://itunes.apple.com/us/app/emory-bubble/id538091098";
   }
 });
 

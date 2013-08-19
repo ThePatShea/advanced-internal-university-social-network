@@ -97,11 +97,14 @@ Template.bubbleSubmit.events({
         if (f.type.match('image.*')) {
             var reader = new FileReader();
 
-        var mainCanvas = document.getElementById('cover-main-canvas');
-        var retinaCanvas = document.getElementById('cover-retina-canvas');
-        var mainContext = mainCanvas.getContext('2d');
-        var retinaContext = retinaCanvas.getContext('2d');
-        var profileImage = new Image();
+            var coverMainCanvas = document.getElementById('cover-main-canvas');
+            var coverRetinaCanvas = document.getElementById('cover-retina-canvas');
+            var coverMainContext = coverMainCanvas.getContext('2d');
+            var coverRetinaContext = coverRetinaCanvas.getContext('2d');
+            var coverImage = new Image();
+
+            var minX = 76;
+            var minY = 76;
 
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
@@ -109,15 +112,64 @@ Template.bubbleSubmit.events({
                   $(".bubble-create > .attach-cover-photo > .drop-zone").hide();
                   $(".bubble-create > .attach-cover-photo > .drop-zone > .file-chooser-invisible").width(1);
                   $(".bubble-create > .attach-cover-photo > .drop-zone > .file-chooser-invisible").height(1);
-                  $(".bubble-create > .crop-profile > .crop").attr("src", e.target.result);
-                  profileImage.src = e.target.result;
-                  cropArea = $('.bubble-create > .crop-profile > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '67', minHeight: '67', x1: '10', y1: '10', x2: '77', y2: '77', parent: ".cb-form-container", handles: true, onSelectChange: function(img, selection) {
-                mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
-                retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
-                mainURL = mainCanvas.toDataURL();
-                retinaURL = retinaCanvas.toDataURL();
-                $(".profile-pic-preview").attr("src",mainURL);
-                  }});
+                  $(".crop-cover > .crop").attr("src", e.target.result);
+                  coverImage.src = e.target.result;
+                  coverCropArea = $('.crop-cover > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: coverImage.height, imageWidth: coverImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
+                    onInit: function(img, selection) {
+                      coverMainContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+                      coverRetinaContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+                      coverMainURL = coverMainCanvas.toDataURL();
+                      coverRetinaURL = coverRetinaCanvas.toDataURL();
+                      $(".profile-pic-preview").attr("src",coverMainURL);
+                      if(Session.get("DisableCrop") == "1")
+                      {
+                        coverCropArea.cancelSelection();
+                      }
+                    }, onSelectChange: function(img, selection) {
+                      if(selection.width != 0)
+                      {
+                        coverMainContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+                        console.log(selection.y1);
+                        coverRetinaContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+                        coverMainURL = coverMainCanvas.toDataURL();
+                        coverRetinaURL = coverRetinaCanvas.toDataURL();
+                      }
+                      else
+                      {
+                        coverCropArea.setSelection(10,10, (10+minX),(10+minY));
+                        coverCropArea.setOptions({show: true});
+                        coverCropArea.update();
+                      }
+                      //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                    }, onSelectEnd: function(img, selection){
+                      if((selection.width < minX) || (selection.height < minY))
+                      {
+                        if((selection.x1 > coverImage.width-minX) || (selection.y1 > coverImage.height-minY))
+                        {
+                          if(selection.x1 < minX)
+                          {
+                            coverCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                            coverCropArea.update();
+                          }
+                          else if(selection.y1 < minY)
+                          {
+                            coverCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                            coverCropArea.update();
+                          }
+                          else
+                          {
+                            coverCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                            coverCropArea.update();
+                          }
+                        }
+                        else
+                        {
+                          coverCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                          coverCropArea.update();
+                        }
+                      }
+                    }
+                  });
               };
             })(f);
             reader.readAsDataURL(f);
@@ -382,5 +434,26 @@ Template.bubbleSubmit.rendered = function(){
   $("#coverphoto_preview").hide();
   $("#tempbubbleprofile").hide();
   $("#tempbubblecoverphoto").hide();
+
+
+  $(window).setBreakpoints({
+  // use only largest available vs use all available
+      distinct: true, 
+  // array of widths in pixels where breakpoints
+  // should be triggered
+      breakpoints: [
+        768
+      ] 
+  });
+  $(window).bind('exitBreakpoint768',function() {
+    $(window).unbind('exitBreakpoint768');
+    $(window).bind('enterBreakpoint768', function() {
+      Session.set("DisableCrop","");
+      //alert('enable crop');
+    });
+    Session.set("DisableCrop","1");
+    //alert('disable crop');
+  });
+  $(window).unbind('enterBreakpoint768');
 }
 

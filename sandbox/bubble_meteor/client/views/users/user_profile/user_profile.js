@@ -240,20 +240,3 @@ Template.userProfile.events({
     	}
 	}
 });
-
-//Preview functionality for crop tool
-function preview(img, selection) {
-    var scaleX = 67 / (selection.width || 1);
-    var scaleY = 67 / (selection.height || 1);
-  /*
-    $('.profile-pic-preview').css({
-        width: Math.round(scaleX * img.width) + 'px',
-        height: Math.round(scaleY * img.height) + 'px',
-        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
-        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px',
-        'max-width': 'none',
-        'border-radius': '0'
-    });*/
-	console.log(Math.round(scaleX * img.width));
-	console.log(Math.round(scaleY * img.height));
-};
