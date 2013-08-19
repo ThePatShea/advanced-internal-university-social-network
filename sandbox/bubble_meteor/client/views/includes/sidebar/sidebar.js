@@ -6,10 +6,10 @@ Template.sidebar.helpers({
       var currentSection = window.location.pathname.split("/")[1];
       //console.log(currentSection);
 
-      if ((currentSection == 'search') || (currentSection == 'dashboard'))
-        return false;
-      else
+      if ( (currentSection == 'mybubbles') || (currentSection == 'explore') || (currentSection == 'settings') )
         return true;
+      else
+        return false;
     }
   , myBubblesLink          : function() {
       var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
@@ -36,7 +36,15 @@ Template.sidebar.helpers({
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
 
-      return urlArray[1] == inputSection;
+      if (inputSection != 'dashboard') { 
+        return urlArray[1] == inputSection;
+      } else {
+        if (urlArray[1] == '' || urlArray[1] == 'dashboard') {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
   , selectedSubsectionName : function(inputName) {
       var currentUrl  =  window.location.pathname;

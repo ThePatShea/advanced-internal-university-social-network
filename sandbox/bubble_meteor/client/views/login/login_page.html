@@ -22,9 +22,10 @@
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="{{getSubmitText}}" class="btn btn-primary"/>
-            <button class="btn signup">{{getSignupText}}</button>
+            {{#codeComment}}
+              <button class="btn signup">{{getSignupText}}</button>
+            {{/codeComment}}
         </div>
-
     </div>
   </form>
   <!--<img src="/img/User-Profile.jpg" id="tempprofile">-->

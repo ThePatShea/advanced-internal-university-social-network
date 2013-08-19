@@ -39,7 +39,7 @@ Template.exploreSubmit.events({
       } else {
         console.log(exploreId);
         var createdExplore = Explores.findOne({_id: exploreId});
-        Meteor.Router.to('explorePage', createdExplore);
+        Meteor.Router.to('explorePage', createdExplore._id);
       }
     });
   },

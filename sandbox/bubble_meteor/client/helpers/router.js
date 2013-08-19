@@ -2,6 +2,9 @@ Meteor.Router.add({
   //Login from authentication system
   '/login': 'loginPage',
 
+  //Onboarding page
+  '/onboarding': 'onboarding',
+
   // Bubbles Related Routes
     '/mybubbles/:_id/home': {
       to: 'bubblePage', 
@@ -189,6 +192,7 @@ Meteor.Router.filters({
     return page;
   },
   'routeWhenLogin': function(page) {
+/*
     var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
     if(bubbles.length > 0) {
       Meteor.Router.to('bubblePage',bubbles[0]._id);
@@ -197,6 +201,9 @@ Meteor.Router.filters({
       return 'searchBubbles';
     }
     return page;
+*/
+  //  Meteor.Router.to('dashboard');
+    return 'dashboard';
   },
   'hasSuperBubblePermissions': function(page) {
     if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType){
@@ -219,6 +226,10 @@ Meteor.Router.filters({
       return page;
     }
     return '/';
+  },
+  'setNumUpdatesTo3': function(page){
+    Session.set('numUpdates',3);
+    return page;
   }
 });
 
@@ -233,4 +244,5 @@ Meteor.Router.filter('routeWhenLogin', {only: ['/']});
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
 Meteor.Router.filter('hasSuperBubblePermissions', {only: ['discussionSubmit', 'eventSubmit', 'fileSubmit', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})
 //Checks if page has a potential increase in view count
-Meteor.Router.filter('increaseViewCount', {only: ['postPage', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})
+Meteor.Router.filter('increaseViewCount', {only: ['postPage', 'discussionEdit', 'eventEdit', 'fileobjectEdit']});
+Meteor.Router.filter('setNumUpdatesTo3', {only: ['dashboard','bubblePage']});

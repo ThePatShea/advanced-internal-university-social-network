@@ -1,4 +1,7 @@
 Template.dashboard.helpers({
+        getFiveExplorePosts: function() {
+          return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+        },
 	numBubbles: function() {
 		var uid = Meteor.userId();
 		var numBubbles = Bubbles.find({$or:
@@ -136,6 +139,7 @@ Template.dashboard.helpers({
 	    });
 
 	    Session.set('numUpdates', updateList.length);
+
 	    return updateList.length;
 	  } else {
 	  	return 0;
@@ -261,13 +265,13 @@ Template.dashboard.helpers({
 	      }
 	    });
 
-	    return (updateList.length - 3);
+	    return (updateList.length - Session.get('numUpdates'));
 	  }
 	},
 
-	showMoreUpdates: function(numUpdates, limit) {
+	showMoreUpdates: function(numUpdates) {
 
-		if(numUpdates > limit)
+		if(numUpdates > Session.get('numUpdates'))
 			return true;
 		else
 			return false;
@@ -302,7 +306,7 @@ Template.dashboard.helpers({
 		return Posts.find({'attendees': {$in: [Meteor.userId()]}}).count();
 	},
 
-	getUpdates: function(limit) {
+	getUpdates: function() {
 		var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
 	  if(updateList.length > 0) {
@@ -424,8 +428,8 @@ Template.dashboard.helpers({
 	    updateList = _.sortBy(updateList, function(newUpdate) {
 	      return newUpdate.submitted; 
 	    });  
-	    if(limit>0){
-	      return _.first(updateList.reverse(), limit);
+	    if(Session.get('numUpdates')>0){
+	      return _.first(updateList.reverse(), Session.get('numUpdates'));
 	    }else{
 	      return updateList.reverse();
 	    }
@@ -447,11 +451,17 @@ Template.dashboard.events({
 
   'click #dashboard-icon-2b': function() {
 	location.href="https://itunes.apple.com/us/app/emory-bubble/id538091098";
+  },
+
+  'click .dashboard-more-updates': function() {
+  	Session.set('numUpdates', 0);
+  	console.log(Session.get('numUpdates'));
   }
 });
 
 Template.dashboard.rendered = function () {
 	$('.carousel').carousel();
+
 	$('.dashboard-more-updates').click(function(){
 		$('.threeUpdtes').addClass('visible-0');
 		$('.allUpdates').removeClass('visible-0');
@@ -459,17 +469,3 @@ Template.dashboard.rendered = function () {
 		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
 	});
 };
-
-Template.dashboard.events({
-	'click .test': function() {
-		Meteor.call('search_users', 'John', function(err, res) {
-			if(err) {
-		    	console.log("Search Error: " + err);
-		    	return err;
-		    } else {
-		    	console.log("Search Result: " + res);
-		    	return res;
-		    }
-		});
-	}
-})

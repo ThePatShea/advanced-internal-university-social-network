@@ -104,12 +104,11 @@ createEditEventUpdate = function(userId, postId) {
     var bubble = Bubbles.findOne(post.bubbleId);
     var attendees = post.attendees;
     //Remove post owner from list of attendees
-    var index = attendees.indexOf(Meteor.users.findOne(userId).username);
-    if(index>0){
-      attendees.splice(index,1);
-    }
-    _.each(attendees, function(username){
-      var user = Meteor.users.findOne({username:username});
+    attendees = _.reject(attendees, function(attendeeId){
+      return attendeeId == userId;
+    });
+    _.each(attendees, function(uId){
+      var user = Meteor.users.findOne({_id:uId});
       Meteor.call('update',{
         userId: user._id,
         postId: post._id,

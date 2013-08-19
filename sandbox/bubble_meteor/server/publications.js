@@ -292,6 +292,9 @@ getBubbleId =  function(userId) {
   Meteor.publish('currentExplore', function(exploreId){
     return Posts.find({'exploreId': exploreId});
   });
+  Meteor.publish('fiveExplorePosts', function() {
+    return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+  });
 
 // Meteor Users Related Publications
   Meteor.publish('allUsers', function(){

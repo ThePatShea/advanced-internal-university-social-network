@@ -141,26 +141,39 @@
 			</div>
 		</div>
 	</div>
-	<div class="dashboard-section-header">
-		{{numUpdates}} Updates
-		<button class="std-btn-light pull-right clear-updates">clear all</button> 
-	</div>
-	<div class="dashboard-updates">
-		<div class="threeUpdates">
-                  <div></div>
-			{{#each getUpdates 3}}
-				{{> updateItem}}
-			{{/each}}
-		</div>
-		<div class="allUpdates visible-0">
-			{{#each getUpdates 0}}
-				{{> updateItem}}
-			{{/each}}
-		</div>
-		{{#if showMoreUpdates numUpdates 3}}
-			<div class="dashboard-more-updates">
-				+{{pluralize numUpdatesMinusThree "update" "more"}}
-			</div>
-		{{/if}}
-	</div>
+        <div class="visible-{{numUpdates}}">
+          <div class="dashboard-section-header">
+          	{{numUpdates}} Updates
+          	<button class="std-btn-light pull-right clear-updates">clear all</button> 
+          </div>
+          <div class="dashboard-updates">
+          	<div class="threeUpdates">
+                    <div></div>
+          		{{#each getUpdates 3}}
+          			{{> updateItem}}
+          		{{/each}}
+          	</div>
+          	<div class="allUpdates visible-0">
+          		{{#each getUpdates 0}}
+          			{{> updateItem}}
+          		{{/each}}
+          	</div>
+          	{{#if showMoreUpdates numUpdates 3}}
+          		<div class="dashboard-more-updates">
+          			+{{pluralize numUpdatesMinusThree "update" "more"}}
+          		</div>
+          	{{/if}}
+          </div>
+        </div>
+        <div>
+          <div class="dashboard-section-header">
+            latest posts from explore
+          </div>
+          <div>
+            <div></div>
+            {{#each getFiveExplorePosts}}
+              {{> listItem}}
+            {{/each}}
+          </div>
+        </div>
 </template>

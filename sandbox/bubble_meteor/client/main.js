@@ -58,6 +58,7 @@ Deps.autorun(function() {
 			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
 		Meteor.subscribe('attendingEvents', Meteor.userId());
+                Meteor.subscribe('fiveExplorePosts');
 
 
 	// Retrieves searched Posts
