@@ -1012,15 +1012,42 @@ wysiwyg-image(n)
         .post-as-button
           border         1px solid main-light
           color          main-light
+          position       relative
           border-radius  17px
           height         35px
           &.active,
           &:hover
             background     main-light
             color          main-dark
+            .check-circle
+              background     main-light
+              border-color   main-dark
+              .cb-icon
+                fill           main-dark
           &.me
             fontize(main, bold, uppercase, 12px)
             width          80px
+          .check-circle
+            border         2px solid main-light
+            background     main-dark
+            position       absolute
+            height         33px
+            width          33px
+            left           -4px
+            top            -2px
+            border-radius  50%
+            .cb-icon
+              fill           main-light
+              position       absolute
+              left           50%
+              top            50%
+              &.check
+                margin         -6px 0 0 -7px
+                svg
+                  height         11px
+                  width          13px
+          .lbl-as
+            padding-left   28px
     .select-bubble-type
       overflow        hidden
       margin-bottom   30px
