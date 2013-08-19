@@ -1,4 +1,8 @@
 <template name="sidebar">
+  <div class="visible-0">
+    {{> icon-iOS}}
+    {{> icon-android}}
+  </div>
   <div class="navbar desktop-logo-container">
     <div class="navbar-inner">
       <a href="/dashboard" class="cb-logo-main">
@@ -19,6 +23,15 @@
       </div>
     </div>
     <div class="pane section">
+      <a href="/dashboard">
+        <button class="btn-nav btn-nav-section active-{{selectedSection 'dashboard'}}">
+          <div class="inner">
+            <div class="cb-icon dashboard-icon">{{> icon-dashboard-big}}</div>
+            <div class="lbl">dashboard</div>
+          </div>
+          <div class="selected-arrow">{{> icon-arrow-right}}</div>
+        </button>
+      </a>
       <a href="{{myBubblesLink}}">
         <button class="btn-nav btn-nav-section active-{{selectedSection 'mybubbles'}}">
           <div class="inner">

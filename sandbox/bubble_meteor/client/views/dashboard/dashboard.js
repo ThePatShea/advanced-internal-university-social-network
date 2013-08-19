@@ -1,4 +1,7 @@
 Template.dashboard.helpers({
+        getFiveExplorePosts: function() {
+          return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+        },
 	numBubbles: function() {
 		var uid = Meteor.userId();
 		var numBubbles = Bubbles.find({$or:
@@ -135,8 +138,12 @@ Template.dashboard.helpers({
 	      }
 	    });
 
+	    Session.set('numUpdates', updateList.length);
+
 	    return updateList.length;
-	  }
+	  } else {
+            return 0;
+          }
 	},
 
 	numUpdatesMinusThree: function() {
@@ -445,4 +452,11 @@ Template.dashboard.events({
 
 Template.dashboard.rendered = function () {
 	$('.carousel').carousel();
+
+	$('.dashboard-more-updates').click(function(){
+		$('.threeUpdtes').addClass('visible-0');
+		$('.allUpdates').removeClass('visible-0');
+		$('.dashboard-more-updates').addClass('visible-0');
+		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
+	});
 };
