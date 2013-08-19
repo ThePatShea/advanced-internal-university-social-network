@@ -29,7 +29,26 @@ Template.exploreEventSubmit.events({
 });
 
 
+
+Template.exploreEventSubmit.helpers({
+  getAdminBubbles: function() {
+    adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
+    adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
+   
+    if (adminBubblesCount > 0) {
+      return adminBubbles;
+    } else {
+      return false;
+    } 
+  }
+});
+
+
+
 Template.exploreEventSubmit.events({
+  'click .post-as-button.bubble': function(event) {
+    event.preventDefault();
+  },
   'click .cb-explore-eventSubmit-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
@@ -107,6 +126,11 @@ Template.exploreEventSubmit.events({
 });
 
 Template.exploreEventSubmit.rendered = function() {
+  var postAsType = $("[name=post-as-type]").val();
+  $(".postAsButton." + postAsType).addClass("active-true");
+
+
+
 
   this.validateForm();
 
