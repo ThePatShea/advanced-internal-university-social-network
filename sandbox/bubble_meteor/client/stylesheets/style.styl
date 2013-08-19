@@ -2020,8 +2020,8 @@ navbar-height        =  60px
   background        main-xlight
   color             main-light
   position          absolute
-  bottom            -40px
-  padding           15px
+  top               30px
+  padding           15px 0
   width             100%
   z-index           100
   border-radius     8px
@@ -2032,6 +2032,14 @@ navbar-height        =  60px
     position          absolute
     right             13px
     top               -5px
+  .dropdown-buttons-container
+    border-top          1px solid #89A5B8
+    .dropdown-button
+      border-bottom       1px solid #89A5B8
+      padding             10px 15px
+      &:hover
+        cursor                   pointer
+        background               #89A5B8
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
