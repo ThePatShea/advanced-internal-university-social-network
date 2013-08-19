@@ -1048,8 +1048,17 @@ wysiwyg-image(n)
             text-align     left
             right          -1px
             top            0
+            &:hover
+              .arrow-down
+                fill           main-dark
             .lbl-as
               padding-left   40px
+            .arrow-down
+              fill           main-light
+              position       absolute
+              margin-top     -3px
+              right          15px
+              top            50%
           &.active-true
             cursor         default
             .check-circle
