@@ -23,7 +23,7 @@ Template.exploreEventSubmit.created = function(){
 
 
 Template.exploreEventSubmit.events({
-  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
       tmpl.validateForm();
   }
 });
@@ -62,6 +62,8 @@ Template.exploreEventSubmit.events({
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-explore-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-explore-eventSubmit-form > .event-details').val(),
+      postAsType: $('.cb-explore-eventSubmit-form .post-as-type').val(),
+      postAsId:   $('.cb-explore-eventSubmit-form .post-as-id').val(),
       postType: 'event',
       exploreId: Session.get('currentExploreId'),
       attendees: [Meteor.userId()],
