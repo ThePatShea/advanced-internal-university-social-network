@@ -2,6 +2,9 @@ Meteor.Router.add({
   //Login from authentication system
   '/login': 'loginPage',
 
+  //Onboarding page
+  '/onboarding': 'onboarding',
+
   // Bubbles Related Routes
     '/mybubbles/:_id/home': {
       to: 'bubblePage', 

@@ -1,0 +1,33 @@
+<template name="onboarding">
+  <div class="navbar navbar-onboarding">
+    <div class="navbar-inner">
+      <a class="cb-logo-main">
+        <span class="logo-main">{{> icon-logo-main}}</span>
+        <span class="logo-words">
+          <span class="left">emory</span><span class="right">bubble</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="onboarding">
+    <div class="heading-onboarding">
+      Welcome {{getCurrentName}}, customize your profile
+    </div>
+  </div>
+
+  <div class="cb-form-container" id="cb-form-container-onboarding">
+    <form class="cb-form cb-form-onboarding">
+      <div class="attach-files">
+        <label class="no-typing less-formatting">add profile photo</label>
+        {{> dropZone}}
+      </div>
+      <label class="no-typing margin-top-35">accept terms of service and privacy policy?</label>
+      <hr>
+      <div class="cb-submit-container">
+        <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
+      </div>
+    </form>
+  </div>
+
+</template>

@@ -304,6 +304,16 @@ Handlebars.registerHelper('getTextAfterSlash',function(inputText) {
   }
 });
 
+Handlebars.registerHelper('isOnboarding', function() {
+  var currentSection = window.location.pathname.split("/")[1];
+
+  if (currentSection == "onboarding") {
+    return true;
+  } else {
+    return false;
+  }
+});
+
 Handlebars.registerHelper('isLoggedIn', function() {
   if(Meteor.user()) {
     return true;

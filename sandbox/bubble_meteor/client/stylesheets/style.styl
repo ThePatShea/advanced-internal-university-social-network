@@ -1349,6 +1349,8 @@ wysiwyg-image(n)
         &.less-formatting
           border-bottom      0
           margin-bottom      0
+        &.margin-top-35
+          margin-top         35px
     label,
     input
       border-bottom  1px solid main-light
@@ -1530,6 +1532,16 @@ body
   height                 70px
   border-box             0
 /**********      Base Divs       **********/
+
+
+/**********      onboarding      **********/
+.onboarding
+  .heading-onboarding
+    padding             40px 30px 25px 30px 
+    fontize(alt, light, blank, 30px)
+    color               main-light
+/**********      onboarding      **********/
+
 
 /**********      post-item       **********/
 post-item-attributes-width-minus-30  =  250px
@@ -1761,6 +1773,8 @@ navbar-height        =  60px
   letter-spacing         1px
   svg
     vertical-align           middle
+  &.navbar-onboarding
+    border-bottom            4px solid main-xlight
   &.navbar-main
     position                 relative
     z-index                  100
