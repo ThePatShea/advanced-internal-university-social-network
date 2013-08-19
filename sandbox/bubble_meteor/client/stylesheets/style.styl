@@ -1026,7 +1026,7 @@ wysiwyg-image(n)
           position       absolute
           border-radius  17px
           height         35px
-          &.active,
+          &.active-true,
           &:hover
             background     main-light
             color          main-dark
@@ -1045,6 +1045,13 @@ wysiwyg-image(n)
             width          200px
             right          -1px
             top            0
+          &.active-true
+            cursor         default
+            .check-circle
+              .check
+                display      block
+              .x
+                display      none
           &.active-false
             &:hover
               .check-circle
