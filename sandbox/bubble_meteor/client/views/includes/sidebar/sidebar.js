@@ -33,7 +33,15 @@ Template.sidebar.helpers({
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
 
-      return urlArray[1] == inputSection;
+      if (inputSection != 'dashboard') { 
+        return urlArray[1] == inputSection;
+      } else {
+        if (urlArray[1] == '' || urlArray[1] == 'dashboard') {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
   , selectedSubsectionName : function(inputName) {
       var currentUrl  =  window.location.pathname;
