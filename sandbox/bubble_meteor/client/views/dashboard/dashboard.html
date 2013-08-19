@@ -161,10 +161,10 @@
 				{{> updateItem}}
 			{{/each}}
 		</div>
-		{{#if showMoreUpdates numUpdates 3}}
-			<div class="dashboard-more-updates">
+		{{#if showMoreUpdates numUpdates}}
+			<button class="std-btn-light dashboard-more-updates">
 				+{{pluralize numUpdatesMinusThree "update" "more"}}
-			</div>
+			</button>
 		{{/if}}
 	</div>
 </template>

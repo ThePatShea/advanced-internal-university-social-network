@@ -219,6 +219,10 @@ Meteor.Router.filters({
       return page;
     }
     return '/';
+  },
+  'setNumUpdatesTo3': function(page){
+    Session.set('numUpdates',3);
+    return page;
   }
 });
 
@@ -233,4 +237,5 @@ Meteor.Router.filter('routeWhenLogin', {only: ['/']});
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
 Meteor.Router.filter('hasSuperBubblePermissions', {only: ['discussionSubmit', 'eventSubmit', 'fileSubmit', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})
 //Checks if page has a potential increase in view count
-Meteor.Router.filter('increaseViewCount', {only: ['postPage', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})
+Meteor.Router.filter('increaseViewCount', {only: ['postPage', 'discussionEdit', 'eventEdit', 'fileobjectEdit']});
+Meteor.Router.filter('setNumUpdatesTo3', {only: ['dashboard','bubblePage']});

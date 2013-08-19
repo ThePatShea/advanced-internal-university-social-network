@@ -135,7 +135,6 @@ Template.dashboard.helpers({
 	      }
 	    });
 
-	    Session.set('numUpdates', updateList.length);
 	    return updateList.length;
 	  }
 	},
@@ -259,13 +258,13 @@ Template.dashboard.helpers({
 	      }
 	    });
 
-	    return (updateList.length - 3);
+	    return (updateList.length - Session.get('numUpdates'));
 	  }
 	},
 
-	showMoreUpdates: function(numUpdates, limit) {
+	showMoreUpdates: function(numUpdates) {
 
-		if(numUpdates > limit)
+		if(numUpdates > Session.get('numUpdates'))
 			return true;
 		else
 			return false;
@@ -300,7 +299,7 @@ Template.dashboard.helpers({
 		return Posts.find({'attendees': {$in: [Meteor.userId()]}}).count();
 	},
 
-	getUpdates: function(limit) {
+	getUpdates: function() {
 		var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
 	  if(updateList.length > 0) {
@@ -422,8 +421,8 @@ Template.dashboard.helpers({
 	    updateList = _.sortBy(updateList, function(newUpdate) {
 	      return newUpdate.submitted; 
 	    });  
-	    if(limit>0){
-	      return _.first(updateList.reverse(), limit);
+	    if(Session.get('numUpdates')>0){
+	      return _.first(updateList.reverse(), Session.get('numUpdates'));
 	    }else{
 	      return updateList.reverse();
 	    }
@@ -437,15 +436,13 @@ Template.dashboard.events({
     _.each(updates, function(update) {
       Meteor.call('setRead', update);
     });
+  },
+  'click .dashboard-more-updates': function() {
+  	Session.set('numUpdates', 0);
+  	console.log(Session.get('numUpdates'));
   }
 });
 
 Template.dashboard.rendered = function () {
 	$('.carousel').carousel();
-	$('.dashboard-more-updates').click(function(){
-		$('.threeUpdtes').addClass('visible-0');
-		$('.allUpdates').removeClass('visible-0');
-		$('.dashboard-more-updates').addClass('visible-0');
-		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
-	});
 };

@@ -496,7 +496,12 @@ Handlebars.registerHelper('compressedUpdates', function(bubbleId, limit) {
 
 //Pulls the count of compressed list of updates for each bubble
 Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
-  var updateList = Updates.find({userId: Meteor.userId(), bubbleId: bubbleId, read:false}).fetch();
+  var updateList;
+  if(bubbleId){
+    updateList = Updates.find({userId: Meteor.userId(), bubbleId: bubbleId, read:false}).fetch();
+  }else{
+    updateList = Updates.find({userId: Meteor.userId(), bubbleId: Session.get('currentBubbleId'), read:false}).fetch();
+  }
 
   if(updateList.length > 0) {
     //To combine updates with same userId, invokerId, updateType and postId
@@ -615,7 +620,6 @@ Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
         }
       }
     });
-
     return updateList.length;
   }
 });
