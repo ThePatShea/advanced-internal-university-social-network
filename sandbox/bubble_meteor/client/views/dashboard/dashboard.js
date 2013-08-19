@@ -136,8 +136,11 @@ Template.dashboard.helpers({
 	    });
 
 	    Session.set('numUpdates', updateList.length);
+
 	    return updateList.length;
-	  }
+	  } else {
+            return 0;
+          }
 	},
 
 	numUpdatesMinusThree: function() {
