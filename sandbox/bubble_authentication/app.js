@@ -256,6 +256,9 @@ app.post('/login/samlcallback',
     console.log('altMail: ', altMail);
     console.log('altEmail: ', altEmail);
 
+    var seed = crypto.randomBytes(20);
+    var secret = crypto.createHash('sha1').update(seed).digest('hex');
+
   var data = querystring.stringify({
       'netId': netId,
       'ppId': ppId,
@@ -264,12 +267,13 @@ app.post('/login/samlcallback',
       'isFerpa': isFerpa,
       'emoryEmail': emoryEmail,
       'altMail': altMail,
-      'altEmail': altEmail
+      'altEmail': altEmail,
+      'secret': secret
     });
 
   var options = {
-    host: 'bubbletest3.meteor.com',
-    port: 80,
+    host: 'test.emorybubble.com',
+    port: 443,
     path: '/testauth',
     method: 'POST',
     headers: {
@@ -278,11 +282,11 @@ app.post('/login/samlcallback',
     }
   };
 
-  var req = http.request(options, function(response) {
+  var req = https.request(options, function(response) {
     //var userid = response.get('userid');
     //console.log('Post sent');
     res.on('data', function(chunk){
-        console.log("body: " + chunk);
+        console.log("post response body: " + chunk);
     });
     //res.header('location', 'http://talkschool.net/authenticateduser/' + secret);
     //res.send(302, null);
@@ -296,7 +300,9 @@ app.post('/login/samlcallback',
   req.write(data);
   req.end();
 
-    res.render('home', {username: globalprofile});
+    //res.render('home', {username: globalprofile});
+    res.header('location', 'https://test.emorybubble.com/testauth/' + secret);
+    res.send(302, null);
   }
 );
 
