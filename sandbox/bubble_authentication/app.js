@@ -33,8 +33,10 @@ function parseAttribute(attributeString){
 
 //var privateKey = fs.readFileSync('./certs/ssl-key.pem').toString();
 //var certificate = fs.readFileSync('./certs/ssl-cert.pem').toString();
-var privateKey = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/wildcard.emorybubble.com.key').toString();
-var certificate = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/bundle.wildcard.emorybubble.com.crt').toString();
+
+
+//var privateKey = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/wildcard.emorybubble.com.key').toString();
+//var certificate = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/bundle.wildcard.emorybubble.com.crt').toString();
 
 
 /*var privateKey = raw_privateKey;
@@ -112,8 +114,8 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-//var app = express();
-var options = {key: privateKey, cert: certificate};
+//var options = {key: privateKey, cert: certificate};
+
 var app = express();
 
 
@@ -329,4 +331,4 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-https.createServer(options, app).listen(443);
+//https.createServer(options, app).listen(443);
