@@ -96,12 +96,14 @@ Meteor.Router.add('/testauth', 'POST', function(){
 
 Meteor.Router.add('/testauth/:secret', 'GET', function(secret){
 	var user = Meteor.users.findOne({'secret': secret});
+	console.log(user);
 	if(!user){
 		if(user.secret == secret){
 			var username = user.username;
 			Meteor.user.loginWithPassword(username, 'F302pinpulse');
-			return [302, {'Location': 'https://test.emorybubble.com'}];
+			//return [302, {'Location': 'https://test.emorybubble.com'}];
 			//return [200, 'Username: ' + username + '\nSecret: ' + secret];
+			Meteor.Router.to('/');
 		}
 		else{
 			return [302, {'Location': 'https://login.emorybubble.com'}];
