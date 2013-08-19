@@ -192,6 +192,7 @@ Meteor.Router.filters({
     return page;
   },
   'routeWhenLogin': function(page) {
+/*
     var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
     if(bubbles.length > 0) {
       Meteor.Router.to('bubblePage',bubbles[0]._id);
@@ -200,6 +201,9 @@ Meteor.Router.filters({
       return 'searchBubbles';
     }
     return page;
+*/
+  //  Meteor.Router.to('dashboard');
+    return 'dashboard';
   },
   'hasSuperBubblePermissions': function(page) {
     if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType){

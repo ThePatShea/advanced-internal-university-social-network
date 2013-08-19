@@ -6,10 +6,10 @@ Template.sidebar.helpers({
       var currentSection = window.location.pathname.split("/")[1];
       //console.log(currentSection);
 
-      if ((currentSection == 'search') || (currentSection == 'dashboard'))
-        return false;
-      else
+      if ( (currentSection == 'mybubbles') || (currentSection == 'explore') || (currentSection == 'settings') )
         return true;
+      else
+        return false;
     }
   , myBubblesLink          : function() {
       var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();

@@ -70,7 +70,7 @@ Template.loginPage.events({
             Meteor.users.update(userid, {$set: profileProperties}, function(err){
               console.log(err);
             });
-            Meteor.Router.to('searchBubbles');
+            Meteor.Router.to('dashboard');
           }
         });
       }else{
@@ -85,12 +85,7 @@ Template.loginPage.events({
           if(err){
             //Do something with error
           }else{
-            var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
-            if(bubbles.length > 0) {
-              Meteor.Router.to('bubblePage',bubbles[0]._id);
-            }else{
-              Meteor.Router.to('searchBubbles');
-            }
+            Meteor.Router.to('dashboard');
           }
         });   
       }else{
