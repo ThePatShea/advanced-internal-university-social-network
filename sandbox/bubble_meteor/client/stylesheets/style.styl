@@ -1012,7 +1012,8 @@ wysiwyg-image(n)
         .post-as-button
           border         1px solid main-light
           color          main-light
-          position       relative
+          background     main-dark
+          position       absolute
           border-radius  17px
           height         35px
           &.active,
@@ -1027,6 +1028,13 @@ wysiwyg-image(n)
           &.me
             fontize(main, bold, uppercase, 12px)
             width          80px
+            left           0
+            top            0
+          &.bubble
+            fontize(alt, semibold, none, 14px)
+            width          200px
+            right          -1px
+            top            0
           &.active-false
             &:hover
               .check-circle
@@ -1080,8 +1088,10 @@ wysiwyg-image(n)
       margin-bottom  -12px
     .cb-form-row
       margin          0 0 45px 0
-      clear           btoh
+      clear           both
       overflow        hidden
+      &.margin-bottom-0
+        margin-bottom    0
       &.paperclip-attach-files
         margin         0 0 20px 0
         position       relative

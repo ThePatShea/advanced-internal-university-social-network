@@ -8,7 +8,7 @@
         <input class="required half-width column-one event-name" name="name" type="text" value="" placeholder="Event title*"/> 
         <input class="required half-width column-two event-location" name="location" type="text" placeholder="Where?*"/>
       </div>
-      <div class="cb-form-row third-width-container">
+      <div class="cb-form-row third-width-container margin-bottom-0">
         <input class="required third-width column-first date" name="date" type="text" placeholder="Date?* (ex: 10/25/13)"/>
         <input class="required third-width column-second time" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
         <label class="third-width column-third" name="picture" type="label" data-toggle="collapse" data-target="#add-picture">Add picture?</label>
@@ -43,6 +43,13 @@
               <span class="cb-icon x">{{> icon-x}}</span>
             </div>
             <div class="lbl-as">me<div>
+          </button>
+          <button class="active-false post-as-button bubble">
+            <div class="check-circle">
+              <span class="cb-icon check">{{> icon-check}}</span>
+              <span class="cb-icon x">{{> icon-x}}</span>
+            </div>
+            <div class="lbl-as">Bubble Name<div>
           </button>
         </div>
       </div>
