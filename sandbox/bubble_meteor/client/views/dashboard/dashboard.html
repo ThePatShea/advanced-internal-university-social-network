@@ -174,9 +174,10 @@
             latest posts from explore
           </div>
           <div>
-            {{#with getFiveExplorePosts}}
+            <div></div>
+            {{#each getFiveExplorePosts}}
               {{> listItem}}
-            {{/with}}
+            {{/each}}
           </div>
         </div>
 </template>

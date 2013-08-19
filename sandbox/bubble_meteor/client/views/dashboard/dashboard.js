@@ -1,4 +1,7 @@
 Template.dashboard.helpers({
+        getFiveExplorePosts: function() {
+          return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+        },
 	numBubbles: function() {
 		var uid = Meteor.userId();
 		var numBubbles = Bubbles.find({$or:
