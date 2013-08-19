@@ -98,8 +98,8 @@ Meteor.Router.add('/testauth/:secret', 'GET', function(secret){
 	var user = Meteor.users.findOne({'secret': secret});
 	if(!user){
 		if(user.secret == secret){
-			Meteor.user.loginWithPassword(username, 'F302pinpulse');
 			var username = user.username;
+			Meteor.user.loginWithPassword(username, 'F302pinpulse');
 			return [200, 'Username: ' + username + '\nSecret: ' + secret];
 		}
 		else{
