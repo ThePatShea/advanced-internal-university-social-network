@@ -1027,6 +1027,18 @@ wysiwyg-image(n)
           &.me
             fontize(main, bold, uppercase, 12px)
             width          80px
+          &.active-false
+            &:hover
+              .check-circle
+                .check
+                  display      block
+                .x
+                  display      none
+            .check-circle
+              .check
+                display      none
+              .x
+                display      block
           .check-circle
             border         2px solid main-light
             background     main-dark
@@ -1046,6 +1058,11 @@ wysiwyg-image(n)
                 svg
                   height         11px
                   width          13px
+              &.x
+                margin         -6px 0 0 -6px
+                svg
+                  height         12px
+                  width          12px
           .lbl-as
             padding-left   28px
     .select-bubble-type
