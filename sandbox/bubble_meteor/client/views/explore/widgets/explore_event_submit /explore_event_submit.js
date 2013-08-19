@@ -46,7 +46,7 @@ Template.exploreEventSubmit.helpers({
 
 
 Template.exploreEventSubmit.events({
-  'click .post-as-button.bubble': function(event) {
+  'click .post-as-button': function(event) {
     event.preventDefault();
   },
   'click .cb-explore-eventSubmit-form > .cb-submit-container > .cb-submit': function(event) {
@@ -137,7 +137,7 @@ Template.exploreEventSubmit.rendered = function() {
     $(".post-as-bubble-dropdown").hide();
   });
 
-  $(".btn-select-post-as-bubble").click(function(){
+  $(".btn-select-post-as-bubble").click(function() {
     var postAsId = $(this).attr("name");
     $("[name=post-as-id]").val(postAsId);
 
@@ -152,6 +152,19 @@ Template.exploreEventSubmit.rendered = function() {
 
     $(".post-as-bubble-dropdown").hide();
   });
+
+
+  $(".post-as-button.me").click(function() {
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+  });
+
+
 
 
 
