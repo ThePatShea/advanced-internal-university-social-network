@@ -995,6 +995,32 @@ wysiwyg-image(n)
     position       relative
     padding        0 30px
     margin         0
+    .post-as-container
+      position       relative
+      margin-top     45px
+      height         35px
+      .post-as-label
+        margin-right   315px
+      .post-as-buttons-container
+        border         1px solid main-light
+        position       absolute
+        width          300px
+        height         35px
+        border-radius  17px
+        bottom         3px
+        right          0
+        .post-as-button
+          border         1px solid main-light
+          color          main-light
+          border-radius  17px
+          height         35px
+          &.active,
+          &:hover
+            background     main-light
+            color          main-dark
+          &.me
+            fontize(main, bold, uppercase, 12px)
+            width          80px
     .select-bubble-type
       overflow        hidden
       margin-bottom   30px
