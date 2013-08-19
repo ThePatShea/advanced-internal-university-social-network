@@ -127,8 +127,27 @@ Template.exploreEventSubmit.events({
 
 Template.exploreEventSubmit.rendered = function() {
   var postAsType = $("[name=post-as-type]").val();
-  $(".postAsButton." + postAsType).addClass("active-true");
+  //$(".postAsButton." + postAsType).addClass("active-true");
 
+  $(".post-as-button.bubble").hover(function() {
+    $(".post-as-bubble-dropdown").show();
+  });
+
+  $(".btn-select-post-as-bubble").click(function(){
+    var postAsId = $(this).attr("name");
+    $("[name=post-as-id]").val(postAsId);
+
+    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+  });
 
 
 

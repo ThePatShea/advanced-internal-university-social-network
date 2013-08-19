@@ -24,14 +24,17 @@
               <span class="cb-icon check">{{> icon-check}}</span>
               <span class="cb-icon x">{{> icon-x}}</span>
             </div>
-            <div class="lbl-as">Select a bubble</div>
+            <div class="lbl-as selected-bubble-post-as">Select a bubble</div>
             <div class="arrow-down">{{> icon-arrow-down}}</div>
 
             <div class="independent-dropdown post-as-bubble-dropdown">
               <div class="arrow-up">{{> icon-arrow-up}}</div>
               <div class="dropdown-buttons-container">
                 {{#each getAdminBubbles}}
-                  <div class="dropdown-button" name="{{_id}}">{{title}}</div>
+                  <div class="dropdown-button btn-select-post-as-bubble" name="{{_id}}">
+                    <input type="hidden" class="bubble-title" name="{{title}}"/>
+                    {{title}}
+                  </div>
                 {{/each}}
               </div>
             </div>
