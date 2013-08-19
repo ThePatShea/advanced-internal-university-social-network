@@ -2744,6 +2744,9 @@ attachment-height  =  75px
     svg
       height          56px
       width           56px
+
+.bubble-members,
+.onboarding
   .invitee-container
     height              54px
     border              1px solid main-light
@@ -2755,16 +2758,45 @@ attachment-height  =  75px
     padding             0 10px 0 0
     position            relative
     &:hover
-      background-color  main-xlight
       cursor            pointer
+    &.accept-terms
+      width             230px
+      float             none
+      &.selected,
+      &:hover
+        .pic-preview-wrapper-middle
+          border            0
+          left              0
+          top               0
+        .invitee-text
+          text-transform    none
+        .accept-check-container
+          .cb-icon-check
+            fill              main-dark
+      .pic-preview-wrapper-middle
+        border                2px solid main-light
+        position              relative
+        left                  -1px
+        top                   -2px
+      .invitee-text
+        text-transform    none
+      .accept-check-container
+        background        main-dark
+        .cb-icon-check
+          fill              main-light
+          position          absolute
+          bottom            11px
+          left              12px
     .invitee-pic-container
+      margin            -1px 0 0 -2px
       position          relative
       float             left
-      margin            -1px 0 0 -2px
+      width             55px
     .invitee-text
       margin              0 0 0 10px
       fontize(alt,light,capitalize,15px,auto,auto,auto,auto)
-    &.selected
+    &.selected,
+    &:hover
       background-color  main-light
       border 1px solid main-dark
       .invitee-text
@@ -2778,7 +2810,6 @@ attachment-height  =  75px
           height 0
           width 0
       .pic-preview-wrapper-middle
-        border 1px solid dark
         border-radius 50%
         overflow hidden
         background-color main-dark
@@ -2791,14 +2822,14 @@ attachment-height  =  75px
         float left
       .pic-preview-wrapper-inner-invitee
         background-color main-light
-      .cb-icon-check
-        position absolute
-        left 15px
-        bottom 10px
-        svg
-          height          26px
-          width           26px
-        fill main-dark
+    .cb-icon-check
+      position absolute
+      left 15px
+      bottom 10px
+      svg
+        height          26px
+        width           26px
+      fill main-dark
 
   .cb-form-add-members
     min-height          200px

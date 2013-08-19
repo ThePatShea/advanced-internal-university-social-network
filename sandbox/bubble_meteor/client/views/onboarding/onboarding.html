@@ -14,20 +14,43 @@
     <div class="heading-onboarding">
       Welcome {{getCurrentName}}, customize your profile
     </div>
-  </div>
 
-  <div class="cb-form-container" id="cb-form-container-onboarding">
-    <form class="cb-form cb-form-onboarding">
-      <div class="attach-files">
-        <label class="no-typing less-formatting">add profile photo</label>
-        {{> dropZone}}
-      </div>
-      <label class="no-typing margin-top-35">accept <a onclick="window.open('/pdf/termsOfUse.pdf', '_blank')">terms of use</a> and <a onclick="window.open('/pdf/privacyPolicy.pdf', '_blank')">privacy policy</a>?</label>
-      <hr>
-      <div class="cb-submit-container">
-        <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
-      </div>
-    </form>
+    <div class="cb-form-container" id="cb-form-container-onboarding">
+      <form class="cb-form cb-form-onboarding">
+        <div class="attach-files">
+          <label class="no-typing less-formatting">add profile photo</label>
+          {{> dropZone}}
+        </div>
+        <label class="no-typing margin-top-35">accept <a onclick="window.open('/pdf/termsOfUse.pdf', '_blank')">terms of use</a> and <a onclick="window.open('/pdf/privacyPolicy.pdf', '_blank')">privacy policy</a>?</label>
+  
+        <div class="accept-terms invitee-container {{#if selected}}selected{{/if}}">
+          <div class="invitee-pic-container">
+            <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
+            <div class="pic-preview-wrapper-outer">
+              <div class="pic-preview-wrapper-middle">
+                <div class="pic-preview-wrapper-inner-invitee accept-check-container">
+                  <span class="invisible-false cb-icon-check">{{> icon-check}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="v-middle">
+            <div class="v-inner">
+              <span class="pull-left invitee-text">
+                Click here to accept
+              </span>
+            </div>
+          </div>
+        </div>
+  
+  
+        <hr>
+  
+        <div class="cb-submit-container">
+          <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
+        </div>
+      </form>
+    </div>
   </div>
 
 </template>
