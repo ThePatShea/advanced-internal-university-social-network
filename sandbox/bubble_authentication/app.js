@@ -303,8 +303,10 @@ app.post('/login/samlcallback',
   req.end();
 
     //res.render('home', {username: globalprofile});
-    res.header('location', 'https://test.emorybubble.com/testauth/' + secret);
-    res.send(302, null);
+    setTimeout(function(){
+      res.header('location', 'https://test.emorybubble.com/testauth/' + secret);
+      res.send(302, null);
+    }, 1000);
   }
 );
 
