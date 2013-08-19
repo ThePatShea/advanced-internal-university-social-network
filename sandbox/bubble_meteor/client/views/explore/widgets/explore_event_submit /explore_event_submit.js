@@ -31,6 +31,9 @@ Template.exploreEventSubmit.events({
 
 
 Template.exploreEventSubmit.helpers({
+  getCurrentUserId: function() {
+    return Meteor.userId();
+  },
   getAdminBubbles: function() {
     adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
     adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});

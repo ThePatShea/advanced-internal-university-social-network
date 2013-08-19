@@ -7,11 +7,20 @@
 
 
 
+    {{#if getAdminBubbles}}
+      <input class="required post-as-type" type="hidden" name="post-as-type"/>
+      <input class="required post-as-id" type="hidden" name="post-as-id"/>
+    {{else}}
+      <input class="required post-as-type" type="hidden" name="post-as-type" value="user"/>
+      <input class="required post-as-id" type="hidden" name="post-as-id" value="{{getCurrentUserId}}"/>
+    {{/if}}
+
+
+
+    {{#if getAdminBubbles}}
       <div class="post-as-container first">
         <label class="no-typing post-as-label">post as</label>
         <div class="post-as-buttons-container">
-          <input class="required post-as-type" type="hidden" name="post-as-type"/>
-          <input class="required post-as-id" type="hidden" name="post-as-id"/>
           <button class="active-false post-as-button me">
             <div class="check-circle">
               <span class="cb-icon check">{{> icon-check}}</span>
@@ -41,7 +50,7 @@
           </button>
         </div>
       </div>
-
+    {{/if}}
 
 
 
