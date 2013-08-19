@@ -23,7 +23,7 @@
         </div>
         <label class="no-typing margin-top-35">accept <a onclick="window.open('/pdf/termsOfUse.pdf', '_blank')">terms of use</a> and <a onclick="window.open('/pdf/privacyPolicy.pdf', '_blank')">privacy policy</a>?</label>
   
-        <div class="accept-terms invitee-container {{#if selected}}selected{{/if}}">
+        <div id="accept-terms" class="accept-terms invitee-container {{acceptTermsSelected}}">
           <div class="invitee-pic-container">
             <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
             <div class="pic-preview-wrapper-outer">
@@ -47,7 +47,10 @@
         <hr>
   
         <div class="cb-submit-container">
-          <button type="submit" class="pull-right std-btn-form cb-submit">submit</button>
+          <button type="submit" class="pull-right std-btn-form cb-submit">
+            <span class="words-main">submit</span>
+            <span class="words-error">please accept the terms of use and privacy policy</span>
+          </button>
         </div>
       </form>
     </div>
