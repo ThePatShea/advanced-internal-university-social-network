@@ -1,3 +1,20 @@
+Template.exploreEditEvent.helpers({
+  getCurrentUserId: function() {
+    return Meteor.userId();
+  },
+  getAdminBubbles: function() {
+    adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
+    adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
+
+    if (adminBubblesCount > 0) {
+      return adminBubbles;
+    } else {
+      return false;
+    }
+  }
+});
+
+
 Template.exploreEditEvent.created = function(){
   this.validateForm = function() {
     var count = 0;
@@ -24,7 +41,6 @@ Template.exploreEditEvent.created = function(){
 
 
 Template.exploreEditEvent.rendered = function(){
-
   this.validateForm();
 
 	var event = this.data;
@@ -76,7 +92,10 @@ Template.exploreEditEvent.rendered = function(){
 
 
 Template.exploreEditEvent.events({
-  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+  'click .post-as-button': function(event) {
+    event.preventDefault();
+  },
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
       tmpl.validateForm();
   }
 });
@@ -95,6 +114,8 @@ Template.exploreEditEvent.events({
       location: $('.cb-explore-edit-event-form > .first > .location').val(),
       name: $('.cb-explore-edit-event-form > .first > .title').val(),
       body: $('.cb-explore-edit-event-form > .body').val(),
+      postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
+      postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
       //eventPhoto: $("#eventPhoto").attr("src"),
       //retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
     };
