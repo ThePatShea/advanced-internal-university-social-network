@@ -221,8 +221,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    NSURL* appURL = [NSURL URLWithString:@"http://www.emorybubble.com"];
+    NSString *token = [defaults objectForKey:@"deviceToken"];
+    NSURL* appURL = [NSURL URLWithString:[@"https://www.emorybubble.com/?deviceToken=" stringByAppendingString:token]];
+//    NSURL* appURL = [NSURL URLWithString: @"https://www.emorybubble.com"];
+
     NSString* loadErr = nil;
 //
 //    if ([self.startPage rangeOfString:@"://"].location != NSNotFound) {

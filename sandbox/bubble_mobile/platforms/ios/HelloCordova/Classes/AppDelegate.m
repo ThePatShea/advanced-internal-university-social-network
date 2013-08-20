@@ -91,6 +91,17 @@
     return YES;
 }
 
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet:      [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:token forKey:@"deviceToken"];
+    [defaults synchronize];
+    
+}
+
 // this happens while we are running ( in the background, or from within our own app )
 // only valid if HelloCordova-Info.plist specifies a protocol to handle
 - (BOOL)application:(UIApplication*)application handleOpenURL:(NSURL*)url
