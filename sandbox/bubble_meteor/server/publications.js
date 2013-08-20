@@ -305,6 +305,7 @@ getBubbleId =  function(userId) {
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
+       'neverLoggedIn': 1,
        'profilePicture': 1
       }
     });
@@ -332,7 +333,8 @@ getBubbleId =  function(userId) {
          'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
-         'profilePicture': 1
+         'profilePicture': 1,
+         'neverLoggedIn': 1,
         }
       });
     }
@@ -347,7 +349,8 @@ getBubbleId =  function(userId) {
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
-       'profilePicture': 1
+       'profilePicture': 1,
+       'neverLoggedIn': 1,
       }
     });
   });
@@ -359,7 +362,8 @@ getBubbleId =  function(userId) {
          'username': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
-         'profilePicture': 1
+         'profilePicture': 1,
+         'neverLoggedIn': 1,
         }
       });
     }
@@ -375,6 +379,7 @@ getBubbleId =  function(userId) {
        'phone': 1,
        'profilePicture': 1,
        'retinaProfilePicture': 1,
+       'neverLoggedIn': 1,
        'lastUpdated': 1
       }
     });
@@ -382,6 +387,7 @@ getBubbleId =  function(userId) {
   Meteor.publish('authenticatedUser', function(secret){
     return Meteor.users.find({'secret': secret}, {
       fields: {
+        'neverLoggedIn': 1,
         'username': 1,
         'secret': 1
       }
