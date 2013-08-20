@@ -14,14 +14,12 @@
         {{#if compressedUpdates _id '1'}}
           <div class="bubble-list">
             <div class="bubble-list-heading">
-              <h3 class="section-name pull-left">updates</h3>
+              <h3 class="section-name pull-left">{{compressedUpdatesCount this._id}} updates</h3>
 
               <button class="std-btn-light pull-right clear-updates">clear all</button> 
               
               {{#if showMoreUpdates compressedUpdatesCount}}
-                <button class="std-btn-light pull-right more-updates">
-                  +{{pluralize numUpdatesMinusThree "update" "more"}}
-                </button>
+                <button class="std-btn-light pull-right more-updates">see all</button>
               {{/if}}
               
             </div>

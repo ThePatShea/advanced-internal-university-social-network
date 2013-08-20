@@ -1,3 +1,20 @@
+Template.exploreDiscussionEdit.helpers({
+  getCurrentUserId: function() {
+    return Meteor.userId();
+  },
+  getAdminBubbles: function() {
+    adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
+    adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
+
+    if (adminBubblesCount > 0) {
+      return adminBubbles;
+    } else {
+      return false;
+    }
+  }
+});
+
+
 Template.exploreDiscussionEdit.created = function(){
 
   this.validateForm = function() {
@@ -53,7 +70,10 @@ Template.exploreDiscussionEdit.rendered = function () {
 
 
 Template.exploreDiscussionEdit.events({
-  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+  'click .post-as-button': function(event) {
+    event.preventDefault();
+  },
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
     tmpl.validateForm();
   }
 });
@@ -213,6 +233,8 @@ function updateDiscussionPost(){
     var discussionAttributes = {
       name: $('.cb-explore-editDiscussion-form > .discussionTitle').val(),
       body: $('.cb-explore-editDiscussion-form > .wysiwyg_group').find('[name=body]').html(),
+      postAsType: $('.cb-explore-editDiscussion-form .post-as-type').val(),
+      postAsId:   $('.cb-explore-editDiscussion-form .post-as-id').val(),
       //exploreId: currentExploreId,
       children: newChildren
     };

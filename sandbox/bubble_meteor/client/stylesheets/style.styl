@@ -997,7 +997,6 @@ wysiwyg-image(n)
     margin         0
     .post-as-container
       position       relative
-      margin-top     45px
       @media (min-width: 768px)
         height         35px
       @media (max-width: 767px)
@@ -1048,9 +1047,12 @@ wysiwyg-image(n)
             text-align     left
             right          -1px
             top            0
+            &.active-true,
             &:hover
               .arrow-down
                 fill           main-dark
+            .post-as-bubble-dropdown
+              display        none
             .lbl-as
               padding-left   40px
             .arrow-down
@@ -1060,7 +1062,6 @@ wysiwyg-image(n)
               right          15px
               top            50%
           &.active-true
-            cursor         default
             .check-circle
               .check
                 display      block
@@ -2013,6 +2014,33 @@ navbar-height        =  60px
                 display           block
                 padding           5px 20px
                 border-bottom     0
+
+
+.independent-dropdown
+  fontize(alt, semibold, none, 13px)
+  background        main-xlight
+  color             main-light
+  position          absolute
+  top               30px
+  padding           15px 0
+  width             100%
+  z-index           100
+  border-radius     8px
+  right             0
+  border-box        0
+  .arrow-up
+    fill              main-xlight
+    position          absolute
+    right             13px
+    top               -5px
+  .dropdown-buttons-container
+    border-top          1px solid #89A5B8
+    .dropdown-button
+      border-bottom       1px solid #89A5B8
+      padding             10px 15px
+      &:hover
+        cursor                   pointer
+        background               #89A5B8
 /**********        navbar        **********/
 
 /**********        sidebar       **********/
@@ -2561,6 +2589,8 @@ section-icon-no-fill(n)
         padding                0 30px 20px 30px
       @media (max-width: 767px)
         padding                0 10px 10px 20px
+      .more-updates
+        margin-right           10px
       .section-icon-discussion
         section-icon           0
         svg
@@ -2877,7 +2907,7 @@ attachment-height  =  75px
     &:hover
       cursor            pointer
     &.accept-terms
-      width             230px
+      width             310px
       float             none
       &.selected,
       &:hover
