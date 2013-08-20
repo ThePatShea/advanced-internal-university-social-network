@@ -10,9 +10,22 @@ Template.secretLogin.rendered = function(){
       var theUrl = '/resetpass/' + username;
       $.ajax({url: theUrl, success:function(result){
           console.log('Password reset.');
+          });
         }
       });
-      Meteor.Router.to('/dashboard');
+
+      var user = Meteor.users.findOne({'username': username});
+      if(typeof user.neverLoggedIn != undefined){
+        if(user.neverLoggedIn == true){
+          Meteor.Router.to('/onboarding');
+        }
+        else{
+          Meteor.Router.to('/dashboard');
+        }
+      }
+      else{
+        Meteor.Router.to('/onboarding');
+      }
     }
   });
 }
