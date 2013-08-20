@@ -26,6 +26,7 @@ Template.searchUsers.helpers({
     });
     return searchedUsers;
     */
+    Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
     return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}});
   },
 

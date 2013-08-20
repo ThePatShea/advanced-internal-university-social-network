@@ -353,8 +353,8 @@ getBubbleId =  function(userId) {
     if(userIdList){
       return Meteor.users.find({_id: {$in: userIdList}}, {
         fields: {
+         'name': 1,
          'username': 1,
-         'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
          'profilePicture': 1
