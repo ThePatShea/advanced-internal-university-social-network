@@ -38,17 +38,19 @@ Template.bubbleInvitation.helpers({
         _id: {$nin: rejectList}, 
         username: new RegExp(Session.get('selectedUsername'),'i')
       }, {limit: 5});*/
-
-    console.log('searching users');
-    Meteor.call('search_users', Session.get('selectedUsername'), function(err, res) {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(res[0]);
-        Session.set('potentialUserIdList', res);
-        findResponse = true;
-      }
-    });
+    if(Session.get('selectedUsername').length > 3)
+    {
+      console.log('searching users');
+      Meteor.call('search_users', Session.get('selectedUsername'), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(res[0]);
+          Session.set('potentialUserIdList', res);
+          findResponse = true;
+        }
+      });
+    }
   },
   getFoundUsers: function() {
     findResponse = false;

@@ -27,7 +27,7 @@ var idx = lunr(function() {
 // idx.add(doc3);
 // idx.add(doc4);
 
-var items = Meteor.users.find();
+var items = Meteor.users.find({}, {fields: {'name': 1, '_id': 1}});
 items.forEach(function(item) {
 	var tmpDoc = {
 		"name": item.name,
@@ -43,7 +43,7 @@ Meteor.methods({
 		var retVal = [];
 		console.log(res);
 		res.forEach(function(i) {
-			if(i.score > .05)
+			if(i.score > .01)
 			{
 				retVal.push(i.ref);
 			}

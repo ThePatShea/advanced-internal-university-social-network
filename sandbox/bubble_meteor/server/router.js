@@ -58,7 +58,7 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 	var userType = this.request.body.userType;
 	var profilePicture = this.request.body.profilePicture;
 	var retinaProfilePicture = this.request.body.retinaProfilePicture;
-	var firstTimeLogin = false;
+	var neverLoggedIn = true;
 
 	var user = Meteor.users.findOne({'username': username});
 	if(!user)

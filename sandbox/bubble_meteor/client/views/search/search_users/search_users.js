@@ -1,5 +1,8 @@
-searchedUsers = [];
-searchResponse = false;
+Template.searchUsers.created = function() {
+  Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+  searchedUsers = [];
+  searchResponse = false;
+}
 
 Template.searchUsers.rendered = function(){
   //To set header as active
@@ -15,6 +18,7 @@ Template.searchUsers.rendered = function(){
 }
 
 Template.searchUsers.helpers({
+
   getSearchedUsers: function() {
     searchResponse = false;
     searchedUsers = [];
@@ -26,20 +30,22 @@ Template.searchUsers.helpers({
     });
     return searchedUsers;
     */
-    Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
-    return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}});
+    return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}},{limit:10});
   },
 
   searchUsers: function() {
-    console.log('searching users');
-    Meteor.call('search_users', Session.get('searchText'), function(err, res) {
-      if(err) {
-        console.log(err);
-      } else {
-        searchResponse = true;
-        Session.set('selectedUserIdList', res);
-      }
-    });
+    if(Session.get('searchText').length > 2)
+    {
+      console.log('searching users');
+      Meteor.call('search_users', Session.get('searchText'), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          searchResponse = true;
+          Session.set('selectedUserIdList', res);
+        }
+      });
+    }
   },
 
   hasSearchResponse: function() {
@@ -52,3 +58,4 @@ Template.searchUsers.helpers({
     }
   }
 });
+

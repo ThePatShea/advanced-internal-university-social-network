@@ -186,8 +186,8 @@ Template.bubbleEdit.events({
             var coverRetinaContext = coverRetinaCanvas.getContext('2d');
             var coverImage = new Image();
 
-            var minX = 96;
-            var minY = 11;
+            var minX = 96*2;
+            var minY = 11*2;
 
             // Closure to capture the file information.
             reader.onload = (function(theFile) {

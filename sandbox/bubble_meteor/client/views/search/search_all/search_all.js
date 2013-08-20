@@ -61,11 +61,12 @@ Template.searchAll.helpers({
       });
     }
 
-    Session.set('selectedUsername',Session.get('searchText'));
+    /*Session.set('selectedUsername',Session.get('searchText'));
     var searchedUsers = Meteor.users.find(
       {
         username:new RegExp(Session.get('searchText'),'i')
-      }, {limit: usersListHandle.limit()}).fetch();
+      }, {limit: usersListHandle.limit()}).fetch();*/
+    var searchedUsers = Meteor.users.find({username: "taggartbg"});
 
     
     var searchedAll  =  searchedBubbles.concat(searchedDiscussions, searchedEvents, searchedFiles, searchedUsers);
