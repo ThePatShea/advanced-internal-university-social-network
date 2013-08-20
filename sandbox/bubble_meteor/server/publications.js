@@ -328,6 +328,7 @@ getBubbleId =  function(userId) {
       return Meteor.users.find({$or: [{_id: {$in: userList}},{username: {$in: usernameList}}]}, {
         fields: {
          'username': 1,
+         'name': 1,
          'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
@@ -342,6 +343,7 @@ getBubbleId =  function(userId) {
     return Meteor.users.find(search_query, {
       fields: {
        'username': 1,
+       'name': 1,
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
@@ -366,6 +368,7 @@ getBubbleId =  function(userId) {
     return Meteor.users.find({_id: userId}, {
       fields: {
        'username': 1,
+       'name': 1,
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
