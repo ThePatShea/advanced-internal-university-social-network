@@ -62,13 +62,19 @@ Template.loginPage.events({
           }else{
             var profileProperties = {
               profilePicture: profilePictureData,
-              retinaProfilePicture: retinaProfilePictureData
+              retinaProfilePicture: retinaProfilePictureData,
             };
             //console.log(profilePictureData);
             //console.log($('#profilePicture').attr('src'));
+
+            if(Session.get('deviceToken'))
+              Meteor.users.update(Meteor.userId(), {$set: {deviceToken:Session.get('deviceToken')}});
+
             var userid = Meteor.userId();
             Meteor.users.update(userid, {$set: profileProperties}, function(err){
-              console.log(err);
+              if(err){
+                console.log(err);
+              }
             });
             Meteor.Router.to('searchBubbles');
           }
@@ -85,7 +91,11 @@ Template.loginPage.events({
           if(err){
             //Do something with error
           }else{
+            if(Session.get('deviceToken'))
+              Meteor.users.update(Meteor.userId(), {$set: {deviceToken:Session.get('deviceToken')}});
+
             var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
+
             if(bubbles.length > 0) {
               Meteor.Router.to('bubblePage',bubbles[0]._id);
             }else{

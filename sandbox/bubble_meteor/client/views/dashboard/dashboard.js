@@ -264,7 +264,7 @@ Template.dashboard.helpers({
 
 	showMoreUpdates: function(numUpdates) {
 
-		if(numUpdates > Session.get('numUpdates'))
+		if(Session.get('numUpdates') != 0 && numUpdates > Session.get('numUpdates'))
 			return true;
 		else
 			return false;

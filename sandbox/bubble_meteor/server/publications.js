@@ -302,7 +302,8 @@ getBubbleId =  function(userId) {
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
-       'profilePicture': 1
+       'profilePicture': 1,
+       'deviceToken': 1
       }
     });
   }); 
@@ -328,7 +329,8 @@ getBubbleId =  function(userId) {
          'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
-         'profilePicture': 1
+         'profilePicture': 1,
+         'deviceToken': 1
         }
       });
     }
@@ -342,7 +344,8 @@ getBubbleId =  function(userId) {
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
-       'profilePicture': 1
+       'profilePicture': 1,
+       'deviceToken': 1
       }
     });
   });
@@ -354,7 +357,8 @@ getBubbleId =  function(userId) {
          'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
-         'profilePicture': 1
+         'profilePicture': 1,
+         'deviceToken': 1
         }
       });
     }
@@ -369,7 +373,8 @@ getBubbleId =  function(userId) {
        'phone': 1,
        'profilePicture': 1,
        'retinaProfilePicture': 1,
-       'lastUpdated': 1
+       'lastUpdated': 1,
+       'deviceToken': 1
       }
     });
   });
