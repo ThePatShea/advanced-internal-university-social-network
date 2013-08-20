@@ -14,15 +14,18 @@ Template.secretLogin.rendered = function(){
       });
 
       var user = Meteor.users.findOne({'username': username});
-      if(typeof user.neverLoggedIn != undefined){
+      if(typeof user.neverLoggedIn != 'undefined'){
         if(user.neverLoggedIn == true){
+          console.log('User has never logged in before.');
           Meteor.Router.to('/onboarding');
         }
         else{
+          console.log('Seen this user before.');
           Meteor.Router.to('/dashboard');
         }
       }
       else{
+        console.log('Neverlogged in not defined ... User has never logged in before.');
         Meteor.Router.to('/onboarding');
       }
     }

@@ -28,6 +28,7 @@ Template.onboarding.events({
 
     var profileProperties = {
       lastUpdated: new Date().getTime(),
+      neverLoggedIn: false
     };
 
     if(typeof mainURL != 'undefined'){
