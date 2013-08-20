@@ -18,7 +18,7 @@ Template.bubbleEdit.events({
     /*var profilePictureNew        =  $(event.target).find('[id=profilepicture_preview]').attr('src');
     var retinaProfilePictureNew  =  $(event.target).find('[id=profilepicture_retina]').attr('src');
     var coverPhotoNew            =  $(event.target).find('[id=coverphoto_preview]').attr('src');
-    var retinaCoverPhotoNew      =  $(event.target).find('[id=coverphoto_retina]').attr('src');*/
+    var retinaCoverPhotoNew      =  $(event.target).find('[id=coverphoto_retina]').attr('src');
 
     var profilePictureNew        =  $('#profilePhoto').attr('src');
     var retinaProfilePictureNew  =  $('#profileRetinaPhoto').attr('src');
@@ -33,8 +33,16 @@ Template.bubbleEdit.events({
     if (coverPhotoNew != "")
       bubbleProperties.coverPhoto  =  coverPhotoNew;
     if (retinaCoverPhotoNew != "")
-      bubbleProperties.retinaCoverPhoto  =  retinaCoverPhotoNew;
+      bubbleProperties.retinaCoverPhoto  =  retinaCoverPhotoNew;*/
     
+    if(typeof profileMainURL !== "undefined")
+      bubbleProperties.profilePicture = profileMainURL;
+    if(typeof profileRetinaURL !== "undefined")
+      bubbleProperties.retinaProfilePicture = profileRetinaURL;
+    if(typeof coverMainURL !== "undefined")
+      bubbleProperties.coverPicture = coverMainURL;
+    if(typeof coverRetinaURL !== "undefined")
+      bubbleProperties.retinaCoverPicture = coverRetinaURL;
 
     
     Bubbles.update(currentBubbleId, {$set: bubbleProperties}, function(error) {
@@ -55,80 +63,200 @@ Template.bubbleEdit.events({
     evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'change .cb-form > .attach-profile-picture > .drop-zone': function(evt){
-    files = evt.target.files;
-    //If more than one file dropped on the dropzone then throw an error to the user.
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
+  'change .cb-form > .attach-profile-photo > .drop-zone': function(evt){
 
-        var profileCanvas = document.getElementById('profile-main-canvas');
-        var profileRetinaCanvas = document.getElementById('profile-retina-canvas');
-        var profileContext = profileCanvas.getContext('2d');
-        var profileRetinaContext = profileRetinaCanvas.getContext('2d');
-        var profileImage = new Image();
+    evt.stopPropagation();
+    evt.preventDefault();
 
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            $(".cb-form > .attach-profile-picture > .drop-zone").hide();
-            $(".crop-profile > .crop").attr("src", e.target.result);
-            profileImage.src = e.target.result;
-            profileCropArea = $('.crop-profile > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '100', minHeight: '100', x1: '10', y1: '10', x2: '110', y2: '110', parent: ".bubble-create", handles: true, onSelectChange: function(img, selection) {
-              profileContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 300, 300);
-              profileRetinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 600, 600);
-              $('#profilePhoto').attr('src',profileCanvas.toDataURL());
-              $('#profileRetinaPhoto').attr('src',profileRetinaCanvas.toDataURL());
-            }});
-          };
-        })(f);
-        reader.readAsDataURL(f);
+    console.log('Dropzone profile photo change: ', evt.target.files);
+
+      files = evt.target.files;
+      //If more than one file dropped on the dropzone then throw an error to the user.
+      if(files.length > 1){
+        error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
+        throwError(error.reason);
       }
-    }
+      else{
+        f = files[0];
+        //If the file dropped on the dropzone is an image then start processing it
+        if (f.type.match('image.*')) {
+            var reader = new FileReader();
+
+            var profileMainCanvas = document.getElementById('profile-main-canvas');
+            var profileRetinaCanvas = document.getElementById('profile-retina-canvas');
+            var profileMainContext = profileMainCanvas.getContext('2d');
+            var profileRetinaContext = profileRetinaCanvas.getContext('2d');
+            var profileImage = new Image();
+
+            var minX = 67;
+            var minY = 67;
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+              return function(e) {
+                  $(".bubble-edit > .attach-profile-photo > .drop-zone").hide();
+                  $(".bubble-edit > .attach-profile-photo > .drop-zone > .file-chooser-invisible").width(1);
+                  $(".bubble-edit > .attach-profile-photo > .drop-zone > .file-chooser-invisible").height(1);
+                  $(".crop-profile > .crop").attr("src", e.target.result);
+                  profileImage.src = e.target.result;
+                  profileCropArea = $('.crop-profile > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
+                    onInit: function(img, selection) {
+                      profileMainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 300, 300);
+                      profileRetinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 600, 600);
+                      profileMainURL = profileMainCanvas.toDataURL();
+                      profileRetinaURL = profileRetinaCanvas.toDataURL();
+                      if(Session.get("DisableCrop") == "1")
+                      {
+                        profileCropArea.cancelSelection();
+                      }
+                    }, onSelectChange: function(img, selection) {
+                      if(selection.width != 0)
+                      {
+                        profileMainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 300, 300);
+                        console.log(selection.y1);
+                        profileRetinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 600, 600);
+                        profileMainURL = profileMainCanvas.toDataURL();
+                        profileRetinaURL = profileRetinaCanvas.toDataURL();
+                      }
+                      else
+                      {
+                        profileCropArea.setSelection(10,10, (10+minX),(10+minY));
+                        profileCropArea.setOptions({show: true});
+                        profileCropArea.update();
+                      }
+                      //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                    }, onSelectEnd: function(img, selection){
+                      if((selection.width < minX) || (selection.height < minY))
+                      {
+                        if((selection.x1 > profileImage.width-minX) || (selection.y1 > profileImage.height-minY))
+                        {
+                          if(selection.x1 < minX)
+                          {
+                            profileCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                            profileCropArea.update();
+                          }
+                          else if(selection.y1 < minY)
+                          {
+                            profileCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                            profileCropArea.update();
+                          }
+                          else
+                          {
+                            profileCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                            profileCropArea.update();
+                          }
+                        }
+                        else
+                        {
+                          profileCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                          profileCropArea.update();
+                        }
+                      }
+                    }
+                  });
+              };
+            })(f);
+            reader.readAsDataURL(f);
+        }
+      }
   },
 
   'change .cb-form > .attach-cover-photo > .drop-zone': function(evt){
-    files = evt.target.files;
-    //If more than one file dropped on the dropzone then throw an error to the user.
-    if(files.length > 1){
-      error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
-      throwError(error.reason);
-    }
-    else{
-      f = files[0];
-      //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
-        var reader = new FileReader();
 
-        var coverCanvas = document.getElementById('cover-main-canvas');
-        var coverRetinaCanvas = document.getElementById('cover-retina-canvas');
-        var coverContext = coverCanvas.getContext('2d');
-        var coverRetinaContext = coverRetinaCanvas.getContext('2d');
-        var coverImage = new Image();
+    evt.stopPropagation();
+    evt.preventDefault();
 
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-          return function(e) {
-            $(".cb-form > .attach-cover-photo > .drop-zone").hide();
-            $(".crop-coverphoto > .crop").attr("src", e.target.result);
-            coverImage.src = e.target.result;
-            coverCropArea = $('.crop-coverphoto > .crop').imgAreaSelect({instance: true, aspectRatio: '128:15', imageHeight: coverImage.height, imageWidth: coverImage.width, minWidth: '256', minHeight: '30', x1: '10', y1: '10', x2: '266', y2: '40', parent: ".bubble-create", handles: true, onSelectChange: function(img, selection) {
-              coverContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 1280, 150);
-              coverRetinaContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 2560, 300);
-              $('#coverPhoto').attr('src',coverCanvas.toDataURL());
-              $('#coverRetinaPhoto').attr('src',coverRetinaCanvas.toDataURL());
-            }});
-          };
-        })(f);
-        reader.readAsDataURL(f);
+    console.log('Dropzone cover photo change: ', evt.target.files);
+
+      files = evt.target.files;
+      //If more than one file dropped on the dropzone then throw an error to the user.
+      if(files.length > 1){
+        error = new Meteor.Error(422, 'Please choose only one image as the bubble image.');
+        throwError(error.reason);
       }
-    }
+      else{
+        f = files[0];
+        //If the file dropped on the dropzone is an image then start processing it
+        if (f.type.match('image.*')) {
+            var reader = new FileReader();
+
+            var coverMainCanvas = document.getElementById('cover-main-canvas');
+            var coverRetinaCanvas = document.getElementById('cover-retina-canvas');
+            var coverMainContext = coverMainCanvas.getContext('2d');
+            var coverRetinaContext = coverRetinaCanvas.getContext('2d');
+            var coverImage = new Image();
+
+            var minX = 96*2;
+            var minY = 11*2;
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+              return function(e) {
+                  $(".bubble-edit > .attach-cover-photo > .drop-zone").hide();
+                  $(".bubble-edit > .attach-cover-photo > .drop-zone > .file-chooser-invisible").width(1);
+                  $(".bubble-edit > .attach-cover-photo > .drop-zone > .file-chooser-invisible").height(1);
+                  $(".crop-cover > .crop").attr("src", e.target.result);
+                  coverImage.src = e.target.result;
+                  coverCropArea = $('.crop-cover > .crop').imgAreaSelect({instance: true, aspectRatio: '96:11', imageHeight: coverImage.height, imageWidth: coverImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
+                    onInit: function(img, selection) {
+                      coverMainContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 960, 110);
+                      coverRetinaContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 1920, 220);
+                      coverMainURL = coverMainCanvas.toDataURL();
+                      coverRetinaURL = coverRetinaCanvas.toDataURL();
+                      if(Session.get("DisableCrop") == "1")
+                      {
+                        coverCropArea.cancelSelection();
+                      }
+                    }, onSelectChange: function(img, selection) {
+                      if(selection.width != 0)
+                      {
+                        coverMainContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 960, 110);
+                        console.log(selection.y1);
+                        coverRetinaContext.drawImage(coverImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 1920, 220);
+                        coverMainURL = coverMainCanvas.toDataURL();
+                        coverRetinaURL = coverRetinaCanvas.toDataURL();
+                      }
+                      else
+                      {
+                        coverCropArea.setSelection(10,10, (10+minX),(10+minY));
+                        coverCropArea.setOptions({show: true});
+                        coverCropArea.update();
+                      }
+                      //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                    }, onSelectEnd: function(img, selection){
+                      if((selection.width < minX) || (selection.height < minY))
+                      {
+                        if((selection.x1 > coverImage.width-minX) || (selection.y1 > coverImage.height-minY))
+                        {
+                          if(selection.x1 < minX)
+                          {
+                            coverCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                            coverCropArea.update();
+                          }
+                          else if(selection.y1 < minY)
+                          {
+                            coverCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                            coverCropArea.update();
+                          }
+                          else
+                          {
+                            coverCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                            coverCropArea.update();
+                          }
+                        }
+                        else
+                        {
+                          coverCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                          coverCropArea.update();
+                        }
+                      }
+                    }
+                  });
+              };
+            })(f);
+            reader.readAsDataURL(f);
+        }
+      }
   },
 
   

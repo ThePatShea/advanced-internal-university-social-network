@@ -58,6 +58,11 @@ Handlebars.registerHelper('getSelectedUserName', function(userId) {
   return user && user.username;
 });
 
+Handlebars.registerHelper('getSelectedName', function(userId) {
+  var user = Meteor.users.findOne(userId);
+  return user && user.name;
+});
+
 Handlebars.registerHelper('postProperties', {
     discussion : {
         posts      : function() { return getPosts('discussion'); }

@@ -50,7 +50,7 @@ Meteor.methods({
     // pick out the whitelisted keys
     var post = _.extend(_.pick(postAttributes, 'postAsType', 'postAsId', 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'dateTime', 'location', 'bubbleId', 'exploreId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'), {
       userId: user._id,
-      author: user.username, 
+      author: user.name, 
       submitted: new Date().getTime(),
       lastUpdated: new Date().getTime(),
       lastCommentTime: new Date().getTime(),

@@ -1,23 +1,72 @@
+
+Template.bubbleInvitation.created = function() {
+  findResponse = false;
+  rejectList = [];
+  var users = Bubbles.findOne({_id: Session.get('currentBubbleId')}).users;
+  rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
+  rejectList.push(Meteor.userId());
+}
+
+Template.bubbleInvitation.rendered = function() {
+
+  $(".search-text").bind("propertychange keyup input paste", function (event) {
+    Session.set('currentlySearching', 'true');  // Keeps the add-members form open, not collapsed
+
+    var searchText = $(".search-text").val();
+    if (searchText == ""){
+      Session.set('selectedUsername',undefined);
+    }else{
+      Session.set('selectedUsername', searchText);
+    }
+  });
+}
+
+
 Template.bubbleInvitation.helpers({
   findUsers: function() {
-    var users = this.users;
-    var rejectList = [];
     //Convert username list -> userId list
-    inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
+    /*inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
       if(Meteor.users.findOne({username:username})) {
         return Meteor.users.findOne({username:username})._id;
       }
-    });
-    rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
+    });*/
 
-    rejectList.push(Meteor.userId());
     //The regular expression is used here again to prevent showing 
     //users who are removed from bubble but still exists in the local db
-    return Meteor.users.find(
+    /*return Meteor.users.find(
       {
         _id: {$nin: rejectList}, 
         username: new RegExp(Session.get('selectedUsername'),'i')
-      }, {limit: 5});
+      }, {limit: 5});*/
+    if(Session.get('selectedUsername').length > 3)
+    {
+      console.log('searching users');
+      Meteor.call('search_users', Session.get('selectedUsername'), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(res[0]);
+          Session.set('potentialUserIdList', res);
+          findResponse = true;
+        }
+      });
+    }
+  },
+  getFoundUsers: function() {
+    findResponse = false;
+    console.log('hereyago: ' + Session.get('potentialUserIdList')[0]);
+    Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
+    return Meteor.users.find({_id: {$in: Session.get('potentialUserIdList'), $nin: rejectList}},{limit: 6});
+    //return Meteor.users.find(({username: "taggartbg"}));
+  },
+  hasSearchResponse: function() {
+    if(findResponse) {
+      console.log("hasSearchResponse: true");
+      return true;
+    } else {
+      console.log("hasSearchResponse: false");
+      return false;
+    }
   },
   getInvitees: function() {
     return this.users.invitees;
@@ -129,17 +178,3 @@ Template.bubbleInvitation.events({
     Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
   }
 });
-
-Template.bubbleInvitation.rendered = function() {
-
-  $(".search-text").bind("propertychange keyup input paste", function (event) {
-    Session.set('currentlySearching', 'true');  // Keeps the add-members form open, not collapsed
-
-    var searchText = $(".search-text").val();
-    if (searchText == ""){
-      Session.set('selectedUsername',undefined);
-    }else{
-      Session.set('selectedUsername', searchText);
-    }
-  });
-}

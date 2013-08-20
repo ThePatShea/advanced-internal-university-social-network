@@ -1,22 +1,8 @@
-
-Template.searchUsers.helpers({
-  getSearchedUsers: function() {
-  	Session.set('selectedUsername',Session.get('searchText'));
-    var searchedUsers = Meteor.users.find(
-      {
-        username:new RegExp(Session.get('searchText'),'i')
-      },{limit: usersListHandle.limit()});
-    var userList = searchedUsers.fetch();
-    var userIds = [];
-    for(var i=0; i < userList.length; i++){
-      userIds.push(userList[i]._id);
-    };
-
-    Meteor.subscribe('findUsersById', userIds);
-
-    return searchedUsers;
-  },
-});
+Template.searchUsers.created = function() {
+  Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+  searchedUsers = [];
+  searchResponse = false;
+}
 
 Template.searchUsers.rendered = function(){
   //To set header as active
@@ -30,3 +16,46 @@ Template.searchUsers.rendered = function(){
     }
   });
 }
+
+Template.searchUsers.helpers({
+
+  getSearchedUsers: function() {
+    searchResponse = false;
+    searchedUsers = [];
+    /*
+    _.each(Session.get('selectedUserIdList'), function(id) {
+      tmp = Meteor.users.find({_id: id});
+      console.log("tmp: " + tmp.fetch());
+      searchedUsers.push(Meteor.users.find({_id: id}));
+    });
+    return searchedUsers;
+    */
+    return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}},{limit:10});
+  },
+
+  searchUsers: function() {
+    if(Session.get('searchText').length > 2)
+    {
+      console.log('searching users');
+      Meteor.call('search_users', Session.get('searchText'), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          searchResponse = true;
+          Session.set('selectedUserIdList', res);
+        }
+      });
+    }
+  },
+
+  hasSearchResponse: function() {
+    if(searchResponse) {
+      console.log("hasSearchResponse: true");
+      return true;
+    } else {
+      console.log("hasSearchResponse: false");
+      return false;
+    }
+  }
+});
+

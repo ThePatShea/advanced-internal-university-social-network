@@ -168,13 +168,21 @@ Template.userProfile.events({
 				var retinaContext = retinaCanvas.getContext('2d');
 				var profileImage = new Image();
 
+				var minX = 76;
+				var minY = 76;
+
 		        // Closure to capture the file information.
 		        reader.onload = (function(theFile) {
 		        	return function(e) {
 		            	$("#drop_zone").hide();
 		            	$(".crop").attr("src", e.target.result);
 		            	profileImage.src = e.target.result;
-	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: '77', y2: '77', parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+	            		cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+							mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+						    retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+						    mainURL = mainCanvas.toDataURL();
+						    retinaURL = retinaCanvas.toDataURL();
+						    $(".profile-pic-preview").attr("src",mainURL);
 							if(Session.get("DisableCrop") == "1")
 							{
 								cropArea.cancelSelection();
@@ -191,36 +199,36 @@ Template.userProfile.events({
 							}
 							else
 							{
-								cropArea.setSelection(10,10,78,78);
+								cropArea.setSelection(10,10, (10+minX),(10+minY));
 								cropArea.setOptions({show: true});
 						    	cropArea.update();
 							}
 						    //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
 	            		}, onSelectEnd: function(img, selection){
-						    if(selection.width < 67)
+						    if((selection.width < minX) || (selection.height < minY))
 						    {
-						    	if((selection.x1 > profileImage.width-67) || (selection.y1 > profileImage.height-67))
+						    	if((selection.x1 > profileImage.width-minX) || (selection.y1 > profileImage.height-minY))
 						    	{
-						    		if(selection.x1 < 67)
+						    		if(selection.x1 < minX)
 						    		{
-							    		cropArea.setSelection(0,selection.y2-67,67,selection.y2);
+							    		cropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
 							    		cropArea.update();
 							    	}
-							    	else if(selection.y1 < 67)
+							    	else if(selection.y1 < minY)
 							    	{
-							    		cropArea.setSelection(selection.x2-67,0,selection.x2,67);
+							    		cropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
 							    		cropArea.update();
 							    	}
 							    	else
 							    	{
-							    		cropArea.setSelection(selection.x2-67,selection.y2-67,selection.x2,selection.y2);
+							    		cropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
 							    		cropArea.update();
 							    	}
 
 							    }
 							    else
 							    {
-						    		cropArea.setSelection(selection.x1,selection.y1,selection.x1+67,selection.y1+67);
+						    		cropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
 						    		cropArea.update();
 						   		}
 						    }
@@ -232,20 +240,3 @@ Template.userProfile.events({
     	}
 	}
 });
-
-//Preview functionality for crop tool
-function preview(img, selection) {
-    var scaleX = 67 / (selection.width || 1);
-    var scaleY = 67 / (selection.height || 1);
-  /*
-    $('.profile-pic-preview').css({
-        width: Math.round(scaleX * img.width) + 'px',
-        height: Math.round(scaleY * img.height) + 'px',
-        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
-        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px',
-        'max-width': 'none',
-        'border-radius': '0'
-    });*/
-	console.log(Math.round(scaleX * img.width));
-	console.log(Math.round(scaleY * img.height));
-};

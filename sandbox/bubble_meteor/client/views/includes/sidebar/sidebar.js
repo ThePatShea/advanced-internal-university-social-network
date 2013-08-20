@@ -29,6 +29,9 @@ Template.sidebar.helpers({
         return '/explore/create';
       }
     }
+  , dashboardLink          : function() {
+    return '/dashboard';
+  }
   , selectedSection        : function(inputSection) {
       var currentUrl  =  window.location.pathname;
       var urlArray    =  currentUrl.split("/");
