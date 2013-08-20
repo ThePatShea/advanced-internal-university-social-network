@@ -181,7 +181,7 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 		'userType': userType,
 		'profilePicture': profilePicture,
 		'retinaProfilePicture': retinaProfilePicture,
-		'firstTimeLogin': firstTimeLogin
+		'neverLoggedIn': neverLoggedIn
 	};
 	Meteor.users.update(user._id, {$set: userProperties});
 

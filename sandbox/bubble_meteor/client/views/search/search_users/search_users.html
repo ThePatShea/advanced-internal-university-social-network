@@ -2,14 +2,18 @@
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
   	
-  	{{#if hasSearchText}}
-  		{{searchUsers}}
-  	{{/if}}
+    {{#codeComment}}
+    	{{#if hasSearchText}}
+    		{{searchUsers}}
+    	{{/if}}
+    {{/codeComment}}
 
-  	{{#if hasSearchResponse}}
-	    {{#each getSearchedUsers}}
-	      {{> listItem}}
-	    {{/each}}
-	  {{/if}}
+    <div class="gifloader visible-{{typing}}" style="position: relative; top: 294px;">
+      {{> gifLoader}}
+    </div>
+
+    {{#each getSearchedUsers}}
+      {{> listItem}}
+    {{/each}}
   </div>
 </template>
