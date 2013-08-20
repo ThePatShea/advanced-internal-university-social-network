@@ -94,23 +94,25 @@ Meteor.Router.add('/testauth', 'POST', function(){
 });
 
 
-Meteor.Router.add('/testauth/:secret', 'GET', function(secret){
-	var user = Meteor.users.findOne({'secret': secret});
+Meteor.Router.add('/testauth/:username/:secret', 'GET', function(username, secret){
+	var user = Meteor.users.findOne({'username': username});
 	console.log(user);
 	if(!user){
+		console.log('User Found: ', user);
 		if(user.secret == secret){
-			var username = user.username;
+			console.log('User secret checks out.');
 			Meteor.user.loginWithPassword(username, 'F302pinpulse');
 			//return [302, {'Location': 'https://test.emorybubble.com'}];
 			//return [200, 'Username: ' + username + '\nSecret: ' + secret];
-			Meteor.Router.to('/');
+			//Meteor.Router.to('/');
+			return [200, 'Username: ' + username + '\nSecret: ' + secret];
 		}
 		else{
-			return [302, {'Location': 'https://login.emorybubble.com'}];
+			return [404];
 		}
 	}
 	else{
-		return [302, {'Location': 'https://login.emorybubble.com'}];
+		return [404];
 	}
 
 	//return [302, {'Location': 'https://test.emorybubble.com'}];
