@@ -52,10 +52,10 @@ Meteor.Router.add('/testauth', 'POST', function(){
 
 	var user = Meteor.users.findOne({username: this.request.body.netId});
 	if(!user){
-		Accounts.createUser({'username': this.request.body.netId, 'password': 'F302pinpulse'});
+		Accounts.createUser({'username': this.request.body.netId, 'password': secret});
 
 		user = Meteor.users.findOne({username: this.request.body.netId});
-		Accounts.setPassword(user._id, 'F302pinpulse');
+		Accounts.setPassword(user._id, secret);
 
 		var letterProfile = '/img/letterprofiles' + this.request.body.netId.toLowerCase()[0] + '.jpg';
 		
@@ -68,13 +68,14 @@ Meteor.Router.add('/testauth', 'POST', function(){
 			'isFerpa': isFerpa,
 			'emoryEmail': emoryEmail,
 			'altMail': altMail,
-			'altEmail': altEmail,
-			'secret': secret
+			'altEmail': altEmail
+			//'secret': secret
 		}
 
 		Meteor.users.update(user._id, {$set: userProperties});
 	}
 	else{
+		Accounts.setPassword(user._id, secret);
 		var updatedUserProperties = {
 			'ppId': ppId,
 			'lastName': lastName,
@@ -83,7 +84,7 @@ Meteor.Router.add('/testauth', 'POST', function(){
 			'emoryEmail': emoryEmail,
 			'altMail': altMail,
 			'altEmail': altEmail,
-			'secret': secret
+			//'secret': secret
 		}
 
 		Meteor.users.update(user._id, {$set: updatedUserProperties});
@@ -94,16 +95,19 @@ Meteor.Router.add('/testauth', 'POST', function(){
 });
 
 
-Meteor.Router.add('/testauth/:username/:secret', 'GET', function(username, secret){
+/*Meteor.Router.add('/testauth/:username/:secret', 'GET', function(username, secret){
 	var user = Meteor.users.findOne({'username': username, 'secret': secret});
-	console.log(user);
-	if(!user){
+	var usercount = Meteor.users.find({'username': username, 'secret': secret}).count();
+	console.log(username, secret, user);
+	if(usercount > 0){
 		console.log('User secret checks out.');
-		Meteor.user.loginWithPassword(username, 'F302pinpulse');
-		var username = user.username;
+		//Meteor.loginWithPassword(username, 'F302pinpulse');
 		//return [302, {'Location': 'https://test.emorybubble.com'}];
 		//return [200, 'Username: ' + username + '\nSecret: ' + secret];
 		//Meteor.Router.to('/');
+		Accounts.callLoginMethod({
+			methodArguments: [{'user': user, 'password': 'F302pinpulse'}]
+		});
 		return [200, 'Username: ' + username + '\nSecret: ' + secret];
 	}
 	else{
@@ -113,7 +117,7 @@ Meteor.Router.add('/testauth/:username/:secret', 'GET', function(username, secre
 	//return [302, {'Location': 'https://test.emorybubble.com'}];
 
 	//return [200, 'Username: ' + username + '\nSecret: ' + secret];
-});
+});*/
 
 /*
 // Xavier: This commented-out stuff is from conflict with merge to pat branch. I didn't know what to do with it, so I commented it out so you can do what you want with it.   --Pat
