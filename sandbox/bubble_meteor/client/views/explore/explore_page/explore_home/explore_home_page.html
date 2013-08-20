@@ -4,10 +4,17 @@
     <div class="explore-page-content">
   
       <div class="bubble-list">
+        <div></div>
         {{#each posts}}
           {{> listItem}}
         {{else}}
-          There are no posts yet. Add one now!
+          <div class="post-item">
+            <div class="v-middle">
+              <div class="v-inner">
+                No posts yet. Add one now!
+              </div>
+            </div>
+          </div>
         {{/each}}
       </div>
 

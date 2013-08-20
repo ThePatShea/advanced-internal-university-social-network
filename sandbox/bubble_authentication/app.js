@@ -33,8 +33,10 @@ function parseAttribute(attributeString){
 
 //var privateKey = fs.readFileSync('./certs/ssl-key.pem').toString();
 //var certificate = fs.readFileSync('./certs/ssl-cert.pem').toString();
-var privateKey = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/wildcard.emorybubble.com.key').toString();
-var certificate = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/bundle.wildcard.emorybubble.com.crt').toString();
+
+
+//var privateKey = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/wildcard.emorybubble.com.key').toString();
+//var certificate = fs.readFileSync('/home/ubuntu/wildcard-emorybubble-com/bundle.wildcard.emorybubble.com.crt').toString();
 
 
 /*var privateKey = raw_privateKey;
@@ -112,13 +114,13 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-//var app = express();
-var options = {key: privateKey, cert: certificate};
+//var options = {key: privateKey, cert: certificate};
+
 var app = express();
 
 
 // all environments
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(passport.initialize());
@@ -256,7 +258,55 @@ app.post('/login/samlcallback',
     console.log('altMail: ', altMail);
     console.log('altEmail: ', altEmail);
 
-    res.render('home', {username: globalprofile});
+    var seed = crypto.randomBytes(20);
+    var secret = crypto.createHash('sha1').update(seed).digest('hex');
+
+  var data = querystring.stringify({
+      'netId': netId,
+      'ppId': ppId,
+      'lastName': lastName,
+      'firstName': firstName,
+      'isFerpa': isFerpa,
+      'emoryEmail': emoryEmail,
+      'altMail': altMail,
+      'altEmail': altEmail,
+      'secret': secret
+    });
+
+  var options = {
+    host: 'test.emorybubble.com',
+    port: 443,
+    path: '/testauth',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': data.length
+    }
+  };
+
+  var req = https.request(options, function(response) {
+    //var userid = response.get('userid');
+    //console.log('Post sent');
+    res.on('data', function(chunk){
+        console.log("post response body: " + chunk);
+    });
+    //res.header('location', 'http://talkschool.net/authenticateduser/' + secret);
+    //res.send(302, null);
+  });
+
+  req.on('error', function(err){
+    console.log('Error seidning POST: ', err);
+  });
+
+  console.log('Sending...');
+  req.write(data);
+  req.end();
+
+    //res.render('home', {username: globalprofile});
+    setTimeout(function(){
+      res.header('location', 'https://test.emorybubble.com/testauth/' + netId + '/' + secret);
+      res.send(302, null);
+    }, 1000);
   }
 );
 
@@ -283,4 +333,4 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-https.createServer(options, app).listen(443);
+//https.createServer(options, app).listen(443);

@@ -1,6 +1,17 @@
 Meteor.Router.add({
   //Login from authentication system
-    '/login': 'loginPage',
+
+  '/login': 'loginPage',
+  '/testauth/:_username/:_secret': {
+    to: 'secretLogin',
+    and: function(username, secret){
+      Session.set('userSecret', secret);
+      Session.set('usernameSecret', username);
+    }
+  },
+
+  //Onboarding page
+  '/onboarding': 'onboarding',
 
   // Bubbles Related Routes
     '/mybubbles/:_id/home': {
@@ -205,6 +216,7 @@ Meteor.Router.filters({
     return page;
   },
   'routeWhenLogin': function(page) {
+/*
     var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
     if(bubbles.length > 0) {
       Meteor.Router.to('bubblePage',bubbles[0]._id);
@@ -213,6 +225,9 @@ Meteor.Router.filters({
       return 'searchBubbles';
     }
     return page;
+*/
+  //  Meteor.Router.to('dashboard');
+    return 'dashboard';
   },
   'hasSuperBubblePermissions': function(page) {
     if('super' == Bubbles.findOne(Session.get('currentBubbleId')).bubbleType){
@@ -247,7 +262,7 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus');
+Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 

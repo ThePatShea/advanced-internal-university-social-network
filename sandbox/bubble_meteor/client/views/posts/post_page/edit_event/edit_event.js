@@ -93,11 +93,13 @@ Template.editEvent.events({
       dateTime: moment(dateTime).valueOf(),
       location: $(event.target).find('[name=location]').val(),
       name: $(event.target).find('[name=name]').val(),
-      body: $(event.target).find('[name=body]').val(),
-      eventPhoto: $("#eventPhoto").attr("src"),
-      retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
+      body: $(event.target).find('[name=body]').val()
     };
 
+    if(typeof eventMainURL !== "undefined")
+      eventAttributes.eventPhoto = eventMainURL;
+    if(typeof eventRetinaURL !== "undefined")
+      eventAttributes.retinaEventPhoto = eventRetinaURL;
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
     
@@ -133,25 +135,79 @@ Template.editEvent.events({
         //If the file dropped on the dropzone is an image then start processing it
         if (f.type.match('image.*')) {
           var reader = new FileReader();
-          var mainCanvas = document.getElementById('event-main-canvas');
-          var retinaCanvas = document.getElementById('event-retina-canvas');
-          var mainContext = mainCanvas.getContext('2d');
-          var retinaContext = retinaCanvas.getContext('2d');
-          var profileImage = new Image();
+          var eventMainCanvas = document.getElementById('event-main-canvas');
+          var eventRetinaCanvas = document.getElementById('event-retina-canvas');
+          var eventMainContext = eventMainCanvas.getContext('2d');
+          var eventRetinaContext = eventRetinaCanvas.getContext('2d');
+          var eventImage = new Image();
 
-          // Closure to capture the file information.
-          reader.onload = (function(theFile) {
-            return function(e) {
-                $("#event_drop_zone").hide();
-                $(".crop").attr("src", e.target.result);
-                profileImage.src = e.target.result;
-                cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '170', minHeight: '115', x1: '10', y1: '10', x2: '180', y2: '125', parent: "#add-picture", handles: true, onSelectChange: function(img, selection) {
-                  mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
-                  retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
-                  $("#eventPhoto").attr("src",mainCanvas.toDataURL());
-                  $("#eventRetinaPhoto").attr("src",retinaCanvas.toDataURL());
-                }});
-            };
+            var minX = 68;
+            var minY = 46;
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+              return function(e) {
+                  $(".attach-files > .drop-zone").hide();
+                  $(".attach-files > .drop-zone > .file-chooser-invisible").width(1);
+                  $(".attach-files > .drop-zone > .file-chooser-invisible").height(1);
+                  $(".crop-container > .crop").attr("src", e.target.result);
+                  eventImage.src = e.target.result;
+                  eventCropArea = $('.crop-container > .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: eventImage.height, imageWidth: eventImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: "#add-picture", handles: true,
+                    onInit: function(img, selection) {
+                      eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                      eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                      eventMainURL = eventMainCanvas.toDataURL();
+                      eventRetinaURL = eventRetinaCanvas.toDataURL();
+                      if(Session.get("DisableCrop") == "1")
+                      {
+                        eventCropArea.cancelSelection();
+                      }
+                    }, onSelectChange: function(img, selection) {
+                      if(selection.width != 0)
+                      {
+                        eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                        console.log(selection.y1);
+                        eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                        eventMainURL = eventMainCanvas.toDataURL();
+                        eventRetinaURL = eventRetinaCanvas.toDataURL();
+                      }
+                      else
+                      {
+                        eventCropArea.setSelection(10,10, (10+minX),(10+minY));
+                        eventCropArea.setOptions({show: true});
+                        eventCropArea.update();
+                      }
+                      //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                    }, onSelectEnd: function(img, selection){
+                      if((selection.width < minX) || (selection.height < minY))
+                      {
+                        if((selection.x1 > eventImage.width-minX) || (selection.y1 > eventImage.height-minY))
+                        {
+                          if(selection.x1 < minX)
+                          {
+                            eventCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                            eventCropArea.update();
+                          }
+                          else if(selection.y1 < minY)
+                          {
+                            eventCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                            eventCropArea.update();
+                          }
+                          else
+                          {
+                            eventCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                            eventCropArea.update();
+                          }
+                        }
+                        else
+                        {
+                          eventCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                          eventCropArea.update();
+                        }
+                      }
+                    }
+                  });
+              };
           })(f);
           reader.readAsDataURL(f);
         }

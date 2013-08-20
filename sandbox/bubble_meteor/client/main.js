@@ -34,7 +34,7 @@ Deps.autorun(function() {
 
 
 	// Meteor Users Related Subscriptions 
-		usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
+		//usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
 		Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'), 
 												Session.get('inviteeList'+Session.get('currentBubbleId')));
 		Meteor.subscribe('singleUser', Meteor.userId());
@@ -58,6 +58,7 @@ Deps.autorun(function() {
 			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
 		Meteor.subscribe('attendingEvents', Meteor.userId());
+                Meteor.subscribe('fiveExplorePosts');
 
 
 	// Retrieves searched Posts

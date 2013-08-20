@@ -23,13 +23,35 @@ Template.exploreEventSubmit.created = function(){
 
 
 Template.exploreEventSubmit.events({
-  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
       tmpl.validateForm();
   }
 });
 
 
+
+Template.exploreEventSubmit.helpers({
+  getCurrentUserId: function() {
+    return Meteor.userId();
+  },
+  getAdminBubbles: function() {
+    adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
+    adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
+   
+    if (adminBubblesCount > 0) {
+      return adminBubbles;
+    } else {
+      return false;
+    } 
+  }
+});
+
+
+
 Template.exploreEventSubmit.events({
+  'click .post-as-button': function(event) {
+    event.preventDefault();
+  },
   'click .cb-explore-eventSubmit-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
@@ -43,6 +65,8 @@ Template.exploreEventSubmit.events({
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-explore-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-explore-eventSubmit-form > .event-details').val(),
+      postAsType: $('.cb-explore-eventSubmit-form .post-as-type').val(),
+      postAsId:   $('.cb-explore-eventSubmit-form .post-as-id').val(),
       postType: 'event',
       exploreId: Session.get('currentExploreId'),
       attendees: [Meteor.userId()],
@@ -107,6 +131,55 @@ Template.exploreEventSubmit.events({
 });
 
 Template.exploreEventSubmit.rendered = function() {
+  var postAsType = $("[name=post-as-type]").val();
+  //$(".postAsButton." + postAsType).addClass("active-true");
+
+  $(".post-as-button.bubble").mouseover(function() {
+    $(".post-as-bubble-dropdown").show();
+  });
+
+  $(".post-as-button.bubble").mouseout(function() {
+    $(".post-as-bubble-dropdown").hide();
+  });
+
+  $(".btn-select-post-as-bubble").click(function() {
+    var postAsId = $(this).attr("name");
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+
+
+    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+  });
+
+
+  $(".post-as-button.me").click(function() {
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+  });
+
+
+
+
 
   this.validateForm();
 

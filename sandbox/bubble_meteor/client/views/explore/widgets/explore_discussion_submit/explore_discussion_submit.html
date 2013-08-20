@@ -4,6 +4,59 @@
       <div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
     <form class="cb-form cb-explore-discussionSubmit-form">
+
+
+
+
+    {{#if getAdminBubbles}}
+      <input class="required post-as-type" type="hidden" name="post-as-type"/>
+      <input class="required post-as-id" type="hidden" name="post-as-id"/>
+    {{else}}
+      <input class="required post-as-type" type="hidden" name="post-as-type" value="user"/>
+      <input class="required post-as-id" type="hidden" name="post-as-id" value="{{getCurrentUserId}}"/>
+    {{/if}}
+
+
+
+    {{#if getAdminBubbles}}
+      <div class="post-as-container first">
+        <label class="no-typing post-as-label">post as</label>
+        <div class="post-as-buttons-container">
+          <button class="active-false post-as-button me">
+            <div class="check-circle">
+              <span class="cb-icon check">{{> icon-check}}</span>
+              <span class="cb-icon x">{{> icon-x}}</span>
+            </div>
+            <div class="lbl-as">me</div>
+          </button>
+          <button class="active-false post-as-button bubble">
+            <div class="check-circle">
+              <span class="cb-icon check">{{> icon-check}}</span>
+              <span class="cb-icon x">{{> icon-x}}</span>
+            </div>
+            <div class="lbl-as selected-bubble-post-as">Select a bubble</div>
+            <div class="arrow-down">{{> icon-arrow-down}}</div>
+
+            <div class="independent-dropdown post-as-bubble-dropdown">
+              <div class="arrow-up">{{> icon-arrow-up}}</div>
+              <div class="dropdown-buttons-container">
+                {{#each getAdminBubbles}}
+                  <div class="dropdown-button btn-select-post-as-bubble" name="{{_id}}">
+                    <input type="hidden" class="bubble-title" name="{{title}}"/>
+                    {{title}}
+                  </div>
+                {{/each}}
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    {{/if}}
+
+
+
+
+
       <input class="required width-full first" name="name" type="text" value="" placeholder="Discussion title*"/>
       {{> wysiwyg2}}
 
@@ -14,7 +67,7 @@
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit add-comment submit-comment">
           <span class="words-main">submit</span>
-          <span class="words-error">please fill in a title and body before submitting</span>
+          <span class="words-error">please fill in all fields before submitting</span>
         </button>
       </div>
     </form>

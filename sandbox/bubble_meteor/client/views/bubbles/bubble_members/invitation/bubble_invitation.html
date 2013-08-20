@@ -11,7 +11,11 @@
       </div>
       <div class="searchResults">
         {{#if hasSearchText}}
-          {{#each findUsers}}
+          {{findUsers}}
+        {{/if}}
+
+        {{#if hasSearchResponse}}
+          {{#each getFoundUsers}}
             <div class="invitee shortlist-invitee select">
                 <span>
                   <div class="invitee-container {{#if selected}}selected{{/if}}">
@@ -21,7 +25,7 @@
                         <div class="pic-preview-wrapper-middle">
                           <div class="pic-preview-wrapper-inner-invitee">
                             <span class="visible-{{selected}} cb-icon-check">{{> icon-check}}</span>
-                            <span class="invisibile-{{selected}}"><img src="{{profilePicture}}"></span>
+                            <span class="invisible-{{selected}}"><img src="{{profilePicture}}"></span>
                           </div>
                         </div>
                       </div>
@@ -29,8 +33,8 @@
                     <div class="v-middle">
                       <div class="v-inner">
                         <span class="pull-left invitee-text">
-                          {{username}}
-                        </span>
+                          {{name}}
+                        </span><br>
                         <span class="num-posts">
                           {{pluralize numPosts "post" ""}}
                         </span>

@@ -1,4 +1,7 @@
 Template.dashboard.helpers({
+        getFiveExplorePosts: function() {
+          return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+        },
 	numBubbles: function() {
 		var uid = Meteor.userId();
 		var numBubbles = Bubbles.find({$or:
@@ -135,7 +138,11 @@ Template.dashboard.helpers({
 	      }
 	    });
 
+	    Session.set('numUpdates', updateList.length);
+
 	    return updateList.length;
+	  } else {
+	  	return 0;
 	  }
 	},
 
@@ -437,6 +444,15 @@ Template.dashboard.events({
       Meteor.call('setRead', update);
     });
   },
+
+  'click #dashboard-icon-2a': function() {
+	location.href="https://play.google.com/store/apps/details?id=io.cordova.emorybubble";
+  },
+
+  'click #dashboard-icon-2b': function() {
+	location.href="https://itunes.apple.com/us/app/emory-bubble/id538091098";
+  },
+
   'click .dashboard-more-updates': function() {
   	Session.set('numUpdates', 0);
   	console.log(Session.get('numUpdates'));
@@ -445,4 +461,11 @@ Template.dashboard.events({
 
 Template.dashboard.rendered = function () {
 	$('.carousel').carousel();
+
+	$('.dashboard-more-updates').click(function(){
+		$('.threeUpdtes').addClass('visible-0');
+		$('.allUpdates').removeClass('visible-0');
+		$('.dashboard-more-updates').addClass('visible-0');
+		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
+	});
 };

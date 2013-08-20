@@ -43,10 +43,16 @@
   <div class="viewport">
     <div class="frame">
       {{#if isLoggedIn}}
-        {{> sidebar}}
+        {{#unless isOnboarding}}
+          {{> sidebar}}
+        {{/unless}}
       {{/if}}
       <div class="view">
-        {{#if isLoggedIn}} {{> header}} {{/if}}
+        {{#if isLoggedIn}}
+          {{#unless isOnboarding}}
+            {{> header}}
+          {{/unless}}
+        {{/if}}
         <div id="main" class="row-fluid">
           {{> errors}}
           {{renderPage}}

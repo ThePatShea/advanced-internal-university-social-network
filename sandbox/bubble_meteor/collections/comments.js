@@ -23,7 +23,7 @@ Meteor.methods({
 
     comment = _.extend(_.pick(commentAttributes, 'postId', 'body'), {
       userId: user._id,
-      author: user.username,
+      author: user.name,
       submitted: currentTime
     });
     

@@ -1,11 +1,15 @@
 <template name="searchUsers">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
-  
-    {{#if hasSearchText}}
-      {{#each getSearchedUsers}}
-        {{> listItem}}
-      {{/each}}
-    {{/if}}
+  	
+  	{{#if hasSearchText}}
+  		{{searchUsers}}
+  	{{/if}}
+
+  	{{#if hasSearchResponse}}
+	    {{#each getSearchedUsers}}
+	      {{> listItem}}
+	    {{/each}}
+	  {{/if}}
   </div>
 </template>

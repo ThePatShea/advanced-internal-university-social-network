@@ -292,6 +292,9 @@ getBubbleId =  function(userId) {
   Meteor.publish('currentExplore', function(exploreId){
     return Posts.find({'exploreId': exploreId});
   });
+  Meteor.publish('fiveExplorePosts', function() {
+    return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+  });
 
 // Meteor Users Related Publications
   Meteor.publish('allUsers', function(){
@@ -302,6 +305,7 @@ getBubbleId =  function(userId) {
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
+       'neverLoggedIn': 1,
        'profilePicture': 1,
        'deviceToken': 1
       }
@@ -326,11 +330,13 @@ getBubbleId =  function(userId) {
       return Meteor.users.find({$or: [{_id: {$in: userList}},{username: {$in: usernameList}}]}, {
         fields: {
          'username': 1,
+         'name': 1,
          'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
          'profilePicture': 1,
-         'deviceToken': 1
+         'deviceToken': 1,
+         'neverLoggedIn': 1
         }
       });
     }
@@ -341,11 +347,13 @@ getBubbleId =  function(userId) {
     return Meteor.users.find(search_query, {
       fields: {
        'username': 1,
+       'name': 1,
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
        'profilePicture': 1,
-       'deviceToken': 1
+       'deviceToken': 1,
+       'neverLoggedIn': 1
       }
     });
   });
@@ -353,12 +361,13 @@ getBubbleId =  function(userId) {
     if(userIdList){
       return Meteor.users.find({_id: {$in: userIdList}}, {
         fields: {
+         'name': 1,
          'username': 1,
-         'emails': 1,
          'userType': 1,
          'lastActionTimestamp': 1,
          'profilePicture': 1,
-         'deviceToken': 1
+         'deviceToken': 1,
+         'neverLoggedIn': 1
         }
       });
     }
@@ -367,20 +376,23 @@ getBubbleId =  function(userId) {
     return Meteor.users.find({_id: userId}, {
       fields: {
        'username': 1,
+       'name': 1,
        'emails': 1,
        'userType': 1,
        'lastActionTimestamp': 1,
        'phone': 1,
        'profilePicture': 1,
        'retinaProfilePicture': 1,
-       'lastUpdated': 1,
-       'deviceToken': 1
+       'deviceToken': 1,
+       'neverLoggedIn': 1,
+       'lastUpdated': 1
       }
     });
   });
   Meteor.publish('authenticatedUser', function(secret){
     return Meteor.users.find({'secret': secret}, {
       fields: {
+        'neverLoggedIn': 1,
         'username': 1,
         'secret': 1
       }

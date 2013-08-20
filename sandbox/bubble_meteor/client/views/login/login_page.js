@@ -76,7 +76,7 @@ Template.loginPage.events({
                 console.log(err);
               }
             });
-            Meteor.Router.to('searchBubbles');
+            Meteor.Router.to('dashboard');
           }
         });
       }else{
@@ -96,11 +96,7 @@ Template.loginPage.events({
 
             var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).fetch();
 
-            if(bubbles.length > 0) {
-              Meteor.Router.to('bubblePage',bubbles[0]._id);
-            }else{
-              Meteor.Router.to('searchBubbles');
-            }
+            Meteor.Router.to('dashboard');
           }
         });   
       }else{

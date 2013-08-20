@@ -4,7 +4,7 @@ Template.exploreDiscussionSubmit.created = function () {
   this.validateForm = function() {
     var count = 0;
 
-    $('.required').each(function(i) {
+    $('#cb-form-container-discussion .required').each(function(i) {
       if( !$(this).hasClass('wysiwyg') && $(this).val() === '' && $(this).attr("name") != undefined ) {
         count++;
       } else if ( $(this).hasClass('wysiwyg') && $(this).html().trim().replace("<br>","").replace('<span class="wysiwyg-placeholder">Type here...</span>','') == "" ) {
@@ -23,11 +23,86 @@ Template.exploreDiscussionSubmit.created = function () {
 }
 
 Template.exploreDiscussionSubmit.rendered = function () {
+  var postAsType = $("[name=post-as-type]").val();
+  //$(".postAsButton." + postAsType).addClass("active-true");
+
+  $(".post-as-button.bubble").mouseover(function() {
+    $(".post-as-bubble-dropdown").show();
+  });
+
+  $(".post-as-button.bubble").mouseout(function() {
+    $(".post-as-bubble-dropdown").hide();
+  });
+
+  $(".btn-select-post-as-bubble").click(function() {
+    var postAsId = $(this).attr("name");
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+
+
+    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+  });
+
+
+  $(".post-as-button.me").click(function() {
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+  });
+
+
+
+
+
+
+
+
+
   this.validateForm();
 }
 
+
+Template.exploreDiscussionSubmit.helpers({
+  getCurrentUserId: function() {
+    return Meteor.userId();
+  },
+  getAdminBubbles: function() {
+    adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
+    adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
+
+    if (adminBubblesCount > 0) {
+      return adminBubbles;
+    } else {
+      return false;
+    }
+  }
+});
+
+
 Template.exploreDiscussionSubmit.events({
-  'keyup .required, propertychange .required, input .required, paste .required': function(evt, tmpl) {
+  'click .post-as-button': function(event) {
+    event.preventDefault();
+  },
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
     tmpl.validateForm();
   },
 
@@ -121,6 +196,8 @@ function makeDiscussionPost(){
   var postAttributes = {
     name: $('.cb-explore-discussionSubmit-form').find('[name=name]').val(),
     body: $('.cb-explore-discussionSubmit-form').find('.wysiwyg').html(),
+    postAsType: $('.cb-explore-discussionSubmit-form .post-as-type').val(),
+    postAsId:   $('.cb-explore-discussionSubmit-form .post-as-id').val(),
     postType: 'discussion',
     exploreId: Session.get('currentExploreId'),
     children: []

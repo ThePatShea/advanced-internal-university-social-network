@@ -58,6 +58,11 @@ Handlebars.registerHelper('getSelectedUserName', function(userId) {
   return user && user.username;
 });
 
+Handlebars.registerHelper('getSelectedName', function(userId) {
+  var user = Meteor.users.findOne(userId);
+  return user && user.name;
+});
+
 Handlebars.registerHelper('postProperties', {
     discussion : {
         posts      : function() { return getPosts('discussion'); }
@@ -299,6 +304,16 @@ Handlebars.registerHelper('getTextAfterSlash',function(inputText) {
   if (inputText) {
     var textAfterSlash = inputText.split('/');
     return textAfterSlash[1];
+  } else {
+    return false;
+  }
+});
+
+Handlebars.registerHelper('isOnboarding', function() {
+  var currentSection = window.location.pathname.split("/")[1];
+
+  if (currentSection == "onboarding") {
+    return true;
   } else {
     return false;
   }
