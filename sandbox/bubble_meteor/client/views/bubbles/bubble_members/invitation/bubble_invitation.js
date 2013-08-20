@@ -6,6 +6,7 @@ Template.bubbleInvitation.created = function() {
   rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
   rejectList.push(Meteor.userId());
   mto = [];
+  Session.set('potentialUserIdList',[]);
 }
 
 Template.bubbleInvitation.rendered = function() {
@@ -20,18 +21,15 @@ Template.bubbleInvitation.rendered = function() {
       Session.set('selectedUsername', searchText);
     }
   });*/
-
-  $(".search-text").bind("keydown", function(evt) {
-    Session.set('typing', 'true');
-  });
-  $(".search-text").bind("keyup", function(evt) {
+  Session.set('currentlySearching', 'true');
+  $(".search-text").unbind("propertychange keyup input paste")
+  $(".search-text").bind("propertychange keyup input paste", function(evt) {
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
         Meteor.call('search_users', $(".search-text").val(), function(err, res) {
           if(err) {
             console.log(err);
           } else {
-            Session.set('typing', 'false');
             console.log("RE: sponse");
             Session.set('potentialUserIdList', res);
           }
@@ -42,9 +40,6 @@ Template.bubbleInvitation.rendered = function() {
 
 
 Template.bubbleInvitation.helpers({
-  typing: function() {
-    return Session.get('typing');
-  },
   findUsers: function() {
     //Convert username list -> userId list
     /*inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){

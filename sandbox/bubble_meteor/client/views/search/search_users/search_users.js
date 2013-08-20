@@ -22,7 +22,7 @@ Template.searchUsers.rendered = function(){
   $(".search-text").bind("keydown", function(evt) {
     Session.set('typing', 'true');
   });
-  $(".search-text").bind("keyup", function(evt) {
+  $(".search-text").bind("propertychange keyup input paste", function(evt) {
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
         Meteor.call('search_users', $(".search-text").val(), function(err, res) {
