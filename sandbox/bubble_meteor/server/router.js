@@ -75,7 +75,8 @@ Meteor.Router.add('/testauth', 'POST', function(){
 			'isFerpa': isFerpa,
 			'emoryEmail': emoryEmail,
 			'altMail': altMail,
-			'altEmail': altEmail
+			'altEmail': altEmail,
+			'name': firstName + ' ' + lastName
 			//'secret': secret
 		}
 
@@ -91,6 +92,7 @@ Meteor.Router.add('/testauth', 'POST', function(){
 			'emoryEmail': emoryEmail,
 			'altMail': altMail,
 			'altEmail': altEmail,
+			'name': firstName + ' ' + lastName
 			//'secret': secret
 		}
 
