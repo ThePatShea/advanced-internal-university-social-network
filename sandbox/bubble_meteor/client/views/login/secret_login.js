@@ -9,8 +9,7 @@ Template.secretLogin.rendered = function(){
     else{
       var theUrl = '/resetpass/' + username;
       $.ajax({url: theUrl, success:function(result){
-          console.log('Password reset.');
-          });
+          console.log('Password reset');
         }
       });
 
