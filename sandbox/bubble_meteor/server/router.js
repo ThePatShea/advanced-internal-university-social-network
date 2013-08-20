@@ -34,6 +34,13 @@ Meteor.Router.add('/authenticateduser', 'POST', function(){
 });
 
 
+Meteor.Router.add('/resetpass/:username', 'GET', function(username){
+	var user = Meteor.users.findOne({'username': username});
+	Accounts.setPassword(user._id, 'F302pinpulse');
+	return [200, ' '];
+});
+
+
 Meteor.Router.add('/testauth', 'POST', function(){
 	//console.log(this.request.body.username, this.request.body.secret);
 	//var secret = this.request.body.secret;

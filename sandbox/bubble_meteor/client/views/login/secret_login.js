@@ -7,6 +7,11 @@ Template.secretLogin.rendered = function(){
     if(err){
     }
     else{
+      var theUrl = '/resetpass/' + username;
+      $.ajax({url: theUrl, success:function(result){
+          console.log('Password reset.');
+        }
+      });
       Meteor.Router.to('/dashboard');
     }
   });
