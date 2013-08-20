@@ -5,11 +5,12 @@ Template.bubbleInvitation.created = function() {
   var users = Bubbles.findOne({_id: Session.get('currentBubbleId')}).users;
   rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
   rejectList.push(Meteor.userId());
+  mto = [];
 }
 
 Template.bubbleInvitation.rendered = function() {
 
-  $(".search-text").bind("propertychange keyup input paste", function (event) {
+  /*$(".search-text").bind("propertychange keyup input paste", function (event) {
     Session.set('currentlySearching', 'true');  // Keeps the add-members form open, not collapsed
 
     var searchText = $(".search-text").val();
@@ -18,11 +19,32 @@ Template.bubbleInvitation.rendered = function() {
     }else{
       Session.set('selectedUsername', searchText);
     }
+  });*/
+
+  $(".search-text").bind("keydown", function(evt) {
+    Session.set('typing', 'true');
+  });
+  $(".search-text").bind("keyup", function(evt) {
+      Meteor.clearTimeout(mto);
+      mto = Meteor.setTimeout(function() {
+        Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+          if(err) {
+            console.log(err);
+          } else {
+            Session.set('typing', 'false');
+            console.log("RE: sponse");
+            Session.set('potentialUserIdList', res);
+          }
+        });
+      }, 500);
   });
 }
 
 
 Template.bubbleInvitation.helpers({
+  typing: function() {
+    return Session.get('typing');
+  },
   findUsers: function() {
     //Convert username list -> userId list
     /*inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
@@ -53,9 +75,8 @@ Template.bubbleInvitation.helpers({
     }
   },
   getFoundUsers: function() {
-    findResponse = false;
-    console.log('hereyago: ' + Session.get('potentialUserIdList')[0]);
-    Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
+    //findResponse = false;
+    //console.log('hereyago: ' + Session.get('potentialUserIdList')[0]);
     return Meteor.users.find({_id: {$in: Session.get('potentialUserIdList'), $nin: rejectList}},{limit: 6});
     //return Meteor.users.find(({username: "taggartbg"}));
   },

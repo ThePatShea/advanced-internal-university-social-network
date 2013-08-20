@@ -40,6 +40,7 @@ Deps.autorun(function() {
 		Meteor.subscribe('singleUser', Meteor.userId());
 		Meteor.subscribe('singleUser', Session.get('selectedUserId'));
 		Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+    	Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
 		Meteor.subscribe('authenticatedUser', Session.get('secret'));
 		//Level 3 users need to have access to all users for analytics
 		if(Meteor.user() && Meteor.user().userType == '3'){
