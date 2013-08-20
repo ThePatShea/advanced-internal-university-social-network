@@ -308,7 +308,7 @@ app.post('/login/samlcallback',
     //res.render('home', {username: globalprofile});
     setTimeout(function(){
       //res.header('location', 'https://test.emorybubble.com/testauth/' + netId + '/' + secret);
-      res.header('location', 'https://' + deployment_server + '/testauth/' _ netId + '/' + secret);
+      res.header('location', 'https://' + deployment_server + '/testauth/' + netId + '/' + secret);
       res.send(302, null);
     }, 1000);
   }
