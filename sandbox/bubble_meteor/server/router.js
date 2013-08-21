@@ -154,38 +154,46 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 	var profilePicture = this.request.body.profilePicture;
 	var retinaProfilePicture = this.request.body.retinaProfilePicture;
 	var neverLoggedIn = true;
+	var password = this.request.body.password;
 
-	var user = Meteor.users.findOne({'username': username});
-	if(!user)
+	if(password == "pushUserPass")
 	{
-		Meteor.users.insert({'username': username})
+		var user = Meteor.users.findOne({'username': username});
+		if(!user)
+		{
+			Meteor.users.insert({'username': username})
+		}
+		else
+		{
+			console.log("User already exists: " + username);
+		}
+
+		user = Meteor.users.findOne({'username': username});
+
+		var userProperties = {
+			'ppid': ppid,
+			'emails': [{
+				'address': email,
+				'verified': false
+			}],
+			'altEmails': [{
+				'address': altEmail,
+				'verified': false
+			}],
+			'name': name,
+			'code': code,
+			'level': level,
+			'userType': userType,
+			'profilePicture': profilePicture,
+			'retinaProfilePicture': retinaProfilePicture,
+			'neverLoggedIn': neverLoggedIn
+		};
+		Meteor.users.update(user._id, {$set: userProperties});
+
+		return [200, {'username': username}, null];
 	}
 	else
 	{
-		console.log("User already exists: " + username);
+		return [403, "Password incorrect"];
 	}
-
-	user = Meteor.users.findOne({'username': username});
-
-	var userProperties = {
-		'ppid': ppid,
-		'emails': [{
-			'address': email,
-			'verified': false
-		}],
-		'altEmails': [{
-			'address': altEmail,
-			'verified': false
-		}],
-		'name': name,
-		'code': code,
-		'level': level,
-		'userType': userType,
-		'profilePicture': profilePicture,
-		'retinaProfilePicture': retinaProfilePicture,
-		'neverLoggedIn': neverLoggedIn
-	};
-	Meteor.users.update(user._id, {$set: userProperties});
-
-	return [200, {'username': username}, null];
 });

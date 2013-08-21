@@ -83,62 +83,81 @@ Template.eventSubmit.events({
             $(".attach-files > .drop-zone").hide();
             $(".attach-files > .drop-zone > .file-chooser-invisible").width(1);
             $(".attach-files > .drop-zone > .file-chooser-invisible").height(1);
-            $(".crop-container > .crop").attr("src", e.target.result);
-            eventImage.src = e.target.result;
-            eventCropArea = $('.crop-container > .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: eventImage.height, imageWidth: eventImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
-              onInit: function(img, selection) {
-                eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
-                eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
-                eventMainURL = eventMainCanvas.toDataURL();
-                eventRetinaURL = eventRetinaCanvas.toDataURL();
-                if(Session.get("DisableCrop") == "1")
-                {
-                  eventCropArea.cancelSelection();
-                }
-              }, onSelectChange: function(img, selection) {
-                if(selection.width != 0)
-                {
+            $(".crop-container > .crop").attr("src", e.target.result).load(function() {
+              eventImage.src = e.target.result;
+              eventCropArea = $('.crop-container > .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: eventImage.height, imageWidth: eventImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-eventSubmit-form", handles: true,
+                onInit: function(img, selection) {
                   eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
-                  console.log(selection.y1);
                   eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
                   eventMainURL = eventMainCanvas.toDataURL();
                   eventRetinaURL = eventRetinaCanvas.toDataURL();
-                }
-                else
-                {
-                  eventCropArea.setSelection(10,10, (10+minX),(10+minY));
-                  eventCropArea.setOptions({show: true});
-                  eventCropArea.update();
-                }
-                //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
-              }, onSelectEnd: function(img, selection){
-                if((selection.width < minX) || (selection.height < minY))
-                {
-                  if((selection.x1 > eventImage.width-minX) || (selection.y1 > eventImage.height-minY))
+                  if(Session.get("DisableCrop") == "1")
                   {
-                    if(selection.x1 < minX)
+                    if((eventImage.width/eventImage.height) <= (34/23))
                     {
-                      eventCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
-                      eventCropArea.update();
-                    }
-                    else if(selection.y1 < minY)
-                    {
-                      eventCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
-                      eventCropArea.update();
+                      x1 = 0;
+                      y1 = 0;
+                      width = eventImage.width;
+                      height = eventImage.width * (23/34);
                     }
                     else
                     {
-                      eventCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
-                      eventCropArea.update();
+                      y1 = 0;
+                      x1 = 0;
+                      height = eventImage.height;
+                      width = eventImage.height * (34/23);
                     }
+                    eventMainContext.drawImage(eventImage, x1, y1, width, height, 0, 0, 340, 230);
+                    eventRetinaContext.drawImage(eventImage, x1, y1, width, height, 0, 0, 680, 460);
+                    eventMainURL = eventMainCanvas.toDataURL();
+                    eventRetinaURL = eventRetinaCanvas.toDataURL();
+                    eventCropArea.cancelSelection();
+                  }
+                }, onSelectChange: function(img, selection) {
+                  if(selection.width != 0)
+                  {
+                    eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                    console.log(selection.y1);
+                    eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                    eventMainURL = eventMainCanvas.toDataURL();
+                    eventRetinaURL = eventRetinaCanvas.toDataURL();
                   }
                   else
                   {
-                    eventCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                    eventCropArea.setSelection(10,10, (10+minX),(10+minY));
+                    eventCropArea.setOptions({show: true});
                     eventCropArea.update();
                   }
+                  //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                }, onSelectEnd: function(img, selection){
+                  if((selection.width < minX) || (selection.height < minY))
+                  {
+                    if((selection.x1 > eventImage.width-minX) || (selection.y1 > eventImage.height-minY))
+                    {
+                      if(selection.x1 < minX)
+                      {
+                        eventCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                        eventCropArea.update();
+                      }
+                      else if(selection.y1 < minY)
+                      {
+                        eventCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                        eventCropArea.update();
+                      }
+                      else
+                      {
+                        eventCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                        eventCropArea.update();
+                      }
+                    }
+                    else
+                    {
+                      eventCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                      eventCropArea.update();
+                    }
+                  }
                 }
-              }
+              });
             });
           };
         })(f);
@@ -189,5 +208,12 @@ Template.eventSubmit.rendered = function() {
 
     }
   });
+
+  if($(window).width() < 768)
+  {
+    Session.set("DisableCrop","1");
+  } else {
+    Session.set("DisableCrop","");
+  }
 
 }
