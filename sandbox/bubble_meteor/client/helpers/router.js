@@ -253,12 +253,18 @@ Meteor.Router.filters({
     var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
     var isIE = /*@cc_on!@*/false || document.documentMode;   // At least IE6
 
-    if(!(isFirefox || isSafari || isChrome)){
-      //$(location).attr('href', 'https://test.emorybubble.com/browser_unsupported');
-      return '/browser_unsupported';
+    if($(window).width() > 764){
+
+      if(!(isFirefox || isSafari || isChrome)){
+        //$(location).attr('href', 'https://test.emorybubble.com/browser_unsupported');
+        return '/browser_unsupported';
+      }
+      else{
+        //console.log('Browser supported.');
+        return page;
+      }
     }
     else{
-      //console.log('Browser supported.');
       return page;
     }
   }

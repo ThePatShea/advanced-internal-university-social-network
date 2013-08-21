@@ -7,10 +7,16 @@ ownsProfile = function(userId, profile) {
 }
 
 ownsPost = function(userId, doc) {
-	var bubble = Bubbles.findOne(doc.bubbleId);
-	return ('3' == Meteor.user().userType 
-		|| doc.author == Meteor.user().username
-		|| _.contains(bubble.users.admins,Meteor.userId()));
+  if(typeof doc.bubbleId != 'undefined'){
+  	var bubble = Bubbles.findOne(doc.bubbleId);
+  	return ('3' == Meteor.user().userType 
+  		|| doc.author == Meteor.user().username
+  		|| _.contains(bubble.users.admins,Meteor.userId()));
+  }
+  else{
+    return ('3' == Meteor.user().userType 
+          || doc.userId == Meteor.userId());
+  }
 }
 
 ownsComment = function(userId, doc) {

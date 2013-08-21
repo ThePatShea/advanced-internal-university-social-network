@@ -203,6 +203,14 @@ function makeDiscussionPost(){
     children: []
   }
 
+  if(postAttributes.postAsType == 'user'){
+    postAttributes.author = Meteor.user().username;
+  }
+  else{
+    postAttributes.author = Bubbles.findOne({_id: postAttributes.postAsId}).title;
+  }
+  console.log('Post Attributes', postAttributes);
+
   var newFiles = [];
 
   for(var i=0; i < discussionFiles.length; i++){
