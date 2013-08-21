@@ -6,11 +6,9 @@ Template.logoutDropdown.helpers({
 
 Template.logoutDropdown.events({
   'click .signout': function() {
-    if (confirm("Leave Emory Bubble?")) {
       Meteor.logout(function(){
-        Meteor.Router.to('loginPage');
+        Meteor.Router.to('loggedOut');
       })
-    }
   },
   'click .support': function() {
     window.open('http://support.emorybubble.com','_blank');

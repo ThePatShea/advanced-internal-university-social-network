@@ -1,6 +1,8 @@
 Meteor.Router.add({
   //Login from authentication system
   '/login': 'loginPage',
+  '/welcome': 'welcome',
+  '/loggedOut': 'loggedOut',
   '/testauth/:_username/:_secret': {
     to: 'secretLogin',
     and: function(username, secret){
@@ -182,7 +184,7 @@ Meteor.Router.filters({
     }else if(Meteor.loggingIn()) {
       return 'loading';
     }else {
-      return 'loginPage';
+      return 'welcome';
     }
   },
   'belongToBubble': function(page) {
@@ -245,7 +247,7 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin']});
+Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'loginPage']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
