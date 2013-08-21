@@ -48,6 +48,7 @@ Template.searchAll.helpers({
 
     var posts =  Posts.find(
       { postType: 'file',
+        bubbleId: {$exists: true},
         name: new RegExp(Session.get('searchText'),'i')
       }, {limit: searchFilesHandle.limit()}).fetch();
 
