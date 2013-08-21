@@ -33,7 +33,8 @@ Template.connectBubble.events({
       }
       else if(_.contains(this.users.applicants, Meteor.userId())){ //User has applied to bubble
         console.log('Trying to cancel');
-        Meteor.call('removeInvitee', this._id);
+        //Meteor.call('removeInvitee', this._id);
+        Meteor.call('cancelJoinBubble', this._id);
       }
       else if(_.contains(this.users.invitees, Meteor.userId())){ //User has been invited to bubble
         Meteor.call('acceptInvitation', this._id);
