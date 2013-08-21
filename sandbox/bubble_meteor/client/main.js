@@ -83,8 +83,21 @@ Deps.autorun(function() {
 
 
 	// Updates Related Subscriptions
-	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
-
+	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', function() {
+            setTimeout(function(){
+              Session.set('siteLoading', 'false');  // Handles site loading gif
+            },2000);
+            Session.get('searchText');
+            Meteor.userId();
+          }, 1);
+/*
+		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', function() {
+                  setTimeout(function(){
+                    Session.set('siteLoading', 'false');  // Handles site loading gif
+                  },2000);
+                  Session.get('searchText');
+                }, 10);
+//*/
 	// Flags Related Subscriptions
 		if(Meteor.user() && Meteor.user().userType == '3'){
 			solvedFlagsHandle = Meteor.subscribeWithPagination('solvedFlags', 10);

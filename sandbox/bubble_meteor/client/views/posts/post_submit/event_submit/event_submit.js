@@ -29,11 +29,11 @@ Template.eventSubmit.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
-    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    var dateTime = $("#cb-form-container-event-create .date").val() + " " + $("#cb-form-container-event-create .time").val();
     console.log('Event photo: ', eventMainURL);
 
     var eventAttributes = { 
-      dateTime: new Date().getTime(),
+      dateTime: moment(dateTime).valueOf(),
       location: $('.cb-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-eventSubmit-form > .event-details').val(),

@@ -20,9 +20,10 @@ Template.connectBubble.helpers({
 });
 
 Template.connectBubble.events({
-    'click .connect-bubble': function() {
+    'click .connect-bubble': function(evt) {
       // Disable the parent button
-        event.stopPropagation();
+        evt.stopPropagation();
+        evt.preventDefault();
 
       // Add/remove the user to/from list of attendees
         //Meteor.call('attendEvent',this._id,Meteor.user().username);
@@ -31,7 +32,9 @@ Template.connectBubble.events({
         Meteor.Router.to('/mybubbles/'+this._id+'/home');
       }
       else if(_.contains(this.users.applicants, Meteor.userId())){ //User has applied to bubble
-        Meteor.call('removeInvitee', this._id);
+        console.log('Trying to cancel');
+        //Meteor.call('removeInvitee', this._id);
+        Meteor.call('cancelJoinBubble', this._id);
       }
       else if(_.contains(this.users.invitees, Meteor.userId())){ //User has been invited to bubble
         Meteor.call('acceptInvitation', this._id);
@@ -50,8 +53,8 @@ Template.connectBubble.events({
         //_gaq.push(['_trackEvent', 'Bubble', 'Cancel Application', this.name]);
     },
 
-    'click .deny-invite': function(){
-      event.stopPropagation();
+    'click .deny-invite': function(evt){
+      evt.stopPropagation();
       var userId = Meteor.userId();
       Meteor.call('removeInvitee', this._id, userId);
     }

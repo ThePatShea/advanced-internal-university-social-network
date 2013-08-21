@@ -1,7 +1,7 @@
 Template.bubbleDiscussionPage.helpers({
   //Get posts assigned to this bubble
   getDiscussionPosts: function(){
-  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}, {limit: discussionsHandle.limit()});   
+  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}, {limit: discussionsHandle.limit(), sort: {lastCommentTime:  -1} });   
   }
 });
 

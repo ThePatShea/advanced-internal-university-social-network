@@ -20,7 +20,7 @@ Template.bubbleSubmit.events({
       if (error) {
         throwError(error.reason);
       } else {
-        Meteor.Router.to('bubblePage', bubbleId);
+        Meteor.Router.to('bubbleMembersPage', bubbleId);
       }
     });
   },
