@@ -183,6 +183,7 @@ Template.bubbleSubmit.events({
     evt.dataTransfer.dropEffect = 'copy';
   },
 
+
   'change .bubble-create > .attach-profile-photo > .drop-zone > .file-chooser-invisible': function(evt){
 
     evt.stopPropagation();
@@ -421,8 +422,7 @@ Template.bubbleSubmit.events({
 
 
 
-
-Template.bubbleSubmit.profiles({
+Template.bubbleSubmit.events({
   'keyup .required, propertychange .required, input .required, paste .required, mouseout li': function(evt, tmpl) {
       tmpl.validateForm();
   }
