@@ -41,6 +41,8 @@ Template.exploreEditEvent.created = function(){
 
 
 Template.exploreEditEvent.rendered = function(){
+
+
   this.validateForm();
 
 	var event = this.data;
@@ -119,11 +121,12 @@ Template.exploreEditEvent.events({
       body: $('.cb-explore-edit-event-form > .body').val(),
       postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
       postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
-/*
-      eventPhoto: editEventMainURL,
-      retinaEventPhoto: editEventRetinaURL
-*/
+   //   eventPhoto: editEventMainURL,
+   //   retinaEventPhoto: editEventRetinaURL
     };
+
+    console.log(eventAttributes);
+
 
     /*if($('#eventPhoto').attr('src') != '/img/Event.jpg'){
       eventAttributes.eventPhoto = $("#eventPhoto").attr("src");

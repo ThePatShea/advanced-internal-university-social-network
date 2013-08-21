@@ -64,7 +64,7 @@ Template.exploreEventSubmit.events({
     //console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
     var eventAttributes = { 
-      dateTime: dateTime,
+      dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-explore-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-explore-eventSubmit-form > .event-details').val(),
