@@ -69,71 +69,88 @@ Template.onboarding.events({
         var retinaContext = retinaCanvas.getContext('2d');
         var profileImage = new Image();
 
-        var minX = 76;
-        var minY = 76;
+        var minX = 67;
+        var minY = 67;
 
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
               $("#drop_zone").hide();
-              $(".crop").attr("src", e.target.result);
+              $(".crop").attr("src", e.target.result).load(function() {
               profileImage.src = e.target.result;
               cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
-          mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
-            retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
-            mainURL = mainCanvas.toDataURL();
-            retinaURL = retinaCanvas.toDataURL();
-            $(".profile-pic-preview").attr("src",mainURL);
-          if(Session.get("DisableCrop") == "1")
-          {
-            cropArea.cancelSelection();
+                mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+                retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+                mainURL = mainCanvas.toDataURL();
+                retinaURL = retinaCanvas.toDataURL();
+                $(".profile-pic-preview").attr("src",mainURL);
+                if(Session.get("DisableCrop") == "1")
+                {
+                  if(profileImage.width <= profileImage.height)
+                  {
+                    x1 = 0;
+                    y1 = (profileImage.height - profileImage.width) / 2;
+                    widthHeight = profileImage.width;
+                  }
+                  else
+                  {
+                    y1 = 0;
+                    x1 = (profileImage.width - profileImage.height) / 2;
+                    widthHeight = profileImage.height;
+                  }
+                  mainContext.drawImage(profileImage, x1, y1, widthHeight, widthHeight, 0, 0, 160, 160);
+                  retinaContext.drawImage(profileImage, x1, y1, widthHeight, widthHeight, 0, 0, 320, 320);
+                  mainURL = mainCanvas.toDataURL();
+                  retinaURL = retinaCanvas.toDataURL();
+                  cropArea.cancelSelection();
                 }
               }, onSelectChange: function(img, selection) {
-            if(selection.width != 0)
-            {
-              mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
-              console.log(selection.y1);
-              retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
-              mainURL = mainCanvas.toDataURL();
-              retinaURL = retinaCanvas.toDataURL();
-              $(".profile-pic-preview").attr("src",mainURL);
-          }
-          else
-          {
-            cropArea.setSelection(10,10, (10+minX),(10+minY));
-            cropArea.setOptions({show: true});
-              cropArea.update();
-          }
-            //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
-              }, onSelectEnd: function(img, selection){
-            if((selection.width < minX) || (selection.height < minY))
-            {
-              if((selection.x1 > profileImage.width-minX) || (selection.y1 > profileImage.height-minY))
-              {
-                if(selection.x1 < minX)
+                if(selection.width != 0)
                 {
-                  cropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
-                  cropArea.update();
-                }
-                else if(selection.y1 < minY)
-                {
-                  cropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
-                  cropArea.update();
+                  mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
+                  console.log(selection.y1);
+                  retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
+                  mainURL = mainCanvas.toDataURL();
+                  retinaURL = retinaCanvas.toDataURL();
+                  $(".profile-pic-preview").attr("src",mainURL);
                 }
                 else
                 {
-                  cropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                  cropArea.setSelection(10,10, (10+minX),(10+minY));
+                  cropArea.setOptions({show: true});
                   cropArea.update();
                 }
+                //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+              }, onSelectEnd: function(img, selection){
+                if((selection.width < minX) || (selection.height < minY))
+                {
+                  if((selection.x1 > profileImage.width-minX) || (selection.y1 > profileImage.height-minY))
+                  {
+                    if(selection.x1 < minX)
+                    {
+                      cropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                      cropArea.update();
+                    }
+                    else if(selection.y1 < minY)
+                    {
+                      cropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                      cropArea.update();
+                    }
+                    else
+                    {
+                      cropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                      cropArea.update();
+                    }
 
-              }
-              else
-              {
-                cropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
-                cropArea.update();
-              }
-            }
+                  }
+                  else
+                  {
+                    cropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                    cropArea.update();
+                  }
+                }
               }});
+            });
           };
         })(f);
         reader.readAsDataURL(f);
