@@ -14,6 +14,10 @@ Meteor.Router.add({
   //Onboarding page
   '/onboarding': 'onboarding',
 
+  '/browser_unsupported': {
+    to: 'browserUnsupported'
+  },
+
   // Bubbles Related Routes
     '/mybubbles/:_id/home': {
       to: 'bubblePage', 
@@ -239,6 +243,24 @@ Meteor.Router.filters({
   'setNumUpdatesTo3': function(page){
     Session.set('numUpdates',3);
     return page;
+  },
+  'browserSupported': function(page){
+    var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+    var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+    var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        // At least Safari 3+: "[object HTMLElementConstructor]"
+    var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+    var isIE = /*@cc_on!@*/false || document.documentMode;   // At least IE6
+
+    if(!(isFirefox || isSafari || isChrome)){
+      //$(location).attr('href', 'https://test.emorybubble.com/browser_unsupported');
+      return '/browser_unsupported';
+    }
+    else{
+      //console.log('Browser supported.');
+      return page;
+    }
   }
 });
 
@@ -247,7 +269,8 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'loginPage', 'welcomePage']});
+Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
+Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
 //Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 

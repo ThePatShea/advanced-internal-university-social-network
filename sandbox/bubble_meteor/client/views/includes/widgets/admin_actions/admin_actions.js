@@ -17,7 +17,7 @@ Template.adminActions.helpers({
 });
 
 Template.adminActions.events({
-	'click .demote-admin': function(){
+	'click .demote-admin': function(event){
 	// Disable the parent button
     event.stopPropagation();
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
@@ -36,7 +36,7 @@ Template.adminActions.events({
   },
 
   //This happens when admin leaves the bubble
-  'click .remove-admin': function() {
+  'click .remove-admin': function(event) {
   	// Disable the parent button
     event.stopPropagation();
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
@@ -80,8 +80,9 @@ Template.adminActions.events({
     }
   },
 
-  'click .accept': function(){
+  'click .accept': function(event){
     event.stopPropagation();
+    event.preventDefault();
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $addToSet: {'users.members': this._id},
@@ -92,8 +93,9 @@ Template.adminActions.events({
     createNewMemberUpdate(this._id);
   },
 
-  'click .deny': function(){
+  'click .deny': function(event){
     event.stopPropagation();
+    event.preventDefault();
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.applicants': this._id}
@@ -103,8 +105,9 @@ Template.adminActions.events({
     createRejectApplicationUpdate(this._id);
   },
 
-  'click .promote-member': function() {
+  'click .promote-member': function(event) {
     event.stopPropagation();
+    event.preventDefault();
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $addToSet: {'users.admins': this._id},
@@ -116,8 +119,9 @@ Template.adminActions.events({
     createMemberPromoteUpdate(this._id);
   },
 
-  'click .remove-member': function() {
+  'click .remove-member': function(event) {
     event.stopPropagation();
+    event.preventDefault();
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.members': this._id}
@@ -130,8 +134,9 @@ Template.adminActions.events({
     }
   },
 
-    'click .uninvite': function() {
+    'click .uninvite': function(event) {
     event.stopPropagation();
+    event.preventDefault();
     Bubbles.update({_id:Session.get('currentBubbleId')},
     {
       $pull: {'users.invitees': this._id}
