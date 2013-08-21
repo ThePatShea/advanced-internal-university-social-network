@@ -119,8 +119,10 @@ Template.exploreEditEvent.events({
       body: $('.cb-explore-edit-event-form > .body').val(),
       postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
       postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
+/*
       eventPhoto: editEventMainURL,
       retinaEventPhoto: editEventRetinaURL
+*/
     };
 
     /*if($('#eventPhoto').attr('src') != '/img/Event.jpg'){
