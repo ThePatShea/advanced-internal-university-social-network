@@ -190,10 +190,10 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 		};
 		Meteor.users.update(user._id, {$set: userProperties});
 
-		return [200, {'username': username}, null];
+		return [200];
 	}
 	else
 	{
-		return [403, "Password incorrect"];
+		return [403];
 	}
 });

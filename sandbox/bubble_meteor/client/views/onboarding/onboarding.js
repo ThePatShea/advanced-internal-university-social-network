@@ -42,6 +42,8 @@ Template.onboarding.events({
         Meteor.Router.to('dashboard');
       }
     });
+
+    Meteor.call("sendEmail", 'taggartbg@gmail.com', 'Welcome to Emory Bubble!', 'This is the body of the email');
   },
 
   'dragover .dropzone': function(evt){
