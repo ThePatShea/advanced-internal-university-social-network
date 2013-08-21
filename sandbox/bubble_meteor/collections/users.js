@@ -11,10 +11,14 @@ Meteor.users.deny({
 
 if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
-		if(user.username == 'campusbubble') {
+		if (user.username == 'campusbubble') {
                         user.profilePicture = '/img/letterprofiles/c.jpg';
 			user.userType = '4';
-		}else{
+		} else if (user.username == 'emorybubble') {
+                        user.profilePicture = '/img/letterprofiles/e.jpg';
+                        user.name = 'Emory Bubble';
+			user.userType = '1';
+		} else {
 			user.userType = '1';
 		}
 		return user;
