@@ -1,7 +1,7 @@
 Bubbles = new Meteor.Collection('bubbles');
 
 Bubbles.allow({
-   update: ownsBubble,
+   update: isConnectedToBubble,
    remove: ownsBubble
  });
 

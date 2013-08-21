@@ -37,6 +37,25 @@ ownsBubble = function(userId, doc, onChange) {
     || doc.users.admins, Meteor.userId());
 }
 
+isConnectedToBubble = function(userId, doc) {
+  if( Meteor.userId() ) {
+    var userId = Meteor.userId();
+    var bubble = Bubbles.findOne(doc._id);
+
+    if(
+      '3' == Meteor.user().userType
+      || _.contains(bubble.users.applicants, userId)
+      || _.contains(bubble.users.invitees, userId)
+      || _.contains(bubble.users.members, userId)
+      || _.contains(bubble.users.admins, userId)
+    ) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+}
+
 
 ownsExplore = function(userId, doc){
   return true;
