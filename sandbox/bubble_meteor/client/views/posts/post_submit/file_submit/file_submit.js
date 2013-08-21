@@ -3,7 +3,7 @@ Template.fileSubmit.events({
     evt.preventDefault();
     console.log('Submitting files.');
     //Google Analytics
-    _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);
+    _gaq.push(['_trackEvent', 'Post', 'Create File', $(evt.target).find('[name=name]').val()]);
 
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
