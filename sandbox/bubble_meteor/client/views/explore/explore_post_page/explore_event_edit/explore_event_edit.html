@@ -64,8 +64,8 @@
         <input class="required third-width column-second time" name="time" type="text" placeholder="Time? (ex: 5pm)*"/>
         <label class="third-width column-third" name="picture" type="label" data-toggle="collapse" data-target="#add-picture-dropzone">Change picture?</label>
       </div>
-      <canvas id="event-main-canvas" width="340" height="230" class="visible-0"></canvas>
-      <canvas id="event-retina-canvas" width="680" height="460" class="visible-0"></canvas>
+      <canvas id="edit-event-main-canvas" width="340" height="230" class="visible-0"></canvas>
+      <canvas id="edit-event-retina-canvas" width="680" height="460" class="visible-0"></canvas>
       <img class="visible-0" id="eventPhoto" />
       <img class="visible-0" id="eventRetinaPhoto" />
       <div class="collapse attach-files" id="add-picture-dropzone">
@@ -74,7 +74,7 @@
           <div class="dz-subtitle">or click here</div>
           <input class="file-chooser-invisible" name="filesToUpload[]" id="eventFilesToUpload" type="file" multiple="">
         </div>
-        <div class="crop-container" style="text-align: center;">
+        <div class="edit-crop-container" style="text-align: center;">
           <img class="crop"></img>
         </div>
       </div> 

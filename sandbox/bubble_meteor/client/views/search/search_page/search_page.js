@@ -14,8 +14,6 @@ Template.searchPage.rendered = function() {
 
   if($(window).width() < 768)
   {
-    $('.search-btn').removeClass('visible-0');
-    $('.search-btn').addClass('visible-1');
     $('.search-btn').bind("click", function(evt) {
       var searchText = $(".search-text").val();
       if (searchText == ""){

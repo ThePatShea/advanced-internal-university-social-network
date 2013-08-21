@@ -80,25 +80,12 @@ Template.userProfile.rendered = function() {
 	var mainURL;
 	var retinaURL;
 
-	$(window).setBreakpoints({
-	// use only largest available vs use all available
-	    distinct: true, 
-	// array of widths in pixels where breakpoints
-	// should be triggered
-	    breakpoints: [
-	    	768
-	    ] 
-	});
-	$(window).bind('exitBreakpoint768',function() {
-		$(window).unbind('exitBreakpoint768');
-		$(window).bind('enterBreakpoint768', function() {
-			Session.set("DisableCrop","");
-			//alert('enable crop');
-		});
+ 	if($(window).width() < 768)
+	{
 		Session.set("DisableCrop","1");
-		//alert('disable crop');
-	});
-	$(window).unbind('enterBreakpoint768');
+  	} else {
+		Session.set("DisableCrop","");
+	}
 };
 
 Template.userProfile.events({

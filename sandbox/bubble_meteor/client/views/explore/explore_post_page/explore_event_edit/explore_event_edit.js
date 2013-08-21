@@ -53,6 +53,8 @@ Template.exploreEditEvent.rendered = function(){
 	$('.cb-explore-edit-event-form > .body').val(event.body);
 	$("#eventPhoto").attr("src",this.eventPhoto);
 	$("eventRetinaPhoto").attr("src",this.eventRetinaPhoto);
+  editEventMainURL = this.eventPhoto;
+  editEventRetinaURL = this.eventRetinaPhoto;
     if (time) {
       var firstAlphabet  = parseInt(time[0]);
 
@@ -110,20 +112,21 @@ Template.exploreEditEvent.events({
     var dateTime = $('.cb-explore-edit-event-form > .cb-form-row > .date').val() + " " + $('.cb-explore-edit-event-form > .cb-form-row > .time').val();
 
     var eventAttributes = { 
+      author: Meteor.userId(),
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-edit-event-form > .first > .location').val(),
       name: $('.cb-explore-edit-event-form > .first > .title').val(),
       body: $('.cb-explore-edit-event-form > .body').val(),
       postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
       postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
-      //eventPhoto: $("#eventPhoto").attr("src"),
-      //retinaEventPhoto: $("#eventRetinaPhoto").attr("src")
+      eventPhoto: editEventMainURL,
+      retinaEventPhoto: editEventRetinaURL
     };
 
-    if($('#eventPhoto').attr('src') != '/img/Event.jpg'){
+    /*if($('#eventPhoto').attr('src') != '/img/Event.jpg'){
       eventAttributes.eventPhoto = $("#eventPhoto").attr("src");
       eventAttributes.retinaEventPhoto = $("#eventRetinaPhoto").attr("src");
-    }
+    }*/
 
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
@@ -160,24 +163,77 @@ Template.exploreEditEvent.events({
         //If the file dropped on the dropzone is an image then start processing it
         if (f.type.match('image.*')) {
           var reader = new FileReader();
-          var mainCanvas = document.getElementById('event-main-canvas');
-          var retinaCanvas = document.getElementById('event-retina-canvas');
-          var mainContext = mainCanvas.getContext('2d');
-          var retinaContext = retinaCanvas.getContext('2d');
-          var profileImage = new Image();
+          var editEventMainCanvas = document.getElementById('edit-event-main-canvas');
+          var editEventRetinaCanvas = document.getElementById('edit-event-retina-canvas');
+          var editEventMainContext = editEventMainCanvas.getContext('2d');
+          var editEventRetinaContext = editEventRetinaCanvas.getContext('2d');
+          var editEventImage = new Image();
+          var minX = 68;
+          var minY = 46;
 
           // Closure to capture the file information.
           reader.onload = (function(theFile) {
             return function(e) {
-                $(".cb-explore-edit-event-form .attach-files > .drop-zone").hide();
-                $(".cb-explore-edit-event-form > .attach-files > .crop-container .crop").attr("src", e.target.result);
-                profileImage.src = e.target.result;
-                cropArea = $('.cb-explore-edit-event-form > .attach-files > .crop-container .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: profileImage.height, imageWidth: profileImage.width, minWidth: '170', minHeight: '115', x1: '10', y1: '10', x2: '180', y2: '125', parent: "#add-picture", handles: true, onSelectChange: function(img, selection) {
-                  mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
-                  retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
-                  $("#eventPhoto").attr("src",mainCanvas.toDataURL());
-                  $("#eventRetinaPhoto").attr("src",retinaCanvas.toDataURL());
-                }});
+              $("#cb-form-container-edit-event > .cb-form > .attach-files > .drop-zone").hide();
+              $("#cb-form-container-edit-event > .cb-form > .attach-files > .drop-zone > .file-chooser-invisible").width(1);
+              $("#cb-form-container-edit-event > .cb-form > .attach-files > .drop-zone > .file-chooser-invisible").height(1);
+              $(".edit-crop-container > .crop").attr("src", e.target.result);
+              editEventImage.src = e.target.result;
+              editEventCropArea = $('.edit-crop-container > .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: editEventImage.height, imageWidth: editEventImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: "#cb-form-container-edit-event > .cb-form", handles: true,
+                onInit: function(img, selection) {
+                  editEventMainContext.drawImage(editEventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                  editEventRetinaContext.drawImage(editEventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                  editEventMainURL = editEventMainCanvas.toDataURL();
+                  editEventRetinaURL = editEventRetinaCanvas.toDataURL();
+                  if(Session.get("DisableCrop") == "1")
+                  {
+                    editEventCropArea.cancelSelection();
+                  }
+                }, onSelectChange: function(img, selection) {
+                  if(selection.width != 0)
+                  {
+                    editEventMainContext.drawImage(editEventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                    console.log(selection.y1);
+                    editEventRetinaContext.drawImage(editEventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                    editEventMainURL = editEventMainCanvas.toDataURL();
+                    editEventRetinaURL = editEventRetinaCanvas.toDataURL();
+                  }
+                  else
+                  {
+                    editEventCropArea.setSelection(10,10, (10+minX),(10+minY));
+                    editEventCropArea.setOptions({show: true});
+                    editEventCropArea.update();
+                  }
+                  //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                }, onSelectEnd: function(img, selection){
+                  if((selection.width < minX) || (selection.height < minY))
+                  {
+                    if((selection.x1 > eventImage.width-minX) || (selection.y1 > eventImage.height-minY))
+                    {
+                      if(selection.x1 < minX)
+                      {
+                        editEventCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                        editEventCropArea.update();
+                      }
+                      else if(selection.y1 < minY)
+                      {
+                        editEventCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                        editEventCropArea.update();
+                      }
+                      else
+                      {
+                        editEventCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
+                        editEventCropArea.update();
+                      }
+                    }
+                    else
+                    {
+                      editEventCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                      editEventCropArea.update();
+                    }
+                  }
+                }
+              });
             };
           })(f);
           reader.readAsDataURL(f);

@@ -1267,6 +1267,10 @@ wysiwyg-image(n)
       position     absolute
       bottom       20px
       right        20px
+      @media(min-width:768px)
+        display    none
+      @media(max-width:767px)
+        display    block
     .attach-files
       padding-top     30px
       &.no-padding
