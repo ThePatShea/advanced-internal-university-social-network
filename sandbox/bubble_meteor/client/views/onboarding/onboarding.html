@@ -1,4 +1,6 @@
 <template name="onboarding">
+
+{{#if isLoggedIn}}
   <div class="navbar navbar-onboarding">
     <div class="navbar-inner">
       <a class="cb-logo-main">
@@ -72,5 +74,7 @@
       </form>
     </div>
   </div>
-
+{{else}}
+  <div class="gif-loader-wrapper">{{> gifLoaderSite}}</div>
+{{/if}}
 </template>

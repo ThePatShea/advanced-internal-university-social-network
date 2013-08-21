@@ -3,3 +3,4 @@ server {
     server_name test.emorybubble.com;
     rewrite ^ https://$server_name$request_uri? permanent;
 }
+
