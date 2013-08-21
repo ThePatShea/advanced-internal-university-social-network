@@ -184,7 +184,7 @@ Meteor.Router.filters({
     }else if(Meteor.loggingIn()) {
       return 'loading';
     }else {
-      return 'welcome';
+      return 'welcomePage';
     }
   },
   'belongToBubble': function(page) {
