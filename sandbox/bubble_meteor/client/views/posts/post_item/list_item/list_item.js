@@ -42,7 +42,9 @@ Template.listItem.helpers({
 });
 
 Template.listItem.events({
-    'click .post-item' : function() {
+    'click .post-item' : function(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
       if(typeof this.bubbleId != 'undefined'){
         // Links to parent post if the post is a file attachment. Otherwise, links to the post itself.
           if (this.postType == 'file' && this.parent){
