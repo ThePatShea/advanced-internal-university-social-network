@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/test');
 var globalprofile = '';
 var json_globalprofile = '';
 
-var deployment_server = 'test.emorybubble.com';
+var deployment_server = 'www.emorybubble.com';
 
 function parseAttribute(attributeString){
   var i = attributeString.indexOf('":"');
