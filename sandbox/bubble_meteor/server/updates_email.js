@@ -19,7 +19,7 @@ if(Meteor.isServer){
   
   Meteor.startup(function () {
     process.env.MAIL_URL = 'smtp://no-reply%40thecampusbubble.com:u3nT8dAC@smtp.gmail.com:465/';
-
+    
     Meteor.setInterval(function(){
       //Checks if its 8am of Monday
       if(moment().day() == 1 && moment().hours() == 8 
@@ -62,7 +62,8 @@ if(Meteor.isServer){
             emailUpdateList[bubble.title] = contentList;
           });
           var user = Meteor.users.findOne(userId);
-          Meteor.call('sendEmail',  user.emails[0].address , 'Weekly Updates', emailUpdateList);
+          //Meteor.call('sendEmail',  user.emails[0].address , 'Weekly Updates', emailUpdateList);
+          //^^^^DISABLED^^^^^//
         });
       }
     },1000);

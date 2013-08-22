@@ -90,6 +90,10 @@ Template.userProfile.rendered = function() {
 
 Template.userProfile.events({
 
+	'click #btn1': function() {
+		Meteor.call("sendWelcomeEmail", Meteor.userId());
+	},
+
 	'click .removeCropTool': function() {
 		cropArea.cancelSelection();
 		//$(".crop").hide();
