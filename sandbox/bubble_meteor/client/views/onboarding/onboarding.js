@@ -43,7 +43,7 @@ Template.onboarding.events({
       }
     });
 
-    Meteor.call("sendEmail", 'taggartbg@gmail.com', 'Welcome to Emory Bubble!', 'This is the body of the email');
+    Meteor.call("sendWelcomeEmail", Meteor.userId());
   },
 
   'dragover .dropzone': function(evt){
@@ -176,4 +176,11 @@ Template.onboarding.rendered = function() {
     } else {
     Session.set("DisableCrop","");
   }
+}
+
+Template.onboarding.created = function() {
+  uid = Meteor.userId()
+  user = Meteor.users.findOne({_id: uid});
+  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
 }

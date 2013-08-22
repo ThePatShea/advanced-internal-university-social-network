@@ -40,6 +40,7 @@ Template.connectBubble.events({
         Meteor.call('acceptInvitation', this._id);
       }
       else{
+        Meteor.call('sendApplicantEmail', Meteor.userId(), this._id);
         Meteor.call('joinBubble', this._id);
       }
       

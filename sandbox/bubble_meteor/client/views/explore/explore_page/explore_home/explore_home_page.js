@@ -52,7 +52,7 @@ Template.explorePage.helpers({
 
   posts: function() {
     var explore = Explores.findOne(Session.get('currentExploreId'));
-    return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType})
+    return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} });
   }
 });
 

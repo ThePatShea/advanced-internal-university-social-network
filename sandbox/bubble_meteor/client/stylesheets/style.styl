@@ -760,6 +760,18 @@ opacity(n)
 .visible-false,
 .visible-0
   display                none
+
+.visible-desktop
+  @media (min-width: 768px)
+    display      block !important
+  @media (max-width: 767px)
+    display      none
+
+.visible-mobile
+  @media (min-width: 768px)
+    display      none
+  @media (max-width: 767px)
+    display      block
 /*****    Visibility    *****/
 /**********     Helpers     **********/
 
@@ -1629,6 +1641,56 @@ transform(args...)
   margin-top      40px
 /**********  bubble-users-list  **********/
 
+/**********  browser-icon  **********/
+.browser-icon-container
+  margin         20px 0
+  .browser-icon
+    width          100px
+    margin-right   20px
+    border-radius  10px
+    float          left
+    &:hover
+      background     main-light
+      .browser-lbl
+        color          white-light
+    .browser-img
+      width          100%
+    .browser-lbl
+      fontize(main, bold, uppercase, 12px)
+      color          main-light
+      text-align     center
+      width          100%
+/**********  browser-icon  **********/
+
+/**********  post-as-bubble-single  **********/
+.list-item-post-as
+  fontize(alt,regular,blank,13px)
+  color             white-xxdark
+  overflow          hidden
+  width             110px
+  height            18px
+
+.post-as-bubble-list
+  margin-right      15px
+  height            35px
+  width             35px
+  svg
+    height            35px
+    width             35px
+
+.post-as-bubble-single
+  position          relative
+  top               -2px
+  margin-right      15px
+  height            42px
+  width             42px
+  svg
+    height            42px
+    width             42px
+  
+/**********  post-as-bubble-single  **********/
+
+
 /***************  Multi-Purpose Elements   ***************/
 
 
@@ -1888,6 +1950,9 @@ navbar-height        =  60px
   std-white-light-fill       0
   main-dark-bg               0
 
+.username-toggle
+  @media (min-width: 768px)
+    border-left            1px solid navbar-border-color
 
 .navbar
   border-bottom          1px solid navbar-border-color
@@ -3343,7 +3408,6 @@ cover-btns-width-small  =  130px
     margin               40px 20px 20px 20px
 .dashboard-updates
   width               100%
-  max-height          (75*4)px
   margin-bottom       50px
   .dashboard-more-updates
     padding             2px 10px

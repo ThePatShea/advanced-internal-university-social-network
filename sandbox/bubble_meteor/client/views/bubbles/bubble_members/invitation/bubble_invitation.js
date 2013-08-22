@@ -165,7 +165,9 @@ Template.bubbleInvitation.events({
     usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
     userIdList = [];
     _.each(usernameList, function(username) {
-      userIdList.push(Meteor.users.findOne({username:username})._id);
+      tmp = Meteor.users.findOne({username:username})._id;
+      userIdList.push(tmp);
+      Meteor.call("sendInvitedEmail", Meteor.userId(), tmp, Session.get('currentBubbleId'));
     });
 
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
