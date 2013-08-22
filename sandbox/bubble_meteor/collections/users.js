@@ -13,6 +13,7 @@ if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
 		if (user.username == 'campusbubble') {
                         user.profilePicture = '/img/letterprofiles/c.jpg';
+                        user.name = 'Campus Bubble';
 			user.userType = '4';
 		} else if (user.username == 'emorybubble') {
                         user.profilePicture = '/img/letterprofiles/e.jpg';
