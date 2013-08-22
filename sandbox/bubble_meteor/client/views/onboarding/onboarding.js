@@ -177,3 +177,10 @@ Template.onboarding.rendered = function() {
     Session.set("DisableCrop","");
   }
 }
+
+Template.onboarding.created = function() {
+  uid = Meteor.userId()
+  user = Meteor.users.findOne({_id: uid});
+  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+}
