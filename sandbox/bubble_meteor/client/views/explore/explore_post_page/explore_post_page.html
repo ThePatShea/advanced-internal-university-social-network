@@ -56,14 +56,20 @@
         {{/if}}
      {{/if}}
       <div class="post-heading">
+      {{#if postedAsUser}}
         <a href="{{userProfilePath this.userId}}">
           <div class="author-pic">
             <div class="bubble-bg">{{> icon-bubble}}</div>
             <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
           </div>
         </a>
+      {{else}}
+        <div class="pull-left category-{{getPostAsBubbleCategory}}-fill post-as-bubble-single">
+          {{> icon-bubble}}
+        </div>
+      {{/if}}
         <div class="name">{{decodeURI name}}</div>
-        <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
+        <div class="subtitle">posted {{timestampToFromNow submitted}} by {{displayName}}</div>
       </div>
 
       {{> postAttributes}}
