@@ -8,7 +8,7 @@ Meteor.methods({
 		});
 		//var res = HTTP.post("http://httpbin.org/post", {'invokerId': flag.invokerId, 'invokerName': flag.invokerName, 'bubbleId': flag.bubbleId, 'bubbleName': bubble.name, 'postId': flag.postId, 'to': to});
 		var retVal = {'invokerId': flag.invokerId, 'invokerName': flag.invokerName, 'bubbleId': flag.bubbleId, 'bubbleName': bubble.name, 'postId': flag.postId, 'to': to.toString()};
-		Meteor.http.post("HOSTNAME/sendFlagEmail",//http://httpbin.org/post",
+		Meteor.http.post("https://login.emorybubble.com/sendFlagEmail",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);
@@ -19,7 +19,7 @@ Meteor.methods({
 		var user = Meteor.users.findOne({_id: userId});
 		//var res = HTTP.post("http://httpbin.org/post", {'userId': userId, 'name': user.name, 'to': user.emails[0].address});
 		var retVal = {'userId': userId, 'name': user.name, 'to': user.emails[0].address};
-		Meteor.http.post("HOSTNAME/sendWelcomeEmail",//http://httpbin.org/post",
+		Meteor.http.post("https://login.emorybubble.com/sendWelcomeEmail",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);
@@ -31,7 +31,7 @@ Meteor.methods({
 		var user = Meteor.users.findOne({_id: userId});
 		var bubble = Bubbles.findOne({_id: bubbleId});
 		var retVal = {'currentUserId': currentUserId, 'currentUserName': currentUser.name, 'userId': userId, 'bubbleId': bubbleId, 'name': user.name, 'bubbleName': bubble.title, 'to': user.emails[0].address};
-		Meteor.http.post("HOSTNAME/sendInvitedEmail",//http://httpbin.org/post",
+		Meteor.http.post("https://login.emorybubble.com/sendInvitedEmail",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);
@@ -51,7 +51,7 @@ Meteor.methods({
 		var retVal = {'userId': userId, 'name': user.name, 'bubbleId': bubbleId, 'bubbleName': bubble.title, 'to': adminEmails.toString()};
 
 		//var res = HTTP.post("http://httpbin.org/post", {'userId': userId, 'name': user.name, 'bubbleId': bubbleId, 'bubbleName': bubble.title, 'to': adminEmails})
-		Meteor.http.post("HOSTNAME/sendApplicantEmail",//http://httpbin.org/post",
+		Meteor.http.post("https://login.emorybubble.com/sendApplicantEmail",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);
