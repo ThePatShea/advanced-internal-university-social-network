@@ -760,6 +760,18 @@ opacity(n)
 .visible-false,
 .visible-0
   display                none
+
+.visible-desktop
+  @media (min-width: 768px)
+    display      block
+  @media (max-width: 767px)
+    display      none
+
+.visible-mobile
+  @media (min-width: 768px)
+    display      none
+  @media (max-width: 767px)
+    display      block
 /*****    Visibility    *****/
 /**********     Helpers     **********/
 
@@ -1910,6 +1922,9 @@ navbar-height        =  60px
   std-white-light-fill       0
   main-dark-bg               0
 
+.username-toggle
+  @media (min-width: 768px)
+    border-left            1px solid navbar-border-color
 
 .navbar
   border-bottom          1px solid navbar-border-color
