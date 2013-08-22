@@ -83,13 +83,9 @@ Deps.autorun(function() {
 
 
 	// Updates Related Subscriptions
-	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', function() {
-            setTimeout(function(){
-              Session.set('siteLoading', 'false');  // Handles site loading gif
-            },2000);
-            Session.get('searchText');
-            Meteor.userId();
-          }, 1);
+
+	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+
 /*
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', function() {
                   setTimeout(function(){
