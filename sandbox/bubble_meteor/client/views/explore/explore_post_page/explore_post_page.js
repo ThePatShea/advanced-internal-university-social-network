@@ -1,4 +1,12 @@
 Template.explorePostPage.helpers({
+    displayName: function() {
+      if (this.postAsType == "user") {
+        return this.author;
+      } else if (this.postAsType == "bubble") {
+        var bubble = Bubbles.findOne(this.postAsId);
+        return bubble.title;
+      }
+    },
     isFlagged: function() {
       if (this.flagged)
         return true;
