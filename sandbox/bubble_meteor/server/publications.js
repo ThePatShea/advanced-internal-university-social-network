@@ -1,3 +1,33 @@
+// New Publications for fixing load times
+  Meteor.publish('dashboardCounts', function() {
+    var currentUserId  =  Meteor.userId();
+    
+    var bubblesCount   =  Bubbles.find(
+      {$or: [
+        {'users.members': currentUserId},
+        {'users.admins': currentUserId}
+      ]}, {
+      fields: {
+        '_id': 1,
+      }
+    });
+
+
+
+    var eventsCount    =  Posts.find({userId: currentUserId, postType: 'event'}, {fields: {'_id': 1}});
+    var postsCount     =  Posts.find({userId: currentUserId}, {fields: {'_id': 1}});
+    var commentsCount  =  Comments.find({userId: Meteor.userId()}, {fields: {'_id': 1}});
+    return [bubblesCount, eventsCount, postsCount, commentsCount];
+  });
+
+  Meteor.publish('dashboardComments', function() {
+    var commentsCount  =  Comments.find({userId: Meteor.userId()}, {fields: {'_id': 1}});
+    return commentsCount;
+  });
+
+
+
+
 // This method returns a list of bubbleIds of the bubble that the user belongs to
 getBubbleId =  function(userId) {
   if(userId){
@@ -249,19 +279,17 @@ getBubbleId =  function(userId) {
         }
       });
   });
-  Meteor.publish('joinedBubbles', function(userId, limit) {
+  Meteor.publish('sidebarBubbles', function(userId) {
     return Bubbles.find({
       $or: [{
         'users.members': userId}, 
         {'users.admins': userId}
         ]}, {
       sort: {submitted: -1}, 
-      limit: limit,
       fields: {
-        'coverPhoto': 0,
-        'retinaCoverPhoto': 0,
-        'profilePicture': 0, 
-        'retinaProfilePicture': 0
+        '_id': 1,
+        'title': 1,
+        'category': 1
       }
     });
   });
@@ -287,13 +315,14 @@ getBubbleId =  function(userId) {
         'description': 1,
         'exploreIcon': 1,
         'exploreType': 1,
-        'coverPhoto': 1, 
-        'retunaCoverPhoto': 1
       }
     });
   });
   Meteor.publish('currentExplore', function(exploreId){
-    return Posts.find({'exploreId': exploreId});
+    return Posts.find({'exploreId': exploreId}, {fields: {
+      'coverPhoto': 0,
+      'retinaCoverPhoto': 0
+    } });
   });
   Meteor.publish('fiveExplorePosts', function() {
     return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
