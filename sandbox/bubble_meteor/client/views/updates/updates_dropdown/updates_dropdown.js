@@ -1,3 +1,8 @@
+Template.updatesDropdown.rendered = function() {
+  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+}
+
+
 Template.updatesDropdown.helpers({
   updates: function() {
     return Updates.find({userId: Meteor.userId()});
