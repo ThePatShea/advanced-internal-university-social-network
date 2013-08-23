@@ -52,7 +52,7 @@ Deps.autorun(function() {
 
 	// Posts Related Subscriptions
 		Meteor.subscribe('singlePost', Session.get('currentPostId'));
-		eventsHandle = Meteor.subscribeWithPagination('events', Session.get('currentBubbleId'), 10);
+	//	eventsHandle = Meteor.subscribeWithPagination('events', Session.get('currentBubbleId'), 10);
 		discussionsHandle = Meteor.subscribeWithPagination('discussions', Session.get('currentBubbleId'), 10);
 		filesHandle = Meteor.subscribeWithPagination('files', Session.get('currentBubbleId'), 10);
 		if(Meteor.user() && '3' == Meteor.user().userType){
@@ -84,7 +84,7 @@ Deps.autorun(function() {
 
 	// Updates Related Subscriptions
 
-	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+	  //mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
 
 /*
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', function() {
