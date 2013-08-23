@@ -1,7 +1,10 @@
 // Handles site loading gif
     Meteor.startup(function () {
-      //Session.set('siteLoading', 'true');
-      Session.set('siteLoading', 'false');
+      Session.set('siteLoading', 'true');
+
+      setTimeout(function() {
+        Session.set('siteLoading', 'false');
+      }, 1000);
     });
 
 
