@@ -80,6 +80,7 @@ Meteor.Router.add('/testauth', 'POST', function(){
 			//'secret': secret
 		}
 
+    Meteor.call("addToIndex", user._id, firstName + ' ' + lastName);
 		Meteor.users.update(user._id, {$set: userProperties});
 	}
 	else{
@@ -162,6 +163,7 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 		if(!user)
 		{
 			Meteor.users.insert({'username': username})
+      var addToIndex = true;
 		}
 		else
 		{
@@ -188,7 +190,14 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 			'retinaProfilePicture': retinaProfilePicture,
 			'neverLoggedIn': neverLoggedIn
 		};
+
+    if(addToIndex == true)
+    {
+      Meteor.call("addToIndex", user._id, name);
+      console.log("ADDED TO INDEX: " + name);
+    }
 		Meteor.users.update(user._id, {$set: userProperties});
+
 
 		return [200, "Success"];
 	}
