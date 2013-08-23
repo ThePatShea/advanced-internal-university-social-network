@@ -68,6 +68,7 @@ Meteor.methods({
 	sendWelcomeEmail: function(userId) {
 		var user = Meteor.users.findOne({_id: userId});
 		var name = user.name;
+		var fname = user.name.substring(0,user.name.indexOf(' '));
 		var to = user.emails[0].address;
 		//console.log("SENT TO: " + to + " | NAME: " + name + " | USERID: " + userId);
 		var retVal = {
@@ -90,6 +91,10 @@ Meteor.methods({
 			            "name": "NAME",
 			            "content": name
 			        },
+			       	{
+			        	"name": "FNAME",
+			        	"content": fname
+			       	},
 			       	{
 			        	"name": "USERID",
 			        	"content": userId
@@ -116,6 +121,7 @@ Meteor.methods({
 		var bubble = Bubbles.findOne({_id: bubbleId});
 		var currentUserName = currentUser.name;
 		var name = user.name;
+		var fname = user.name.substring(0,user.name.indexOf(' '));
 		var bubbleName = bubble.title;
 		var to = user.emails[0].address;
 		if(typeof to == undefined)
@@ -154,6 +160,10 @@ Meteor.methods({
 			       	{
 			        	"name": "INVITEENAME",
 			        	"content": name
+			       	},
+			       	{
+			        	"name": "INVITEEFNAME",
+			        	"content": fname
 			       	},
 			       	{
 			        	"name": "BUBBLEID",
@@ -207,7 +217,7 @@ Meteor.methods({
 			            "content": userId
 			        },
 			       	{
-			        	"name": "USERNAME",
+			        	"name": "NAME",
 			        	"content": name
 			       	},
 			       	{
