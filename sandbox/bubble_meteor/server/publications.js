@@ -215,7 +215,10 @@ getBubbleId =  function(userId) {
 
 // Bubbles Related Publications
   Meteor.publish('singleBubble', function(bubbleId){
-  	return bubbleId && Bubbles.find(bubbleId);
+  	return bubbleId && Bubbles.find(bubbleId, { fields: {
+        'coverPhoto': 0,
+        'retinaCoverPhoto': 0,
+      } });
   });
   Meteor.publish('bubbles', function(limit) {
     return Bubbles.find({}, {

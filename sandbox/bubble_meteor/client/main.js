@@ -19,7 +19,7 @@ Deps.autorun(function() {
                 }, 10);
 		Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
 		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
-		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
+		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20); //TODO: Make this infinite scroll and put it in sidebar
 		// Meteor.subscribe('allBubbles', Meteor.userId());
 
 	// Bubble Related Subscriptions
@@ -28,19 +28,19 @@ Deps.autorun(function() {
 
 
 	// Comments Related Subscriptions
-		Meteor.subscribe('comments', Session.get('currentPostId'));
-		commentsHandle = Meteor.subscribe('comments', Session.get('currentPostId'), Meteor.userId());
-		Meteor.subscribe('userComments',Meteor.userId());
+		//Meteor.subscribe('comments', Session.get('currentPostId'));
+		//commentsHandle = Meteor.subscribe('comments', Session.get('currentPostId'), Meteor.userId());
+		Meteor.subscribe('userComments',Meteor.userId()); //TODO: Move this to dashboard
 
 
 	// Meteor Users Related Subscriptions 
 		//usersListHandle = Meteor.subscribeWithPagination('findUsersByName', Session.get('selectedUsername'), 10);
 		Meteor.subscribe('relatedUsers', Session.get('currentBubbleId'), Session.get('currentPostId'), 
-												Session.get('inviteeList'+Session.get('currentBubbleId')));
+		Session.get('inviteeList'+Session.get('currentBubbleId')));
 		Meteor.subscribe('singleUser', Meteor.userId());
 		Meteor.subscribe('singleUser', Session.get('selectedUserId'));
 		Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
-    	Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
+    		Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
 		Meteor.subscribe('authenticatedUser', Session.get('secret'));
 		//Level 3 users need to have access to all users for analytics
 		if(Meteor.user() && Meteor.user().userType == '3'){
@@ -51,10 +51,10 @@ Deps.autorun(function() {
 
 
 	// Posts Related Subscriptions
-		Meteor.subscribe('singlePost', Session.get('currentPostId'));
-		eventsHandle = Meteor.subscribeWithPagination('events', Session.get('currentBubbleId'), 10);
-		discussionsHandle = Meteor.subscribeWithPagination('discussions', Session.get('currentBubbleId'), 10);
-		filesHandle = Meteor.subscribeWithPagination('files', Session.get('currentBubbleId'), 10);
+	//	Meteor.subscribe('singlePost', Session.get('currentPostId'));
+	//	eventsHandle = Meteor.subscribeWithPagination('events', Session.get('currentBubbleId'), 10);
+	//	discussionsHandle = Meteor.subscribeWithPagination('discussions', Session.get('currentBubbleId'), 10);
+	//	filesHandle = Meteor.subscribeWithPagination('files', Session.get('currentBubbleId'), 10);
 		if(Meteor.user() && '3' == Meteor.user().userType){
 			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
@@ -84,7 +84,7 @@ Deps.autorun(function() {
 
 	// Updates Related Subscriptions
 
-	  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+	  //mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
 
 /*
 		searchBubblesHandle = Meteor.subscribeWithPagination('searchBubbles', function() {

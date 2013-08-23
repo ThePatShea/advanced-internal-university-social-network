@@ -1,3 +1,4 @@
+/*
 Template.bubbleCover.rendered = function() {
   $(".cover-pic").bind('load', function() {
     setTimeout(function(){
@@ -5,6 +6,7 @@ Template.bubbleCover.rendered = function() {
     },500)
   });
 }
+*/
 
 
 Template.bubbleCover.helpers({
