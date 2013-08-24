@@ -1,4 +1,17 @@
 Template.bubbleEdit.events({
+  'click .select-bubble-type > .normal': function(evt) {
+    evt.preventDefault();
+    $("input[name=bubbleType]").val("normal");
+    selectedBubbleType = "normal";
+    $(".select-bubble-type > .super").removeClass("active-true");
+    $(".select-bubble-type > .normal").addClass("active-true");
+  },
+  'click .select-bubble-type > .super': function(evt) {
+    evt.preventDefault();
+    $("input[name=bubbleType]").val("super");
+    $(".select-bubble-type > .normal").removeClass("active-true");
+    $(".select-bubble-type > .super").addClass("active-true");
+  }
   'click .bubble-edit > .cb-submit-container > .cb-submit': function(e) {
     e.preventDefault();
     
@@ -11,7 +24,8 @@ Template.bubbleEdit.events({
       title: $('.bubble-edit > .first > .title').val(),
       description: $('.cb-form > .wysiwyg_group > .wysiwyg').html(),
       category: $('.bubble-edit > .cb-form-row > .bubble-category > .category').val(),
-      lastUpdated: new Date().getTime()
+      lastUpdated: new Date().getTime(),
+      bubbleType: $('.cb-form').find('[name=bubbleType]').val(),
     }
 
 
