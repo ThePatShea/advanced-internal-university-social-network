@@ -1,14 +1,64 @@
 Meteor.methods({
 	sendFlagEmail: function(flag) {
 		var bubble = Bubbles.findOne({_id: flag.bubbleId});
+		var post = Posts.findOne({_id: flag.postId});
 		var moderatorList = Meteor.users.find({'userType': '3'}).fetch();
 		var to = [];
 		_.each(moderatorList, function(i) {
-			to.push(i.emails[0].address);
+			to.push({"email": i.emails[0].adddress, "name": "Bubble Moderator"});
 		});
-		//var res = HTTP.post("http://httpbin.org/post", {'invokerId': flag.invokerId, 'invokerName': flag.invokerName, 'bubbleId': flag.bubbleId, 'bubbleName': bubble.name, 'postId': flag.postId, 'to': to});
-		var retVal = {'invokerId': flag.invokerId, 'invokerName': flag.invokerName, 'bubbleId': flag.bubbleId, 'bubbleName': bubble.name, 'postId': flag.postId, 'to': to.toString()};
-		Meteor.http.post("https://login.emorybubble.com/sendFlagEmail",//http://httpbin.org/post",
+		//var retVal = {'invokerId': flag.invokerId, 'invokerName': flag.invokerName, 'bubbleId': flag.bubbleId, 'bubbleName': bubble.name, 'postId': flag.postId, 'to': to.toString()};
+		var invokerId = flag.invokerId;
+		var invokerName = flag.invokerName;
+		var bubbleId = flag.bubbleId;
+		var bubbleName = bubble.title;
+		var postId = flag.postId;
+		var postName = post.name;
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "cb-flag-email",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": to,
+			    "global_merge_vars": [
+			        {
+			            "name": "INVOKERID",
+			            "content": invokerId
+			        },
+			       	{
+			        	"name": "INVOKERNAME",
+			        	"content": invokerName
+			       	},
+			       	{
+			        	"name": "BUBBLEID",
+			        	"content": bubbleId
+			       	},
+			       	{
+			        	"name": "BUBBLENAME",
+			        	"content": bubbleName
+			       	},
+			       	{
+			        	"name": "POSTID",
+			        	"content": postId
+			       	},
+			       	{
+			        	"name": "POSTNAME",
+			        	"content": postName
+			       	}
+			    ],
+			    tags: ["sendFlagEmail"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);
@@ -17,10 +67,49 @@ Meteor.methods({
 	},
 	sendWelcomeEmail: function(userId) {
 		var user = Meteor.users.findOne({_id: userId});
-		//var res = HTTP.post("http://httpbin.org/post", {'userId': userId, 'name': user.name, 'to': user.emails[0].address});
-		var retVal = {'userId': userId, 'name': user.name, 'to': user.emails[0].address};
-		Meteor.http.post("https://login.emorybubble.com/sendWelcomeEmail",//http://httpbin.org/post",
-			{"data": retVal},
+		var name = user.name;
+		var fname = user.name.substring(0,user.name.indexOf(' '));
+		var to = user.emails[0].address;
+		//console.log("SENT TO: " + to + " | NAME: " + name + " | USERID: " + userId);
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "cb-welcome-email",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": [
+			        {
+			          "email": to,
+			          "name": name
+			        }
+			    ],
+			     "global_merge_vars": [
+			        {
+			            "name": "NAME",
+			            "content": name
+			        },
+			       	{
+			        	"name": "FNAME",
+			        	"content": fname
+			       	},
+			       	{
+			        	"name": "USERID",
+			        	"content": userId
+			       	}
+			    ],
+			    tags: ["sendWelcomeEmail"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
+			{data: retVal},
 			function(err, res) {
 				console.log(res);
 			}
@@ -30,8 +119,70 @@ Meteor.methods({
 		var currentUser = Meteor.users.findOne({_id: currentUserId});
 		var user = Meteor.users.findOne({_id: userId});
 		var bubble = Bubbles.findOne({_id: bubbleId});
-		var retVal = {'currentUserId': currentUserId, 'currentUserName': currentUser.name, 'userId': userId, 'bubbleId': bubbleId, 'name': user.name, 'bubbleName': bubble.title, 'to': user.emails[0].address};
-		Meteor.http.post("https://login.emorybubble.com/sendInvitedEmail",//http://httpbin.org/post",
+		var currentUserName = currentUser.name;
+		var name = user.name;
+		var fname = user.name.substring(0,user.name.indexOf(' '));
+		var bubbleName = bubble.title;
+		var to = user.emails[0].address;
+		if(typeof to == undefined)
+		{
+			return "No Email Address for invited user";
+		}
+		//var retVal = {'currentUserId': currentUserId, 'currentUserName': currentUser.name, 'userId': userId, 'bubbleId': bubbleId, 'name': user.name, 'bubbleName': bubble.title, 'to': user.emails[0].address};
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",//c4HA5dUtFK1IjN01VjjBKw
+			"template_name": "cb-invited-email",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": [
+			        {
+			          "email": to,
+			          "name": name
+			        }
+			    ],
+			     "global_merge_vars": [
+			        {
+			            "name": "INVITERID",
+			            "content": currentUserId
+			        },
+			       	{
+			        	"name": "INVITERNAME",
+			        	"content": currentUserName
+			       	},
+			       	{
+			        	"name": "INVITEEID",
+			        	"content": userId
+			       	},
+			       	{
+			        	"name": "INVITEENAME",
+			        	"content": name
+			       	},
+			       	{
+			        	"name": "INVITEEFNAME",
+			        	"content": fname
+			       	},
+			       	{
+			        	"name": "BUBBLEID",
+			        	"content": userId
+			       	},
+			       	{
+			        	"name": "BUBBLENAME",
+			        	"content": bubbleName
+			       	}
+			    ],
+			    tags: ["sendInvitedEmail"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);
@@ -42,16 +193,51 @@ Meteor.methods({
 		var user = Meteor.users.findOne({_id: userId});
 		var bubble = Bubbles.findOne({_id: bubbleId});
 		var adminIds = bubble.users.admins;
-		var adminEmails = [];
+		var name = user.name;
+		var bubbleName = bubble.title;
+		var to = [];
 
 		_.each(adminIds, function(i) {
 			tmp = Meteor.users.findOne({_id: i});
-			adminEmails.push(tmp.emails[0].address);
+			to.push({"email": tmp.emails[0].address, "name": "Bubble Admin"});
 		});
-		var retVal = {'userId': userId, 'name': user.name, 'bubbleId': bubbleId, 'bubbleName': bubble.title, 'to': adminEmails.toString()};
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "cb-applicant-email",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": to,
+			     "global_merge_vars": [
+			        {
+			            "name": "USERID",
+			            "content": userId
+			        },
+			       	{
+			        	"name": "NAME",
+			        	"content": name
+			       	},
+			       	{
+			        	"name": "BUBBLEID",
+			        	"content": bubbleId
+			       	},
+			       	{
+			        	"name": "BUBBLENAME",
+			        	"content": bubbleName
+			       	}
+			    ],
+			    tags: ["sendApplicantEmail"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
 
-		//var res = HTTP.post("http://httpbin.org/post", {'userId': userId, 'name': user.name, 'bubbleId': bubbleId, 'bubbleName': bubble.title, 'to': adminEmails})
-		Meteor.http.post("https://login.emorybubble.com/sendApplicantEmail",//http://httpbin.org/post",
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
 			{"data": retVal},
 			function(err, res) {
 				console.log(res);

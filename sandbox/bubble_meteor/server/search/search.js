@@ -54,5 +54,12 @@ Meteor.methods({
 				retVal.push(res[i].ref)
 		}
 		return retVal;
+	},
+	addToIndex: function(id, name) {
+		var tmp = {
+			"name": name,
+			"id": id
+		};
+		idx.add(tmp);
 	}
 });
