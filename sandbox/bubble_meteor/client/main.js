@@ -1,4 +1,5 @@
 // Handles site loading gif
+/*
     Meteor.startup(function () {
       Session.set('siteLoading', 'true');
 
@@ -6,7 +7,7 @@
         Session.set('siteLoading', 'false');
       }, 1000);
     });
-
+*/
 
 
 // Bubble Related Subscriptions
@@ -70,7 +71,7 @@ Deps.autorun(function() {
 			flaggedPostsHandle = Meteor.subscribeWithPagination('flaggedPosts',10);
 		}
 		//Meteor.subscribe('attendingEvents', Meteor.userId());
-                //Meteor.subscribe('fiveExplorePosts');
+                Meteor.subscribe('fiveExplorePosts');
 
 
 	// Retrieves searched Posts
