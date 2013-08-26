@@ -1,3 +1,4 @@
+/*
 // New Publications for fixing load times
   Meteor.publish('dashboardCounts', function() {
     var currentUserId  =  Meteor.userId();
@@ -46,6 +47,7 @@ getBubbleId =  function(userId) {
     var postsList = _.pluck(updates,'postId');
     return Posts.find({_id: {$in: postsList}});
   });
+//*/
   Meteor.publish('events', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'event'}, {
       sort: {submitted: -1},
@@ -92,7 +94,8 @@ getBubbleId =  function(userId) {
         'retinaEventPhoto': 0
       }
     });
-  })
+  });
+  
   //This Publication allows normal user to view all posts during searching
   Meteor.publish('searchEvents', function(searchText, userId, limit) {
     return Posts.find(
@@ -279,20 +282,24 @@ getBubbleId =  function(userId) {
         }
       });
   });
-  Meteor.publish('sidebarBubbles', function(userId) {
-    return Bubbles.find({
-      $or: [{
-        'users.members': userId}, 
-        {'users.admins': userId}
-        ]}, {
-      sort: {submitted: -1}, 
-      fields: {
-        '_id': 1,
-        'title': 1,
-        'category': 1
-      }
-    });
+
+Meteor.publish('sidebarBubbles', function(userId) {
+  return Bubbles.find({
+      $or: [
+        {'users.members': userId}, 
+        {'users.admins': userId} 
+      ]
+    }, { 
+         fields: {
+          'coverPhoto': 0,
+          'retinaCoverPhoto': 0,
+          'profilePicture': 0,
+          'retinaProfilePicture': 0,
+         },
+    sort: {submitted: -1}, 
   });
+});
+
   Meteor.publish('invitedBubbles', function(userId, limit) {
     return Bubbles.find({'users.invitees':userId}, {
       sort: {submitted: -1}, 
@@ -342,6 +349,7 @@ getBubbleId =  function(userId) {
       }
     });
   }); 
+
   Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
     if (!usernameList) {
       usernameList = [];
@@ -371,6 +379,7 @@ getBubbleId =  function(userId) {
       });
     }
   });
+
   Meteor.publish("findUsersByName", function(username, limit) {
     var search_name = new RegExp(username,'i');
     var search_query = {username: search_name, userType: {$nin: ['4']}};
@@ -386,6 +395,7 @@ getBubbleId =  function(userId) {
       }
     });
   });
+
   Meteor.publish('findUsersById', function(userIdList) {
     if(userIdList){
       return Meteor.users.find({_id: {$in: userIdList}}, {
@@ -400,6 +410,7 @@ getBubbleId =  function(userId) {
       });
     }
   });
+
   Meteor.publish('singleUser', function(userId) { 
     return Meteor.users.find({_id: userId}, {
       fields: {
@@ -416,6 +427,7 @@ getBubbleId =  function(userId) {
       }
     });
   });
+
   Meteor.publish('authenticatedUser', function(secret){
     return Meteor.users.find({'secret': secret}, {
       fields: {
@@ -446,3 +458,4 @@ getBubbleId =  function(userId) {
   Meteor.publish('allUserlogs', function(limit) {
     return Userlogs.find({}, {limit: limit});
   });
+

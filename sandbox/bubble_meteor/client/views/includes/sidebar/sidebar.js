@@ -1,3 +1,5 @@
+Meteor.subscribe('sidebarBubbles', Meteor.userId()); //TODO: Make this infinite scroll and put it in sidebar. TODO: Move this to sidebar.js
+
 Template.sidebar.helpers({
     sidebarOpen            : function() {
       return Session.get('sidebarOpen');

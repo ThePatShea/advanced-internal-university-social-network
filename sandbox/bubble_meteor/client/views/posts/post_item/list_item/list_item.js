@@ -21,12 +21,15 @@ Template.listItem.helpers({
       }
     },
     displayName: function() {
+      /*
       if (this.postAsType == "user") {
         return this.author;
       } else if (this.postAsType == "bubble") {
         var bubble = Bubbles.findOne(this.postAsId);
         return bubble.title;
-      }
+      }*/
+
+      return "TEST DISPLAY NAME";
     },
     isGoing : function() {
       return _.contains(this.attendees,Meteor.user().username)
