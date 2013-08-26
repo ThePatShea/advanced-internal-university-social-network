@@ -38,7 +38,9 @@
 <body>
   {{> googleAnalytics}}
    
-  <div class="gif-loader-wrapper visible-{{siteLoading}}">{{> gifLoaderSite}}</div>
+  {{#unless isLoggedIn}}
+    <div class="gif-loader-wrapper">{{> gifLoaderSite}}</div>
+  {{/unless}}
 
   <div class="viewport">
     <div class="frame">
