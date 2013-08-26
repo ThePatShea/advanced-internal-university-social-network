@@ -6,6 +6,21 @@ Template.searchUsers.created = function() {
   Session.set('typing', 'false');
 }
 
+Template.searchUsers.events({
+  "click .search-btn": function(evt){
+    Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+      if(err) {
+        console.log(err);
+      } else {
+        Session.set('typing', 'false');
+        searchResponse = true;
+        console.log("RE: sponse");
+        Session.set('selectedUserIdList', res);
+      }
+    });
+  }
+})
+
 Template.searchUsers.rendered = function(){
   //To set header as active
   Session.set('searchCategory', 'users');
@@ -17,7 +32,9 @@ Template.searchUsers.rendered = function(){
       }
     }
   });
-
+  
+  //DO NOT DELETE UNTIL YOU ASK TAGGART//
+  /*
   $(".search-text").unbind("propertychange keyup input paste");
   $(".search-text").bind("keydown", function(evt) {
     Session.set('typing', 'true');
@@ -37,6 +54,7 @@ Template.searchUsers.rendered = function(){
         });
       }, 500);
   });
+  */
 }
 
 Template.searchUsers.helpers({
