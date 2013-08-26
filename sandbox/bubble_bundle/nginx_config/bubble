@@ -1,5 +1,6 @@
 server {
     listen      80;
-    server_name test.emorybubble.com;
+    server_name www.emorybubble.com;
     rewrite ^ https://$server_name$request_uri? permanent;
 }
+

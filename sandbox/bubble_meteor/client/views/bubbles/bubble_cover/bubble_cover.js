@@ -1,3 +1,4 @@
+/*
 Template.bubbleCover.rendered = function() {
   $(".cover-pic").bind('load', function() {
     setTimeout(function(){
@@ -5,6 +6,7 @@ Template.bubbleCover.rendered = function() {
     },500)
   });
 }
+*/
 
 
 Template.bubbleCover.helpers({
@@ -33,6 +35,7 @@ Template.bubbleCover.events({
   'click .join-apply': function() {
     //Google Analytics
     _gaq.push(['_trackEvent', 'Bubble', 'Join Bubble', this.title]);
+    Meteor.call('sendApplicantEmail', Meteor.userId(), this._id);
     Meteor.call('joinBubble', Session.get('currentBubbleId'));
   },
   'click .cancel-apply': function() {

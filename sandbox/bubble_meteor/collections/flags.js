@@ -18,6 +18,8 @@ Meteor.methods({
     // Creates the update when the flag object is created
     createPostFlagUpdate(flag);
 
+    Meteor.call("sendFlagEmail",flag);
+
     return flag;
   },
   resolveFlag: function(flag){

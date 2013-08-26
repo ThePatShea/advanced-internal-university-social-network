@@ -94,10 +94,10 @@ Template.bubbleEdit.events({
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
               return function(e) {
-                  $(".bubble-edit > .attach-profile-photo > .drop-zone").hide();
-                  $(".bubble-edit > .attach-profile-photo > .drop-zone > .file-chooser-invisible").width(1);
-                  $(".bubble-edit > .attach-profile-photo > .drop-zone > .file-chooser-invisible").height(1);
-                  $(".crop-profile > .crop").attr("src", e.target.result);
+                $(".bubble-edit > .attach-profile-photo > .drop-zone").hide();
+                $(".bubble-edit > .attach-profile-photo > .drop-zone > .file-chooser-invisible").width(1);
+                $(".bubble-edit > .attach-profile-photo > .drop-zone > .file-chooser-invisible").height(1);
+                $(".crop-profile > .crop").attr("src", e.target.result).load(function() {
                   profileImage.src = e.target.result;
                   profileCropArea = $('.crop-profile > .crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
                     onInit: function(img, selection) {
@@ -107,6 +107,22 @@ Template.bubbleEdit.events({
                       profileRetinaURL = profileRetinaCanvas.toDataURL();
                       if(Session.get("DisableCrop") == "1")
                       {
+                        if(profileImage.width <= profileImage.height)
+                        {
+                          x1 = 0;
+                          y1 = (profileImage.height - profileImage.width) / 2;
+                          widthHeight = profileImage.width;
+                        }
+                        else
+                        {
+                          y1 = 0;
+                          x1 = (profileImage.width - profileImage.height) / 2;
+                          widthHeight = profileImage.height;
+                        }
+                        profileMainContext.drawImage(profileImage, x1, y1, widthHeight, widthHeight, 0, 0, 300, 300);
+                        profileRetinaContext.drawImage(profileImage, x1, y1, widthHeight, widthHeight, 0, 0, 600, 600);
+                        profileMainURL = profileMainCanvas.toDataURL();
+                        profileRetinaURL = profileRetinaCanvas.toDataURL();
                         profileCropArea.cancelSelection();
                       }
                     }, onSelectChange: function(img, selection) {
@@ -154,6 +170,7 @@ Template.bubbleEdit.events({
                       }
                     }
                   });
+                });
               };
             })(f);
             reader.readAsDataURL(f);
@@ -192,10 +209,10 @@ Template.bubbleEdit.events({
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
               return function(e) {
-                  $(".bubble-edit > .attach-cover-photo > .drop-zone").hide();
-                  $(".bubble-edit > .attach-cover-photo > .drop-zone > .file-chooser-invisible").width(1);
-                  $(".bubble-edit > .attach-cover-photo > .drop-zone > .file-chooser-invisible").height(1);
-                  $(".crop-cover > .crop").attr("src", e.target.result);
+                $(".bubble-edit > .attach-cover-photo > .drop-zone").hide();
+                $(".bubble-edit > .attach-cover-photo > .drop-zone > .file-chooser-invisible").width(1);
+                $(".bubble-edit > .attach-cover-photo > .drop-zone > .file-chooser-invisible").height(1);
+                $(".crop-cover > .crop").attr("src", e.target.result).load(function() {
                   coverImage.src = e.target.result;
                   coverCropArea = $('.crop-cover > .crop').imgAreaSelect({instance: true, aspectRatio: '96:11', imageHeight: coverImage.height, imageWidth: coverImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
                     onInit: function(img, selection) {
@@ -205,8 +222,26 @@ Template.bubbleEdit.events({
                       coverRetinaURL = coverRetinaCanvas.toDataURL();
                       if(Session.get("DisableCrop") == "1")
                       {
+                        if((coverImage.width/coverImage.height) <= (96/11))
+                        {
+                          x1 = 0;
+                          y1 = 0;
+                          width = coverImage.width;
+                          height = coverImage.width * (11/96);
+                        }
+                        else
+                        {
+                          y1 = 0;
+                          x1 = 0;
+                          height = coverImage.height;
+                          width = coverImage.height * (96/11);
+                        }
+                        coverMainContext.drawImage(coverImage, x1, y1, width, height, 0, 0, 960, 110);
+                        coverRetinaContext.drawImage(coverImage, x1, y1, width, height, 0, 0, 1920, 220);
+                        coverMainURL = coverMainCanvas.toDataURL();
+                        coverRetinaURL = coverRetinaCanvas.toDataURL();
                         coverCropArea.cancelSelection();
-                      }
+                      };
                     }, onSelectChange: function(img, selection) {
                       if(selection.width != 0)
                       {
@@ -252,6 +287,7 @@ Template.bubbleEdit.events({
                       }
                     }
                   });
+                });
               };
             })(f);
             reader.readAsDataURL(f);
@@ -331,6 +367,14 @@ Template.bubbleEdit.created = function(){
 
 
 Template.bubbleEdit.rendered = function(){
+
+  if($(window).width() < 768)
+  {
+    Session.set("DisableCrop","1");
+  } else {
+    Session.set("DisableCrop","");
+  }
+
   this.validateForm();
   
   $('#coverphoto_retina').hide();

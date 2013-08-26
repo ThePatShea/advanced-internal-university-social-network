@@ -1,7 +1,7 @@
 <template name="logoutDropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    {{getUsername}}
-    {{> icon-arrow-down}}
+  <a href="#" class="dropdown-toggle username-toggle" data-toggle="dropdown">
+    <span class="visible-desktop">{{getUsername}} {{> icon-arrow-down}}</span>
+    <span class="visible-mobile">{{> icon-arrow-down}}</span>
   </a>
   <ul class="dropdown-menu dropdown-logout">
     <li class="view-profile">

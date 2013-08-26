@@ -21,6 +21,8 @@ mongoose.connect('mongodb://localhost:27017/test');
 var globalprofile = '';
 var json_globalprofile = '';
 
+var deployment_server = 'www.emorybubble.com';
+
 function parseAttribute(attributeString){
   var i = attributeString.indexOf('":"');
   var key = attributeString.slice(0, i+1);
@@ -274,7 +276,8 @@ app.post('/login/samlcallback',
     });
 
   var options = {
-    host: 'test.emorybubble.com',
+    //host: 'test.emorybubble.com',
+    host: deployment_server,
     port: 443,
     path: '/testauth',
     method: 'POST',
@@ -304,7 +307,8 @@ app.post('/login/samlcallback',
 
     //res.render('home', {username: globalprofile});
     setTimeout(function(){
-      res.header('location', 'https://test.emorybubble.com/testauth/' + netId + '/' + secret);
+      //res.header('location', 'https://test.emorybubble.com/testauth/' + netId + '/' + secret);
+      res.header('location', 'https://' + deployment_server + '/testauth/' + netId + '/' + secret);
       res.send(302, null);
     }, 1000);
   }

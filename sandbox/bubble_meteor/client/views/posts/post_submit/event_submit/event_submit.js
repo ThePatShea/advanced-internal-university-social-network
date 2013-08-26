@@ -29,11 +29,11 @@ Template.eventSubmit.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
-    var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
+    var dateTime = $("#cb-form-container-event-create .date").val() + " " + $("#cb-form-container-event-create .time").val();
     console.log('Event photo: ', eventMainURL);
 
     var eventAttributes = { 
-      dateTime: new Date().getTime(),
+      dateTime: moment(dateTime).valueOf(),
       location: $('.cb-eventSubmit-form > .first > .event-location').val(),
       name: $('.cb-eventSubmit-form > .first > .event-name').val(),
       body: $('.cb-eventSubmit-form > .event-details').val(),
@@ -57,101 +57,118 @@ Template.eventSubmit.events({
   },
 
   'change .cb-eventSubmit-form .attach-files > .drop-zone > .file-chooser-invisible': function(evt){
-      files = evt.target.files;
-      console.log('Event picture: ', files);
-      //If more than one file dropped on the dropzone then throw an error to the user.
-      if(files.length > 1){
-        error = new Meteor.Error(422, 'Please choose only one image as the event image.');
-        throwError(error.reason);
-      }
-      else{
-        f = files[0];
-        //If the file dropped on the dropzone is an image then start processing it
-        if (f.type.match('image.*')) {
-          var reader = new FileReader();
-          var eventMainCanvas = document.getElementById('event-main-canvas');
-          var eventRetinaCanvas = document.getElementById('event-retina-canvas');
-          var eventMainContext = eventMainCanvas.getContext('2d');
-          var eventRetinaContext = eventRetinaCanvas.getContext('2d');
-          var eventImage = new Image();
+    files = evt.target.files;
+    console.log('Event picture: ', files);
+    //If more than one file dropped on the dropzone then throw an error to the user.
+    if(files.length > 1){
+      error = new Meteor.Error(422, 'Please choose only one image as the event image.');
+      throwError(error.reason);
+    }
+    else{
+      f = files[0];
+      //If the file dropped on the dropzone is an image then start processing it
+      if (f.type.match('image.*')) {
+        var reader = new FileReader();
+        var eventMainCanvas = document.getElementById('event-main-canvas');
+        var eventRetinaCanvas = document.getElementById('event-retina-canvas');
+        var eventMainContext = eventMainCanvas.getContext('2d');
+        var eventRetinaContext = eventRetinaCanvas.getContext('2d');
+        var eventImage = new Image();
+        var minX = 68;
+        var minY = 46;
 
-            var minX = 68;
-            var minY = 46;
-
-            // Closure to capture the file information.
-            reader.onload = (function(theFile) {
-              return function(e) {
-                  $(".attach-files > .drop-zone").hide();
-                  $(".attach-files > .drop-zone > .file-chooser-invisible").width(1);
-                  $(".attach-files > .drop-zone > .file-chooser-invisible").height(1);
-                  $(".crop-container > .crop").attr("src", e.target.result);
-                  eventImage.src = e.target.result;
-                  eventCropArea = $('.crop-container > .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: eventImage.height, imageWidth: eventImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form", handles: true,
-                    onInit: function(img, selection) {
-                      eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
-                      eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
-                      eventMainURL = eventMainCanvas.toDataURL();
-                      eventRetinaURL = eventRetinaCanvas.toDataURL();
-                      if(Session.get("DisableCrop") == "1")
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+          return function(e) {
+            $(".attach-files > .drop-zone").hide();
+            $(".attach-files > .drop-zone > .file-chooser-invisible").width(1);
+            $(".attach-files > .drop-zone > .file-chooser-invisible").height(1);
+            $(".crop-container > .crop").attr("src", e.target.result).load(function() {
+              eventImage.src = e.target.result;
+              eventCropArea = $('.crop-container > .crop').imgAreaSelect({instance: true, aspectRatio: '34:23', imageHeight: eventImage.height, imageWidth: eventImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-eventSubmit-form", handles: true,
+                onInit: function(img, selection) {
+                  eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                  eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                  eventMainURL = eventMainCanvas.toDataURL();
+                  eventRetinaURL = eventRetinaCanvas.toDataURL();
+                  if(Session.get("DisableCrop") == "1")
+                  {
+                    if((eventImage.width/eventImage.height) <= (34/23))
+                    {
+                      x1 = 0;
+                      y1 = 0;
+                      width = eventImage.width;
+                      height = eventImage.width * (23/34);
+                    }
+                    else
+                    {
+                      y1 = 0;
+                      x1 = 0;
+                      height = eventImage.height;
+                      width = eventImage.height * (34/23);
+                    }
+                    eventMainContext.drawImage(eventImage, x1, y1, width, height, 0, 0, 340, 230);
+                    eventRetinaContext.drawImage(eventImage, x1, y1, width, height, 0, 0, 680, 460);
+                    eventMainURL = eventMainCanvas.toDataURL();
+                    eventRetinaURL = eventRetinaCanvas.toDataURL();
+                    eventCropArea.cancelSelection();
+                  }
+                }, onSelectChange: function(img, selection) {
+                  if(selection.width != 0)
+                  {
+                    eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
+                    console.log(selection.y1);
+                    eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
+                    eventMainURL = eventMainCanvas.toDataURL();
+                    eventRetinaURL = eventRetinaCanvas.toDataURL();
+                  }
+                  else
+                  {
+                    eventCropArea.setSelection(10,10, (10+minX),(10+minY));
+                    eventCropArea.setOptions({show: true});
+                    eventCropArea.update();
+                  }
+                  //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
+                }, onSelectEnd: function(img, selection){
+                  if((selection.width < minX) || (selection.height < minY))
+                  {
+                    if((selection.x1 > eventImage.width-minX) || (selection.y1 > eventImage.height-minY))
+                    {
+                      if(selection.x1 < minX)
                       {
-                        eventCropArea.cancelSelection();
+                        eventCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
+                        eventCropArea.update();
                       }
-                    }, onSelectChange: function(img, selection) {
-                      if(selection.width != 0)
+                      else if(selection.y1 < minY)
                       {
-                        eventMainContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 340, 230);
-                        console.log(selection.y1);
-                        eventRetinaContext.drawImage(eventImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 680, 460);
-                        eventMainURL = eventMainCanvas.toDataURL();
-                        eventRetinaURL = eventRetinaCanvas.toDataURL();
+                        eventCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
+                        eventCropArea.update();
                       }
                       else
                       {
-                        eventCropArea.setSelection(10,10, (10+minX),(10+minY));
-                        eventCropArea.setOptions({show: true});
+                        eventCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
                         eventCropArea.update();
                       }
-                      //console.log(selection.x1+" "+selection.y1+" "+selection.width+" "+selection.height);
-                    }, onSelectEnd: function(img, selection){
-                      if((selection.width < minX) || (selection.height < minY))
-                      {
-                        if((selection.x1 > eventImage.width-minX) || (selection.y1 > eventImage.height-minY))
-                        {
-                          if(selection.x1 < minX)
-                          {
-                            eventCropArea.setSelection(0,selection.y2-minY,minX,selection.y2);
-                            eventCropArea.update();
-                          }
-                          else if(selection.y1 < minY)
-                          {
-                            eventCropArea.setSelection(selection.x2-minX,0,selection.x2,minY);
-                            eventCropArea.update();
-                          }
-                          else
-                          {
-                            eventCropArea.setSelection(selection.x2-minX,selection.y2-minY,selection.x2,selection.y2);
-                            eventCropArea.update();
-                          }
-                        }
-                        else
-                        {
-                          eventCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
-                          eventCropArea.update();
-                        }
-                      }
                     }
-                  });
-              };
-          })(f);
-          reader.readAsDataURL(f);
-        }
-        else{
-          error = new Meteor.Error(422, 'Please choose a valid image.');
-          throwError(error.reason);
-        }
+                    else
+                    {
+                      eventCropArea.setSelection(selection.x1,selection.y1,selection.x1+minX,selection.y1+minY);
+                      eventCropArea.update();
+                    }
+                  }
+                }
+              });
+            });
+          };
+        })(f);
+        reader.readAsDataURL(f);
       }
+      else{
+        error = new Meteor.Error(422, 'Please choose a valid image.');
+        throwError(error.reason);
+      }
+    }
   }
-
 });
 
 
@@ -191,5 +208,12 @@ Template.eventSubmit.rendered = function() {
 
     }
   });
+
+  if($(window).width() < 768)
+  {
+    Session.set("DisableCrop","1");
+  } else {
+    Session.set("DisableCrop","");
+  }
 
 }

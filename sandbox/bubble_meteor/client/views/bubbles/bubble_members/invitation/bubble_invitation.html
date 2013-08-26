@@ -6,45 +6,46 @@
     <div class="cb-form cb-form-add-members">
       <div class="control-group">
         <div class="controls">
-            <input class="search-text" name="searchText" type="text" placeholder="Start typing..."/>
+            <input class="search-text" name="searchText" type="text" placeholder="Type anyone's name to invite..."/>
         </div>
       </div>
       <div class="searchResults">
+      {{#codeComment}}
         {{#if hasSearchText}}
           {{findUsers}}
         {{/if}}
+      {{/codeComment}}
 
-        {{#if hasSearchResponse}}
-          {{#each getFoundUsers}}
-            <div class="invitee shortlist-invitee select">
-                <span>
-                  <div class="invitee-container {{#if selected}}selected{{/if}}">
-                    <div class="invitee-pic-container">
-                      <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
-                      <div class="pic-preview-wrapper-outer">
-                        <div class="pic-preview-wrapper-middle">
-                          <div class="pic-preview-wrapper-inner-invitee">
-                            <span class="visible-{{selected}} cb-icon-check">{{> icon-check}}</span>
-                            <span class="invisible-{{selected}}"><img src="{{profilePicture}}"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="v-middle">
-                      <div class="v-inner">
-                        <span class="pull-left invitee-text">
-                          {{name}}
-                        </span><br>
-                        <span class="num-posts">
-                          {{pluralize numPosts "post" ""}}
-                        </span>
+      {{#each getFoundUsers}}
+        <div class="invitee shortlist-invitee select">
+            <span>
+              <div class="invitee-container {{#if selected}}selected{{/if}}">
+                <div class="invitee-pic-container">
+                  <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
+                  <div class="pic-preview-wrapper-outer">
+                    <div class="pic-preview-wrapper-middle">
+                      <div class="pic-preview-wrapper-inner-invitee">
+                        <span class="visible-{{selected}} cb-icon-check">{{> icon-check}}</span>
+                        <span class="invisible-{{selected}}"><img src="{{profilePicture}}"></span>
                       </div>
                     </div>
                   </div>
-                </span>
-            </div>
-          {{/each}}
-        {{/if}}
+                </div>
+                <div class="v-middle">
+                  <div class="v-inner">
+                    <span class="pull-left invitee-text">
+                      {{name}}
+                    </span><br>
+                    <span class="num-posts">
+                      {{pluralize numPosts "post" ""}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </span>
+        </div>
+      {{/each}}
+
       </div>
       {{#if potentialInvitees}}
         <div class="cancel-invitee-container">

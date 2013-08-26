@@ -8,7 +8,7 @@ Posts.allow({
 Posts.deny({
   update: function(userId, post, fieldNames) {
     // may only edit the following fields:
-    return (_.without(fieldNames, 'postAsType', 'postAsId', 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'fileSize', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto', 'numDownloads', 'children', 'flagged', 'lastDownloadTime').length > 0);
+    return (_.without(fieldNames, 'author', 'exploreId', 'postAsType', 'postAsId', 'name', 'body', 'dateTime', 'location', 'file', 'fileType', 'fileSize', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto', 'numDownloads', 'children', 'flagged', 'lastDownloadTime').length > 0);
   }
 });
 
@@ -159,6 +159,7 @@ createPostWithAttachments = function(postAttributes, fileList){
               postType: 'file',
               numDownloads: 0,
               lastDownloadTime: new Date().getTime(),
+              author: postAttributes.author,
               //bubbleId: Session.get('currentBubbleId'),
               parent: post._id   //This needs to be set to the ID of the post created above.
             };
@@ -185,6 +186,8 @@ createPostWithAttachments = function(postAttributes, fileList){
                 var updatedProperties = {
                   children: childPosts
                 };
+
+                console.log('Attaching: ', parentid, updatedProperties);
                 Posts.update(parentid, {$set: updatedProperties}, function(error){
                   if(error){
                     throwError(error.reason);

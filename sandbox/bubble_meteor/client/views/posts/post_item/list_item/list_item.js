@@ -1,4 +1,33 @@
 Template.listItem.helpers({
+    getPostAsUser: function() {
+      return Meteor.users.findOne(this.postAsId);
+    },
+    getPostAsBubble: function() {
+      var bubble = Bubbles.findOne(this.postAsId);
+      return bubble;
+    },
+    postedAsUser: function() {
+      if (this.postAsType == "user") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    postedAsBubble: function() {
+      if (this.postAsType == "bubble") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    displayName: function() {
+      if (this.postAsType == "user") {
+        return this.author;
+      } else if (this.postAsType == "bubble") {
+        var bubble = Bubbles.findOne(this.postAsId);
+        return bubble.title;
+      }
+    },
     isGoing : function() {
       return _.contains(this.attendees,Meteor.user().username)
     },
@@ -42,7 +71,9 @@ Template.listItem.helpers({
 });
 
 Template.listItem.events({
-    'click .post-item' : function() {
+    'click .post-item' : function(evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
       if(typeof this.bubbleId != 'undefined'){
         // Links to parent post if the post is a file attachment. Otherwise, links to the post itself.
           if (this.postType == 'file' && this.parent){

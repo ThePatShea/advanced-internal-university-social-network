@@ -4,10 +4,18 @@ if(!Meteor.users.findOne({username:'campusbubble'})){
 		email:'development@thecampusbubble.com',
 		password:'F302pinpulse'
 	});
-/*
-        Meteor.users.update({email: 'development@thecampusbubble.com'}, {$set: {profilePicture: '/img/letterprofiles/c.jpg'} });
-*/
 }
+
+if(!Meteor.users.findOne({username:'emorybubble'})){
+	Accounts.createUser({
+		username:'emorybubble',
+		email:'support@emorybubble.com',
+		password:'F302pinpulse'
+	});
+}
+
+
+
 // if (Meteor.isServer) {
 //   Meteor.startup(function () {
 // 		Meteor.headly.config({tagsForRequest: function(req) {

@@ -42,12 +42,24 @@ Meteor.methods({
 		var res = idx.search(q);
 		var retVal = [];
 		console.log(res);
-		res.forEach(function(i) {
+		/*res.forEach(function(i) {
 			if(i.score > .01)
 			{
 				retVal.push(i.ref);
 			}
-		})
+		})*/
+		for(var i = 0; i < 10; i++)
+		{
+			if(typeof res[i] !== "undefined")
+				retVal.push(res[i].ref)
+		}
 		return retVal;
+	},
+	addToIndex: function(id, name) {
+		var tmp = {
+			"name": name,
+			"id": id
+		};
+		idx.add(tmp);
 	}
 });

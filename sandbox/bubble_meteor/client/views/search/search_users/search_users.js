@@ -1,8 +1,25 @@
 Template.searchUsers.created = function() {
-  Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
   searchedUsers = [];
   searchResponse = false;
+  mto = "";
+  Session.set("selectedUserIdList", []);
+  Session.set('typing', 'false');
 }
+
+Template.searchUsers.events({
+  "click .search-btn": function(evt){
+    Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+      if(err) {
+        console.log(err);
+      } else {
+        Session.set('typing', 'false');
+        searchResponse = true;
+        console.log("RE: sponse");
+        Session.set('selectedUserIdList', res);
+      }
+    });
+  }
+})
 
 Template.searchUsers.rendered = function(){
   //To set header as active
@@ -15,9 +32,36 @@ Template.searchUsers.rendered = function(){
       }
     }
   });
+  
+  //DO NOT DELETE UNTIL YOU ASK TAGGART//
+  /*
+  $(".search-text").unbind("propertychange keyup input paste");
+  $(".search-text").bind("keydown", function(evt) {
+    Session.set('typing', 'true');
+  });
+  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+      Meteor.clearTimeout(mto);
+      mto = Meteor.setTimeout(function() {
+        Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+          if(err) {
+            console.log(err);
+          } else {
+            Session.set('typing', 'false');
+            searchResponse = true;
+            console.log("RE: sponse");
+            Session.set('selectedUserIdList', res);
+          }
+        });
+      }, 500);
+  });
+  */
 }
 
 Template.searchUsers.helpers({
+
+  typing: function() {
+    return Session.get("typing");
+  },
 
   getSearchedUsers: function() {
     searchResponse = false;

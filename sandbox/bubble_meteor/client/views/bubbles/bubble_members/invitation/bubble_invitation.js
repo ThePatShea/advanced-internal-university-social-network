@@ -5,11 +5,13 @@ Template.bubbleInvitation.created = function() {
   var users = Bubbles.findOne({_id: Session.get('currentBubbleId')}).users;
   rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
   rejectList.push(Meteor.userId());
+  mto = [];
+  Session.set('potentialUserIdList',[]);
 }
 
 Template.bubbleInvitation.rendered = function() {
 
-  $(".search-text").bind("propertychange keyup input paste", function (event) {
+  /*$(".search-text").bind("propertychange keyup input paste", function (event) {
     Session.set('currentlySearching', 'true');  // Keeps the add-members form open, not collapsed
 
     var searchText = $(".search-text").val();
@@ -18,6 +20,21 @@ Template.bubbleInvitation.rendered = function() {
     }else{
       Session.set('selectedUsername', searchText);
     }
+  });*/
+  Session.set('currentlySearching', 'true');
+  $(".search-text").unbind("propertychange keyup input paste")
+  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+      Meteor.clearTimeout(mto);
+      mto = Meteor.setTimeout(function() {
+        Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+          if(err) {
+            console.log(err);
+          } else {
+            console.log("RE: sponse");
+            Session.set('potentialUserIdList', res);
+          }
+        });
+      }, 500);
   });
 }
 
@@ -53,9 +70,8 @@ Template.bubbleInvitation.helpers({
     }
   },
   getFoundUsers: function() {
-    findResponse = false;
-    console.log('hereyago: ' + Session.get('potentialUserIdList')[0]);
-    Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
+    //findResponse = false;
+    //console.log('hereyago: ' + Session.get('potentialUserIdList')[0]);
     return Meteor.users.find({_id: {$in: Session.get('potentialUserIdList'), $nin: rejectList}},{limit: 6});
     //return Meteor.users.find(({username: "taggartbg"}));
   },
@@ -149,7 +165,9 @@ Template.bubbleInvitation.events({
     usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
     userIdList = [];
     _.each(usernameList, function(username) {
-      userIdList.push(Meteor.users.findOne({username:username})._id);
+      tmp = Meteor.users.findOne({username:username})._id;
+      userIdList.push(tmp);
+      Meteor.call("sendInvitedEmail", Meteor.userId(), tmp, Session.get('currentBubbleId'));
     });
 
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));

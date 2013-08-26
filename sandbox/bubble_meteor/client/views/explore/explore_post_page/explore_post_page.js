@@ -1,4 +1,30 @@
 Template.explorePostPage.helpers({
+    getPostAsBubbleCategory: function() {
+      var bubble = Bubbles.findOne(this.postAsId);
+      return bubble.category;
+    },
+    postedAsUser: function() {
+      if (this.postAsType == "user") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    postedAsBubble: function() {
+      if (this.postAsType == "bubble") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    displayName: function() {
+      if (this.postAsType == "user") {
+        return this.author;
+      } else if (this.postAsType == "bubble") {
+        var bubble = Bubbles.findOne(this.postAsId);
+        return bubble.title;
+      }
+    },
     isFlagged: function() {
       if (this.flagged)
         return true;
