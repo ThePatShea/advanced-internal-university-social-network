@@ -332,7 +332,19 @@ Meteor.publish('sidebarBubbles', function(userId) {
     } });
   });
   Meteor.publish('fiveExplorePosts', function() {
-    return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+    //return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+
+    var posts = Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+    var posts2 = posts.fetch();
+
+    var userIds = [];
+
+    for (var i = 0; i < posts2.length; i++) {
+      userIds.push(posts2[i].userId);
+    }
+
+    var users = Meteor.users.find({_id: {$in: userIds}});
+    return [posts, users];
   });
 
 // Meteor Users Related Publications
