@@ -1,5 +1,5 @@
-/*
 // New Publications for fixing load times
+/*
   Meteor.publish('dashboardCounts', function() {
     var currentUserId  =  Meteor.userId();
     
@@ -25,7 +25,7 @@
     var commentsCount  =  Comments.find({userId: Meteor.userId()}, {fields: {'_id': 1}});
     return commentsCount;
   });
-
+*/
 
 
 
@@ -47,7 +47,6 @@ getBubbleId =  function(userId) {
     var postsList = _.pluck(updates,'postId');
     return Posts.find({_id: {$in: postsList}});
   });
-//*/
   Meteor.publish('events', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'event'}, {
       sort: {submitted: -1},
@@ -337,14 +336,24 @@ Meteor.publish('sidebarBubbles', function(userId) {
     var posts = Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
     var posts2 = posts.fetch();
 
-    var userIds = [];
+    //Users
+      var userIds = [];
 
-    for (var i = 0; i < posts2.length; i++) {
-      userIds.push(posts2[i].userId);
-    }
+      for (var i = 0; i < posts2.length; i++) {
+        userIds.push(posts2[i].userId);
+      }
 
-    var users = Meteor.users.find({_id: {$in: userIds}});
-    return [posts, users];
+      var users = Meteor.users.find({_id: {$in: userIds}});
+
+    //Bubbles
+      var bubbleIds = [];
+      for (var i = 0; i < posts2.length; i++) {
+        bubbleIds.push(posts2[i].postAsId);
+      }
+
+      var bubbles = Bubbles.find({_id: {$in: bubbleIds}});
+
+    return [posts, users, bubbles];
   });
 
 // Meteor Users Related Publications

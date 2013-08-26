@@ -463,6 +463,7 @@ Template.dashboard.events({
 
 Template.dashboard.rendered = function () {
 Meteor.subscribe('fiveExplorePosts');
+Meteor.subscribe('updatedPosts', Meteor.userId());
 
 	$('.carousel').carousel();
 
