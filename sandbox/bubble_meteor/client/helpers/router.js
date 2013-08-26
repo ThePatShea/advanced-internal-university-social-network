@@ -126,7 +126,7 @@ Meteor.Router.add({
     '/explore/create': 'exploreSubmit',
     '/explore/:id/home': {
       to: 'explorePage',
-      and: function(id){Session.set('currentExploreId', id);}
+      and: function(id){Session.set('currentExploreId', id); Meteor.subscribe('currentExplore', id);}
     },
     '/explore/:_expId/posts/:_pId': {
       to: 'explorePostPage',

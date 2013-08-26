@@ -1,4 +1,4 @@
-Meteor.subscribe('sidebarBubbles', Meteor.userId()); //TODO: Make this infinite scroll and put it in sidebar. TODO: Move this to sidebar.js
+
 
 Template.sidebar.helpers({
     sidebarOpen            : function() {
@@ -145,6 +145,8 @@ Template.sidebar.events({
 
 
 Template.sidebar.rendered = function() {
+  Meteor.subscribe('sidebarBubbles', Meteor.userId()); //TODO: Make this infinite scroll and put it in sidebar. TODO: Move this to sidebar.js
+  Meteor.subscribe('allExplores');
   // Controls the new sidebar's visibility
     var controlSidebarVisibility = function() {
       if ($(window).width() >= 768)
