@@ -12,6 +12,14 @@ Template.bubblePage.created = function() {
 }
 
 
+Template.bubblePage.rendered = function() {
+ var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+
+  Meteor.subscribe('bubbleHomeDiscussions', bubble._id);
+  Meteor.subscribe('bubbleHomeEvents', bubble._id);
+  Meteor.subscribe('bubbleHomeFiles', bubble._id);
+}
+
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
