@@ -60,7 +60,7 @@ Deps.autorun(function() {
 			mainUsersHandle = Meteor.subscribeWithPagination('allUsers');
 		};
 */
-
+Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
 
 
 	// Posts Related Subscriptions
@@ -81,13 +81,13 @@ Deps.autorun(function() {
 	//	Meteor.subscribe('updatedPosts', Meteor.userId());
 /*
 		if( Meteor.user() && '3' == Meteor.user().userType){
-			//searchEventsHandle = Meteor.subscribeWithPagination('lvl3SearchEvents', Session.get('searchText'), 10);
-			//searchDiscussionsHandle = Meteor.subscribeWithPagination('lvl3SearchDiscussions', Session.get('searchText'), 10);
-			//searchFilesHandle = Meteor.subscribeWithPagination('lvl3SearchFiles', Session.get('searchText'), 10);
+			searchEventsHandle = Meteor.subscribeWithPagination('lvl3SearchEvents', Session.get('searchText'), 10);
+			searchDiscussionsHandle = Meteor.subscribeWithPagination('lvl3SearchDiscussions', Session.get('searchText'), 10);
+			searchFilesHandle = Meteor.subscribeWithPagination('lvl3SearchFiles', Session.get('searchText'), 10);
 		}else{
-			//searchEventsHandle = Meteor.subscribeWithPagination('searchEvents', Session.get('searchText'), Meteor.userId, 10);
-			//searchDiscussionsHandle = Meteor.subscribeWithPagination('searchDiscussions', Session.get('searchText'), Meteor.userId, 10);
-			//searchFilesHandle = Meteor.subscribeWithPagination('searchFiles', Session.get('searchText'), Meteor.userId, 10);
+			searchEventsHandle = Meteor.subscribeWithPagination('searchEvents', Session.get('searchText'), Meteor.userId, 10);
+			searchDiscussionsHandle = Meteor.subscribeWithPagination('searchDiscussions', Session.get('searchText'), Meteor.userId, 10);
+			searchFilesHandle = Meteor.subscribeWithPagination('searchFiles', Session.get('searchText'), Meteor.userId, 10);
 		}
 */
 
@@ -110,7 +110,7 @@ Deps.autorun(function() {
                   },2000);
                   Session.get('searchText');
                 }, 10);
-//*/
+*/
 /*
 	// Flags Related Subscriptions
 		if(Meteor.user() && Meteor.user().userType == '3'){
