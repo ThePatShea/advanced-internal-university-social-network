@@ -42,6 +42,45 @@ getBubbleId =  function(userId) {
 
 
 // Posts Related Publications
+  Meteor.publish('bubbleHomeEvents', function(bubbleId) {
+    var events = Posts.find({bubbleId: bubbleId, postType: 'event'}, {
+      sort: {dateTime: 1}, 
+      limit: 3, 
+      fields: {
+        'retinaEventPhoto': 0,
+        'eventPhoto': 0,
+        'file': 0,
+      }
+    });
+    
+    return events;
+  });
+
+  Meteor.publish('bubbleHomeDiscussions', function(bubbleId) {
+    var discussions = Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
+      sort: {submitted: -1},
+      limit: 3, 
+    });
+
+    return discussions;
+  });
+
+  Meteor.publish('bubbleHomeFiles', function(bubbleId) {
+    var files = Posts.find({bubbleId: bubbleId, postType: 'file'}, {
+      sort: {submitted: -1},
+      limit: 3, 
+      fields: {
+        'retinaEventPhoto': 0,
+        'eventPhoto': 0,
+        'file': 0,
+      }
+    });
+
+    return files;
+  });
+
+
+
   Meteor.publish('updatedPosts', function(userId) {
     var updates = Updates.find({userId: userId, read: false}).fetch();
     var postsList = _.pluck(updates,'postId');
