@@ -1,4 +1,13 @@
 Template.bubbleMembersPage.rendered = function () {
+	var currentBubbleId = window.location.pathname.split('/')[2];
+	Meteor.subscribe('singleBubble', currentBubbleId);
+	console.log(currentBubbleId);
+	var currentBubble = Bubbles.findOne({_id: currentBubbleId});
+	var adminIds = currentBubble.users.admins;
+	var memberIds = currentBubble.users.members;
+	var userIds = adminIds.concat(memberIds);
+	Meteor.subscribe('findUsersById', userIds);
+
 	var userIdList = Session.get("selectedUserIdList");
 	var userIdArray = [];
 	_.each(userIdList, function(userId)
