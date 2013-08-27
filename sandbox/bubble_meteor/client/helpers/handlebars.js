@@ -325,6 +325,13 @@ Handlebars.registerHelper('isLoggedIn', function() {
   }
 });
 
+Handlebars.registerHelper('isLoggedIn2', function() {
+  var currentPage = window.location.pathname.split("/")[1];
+  if(Meteor.user() || currentPage == "login" || currentPage == "loggedOut") {
+    return true;
+  }
+});
+
 Handlebars.registerHelper('hasBubble', function() {
   if(Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]}).count() > 0){
     return true;
