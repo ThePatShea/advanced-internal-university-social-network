@@ -20,6 +20,7 @@ Deps.autorun(function() {
 		Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
 		invitedBubblesHandle = Meteor.subscribeWithPagination('invitedBubbles', Meteor.userId(), 10);
 		joinedBubblesHandle = Meteor.subscribeWithPagination('joinedBubbles', Meteor.userId(), 20);
+		Meteor.subscribe('findBubblesById', Session.get('selectedBubbleIdList'));
 		// Meteor.subscribe('allBubbles', Meteor.userId());
 
 	// Bubble Related Subscriptions
@@ -60,6 +61,7 @@ Deps.autorun(function() {
 		}
 		Meteor.subscribe('attendingEvents', Meteor.userId());
                 Meteor.subscribe('fiveExplorePosts');
+		Meteor.subscribe('findPostsById', Session.get('selectedPostIdList'));
 
 
 	// Retrieves searched Posts

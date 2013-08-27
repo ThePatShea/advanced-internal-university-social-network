@@ -27,6 +27,21 @@ getBubbleId =  function(userId) {
       }
     });
   });
+  Meteor.publish('findPostsById', function(postIdList) {
+    if(postIdList){
+      return Posts.find({_id: {$in: postIdList}}, {
+        fields: {
+         'name': 1,
+         'bubbleId': 1,
+         'commentsCount': 1,
+         'lastCommentTime': 1,
+         'lastUpdated': 1,
+         'attendees': 1,
+         'viewCount': 1
+        }
+      });
+    }
+  });
   Meteor.publish('discussions', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
       sort: {submitted: -1},
@@ -245,6 +260,18 @@ getBubbleId =  function(userId) {
           'retinaProfilePicture': 0
         }
       });
+  });
+  Meteor.publish('findBubblesById', function(bubbleIdList) {
+    if(bubbleIdList){
+      return Meteor.users.find({_id: {$in: bubbleIdList}}, {
+        fields: {
+         'title': 1,
+         'category': 1,
+         'retinaProfilePicture': 1,
+         'users': 1
+        }
+      });
+    }
   });
   Meteor.publish('joinedBubbles', function(userId, limit) {
     return Bubbles.find({

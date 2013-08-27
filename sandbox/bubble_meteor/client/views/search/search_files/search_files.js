@@ -1,5 +1,6 @@
 Template.searchFiles.helpers({
 
+  /*
   getSearchedFiles: function() {
 
   	var posts =  Posts.find(
@@ -17,6 +18,13 @@ Template.searchFiles.helpers({
         }
       });
     }
+  }*/
+  getSearchedFiles: function() {
+    return Posts.find({_id: {$in: Session.get('selectedPostIdList')}},{limit:10});
+  },
+
+  typing: function() {
+    return Session.get("typing");
   }
 });
 
@@ -24,11 +32,48 @@ Template.searchFiles.rendered = function(){
   //To set header as active
   Session.set('searchCategory', 'files');
 
-  $(window).scroll(function(){
+  /*$(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == 'searchFiles'){
         this.searchFilesHandle.loadNextPage();
       }
     }
+  });*/
+  $(".search-text").bind("keydown", function(evt) {
+    Session.set('typing', 'true');
+  });
+  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+      Meteor.clearTimeout(mto);
+      mto = Meteor.setTimeout(function() {
+        Meteor.call('search_files', $(".search-text").val(), function(err, res) {
+          if(err) {
+            console.log(err);
+          } else {
+            Session.set('typing', 'false');
+            Session.set('selectedPostIdList', res);
+          }
+        });
+      }, 500);
   });
 }
+
+Template.searchFiles.created = function() {
+  mto = "";
+  Session.set('typing', 'false');
+  Session.set("selectedPostIdList", []);
+}
+
+Template.searchFiles.events({
+  /*
+  "click .search-btn": function(evt){
+    Meteor.call('search_files', $(".search-text").val(), function(err, res) {
+      if(err) {
+        console.log(err);
+      } else {
+        Session.set('typing', 'false');
+        Session.set('selectedPostIdList', res);
+      }
+    });
+  }
+  */
+})
