@@ -18,6 +18,8 @@ Template.bubblePage.rendered = function() {
   Meteor.subscribe('bubbleHomeDiscussions', bubble._id);
   Meteor.subscribe('bubbleHomeEvents', bubble._id);
   Meteor.subscribe('bubbleHomeFiles', bubble._id);
+
+  Meteor.subscribe('singleBubble', bubble._id);
 }
 
 Template.bubblePage.helpers({ 
