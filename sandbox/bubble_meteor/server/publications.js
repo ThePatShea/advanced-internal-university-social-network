@@ -263,12 +263,19 @@ getBubbleId =  function(userId) {
     //console.log('Publishing: ', post);
     if(post != undefined){
       if(post.postType == 'discussion'){
-        return postId && Posts.find({_id: {$in: post.children}});
+        var postIds = post.children.concat([postId]);
+
+        var postAndChildren = Posts.find({_id: {$in: postIds}});
+
+        return postAndChildren;
       }
     }
-    return postId && Posts.find(postId);
+    return post;
 
   });
+
+  
+
   Meteor.publish('attendingEvents', function(userId) {
     return Posts.find({
         'attendees': {$in: [userId]}
