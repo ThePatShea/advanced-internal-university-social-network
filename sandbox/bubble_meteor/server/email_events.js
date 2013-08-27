@@ -123,7 +123,7 @@ Meteor.methods({
 		var name = user.name;
 		var fname = user.name.substring(0,user.name.indexOf(' '));
 		var bubbleName = bubble.title;
-		var to = user.emails[0].address;
+		//var to = user.emails[0].address;
 		if(typeof to == undefined)
 		{
 			return "No Email Address for invited user";
@@ -131,7 +131,7 @@ Meteor.methods({
 		//var retVal = {'currentUserId': currentUserId, 'currentUserName': currentUser.name, 'userId': userId, 'bubbleId': bubbleId, 'name': user.name, 'bubbleName': bubble.title, 'to': user.emails[0].address};
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",//c4HA5dUtFK1IjN01VjjBKw
-			"template_name": "cb-invited-email",
+			"template_name": "mandrill-invite",
 			"template_content": [],
 			"headers": {
             	"Content-Type": "application/json"
@@ -140,7 +140,7 @@ Meteor.methods({
 			{
 			    "to": [
 			        {
-			          "email": to,
+			          "email": "taggart@thecampusbubble.com",
 			          "name": name
 			        }
 			    ],
@@ -203,7 +203,7 @@ Meteor.methods({
 		});
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",
-			"template_name": "cb-applicant-email",
+			"templat_ename": "cb-applicant-email",
 			"template_content": [],
 			"headers": {
             	"Content-Type": "application/json"

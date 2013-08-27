@@ -60,7 +60,11 @@ Deps.autorun(function() {
 			mainUsersHandle = Meteor.subscribeWithPagination('allUsers');
 		};
 */
+
+//SEARCH SUBSCRIPTIONS
 Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+Meteor.subscribe('findPostsById', Session.get('selectedPostIdList'));
+Meteor.subscribe('findBubblesById', Session.get('selectedBubbleIdList'));
 
 
 	// Posts Related Subscriptions

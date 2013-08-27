@@ -5,6 +5,12 @@ Bubbles.allow({
    remove: ownsBubble
  });
 
+//ADD CURRENT BUBBLES TO SEARCH INDEX
+var bubbles = Bubbles.find({}, {fields: {'title': 1, '_id': 1}});
+bubbles.forEach(function(bubble) {
+  Meteor.call("addBubbleToIndex", bubble._id, bubble.title);
+});
+
 Meteor.methods({
 	bubble: function(bubbleAttributes){
 		var user = Meteor.user(),
