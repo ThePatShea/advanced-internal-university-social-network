@@ -53,6 +53,16 @@ Template.userActions.events({
 	        _.each(updates, function(update){
 	          Updates.update({_id: update._id}, {read:true});
 	        });
+	        var updateIds = _.pluck(updates, '_id');
+	        var currentBubbleId = Session.get('currentBubbleId');
+	        var bubbleExplorePosts = Posts.find({postAsId: currentBubbleId}).fetch();
+	        var bubbleOwnPosts = Posts.find({bubbleId: currentBubbleId}).fetch();
+	        var bubblePosts = bubbleOwnPosts.concat(bubbleExplorePosts);
+	        var bubblePostIds = _.pluck(bubblePosts, '_id');
+	        
+
+	        /*Posts.remove({_id: {$in: bubblePostIds}});
+	        Updates.remove({_id: {$in: updateIds}});*/
 	        Bubbles.remove({_id:Session.get('currentBubbleId')});
 
 	        //Route to the next available bubble or to the search page
