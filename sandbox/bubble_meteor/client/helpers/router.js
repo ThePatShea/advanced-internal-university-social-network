@@ -60,19 +60,19 @@ Meteor.Router.add({
   // Posts Related Routes
     '/mybubbles/:_bId/posts/:_pId': {
       to: 'postPage', 
-      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
       to: 'discussionEdit', 
-      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/event': {
       to: 'eventEdit', 
-      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); }  
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}  
     },
     '/mybubbles/:_bId/posts/:_pId/edit/file': {
       to: 'fileobjectEdit',
-      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId);}
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
 
 

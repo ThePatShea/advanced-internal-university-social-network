@@ -82,6 +82,7 @@
 		</div>
 	</div>
 
+{{#codeComment}}
 	<div class="dashboard-section-header">
 		{{> icon-dashboard-big}} dashboard
 	</div> 
@@ -141,9 +142,12 @@
 			</div>
 		</div>
 	</div>
+{{/codeComment}}
+
+
         <div class="visible-{{numUpdates}}">
           <div class="dashboard-section-header">
-          	{{numUpdates}} Updates
+          	{{pluralize numUpdates 'update' ""}}
           	<button class="std-btn-light pull-right clear-updates">clear all</button> 
           </div>
           <div class="dashboard-updates">

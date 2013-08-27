@@ -24,6 +24,8 @@ Template.commentSubmit.events({
     Meteor.call('comment', comment, function(error, commentId) {
       error && throwError(error.reason);
     });
+
+    Meteor.subscribe('comments', template.data._id);
   }
 });
 

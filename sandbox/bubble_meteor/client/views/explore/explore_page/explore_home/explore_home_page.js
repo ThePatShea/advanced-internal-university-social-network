@@ -1,6 +1,11 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
+Template.explorePage.rendered = function(){
+  var currentExploreId = window.location.pathname.split("/")[2];
+  Meteor.subscribe('currentExplore', currentExploreId);
+}
+
 Template.explorePage.helpers({ 
   currentExplore: function(){
     var currentExploreId = Session.get('currentExploreId');

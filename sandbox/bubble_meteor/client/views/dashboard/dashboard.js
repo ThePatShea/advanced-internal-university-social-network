@@ -1,3 +1,5 @@
+
+
 Template.dashboard.helpers({
         getFiveExplorePosts: function() {
           return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
@@ -460,6 +462,9 @@ Template.dashboard.events({
 });
 
 Template.dashboard.rendered = function () {
+Meteor.subscribe('fiveExplorePosts');
+Meteor.subscribe('updatedPosts', Meteor.userId());
+
 	$('.carousel').carousel();
 
 	$('.dashboard-more-updates').click(function(){

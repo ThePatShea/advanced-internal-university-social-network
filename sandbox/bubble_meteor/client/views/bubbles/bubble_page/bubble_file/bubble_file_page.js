@@ -1,16 +1,27 @@
 Template.bubbleFilePage.helpers({
   //Get posts assigned to this bubble
   getFilePosts: function(){
-  	return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}, {limit: filesHandle.limit(), sort: {lastDownloadTime: -1} });
+    var currentUrl  =  window.location.pathname;
+    var urlArray    =  currentUrl.split("/");
+    var currentBubbleId  =  urlArray[2];
+
+    return Posts.find({bubbleId: currentBubbleId, postType:'file'}, {/*limit: filesHandle.limit(),*/ sort: {lastDownloadTime: -1} });
   }
 });
 
-Template.bubbleFilePage.rendered = function(){
-  $(window).scroll(function(){
-    if ($(window).scrollTop() == $(document).height() - $(window).height()){
-      if(Meteor.Router._page == "bubbleFilePage"){
-        this.filesHandle.loadNextPage();
-      }
+
+Template.bubbleFilePage.rendered = function() {
+  var currentUrl  =  window.location.pathname;
+  var urlArray    =  currentUrl.split("/");
+  var currentBubbleId  =  urlArray[2];
+  filesHandle = Meteor.subscribe('files', currentBubbleId);
+
+
+/*
+  $("#main").scroll(function(){
+    if ( ($("#main").scrollTop() >= $("#main")[0].scrollHeight - $("#main").height()) ) {
+      filesHandle.loadNextPage();
     }
   });
+//*/
 }
