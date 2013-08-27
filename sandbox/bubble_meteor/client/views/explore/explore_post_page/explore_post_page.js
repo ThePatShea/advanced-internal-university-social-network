@@ -99,3 +99,8 @@ Template.explorePostPage.events({
       }
     }
 });
+
+
+Template.explorePostPage.rendered = function(){
+  Meteor.subscribe('comments', this._id);
+}
