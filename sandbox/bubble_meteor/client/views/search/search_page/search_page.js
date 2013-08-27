@@ -26,6 +26,10 @@ Template.searchPage.events({
 Template.searchPage.rendered = function() {
   if ( !Session.get('searchText') )
     Session.set('searchText', ' ');
+  Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
+  Meteor.subscribe('findPostsById', Session.get('selectedPostIdList'));
+  Meteor.subscribe('findBubblesById', Session.get('selectedBubbleIdList'));
+
   
   /*
   if($(window).width() < 768)

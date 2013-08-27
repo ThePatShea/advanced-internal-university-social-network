@@ -99,15 +99,13 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('findPostsById', function(postIdList) {
     if(postIdList){
-      return Posts.find({_id: {$in: postIdList}}, {
+      bubbles = Bubbles.find({$or: [{'users.members': this.userId}, {'users.admins': this.userId}]}).fetch();
+      bubbleIdList = _.pluck(bubbles, '_id');
+      return Posts.find({_id: {$in: postIdList}, bubbleId: {$in: bubbleIdList}}, {
         fields: {
-         'name': 1,
-         'bubbleId': 1,
-         'commentsCount': 1,
-         'lastCommentTime': 1,
-         'lastUpdated': 1,
-         'attendees': 1,
-         'viewCount': 1
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
         }
       });
     }
@@ -338,12 +336,12 @@ getBubbleId =  function(userId) {
 
   Meteor.publish('findBubblesById', function(bubbleIdList) {
     if(bubbleIdList){
-      return Meteor.users.find({_id: {$in: bubbleIdList}}, {
+      return Bubbles.find({_id: {$in: bubbleIdList}}, {
         fields: {
-         'title': 1,
-         'category': 1,
-         'retinaProfilePicture': 1,
-         'users': 1
+          'coverPhoto': 0,
+          'retinaCoverPhoto': 0,
+          'profilePicture': 0, 
+          'retinaProfilePicture': 0
         }
       });
     }

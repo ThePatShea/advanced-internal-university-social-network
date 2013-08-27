@@ -80,6 +80,17 @@ Meteor.methods({
     post._id = Posts.insert(post);
     createPostUpdate(post);
 
+    if(postAttributes.postType == "file")
+    {
+      Meteor.call("addFileToIndex", post._id, postAttributes.name);
+    } else
+    if(postAttributes.postType == "discussion") {
+      Meteor.call("addDiscussionToIndex", post._id, postAttributes.name);
+    } else
+    if(postAttributes.postType == "event") {
+      Meteor.call("addEventToIndex", post._id, postAttributes.name);
+    }
+
     return post;
   },
 

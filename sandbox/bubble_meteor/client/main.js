@@ -61,11 +61,6 @@ Deps.autorun(function() {
 		};
 */
 
-//SEARCH SUBSCRIPTIONS
-Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
-Meteor.subscribe('findPostsById', Session.get('selectedPostIdList'));
-Meteor.subscribe('findBubblesById', Session.get('selectedBubbleIdList'));
-
 
 	// Posts Related Subscriptions
 	//	Meteor.subscribe('singlePost', Session.get('currentPostId'));

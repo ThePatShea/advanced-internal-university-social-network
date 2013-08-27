@@ -33,11 +33,9 @@ Meteor.methods({
 		var res = user_idx.search(q);
 		var retVal = [];
 		console.log(res);
-		for(var i = 0; i < 10; i++)
-		{
-			if(typeof res[i] !== "undefined")
-				retVal.push(res[i].ref)
-		}
+		_.each(res, function(i) {
+			retVal.push(i.ref)
+		});
 		return retVal;
 	},
 	search_bubbles: function(q) {
@@ -45,11 +43,9 @@ Meteor.methods({
 		var res = bubble_idx.search(q);
 		var retVal = [];
 		console.log(res);
-		for(var i = 0; i < 10; i++)
-		{
-			if(typeof res[i] !== "undefined")
-				retVal.push(res[i].ref)
-		}
+		_.each(res, function(i) {
+			retVal.push(i.ref)
+		});
 		return retVal;
 	},
 	search_events: function(q) {
@@ -57,11 +53,9 @@ Meteor.methods({
 		var res = event_idx.search(q);
 		var retVal = [];
 		console.log(res);
-		for(var i = 0; i < 10; i++)
-		{
-			if(typeof res[i] !== "undefined")
-				retVal.push(res[i].ref)
-		}
+		_.each(res, function(i) {
+			retVal.push(i.ref)
+		});
 		return retVal;
 	},
 	search_discussions: function(q) {
@@ -69,11 +63,9 @@ Meteor.methods({
 		var res = discussion_idx.search(q);
 		var retVal = [];
 		console.log(res);
-		for(var i = 0; i < 10; i++)
-		{
-			if(typeof res[i] !== "undefined")
-				retVal.push(res[i].ref)
-		}
+		_.each(res, function(i) {
+			retVal.push(i.ref)
+		});
 		return retVal;
 	},
 	search_files: function(q) {
@@ -81,11 +73,9 @@ Meteor.methods({
 		var res = file_idx.search(q);
 		var retVal = [];
 		console.log(res);
-		for(var i = 0; i < 10; i++)
-		{
-			if(typeof res[i] !== "undefined")
-				retVal.push(res[i].ref)
-		}
+		_.each(res, function(i) {
+			retVal.push(i.ref)
+		});
 		return retVal;
 	},
 
@@ -107,6 +97,7 @@ Meteor.methods({
 		user_idx.add(tmp);
 		console.log("ADDED TO USER INDEX: " + name);
 	},
+	//collections/bubbles.js, /view/bubble/bubble_submit.js
 	addBubbleToIndex: function(id, title) {
 		var tmp = {
 			"title": title,
@@ -115,6 +106,7 @@ Meteor.methods({
 		bubble_idx.add(tmp);
 		console.log("ADDED TO BUBBLE INDEX: " + title);
 	},
+	//collections/post.js
 	addEventToIndex: function(id, name) {
 		var tmp = {
 			"name": name,
