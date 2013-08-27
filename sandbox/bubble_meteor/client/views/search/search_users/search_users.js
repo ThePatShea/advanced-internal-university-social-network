@@ -23,18 +23,19 @@ Template.searchUsers.rendered = function(){
   //To set header as active
   Session.set('searchCategory', 'users');
 
-  $(window).scroll(function(){
+  /*$(window).scroll(function(){
     if ($(window).scrollTop() == $(document).height() - $(window).height()){
       if(Meteor.Router._page == 'searchUsers'){
         this.usersListHandle.loadNextPage();
       }
     }
-  });
-
-  $(".search-text").bind("keydown", function(evt) {
-    Session.set('typing', 'true');
-  });
-  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+  });*/
+  if($(window).width() > 768)
+  {
+    $(".search-text").bind("keydown", function(evt) {
+      Session.set('typing', 'true');
+    });
+    $(".search-text").bind("propertychange keyup input paste", function(evt) {
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
         Meteor.call('search_users', $(".search-text").val(), function(err, res) {
@@ -46,6 +47,20 @@ Template.searchUsers.rendered = function(){
           }
         });
       }, 500);
+    });
+  }
+  $(".search-btn").bind("click", function(evt) {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          Session.set('typing', 'false');
+          Session.set('selectedUserIdList', res);
+        }
+      });
+    }, 500);
   });
 }
 

@@ -42,10 +42,12 @@ Template.searchBubbles.rendered = function(){
     }
   });
   */
-  $(".search-text").bind("keydown", function(evt) {
-    Session.set('typing', 'true');
-  });
-  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+  if($(window).width() > 768)
+  {
+    $(".search-text").bind("keydown", function(evt) {
+      Session.set('typing', 'true');
+    });
+    $(".search-text").bind("propertychange keyup input paste", function(evt) {
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
         Meteor.call('search_bubbles', $(".search-text").val(), function(err, res) {
@@ -57,12 +59,26 @@ Template.searchBubbles.rendered = function(){
           }
         });
       }, 500);
+    });
+  }
+  $(".search-btn").bind("click", function(evt) {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('search_bubbles', $(".search-text").val(), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          Session.set('typing', 'false');
+          Session.set('selectedBubbleIdList', res);
+        }
+      });
+    }, 500);
   });
 }
 
 Template.searchBubbles.events({
-  /*
-  "click .search-btn": function(evt){
+  
+  /*"click .search-btn": function(evt){
     Meteor.call('search_bubbles', $(".search-text").val(), function(err, res) {
       if(err) {
         console.log(err);
@@ -71,6 +87,5 @@ Template.searchBubbles.events({
         Session.set('selectedBubbleIdList', res);
       }
     });
-  }
-  */
+  }*/
 })

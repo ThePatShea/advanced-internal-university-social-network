@@ -21,6 +21,7 @@ Template.bubblePage.rendered = function() {
   Meteor.subscribe('bubbleHomeDiscussions', bubbleId);
   Meteor.subscribe('bubbleHomeEvents', bubbleId);
   Meteor.subscribe('bubbleHomeFiles', bubbleId);
+  Meteor.subscribe('bubbleHomeUpdates'     , bubbleId);
 }
 
 Template.bubblePage.helpers({ 

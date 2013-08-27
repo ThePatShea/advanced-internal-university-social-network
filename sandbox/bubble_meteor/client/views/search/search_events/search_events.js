@@ -34,10 +34,12 @@ Template.searchEvents.rendered = function(){
     }
   });
   */
-  $(".search-text").bind("keydown", function(evt) {
-    Session.set('typing', 'true');
-  });
-  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+  if($(window).width() > 768)
+  {
+    $(".search-text").bind("keydown", function(evt) {
+      Session.set('typing', 'true');
+    });
+    $(".search-text").bind("propertychange keyup input paste", function(evt) {
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
         Meteor.call('search_events', $(".search-text").val(), function(err, res) {
@@ -49,6 +51,20 @@ Template.searchEvents.rendered = function(){
           }
         });
       }, 500);
+    });
+  }
+  $(".search-btn").bind("click", function(evt) {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('search_events', $(".search-text").val(), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          Session.set('typing', 'false');
+          Session.set('selectedPostIdList', res);
+        }
+      });
+    }, 500);
   });
 }
 
