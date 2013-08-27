@@ -13,11 +13,15 @@ Template.bubblePage.created = function() {
 
 
 Template.bubblePage.rendered = function() {
- var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+  var bubbleId = window.location.pathname.split('/')[2];
+  Meteor.subscribe('singleBubble', bubbleId);
+  var bubble = Bubbles.findOne({_id: bubbleId});
 
-  Meteor.subscribe('bubbleHomeDiscussions', bubble._id);
-  Meteor.subscribe('bubbleHomeEvents', bubble._id);
-  Meteor.subscribe('bubbleHomeFiles', bubble._id);
+  Meteor.subscribe('bubbleHomeDiscussions', bubbleId);
+  Meteor.subscribe('bubbleHomeEvents', bubbleId);
+  Meteor.subscribe('bubbleHomeFiles', bubbleId);
+  Meteor.subscribe('bubbleHomeUpdates'     , bubbleId);
 }
 
 Template.bubblePage.helpers({ 

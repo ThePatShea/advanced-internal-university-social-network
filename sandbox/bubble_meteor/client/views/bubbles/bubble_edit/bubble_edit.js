@@ -11,7 +11,7 @@ Template.bubbleEdit.events({
     $("input[name=bubbleType]").val("super");
     $(".select-bubble-type > .normal").removeClass("active-true");
     $(".select-bubble-type > .super").addClass("active-true");
-  }
+  },
   'click .bubble-edit > .cb-submit-container > .cb-submit': function(e) {
     e.preventDefault();
     

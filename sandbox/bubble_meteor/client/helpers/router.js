@@ -133,6 +133,9 @@ Meteor.Router.add({
       and: function(expId, pId){
         Session.set('currentExploreId', expId);
         Session.set('currentPostId', pId);
+        Meteor.subscribe('comments', pId);
+        Meteor.subscribe('currentExplore', expId);
+        Meteor.subscribe('singlePost', pId);
       }
     },
     '/explore':  'exploreAll',

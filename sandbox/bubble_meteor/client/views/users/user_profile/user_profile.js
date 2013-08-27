@@ -76,6 +76,8 @@ Template.userProfile.helpers({
 
 //Crop selection
 Template.userProfile.rendered = function() {
+        Meteor.subscribe('singleUser', Session.get('selectedUserId'));
+
 	var cropArea;
 	var mainURL;
 	var retinaURL;
