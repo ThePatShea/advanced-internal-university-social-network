@@ -80,6 +80,21 @@ getBubbleId =  function(userId) {
   });
 
 
+  Meteor.publish('bubbleHomeUpdates', function(bubbleId) {
+    var updates    =  Updates.find({bubbleId: bubbleId, read: false}).fetch();
+
+    var postsList  =  _.pluck(updates,'postId');
+
+    var posts      =  Posts.find({_id: {$in: postsList}});
+ 
+    var posts2     =  posts.fetch();
+    var usersList  =  _.pluck(posts2,'userId');
+    var users      =  Meteor.users.find({_id: {$in: usersList} });
+
+    return [posts, users];
+    //return posts;
+  });
+
 
   Meteor.publish('updatedPosts', function(userId) {
     var updates = Updates.find({userId: userId, read: false}).fetch();
