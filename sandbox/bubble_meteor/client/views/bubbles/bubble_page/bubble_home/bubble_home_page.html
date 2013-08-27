@@ -36,8 +36,8 @@
                 </div>
               </div>
             {{/each}}
-            <a class="visible-{{hasMoreEvents}}" href="{{bubbleEventPagePath getCurrentBubble._id}}">
-              <button class="pull-left btn-tiny more-posts">+ {{pluralize numMoreEvents 'event' 'more'}}</button>
+            <a class="visible" href="{{bubbleEventPagePath getCurrentBubble._id}}">
+              <button class="pull-left btn-tiny more-posts">+ view more events</button>
             </a>
           {{/with}}
         </div>
@@ -57,8 +57,8 @@
                 </div>
               </div>
             {{/each}}
-            <a class="visible-{{hasMoreDiscussions}}" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
-              <button class="pull-left btn-tiny more-posts">+ {{pluralize numMoreDiscussionsCount postType 'more'}}</button>
+            <a class="visible" href="{{bubbleDiscussionPagePath getCurrentBubble._id}}">
+              <button class="pull-left btn-tiny more-posts">+ more discussions</button>
             </a>
           {{/with}}
         </div>
@@ -78,8 +78,8 @@
                 </div>
               </div>
             {{/each}}
-            <a class="visible-{{hasMoreFiles}}" href="{{bubbleFilePagePath getCurrentBubble._id}}">
-              <button class="pull-left btn-tiny more-posts">+ {{pluralize filesCount postType 'more'}}</button>
+            <a class="visible" href="{{bubbleFilePagePath getCurrentBubble._id}}">
+              <button class="pull-left btn-tiny more-posts">+ view more files</button>
             </a>
           {{/with}}
         </div>
