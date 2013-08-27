@@ -1,3 +1,3 @@
 Template.welcomePage.rendered = function() {
-  window.location = "/landing";
+  window.location = "/landing/index.html";
 }
