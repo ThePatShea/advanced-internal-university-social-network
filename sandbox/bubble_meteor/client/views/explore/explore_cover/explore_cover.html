@@ -1,8 +1,7 @@
 <template name="exploreCover">
     <div class="explore-cover">
-      <img class="cover-pic" src="{{coverPhoto}}"/>
+      <!-- <img class="cover-pic" src=""/> -->
       <div class="cover-mask"></div>
-
       <div class="v-middle pull-left">
         <div class="v-inner">
           <div class="profile-icon-container">
@@ -10,14 +9,12 @@
           </div>
         </div>
       </div>
-
       <div class="v-middle explore-name-and-subtitle">
         <div class="v-inner">
           <h1 class="explore-name">{{title}}</h1>
           <h2 class="explore-subtitle">{{description}}</h2>
         </div>
       </div>
-
       <div class="v-middle cover-btns">
         <div class="v-inner">
             <a href="#">
@@ -31,7 +28,6 @@
         </div>
       </div>
     </div>
-
     {{#if isExploreType 'discussion'}}
       {{> exploreDiscussionSubmit}}
     {{else}}
