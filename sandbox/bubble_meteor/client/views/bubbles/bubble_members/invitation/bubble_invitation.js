@@ -21,6 +21,7 @@ Template.bubbleInvitation.rendered = function() {
       Session.set('selectedUsername', searchText);
     }
   });*/
+  Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
   Session.set('currentlySearching', 'true');
   $(".search-text").unbind("propertychange keyup input paste")
   $(".search-text").bind("propertychange keyup input paste", function(evt) {
@@ -30,7 +31,7 @@ Template.bubbleInvitation.rendered = function() {
           if(err) {
             console.log(err);
           } else {
-            console.log("RE: sponse");
+            console.log("response");
             Session.set('potentialUserIdList', res);
           }
         });
