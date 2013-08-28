@@ -157,10 +157,63 @@ Template.searchAll.rendered = function() {
   Session.set('searchCategory','all');
   Session.set('currentBubbleId','');
 
-  $(".search-text").bind("keydown", function(evt) {
-    Session.set('typing', 'true');
-  });
-  $(".search-text").bind("propertychange keyup input paste", function(evt) {
+
+  if($(window).width() > 768)
+  {
+    $(".search-text").bind("keydown", function(evt) {
+      Session.set('typing', 'true');
+    });
+    $(".search-text").bind("propertychange keyup input paste", function(evt) {
+        Meteor.clearTimeout(mto);
+        mto = Meteor.setTimeout(function() {
+          Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+            if(err) {
+              console.log(err);
+            } else {
+              Session.set('selectedUserIdList', res);
+            }
+          });
+          Meteor.call('search_bubbles', $(".search-text").val(), function(err, res) {
+            if(err) {
+              console.log(err);
+            } else {
+              Session.set('typing', 'false');
+              Session.set('selectedBubbleIdList', res);
+            }
+          });
+          Meteor.call('search_files', $(".search-text").val(), function(err, res) {
+            if(err) {
+              console.log(err);
+            } else {
+              Session.set('typing', 'false');
+              tmp = res;
+              console.log('@files: ' + res);
+              Meteor.call('search_events', $(".search-text").val(), function(err, res) {
+                if(err) {
+                  console.log(err);
+                } else {
+                  Session.set('typing', 'false');
+                  tmp = tmp.concat(res);
+                  console.log('@events: ' + res);
+                  Meteor.call('search_discussions', $(".search-text").val(), function(err, res) {
+                    if(err) {
+                      console.log(err);
+                    } else {
+                      Session.set('typing', 'false');
+                      tmp = tmp.concat(res);
+                      console.log('@discussions: ' + tmp);
+                      Session.set('typing', 'false');
+                      Session.set('selectedPostIdList', tmp);
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }, 500);
+    });
+  }
+  $(".search-btn").bind("click", function(evt) {
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
         Meteor.call('search_users', $(".search-text").val(), function(err, res) {
@@ -235,54 +288,3 @@ Template.searchAll.created = function() {
   Session.set("selectedUserIdList", []);
   var tmp = [];
 }
-/*
-Template.searchAll.events({
-  "click .search-btn": function(evt){
-    Meteor.call('search_users', $(".search-text").val(), function(err, res) {
-      if(err) {
-        console.log(err);
-      } else {
-        Session.set('selectedUserIdList', res);
-      }
-    });
-    Meteor.call('search_bubbles', $(".search-text").val(), function(err, res) {
-      if(err) {
-        console.log(err);
-      } else {
-        Session.set('typing', 'false');
-        Session.set('selectedBubbleIdList', res);
-      }
-    });
-    Meteor.call('search_files', $(".search-text").val(), function(err, res) {
-      if(err) {
-        console.log(err);
-      } else {
-        Session.set('typing', 'false');
-        tmp = Session.get('selectedPostIdList');
-        tmp = tmp.concat(res);
-        console.log('@files: ' + res);
-        Meteor.call('search_events', $(".search-text").val(), function(err, res) {
-          if(err) {
-            console.log(err);
-          } else {
-            Session.set('typing', 'false');
-            tmp = tmp.concat(res);
-            console.log('@events: ' + res);
-            Meteor.call('search_discussions', $(".search-text").val(), function(err, res) {
-              if(err) {
-                console.log(err);
-              } else {
-                Session.set('typing', 'false');
-                tmp = tmp.concat(res);
-                console.log('@discussions: ' + tmp);
-                Session.set('typing', 'false');
-                Session.set('selectedPostIdList', tmp);
-              }
-            });
-          }
-        });
-      }
-    });
-  }
-})
-*/

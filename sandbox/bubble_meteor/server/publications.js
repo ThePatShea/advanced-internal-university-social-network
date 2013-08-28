@@ -112,6 +112,21 @@ getBubbleId =  function(userId) {
       }
     });
   });
+
+  Meteor.publish('findPostsById', function(postIdList) {
+    if(postIdList){
+      bubbles = Bubbles.find({$or: [{'users.members': this.userId}, {'users.admins': this.userId}]}).fetch();
+      bubbleIdList = _.pluck(bubbles, '_id');
+      return Posts.find({_id: {$in: postIdList}, bubbleId: {$in: bubbleIdList}}, {
+        fields: {
+          'file': 0,
+          'eventPhoto': 0,
+          'retinaEventPhoto': 0
+        }
+      });
+    }
+  });
+
   Meteor.publish('discussions', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
       sort: {submitted: -1},
@@ -348,6 +363,22 @@ getBubbleId =  function(userId) {
       });
   });
 
+<<<<<<< HEAD
+=======
+  Meteor.publish('findBubblesById', function(bubbleIdList) {
+    if(bubbleIdList){
+      return Bubbles.find({_id: {$in: bubbleIdList}}, {
+        fields: {
+          'coverPhoto': 0,
+          'retinaCoverPhoto': 0,
+          'profilePicture': 0, 
+          'retinaProfilePicture': 0
+        }
+      });
+    }
+  });
+
+>>>>>>> 1c800b7624d2316d89c69182aa65b7f77d873750
 Meteor.publish('sidebarBubbles', function(userId) {
   return Bubbles.find({
       $or: [
