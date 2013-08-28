@@ -275,6 +275,31 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('singlePost', function(postId) {
     var post = Posts.findOne(postId);
+    var postType = post.postType;
+
+    if (postType == "discussion") {
+      var postIds  =  post.children.concat([postId]);
+      
+      var posts    =  Posts.find({_id: {$in: postIds}});
+
+      var users    =  Meteor.users.find({_id: post.userId});
+
+      return [posts, users];
+    } else if (postType == "event") {
+      var posts    =  Posts.find({_id: postId});
+
+      var users    =  Meteor.users.find({_id: post.userId});
+
+      return [posts, users];
+    } else if (postType == "file") {
+      var posts    =  Posts.find({_id: postId});
+
+      var users    =  Meteor.users.find({_id: post.userId});
+
+      return [posts, users];
+    }
+/*
+    var post = Posts.findOne(postId);
 
     if(post != undefined){
       if(post.postType == 'discussion'){
@@ -292,6 +317,7 @@ getBubbleId =  function(userId) {
 
     return [returnPost, user];
     //return post;
+*/
   });
 
   
@@ -312,7 +338,14 @@ getBubbleId =  function(userId) {
 
 // Comments Related Publications
   Meteor.publish('comments', function(postId, limit) {
-    return Comments.find({postId: postId}, {sort: {submitted:-1}, limit: limit});
+      var comments  =  Comments.find({postId: postId}, {sort: {submitted:-1}, limit: limit});
+
+      var comments2  =  comments.fetch();
+      var commentIds =  _.pluck(comments2, "userId");
+
+      var users    =  Meteor.users.find({_id: {$in: commentIds} });
+
+      return [comments, users];
   });
 
   Meteor.publish('userComments', function(userId){
