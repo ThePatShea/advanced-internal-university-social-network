@@ -275,28 +275,31 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('singlePost', function(postId) {
     var post = Posts.findOne(postId);
-    var postType = post.postType;
 
-    if (postType == "discussion") {
-      var postIds  =  post.children.concat([postId]);
-      
-      var posts    =  Posts.find({_id: {$in: postIds}});
+    if(post != undefined){
+      var postType = post.postType;
 
-      var users    =  Meteor.users.find({_id: post.userId});
+      if (postType == "discussion") {
+        var postIds  =  post.children.concat([postId]);
+        
+        var posts    =  Posts.find({_id: {$in: postIds}});
 
-      return [posts, users];
-    } else if (postType == "event") {
-      var posts    =  Posts.find({_id: postId});
+        var users    =  Meteor.users.find({_id: post.userId});
 
-      var users    =  Meteor.users.find({_id: post.userId});
+        return [posts, users];
+      } else if (postType == "event") {
+        var posts    =  Posts.find({_id: postId});
 
-      return [posts, users];
-    } else if (postType == "file") {
-      var posts    =  Posts.find({_id: postId});
+        var users    =  Meteor.users.find({_id: post.userId});
 
-      var users    =  Meteor.users.find({_id: post.userId});
+        return [posts, users];
+      } else if (postType == "file") {
+        var posts    =  Posts.find({_id: postId});
 
-      return [posts, users];
+        var users    =  Meteor.users.find({_id: post.userId});
+
+        return [posts, users];
+      }
     }
 /*
     var post = Posts.findOne(postId);
