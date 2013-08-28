@@ -419,10 +419,31 @@ Meteor.publish('sidebarBubbles', function(userId) {
     });
   });
   Meteor.publish('currentExplore', function(exploreId){
-    return Posts.find({'exploreId': exploreId}, {fields: {
+    var posts = Posts.find({'exploreId': exploreId});
+    var posts2 = posts.fetch();
+
+    //Users
+      var userIds = [];
+
+      for (var i = 0; i < posts2.length; i++) {
+        userIds.push(posts2[i].userId);
+      }
+
+      var users = Meteor.users.find({_id: {$in: userIds}});
+
+    //Bubbles
+      var bubbleIds = [];
+      for (var i = 0; i < posts2.length; i++) {
+        bubbleIds.push(posts2[i].postAsId);
+      }
+
+      var bubbles = Bubbles.find({_id: {$in: bubbleIds}});
+
+    return [posts, users, bubbles];
+    /*return Posts.find({'exploreId': exploreId}, {fields: {
       'coverPhoto': 0,
       'retinaCoverPhoto': 0
-    } });
+    } });*/
   });
   Meteor.publish('fiveExplorePosts', function() {
     //return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});

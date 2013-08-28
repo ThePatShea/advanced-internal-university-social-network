@@ -103,7 +103,8 @@ Template.explorePostPage.events({
 
 Template.explorePostPage.rendered = function(){
   Meteor.subscribe('comments', this._id);
-  Meteor.subscribe('currentExplore', this.exploreId);
+  //Meteor.subscribe('currentExplore', this.exploreId);
+  Meteor.subscribe('allExplores');
   Meteor.subscribe('singlePost', this._id);
 }
 
