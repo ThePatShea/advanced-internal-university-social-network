@@ -363,8 +363,6 @@ getBubbleId =  function(userId) {
       });
   });
 
-<<<<<<< HEAD
-=======
   Meteor.publish('findBubblesById', function(bubbleIdList) {
     if(bubbleIdList){
       return Bubbles.find({_id: {$in: bubbleIdList}}, {
@@ -378,7 +376,6 @@ getBubbleId =  function(userId) {
     }
   });
 
->>>>>>> 1c800b7624d2316d89c69182aa65b7f77d873750
 Meteor.publish('sidebarBubbles', function(userId) {
   return Bubbles.find({
       $or: [
