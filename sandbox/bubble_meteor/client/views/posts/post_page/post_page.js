@@ -1,9 +1,13 @@
 Template.postPage.rendered = function() {
   var currentUrl     =  window.location.pathname;
   var urlArray       =  currentUrl.split("/");
-  var currentPostId  =  urlArray[4];
+
+  var currentBubbleId  =  urlArray[2];
+  var currentPostId    =  urlArray[4];
+
+  Meteor.subscribe('singleBubble', currentBubbleId);
   Meteor.subscribe('singlePost', currentPostId);
-  commentsHandle = Meteor.subscribe('comments', currentPostId);
+  Meteor.subscribe('comments', currentPostId);
 }
 
 

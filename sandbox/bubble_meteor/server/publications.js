@@ -112,21 +112,6 @@ getBubbleId =  function(userId) {
       }
     });
   });
-  Meteor.publish('findPostsById', function(postIdList) {
-    if(postIdList){
-      return Posts.find({_id: {$in: postIdList}}, {
-        fields: {
-         'name': 1,
-         'bubbleId': 1,
-         'commentsCount': 1,
-         'lastCommentTime': 1,
-         'lastUpdated': 1,
-         'attendees': 1,
-         'viewCount': 1
-        }
-      });
-    }
-  });
   Meteor.publish('discussions', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
       sort: {submitted: -1},
@@ -275,18 +260,23 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('singlePost', function(postId) {
     var post = Posts.findOne(postId);
-    //console.log('Publishing: ', post);
+
     if(post != undefined){
       if(post.postType == 'discussion'){
         var postIds = post.children.concat([postId]);
 
         var postAndChildren = Posts.find({_id: {$in: postIds}});
 
-        return postAndChildren;
+        var returnPost = postAndChildren;
+      } else {
+        var returnPost = post;
       }
     }
-    return post;
 
+    var user = Meteor.users.find({_id: returnPost.userId});
+
+    return [returnPost, user];
+    //return post;
   });
 
   
@@ -358,19 +348,6 @@ getBubbleId =  function(userId) {
       });
   });
 
-  Meteor.publish('findBubblesById', function(bubbleIdList) {
-    if(bubbleIdList){
-      return Meteor.users.find({_id: {$in: bubbleIdList}}, {
-        fields: {
-         'title': 1,
-         'category': 1,
-         'retinaProfilePicture': 1,
-         'users': 1
-        }
-      });
-    }
-  });
-
 Meteor.publish('sidebarBubbles', function(userId) {
   return Bubbles.find({
       $or: [
@@ -414,19 +391,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
     });
   });
   Meteor.publish('currentExplore', function(exploreId){
-    var posts = Posts.find({'exploreId': exploreId}, {fields: {
+    return Posts.find({'exploreId': exploreId}, {fields: {
       'coverPhoto': 0,
       'retinaCoverPhoto': 0
     } });
-
-    var posts2 = posts.fetch();
-
-    var bubbleIds = _.pluck(posts2, "postAsId");
-    var userIds = _.pluck(posts2, "userId");
-    var bubbles = Bubbles.find({_id: {$in: bubbleIds}}, {fields: {category: 1, title: 1}});
-    var users = Meteor.users.find({_id: {$in: userIds}}, {fields: {name: 1, profilePicture: 1}});
-
-    return [posts, bubbles, users];
   });
   Meteor.publish('fiveExplorePosts', function() {
     //return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
