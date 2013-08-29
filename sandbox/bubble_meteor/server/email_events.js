@@ -244,11 +244,11 @@ Meteor.methods({
 			}
 		);
 	},
-	sendDailyDigest: function(userId, content) {
+	sendDailyDigest: function(userId, numUpdates, content) {
 		console.log("Daily Digest");
 		var user = Meteor.users.findOne({_id: userId});
 		var to = user.emails[0].address;
-		var name = user.name;
+		var name = user.name;//.substring(0,user.name.indexOf(" "));
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",
 			"template_name": "cb-daily-digest",
@@ -272,6 +272,10 @@ Meteor.methods({
 			       	{
 			        	"name": "NAME",
 			        	"content": name
+			       	},
+			       	{
+			       		"name": "NUMUPDATES",
+			       		"content": numUpdates
 			       	},
 			       	{
 			        	"name": "CONTENT",

@@ -213,6 +213,7 @@ Meteor.Router.add('/dailyDigest', 'POST', function(){
     users = Meteor.users.find().fetch();
     _.each(users, function(user) {
       var retVal = "<ul>";
+      var count = 0;
       if(user.neverLoggedIn == false)
       {
         updates = Updates.find({userId: user._id}).fetch();
@@ -223,12 +224,13 @@ Meteor.Router.add('/dailyDigest', 'POST', function(){
           {
             //Updates.update({_id: update._id}, {$set: {emailed: true}});
             retVal = retVal.concat("<li>" + update.content + "</li>");
+            count++;
           }
         });
         retVal = retVal.concat("</ul>");
         if(retVal !== "<ul></ul>")
         {
-          Meteor.call("sendDailyDigest", user._id, retVal);
+          Meteor.call("sendDailyDigest", user._id, count, retVal);
         }
       }
     });

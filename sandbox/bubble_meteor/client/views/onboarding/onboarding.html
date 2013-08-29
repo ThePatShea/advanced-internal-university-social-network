@@ -1,5 +1,6 @@
 <template name="onboarding">
 
+<div style="scroll: auto;">
 {{#if isLoggedIn}}
   <div class="navbar navbar-onboarding">
     <div class="navbar-inner">
@@ -77,4 +78,5 @@
 {{else}}
   <div class="gif-loader-wrapper">{{> gifLoaderSite}}</div>
 {{/if}}
+</div>
 </template>
