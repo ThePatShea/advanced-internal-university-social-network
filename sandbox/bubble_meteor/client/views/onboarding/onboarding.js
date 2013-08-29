@@ -176,6 +176,16 @@ Template.onboarding.rendered = function() {
     } else {
     Session.set("DisableCrop","");
   }
+
+  var adjustMain = function() {
+    $('#main').css('height', $(window).height()/* - $('.navbar').height()*/);
+  }
+
+  $(window).resize(function() {
+    adjustMain();
+  });
+
+  adjustMain();
 }
 
 Template.onboarding.created = function() {
