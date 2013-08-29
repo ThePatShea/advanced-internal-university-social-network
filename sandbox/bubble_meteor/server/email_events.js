@@ -123,7 +123,7 @@ Meteor.methods({
 		var name = user.name;
 		var fname = user.name.substring(0,user.name.indexOf(' '));
 		var bubbleName = bubble.title;
-		//var to = user.emails[0].address;
+		var to = user.emails[0].address;
 		if(typeof to == undefined)
 		{
 			return "No Email Address for invited user";
@@ -131,7 +131,7 @@ Meteor.methods({
 		//var retVal = {'currentUserId': currentUserId, 'currentUserName': currentUser.name, 'userId': userId, 'bubbleId': bubbleId, 'name': user.name, 'bubbleName': bubble.title, 'to': user.emails[0].address};
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",//c4HA5dUtFK1IjN01VjjBKw
-			"template_name": "mandrill-invite",
+			"template_name": "cb-invited-email",
 			"template_content": [],
 			"headers": {
             	"Content-Type": "application/json"
@@ -140,7 +140,7 @@ Meteor.methods({
 			{
 			    "to": [
 			        {
-			          "email": "taggart@thecampusbubble.com",
+			          "email": to,
 			          "name": name
 			        }
 			    ],
@@ -203,7 +203,7 @@ Meteor.methods({
 		});
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",
-			"templat_ename": "cb-applicant-email",
+			"template_name": "cb-applicant-email",
 			"template_content": [],
 			"headers": {
             	"Content-Type": "application/json"
@@ -230,6 +230,59 @@ Meteor.methods({
 			       	}
 			    ],
 			    tags: ["sendApplicantEmail"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
+			{"data": retVal},
+			function(err, res) {
+				console.log(res);
+			}
+		);
+	},
+	sendDailyDigest: function(userId, numUpdates, content) {
+		console.log("Daily Digest");
+		var user = Meteor.users.findOne({_id: userId});
+		var to = user.emails[0].address;
+		var name = user.name;//.substring(0,user.name.indexOf(" "));
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "cb-daily-digest",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": [
+			        {
+			          "email": "taggart@thecampusbubble.com",
+			          "name": name
+			        }
+			    ],
+			     "global_merge_vars": [
+			        {
+			            "name": "USERID",
+			            "content": userId
+			        },
+			       	{
+			        	"name": "NAME",
+			        	"content": name
+			       	},
+			       	{
+			       		"name": "NUMUPDATES",
+			       		"content": numUpdates
+			       	},
+			       	{
+			        	"name": "CONTENT",
+			        	"content": content
+			       	}
+			    ],
+			    tags: ["dailyDigest"],
 			    track_opens: true,
 			    track_clicks: true
 			}
