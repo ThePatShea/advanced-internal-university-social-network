@@ -166,6 +166,8 @@ Template.onboarding.rendered = function() {
   $('#cb-form-container-onboarding .cb-submit').addClass('ready-false');
   $('#cb-form-container-onboarding .cb-submit').prop('disabled', true);
 
+  Meteor.subscribe('authenticatedUser', Session.get('secret'));
+
   var cropArea;
   var mainURL;
   var retinaURL;
