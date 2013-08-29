@@ -39,21 +39,21 @@ Template.bubbleMembersPage.rendered = function () {
 	Session.set("selectedUserIdList",userIdArray);
 
 	//var numIds = 10;
+	var index = 0;
+	var oldpage = 0;
 
 	$("#main").scroll(function(){
 	    //if ( ($("#main").scrollTop() >= $("#main")[0].scrollHeight - $("#main").height()) ) {
 	    	var page = Math.round( $("#main").scrollTop()/$("#main").height() );
+	    	//var oldpage = page;
 	    	console.log('Pre paginating: ', page, $("#main").scrollTop(), $("#main").height(), $(document).height());
-	    if ( page > 0 ){
+	    if ( page > 0  && page != oldpage){
 	      //alert(page);
-	      console.log('Scrolling: ', page, userIds.slice((page-1)*10, page*10));
-	      numIds = page*10;
-	      if(numIds >= userIds.length){
-	      	numIds = userIds.length - 1;
-	      }
-	      var pageUserIds = userIds.slice((page-1)*10, page*10);
+	      console.log('Scrolling: ', page, userIds.slice(oldpage*10, page*10));
+	      var pageUserIds = userIds.slice(oldpage*10, page*10);
 	      Meteor.subscribe('findUsersById', pageUserIds);
 	    }
+	    oldpage = page;
 	  });
 
 };
