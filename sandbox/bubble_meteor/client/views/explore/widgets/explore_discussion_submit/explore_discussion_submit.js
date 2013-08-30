@@ -204,7 +204,10 @@ function makeDiscussionPost(){
   }
 
   if(postAttributes.postAsType == 'user'){
-    postAttributes.author = Meteor.user().username;
+    //postAttributes.author = Meteor.user().username;
+    var userId = Meteor.userId();
+    var user = Meteor.users.findOne({_id: userId});
+    postAttributes.author = user.name;
   }
   else{
     postAttributes.author = Bubbles.findOne({_id: postAttributes.postAsId}).title;
