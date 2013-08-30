@@ -64,7 +64,7 @@ Meteor.Router.add('/testauth', 'POST', function(){
 		user = Meteor.users.findOne({username: this.request.body.netId});
 		Accounts.setPassword(user._id, secret);
 
-		var letterProfile = '/img/letterprofiles' + this.request.body.netId.toLowerCase()[0] + '.jpg';
+		var letterProfile = '/img/letterprofiles/' + this.request.body.netId.toLowerCase()[0] + '.jpg';
 		
 		var userProperties = {
 			'profilePicture': letterProfile,
