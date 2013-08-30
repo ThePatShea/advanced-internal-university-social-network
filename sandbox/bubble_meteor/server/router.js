@@ -64,7 +64,7 @@ Meteor.Router.add('/testauth', 'POST', function(){
 		user = Meteor.users.findOne({username: this.request.body.netId});
 		Accounts.setPassword(user._id, secret);
 
-		var letterProfile = '/img/letterprofiles' + this.request.body.netId.toLowerCase()[0] + '.jpg';
+		var letterProfile = '/img/letterprofiles/' + this.request.body.netId.toLowerCase()[0] + '.jpg';
 		
 		var userProperties = {
 			'profilePicture': letterProfile,
@@ -208,200 +208,54 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 });
 
 Meteor.Router.add('/dailyDigest', 'POST', function(){
-	secret = this.request.body.secret;
-	var to = []
-	var updatesRes = []
-	if(secret == "F302pinpulse")
+  if(this.request.body.secret == "dailyPass")
+  {
+    users = Meteor.users.find().fetch();
+    _.each(users, function(user) {
+      var retVal = "<ul>";
+      var count = 0;
+      if(user.neverLoggedIn == false)
+      {
+        updates = Updates.find({userId: user._id}).fetch();
+        console.log(user._id);
+        _.each(updates, function(update) {
+          //console.log("user._id: " + user._id + " | update.userId: " + update.userId + " | update.emailed: " + update.emailed + " | update.content: " + update.content);
+          if(update.emailed == false)
+          {
+            //Updates.update({_id: update._id}, {$set: {emailed: true}});
+            retVal = retVal.concat("<li>" + update.content + "</li>");
+            count++;
+          }
+        });
+        retVal = retVal.concat("</ul>");
+        if(retVal !== "<ul></ul>")
+        {
+          Meteor.call("sendDailyDigest", user._id, count, retVal);
+        }
+      }
+    });
+    return [200, "Success"];
+  } else {
+    return [403, "Forbidden"];
+  }
+});
+
+Meteor.Router.add('/getBubbleId', 'POST', function() {
+	console.log("Getting Bubble Id...");
+	bubble = Bubbles.findOne({title: this.request.body.title});
+	if(bubble == undefined)
 	{
-		var fullUpdateList = compressUpdates();
-		console.log(fullUpdatesList);
-        //Pulling the userId out for the 1st layer
-        var userIdList = Object.keys(fullUpdateList);
-        _.each(userIdList, function(userId){
-          var emailUpdateList = {};
-          var bubbleUpdateList = fullUpdateList[userId];
-          //Pulling the bubbleId out for the 2nd layer
-          var bubbleIdList = Object.keys(bubbleUpdateList);
-          //Iterate through the 3rd layer of updates
-          _.each(bubbleIdList, function(bubbleId){
-            var updateList = bubbleUpdateList[bubbleId]; 
-            //Edit the content for update types that does compiling
-            var bubbleUpdateTypeList = 
-              [ 
-                "new applicant",
-                "new attendee",        
-                "member promoted",
-                "member demoted",
-                "joined bubble"
-              ];
-            _.each(updateList, function(update){
-              if(update.updateType == 'replied'
-                || _.contains(bubbleUpdateTypeList,update.updateType)) {
-                update.content = update.invokerName + update.content;
-              }
-            });
-            var contentList = _.pluck(updateList,'content');
-            var bubble = Bubbles.findOne(bubbleId);
-            emailUpdateList[bubble.title] = contentList;
-          });
-          var user = Meteor.users.findOne(userId);
-
-          to.push(user.emails[0].address);
-          updatesRes.push(emailUpdateList);
-          console.log("to: " + to);
-          console.log("updates" + to);
-
-      	Updates.update({read:false, emailed:false}, {$set:{emailed:true}});
-		});
-		return [200, "Hurray"]
+		var bubbleParams = {
+	      category             : this.request.body.category,
+	      bubbleType           : "normal",
+	      description          : "",
+	      title                : this.request.body.title,
+	      retinaProfilePicture : "/img/Bubble-Profile.jpg",
+	      retinaCoverPhoto     : "/img/Bubble-Cover.jpg",
+	      profilePicture       : "/img/Bubble-Profile.jpg",
+	      coverPhoto           : "/img/Bubble-Cover.jpg",
+	    };
+	    
 	}
-	else
-	{
-		return [403, "Forbidden"]
-	}
-})
-
-compressUpdates = function() {
-  var fullUpdateList = Updates.find({read: false, emailed: false }).fetch();
-  var userUpdateList = _.toArray(_.groupBy(fullUpdateList,'userId'));
-  var finalUpdateDic = {};
-
-  _.each(userUpdateList, function(updateList){
-    var userId = updateList[0].userId;
-    //To combine updates with same userId, invokerId, updateType and postId
-    if(updateList.length > 0) {
-      //To combine updates with same userId, invokerId, updateType and postId
-      _.each(updateList, function(update){
-        updateList = _.reject(updateList, function(newUpdate) {
-          return  update.bubbleId == newUpdate.bubbleId && 
-                  update.userId == newUpdate.userId && 
-                  update.invokerId == newUpdate.invokerId && 
-                  update.updateType == newUpdate.updateType &&
-                  update.postId == newUpdate.postId;
-        });
-        if(!_.contains(updateList,update)){
-          updateList.push(update);
-        }
-      });
-
-      /**
-      * To combine updates for comments in the same post
-      **/
-      _.each(updateList, function(update){
-
-        var commentUpdates = _.reject(updateList, function(update) {
-          return update.updateType != "replied";
-        });
-
-        //Combine and chain the names together
-        if (commentUpdates.length > 0) {
-          updateList = _.reject(updateList, function(newUpdate) {
-            return update.postId == newUpdate.postId && 
-                    update.updateType == newUpdate.updateType &&
-                    update.updateType == "replied";
-          });
-          if(!_.contains(updateList,update)) {
-            //Pull out comment updates that belong to the same post
-            singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-              return update.postId != newUpdate.postId;
-            });
-            if (singleTypeUpdates.length > 0) {
-              //Create the chained name
-              var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-              var chainedName = nameArray.join();
-              var maxLength = 13;
-
-              //Checks to see if the length of names exceed a certain limit
-              if(chainedName.length > maxLength) {
-                chainedName = chainedName.substring(0,maxLength);
-                var nameList = chainedName.split(',');
-                if(nameArray[0].length > maxLength) {
-                  nameList[0] = nameArray[0];
-                }else{
-                  nameList.pop();
-                }
-                var excessCount = nameArray.length - nameList.length;
-                chainedName = nameList.join();
-                if(excessCount == 1) {
-                  chainedName = chainedName + " and " + excessCount + " other";
-                }else if(excessCount > 1){
-                  chainedName = chainedName + " and " + excessCount + " others";
-                }
-              }else{
-                chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-              }
-
-              //Add the chained name to the invokerName
-              update.invokerName = chainedName;
-            }
-            updateList.push(update);
-          }
-        }
-      });
-
-      //Declaring the types that needs collapsing of names
-      var bubbleUpdateList = 
-      [ 
-        "new applicant",
-        "new attendee",        
-        "member promoted",
-        "member demoted",
-        "joined bubble"
-      ]
-
-      /**
-      *  To combine and chain up names for compressed updates
-      **/
-      _.each(bubbleUpdateList, function(type) {
-        var singleTypeUpdates = _.reject(updateList, function(update) {
-          return update.updateType != type;
-        });
-        if (singleTypeUpdates.length > 0) {
-          var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-          var chainedName = nameArray.join();
-          var maxLength = 13;
-
-          if(chainedName.length > maxLength) {
-            chainedName = chainedName.substring(0,maxLength);
-            var nameList = chainedName.split(',');
-            if(nameArray[0].length > maxLength) {
-              nameList[0] = nameArray[0];
-            }else{
-              nameList.pop();
-            }
-            var excessCount = nameArray.length - nameList.length;
-            chainedName = nameList.join();
-            if(excessCount == 1) {
-              chainedName = chainedName + " and " + excessCount + " other";
-            }else{
-              chainedName = chainedName + " and " + excessCount + " others";
-            } 
-          }else{
-            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-          }
-
-          //First retrieve applicant
-          var firstUpdate = _.find(updateList, function(update) {
-            update.invokerName = chainedName;
-            return update.updateType == type
-          });
-          // Next remove all applicants
-          updateList = _.reject(updateList, function(newUpdate) {
-            return newUpdate.updateType == type;
-          });
-          //Now ad back with the applicant that has a changed invoker name
-          if(firstUpdate){
-            updateList.push(firstUpdate);
-          }
-        }
-      });
-
-      updateList = _.sortBy(updateList, function(newUpdate) {
-        return newUpdate.submitted; 
-      }); 
-
-      finalUpdateDic[userId] = _.groupBy(updateList,'bubbleId');
-    }
-  });
-  return finalUpdateDic;
-}
+	return [200, "Success"];
+});

@@ -35,8 +35,8 @@ Meteor.methods({
 		console.log(res);
 		_.each(res, function(i) {
 			retVal.push(i.ref)
-		});
-		return retVal;
+		})
+;		return retVal;
 	},
 	search_bubbles: function(q) {
 		console.log("Query: " + q);
