@@ -3,19 +3,14 @@ var https = require('https');
 var querystring = require('querystring');
 
 csv()
-.from('clean.csv', {columns: true, delimiter: '|'})
+.from('final.csv', {columns: true, delimiter: '\t'})
 .on('record', function(row,index){
 	var post_data = querystring.stringify({
-		'username': row.username.toUpperCase(),
-		'email': row.email,
-		'altEmail': row.altEmail,
-		'ppid': row.ppid,
+		'username': row.netID,//.toUpperCase(),
+		'email': row.Email,
 		'name': row.name,
-		'code': row.code,
-		'level': row.level,
-		'userType': 1,
-		'profilePicture': '/img/letterprofiles/'+row.username.substring(0,1)+'.jpg',
-		'retinaProfilePicture': '/img/letterprofiles/'+row.username.substring(0,1)+'.jpg',
+		'profilePicture': '/img/letterprofiles/'+row.name.substring(0,1).toLowerCase()+'.jpg',
+		'retinaProfilePicture': '/img/letterprofiles/'+row.name.substring(0,1).toLowerCase()+'.jpg',
 		'password': 'pushUserPass'
 	});
 
