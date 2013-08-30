@@ -1,7 +1,5 @@
-netId	name
-jwelco2	James Welco
-	Dup Name
-	Dup Name
-	Sydney Carpenter
-asufi	
-slwu	
+BubbleName	BubbleType	Members	Admins
+PopTest	greek	emorybubble
+PopTest	greek	campusbubble
+PopTest2	greek	emorybubble
+PopTest2	greek	campusbubble

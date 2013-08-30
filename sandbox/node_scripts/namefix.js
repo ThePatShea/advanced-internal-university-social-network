@@ -7,6 +7,7 @@ mongoose.connect('mongodb://bubbleproduction:F302pinpulse@ds041848-a0.mongolab.c
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
 db.once('open', function () {
+	
 	var userSchema = mongoose.Schema({
 		_id: String,
 		username: String,
@@ -17,6 +18,7 @@ db.once('open', function () {
 
 	var User = mongoose.model('User', userSchema);
 
+	/*
 	var count = 0;
 
 	var stream = User.find().stream();
@@ -29,10 +31,10 @@ db.once('open', function () {
 		else{
 			if(doc.name.indexOf(' ') < 0)
 			{
-				console.log("Name: " + doc.name + " | First: " + doc.firstName + " | Last: " + doc.lastName);
-				count++;
 				if((doc.firstName != undefined) && (doc.lastName != undefined))
 				{
+				console.log("Name: " + doc.name + " | First: " + doc.firstName + " | Last: " + doc.lastName);
+				count++;
 					var tmp = doc.firstName + ' ' + doc.lastName;
 					console.log(tmp);
 					//User.update({_id: doc._id}, {$set: {name: tmp}});
@@ -43,5 +45,23 @@ db.once('open', function () {
 		console.log("Error on + " + doc._id + ": " + err);
 	}).on('close', function() {
 		console.log("Count: " + count);
+	});
+	*/
+	csv()
+	.from('EmoryBubbleFeed.csv', {columns: true, delimiter: ','})
+	.on('record', function(row, index) {
+		User.findOne({'username': row.NetID}, function(err, res) {	
+			if(res.name.indexOf(' ') < 0)
+			{
+				console.log(res.name + " | " + row.First + " " + row.Last);
+				User.update({'username': row.NetID}, {$set: {name: row.First + " " + row.Last}});
+			}
+		});
+	})
+	.on('end', function(count) {
+		console.log("Counted: " + count);
+	})
+	.on('error', function(err) {
+		console.log("Error: "  + err);
 	});
 });

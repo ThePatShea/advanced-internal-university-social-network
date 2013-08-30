@@ -255,7 +255,107 @@ Meteor.Router.add('/getBubbleId', 'POST', function() {
 	      profilePicture       : "/img/Bubble-Profile.jpg",
 	      coverPhoto           : "/img/Bubble-Cover.jpg",
 	    };
-	    
+		var newBubble = _.extend(_.pick(bubbleParams, 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'profilePicture', 'retinaProfilePicture', 'bubbleType'), {
+    		submitted: new Date().getTime(),
+      		lastUpdated: new Date().getTime(),
+      		users: {
+      			admins: [],
+      			members: [],
+      			invitees: [],
+      			applicants: []
+      		}
+    	});
+    	bubbleId = Bubbles.insert(newBubble);
+    	if(bubbleId)
+    	{
+		    Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
+	    	return[200, bubbleId];
+    	}
+    	else
+    	{
+    		return[400, "Unsuccessful"];
+    	}
+
 	}
-	return [200, "Success"];
+	else
+	{
+		return [200, bubble._id];
+	}
+	return [500, "Unsuccessful"];
+});
+Meteor.Router.add('/populateBubble', 'POST', function() {
+	bubbleId = this.request.body.bubbleId;
+	user = this.request.body.user;
+	userId = "";
+	type = this.request.body.type;//netId, name, email
+	status = this.request.body.status;//Member, Admin, Invitee
+
+	if(type == "netId")
+	{
+		tmp = Meteor.users.findOne({username: user});
+		if(tmp != undefined)
+		{
+			userId = tmp._id;
+		}
+		else
+		{
+			return[404, "Not found: " + user]
+		}
+	}
+	if(type == "name")
+	{
+		tmp = Meteor.users.findOne({name: user});
+		if(tmp != undefined)
+		{
+			userId = tmp._id
+		}
+		else
+		{
+			return[404, "Not found: " + user]
+		}
+	}
+	if(type == "email")
+	{
+		tmp = Meteor.users.findOne({$or: [{"emails.address": user},{"altEmail.address": user}]});
+		if(tmp != undefined)
+		{
+			userId = tmp._id
+		}
+		else
+		{
+			return[404, "Not found: " + user];
+		}
+	}
+
+	if(userId != "")
+	{
+		return [200, user + ' ' + userId + ' ' + bubbleId];
+		bubble = Bubbles.findOne({_id: bubbleId});
+		if(bubble == undefined)
+		{
+			return[404, "Bubble not found: " + bubbleId];
+		}
+		else
+		{
+			if(status == "member")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.members": userId}});
+				return[200, "Added: " + userId];
+			}
+			if(status == "admin")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.admins": userId}});
+				return[200, "Added: " + userId];
+			}
+			if(status == "invitee")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.invitees": userId}});
+				return[200, "Added: " + userId];
+			}
+		}
+	}
+	else
+	{
+		return [404, "Not Found: " + user];
+	}
 });
