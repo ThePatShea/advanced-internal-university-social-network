@@ -134,7 +134,7 @@ Meteor.Router.add({
         Session.set('currentExploreId', expId);
         Session.set('currentPostId', pId);
         Meteor.subscribe('comments', pId);
-        Meteor.subscribe('currentExplore', expId);
+        //Meteor.subscribe('currentExplore', expId);
         Meteor.subscribe('singlePost', pId);
       }
     },

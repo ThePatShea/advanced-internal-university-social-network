@@ -163,6 +163,10 @@ Template.onboarding.events({
 
 
 Template.onboarding.rendered = function() {
+ uid = Meteor.userId()
+  user = Meteor.users.findOne({_id: uid});
+  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
   $("#cb-form-container-onboarding").hide();
 
   var user = Meteor.users.findOne({_id: Meteor.userId()});
@@ -205,10 +209,7 @@ Template.onboarding.rendered = function() {
 }
 
 Template.onboarding.created = function() {
-  uid = Meteor.userId()
-  user = Meteor.users.findOne({_id: uid});
-  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
-  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+ 
 
 
   // Redirects to dashboard if already had logged in before
