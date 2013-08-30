@@ -239,3 +239,23 @@ Meteor.Router.add('/dailyDigest', 'POST', function(){
     return [403, "Forbidden"];
   }
 });
+
+Meteor.Router.add('/getBubbleId', 'POST', function() {
+	console.log("Getting Bubble Id...");
+	bubble = Bubbles.findOne({title: this.request.body.title});
+	if(bubble == undefined)
+	{
+		var bubbleParams = {
+	      category             : this.request.body.category,
+	      bubbleType           : "normal",
+	      description          : "",
+	      title                : this.request.body.title,
+	      retinaProfilePicture : "/img/Bubble-Profile.jpg",
+	      retinaCoverPhoto     : "/img/Bubble-Cover.jpg",
+	      profilePicture       : "/img/Bubble-Profile.jpg",
+	      coverPhoto           : "/img/Bubble-Cover.jpg",
+	    };
+	    
+	}
+	return [200, "Success"];
+});
