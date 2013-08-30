@@ -1,3 +1,9 @@
+Template.bubbleMembersPage.created = function() {
+	page = 0;
+	max_scrolltop = 700;
+}
+
+
 Template.bubbleMembersPage.rendered = function () {
 	var currentBubbleId = window.location.pathname.split('/')[2];
 	Meteor.subscribe('singleBubble', currentBubbleId);
@@ -10,7 +16,7 @@ Template.bubbleMembersPage.rendered = function () {
 	var applicantIds = currentBubble.users.applicants;
 	var inviteeIds = currentBubble.users.invitees;
 	var userIds = applicantIds.concat(adminIds, memberIds, inviteeIds);
-	Meteor.subscribe('findUsersById', userIds.slice(0, 10));
+	Meteor.subscribe('findUsersById', userIds.slice(0, 20));
 
 	var userIdList = Session.get("selectedUserIdList");
 
@@ -39,21 +45,22 @@ Template.bubbleMembersPage.rendered = function () {
 	Session.set("selectedUserIdList",userIdArray);
 
 	//var numIds = 10;
-	var index = 0;
-	var oldpage = 0;
+	//var page = 0;
 
 	$("#main").scroll(function(){
-	    //if ( ($("#main").scrollTop() >= $("#main")[0].scrollHeight - $("#main").height()) ) {
-	    	var page = Math.round( $("#main").scrollTop()/$("#main").height() );
-	    	//var oldpage = page;
-	    	console.log('Pre paginating: ', page, $("#main").scrollTop(), $("#main").height(), $(document).height());
-	    if ( page > 0  && page != oldpage){
-	      //alert(page);
-	      console.log('Scrolling: ', page, userIds.slice(oldpage*10, page*10));
-	      var pageUserIds = userIds.slice(oldpage*10, page*10);
-	      Meteor.subscribe('findUsersById', pageUserIds);
-	    }
-	    oldpage = page;
+		console.log('Scrolltop, mainheight, documentheight, windowheight: ', $("#main").scrollTop(), $("#main").height(), $(document).height(), $(window).height());
+	    //if ( ($("#main").scrollTop() >= $(document).height() + $("#main").height() - 10) ) {
+	    if($("#main").scrollTop() > max_scrolltop){
+		    //console.log('Pre paginating: ', page, $("#main").scrollTop(), $("#main").height(), $(document).height());
+		    //console.log('Scrolling: ', page, userIds.slice(oldpage*10, page*10));
+		    max_scrolltop = $("#main").scrollTop() + 200;
+		    page = page + 1;
+		    var pageUserIds = userIds.slice((page)*5, (page+1)*5);
+		    Meteor.subscribe('findUsersById', pageUserIds);
+		    console.log('Paginating: ', (page)*5, (page+1)*5);
+		    console.log('End of Page');
+		}
+	    
 	  });
 
 };
