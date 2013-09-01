@@ -36,7 +36,7 @@ Template.discussionSubmit.events({
       //Google Analytics
       _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
-      makeDiscussionPost();      
+      makeDiscussionPost(); 
   },
 
   'change .cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible': function(evt){

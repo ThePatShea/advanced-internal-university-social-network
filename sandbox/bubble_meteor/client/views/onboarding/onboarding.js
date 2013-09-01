@@ -163,8 +163,28 @@ Template.onboarding.events({
 
 
 Template.onboarding.rendered = function() {
+ uid = Meteor.userId()
+  user = Meteor.users.findOne({_id: uid});
+  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+  $("#cb-form-container-onboarding").hide();
+
+  var user = Meteor.users.findOne({_id: Meteor.userId()});
+  console.log("neverLoggedIn: " , user );  //TESTING
+
+  if (user.neverLoggedIn == false) {
+    Meteor.Router.to("/dashboard");
+  } else {
+    $("#cb-form-container-onboarding").show();
+  }
+
+
+
   $('#cb-form-container-onboarding .cb-submit').addClass('ready-false');
   $('#cb-form-container-onboarding .cb-submit').prop('disabled', true);
+
+  Meteor.subscribe('authenticatedUser', Session.get('secret'));
+  Meteor.subscribe('singleUser', Meteor.userId());
 
   var cropArea;
   var mainURL;
@@ -176,11 +196,22 @@ Template.onboarding.rendered = function() {
     } else {
     Session.set("DisableCrop","");
   }
+
+  var adjustMain = function() {
+    $('#main').css('height', $(window).height()/* - $('.navbar').height()*/);
+  }
+
+  $(window).resize(function() {
+    adjustMain();
+  });
+
+  adjustMain();
 }
 
 Template.onboarding.created = function() {
-  uid = Meteor.userId()
-  user = Meteor.users.findOne({_id: uid});
-  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
-  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+ 
+
+
+  // Redirects to dashboard if already had logged in before
+    Meteor.subscribe('singleUser', Meteor.userId());
 }

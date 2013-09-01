@@ -1,6 +1,18 @@
+
+
 Template.dashboard.helpers({
         getFiveExplorePosts: function() {
-          return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});
+		    var posts = Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}}).fetch();
+		    var validPostIds = [];
+		    for(var i=0; i < posts.length; i++){
+		      var postAsId = posts[i].postAsId;
+		      //console.log('PostId, PostAsId: ', posts[i]._id, posts[i].postAsId);
+		      if((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}).count() > 0)){
+		        validPostIds.push(posts[i]._id);
+		      }
+		    }
+		    //console.log('Dashboard Valid posts: ', validPostIds);
+          return Posts.find({_id: {$in: validPostIds} },{limit: 5, sort: {submitted: -1}});
         },
 	numBubbles: function() {
 		var uid = Meteor.userId();
@@ -460,6 +472,9 @@ Template.dashboard.events({
 });
 
 Template.dashboard.rendered = function () {
+Meteor.subscribe('fiveExplorePosts');
+Meteor.subscribe('updatedPosts', Meteor.userId());
+
 	$('.carousel').carousel();
 
 	$('.dashboard-more-updates').click(function(){

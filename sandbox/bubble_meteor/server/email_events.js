@@ -243,5 +243,58 @@ Meteor.methods({
 				console.log(res);
 			}
 		);
+	},
+	sendDailyDigest: function(userId, numUpdates, content) {
+		console.log("Daily Digest");
+		var user = Meteor.users.findOne({_id: userId});
+		var to = user.emails[0].address;
+		var name = user.name;//.substring(0,user.name.indexOf(" "));
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "cb-daily-digest",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": [
+			        {
+			          "email": "taggart@thecampusbubble.com",
+			          "name": name
+			        }
+			    ],
+			     "global_merge_vars": [
+			        {
+			            "name": "USERID",
+			            "content": userId
+			        },
+			       	{
+			        	"name": "NAME",
+			        	"content": name
+			       	},
+			       	{
+			       		"name": "NUMUPDATES",
+			       		"content": numUpdates
+			       	},
+			       	{
+			        	"name": "CONTENT",
+			        	"content": content
+			       	}
+			    ],
+			    tags: ["dailyDigest"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
+			{"data": retVal},
+			function(err, res) {
+				console.log(res);
+			}
+		);
 	}
 });

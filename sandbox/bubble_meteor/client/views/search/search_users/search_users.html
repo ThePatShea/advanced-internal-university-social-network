@@ -1,12 +1,6 @@
 <template name="searchUsers">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
-  	
-    {{#codeComment}}
-    	{{#if hasSearchText}}
-    		{{searchUsers}}
-    	{{/if}}
-    {{/codeComment}}
 
     <div class="gifloader visible-{{typing}}" style="position: relative; top: 294px;">
       {{> gifLoader}}

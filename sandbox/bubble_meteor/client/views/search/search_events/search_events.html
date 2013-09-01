@@ -1,10 +1,13 @@
 <template name="searchEvents">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
-    {{#if hasSearchText}}
-      {{#each getSearchedEvents}}
-        {{> listItem}}
-      {{/each}}
-    {{/if}}
+
+    <div class="gifloader visible-{{typing}}" style="position: relative; top: 294px;">
+      {{> gifLoader}}
+    </div>
+
+    {{#each getSearchedEvents}}
+      {{> listItem}}
+    {{/each}}
   </div>
 </template>

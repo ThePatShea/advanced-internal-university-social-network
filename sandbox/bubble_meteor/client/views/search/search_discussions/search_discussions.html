@@ -1,10 +1,13 @@
 <template name="searchDiscussions">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
-    {{#if hasSearchText}}
-      {{#each getSearchedDiscussions}}
-        {{> listItem}}
-      {{/each}}
-    {{/if}}
+
+    <div class="gifloader visible-{{typing}}" style="position: relative; top: 294px;">
+      {{> gifLoader}}
+    </div>
+
+    {{#each getSearchedDiscussions}}
+      {{> listItem}}
+    {{/each}}
   </div>
 </template>

@@ -1,6 +1,10 @@
 <template name="searchBubbles">
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
+
+    <div class="gifloader visible-{{typing}}" style="position: relative; top: 294px;">
+      {{> gifLoader}}
+    </div>
   
     {{#each getSearchedBubbles}}
     	{{> listItem}}

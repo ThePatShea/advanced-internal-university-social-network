@@ -20,3 +20,8 @@ Template.invitationsPage.helpers({
     return numInvitedBubbles;
   },
 });
+
+
+Template.invitationsPage.rendered = function() {
+  Meteor.subscribe('invitedBubbles');
+}

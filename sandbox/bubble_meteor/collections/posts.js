@@ -12,6 +12,23 @@ Posts.deny({
   }
 });
 
+//ADD EVENTS TO INDEX
+var events = Posts.find({postType: "event"}, {fields: {'name': 1, '_id': 1}});
+events.forEach(function(event) {
+  Meteor.call("addEventToIndex", event._id, event.name);
+});
+//ADD DISCUSSIONS TO INDEX
+var discussions = Posts.find({postType: "discussion"}, {fields: {'name': 1, '_id': 1}});
+discussions.forEach(function(discussion) {
+  Meteor.call("addDiscussionToIndex", discussion._id, discussion.name);
+});
+//ADD FILES TO INDEX IF THEY HAVE A BUBBLEID
+var files = Posts.find({postType: "file", bubbleId: {$exists: true}}, {fields: {'name': 1, '_id': 1}});
+files.forEach(function(file) {
+  Meteor.call("addFileToIndex", file._id, file.name);
+});
+
+
 Meteor.methods({
   post: function(postAttributes) {
     var user = Meteor.user();
@@ -62,6 +79,17 @@ Meteor.methods({
 
     post._id = Posts.insert(post);
     createPostUpdate(post);
+
+    if(postAttributes.postType == "file")
+    {
+      Meteor.call("addFileToIndex", post._id, postAttributes.name);
+    } else
+    if(postAttributes.postType == "discussion") {
+      Meteor.call("addDiscussionToIndex", post._id, postAttributes.name);
+    } else
+    if(postAttributes.postType == "event") {
+      Meteor.call("addEventToIndex", post._id, postAttributes.name);
+    }
 
     return post;
   },

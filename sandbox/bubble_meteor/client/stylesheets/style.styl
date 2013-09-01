@@ -1717,10 +1717,24 @@ body
 
 /**********      onboarding      **********/
 .onboarding
+  .attach-files
+    @media (max-width: 767px)
+      display none
+  .navbar-onboarding
+    position relative
+    display block
+    height 100%
   .heading-onboarding
     padding             40px 30px 25px 30px 
     fontize(alt, light, blank, 30px)
     color               main-light
+    position relative
+    display block
+    height 100%
+  .cb-form-container-onboarding
+    position relative
+    display block
+    height 100%
 /**********      onboarding      **********/
 
 
@@ -3117,7 +3131,8 @@ cover-btns-width-small  =  130px
 
 .explore-cover
   position               relative
-  overflow               hidden
+  background             #222222
+  // overflow               hidden
   padding                0 30px
   border-bottom          5px solid main-xlight
   @media (min-width: 768px)

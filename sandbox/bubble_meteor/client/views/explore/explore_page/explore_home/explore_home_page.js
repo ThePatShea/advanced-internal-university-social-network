@@ -1,6 +1,11 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
+Template.explorePage.rendered = function(){
+  var currentExploreId = window.location.pathname.split("/")[2];
+  Meteor.subscribe('currentExplore', currentExploreId);
+}
+
 Template.explorePage.helpers({ 
   currentExplore: function(){
     var currentExploreId = Session.get('currentExploreId');
@@ -52,7 +57,19 @@ Template.explorePage.helpers({
 
   posts: function() {
     var explore = Explores.findOne(Session.get('currentExploreId'));
-    return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} });
+    var posts = Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} }).fetch();
+    var validPostIds = [];
+    for(var i=0; i < posts.length; i++){
+      var postAsId = posts[i].postAsId;
+      //console.log('Post as id: ', posts[i].postAsId, ((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}) > 0)));
+      if((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}).count() > 0)){
+        validPostIds.push(posts[i]._id);
+      }
+    }
+    //console.log('Valid post ids: ', validPostIds);
+
+    //return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} });
+    return Posts.find({_id: {$in: validPostIds}, postType: explore.exploreType}, {sort: {lastCommentTime: -1}});
   }
 });
 

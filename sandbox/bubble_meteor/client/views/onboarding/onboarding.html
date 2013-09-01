@@ -1,80 +1,81 @@
 <template name="onboarding">
-
-{{#if isLoggedIn}}
-  <div class="navbar navbar-onboarding">
-    <div class="navbar-inner">
-      <a class="cb-logo-main">
-        <span class="logo-main">{{> icon-logo-main}}</span>
-        <span class="logo-words">
-          <span class="left">emory</span><span class="right">bubble</span>
-        </span>
-      </a>
+<div id="main">
+  {{#if isLoggedIn}}
+    <div style="position: relative;" class="navbar navbar-onboarding">
+      <div class="navbar-inner">
+        <a class="cb-logo-main">
+          <span class="logo-main">{{> icon-logo-main}}</span>
+          <span class="logo-words">
+            <span class="left">emory</span><span class="right">bubble</span>
+          </span>
+        </a>
+      </div>
     </div>
-  </div>
-
-  <div class="onboarding">
-    <div class="heading-onboarding">
-      Hey {{getCurrentName}}, customize your profile
-    </div>
-
-    <canvas id="main-canvas" width="160" height="160" class="visible-0"></canvas>
-    <canvas id="retina-canvas" width="320" height="320" class="visible-0"></canvas>
-
-    <div class="cb-form-container" id="cb-form-container-onboarding">
-      <form class="cb-form cb-form-onboarding">
-        <div class="attach-files">
-          <label class="first no-typing less-formatting">add profile photo</label>
-
-
-
-           <div class="attach-files no-padding">
-             <div id="drop_zone" class="drop-zone">
-               <div class="dz-title">drag and drop</div>
-               <div class="dz-subtitle">or click here</div>
-               <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
-               <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
-             </div>
-           </div>
-           <div class="crop-container" style="text-align: center;">
-             <img class="crop"></img>
-           </div>
-
-        </div>
-        <label class="no-typing margin-top-35">Read our <a onclick="window.open('/pdf/termsOfUse.pdf', '_blank')">terms of use</a>, <a onclick="window.open('/pdf/privacyPolicy.pdf', '_blank')">privacy policy</a>, and our <a onclick="window.open('/pdf/ferpaNotice.pdf', '_blank')">FERPA notice</a>.</label>
   
-        <div id="accept-terms" class="accept-terms invitee-container {{acceptTermsSelected}}">
-          <div class="invitee-pic-container">
-            <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
-            <div class="pic-preview-wrapper-outer">
-              <div class="pic-preview-wrapper-middle">
-                <div class="pic-preview-wrapper-inner-invitee accept-check-container">
-                  <span class="invisible-false cb-icon-check">{{> icon-check}}</span>
+    <div class="onboarding">
+      <div class="heading-onboarding">
+        Hey {{getCurrentName}}, customize your profile
+      </div>
+  
+      <canvas id="main-canvas" width="160" height="160" class="visible-0"></canvas>
+      <canvas id="retina-canvas" width="320" height="320" class="visible-0"></canvas>
+  
+      <div class="cb-form-container" id="cb-form-container-onboarding">
+        <form class="cb-form cb-form-onboarding">
+          <div class="attach-files">
+            <label class="first no-typing less-formatting">add profile photo</label>
+  
+  
+  
+             <div class="attach-files no-padding">
+               <div id="drop_zone" class="drop-zone">
+                 <div class="dz-title">drag and drop</div>
+                 <div class="dz-subtitle">or click here</div>
+                 <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+                 <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
+               </div>
+             </div>
+             <div class="crop-container" style="text-align: center;">
+               <img class="crop"></img>
+             </div>
+  
+          </div>
+          <label class="no-typing margin-top-35">Read our <a onclick="window.open('/pdf/termsOfUse.pdf', '_blank')">terms of use</a>, <a onclick="window.open('/pdf/privacyPolicy.pdf', '_blank')">privacy policy</a>, and our <a onclick="window.open('/pdf/ferpaNotice.pdf', '_blank')">FERPA notice</a>.</label>
+    
+          <div id="accept-terms" class="accept-terms invitee-container {{acceptTermsSelected}}">
+            <div class="invitee-pic-container">
+              <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
+              <div class="pic-preview-wrapper-outer">
+                <div class="pic-preview-wrapper-middle">
+                  <div class="pic-preview-wrapper-inner-invitee accept-check-container">
+                    <span class="invisible-false cb-icon-check">{{> icon-check}}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="v-middle">
-            <div class="v-inner">
-              <span class="pull-left invitee-text">
-                Click here to agree to the Terms of Use and Privacy Policy.
-              </span>
+            <div class="v-middle">
+              <div class="v-inner">
+                <span class="pull-left invitee-text">
+                  Click here to agree to the Terms of Use and Privacy Policy.
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-  
-  
-        <hr>
-  
-        <div class="cb-submit-container">
-          <button type="submit" class="pull-right std-btn-form cb-submit">
-            <span class="words-main">submit</span>
-            <span class="words-error">Please agree to the Terms of Use and Privacy Policy</span>
-          </button>
-        </div>
-      </form>
+    
+    
+          <hr>
+    
+          <div class="cb-submit-container">
+            <button type="submit" class="pull-right std-btn-form cb-submit">
+              <span class="words-main">submit</span>
+              <span class="words-error">Please agree to the Terms of Use and Privacy Policy</span>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-{{else}}
-  <div class="gif-loader-wrapper">{{> gifLoaderSite}}</div>
-{{/if}}
+  {{else}}
+    <div class="gif-loader-wrapper">{{> gifLoaderSite}}</div>
+  {{/if}}
+</div>
 </template>
