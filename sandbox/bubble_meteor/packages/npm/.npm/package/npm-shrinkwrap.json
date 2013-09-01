@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "urban-airship": {
+      "version": "0.2.5"
+    }
+  }
+}
