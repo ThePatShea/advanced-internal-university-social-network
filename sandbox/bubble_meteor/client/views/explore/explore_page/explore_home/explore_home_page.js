@@ -1,9 +1,40 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
+Template.explorePage.created = function(){
+  max_scrolltop = 100;
+  virtualPage = 0; 
+}
+
+
 Template.explorePage.rendered = function(){
   var currentExploreId = window.location.pathname.split("/")[2];
   Meteor.subscribe('currentExplore', currentExploreId);
+  Meteor.subscribe('currentExplorePostIds', currentExploreId);
+  var posts = Posts.find({exploreId: currentExploreId}).fetch()
+  var postIds = _.pluck(posts, "_id");
+  console.log('Current Explore postIds: ', postIds);
+  var virtualPagePostIds = postIds.slice(0, 10);
+  Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+
+  /*$("#main").scroll(function(){
+    console.log('Scrolltop, mainheight, documentheight, windowheight: ', $("#main").scrollTop(), $("#main").height(), $(document).height(), $(window).height());
+      if($("#main").scrollTop() > max_scrolltop){
+        console.log('Pre paginating: ', virtualPage, $("#main").scrollTop(), $("#main").height(), $(document).height());
+        //console.log('Scrolling: ', virtualPage, userIds.slice(oldpage*10, page*10));
+        max_scrolltop = $("#main").scrollTop() + 200;
+        virtualPage = virtualPage + 1;
+        //var pageUserIds = userIds.slice((page)*5, (page+1)*5);
+        //Meteor.subscribe('findUsersById', pageUserIds);
+        var virtualPagePostIds = postIds.slice((virtualPage)*10, (virtualPage+1)*10);
+        Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+        console.log('Paginating: ', (virtualPage)*10, (virtualPage+1)*10);
+        console.log('Explore post Ids: ', virtualPagePostIds);
+        console.log('End of Page');
+      }
+      
+    });*/
+
 }
 
 Template.explorePage.helpers({ 

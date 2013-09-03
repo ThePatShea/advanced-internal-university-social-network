@@ -455,7 +455,12 @@ Meteor.publish('sidebarBubbles', function(userId) {
     });
   });
   Meteor.publish('currentExplore', function(exploreId){
-    var posts = Posts.find({'exploreId': exploreId});
+    var posts = Posts.find({'exploreId': exploreId}, {
+      'fields': {
+        'body': 0,
+        'file': 0
+      }
+    });
     var posts2 = posts.fetch();
 
     //Users
@@ -484,8 +489,7 @@ Meteor.publish('sidebarBubbles', function(userId) {
   Meteor.publish('currentExplorePostIds', function(exploreId){
     return posts = Posts.find({'exploreId': exploreId}, {
       'fields': {
-        'body': 0,
-        'file': 0
+        'exploreId': 1
       }
     });
   });
