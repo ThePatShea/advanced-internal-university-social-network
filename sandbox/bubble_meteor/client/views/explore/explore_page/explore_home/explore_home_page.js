@@ -3,24 +3,38 @@ referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.explorePage.created = function(){
   max_scrolltop = 100;
-  virtualPage = 0; 
+  virtualPage = 0;
+  var currentExploreId = window.location.pathname.split("/")[2];
+  //console.log('Explore Page Created');
+  postIds = [];
+  Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
+    console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
+    posts = Posts.find({exploreId: currentExploreId}).fetch()
+    postIds = _.pluck(posts, "_id");
+    virtualPagePostIds = postIds.slice(0, 10);
+  });
 }
 
 
 Template.explorePage.rendered = function(){
   var currentExploreId = window.location.pathname.split("/")[2];
-  Meteor.subscribe('currentExplore', currentExploreId);
-  Meteor.subscribe('currentExplorePostIds', currentExploreId);
-  var posts = Posts.find({exploreId: currentExploreId}).fetch()
-  var postIds = _.pluck(posts, "_id");
-  console.log('Current Explore postIds: ', postIds);
-  var virtualPagePostIds = postIds.slice(0, 10);
-  Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+  console.log('Explore Page Rendered: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
+  //var posts = Posts.find({exploreId: currentExploreId}).fetch();
+  //var postIds = _.pluck(posts, "_id");
+  //Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+  Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
+    console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
+    posts = Posts.find({exploreId: currentExploreId}).fetch()
+    postIds = _.pluck(posts, "_id");
+    virtualPagePostIds = postIds.slice(0, 10)
+    Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+  });
+  //console.log('Post Ids: ', postIds);
 
-  /*$("#main").scroll(function(){
+  $("#main").scroll(function(){
     console.log('Scrolltop, mainheight, documentheight, windowheight: ', $("#main").scrollTop(), $("#main").height(), $(document).height(), $(window).height());
       if($("#main").scrollTop() > max_scrolltop){
-        console.log('Pre paginating: ', virtualPage, $("#main").scrollTop(), $("#main").height(), $(document).height());
+        //console.log('Pre paginating: ', virtualPage, $("#main").scrollTop(), $("#main").height(), $(document).height());
         //console.log('Scrolling: ', virtualPage, userIds.slice(oldpage*10, page*10));
         max_scrolltop = $("#main").scrollTop() + 200;
         virtualPage = virtualPage + 1;
@@ -28,12 +42,12 @@ Template.explorePage.rendered = function(){
         //Meteor.subscribe('findUsersById', pageUserIds);
         var virtualPagePostIds = postIds.slice((virtualPage)*10, (virtualPage+1)*10);
         Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
-        console.log('Paginating: ', (virtualPage)*10, (virtualPage+1)*10);
-        console.log('Explore post Ids: ', virtualPagePostIds);
-        console.log('End of Page');
+        //console.log('Paginating: ', (virtualPage)*10, (virtualPage+1)*10);
+        //console.log('Explore post Ids: ', virtualPagePostIds);
+        //console.log('End of Page');
       }
       
-    });*/
+    });
 
 }
 

@@ -489,10 +489,12 @@ Meteor.publish('sidebarBubbles', function(userId) {
   Meteor.publish('currentExplorePostIds', function(exploreId){
     return posts = Posts.find({'exploreId': exploreId}, {
       'fields': {
-        'exploreId': 1
+        'exploreId': 1,
+        'name': 1
       }
     });
   });
+
   Meteor.publish('findExplorePostsById', function(postIdList){
     var posts = Posts.find({_id: {$in: postIdList}}, {
       'fields': {
