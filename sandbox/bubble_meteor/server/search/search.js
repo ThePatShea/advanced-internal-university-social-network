@@ -28,6 +28,40 @@ users.forEach(function(user) {
 //ADD CURRENT EVENTS,DISCUSSIONS,FILES TO INDEX: collections/posts.js
 	
 Meteor.methods({
+	reindex: function() {
+
+		//ADD CURRENT USERS TO INDEX
+		var users = Meteor.users.find({}, {fields: {'name': 1, '_id': 1}});
+		users.forEach(function(user) {
+			var tmpDoc = {
+				"name": user.name,
+				"id": user._id
+				};
+			user_idx.add(tmpDoc)
+		});
+
+		//ADD CURRENT BUBBLES TO SEARCH INDEX
+		var bubbles = Bubbles.find({}, {fields: {'title': 1, '_id': 1}});
+		bubbles.forEach(function(bubble) {
+		  Meteor.call("addBubbleToIndex", bubble._id, bubble.title);
+		});
+
+		//ADD EVENTS TO INDEX
+		var events = Posts.find({postType: "event"}, {fields: {'name': 1, '_id': 1}});
+		events.forEach(function(event) {
+		  Meteor.call("addEventToIndex", event._id, event.name);
+		});
+		//ADD DISCUSSIONS TO INDEX
+		var discussions = Posts.find({postType: "discussion"}, {fields: {'name': 1, '_id': 1}});
+		discussions.forEach(function(discussion) {
+		  Meteor.call("addDiscussionToIndex", discussion._id, discussion.name);
+		});
+		//ADD FILES TO INDEX IF THEY HAVE A BUBBLEID
+		var files = Posts.find({postType: "file", bubbleId: {$exists: true}}, {fields: {'name': 1, '_id': 1}});
+		files.forEach(function(file) {
+		  Meteor.call("addFileToIndex", file._id, file.name);
+		});
+	},
 	search_users: function(q) {
 		console.log("Query: " + q);
 		var res = user_idx.search(q);
@@ -35,8 +69,8 @@ Meteor.methods({
 		console.log(res);
 		_.each(res, function(i) {
 			retVal.push(i.ref)
-		})
-;		return retVal;
+		});
+		return retVal;
 	},
 	search_bubbles: function(q) {
 		console.log("Query: " + q);

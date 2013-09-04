@@ -240,16 +240,17 @@ Meteor.Router.add('/dailyDigest', 'POST', function(){
   }
 });
 
-Meteor.Router.add('/getBubbleId', 'POST', function() {
+Meteor.Router.add('/getBubbleId/:bubbleName', 'POST', function(bubbleName) {
 	console.log("Getting Bubble Id...");
-	bubble = Bubbles.findOne({title: this.request.body.title});
+	var data = this.request.body;
+	var bubble = Bubbles.findOne({title: data.bubbleName});
 	if(bubble == undefined)
 	{
 		var bubbleParams = {
-	      category             : this.request.body.category,
+	      category             : data.bubbleType,
 	      bubbleType           : "normal",
 	      description          : "",
-	      title                : this.request.body.title,
+	      title                : bubbleName,
 	      retinaProfilePicture : "/img/Bubble-Profile.jpg",
 	      retinaCoverPhoto     : "/img/Bubble-Cover.jpg",
 	      profilePicture       : "/img/Bubble-Profile.jpg",
@@ -269,7 +270,8 @@ Meteor.Router.add('/getBubbleId', 'POST', function() {
     	if(bubbleId)
     	{
 		    Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
-	    	return[200, bubbleId];
+		    data.bubbleId = bubbleId;
+	    	//return[200, bubbleId];
     	}
     	else
     	{
@@ -279,10 +281,12 @@ Meteor.Router.add('/getBubbleId', 'POST', function() {
 	}
 	else
 	{
-		return [200, bubble._id];
+		data.bubbleId = bubble._id;
+		//return [200, bubble._id];
 	}
-	return [500, "Unsuccessful"];
+	return [200, JSON.stringify(data)];
 });
+/*
 Meteor.Router.add('/populateBubble', 'POST', function() {
 	bubbleId = this.request.body.bubbleId;
 	user = this.request.body.user;
@@ -358,4 +362,186 @@ Meteor.Router.add('/populateBubble', 'POST', function() {
 	{
 		return [404, "Not Found: " + user];
 	}
+});
+*/
+
+Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
+	//console.log("popbub: " + JSON.stringify(this.request.body));
+	var data = this.request.body;
+	var tmp;
+	console.log("Members in " + bubbleId + ":");
+	_.each(data.members, function(member) {
+		if(member.type == "NetID")
+		{
+			var netId = member.user.toUpperCase();
+			var user = Meteor.users.findOne({username: netId});
+			if(typeof user != "undefined")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.members": user._id}});
+			}
+			else
+			{
+				console.log("USER NOT FOUND: " + netId);
+			}
+		}
+		else if(member.type == "Name")
+		{
+			var name = member.user;
+			var nameCount = Meteor.users.count({name: name});
+			if(count == 1)
+			{
+				var user = Meteor.users.findOne({name: name});
+				if(typeof user != "undefined")
+				{
+					Bubbles.update({_id: bubbleId}, {$push: {"users.members": user._id}});
+				}
+				else
+				{
+					console.log("USER NOT FOUND: " + name);
+				}
+			}
+			if(count > 1)
+			{
+				console.log("Multiple users named: " + name);
+			}
+			if(count < 1)
+			{
+				console.log("User not found: " + name);
+			}
+		}
+		else if(member.type == "Email")
+		{
+			var email = member.user;
+			var user = Meteor.users.findOne({$or: [{"emails.address": email},{"altEmails.address": email},{"email.address": email},{"altEmail.address": email}]});
+			if(typeof user != "undefined")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.members": user._id}});
+			}
+			else
+			{
+				console.log("USER NOT FOUND: " + email);
+			}
+		}
+		else
+		{
+			console.log("Type (" + member.type + ") not recognized for: " + member.user);
+		}
+	});
+	console.log("Admins in " + bubbleId + ":");
+	_.each(data.admins, function(admin) {
+				if(admin.type == "NetID")
+		{
+			var netId = admin.user.toUpperCase();
+			var user = Meteor.users.findOne({username: netId});
+			if(typeof user != "undefined")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.admins": user._id}});
+			}
+			else
+			{
+				console.log("USER NOT FOUND: " + netId);
+			}
+		}
+		else if(admin.type == "Name")
+		{
+			var name = admin.user;
+			var nameCount = Meteor.users.count({name: name});
+			if(count == 1)
+			{
+				var user = Meteor.users.findOne({name: name});
+				if(typeof user != "undefined")
+				{
+					Bubbles.update({_id: bubbleId}, {$push: {"users.admins": user._id}});
+				}
+				else
+				{
+					console.log("USER NOT FOUND: " + name);
+				}
+			}
+			if(count > 1)
+			{
+				console.log("Multiple users named: " + name);
+			}
+			if(count < 1)
+			{
+				console.log("User not found: " + name);
+			}
+		}
+		else if(admin.type == "Email")
+		{
+			var email = admin.user;
+			var user = Meteor.users.findOne({$or: [{"emails.address": email},{"altEmails.address": email},{"email.address": email},{"altEmail.address": email}]});
+			if(typeof user != "undefined")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.admins": user._id}});
+			}
+			else
+			{
+				console.log("USER NOT FOUND: " + email);
+			}
+		}
+		else
+		{
+			console.log("Type (" + admin.type + ") not recognized for: " + admin.user);
+		}
+	});
+	console.log("Invitees in " + bubbleId + ":");
+	_.each(data.invitees, function(invitee) {
+				if(invitee.type == "NetID")
+		{
+			var netId = invitee.user.toUpperCase();
+			var user = Meteor.users.findOne({username: netId});
+			if(typeof user != "undefined")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.invitees": user._id}});
+			}
+			else
+			{
+				console.log("USER NOT FOUND: " + netId);
+			}
+		}
+		else if(invitee.type == "Name")
+		{
+			var name = invitee.user;
+			var nameCount = Meteor.users.count({name: name});
+			if(count == 1)
+			{
+				var user = Meteor.users.findOne({name: name});
+				if(typeof user != "undefined")
+				{
+					Bubbles.update({_id: bubbleId}, {$push: {"users.invitees": user._id}});
+				}
+				else
+				{
+					console.log("USER NOT FOUND: " + name);
+				}
+			}
+			if(count > 1)
+			{
+				console.log("Multiple users named: " + name);
+			}
+			if(count < 1)
+			{
+				console.log("User not found: " + name);
+			}
+		}
+		else if(invitee.type == "Email")
+		{
+			var email = invitee.user;
+			var user = Meteor.users.findOne({$or: [{"emails.address": email},{"altEmails.address": email},{"email.address": email},{"altEmail.address": email}]});
+			if(typeof user != "undefined")
+			{
+				Bubbles.update({_id: bubbleId}, {$push: {"users.invitees": user._id}});
+			}
+			else
+			{
+				console.log("USER NOT FOUND: " + email);
+			}
+		}
+		else
+		{
+			console.log("Type (" + invitee.type + ") not recognized for: " + invitee.user);
+		}
+	});
+	return [200, "Success"];
 });
