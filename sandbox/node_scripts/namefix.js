@@ -47,18 +47,24 @@ db.once('open', function () {
 		console.log("Count: " + count);
 	});
 	*/
+	var count = 0;
 	csv()
 	.from('EmoryBubbleFeed.csv', {columns: true, delimiter: ','})
 	.on('record', function(row, index) {
 		User.findOne({'username': row.NetID}, function(err, res) {	
 			if(res.name.indexOf(' ') < 0)
 			{
-				console.log(res.name + " | " + row.First + " " + row.Last);
-				User.update({'username': row.NetID}, {$set: {name: row.First + " " + row.Last}});
+				count++;
+				console.log(res.username + " | " + row.First + " " + row.Last);
+				//change _id: res._id to username: row.username?
+				/*User.update({_id: res._id}, {$set: {name: row.First + " " + row.Last}}, function(error, response) {
+					if(error) {console.log("error: " + error)}
+					console.log("response: " + response);
+				});*/
 			}
 		});
 	})
-	.on('end', function(count) {
+	.on('end', function(c) {
 		console.log("Counted: " + count);
 	})
 	.on('error', function(err) {

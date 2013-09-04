@@ -1,5 +1,4 @@
-BubbleName	BubbleType	Members	Admins
-PopTest	greek	emorybubble
-PopTest	greek	campusbubble
-PopTest2	greek	emorybubble
-PopTest2	greek	campusbubble
+BubbleName	BubbleType	UserType	Members	Admins
+PopTest	greek	NetID	emorybubble
+PopTest	greek	NetID	campusbubble
+PopTest2	greek	NetID	emorybubble	campusbubble

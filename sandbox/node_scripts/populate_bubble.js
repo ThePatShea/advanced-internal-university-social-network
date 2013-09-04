@@ -22,12 +22,12 @@ db.once('open', function () {
 	var User = mongoose.model('User', userSchema);
 	var Bubble = mongoose.model('Bubble', bubbleSchema);
 
-	var bubbleId = "r8CT6acizqCEGq3QX";
+	var bubbleId = "sqgnzNvFyEvsgArYG";
 
 	csv()
-	.from('eastVillage.csv', {columns: true, delimiter: '\t'})
+	.from('adpi.csv', {columns: true, delimiter: '\t'})
 	.on('record', function(row,index){
-		if(row.netId != "")
+		if(typeof row.netId !== "undefined")
 		{
 			var netId = row.netId.toUpperCase();
 			//console.log("NetId: " + netId);
@@ -42,13 +42,13 @@ db.once('open', function () {
 					{
 						Bubble.update({_id: bubbleId}, {$push: {"users.members": JSON.stringify(res._id).substring(1,JSON.stringify(res._id).length-1)}}, function(err, numAffected, raw) {
 							if(err) console.log("Error on " + netId + ": " + err);
-							console.log("Response: " + JSON.stringify(raw));
+							//console.log("Response: " + JSON.stringify(raw));
 						});
 					}
 				}
 			})
 		}
-		else if(row.name != "")
+		else if(typeof row.name !== "undefined")
 		{
 			//console.log("Name: " + row.name);
 			User.count({name: row.name}, function(err, count) {
@@ -61,10 +61,10 @@ db.once('open', function () {
 							{
 								console.log("USER NOT FOUND: " + row.name);
 							}
-							/*Bubble.update({_id: bubbleId}, {$push: {"users.members": JSON.stringify(res._id).substring(1,JSON.stringify(res._id).length-1)}}, function(err, numAffected, raw) {
+							Bubble.update({_id: bubbleId}, {$push: {"users.members": JSON.stringify(res._id).substring(1,JSON.stringify(res._id).length-1)}}, function(err, numAffected, raw) {
 								if(err) console.log("Error on " + netId + ": " + err);
 								console.log("Response: " + JSON.stringify(raw));
-							});*/
+							});
 						}
 					})
 				}
@@ -87,6 +87,6 @@ db.once('open', function () {
 		console.log("Entries: " + count)
 	})
 	.on('error', function(error){
-		console.log("ERROR ON " + row.netId + ": " + error.message);
+		console.log("ERROR: " + error.message);
 	});
 });

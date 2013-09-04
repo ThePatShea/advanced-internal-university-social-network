@@ -2,15 +2,20 @@ var csv = require('csv');
 var mongoose = require('mongoose');
 var querystring = require('querystring');
 var http = require('http');
+var async = require('async');
 
+/*
 var bubbleNames = [];
 var bubbleTypes = [];
 var members = [];
 var admins = [];
+*/
+var data = [];
 
 csv()
 .from('poptest.csv', {columns: true, delimiter: '\t'})
 .on('record', function(row,index){
+	/*
 	var tmp = []
 	if(row.BubbleName != "")
 	{
@@ -30,13 +35,69 @@ csv()
 	{
 		admins[bubbleNames.indexOf(row.BubbleName)].push(row.Admins);
 	}
+	*/
+
+	var mtmp = "";
+	var atmp = "";
+	var itmp = "";
+
+	
+	if((row.Members != null) && (typeof row.Members != "undefined"))
+	{
+		mtmp = {
+			type: row.UserType,
+			user: row.Members
+		}
+	}
+	if((row.Admins != null) && (typeof row.Admins != "undefined"))
+	{
+		atmp = {
+			type: row.UserType,
+			user: row.Admins
+		}
+	}
+	if((row.Invitees != null) && (typeof row.Invitees != "undefined"))
+	{
+		itmp = {
+			type: row.UserType,
+			user: row.Invitees
+		}
+	}
+
+	var newBubble = true;
+	for(i in data)
+	{
+		if(data[i].bubbleName === row.BubbleName)
+		{
+			newBubble = false;
+		}
+	}
+	if(newBubble == true)
+	{
+		data.push({bubbleName: row.BubbleName, bubbleType: row.BubbleType, members: [], admins: [], invitees: []});
+	}
+
+	for(i in data)
+	{
+		if(data[i].bubbleName === row.BubbleName)
+		{
+			if(mtmp != "")
+			{
+				data[i].members.push(mtmp);
+			}
+			if(atmp != "")
+			{
+				data[i].admins.push(atmp);
+			}
+			if(itmp != "")
+			{
+				data[i].invitees.push(itmp);
+			}
+		}
+	}
 })
 .on('end', function(count){
-	console.log(bubbleNames);
-	console.log(bubbleTypes);
-	console.log(members);
-	console.log(admins);
-
+	/*
 	var type="netId";
 
 	var getBubbleId_options = {
@@ -94,6 +155,68 @@ csv()
 		getBubbleId_req.write(getBubbleId_data);
 		getBubbleId_req.end();
 	};
+	*/
+
+
+	for(i in data)
+	{
+		var getBubbleId_options = {
+			host: 'localhost',
+			port: '3000',
+			path: '/getBubbleId/'+data[i].bubbleName,
+			method: 'POST',
+			headers: {
+	        	'Content-Type': 'application/json'
+	    	}
+		};
+
+		/*
+		var getBubbleId_data = querystring.stringify({
+			'title': data[i].bubbleName,
+			'category': data[i].bubbleType,
+		});
+		*/
+
+		var getBubbleId_data = JSON.stringify(data[i]);
+
+		var getBubbleId_req = http.request(getBubbleId_options, function(res) {
+			res.setEncoding('utf8');
+			res.on('data', function (dataWithId){
+				console.log(dataWithId);
+
+				tmpData = JSON.parse(dataWithId);
+				
+				bubbleId = tmpData.bubbleId;
+
+				var populateBubble_options = {
+					host: 'localhost',
+					port: '3000',
+					path: '/populateBubble/'+bubbleId,
+					method: 'POST',
+					headers: {
+			        	'Content-Type': 'application/json'
+			    	}
+				};
+
+				var populateBubble_req = http.request(populateBubble_options, function(res) {
+					res.setEncoding('utf8');
+					res.on('data', function (chunk){
+						console.log(chunk);
+					});
+				});
+
+				populateBubble_data = tmpData;
+				//console.log(JSON.stringify(tmpData));
+				populateBubble_req.write(JSON.stringify(tmpData));
+				populateBubble_req.end();
+				
+				
+			});
+		});
+
+		getBubbleId_req.write(getBubbleId_data);
+		getBubbleId_req.end();
+	}
 })
 .on('error', function(error){
 	console.log("ERROR: " + error.message);
