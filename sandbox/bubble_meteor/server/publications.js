@@ -455,7 +455,12 @@ Meteor.publish('sidebarBubbles', function(userId) {
     });
   });
   Meteor.publish('currentExplore', function(exploreId){
-    var posts = Posts.find({'exploreId': exploreId});
+    var posts = Posts.find({'exploreId': exploreId}, {
+      'fields': {
+        'body': 0,
+        'file': 0
+      }
+    });
     var posts2 = posts.fetch();
 
     //Users
@@ -480,6 +485,45 @@ Meteor.publish('sidebarBubbles', function(userId) {
       'coverPhoto': 0,
       'retinaCoverPhoto': 0
     } });*/
+  });
+  Meteor.publish('currentExplorePostIds', function(exploreId){
+    return posts = Posts.find({'exploreId': exploreId}, {
+      'fields': {
+        'exploreId': 1,
+        'name': 1
+      }
+    });
+  });
+
+  Meteor.publish('findExplorePostsById', function(postIdList){
+    var posts = Posts.find({_id: {$in: postIdList}}, {
+      'fields': {
+        'file': 0,
+        'body': 0
+      }
+    });
+    var posts2 = posts.fetch();
+
+    //Users
+      var userIds = [];
+
+      for (var i = 0; i < posts2.length; i++) {
+        userIds.push(posts2[i].userId);
+      }
+
+      var users = Meteor.users.find({_id: {$in: userIds}});
+
+    //Bubbles
+      var bubbleIds = [];
+      for (var i = 0; i < posts2.length; i++) {
+        bubbleIds.push(posts2[i].postAsId);
+      }
+
+      var bubbles = Bubbles.find({_id: {$in: bubbleIds}});
+
+      console.log('Post users and bubbles: ', userIds, bubbleIds);
+
+    return [posts, users, bubbles];
   });
   Meteor.publish('fiveExplorePosts', function() {
     //return Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}});

@@ -23,5 +23,5 @@ Template.invitationsPage.helpers({
 
 
 Template.invitationsPage.rendered = function() {
-  Meteor.subscribe('invitedBubbles');
+  Meteor.subscribe('invitedBubbles', Meteor.userId());
 }
