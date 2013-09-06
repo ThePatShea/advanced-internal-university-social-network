@@ -61,6 +61,35 @@ Template.postPage.helpers({
     else{
       return false;
     }
+  },
+
+  canDelete: function(){
+    var userId = Meteor.userId();
+    var user = Meteor.users.findOne({_id: userId});
+    console.log('Post page: ', this.bubbleId);
+    var bubble = Bubbles.findOne({_id: this.bubbleId});
+    if(typeof bubble.users == 'undefined'){
+      return false;
+    }
+    else{
+      var bubbleAdminIds = bubble.users.admins;
+
+      if(this.userId == userId){
+        console.log('Post Page: Post Author');
+        return true;
+      }
+      else if(bubbleAdminIds.indexOf(userId) != -1){
+        console.log('Post Page: Bubble Admin');
+        return true;
+      }
+      else if(user.userType == 3){
+        console.log('Post Page: Campus Moderator');
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
   }
 });
 

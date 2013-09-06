@@ -566,6 +566,14 @@ Meteor.publish('sidebarBubbles', function(userId) {
     });
   }); 
 
+  Meteor.publish('allUserNames', function(){
+    return Meteor.users.find({}, {
+      fields: {
+        'username': 1
+      }
+    })
+  });
+
   Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
     if (!usernameList) {
       usernameList = [];
@@ -610,6 +618,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
        'neverLoggedIn': 1,
       }
     });
+  });
+
+  Meteor.publish('findUsersByUsername', function(username){
+    return Meteor.users.find({'username': username});
   });
 
   Meteor.publish('findUsersById', function(userIdList) {
