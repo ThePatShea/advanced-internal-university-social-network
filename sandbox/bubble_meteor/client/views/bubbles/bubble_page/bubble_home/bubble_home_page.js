@@ -2,6 +2,7 @@
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.bubblePage.created = function() {
+  Session.set("isLoading", true);
  var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
 
  if(typeof bubble != "undefined" &&
@@ -15,7 +16,9 @@ Template.bubblePage.created = function() {
 Template.bubblePage.rendered = function() {
   //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
   var bubbleId = window.location.pathname.split('/')[2];
-  Meteor.subscribe('singleBubble', bubbleId);
+  Meteor.subscribe('singleBubble', bubbleId, function() {
+    Session.set("isLoading", false);
+  });
   var bubble = Bubbles.findOne({_id: bubbleId});
 
   Meteor.subscribe('bubbleHomeDiscussions', bubbleId);
@@ -27,7 +30,7 @@ Template.bubblePage.rendered = function() {
 Template.bubblePage.helpers({ 
 
   //Get posts assigned to this bubble
-  isLoading: function() {
+  /*isLoading: function() {
     var bubbleLoading = Session.get('bubbleLoading');
 
     if (bubbleLoading == 'true') {
@@ -35,7 +38,7 @@ Template.bubblePage.helpers({
     } else {
       return false;
     }
-  },
+  },*/
   eventsCount: function() {
     return Meteor.call('getNumOfEvents','event');
   },

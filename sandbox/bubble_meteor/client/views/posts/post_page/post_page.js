@@ -1,3 +1,8 @@
+Template.postPage.created = function() {
+  Session.set("isLoadingPost", true);
+  Session.set("isLoadingComments", true);
+}
+
 Template.postPage.rendered = function() {
   var currentUrl     =  window.location.pathname;
   var urlArray       =  currentUrl.split("/");
@@ -6,8 +11,12 @@ Template.postPage.rendered = function() {
   var currentPostId    =  urlArray[4];
 
   Meteor.subscribe('singleBubble', currentBubbleId);
-  Meteor.subscribe('singlePost', currentPostId);
-  Meteor.subscribe('comments', currentPostId);
+  Meteor.subscribe('singlePost', currentPostId, function() {
+    Session.set("isLoadingPost", false);
+  });
+  Meteor.subscribe('comments', currentPostId, function() {
+    Session.set("isLoadingComments", false);
+  });
 }
 
 
@@ -21,6 +30,11 @@ Template.postPage.helpers({
   , getAuthorProfilePicture: function() {
     var user = Meteor.users.findOne(this.userId);
     return user && user.profilePicture;
+  },
+
+  isLoading: function() {
+    if(Session.get("isLoadingPost") && Session.get("isLoadingComments")) {return true};
+    return false;
   },
 
   returnFalse: function() {

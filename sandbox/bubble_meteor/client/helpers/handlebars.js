@@ -43,6 +43,11 @@ Handlebars.registerHelper('siteLoading', function() {
   }
 });
 
+Handlebars.registerHelper('isLoading', function() {
+  if(Session.get('isLoading')) {return true;}
+  return false
+});
+
 
 Handlebars.registerHelper('getUserTypeName', function(userType) {
   return userTypes[userType];

@@ -241,7 +241,7 @@ Meteor.Router.add('/dailyDigest', 'POST', function(){
 });
 
 Meteor.Router.add('/getBubbleId/:bubbleName', 'POST', function(bubbleName) {
-	console.log("Getting Bubble Id...");
+	//console.log("Getting Bubble Id...");
 	var data = this.request.body;
 	var bubble = Bubbles.findOne({title: data.bubbleName});
 	if(bubble == undefined)
@@ -250,7 +250,7 @@ Meteor.Router.add('/getBubbleId/:bubbleName', 'POST', function(bubbleName) {
 	      category             : data.bubbleType,
 	      bubbleType           : "normal",
 	      description          : "",
-	      title                : bubbleName,
+	      title                : data.bubbleName,
 	      retinaProfilePicture : "/img/Bubble-Profile.jpg",
 	      retinaCoverPhoto     : "/img/Bubble-Cover.jpg",
 	      profilePicture       : "/img/Bubble-Profile.jpg",
@@ -269,7 +269,7 @@ Meteor.Router.add('/getBubbleId/:bubbleName', 'POST', function(bubbleName) {
     	bubbleId = Bubbles.insert(newBubble);
     	if(bubbleId)
     	{
-		    Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
+		    Meteor.call('addBubbleToIndex', bubbleId, data.bubbleName);
 		    data.bubbleId = bubbleId;
 	    	//return[200, bubbleId];
     	}
@@ -369,7 +369,7 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 	//console.log("popbub: " + JSON.stringify(this.request.body));
 	var data = this.request.body;
 	var tmp;
-	console.log("Members in " + bubbleId + ":");
+	//console.log("Members in " + bubbleId + ":");
 	_.each(data.members, function(member) {
 		if(member.type == "NetID")
 		{
@@ -387,7 +387,7 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 		else if(member.type == "Name")
 		{
 			var name = member.user;
-			var nameCount = Meteor.users.count({name: name});
+			var count = Meteor.users.find({name: name}).count();
 			if(count == 1)
 			{
 				var user = Meteor.users.findOne({name: name});
@@ -427,7 +427,7 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 			console.log("Type (" + member.type + ") not recognized for: " + member.user);
 		}
 	});
-	console.log("Admins in " + bubbleId + ":");
+	//console.log("Admins in " + bubbleId + ":");
 	_.each(data.admins, function(admin) {
 				if(admin.type == "NetID")
 		{
@@ -445,7 +445,7 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 		else if(admin.type == "Name")
 		{
 			var name = admin.user;
-			var nameCount = Meteor.users.count({name: name});
+			var count = Meteor.users.find({name: name}).count();
 			if(count == 1)
 			{
 				var user = Meteor.users.findOne({name: name});
@@ -485,7 +485,7 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 			console.log("Type (" + admin.type + ") not recognized for: " + admin.user);
 		}
 	});
-	console.log("Invitees in " + bubbleId + ":");
+	//console.log("Invitees in " + bubbleId + ":");
 	_.each(data.invitees, function(invitee) {
 				if(invitee.type == "NetID")
 		{
@@ -503,7 +503,7 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 		else if(invitee.type == "Name")
 		{
 			var name = invitee.user;
-			var nameCount = Meteor.users.count({name: name});
+			var count = Meteor.users.find({name: name}).count();
 			if(count == 1)
 			{
 				var user = Meteor.users.findOne({name: name});

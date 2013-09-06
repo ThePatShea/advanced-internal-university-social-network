@@ -3,6 +3,11 @@
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
   {{/with}}
+
+  <div class="visible-{{isLoading}}">
+    {{> gifLoaderToParent}}
+  </div>
+  
   {{#with getCurrentPost}}
     <div class="bubble-page-content post-page">
       <div class="top-btns">

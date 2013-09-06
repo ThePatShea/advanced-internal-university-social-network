@@ -1,4 +1,9 @@
 <template name="explorePage">
+
+  <div class="visible-{{isLoading}}">
+    {{> gifLoaderToParent}}
+  </div>
+  
   {{#with currentExplore}}
     {{> exploreCover}}
     <div class="explore-page-content">

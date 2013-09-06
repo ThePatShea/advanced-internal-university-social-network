@@ -2,6 +2,7 @@
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.explorePage.created = function(){
+  Session.set("isLoading", true);
   max_scrolltop = 100;
   virtualPage = 0;
   var currentExploreId = window.location.pathname.split("/")[2];
@@ -27,7 +28,10 @@ Template.explorePage.rendered = function(){
     posts = Posts.find({exploreId: currentExploreId}).fetch()
     postIds = _.pluck(posts, "_id");
     virtualPagePostIds = postIds.slice(0, 10)
-    Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+    Meteor.subscribe('findExplorePostsById', virtualPagePostIds, function() {
+      Session.set("isLoading", false);
+      console.log("DONE");
+    });
   });
   //console.log('Post Ids: ', postIds);
 
