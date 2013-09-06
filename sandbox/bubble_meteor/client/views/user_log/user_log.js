@@ -1,3 +1,8 @@
+Template.userlog.created = function(){
+  console.log('Analytics template created.');
+  Meteor.subscribe('currentUserlogs', Meteor.userId());
+}
+
 Template.userlog.helpers({
   getUserlogs: function() {
     if(Session.get('selectedUsername')) {
@@ -45,6 +50,7 @@ Template.userlog.helpers({
 });
 
 Template.userlog.rendered = function() {
+  console.log('Analytics page.');
   $(".search-text").bind("propertychange keyup input paste", function (event) {
     var searchText = $(".search-text").val();
     if (searchText == ""){

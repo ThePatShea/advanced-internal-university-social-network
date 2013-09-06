@@ -14,6 +14,8 @@ Meteor.Router.add({
   //Onboarding page
   '/onboarding': 'onboarding',
 
+  '/bubbleanalytics': 'bubbleAnalytics',
+
   '/browser_unsupported': {
     to: 'browserUnsupported'
   },
@@ -138,7 +140,13 @@ Meteor.Router.add({
         Meteor.subscribe('singlePost', pId);
       }
     },
-    '/explore':  'exploreAll',
+    '/explore': {
+      to: 'exploreAll',
+      and: function(){
+        var user = Meteor.users.findOne({_id: Meteor.userId()});
+        Session.set('selectedUsername', user.username);
+      }
+    },
 
 
 
