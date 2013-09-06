@@ -138,6 +138,9 @@ Template.sidebar.events({
         Session.set('sidebarOpen', true);
       else
         Session.set('sidebarOpen', false);
+    },
+    'click .set-loading' : function() {
+      Session.set("isLoading", true);
     }
 });
 

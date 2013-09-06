@@ -2,6 +2,11 @@
   {{#with getCurrentBubble}}
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
+
+    <div class="visible-{{isLoading}}">
+      {{> gifLoaderToParent}}
+    </div>
+    
     <div class="bubble-page-content">
       <div class="bubble-list">
         <div></div>

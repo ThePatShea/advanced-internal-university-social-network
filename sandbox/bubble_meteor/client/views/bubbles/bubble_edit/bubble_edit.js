@@ -498,4 +498,5 @@ Template.bubbleEdit.rendered = function(){
     $(this).addClass("active");
   });
 
+
 }

@@ -15,7 +15,9 @@ Template.bubbleEventPage.rendered = function(){
 var currentUrl  =  window.location.pathname;
 var urlArray    =  currentUrl.split("/");
 var currentBubbleId  =  urlArray[2];
-eventsHandle = Meteor.subscribe('events', currentBubbleId);
+eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
+    Session.set("isLoading", false);
+  });
 
 /*
   $("#main").scroll(function(){
@@ -26,3 +28,6 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId);
 */
 }
 
+Template.bubbleEventPage.created = function(){
+  Session.set("isLoading", true);
+}

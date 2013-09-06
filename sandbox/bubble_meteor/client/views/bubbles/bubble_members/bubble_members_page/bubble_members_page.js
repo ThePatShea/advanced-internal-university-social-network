@@ -1,12 +1,15 @@
 Template.bubbleMembersPage.created = function() {
 	virtualPage = 0;
 	max_scrolltop = 200;
+	Session.set("isLoading", true);
 }
 
 
 Template.bubbleMembersPage.rendered = function () {
 	var currentBubbleId = window.location.pathname.split('/')[2];
-	Meteor.subscribe('singleBubble', currentBubbleId);
+	Meteor.subscribe('singleBubble', currentBubbleId, function() {
+		Session.set("isLoading", false);
+	});
 	console.log(currentBubbleId);
 	var currentBubble = Bubbles.findOne({_id: currentBubbleId});
 	var adminIds = currentBubble.users.admins;

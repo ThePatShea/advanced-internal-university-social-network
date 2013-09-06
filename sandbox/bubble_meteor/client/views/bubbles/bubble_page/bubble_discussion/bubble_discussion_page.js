@@ -20,7 +20,9 @@ Template.bubbleDiscussionPage.rendered = function(){
 var currentUrl  =  window.location.pathname;
 var urlArray    =  currentUrl.split("/");
 var currentBubbleId  =  urlArray[2];
-discussionsHandle = Meteor.subscribe('discussions', currentBubbleId);
+discussionsHandle = Meteor.subscribe('discussions', currentBubbleId, function() {
+    Session.set("isLoading", false);
+  });
 
 
 /*
@@ -30,4 +32,7 @@ discussionsHandle = Meteor.subscribe('discussions', currentBubbleId);
     }
    });
 //*/
+}
+Template.bubbleDiscussionPage.created = function(){
+  Session.set("isLoading", true);
 }
