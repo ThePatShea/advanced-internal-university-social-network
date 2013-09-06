@@ -1,6 +1,6 @@
 Template.bubbleMembersPage.created = function() {
 	virtualPage = 0;
-	max_scrolltop = 700;
+	max_scrolltop = 200;
 }
 
 
