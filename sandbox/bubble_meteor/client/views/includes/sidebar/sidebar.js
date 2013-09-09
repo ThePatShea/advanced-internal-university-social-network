@@ -23,7 +23,7 @@ Template.sidebar.helpers({
     },
 
     exploreLink: function(){
-      var explores = Explores.find({}).fetch();
+      var explores = Explores.find({}, {sort: {'submitted': 1}}).fetch();
       if(explores.length > 0){
         return '/explore/' + explores[0]._id + '/home';
       }
