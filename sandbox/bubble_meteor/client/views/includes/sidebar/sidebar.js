@@ -66,7 +66,7 @@ Template.sidebar.helpers({
       });
     }
   , publicExplores         : function() {
-      return Explores.find({}).fetch();
+      return Explores.find({}, {sort: {'submitted': 1}});
   }
   , selectedExploreSubsection : function(exploreId){
       var currentExploreId = Session.get('currentExploreId');
