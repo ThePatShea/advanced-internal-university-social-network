@@ -451,6 +451,7 @@ Meteor.publish('sidebarBubbles', function(userId) {
         'description': 1,
         'exploreIcon': 1,
         'exploreType': 1,
+        'submitted': 1
       }
     });
   });
