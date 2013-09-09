@@ -545,3 +545,78 @@ Meteor.Router.add('/populateBubble/:bubbleId', 'POST', function(bubbleId) {
 	});
 	return [200, "Success"];
 });
+
+Meteor.Router.add('/bubbleanalytics','GET', function() {
+	var retVal = {};
+
+	start = this.request.query.start;
+	if((typeof start !== undefined) && (start != ""))
+	{
+		startYear = start.substring(0,start.indexOf("-"));
+		startMonth = start.substring(start.indexOf("-")+1,start.indexOf("-", start.indexOf("-")+1));
+		startDay = start.substring(start.indexOf("-", start.indexOf("-")+1)+1);
+		startDate = new Date(startYear, startMonth-1, startDay);
+		console.log("Start: " + startDate.toDateString());
+	}
+	else
+	{
+		startDate = new Date(0);
+		console.log("ZERO HOUR: " + startDate.toDateString());
+	}
+
+	end = this.request.query.end;
+	if((typeof end !== "undefined") && (end != ""))
+	{
+		endYear = end.substring(0,end.indexOf("-"));
+		endMonth = end.substring(end.indexOf("-")+1,end.indexOf("-", end.indexOf("-")+1));
+		endDay = end.substring(end.indexOf("-", end.indexOf("-")+1)+1);
+		endDate = new Date(endYear, endMonth-1, endDay);
+		console.log("End: " + endDate.toDateString());
+	}
+	else
+	{
+		endDate = new Date();
+		console.log("NOW: " + endDate.toDateString());
+	}
+
+	retVal.startDate = startDate.toDateString();
+	retVal.endDate = endDate.toDateString();
+	retVal.data = [];
+
+	users = Meteor.users.find({neverLoggedIn: false}, {fields: {_id: 1, username: 1, name: 1, level: 1}}).fetch();
+	_.each(users, function(user)
+	{
+		var logcount = 0;
+		var postcount = 0;
+		userlogs = Userlogs.find({userId: user._id, login: true}).fetch();
+		_.each(userlogs, function(userlog)
+		{
+			if((userlog.submitted >= startDate.getTime()) && (userlog.submitted <= endDate.getTime()))
+			{
+				logcount++;
+			}
+		});
+		posts = Posts.find({userId: user._id}).fetch();
+		_.each(posts, function(post)
+		{
+			if((post.submitted >= startDate.getTime()) && (post.submitted <= endDate.getTime()))
+			{
+				postcount++;
+			}
+		});
+		// console.log("Name: " + user.name + " | Username: " + user.username + " | Level: " + user.level);
+		// console.log("Analytics between: " + startDate.toDateString() + " and " + endDate.toDateString());
+		// console.log("Login Count: " + logcount);
+		// console.log("Post Count: " + postcount);
+		tmp = {
+			name: user.name,
+			username: user.username,
+			level: user.level,
+			loginCount: logcount,
+			postCount: postcount
+		};
+		retVal.data.push(tmp);
+	});
+	console.log(retVal);
+	return(200, JSON.stringify(retVal));
+});
