@@ -122,7 +122,7 @@ var app = express();
 
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3030);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(passport.initialize());
@@ -336,6 +336,8 @@ app.get('/users', user.list);
 app.post('/sendWelcomeEmail', function(req, res){
   console.log(JSON.stringify(req.body.userId));
 });
+
+app.get('/bubbleanalytics.csv', routes.analytics);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

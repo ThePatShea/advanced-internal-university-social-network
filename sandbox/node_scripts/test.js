@@ -3,7 +3,7 @@ var https = require('https');
 var querystring = require('querystring');
 
 csv()
-.from('clean.csv', {columns: true, delimiter: '|'})
+.from('CleanWithFreshman.csv', {columns: true, delimiter: '|'})
 .on('record', function(row,index){
 	var post_data = querystring.stringify({
 		'username': row.username.toUpperCase(),
