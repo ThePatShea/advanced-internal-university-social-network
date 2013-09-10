@@ -23,7 +23,7 @@ Template.sidebar.helpers({
     },
 
     exploreLink: function(){
-      var explores = Explores.find({}).fetch();
+      var explores = Explores.find({}, {sort: {'submitted': 1}}).fetch();
       if(explores.length > 0){
         return '/explore/' + explores[0]._id + '/home';
       }
@@ -66,7 +66,7 @@ Template.sidebar.helpers({
       });
     }
   , publicExplores         : function() {
-      return Explores.find({}).fetch();
+      return Explores.find({}, {sort: {'submitted': 1}});
   }
   , selectedExploreSubsection : function(exploreId){
       var currentExploreId = Session.get('currentExploreId');
