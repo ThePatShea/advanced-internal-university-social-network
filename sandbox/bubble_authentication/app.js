@@ -122,7 +122,7 @@ var app = express();
 
 
 // all environments
-app.set('port', process.env.PORT || 3030);
+app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(passport.initialize());
