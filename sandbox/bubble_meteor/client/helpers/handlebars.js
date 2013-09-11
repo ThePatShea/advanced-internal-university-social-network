@@ -340,7 +340,7 @@ Handlebars.registerHelper('isLoggedIn', function() {
 
 Handlebars.registerHelper('isLoggedIn2', function() {
   var currentPage = window.location.pathname.split("/")[1];
-  if(Meteor.user() || currentPage == "login" || currentPage == "loggedOut") {
+  if(Meteor.user() || currentPage == "login" || currentPage == "loggedOut" || currentPage == "browser_unsupported") {
     return true;
   }
 });
