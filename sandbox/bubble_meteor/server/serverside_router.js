@@ -217,36 +217,8 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
     }
-    /*else if(urlNumSections == 4){   
-        firstSegment = urlSections[2];
-        secondSegment = urlSections[3];
-        var fields = [];
-       if(firstSegment.indexOf('?') != -1){    // URL /2013-09-09/posts?fields=name,body
-            var subSegments = firstSegment.split('?');
-            var collectionName = subSegments[0];
-            var parameters = subSegments[1].split('=');
-            var parameterValues = parameters[1].split(',');
-            fields = parameterValues;
-            console.log('Collection: ', collectionName);
-            console.log('Fields: ', parameterValues);
-        }
-        else{                              // URL /2013-09-09/posts
-            var collectionName = subSegments[0];
-            console.log('Collection: ', collectionName);
-        }
 
-        var response = getCollection(collectionName, limit, offset, fields);
-        var stringifiedResponse = JSON.stringify(response);
-        return [200, {'Content-type': 'application/json'}, stringifiedResponse];
-
-    }
-    else if(urlSections.length == 5){
-        firstSegment = urlSections[2];
-        secondSegment = urlSections[3];
-        var fields = [];  
-    }*/
-
-    return [200, 'Success'];
+    return [400, 'Malformed request'];
 
 });
 
@@ -304,6 +276,10 @@ Meteor.Router.add('/2013-09-11/explores/:id/?:q', 'GET', function(id){
     var limit = 10;
     var offset = 0;
     var urlNumSections = urlSections.length - 2;
+    var explore = Explores.findOne(id);
+    if(!explore){
+        return [500, 'Explore not found'];
+    }
     if(urlSections[urlSections.length-1].indexOf('&') != -1){
         var paginationSegment = urlSections[urlSections.length-1];
         var paginationParams = paginationSegment.split('&');
@@ -338,6 +314,10 @@ Meteor.Router.add('/2013-09-11/bubbles/:id/?:q', 'GET', function(id){
     var limit = 10;
     var offset = 0;
     var urlNumSections = urlSections.length - 2;
+    var bubble = Bubbles.findOne(id);
+    if(!bubble){
+        return [500, 'Bubble not found.'];
+    }
     if(urlSections[urlSections.length-1].indexOf('&') != -1){
         var paginationSegment = urlSections[urlSections.length-1];
         var paginationParams = paginationSegment.split('&');
@@ -361,6 +341,40 @@ Meteor.Router.add('/2013-09-11/bubbles/:id/?:q', 'GET', function(id){
 
     console.log('Limit, Offset', limit, offset);
     var response = getSubCollection('bubbles', id, subCollectionName, limit, offset, fields);
+    var serializedResponse = JSON.stringify(response);
+    return [200, {'Content-type': 'application/javascript'}, serializedResponse];
+});
+
+
+Meteor.Router.add('/2013-09-11/users/:id/?:q', 'GET', function(id){
+    var urlSections = this.request.originalUrl.split('/');
+    var fields = [];
+    var limit = 10;
+    var offset = 0;
+    var urlNumSections = urlSections.length - 2;
+    if(urlSections[urlSections.length-1].indexOf('&') != -1){
+        var paginationSegment = urlSections[urlSections.length-1];
+        var paginationParams = paginationSegment.split('&');
+        var firstParam = paginationParams[0].split('=');
+        var secondParam = paginationParams[1].split('=');
+        limit = parseInt(firstParam[1]);
+        offset = parseInt(secondParam[1]);
+        urlNumSections = urlNumSections - 1;
+    }
+    var subCollectionSegment = urlSections[4];
+    if(subCollectionSegment.indexOf('?') != -1){
+        var subSegments = subCollectionSegment.split('?');
+        var subCollectionName = subSegments[0];
+        var parameters = subSegments[1].split('=');
+        var parameterValues = parameters[1].split(',');
+        fields = parameterValues;
+    }
+    else{
+        var subCollectionName = subCollectionSegment;
+    }
+
+    console.log('Limit, Offset', limit, offset);
+    var response = getSubCollection('users', id, subCollectionName, limit, offset, fields);
     var serializedResponse = JSON.stringify(response);
     return [200, {'Content-type': 'application/javascript'}, serializedResponse];
 });
@@ -443,6 +457,17 @@ function getSubCollection(collectionName, collectionId, subCollectionName, limit
         var bubbleId = collectionId;
         var response = getBubblePosts(limit, offset, fields, bubbleId);
         return response;
+    }
+    else if(collectionName == 'users'){
+        var userId = collectionId;
+        if(subCollectionName == 'bubbles'){
+            var response = getUsersBubbles(limit, offset, fields, userId);
+            return response;
+        }
+        else if(subCollectionName == 'posts'){
+            var response = getUsersPosts(limit, offset, fields, userId);
+            return response;
+        }
     }
 }
 
@@ -585,6 +610,71 @@ function getBubblePosts(limit, offset, fields, bubbleId){
         var allPosts = Posts.find({'bubbleId': bubbleId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
+        return response;
+    }
+}
+
+
+
+function getUsersPosts(limit, offset, fields, userId){
+    var postCount = Posts.find({'userId': userId}).count();
+    var pages = Math.floor(postCount/limit);
+    if(pages*limit < postCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allPosts = Posts.find({'userId': userId}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allPosts = Posts.find({'userId': userId}, {fields: JSON.parse(fieldString)}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
+        return response;      
+    }
+}
+
+
+
+function getUsersBubbles(limit, offset, fields, userId){
+    var bubbleCount = Bubbles.find({$or:
+            [{'users.admins': {$in: [userId]}},
+            {'users.members': {$in: [userId]}}
+            ]}).count();
+    var pages = Math.floor(bubbleCount/limit);
+    if(pages*limit < bubbleCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allBubbles = Bubbles.find({$or:
+            [{'users.admins': {$in: [userId]}},
+            {'users.members': {$in: [userId]}}
+            ]}).fetch();
+        var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': bubbleCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allBubbles = Bubbles.find({$or:
+            [{'users.admins': {$in: [userId]}},
+            {'users.members': {$in: [userId]}}
+            ]}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': bubbleCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
 }
