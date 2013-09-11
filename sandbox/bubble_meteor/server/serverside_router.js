@@ -31,7 +31,7 @@ Meteor.Router.add('/loadtest/:number', 'GET', function(number){
 });
 
 
-Meteor.Router.add('/2013-09-09/posts?:q', function(q){
+Meteor.Router.add('/2013-09-09/posts?:q', 'GET', function(q){
     console.log('REST API: ', this.request.originalUrl);
     urlLevels = this.request.originalUrl.split('/');
     //console.log(urlLevels);
@@ -70,7 +70,7 @@ Meteor.Router.add('/2013-09-09/posts?:q', function(q){
     }
 });
 
-Meteor.Router.add('/2013-09-09/posts/:params', function(params){
+Meteor.Router.add('/2013-09-09/posts/:params', 'GET', function(params){
     console.log('REST API: ', params, this.request.originalUrl);
     var paginationParams = this.request.originalUrl.split('&');
 
@@ -96,7 +96,7 @@ Meteor.Router.add('/2013-09-09/posts/:params', function(params){
 
 
 
-Meteor.Router.add('/2013-09-09/explores/:exploreId/posts?:q', function(exploreId, q){
+Meteor.Router.add('/2013-09-09/explores/:exploreId/posts?:q', 'GET', function(exploreId, q){
     console.log('REST API: ', this.request.originalUrl);
     urlLevels = this.request.originalUrl.split('/');
     //console.log(urlLevels);
@@ -135,7 +135,7 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts?:q', function(exploreId
     }
 });
 
-Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', function(exploreId, params){
+Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', function(exploreId, params){
     console.log('REST API: ', params, this.request.originalUrl);
     //var paginationParams = this.request.originalUrl.split('&');
     var paginationParams = params.split('&');
@@ -161,6 +161,137 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', function(expl
 });
 
 
+
+Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
+    console.log('2013-09-11 REST API: ', q, this.request.originalUrl);
+
+    var urlSections = this.request.originalUrl.split('/');
+    var fields = [];
+    if(urlSections.length == 3){        // URL /2013-09-09/posts?fields=name,body
+        var firstSegment = urlSections[2];
+        if(firstSegment.indexOf('?') != -1){
+            var subSegments = firstSegment.split('?');
+            var collectionName = subSegments[0];
+            var parameters = subSegments[1].split('=');
+            var parameterValues = parameters[1].split(',');
+            fields = parameterValues;
+            console.log('Collection: ', collectionName);
+            console.log('Fields: ', parameterValues);
+            var response = getCollection(collectionName, 10, 0, fields);
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
+        else{                           // URL /2013-09-09/posts
+            var collectionName = subSegments[0];
+            console.log('Collection: ', collectionName);
+            var response = getCollection(collectionName, 10, 0, fields);
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
+    }
+    else if(urlSections.length == 4){   // URL /2013-09-09/posts?fields=name,body/limit=1&offset=2
+        firstSegment = urlSections[2];
+        secondSegment = urlSections[3];
+        var fields = [];
+       if(firstSegment.indexOf('?') != -1){
+            var subSegments = firstSegment.split('?');
+            var collectionName = subSegments[0];
+            var parameters = subSegments[1].split('=');
+            var parameterValues = parameters[1].split(',');
+            fields = parameterValues;
+            console.log('Collection: ', collectionName);
+            console.log('Fields: ', parameterValues);
+        }
+        else{
+            var collectionName = subSegments[0];
+            console.log('Collection: ', collectionName);
+        }
+        var paginationParams = secondSegment.split('&');
+        var firstParam = paginationParams[0].split('=');
+        var secondParam = paginationParams[1].split('=');
+        var limit = parseInt(firstParam[1]);
+        var offset = parseInt(secondParam[1]);
+
+        var response = getCollection(collectionName, limit, offset, fields);
+        var stringifiedResponse = JSON.stringify(response);
+        return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+
+    }
+
+    return [200, 'Success'];
+
+});
+
+
+
+function getCollection(collectionName, limit, offset, fields){
+    if(collectionName == 'posts'){
+        var response = getPosts(limit, offset, fields);
+        return response;
+    }
+    else if(collectionName == 'explores'){
+        var response = getExplores(limit, offset, fields);
+        return response;
+    }
+    else if(collectionName == 'bubbles'){
+        var response = getBubbles(limit, offset, fields);
+        return response;
+    }
+}
+
+
+function getExplores(limit, offset, fields){
+    var exploresCount = Explores.find().count();
+    var pages = Math.floor(exploresCount/limit);
+    if(pages*limit < exploresCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allExplores = Explores.find({}).fetch();
+        var explores = allExplores.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': exploresCount, 'pages': pages, 'page': offset, 'explores': explores};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allExplores = Explores.find({}, {fields: JSON.parse(fieldString)}).fetch();
+        var explores = allExplores.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': exploresCount, 'pages': pages, 'page': offset, 'explores': explores};
+        return response;
+    }
+}
+
+
+function getBubbles(limit, offset, fields){
+    var bubblesCount = Bubbles.find().count();
+    var pages = Math.floor(bubblesCount/limit);
+    if(pages*limit < bubblesCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allBubbles = Bubbles.find({}).fetch();
+        var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allBubbles = Bubbles.find({}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
+        return response;
+    }
+}
 
 
 function getPosts(limit, offset, fields){
@@ -191,6 +322,7 @@ function getPosts(limit, offset, fields){
         return response;
     }
 }
+
 
 
 function getExplorePosts(limit, offset, fields, exploreId){
