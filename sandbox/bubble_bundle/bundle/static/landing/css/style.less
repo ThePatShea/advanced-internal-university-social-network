@@ -1,0 +1,910 @@
+@import url(skeleton.css); /* Bootstrap Gridwork */
+@import url(reset.css); /* Custom CSS reset */
+@import url(typography.css); /* Typography file including fonts/Styles */
+@import url(js.css); /* JS plugins styles */
+
+
+/***************************************************************************************** 
+*********************** COLORS 
+*****************************************************************************************/ 
+
+@first-bg-color: #A5BBC9; /* First Slide Color */
+@second-bg-color: #2F5973; /* Second Slide Color */
+@third-bg-color: #001F37; /* Third Slide Color */
+@fourth-bg-color: #011126; /* Fourth Slide Color */
+
+/***************************************************************************************** 
+*********************** LESS MIXINS 
+*****************************************************************************************/ 
+
+@light-background-color: #2f5973;
+@dark-background-color: #001f37;
+@light-border-color: @light-background-color;
+@scroll-bar-color: #95afbf;
+
+/* Font Colors */
+
+@dark-font-color: #011126;
+@medium-font-color: #476e85;
+@lighter-font-color: #F7F8F8;
+
+@lighter-header-color: #2C5972;
+
+@gray-font-color: #94AEBF;
+
+/* LESS MIXINS SHORTCODES */
+
+.round(@radius: 2px) {
+	border-radius: @radius;
+	-webkit-background-clip: padding;
+	-moz-background-clip: padding;
+	background-clip: padding;
+}	/* Border Radius Mixin */
+
+/* FONTS */
+
+@main-font: 'brandon_grotesque_regularRg';
+@main-font-bold: 'brandon_grotesquebold';
+@main-font-semi: 'proxima_novasemibold';
+@alt-font: 'proxima_nova_rgregular';
+@alt-font-light: 'proxima_novalight';
+@alt-font-bold: 'proxima_nova_rgbold';
+@alt-font-semi: 'proxima_novasemibold';
+
+/***************************************************************************************** 
+*********************** MISC STYLES 
+*****************************************************************************************/ 
+
+.hide-normal { display: none !important; }
+.pull-right { float: right; }
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** TYPOGRAPHIC STYLES 
+*****************************************************************************************/
+
+.info-text {
+    display: inline-block;
+    margin-right: 17px;
+	font-family: @main-font-bold;
+	text-transform: uppercase;
+	font-size: 13px;
+	color: #A5B9C9;
+}
+
+.info-text2 {
+    display: inline-block;
+    font-size: 24px;
+	font-family: @main-font-bold;
+	text-transform: uppercase;
+	color: #2F5973;
+	line-height: 1.5em;
+	margin-bottom: 16px;
+}
+
+h1.intro-header {
+	font-size: 62px;
+	line-height: 0.9em;
+	font-family: @main-font-bold;
+	color: #F7F8F8;
+	letter-spacing: 0.2em;
+	margin-left: -5px;
+}
+
+h5.intro {
+	font-size: 22px;
+	font-family: @alt-font-light;
+	font-weight: 300;
+	color: #94AEBF;
+	line-height: 0.95em;
+	margin-top: 20px;
+	margin-bottom: 36px;
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** GENERAL STYLES 
+*****************************************************************************************/ 
+
+body {
+	background-color: @fourth-bg-color;
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** ICONS
+*****************************************************************************************/ 
+
+.icon-classifieds,
+.icon-professor,
+.icon-deals,
+.icon-events,
+.android-icon,
+.apple-icon,
+.arrow-icon {
+	background: url(../images/sprite.png) no-repeat;
+	-webkit-background-size: 240px 150px;
+    -moz-background-size:  240px 150px;
+    -o-background-size:  240px 150px;
+    background-size:  240px 150px;
+	display: inline-block;
+}
+
+.android-icon,
+.apple-icon { width: 30px; height: 30px; }
+.android-icon { vertical-align: top; background-position: -60px 0; }
+.apple-icon { vertical-align: top; background-position: 0 0; }
+
+
+
+.arrow-icon { width: 15px; height: 15px; background-position: -130px -10px; }
+
+
+.icon-classifieds,
+.icon-professor,
+.icon-deals,
+.icon-events { width: 60px; height: 60px; vertical-align: top; }
+.icon-classifieds { background-position: 0 -30px; }
+.icon-professor { background-position: -60px -30px; }
+.icon-events { background-position: -120px -30px; }
+.icon-deals { background-position: -175px -30px; }
+
+
+.strip {
+	background: url(../images/strip.png);
+	width: 100%;
+	height: 10px;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.admin-logo { background-size: 102px 101px; width: 102px; height: 101px; float: left; margin: 11px 25px 5px 7px; }
+.logo-footer { background: url(../images/logo-footer.png); background-size: 137px 30px; width: 137px; height: 30px; display: block; }
+.logo-bubble-footer { background-image: url(../images/logo-bubble-footer.png); background-size: 52px 65px; width: 52px; height: 65px; display: block; }
+
+
+
+/***************************************************************************************** 
+*********************** SECTION 1 
+*****************************************************************************************/ 
+
+#section-1 {
+	position: relative;
+	padding-top: 40px;
+	max-height: 650-80px;
+	overflow: hidden;
+	background: url(../images/bg.png) no-repeat;
+	background-size: 100% 100%;
+	.main-logo {
+		display: inline-block;
+		background: url(../images/logo.png);
+		background-size: 78px 122px;
+		height: 122px;
+		width: 78px;
+		text-indent: -9999px;
+		margin-bottom: 75px;
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+
+
+}
+
+.image {
+	display: inline-block;
+	margin-top: -105px;
+	position: relative;
+	img {
+		width: 100%;
+		height: auto;
+	}
+	.button {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -90px;
+		margin-top: -80px;
+	}
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** SECTION 2 
+*****************************************************************************************/ 
+
+#section-2 {
+	background-color: @first-bg-color;
+	padding: 100px 0 0 0;
+	overflow: hidden;
+	max-height: 800px;
+	position: relative;
+	.info-container {
+		margin-top: 120px;
+		h1 {
+			font-size: 50px;
+			font-family: @main-font-bold;
+			font-weight: 700;
+			letter-spacing: 0.1em;
+			color: #2D5972;
+			line-height: 0.8em;
+			text-transform: uppercase;
+			.color {
+				color: @third-bg-color;
+			}
+		}
+		p {
+			margin-top: 30px;
+			margin-bottom: 30px;
+			font-family: @alt-font-light;
+			font-size: 28px;
+			line-height: 1.5em;
+			color: #F7F8F8;
+		}
+	}
+
+	.image-container {
+		img {
+			width: 800px;
+			margin-left: -290-80px;
+		}
+	}
+
+	img.down-button {
+		position: absolute;
+		top: 10%;
+		left: 50%;
+		margin-left: -40px;
+	}
+}
+
+
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** SECTION 3 
+*****************************************************************************************/ 
+
+#section-3 {
+	background-color: @second-bg-color;
+	padding: 150px 0;
+	overflow: hidden;
+	.info-container {
+		h1 {
+			font-size: 50px;
+			font-family: @main-font-bold;
+			font-weight: 700;
+			letter-spacing: 0.1em;
+			color: @third-bg-color;
+			line-height: 0.9em;
+			text-transform: uppercase;
+			.color { color: @first-bg-color; }
+		}
+		p {
+			margin-top: 30px;
+			margin-bottom: 30px;
+			font-family: @alt-font-light;
+			font-size: 28px;
+			line-height: 1.4em;
+			color: #A5B8C9;
+		}
+		.info-text2 { color:  @first-bg-color; }
+		.button-alt {
+			text-decoration: none;
+			font-size: 12px;
+			font-family: @main-font-bold;
+			font-weight: 600;
+			text-transform: uppercase;
+			color:  @first-bg-color;
+			border: 1px solid  @first-bg-color;
+			.round(28px);
+			padding: 6px 28px 5px 28px;
+
+			&:hover {
+				border-color: @fourth-bg-color;
+			}
+		}
+	}
+	.features-container {
+		margin-bottom: 30px;
+		a.feature {
+			display: inline-block;
+			text-align: center;
+			margin-right: 18px;
+			text-decoration: none;
+			font-size: 14px;
+			font-family: @main-font-semi;
+			font-weight: 500;
+			color: #001D35;
+			vertical-align: top;
+			span { margin-bottom: 6px; }
+			&:hover {
+				color: #fff;
+				.icon-classifieds { background-position: 0 -90px; }
+				.icon-professor { background-position: -60px -90px; }
+				.icon-events { background-position: -120px -90px; }
+				.icon-deals { background-position: -175px -90px; }
+			}
+		}
+	}
+}
+
+.imac-third {
+	background: url(../images/macbookair1.png)  center center;
+	background-size: 950px 500px;
+	display: inline-block;
+	width: 950px;
+	height: 500px;
+	margin-left: -105+20px;
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** SECTION 4 
+*****************************************************************************************/ 
+
+#section-4 {
+	background-color: @third-bg-color;
+	padding: 120px 0 120px 0;
+	overflow: hidden;
+	p {
+		text-align: center;
+		margin-top: 30px;
+		margin-bottom: 30px;
+		font-family: @alt-font-light;
+		font-size: 28px;
+		line-height: 1.4em;
+		color: #2D5972;
+	}
+	h1 {
+		margin-top: 25px;
+		text-align: center;
+		font-family: @main-font-bold;
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: 0.5em;
+		color: #A4B8C6;
+		.oneplace { font-size: 75px; line-height: 0.85em; }
+		.forall { font-size: 73px; color: #2E5972; line-height: 0.85em; }
+		.emory { font-size: 119px; letter-spacing: 0.12em; line-height: 0.85em; }
+	}
+	.info-colors {
+		margin-left: -90-151px;
+		li {
+			display: inline-block;
+			a {
+				text-transform: uppercase;
+				display: inline-block;
+				font-size: 17px;
+				font-family: @main-font;
+				letter-spacing: 0.2em;
+				color: #F7F8F8;
+				font-weight: 400;
+				padding: 15px 0;
+				text-decoration: none;
+				-webkit-transition: opacity 0.3s ease-in-out;
+				   -moz-transition: opacity 0.3s ease-in-out;
+				    -ms-transition: opacity 0.3s ease-in-out;
+				     -o-transition: opacity 0.3s ease-in-out;
+				        transition: opacity 0.3s ease-in-out;
+				&:hover {
+					opacity: 0.9;
+				}
+			}
+		}
+		.first-color { background-color: #462446; padding-right: 55px; padding-left: 55+100px; }
+		.second-color { background-color: #673653; padding-right: 85px; padding-left: 80+100px; }
+		.third-color { background-color: #B0606D; padding-right: 105px; padding-left: 130+50px; }
+		.fourth-color { background-color: #DE8275; padding-right: 85px; padding-left: 75+100px; }
+		.fifth-color { background-color: #FF8A54; padding-right: 60px; padding-left: 50+100px; }
+		.sixth-color { background-color: #F9C148; padding-right: 65px; padding-left: 60+100px; }
+		.seventh-color { background-color: #70C889; padding-right: 65px; padding-left: 65+100px; }
+		.eighth-color { background-color: #6DC3BA; padding-right: 114px; padding-left: 104+100px; }
+		.nineth-color { background-color: #6BB6A1; padding-right: 105px; padding-left: 100+100px; }
+	}
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** SECTION 5 
+*****************************************************************************************/ 
+
+#section-5 {
+	padding: 150px 0;
+	background-color: @fourth-bg-color;
+	overflow: hidden;
+	max-height: 750px;
+	p {
+		margin-top: 30px;
+		margin-bottom: 30px;
+		font-family: @alt-font-light;
+		font-size: 28px;
+		line-height: 1.4em;
+		color: #A4B8C5;
+	}
+	h1 {
+		font-size: 50px;
+		font-family: @main-font-bold;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		color: #2D5972;
+		line-height: 0.9em;
+		text-transform: uppercase;
+		.color {
+			color: @first-bg-color;
+		}
+	}
+	.button-alt {
+		&:hover {
+			background-color: #2F5973;
+		}
+	}
+}
+.iphone-fifth {
+	background: url(../images/iphone.png)  center center;
+	background-size: 376px 704px;
+	display: inline-block;
+	width: 376px;
+	height: 704px;
+	margin-left: 21px;
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** FOOTER 
+*****************************************************************************************/ 
+
+.main-footer {
+	background-color: #A5BBC9;
+	position: relative;
+	padding: 23px 0;
+	.logo-bubble-footer {
+		position: absolute;
+		top: -30px;
+		left: 0;
+		&:hover {
+			opacity: 0.8;
+		}
+	}
+	.logo-footer { margin-left: 8px; &:hover { opacity: 0.8; } }
+	ul.links {
+		padding-left: 75px;
+		padding-top: 7px;
+		li {
+			display: inline-block;
+			border-right: 1px solid #011126;
+			padding: 0 10px;
+			&:last-child {
+				border-right: none;
+			}
+			a {
+				font-size: 14px;
+				text-transform: uppercase;
+				font-family: @main-font-bold;
+				font-weight: 700;
+				text-decoration: none;
+				color: #011126;
+				letter-spacing: 0.2em;
+				display: inline-block;
+				&:hover {
+					color: #2D5972;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** BUTTONS 
+*****************************************************************************************/ 
+
+a { -webkit-transition: background-color 0.3s ease-in-out; -moz-transition: background-color 0.3s ease-in-out; -ms-transition: background-color 0.3s ease-in-out; -o-transition: background-color 0.3s ease-in-out; transition: background-color 0.3s ease-in-out; }
+
+.button {
+	display: inline-block;
+	font-family: @main-font;
+	font-size: 14px;
+	font-weight: normal;
+	text-transform: uppercase;
+	.round(28px);
+	border: 1px solid @light-border-color;
+	text-decoration: none;
+	color: #F7F8F8;
+	&:hover { background-color: @light-border-color; }
+}
+
+.button-alt {
+	text-decoration: none;
+	font-size: 12px;
+	font-family: @main-font-bold;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #2F5973;
+	border: 1px solid #2F5973;
+	.round(28px);
+	padding: 6px 28px 5px 28px;
+	margin-right: 5px;
+	&:hover { background-color: #011126; border-color: #011126; color: @first-bg-color; }
+}
+
+.small { padding: 11px 35px 10px 35px; letter-spacing: 0.3em; }
+
+.play {
+	padding: 10px 21px 7px 21px;
+	background-color: #011126;
+	background-color: rgba(1, 17, 38, 0.75);
+	border: none;
+	letter-spacing: 0.3em;
+	&:hover { background-color: #011126; }
+	.arrow-icon { display: inline-block; vertical-align: middle; }
+}
+
+.icon {
+	vertical-align: middle;
+	margin-right: 4px;
+	padding: 2px 10px;
+	&:hover {
+		.android-icon { background-position: -90px 0; }
+		.apple-icon { background-position: -30px 0; }
+	}
+}
+
+
+
+
+
+
+/***************************************************************************************** 
+*********************** MEDIA QUERIES 
+*****************************************************************************************/ 
+
+/* Huge Screens (devices) */
+@media only screen and (max-width: 1921px) and (min-width: 1441px)  {
+	body {
+		zoom: 1.35;
+ 		zoom: 135%;
+	}
+
+	#section-2 {
+		img.down-button {
+			position: absolute;
+			top: 5%;
+			left: 50%;
+			margin-left: -40px;
+		}
+	}
+
+	.mfp-bg {
+		zoom: 1;
+		zoom: 100%;
+	}
+
+	.mfp-iframe-scaler iframe {
+		top: -20%;
+	}
+
+	.mfp-iframe-holder .mfp-close {
+		left: 0;
+		top: -20%;
+	}
+}
+
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+	
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 1000px) {
+	
+
+	.intro-right { margin-left: -50px; }
+	.responsive-container {
+		.button-alt {
+			display: inline-block;
+			margin-bottom: 7px;
+		}
+	}
+
+	#section-2 {
+		.info-container {
+			padding-left: 7%;
+		}
+	}
+
+	#section-3 {
+		.imac-third {
+			background: url(../images/macbookair1.png)  center center;
+			background-size: 950/1.5px 500/1.5px;
+			display: inline-block;
+			width: 950/1.5px;
+			height: 500/1.5px;
+			margin-top: 100px;
+			margin-left: -105+100px;
+		}
+	}
+
+	#section-4 {
+	
+		h1 {
+			margin-top: 15%;
+			.oneplace { font-size: 75/1.9px; line-height: 0.85em; }
+			.forall { font-size: 73/2px; color: #2E5972; line-height: 0.85em; }
+			.emory { font-size: 119/1.7px; letter-spacing: 0.12em; line-height: 0.85em; }
+		}
+
+		p {
+			padding-left: 60px;
+			font-size: 20px;
+			width: 80%;
+		}
+
+		.info-colors {
+			margin-left: -35-60px;
+			text-align: left!important;
+			li {
+				display: inline-block;
+				font-family: @main-font;
+				letter-spacing: 0.2em;
+				color: #F7F8F8;
+				font-weight: 400;
+				a { font-size: 14px; padding: 12px 42px 12px 42*3px!important; white-space: nowrap; }
+
+			}
+		}
+	}
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+
+	/***************************************************************************************** 
+	*********************** MISC RESPONSIVE CLASSES 
+	*****************************************************************************************/ 
+	
+	.hide-767 { display: none!important; }
+	.show-767 { display: inline-block!important; }
+	.pull-right { float: none; }
+	.responsive-container { .button-alt { display: inline-block; margin-bottom: 10px; } }
+
+	.hide-normal { display: block!important; }
+
+	.play-responsive {
+		display: inline-block!important;
+		padding: 11px 28px 9px 28px;
+		letter-spacing: 0.3em;
+		.arrow-icon { width: 12px; height: 12px; background-position: -131px -8px; }
+	}
+
+
+
+
+
+
+
+	/***************************************************************************************** 
+	*********************** GENERAL STYLES 
+	*****************************************************************************************/ 
+
+	body { text-align: center; }
+	a.main-logo {  margin-bottom: 30px!important; }
+	h1.intro-header { font-size: 42px; margin-top: 42px; }
+
+
+
+
+
+
+
+	/***************************************************************************************** 
+	*********************** SECTIONS 
+	*****************************************************************************************/ 
+	
+	/*-------------- SECTION 1 --------------*/ 
+	#section-1 { padding-bottom: 100px; }
+	
+
+
+
+
+
+
+	/*-------------- SECTION 2 --------------*/ 
+	#section-2 {
+		padding: 85px 0 0 0;
+		.info-container {
+			padding-left: 0;
+			margin-top: 0;
+			text-align: center;
+			h1 { font-size: 30px; }
+			p { font-size: 18px; }
+		}
+		.ipad-responsive { width: 95%; height: auto; margin-top: 50px; margin-bottom: 0; margin-left: 15px; }
+		img.down-button {
+			display: none!important;
+		}
+	}
+
+
+
+
+
+
+
+	/*-------------- SECTION 3 --------------*/ 
+	#section-3 {
+		padding: 85px 0 0 0;
+		max-height: 900px;
+		.info-container {
+			padding-left: 0;
+			text-align: center;
+			h1 { font-size: 30px; }
+			p { font-size: 18px; }
+			.macbook-responsive { width: 100%; height: auto; margin-top: 50px; margin-bottom: 80px; }
+		}
+		.features-container { a.feature { margin: 0 3px 0 3px; } }
+	}
+
+
+
+
+
+
+
+	/*-------------- SECTION 4 --------------*/ 
+	#section-4 {
+		max-height: 1000px;
+		padding: 85px 0;
+		h1 {
+			margin-top: 0;
+			text-align: center;
+			font-family: @main-font-bold;
+			font-weight: 900;
+			text-transform: uppercase;
+			letter-spacing: 0.5em;
+			color: #A4B8C6;
+			.oneplace { font-size: 75/2.9px; line-height: 0.85em; }
+			.forall { font-size: 73/3.1px; color: #2E5972; line-height: 0.85em; }
+			.emory { font-size: 119/2.3px; letter-spacing: 0.12em; line-height: 0.85em; }
+		}
+		p { font-size: 18px; color: #A4B8C6; }
+		.info-colors {
+			margin-left: -35-150px;
+			text-align: left!important;
+			li {
+				display: inline-block;
+				font-family: @main-font;
+				letter-spacing: 0.2em;
+				color: #F7F8F8;
+				font-weight: 400;
+				a { font-size: 14px; padding: 12px 42px 12px 42*4px !important; }
+			}
+		}
+	}
+
+
+
+
+
+	
+	/*-------------- SECTION 5 --------------*/ 
+
+	#section-5 {
+		max-height: 950px;
+		padding-bottom: 0;
+		p { font-size: 18px; line-height: 1.5em; }
+		h1 {
+			font-size: 30px;
+			font-family: @main-font-bold;
+			font-weight: 700;
+			letter-spacing: 0.1em;
+			color: #2D5972;
+			line-height: 0.9em;
+			text-transform: uppercase;
+			.color { color: @first-bg-color; }
+		}
+		.admin-logo { float: none;  margin: 0 auto; }
+		.iphone-responsive { width: 60%; margin: 0 auto; height: auto; margin-top: 50px; }
+	}
+
+
+
+
+
+
+
+	/*-------------- FOOTER --------------*/ 
+
+	footer.main-footer {
+		padding: 0;
+		.logo-bubble-footer {
+			top: -10px;
+		}
+		.links-responsive {
+			padding-top: 23px;
+			padding-bottom: 40px;
+			padding-left: 60px;
+			li {
+				padding: 0;
+				a { font-weight: 400; padding: 0 7px; letter-spacing: normal; }
+			}
+		}
+	}
+} /* End 767 */
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+	/*-------------- SECTION 4 --------------*/ 
+	#section-4 {
+		
+		.info-colors {
+			margin-left: -95px;
+			text-align: left!important;
+
+			li {
+				display: inline-block;
+				font-family: @main-font;
+				letter-spacing: 0.2em;
+				color: #F7F8F8;
+				font-weight: 400;
+				
+				a {
+					font-size: 14px;
+					padding: 12px 42px 12px 117px !important;
+				}
+			}
+		}
+	}
+}

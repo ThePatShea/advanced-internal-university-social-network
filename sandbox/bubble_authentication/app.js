@@ -337,6 +337,8 @@ app.post('/sendWelcomeEmail', function(req, res){
   console.log(JSON.stringify(req.body.userId));
 });
 
+app.get('/bubbleanalytics.csv', routes.analytics);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

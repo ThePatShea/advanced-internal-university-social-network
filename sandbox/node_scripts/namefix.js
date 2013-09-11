@@ -49,7 +49,7 @@ db.once('open', function () {
 	*/
 	var count = 0;
 	csv()
-	.from('EmoryBubbleFeed.csv', {columns: true, delimiter: ','})
+	.from('FeedWithFreshman.csv', {columns: true, delimiter: ','})
 	.on('record', function(row, index) {
 		User.findOne({'username': row.NetID}, function(err, res) {	
 			if(res.name.indexOf(' ') < 0)
