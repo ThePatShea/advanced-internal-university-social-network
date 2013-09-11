@@ -162,6 +162,9 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 
 
+//**************************Begin REST GET****************************************
+
+//REST api for retreiving selected fields from collections with pagination support
 Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
     console.log('2013-09-11 REST API: ', q, this.request.originalUrl);
 
@@ -224,6 +227,8 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
 
 
 
+
+//REST API for retreiving particular items from Collections
 Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
     var response = getItem('posts', id);
     if(response == 'Not Found'){
@@ -269,7 +274,7 @@ Meteor.Router.add('/2013-09-11/users/:id', 'GET', function(id){
 });
 
 
-
+//REST api for retreiving sub-collections of collections
 Meteor.Router.add('/2013-09-11/explores/:id/?:q', 'GET', function(id){
     var urlSections = this.request.originalUrl.split('/');
     var fields = [];
@@ -378,6 +383,28 @@ Meteor.Router.add('/2013-09-11/users/:id/?:q', 'GET', function(id){
     var serializedResponse = JSON.stringify(response);
     return [200, {'Content-type': 'application/javascript'}, serializedResponse];
 });
+
+//*********************************End REST GET*************************************
+
+
+
+//*********************************Begin REST POST**********************************
+
+Meteor.Router.add('/2013-09-11/bubbles/new', 'POST', function(){
+    //console.log(this.request.body);
+    var bubbleTitle = this.request.body.title;
+    var bubbleCategory = this.request.body.category;
+    var bubbleDescription = this.request.body.description;
+    var bubbleCoverPhoto = this.request.body.coverPhoto;
+    var bubbleRetinaCoverPhoto = this.request.body.retinaCoverPhoto;
+    var bubbleProfilePicture = this.request.body.profilePicture;
+    var bubbleRetinaProfilePicture = this.request.body.retinaProfilePicture;
+    var bubbleType = this.request.body.bubbleType;
+    var bubbleUsers = this.request.body.users;
+    console.log(bubbleTitle, bubbleCategory, bubbleDescription, bubbleCoverPhoto, bubbleRetinaCoverPhoto, bubbleProfilePicture, bubbleRetinaProfilePicture, bubbleType, bubbleUsers);
+});
+
+//*********************************End REST POST************************************
 
 
 
