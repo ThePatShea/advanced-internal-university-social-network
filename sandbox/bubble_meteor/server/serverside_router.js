@@ -167,7 +167,20 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
 
     var urlSections = this.request.originalUrl.split('/');
     var fields = [];
-    if(urlSections.length == 3){        // URL /2013-09-09/posts?fields=name,body
+    var limit = 10;
+    var offset = 0;
+    var urlNumSections = urlSections.length - 2;
+    if(urlSections[urlNumSections-1].indexOf('&') != -1){
+        var paginationSegment = urlSections[urlNumSections-1];
+        var paginationParams = paginationSegment.split('&');
+        var firstParam = paginationParams[0].split('=');
+        var secondParam = paginationParams[1].split('=');
+        limit = parseInt(firstParam[1]);
+        offset = parseInt(secondParam[1]);
+        urlNumSections = urlNumSections - 1;
+    }
+    if(urlNumSections == 1){        // URL /2013-09-09/posts?fields=name,body
+        console.log('1');
         var firstSegment = urlSections[2];
         if(firstSegment.indexOf('?') != -1){
             var subSegments = firstSegment.split('?');
@@ -182,18 +195,33 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
         else{                           // URL /2013-09-09/posts
-            var collectionName = subSegments[0];
+            var collectionName = firstSegment;
             console.log('Collection: ', collectionName);
             var response = getCollection(collectionName, 10, 0, fields);
             var stringifiedResponse = JSON.stringify(response);
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
     }
-    else if(urlSections.length == 4){   // URL /2013-09-09/posts?fields=name,body/limit=1&offset=2
+    else if(urlNumSections == 2){
+        console.log('2');
+        var firstSegment = urlSections[2];
+        var secondSegment = urlSections[3];
+        var collectionName = firstSegment;
+        var itemId = secondSegment;
+        var response = getItem(collectionName, itemId);
+        if(response == 'Not Found'){
+            return [500, 'Not Found in Collection'];
+        }
+        else{
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
+    }
+    /*else if(urlNumSections == 4){   
         firstSegment = urlSections[2];
         secondSegment = urlSections[3];
         var fields = [];
-       if(firstSegment.indexOf('?') != -1){
+       if(firstSegment.indexOf('?') != -1){    // URL /2013-09-09/posts?fields=name,body
             var subSegments = firstSegment.split('?');
             var collectionName = subSegments[0];
             var parameters = subSegments[1].split('=');
@@ -202,26 +230,157 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
             console.log('Collection: ', collectionName);
             console.log('Fields: ', parameterValues);
         }
-        else{
+        else{                              // URL /2013-09-09/posts
             var collectionName = subSegments[0];
             console.log('Collection: ', collectionName);
         }
-        var paginationParams = secondSegment.split('&');
-        var firstParam = paginationParams[0].split('=');
-        var secondParam = paginationParams[1].split('=');
-        var limit = parseInt(firstParam[1]);
-        var offset = parseInt(secondParam[1]);
 
         var response = getCollection(collectionName, limit, offset, fields);
         var stringifiedResponse = JSON.stringify(response);
         return [200, {'Content-type': 'application/json'}, stringifiedResponse];
 
     }
+    else if(urlSections.length == 5){
+        firstSegment = urlSections[2];
+        secondSegment = urlSections[3];
+        var fields = [];  
+    }*/
 
     return [200, 'Success'];
 
 });
 
+
+
+Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
+    var response = getItem('posts', id);
+    if(response == 'Not Found'){
+        return [500, 'Not Found in Collection'];
+    }
+    else{
+        var stringifiedResponse = JSON.stringify(response);
+        return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+});
+
+Meteor.Router.add('/2013-09-11/bubbles/:id', 'GET', function(id){
+    var response = getItem('bubbles', id);
+    if(response == 'Not Found'){
+        return [500, 'Not Found in Collection'];
+    }
+    else{
+        var stringifiedResponse = JSON.stringify(response);
+        return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+});
+
+Meteor.Router.add('/2013-09-11/explores/:id', 'GET', function(id){
+    var response = getItem('explores', id);
+    if(response == 'Not Found'){
+        return [500, 'Not Found in Collection'];
+    }
+    else{
+        var stringifiedResponse = JSON.stringify(response);
+        return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+});
+
+Meteor.Router.add('/2013-09-11/users/:id', 'GET', function(id){
+    var response = getItem('users', id);
+    if(response == 'Not Found'){
+        return [500, 'Not Found in Collection'];
+    }
+    else{
+        var stringifiedResponse = JSON.stringify(response);
+        return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+});
+
+
+
+Meteor.Router.add('/2013-09-11/explores/:id/?:q', 'GET', function(id){
+    var urlSections = this.request.originalUrl.split('/');
+    var fields = [];
+    var limit = 10;
+    var offset = 0;
+    var urlNumSections = urlSections.length - 2;
+    if(urlSections[urlSections.length-1].indexOf('&') != -1){
+        var paginationSegment = urlSections[urlSections.length-1];
+        var paginationParams = paginationSegment.split('&');
+        var firstParam = paginationParams[0].split('=');
+        var secondParam = paginationParams[1].split('=');
+        limit = parseInt(firstParam[1]);
+        offset = parseInt(secondParam[1]);
+        urlNumSections = urlNumSections - 1;
+    }
+    var subCollectionSegment = urlSections[4];
+    if(subCollectionSegment.indexOf('?') != -1){
+        var subSegments = subCollectionSegment.split('?');
+        var subCollectionName = subSegments[0];
+        var parameters = subSegments[1].split('=');
+        var parameterValues = parameters[1].split(',');
+        fields = parameterValues;
+    }
+    else{
+        var subCollectionName = subCollectionSegment;
+    }
+
+    console.log('Limit, Offset', limit, offset);
+    var response = getSubCollection('explores', id, subCollectionName, limit, offset, fields);
+    var serializedResponse = JSON.stringify(response);
+    return [200, {'Content-type': 'application/javascript'}, serializedResponse];
+});
+
+
+
+
+
+function getItem(collectionName, itemId){
+    if(collectionName == 'posts'){
+        var post = Posts.findOne(itemId);
+        if(!post){
+            return 'Not Found';
+        }
+        else{
+            return post;
+        }
+    }
+    else if(collectionName == 'bubbles'){
+        var bubble = Bubbles.findOne(itemId);
+        if(!bubble){
+            return 'Not Found';
+        }
+        else{
+            return bubble;
+        }
+    }
+    else if(collectionName == 'explores'){
+        var explore = Explores.findOne(itemId);
+        if(!explore){
+            return 'Not Found';
+        }
+        else{
+            return explore;
+        }
+    }
+    else if(collectionName == 'users'){
+        var user = Meteor.users.findOne({_id: itemId}, {fields: {
+            'createdAt': 1,
+            'emails': 1,
+            'name': 1,
+            'profilePicture': 1,
+            'userType': 1,
+            'username': 1
+        }});
+
+        if(!user){
+            return 'Not Found';
+        }
+        else{
+            return user;
+        }
+    }
+}
 
 
 function getCollection(collectionName, limit, offset, fields){
@@ -235,6 +394,15 @@ function getCollection(collectionName, limit, offset, fields){
     }
     else if(collectionName == 'bubbles'){
         var response = getBubbles(limit, offset, fields);
+        return response;
+    }
+}
+
+
+function getSubCollection(collectionName, collectionId, subCollectionName, limit, offset, fields){
+    //console.log('Limit, Offset', limit, offset);
+    if(collectionName == 'explores'){
+        var response = getExplorePosts(limit, offset, fields, collectionId);
         return response;
     }
 }
