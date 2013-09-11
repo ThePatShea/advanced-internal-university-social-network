@@ -201,6 +201,14 @@ Handlebars.registerHelper('ownsPost', function() {
   }   
 });
 
+Handlebars.registerHelper('ownsPostExplore', function() {
+  if ( this.postAsId == Meteor.userId() ) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
 Handlebars.registerHelper('submittedText', function(submitted){
   return moment(new Date(submitted).toString()).fromNow().toUpperCase();
 });
