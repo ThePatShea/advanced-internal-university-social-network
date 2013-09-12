@@ -86,6 +86,14 @@ createPostUpdate = function(post) {
         url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
         content: post.author + " created a new " + post.postType + " in " + bubble.title
       });
+      //Create mobile update
+      if(Meteor.users.findOne(userId).deviceToken){
+        Meteor.call(
+          'getUA', 
+          post.author + " created a new " + post.postType + " in " + bubble.title, 
+          Meteor.users.findOne(userId).deviceToken
+        );
+      }
     });
   }
 }
@@ -211,6 +219,16 @@ createInvitationUpdate = function(userList) {
       url: '/settings/invites',
       content: Meteor.user().username + " invited you to " + bubble.title
     });
+
+    //Create mobile update
+    if(Meteor.users.findOne(userId).deviceToken){
+      Meteor.call(
+        'getUA', 
+        Meteor.user().username + " invited you to " + bubble.title, 
+        Meteor.users.findOne(userId).deviceToken
+      );
+    }
+
   });
 }
 
@@ -380,6 +398,15 @@ createNewApplicantUpdate = function(bubbleId) {
       url: '/mybubbles/'+bubble._id+'/members',
       content: " applied to be a member of the bubble " + bubble.title
     });
+
+    //Create mobile update
+    if(Meteor.users.findOne(adminId).deviceToken){
+      Meteor.call(
+        'getUA', 
+        Meteor.user().username + " applied to be a member of the bubble " + bubble.title, 
+        Meteor.users.findOne(adminId).deviceToken
+      );
+    }
   });
 }
 

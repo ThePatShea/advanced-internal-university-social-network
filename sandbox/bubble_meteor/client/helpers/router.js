@@ -150,7 +150,6 @@ Meteor.Router.add({
     },
 
 
-
   // Flags Related Routes
     '/flags/all': 'flagsList',
 
@@ -164,7 +163,24 @@ Meteor.Router.add({
 
   // Etc Routes
     //Capturing rogue urls, hopefully this will be a 404 page in the future
-    '/': '/',
+    '/': {
+      to: '/',
+      and: function(){
+        query = this.querystring.split('=');
+        if(query.length >0 && query[0] == 'deviceToken'){
+          if(Meteor.user()){
+            Meteor.users.update(Meteor.userId(), {$set: {deviceToken :query[1]}},  function(error) {
+              if (error) {
+                // display the error to the user
+                throwError(error.reason);
+              }
+            });
+          }else{
+            Session.set('deviceToken', query[1]);
+          }
+        }
+      }
+    },
     '/bubblevisor': {
       to: 'bubblevisor'
     },

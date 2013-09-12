@@ -27,6 +27,8 @@ Template.postAttributes.helpers({
     	}
     }
   , reverseAttendees: function() {
-      return this.attendees.reverse();
+      if (this.attendees) {
+        return this.attendees.reverse();
+      }
     }
 });

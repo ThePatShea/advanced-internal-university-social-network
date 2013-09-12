@@ -1,7 +1,11 @@
 Template.explorePostPage.helpers({
     getPostAsBubbleCategory: function() {
       var bubble = Bubbles.findOne(this.postAsId);
-      return bubble.category;
+      if (bubble) {
+        return bubble.category;
+      } else {
+        return -1;
+      }
     },
     postedAsUser: function() {
       if (this.postAsType == "user") {
