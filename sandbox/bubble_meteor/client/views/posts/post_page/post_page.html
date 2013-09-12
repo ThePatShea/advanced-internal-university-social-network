@@ -3,6 +3,11 @@
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
   {{/with}}
+
+  <div class="visible-{{isLoading}}">
+    {{> gifLoaderToParent}}
+  </div>
+  
   {{#with getCurrentPost}}
     <div class="bubble-page-content post-page">
       <div class="top-btns">
@@ -24,7 +29,7 @@
           <span>edit</span>
         </button>
 
-        <button class="visible-{{isAdmin}} pull-right std-btn-light with-left-icon btn-delete">
+        <button class="visible-{{canDelete}} pull-right std-btn-light with-left-icon btn-delete">
           <span class="left-icon">{{> icon-cancel}}</span>
           <span>delete</span>
         </button>

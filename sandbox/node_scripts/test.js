@@ -1,23 +1,27 @@
 var csv = require('csv');
-var http = require('http');
+var https = require('https');
 var querystring = require('querystring');
 
 csv()
-.from('clean.csv', {columns: true, delimiter: '|'})
+.from('CleanWithFreshman.csv', {columns: true, delimiter: '|'})
 .on('record', function(row,index){
 	var post_data = querystring.stringify({
-		'username': row.username,
+		'username': row.username.toUpperCase(),
 		'email': row.email,
 		'altEmail': row.altEmail,
 		'ppid': row.ppid,
 		'name': row.name,
 		'code': row.code,
-		'level': row.level
+		'level': row.level,
+		'userType': 1,
+		'profilePicture': '/img/letterprofiles/'+row.username.substring(0,1)+'.jpg',
+		'retinaProfilePicture': '/img/letterprofiles/'+row.username.substring(0,1)+'.jpg',
+		'password': 'pushUserPass'
 	});
 
 	var post_options = {
-		host: 'localhost',
-		port: '3000',
+		host: 'www.emorybubble.com',
+		port: '443',
 		path: '/pushUser',
 		method: 'POST',
 		headers: {
@@ -26,7 +30,7 @@ csv()
     	}
 	};
 
-	var post_req = http.request(post_options, function(res) {
+	var post_req = https.request(post_options, function(res) {
 		res.setEncoding('utf8');
 		res.on('data', function (chunk){
 			console.log('Response: ' + chunk)

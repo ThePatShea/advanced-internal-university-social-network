@@ -9,7 +9,8 @@ ownsProfile = function(userId, profile) {
 ownsPost = function(userId, doc) {
   if(typeof doc.bubbleId != 'undefined'){
   	var bubble = Bubbles.findOne(doc.bubbleId);
-  	return ('3' == Meteor.user().userType 
+  	return ('3' == Meteor.user().userType
+      || doc.userId == Meteor.userId()
   		|| doc.author == Meteor.user().username
   		|| _.contains(bubble.users.admins,Meteor.userId()));
   }
