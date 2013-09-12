@@ -5,21 +5,59 @@ Template.explorePageBB.created = function(){
   var currentExploreId = window.location.pathname.split("/")[2];
   BPost = Backbone.Model.extend({
     url: function() {
-      return "http://localhost:3000/2013-09-11/posts";
+      return "http://localhost:3000/2013-09-11/posts/"+this.id;
     }
   });
   BPosts = Backbone.Collection.extend({
     model: BPost,
     url: function() {
       return "http://localhost:3000/2013-09-11/explores/gzbHkAnBGQqK26FRT/posts";
+    }/*,
+    parse: function(response) {
+      var listSource = new Array();
+      _.each(response.posts, function(element, index, list) {
+        console.log("Parsing: ", element.name);
+        listSource.push(new BPost( {
+          "id": element._id,
+          "name": element.name
+        }));
+      });
+      return listSource;
+    }*/
+  });
+
+  BBBubble = Backbone.Model.extend({
+    url: function() {
+      return "/2013-09-11/bubbles/"+this.attributes._id;
     }
   });
-  bposts = new BPosts();
-  bposts.fetch({"success": function(collection, response) {
+
+  BBubble = Backbone.Model.extend({
+    url: function() {
+      console.log("THIS: ", this);
+      return "/2013-09-11/bubbles/"+this.attributes._id;
+    }
+  });
+  BBubbles = Backbone.Collection.extend({
+    model:BBubble,
+    url: function() {
+      return "/2013-09-11/bubbles?fields=title,category";
+    }
+  });
+
+  bbubbles = new BBubbles();
+  bbubbles.fetch({"async": false, "success": function(collection, response) {
     console.log("success");
-    console.log("Collection: " + collection);
-    console.log("Response: " + response);
-  }})
+    console.log("Bubble Collection: ", collection);
+    console.log("Bubble Response: ", response);
+  }});
+
+  bposts = new BPosts();
+  bposts.fetch({"async": false, "success": function(collection, response) {
+    console.log("success");
+    console.log("Post Collection: ", collection);
+    console.log("Post Response: ", response);
+  }});
   Session.set("isLoading", true);
   max_scrolltop = 100;
   virtualPage = 0;
@@ -72,7 +110,7 @@ Template.explorePageBB.rendered = function(){
 
 }
 
-Template.explorePageBB.helpers({ 
+Template.explorePageBB.helpers({
   currentExplore: function(){
     var currentExploreId = Session.get('currentExploreId');
     var currentExplore = Explores.findOne({_id: currentExploreId});
@@ -121,7 +159,7 @@ Template.explorePageBB.helpers({
     return Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'},{limit: 3}).fetch();
   },
 
-  posts: function() {
+  /*posts: function() {
     var explore = Explores.findOne(Session.get('currentExploreId'));
     var posts = Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} }).fetch();
     var validPostIds = [];
@@ -136,7 +174,13 @@ Template.explorePageBB.helpers({
 
     //return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} });
     return Posts.find({_id: {$in: validPostIds}, postType: explore.exploreType}, {sort: {lastCommentTime: -1}});
+  }*/
+  posts: function() {
+    var posts = bposts.toJSON();
+    console.log("POSTS: ",posts);
+    return posts[0].posts;
   }
+
 });
 
 Template.explorePageBB.events({

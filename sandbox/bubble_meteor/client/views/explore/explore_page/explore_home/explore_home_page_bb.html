@@ -1,17 +1,11 @@
 <template name="explorePageBB">
 
-  <div class="visible-{{isLoading}}">
-    {{> gifLoaderToParent}}
-  </div>
-  
-  {{#with currentExplore}}
-    {{> exploreCover}}
     <div class="explore-page-content">
   
       <div class="bubble-list">
         <div></div>
         {{#each posts}}
-          {{> listItem}}
+          {{> listItemBB}}
         {{else}}
           <div class="post-item">
             <div class="v-middle">
@@ -25,5 +19,4 @@
 
 
     </div>
-  {{/with}}
 </template>

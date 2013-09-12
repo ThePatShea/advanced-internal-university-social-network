@@ -241,6 +241,7 @@ Meteor.Router.add('/2013-09-11/bubbles/:id', 'GET', function(id){
         return [500, 'Not Found in Collection'];
     }
     else{
+        response.id = response._id;
         var stringifiedResponse = JSON.stringify(response);
         return [200, {'Content-type': 'application/json'}, stringifiedResponse];
     }
@@ -303,6 +304,9 @@ Meteor.Router.add('/2013-09-11/explores/:id/?:q', 'GET', function(id){
 
     console.log('Limit, Offset', limit, offset);
     var response = getSubCollection('explores', id, subCollectionName, limit, offset, fields);
+    _.each(response, function(i) {
+        i.id = i._id;
+    })
     var serializedResponse = JSON.stringify(response);
     return [200, {'Content-type': 'application/javascript'}, serializedResponse];
 });
