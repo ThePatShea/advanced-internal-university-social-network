@@ -38,8 +38,4 @@
     <preference name="com.urbanairship.development_app_key" value="M6oTTgCDSMeut2gd_otuPw" />
     <preference name="com.urbanairship.development_app_secret" value="Uqsut-XRT1axMge09Uvt8g" />
     <preference name="com.urbanairship.in_production" value="false" />
-    <feature name="SplashScreen">
-        <param name="ios-package" value="CDVSplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
 </widget>

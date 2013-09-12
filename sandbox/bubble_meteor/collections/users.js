@@ -5,15 +5,14 @@ Meteor.users.allow({
 
 Meteor.users.deny({
 	update: function(userId, profileId, fieldNames){
-		return (_.without(fieldNames, 'emails', 'phone', 'ppid', 'profilePicture', 'retinaProfilePicture', 'lastUpdated', 'userType', 'secret', 'neverLoggedIn').length > 0);
+		return (_.without(fieldNames, 'emails', 'phone', 'ppid', 'profilePicture', 'retinaProfilePicture', 'lastUpdated', 'userType', 'secret', 'neverLoggedIn', 'deviceToken').length > 0);
 	}
 });
 
 if(Meteor.isServer){
 	Accounts.onCreateUser(function(options, user) {
-		if (user.username == 'campusbubble') {
-                        user.profilePicture = '/img/letterprofiles/c.jpg';
-                        user.name = 'Campus Bubble';
+		if(user.username == 'campusbubble') {
+      user.profilePicture = '/img/letterprofiles/c.jpg';
 			user.userType = '4';
 		} else if (user.username == 'emorybubble') {
                         user.profilePicture = '/img/letterprofiles/e.jpg';

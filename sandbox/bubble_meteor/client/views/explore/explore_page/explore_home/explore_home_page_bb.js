@@ -1,45 +1,40 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
-Template.explorePage.created = function(){
+Template.explorePageBB.created = function(){
+  var currentExploreId = window.location.pathname.split("/")[2];
+  BPost = Backbone.Model.extend({
+    url: function() {
+      return "http://localhost:3000/2013-09-11/posts";
+    }
+  });
+  BPosts = Backbone.Collection.extend({
+    model: BPost,
+    url: function() {
+      return "http://localhost:3000/2013-09-11/explores/gzbHkAnBGQqK26FRT/posts";
+    }
+  });
+  bposts = new BPosts();
+  bposts.fetch({"success": function(collection, response) {
+    console.log("success");
+    console.log("Collection: " + collection);
+    console.log("Response: " + response);
+  }})
   Session.set("isLoading", true);
   max_scrolltop = 100;
   virtualPage = 0;
-  var currentExploreId = window.location.pathname.split("/")[2];
   //console.log('Explore Page Created');
   postIds = [];
   Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
     console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
-
-
-    //TODO: Sort discussion explores by lastUpdated
-    //TODO: Sort event explores by dateTime: 1
-
-    var params_find     =  {exploreId: currentExploreId};
-
-
-    var currentExplore  =  Explores.findOne({_id: currentExploreId});
-    var inputPostType   =  currentExplore.exploreType;
-
-    if (inputPostType == 'event') {
-      params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
-      var params_sort       =  {dateTime:     1}
-    } else if (inputPostType == 'file') {
-      var params_sort       =  {lastDownloadTime: -1}
-    } else {
-      var params_sort       =  {lastCommentTime:  -1}
-    }
-
-    posts = Posts.find(params_find, {sort: params_sort}).fetch();
-
-
+    posts = Posts.find({exploreId: currentExploreId}).fetch()
     postIds = _.pluck(posts, "_id");
     virtualPagePostIds = postIds.slice(0, 10);
   });
 }
 
 
-Template.explorePage.rendered = function(){
+Template.explorePageBB.rendered = function(){
   var currentExploreId = window.location.pathname.split("/")[2];
   console.log('Explore Page Rendered: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
   //var posts = Posts.find({exploreId: currentExploreId}).fetch();
@@ -77,7 +72,7 @@ Template.explorePage.rendered = function(){
 
 }
 
-Template.explorePage.helpers({ 
+Template.explorePageBB.helpers({ 
   currentExplore: function(){
     var currentExploreId = Session.get('currentExploreId');
     var currentExplore = Explores.findOne({_id: currentExploreId});
@@ -127,44 +122,24 @@ Template.explorePage.helpers({
   },
 
   posts: function() {
-
-    var currentExploreId      =  Session.get('currentExploreId');
-    var currentExplore        =  Explores.findOne({_id: currentExploreId});
-
-    var params_find           =  {exploreId: currentExploreId};
-    var inputPostType         =  currentExplore.exploreType;
-
-    if (inputPostType == 'event') {
-      params_find.dateTime    =  {$gt: moment().add('hours',-4).valueOf()}
-      var params_sort         =  {dateTime:     1}
-    } else if (inputPostType  == 'file') {
-      var params_sort         =  {lastDownloadTime: -1}
-    } else {
-      var params_sort         =  {lastCommentTime:  -1}
-    }
-
-    var posts = Posts.find(params_find, {sort: params_sort}).fetch();
-
-
+    var explore = Explores.findOne(Session.get('currentExploreId'));
+    var posts = Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} }).fetch();
     var validPostIds = [];
-    for(var i=0; i < posts.length; i++) {
+    for(var i=0; i < posts.length; i++){
       var postAsId = posts[i].postAsId;
-      
+      //console.log('Post as id: ', posts[i].postAsId, ((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}) > 0)));
       if((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}).count() > 0)){
         validPostIds.push(posts[i]._id);
       }
     }
+    //console.log('Valid post ids: ', validPostIds);
 
-
-    params_find._id     =  {$in: validPostIds};
-
-    var posts_filtered  =  Posts.find(params_find, {sort: params_sort}).fetch();
-
-    return posts_filtered;
+    //return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} });
+    return Posts.find({_id: {$in: validPostIds}, postType: explore.exploreType}, {sort: {lastCommentTime: -1}});
   }
 });
 
-Template.explorePage.events({
+Template.explorePageBB.events({
   'btn .clear-updates': function() {
     Meteor.call('clearUpdates', Session.get('currentBubbleId'));
   }
