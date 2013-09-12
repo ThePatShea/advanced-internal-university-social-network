@@ -24,6 +24,9 @@
           <span class="flag-text visible-{{isFlagged}}">flagged</span>
         </button>
 
+
+
+      {{#if ownsPost}}
         <button class="pull-right std-btn-light with-left-icon btn-edit" data-toggle="collapse" data-target="#edit-{{postType}}">
           <span class="left-icon">{{> icon-edit}}</span>
           <span>edit</span>
@@ -33,6 +36,10 @@
           <span class="left-icon">{{> icon-cancel}}</span>
           <span>delete</span>
         </button>
+      {{/if}}
+
+
+
       </div>
 
       {{#if isEvent}}

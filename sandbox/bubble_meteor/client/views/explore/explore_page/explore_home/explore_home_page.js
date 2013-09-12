@@ -10,7 +10,29 @@ Template.explorePage.created = function(){
   postIds = [];
   Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
     console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
-    posts = Posts.find({exploreId: currentExploreId}).fetch()
+
+
+    //TODO: Sort discussion explores by lastUpdated
+    //TODO: Sort event explores by dateTime: 1
+
+    var params_find     =  {exploreId: currentExploreId};
+
+
+    var currentExplore  =  Explores.findOne({_id: currentExploreId});
+    var inputPostType   =  currentExplore.exploreType;
+
+    if (inputPostType == 'event') {
+      params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
+      var params_sort       =  {dateTime:     1}
+    } else if (inputPostType == 'file') {
+      var params_sort       =  {lastDownloadTime: -1}
+    } else {
+      var params_sort       =  {lastCommentTime:  -1}
+    }
+
+    posts = Posts.find(params_find, {sort: params_sort}).fetch();
+
+
     postIds = _.pluck(posts, "_id");
     virtualPagePostIds = postIds.slice(0, 10);
   });
@@ -105,20 +127,40 @@ Template.explorePage.helpers({
   },
 
   posts: function() {
-    var explore = Explores.findOne(Session.get('currentExploreId'));
-    var posts = Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} }).fetch();
+
+    var currentExploreId      =  Session.get('currentExploreId');
+    var currentExplore        =  Explores.findOne({_id: currentExploreId});
+
+    var params_find           =  {exploreId: currentExploreId};
+    var inputPostType         =  currentExplore.exploreType;
+
+    if (inputPostType == 'event') {
+      params_find.dateTime    =  {$gt: moment().add('hours',-4).valueOf()}
+      var params_sort         =  {dateTime:     1}
+    } else if (inputPostType  == 'file') {
+      var params_sort         =  {lastDownloadTime: -1}
+    } else {
+      var params_sort         =  {lastCommentTime:  -1}
+    }
+
+    var posts = Posts.find(params_find, {sort: params_sort}).fetch();
+
+
     var validPostIds = [];
-    for(var i=0; i < posts.length; i++){
+    for(var i=0; i < posts.length; i++) {
       var postAsId = posts[i].postAsId;
-      //console.log('Post as id: ', posts[i].postAsId, ((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}) > 0)));
+      
       if((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}).count() > 0)){
         validPostIds.push(posts[i]._id);
       }
     }
-    //console.log('Valid post ids: ', validPostIds);
 
-    //return Posts.find({exploreId: Session.get('currentExploreId'), postType: explore.exploreType}, {sort: {lastCommentTime:  -1} });
-    return Posts.find({_id: {$in: validPostIds}, postType: explore.exploreType}, {sort: {lastCommentTime: -1}});
+
+    params_find._id     =  {$in: validPostIds};
+
+    var posts_filtered  =  Posts.find(params_find, {sort: params_sort}).fetch();
+
+    return posts_filtered;
   }
 });
 
