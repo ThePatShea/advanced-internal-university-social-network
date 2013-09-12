@@ -16,20 +16,18 @@
  specific language governing permissions and limitations
  under the License.
  */
-//
-//  main.m
-//  HelloCordova
-//
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
-//
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Cordova/CDVPlugin.h>
 
-int main(int argc, char* argv[])
-{
-    @autoreleasepool {
-        int retVal = UIApplicationMain(argc, argv, nil, @"AppDelegate");
-        return retVal;
-    }
+@interface CDVSplashScreen : CDVPlugin {
+    UIActivityIndicatorView* _activityView;
+    UIImageView* _imageView;
+    NSString* _curImageName;
+    BOOL _visible;
 }
+
+- (void)show:(CDVInvokedUrlCommand*)command;
+- (void)hide:(CDVInvokedUrlCommand*)command;
+
+@end
