@@ -47,6 +47,8 @@ Template.eventSubmit.events({
 
     console.log("event attributes: ", eventAttributes );
     createPost(eventAttributes);
+
+    $('#form-loader').show();
   },
 
   'dragover .cb-eventSubmit-form .attach-files > .drop-zone': function(evt){
