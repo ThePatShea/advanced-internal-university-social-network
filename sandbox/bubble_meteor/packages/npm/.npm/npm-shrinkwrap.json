@@ -2,7 +2,7 @@
   "dependencies": {
     "urban-airship": {
       "version": "0.2.5",
-      "from": "urban-airship@0.2.5",
+      "from": "https://registry.npmjs.org/urban-airship/-/urban-airship-0.2.5.tgz",
       "resolved": "https://registry.npmjs.org/urban-airship/-/urban-airship-0.2.5.tgz"
     }
   }
