@@ -7,13 +7,22 @@ Template.bbExplorePage.created = function(){
 
   ExploreUser = Backbone.Model.extend({
     url: function() {
+      console.log("THIS: ", this);
       return "/2013-09-11/users/"+this.id;
     }
   });
   ExploreUsers = Backbone.Collection.extend({
     model: ExploreUser,
     url: function() {
-      return "/2013-09-11/users/";
+      return "/2013-09-11/users";
+    },
+    parse: function(response) {
+      console.log("PARSING: ", response);
+      var retVal = [];
+      _.each(response, function(tmp) {
+        retVal.push(tmp);
+      });
+      return retVal;
     }
   });
 
@@ -25,7 +34,14 @@ Template.bbExplorePage.created = function(){
   ExploreBubbles = Backbone.Collection.extend({
     model: ExploreBubble,
     url: function() {
-      return "/2013-09-11/bubbles/";
+      return "/2013-09-11/bubbles";
+    },
+    parse: function(response) {
+      var retVal = [];
+      _.each(response, function(tmp) {
+        retVal.push(tmp);
+      });
+      return retVal;
     }
   });
 
@@ -60,6 +76,11 @@ Template.bbExplorePage.created = function(){
         }
         retVal.push(post);
       })
+      exploreusers.fetch({"async": false, "success": function(collection, response) {
+        console.log("User Success");
+        console.log("User Collection: ", collection);
+        console.log("User Response: ", response);
+      }});
       return retVal;
     }
   });
