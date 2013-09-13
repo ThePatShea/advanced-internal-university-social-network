@@ -162,6 +162,9 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 
 
+//**************************Begin REST GET****************************************
+
+//REST api for retreiving selected fields from collections with pagination support
 Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
     console.log('2013-09-11 REST API: ', q, this.request.originalUrl);
 
@@ -224,6 +227,8 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
 
 
 
+
+//REST API for retreiving particular items from Collections
 Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
     var response = getItem('posts', id);
     if(response == 'Not Found'){
@@ -269,7 +274,7 @@ Meteor.Router.add('/2013-09-11/users/:id', 'GET', function(id){
 });
 
 
-
+//REST api for retreiving sub-collections of collections
 Meteor.Router.add('/2013-09-11/explores/:id/?:q', 'GET', function(id){
     var urlSections = this.request.originalUrl.split('/');
     var fields = [];
@@ -378,6 +383,28 @@ Meteor.Router.add('/2013-09-11/users/:id/?:q', 'GET', function(id){
     var serializedResponse = JSON.stringify(response);
     return [200, {'Content-type': 'application/javascript'}, serializedResponse];
 });
+
+//*********************************End REST GET*************************************
+
+
+
+//*********************************Begin REST POST**********************************
+
+Meteor.Router.add('/2013-09-11/bubbles/new', 'POST', function(){
+    //console.log(this.request.body);
+    var bubbleTitle = this.request.body.title;
+    var bubbleCategory = this.request.body.category;
+    var bubbleDescription = this.request.body.description;
+    var bubbleCoverPhoto = this.request.body.coverPhoto;
+    var bubbleRetinaCoverPhoto = this.request.body.retinaCoverPhoto;
+    var bubbleProfilePicture = this.request.body.profilePicture;
+    var bubbleRetinaProfilePicture = this.request.body.retinaProfilePicture;
+    var bubbleType = this.request.body.bubbleType;
+    var bubbleUsers = this.request.body.users;
+    console.log(bubbleTitle, bubbleCategory, bubbleDescription, bubbleCoverPhoto, bubbleRetinaCoverPhoto, bubbleProfilePicture, bubbleRetinaProfilePicture, bubbleType, bubbleUsers);
+});
+
+//*********************************End REST POST************************************
 
 
 
@@ -493,6 +520,7 @@ function getExplores(limit, offset, fields){
         fieldString = fieldString + '}';
         var allExplores = Explores.find({}, {fields: JSON.parse(fieldString)}).fetch();
         var explores = allExplores.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(explores);
         var response = {'count': exploresCount, 'pages': pages, 'page': offset, 'explores': explores};
         return response;
     }
@@ -520,6 +548,7 @@ function getBubbles(limit, offset, fields){
         fieldString = fieldString + '}';
         var allBubbles = Bubbles.find({}, {fields: JSON.parse(fieldString)}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbles);
         var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
@@ -550,6 +579,7 @@ function getPosts(limit, offset, fields){
         console.log('fieldString: ', fieldString);
         var allPosts = Posts.find({}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
         return response;
     }
@@ -581,6 +611,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
         console.log('fieldString: ', fieldString);
         var allPosts = Posts.find({'exploreId': exploreId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;
     }
@@ -609,6 +640,7 @@ function getBubblePosts(limit, offset, fields, bubbleId){
         fieldString = fieldString + '}';
         var allPosts = Posts.find({'bubbleId': bubbleId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;
     }
@@ -637,6 +669,7 @@ function getUsersPosts(limit, offset, fields, userId){
         fieldString = fieldString + '}';
         var allPosts = Posts.find({'userId': userId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;      
     }
@@ -674,6 +707,7 @@ function getUsersBubbles(limit, offset, fields, userId){
             {'users.members': {$in: [userId]}}
             ]}, {fields: JSON.parse(fieldString)}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbles);
         var response = {'count': bubbleCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
@@ -681,6 +715,20 @@ function getUsersBubbles(limit, offset, fields, userId){
 
 
 
+function renameIdAttribute(objectList){
+    _.each(objectList, function(item){
+        item.id = item._id;
+        delete item._id;
+    });
+}
+
+
+
 function randomInt(min, max){
     return Math.floor(Math.random() * (max-min+1)) + min;
 }
+
+
+
+
+
