@@ -520,6 +520,7 @@ function getExplores(limit, offset, fields){
         fieldString = fieldString + '}';
         var allExplores = Explores.find({}, {fields: JSON.parse(fieldString)}).fetch();
         var explores = allExplores.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(explores);
         var response = {'count': exploresCount, 'pages': pages, 'page': offset, 'explores': explores};
         return response;
     }
@@ -547,6 +548,7 @@ function getBubbles(limit, offset, fields){
         fieldString = fieldString + '}';
         var allBubbles = Bubbles.find({}, {fields: JSON.parse(fieldString)}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbles);
         var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
@@ -577,6 +579,7 @@ function getPosts(limit, offset, fields){
         console.log('fieldString: ', fieldString);
         var allPosts = Posts.find({}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
         return response;
     }
@@ -608,6 +611,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
         console.log('fieldString: ', fieldString);
         var allPosts = Posts.find({'exploreId': exploreId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;
     }
@@ -636,6 +640,7 @@ function getBubblePosts(limit, offset, fields, bubbleId){
         fieldString = fieldString + '}';
         var allPosts = Posts.find({'bubbleId': bubbleId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;
     }
@@ -664,6 +669,7 @@ function getUsersPosts(limit, offset, fields, userId){
         fieldString = fieldString + '}';
         var allPosts = Posts.find({'userId': userId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;      
     }
@@ -701,9 +707,19 @@ function getUsersBubbles(limit, offset, fields, userId){
             {'users.members': {$in: [userId]}}
             ]}, {fields: JSON.parse(fieldString)}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbles);
         var response = {'count': bubbleCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
+}
+
+
+
+function renameIdAttribute(objectList){
+    _.each(objectList, function(item){
+        item.id = item._id;
+        delete item._id;
+    });
 }
 
 
