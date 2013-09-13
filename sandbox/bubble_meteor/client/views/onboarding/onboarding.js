@@ -10,6 +10,8 @@ Template.onboarding.events({
     $('#cb-form-container-onboarding .cb-submit').removeClass('ready-false');
     $('#cb-form-container-onboarding .cb-submit').prop('disabled', false);
     $('#accept-terms').addClass('selected');
+
+    Session.set("termsAccepted", "true");
   },
 
   'click .removeCropTool': function() {
@@ -180,9 +182,16 @@ Template.onboarding.rendered = function() {
   }
 
 
+  var termsAccepted = Session.get("termsAccepted");
 
-  $('#cb-form-container-onboarding .cb-submit').addClass('ready-false');
-  $('#cb-form-container-onboarding .cb-submit').prop('disabled', true);
+  if (termsAccepted != "true") {
+    $('#cb-form-container-onboarding .cb-submit').addClass('ready-false');
+    $('#cb-form-container-onboarding .cb-submit').prop('disabled', true);
+  } else {
+    $('#accept-terms').addClass('selected');
+  }
+
+
 
   Meteor.subscribe('authenticatedUser', Session.get('secret'));
   Meteor.subscribe('singleUser', Meteor.userId());
