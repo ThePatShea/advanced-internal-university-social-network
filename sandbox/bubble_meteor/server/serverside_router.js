@@ -434,6 +434,8 @@ function getItem(collectionName, itemId){
             return 'Not Found';
         }
         else{
+            post.id = post._id;
+            delete post._id;
             return post;
         }
     }
@@ -443,6 +445,8 @@ function getItem(collectionName, itemId){
             return 'Not Found';
         }
         else{
+            bubble.id = bubble._id;
+            delete bubble._id;
             return bubble;
         }
     }
@@ -452,6 +456,8 @@ function getItem(collectionName, itemId){
             return 'Not Found';
         }
         else{
+            explore.id = explore._id;
+            delete explore.id;
             return explore;
         }
     }
@@ -469,6 +475,8 @@ function getItem(collectionName, itemId){
             return 'Not Found';
         }
         else{
+            user.id = user._id;
+            delete user._id;
             return user;
         }
     }
