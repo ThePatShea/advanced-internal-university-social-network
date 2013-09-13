@@ -172,15 +172,23 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
     var fields = [];
     var limit = 10;
     var offset = 0;
+    var objectId = undefined;
     var urlNumSections = urlSections.length - 2;
-    if(urlSections[urlNumSections-1].indexOf('&') != -1){
-        var paginationSegment = urlSections[urlNumSections-1];
+    //console.log(urlSections[urlSections.length-1]);
+    //if(urlSections[urlNumSections-1].indexOf('&') != -1){
+    if(urlSections[urlSections.length-1].indexOf('&') != -1){
+        var paginationSegment = urlSections[urlSections.length-1];
         var paginationParams = paginationSegment.split('&');
         var firstParam = paginationParams[0].split('=');
         var secondParam = paginationParams[1].split('=');
         limit = parseInt(firstParam[1]);
         offset = parseInt(secondParam[1]);
         urlNumSections = urlNumSections - 1;
+    }
+    else if( (urlSections[urlSections.length-1].length != 0) && (urlSections[urlSections.length-1].indexOf('posts') == -1) && (urlSections[urlSections.length-1].indexOf('bubbles') == -1) &&(urlSections[urlSections.length-1].indexOf('explores') == -1) && (urlSections[urlSections.length-1].indexOf('users') == -1) ){
+        objectId = urlSections[urlSections.length-1];
+        urlNumSections = urlNumSections-1;
+        console.log('Collection objectId: ', objectId);
     }
     if(urlNumSections == 1){        // URL /2013-09-09/posts?fields=name,body
         console.log('1');
@@ -193,14 +201,14 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
             fields = parameterValues;
             console.log('Collection: ', collectionName);
             console.log('Fields: ', parameterValues);
-            var response = getCollection(collectionName, 10, 0, fields);
+            var response = getCollection(collectionName, limit, offset, fields, objectId);
             var stringifiedResponse = JSON.stringify(response);
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
         else{                           // URL /2013-09-09/posts
             var collectionName = firstSegment;
             console.log('Collection: ', collectionName);
-            var response = getCollection(collectionName, 10, 0, fields);
+            var response = getCollection(collectionName, limit, offset, fields);
             var stringifiedResponse = JSON.stringify(response);
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
@@ -388,6 +396,12 @@ Meteor.Router.add('/2013-09-11/users/:id/?:q', 'GET', function(id){
     return [200, {'Content-type': 'application/javascript'}, serializedResponse];
 });
 
+
+Meteor.Router.add('/2013-09-11/users?:q', 'GET', function(q){
+    console.log('Users Selected Fields: ', this.request.originalUrl);
+    return [200, 'Success'];
+});
+
 //*********************************End REST GET*************************************
 
 
@@ -461,17 +475,21 @@ function getItem(collectionName, itemId){
 }
 
 
-function getCollection(collectionName, limit, offset, fields){
+function getCollection(collectionName, limit, offset, fields, objectId){
     if(collectionName == 'posts'){
-        var response = getPosts(limit, offset, fields);
+        var response = getPosts(limit, offset, fields, objectId);
         return response;
     }
     else if(collectionName == 'explores'){
-        var response = getExplores(limit, offset, fields);
+        var response = getExplores(limit, offset, fields, objectId);
         return response;
     }
     else if(collectionName == 'bubbles'){
-        var response = getBubbles(limit, offset, fields);
+        var response = getBubbles(limit, offset, fields, objectId);
+        return response;
+    }
+    else if(collectionName == 'users'){
+        var response = getUsers(limit, offset, fields, objectId);
         return response;
     }
 }
@@ -503,7 +521,7 @@ function getSubCollection(collectionName, collectionId, subCollectionName, limit
 }
 
 
-function getExplores(limit, offset, fields){
+function getExplores(limit, offset, fields, objectId){
     var exploresCount = Explores.find().count();
     var pages = Math.floor(exploresCount/limit);
     if(pages*limit < exploresCount){
@@ -522,16 +540,30 @@ function getExplores(limit, offset, fields){
         }
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
-        var allExplores = Explores.find({}, {fields: JSON.parse(fieldString)}).fetch();
-        var explores = allExplores.slice(offset*limit, (offset+1)*limit);
-        renameIdAttribute(explores);
-        var response = {'count': exploresCount, 'pages': pages, 'page': offset, 'explores': explores};
-        return response;
+        if(objectId == undefined){
+            var allExplores = Explores.find({}, {fields: JSON.parse(fieldString)}).fetch();
+            var explores = allExplores.slice(offset*limit, (offset+1)*limit);
+            renameIdAttribute(explores);
+            var response = {'count': exploresCount, 'pages': pages, 'page': offset, 'explores': explores};
+            return response;
+        }
+        else{
+            var explore = Explores.findOne({_id: objectId}, {fields: JSON.parse(fieldString)});
+            if(!explore){
+                return 'Not Found';
+            }
+            else{
+                explore.id = explore._id;
+                delete explore._id;
+                var response = explore;
+                return response;
+            }
+        }
     }
 }
 
 
-function getBubbles(limit, offset, fields){
+function getBubbles(limit, offset, fields, objectId){
     var bubblesCount = Bubbles.find().count();
     var pages = Math.floor(bubblesCount/limit);
     if(pages*limit < bubblesCount){
@@ -550,16 +582,31 @@ function getBubbles(limit, offset, fields){
         }
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
-        var allBubbles = Bubbles.find({}, {fields: JSON.parse(fieldString)}).fetch();
-        var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
-        renameIdAttribute(bubbles);
-        var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
-        return response;
+        if(objectId == undefined){
+            var allBubbles = Bubbles.find({}, {fields: JSON.parse(fieldString)}).fetch();
+            var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+            renameIdAttribute(bubbles);
+            var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
+            return response;
+        }
+        else{
+            var bubble = Bubbles.findOne({_id: objectId}, {fields: JSON.parse(fieldString)});
+            if(!bubble){
+                return 'Not Found.'
+            }
+            else{
+                bubble.id = bubble._id;
+                delete bubble._id;
+                var response = bubble;
+                return response;
+            }
+        }
+
     }
 }
 
 
-function getPosts(limit, offset, fields){
+function getPosts(limit, offset, fields, objectId){
     var postCount = Posts.find().count();
     var pages = Math.floor(postCount/limit);
     console.log('getPosts: ', limit, offset, fields);
@@ -581,11 +628,69 @@ function getPosts(limit, offset, fields){
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
         console.log('fieldString: ', fieldString);
-        var allPosts = Posts.find({}, {fields: JSON.parse(fieldString)}).fetch();
-        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
-        renameIdAttributes(posts);
-        var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
+        if(objectId == undefined){
+            var allPosts = Posts.find({}, {fields: JSON.parse(fieldString)}).fetch();
+            var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+            renameIdAttribute(posts);
+            var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
+            return response;
+        }
+        else{
+            var post = Posts.findOne({_id: objectId}, {fields: JSON.parse(fieldString)});
+            if(!post){
+                return 'Not Found';
+            }
+            else{
+                post.id = post._id;
+                delete post._id;
+                var response = post;
+                return response;
+            }
+        }
+    }
+}
+
+
+function getUsers(limit, offset, fields, objectId){
+    var userCount = Meteor.users.find().count();
+    var pages = Math.floor(userCount/limit);
+    console.log('getUsers: ', limit, offset, fields);
+    if(pages*limit < userCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allUsers = Meteor.users.find({}).fetch();
+        var users = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(users);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'users': users};
         return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        if(objectId == undefined){
+            var allUsers = Meteor.users.find({}, {fields: JSON.parse(fieldString)}).fetch();
+            var users = allUsers.slice(offset*limit, (offset+1)*limit);
+            renameIdAttribute(users);
+            var response = {'count': userCount, 'pages': pages, 'page': offset,  'users': users};
+            return response;
+        }
+        else{
+            var user = Meteor.users.findOne({_id: objectId}, {fields: JSON.parse(fieldString)});
+            if(!user){
+                return 'Not Found';
+            }
+            else{
+                user.id = user._id;
+                delete user._id;
+                var response = user;
+                return response;
+            }
+        }
     }
 }
 
