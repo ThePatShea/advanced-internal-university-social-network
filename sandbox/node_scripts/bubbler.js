@@ -11,7 +11,7 @@ var admins = [];
 var data = [];
 
 csv()
-.from('residenceHalls.csv', {columns: true, delimiter: '\t'})
+.from('greek5.csv', {columns: true, delimiter: '\t'})
 .on('record', function(row,index){
 	//console.log(row.Members);
 	/*
