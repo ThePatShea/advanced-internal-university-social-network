@@ -703,6 +703,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
     if(fields.length == 0){
         var allPosts = Posts.find({'exploreId': exploreId}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
         return response;
     }
@@ -716,7 +717,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
         console.log('fieldString: ', fieldString);
         var allPosts = Posts.find({'exploreId': exploreId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
-        renameIdAttributes(posts);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;
     }
@@ -733,6 +734,7 @@ function getBubblePosts(limit, offset, fields, bubbleId){
     if(fields.length == 0){
         var allPosts = Posts.find({'bubbleId': bubbleId}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
         return response;
     }
@@ -774,7 +776,7 @@ function getUsersPosts(limit, offset, fields, userId){
         fieldString = fieldString + '}';
         var allPosts = Posts.find({'userId': userId}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
-        renameIdAttributes(posts);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;      
     }
@@ -797,6 +799,7 @@ function getUsersBubbles(limit, offset, fields, userId){
             {'users.members': {$in: [userId]}}
             ]}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbles);
         var response = {'count': bubbleCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
