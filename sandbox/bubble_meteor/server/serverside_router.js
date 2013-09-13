@@ -208,7 +208,7 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
         else{                           // URL /2013-09-09/posts
             var collectionName = firstSegment;
             console.log('Collection: ', collectionName);
-            var response = getCollection(collectionName, limite, offset, fields);
+            var response = getCollection(collectionName, limit, offset, fields);
             var stringifiedResponse = JSON.stringify(response);
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
