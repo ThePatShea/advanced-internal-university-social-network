@@ -577,6 +577,7 @@ function getBubbles(limit, offset, fields, objectId){
         var allBubbles = Bubbles.find({}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
         var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
+        renameIdAttributes(bubbles);
         return response;
     }
     else{
@@ -621,6 +622,7 @@ function getPosts(limit, offset, fields, objectId){
     if(fields.length == 0){
         var allPosts = Posts.find({}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttributes(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
         return response;
     }
