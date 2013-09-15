@@ -1,5 +1,5 @@
-Template.explorePageBackbone.created = function(){
-	/*ExplorePost = Backbone.Model.extend({
+(function(){
+	ExplorePost = Backbone.Model.extend({
 		url: function(){
 			return '/2013-09-11/post/' + this.id;
 		}
@@ -113,18 +113,7 @@ Template.explorePageBackbone.created = function(){
 				that.explorePosts.fetch();
 			}
 		}
-	}*/
+	}
 
-}
-
-
-
-Template.explorePageBackbone.rendered = function(){
-	//var currentExploreId = window.location.pathname.split("/")[2];
-	currentExploreId = 'pxmgzT74iwBbadvyp';
-	es = new ExploreSection({
-		exploreId: currentExploreId,
-		limit: 10,
-		fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted']
-	});
-}
+	return ExploreSection;
+}());
