@@ -1,24 +1,26 @@
 (function(){
-	ExplorePost = Backbone.Model.extend({
+	BubbleData = {};
+	
+	var ExplorePost = Backbone.Model.extend({
 		url: function(){
 			return '/2013-09-11/post/' + this.id;
 		}
 	});
 
-	ExploreBubble = Backbone.Model.extend({
+	var ExploreBubble = Backbone.Model.extend({
 		url: function(){
 			return '/2013-09-11/bubbles/' + this.id;
 		}
 	});
 
-	ExploreUser = Backbone.Model.extend({
+	var ExploreUser = Backbone.Model.extend({
 		url: function(){
 			return '/2013-09-11/users/' + this.id;
 		}
 	});
 
 
-	ExplorePosts = Backbone.Collection.extend({
+	var ExplorePosts = Backbone.Collection.extend({
 		exploreId : 'none',
 		limit: 10,
 		page: 0,
@@ -46,7 +48,7 @@
 	});
 
 
-	ExploreUsers = Backbone.Collection.extend({
+	var ExploreUsers = Backbone.Collection.extend({
 		model: ExploreUser,
 		initialize: function(){
 			this.watch = function(collection){
@@ -64,7 +66,7 @@
 	});
 
 
-	ExploreBubbles = Backbone.Collection.extend({
+	var ExploreBubbles = Backbone.Collection.extend({
 		model: ExploreBubble,
 		initialize: function(){
 			this.watch = function(collection){
@@ -81,7 +83,7 @@
 		}
 	});
 
-	ExploreSection = function(properties){
+	var ExploreSection = function(properties){
 		var that = this;
 
 		this.explorePosts = new ExplorePosts();
@@ -115,5 +117,8 @@
 		}
 	}
 
-	return ExploreSection;
+	BubbleData.ExploreSection = ExploreSection;
+	BubbleData.ExploreUsers = ExploreUsers;
+	BubbleData.ExploreBubbles = ExploreBubbles;
+
 }());
