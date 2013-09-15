@@ -39,6 +39,7 @@ Template.explorePageBackbone.created = function(){
 		},
 		parse: function(response){
 			var listObjects = [];
+			this.pages = response.pages;
 			_.each(response.posts, function(item){listObjects.push(item);});
 			return listObjects;
 		}
@@ -97,6 +98,20 @@ Template.explorePageBackbone.created = function(){
 		this.getPage = function(page){
 			that.explorePosts.page = page;
 			that.explorePosts.fetch();
+		}
+
+		this.nextPage = function(){
+			if(that.explorePosts.page < that.explorePosts.pages){
+				that.explorePosts.page = that.explorePosts.page + 1;
+				that.explorePosts.fetch();
+			}
+		}
+
+		this.prevPage = function(){
+			if(that.explorePosts.page > 0){
+				that.explorePosts.page = that.explorePosts.page - 1;
+				that.explorePosts.fetch();
+			}
 		}
 	}
 
