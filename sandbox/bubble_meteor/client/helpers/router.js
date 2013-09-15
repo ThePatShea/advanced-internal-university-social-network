@@ -1,6 +1,7 @@
 Meteor.Router.add({
   //Login from authentication system
   '/bbexplore': 'bbExplorePage',
+  '/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
   '/welcome': 'welcomePage',
   '/loggedOut': 'loggedOut',

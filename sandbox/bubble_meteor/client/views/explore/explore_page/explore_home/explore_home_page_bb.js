@@ -12,7 +12,15 @@ Template.explorePageBB.created = function(){
     model: BPost,
     url: function() {
       return "http://localhost:3000/2013-09-11/explores/gzbHkAnBGQqK26FRT/posts";
-    }/*,
+    },
+
+    parse: function(response){
+      var listObjects = [];
+      _each(response.posts, function(item){listObjects.push(item);});
+      return listObjects;
+    },
+
+    /*,
     parse: function(response) {
       var listSource = new Array();
       _.each(response.posts, function(element, index, list) {
