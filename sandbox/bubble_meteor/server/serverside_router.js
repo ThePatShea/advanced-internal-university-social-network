@@ -238,47 +238,100 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
 
 //REST API for retreiving particular items from Collections
 Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
-    var response = getItem('posts', id);
-    if(response == 'Not Found'){
-        return [500, 'Not Found in Collection'];
-    }
-    else{
+    if(id.indexOf('&') != -1){
+        var params = id;
+        var paramsList = params.split('&');
+        var paramsValue = paramsList[0].split('=');
+        var limit = parseInt(paramsValue[1]);
+        paramsValue = paramsList[1].split('=');
+        var offset = parseInt(paramsValue[1]);
+        var response = getCollection('posts', limit, offset, [], undefined);
         var stringifiedResponse = JSON.stringify(response);
         return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+    else{
+        var response = getItem('posts', id);
+        if(response == 'Not Found'){
+            return [500, 'Not Found in Collection'];
+        }
+        else{
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
     }
 });
 
+
 Meteor.Router.add('/2013-09-11/bubbles/:id', 'GET', function(id){
-    var response = getItem('bubbles', id);
-    if(response == 'Not Found'){
-        return [500, 'Not Found in Collection'];
-    }
-    else{
-        response.id = response._id;
+    if(id.indexOf('&') != -1){
+        var params = id;
+        var paramsList = params.split('&');
+        var paramsValue = paramsList[0].split('=');
+        var limit = parseInt(paramsValue[1]);
+        paramsValue = paramsList[1].split('=');
+        var offset = parseInt(paramsValue[1]);
+        var response = getCollection('bubbles', limit, offset, [], undefined);
         var stringifiedResponse = JSON.stringify(response);
         return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+    else{
+        var response = getItem('bubbles', id);
+        if(response == 'Not Found'){
+            return [500, 'Not Found in Collection'];
+        }
+        else{
+            response.id = response._id;
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
     }
 });
 
 Meteor.Router.add('/2013-09-11/explores/:id', 'GET', function(id){
-    var response = getItem('explores', id);
-    if(response == 'Not Found'){
-        return [500, 'Not Found in Collection'];
-    }
-    else{
+    if(id.indexOf('&') != -1){
+        var params = id;
+        var paramsList = params.split('&');
+        var paramsValue = paramsList[0].split('=');
+        var limit = parseInt(paramsValue[1]);
+        paramsValue = paramsList[1].split('=');
+        var offset = parseInt(paramsValue[1]);
+        var response = getCollection('explores', limit, offset, [], undefined);
         var stringifiedResponse = JSON.stringify(response);
         return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+    else{
+        var response = getItem('explores', id);
+        if(response == 'Not Found'){
+            return [500, 'Not Found in Collection'];
+        }
+        else{
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
     }
 });
 
 Meteor.Router.add('/2013-09-11/users/:id', 'GET', function(id){
-    var response = getItem('users', id);
-    if(response == 'Not Found'){
-        return [500, 'Not Found in Collection'];
-    }
-    else{
+    if(id.indexOf('&') != -1){
+        var params = id;
+        var paramsList = params.split('&');
+        var paramsValue = paramsList[0].split('=');
+        var limit = parseInt(paramsValue[1]);
+        paramsValue = paramsList[1].split('=');
+        var offset = parseInt(paramsValue[1]);
+        var response = getCollection('users', limit, offset, [], undefined);
         var stringifiedResponse = JSON.stringify(response);
         return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+    }
+    else{
+        var response = getItem('users', id);
+        if(response == 'Not Found'){
+            return [500, 'Not Found in Collection'];
+        }
+        else{
+            var stringifiedResponse = JSON.stringify(response);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
     }
 });
 
@@ -626,7 +679,7 @@ function getPosts(limit, offset, fields, objectId){
     if(fields.length == 0){
         var allPosts = Posts.find({}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
-        renameIdAttributes(posts);
+        renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
         return response;
     }
