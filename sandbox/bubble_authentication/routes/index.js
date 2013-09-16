@@ -31,7 +31,7 @@ exports.analytics = function(req, res){
 	var path = "/bubbleanalytics?start="+ start + "&end=" + end;
 
 	var bubbleanalytics_options = {
-		host: 'www.emorybubble.com',
+		host: 'test.emorybubble.com',
 		port: '80',
 		path: path,
 		method: 'GET',

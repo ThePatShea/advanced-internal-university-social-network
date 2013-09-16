@@ -27,12 +27,15 @@
 		fields: [],
 		model: ExplorePost,
 		url: function(){
-			var fieldString = '';
-			_.each(this.fields, function(field){
-				fieldString = fieldString + field + ',';
-			});
+			// var fieldString = '';
+			// _.each(this.fields, function(field){
+			// 	fieldString = fieldString + field + ',';
+			// });
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
 			if(fieldString.length > 0){
-				fieldString = fieldString.slice(0, fieldString.length-1);
+				//fieldString = fieldString.slice(0, fieldString.length-1);
 				return '/2013-09-11/explores/' + this.exploreId + '/posts?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
 			}
 			else{
