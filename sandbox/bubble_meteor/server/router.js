@@ -550,7 +550,7 @@ Meteor.Router.add('/bubbleanalytics','GET', function() {
 	var retVal = {};
 
 	start = this.request.query.start;
-	if((typeof start !== undefined) && (start != ""))
+	if((typeof start !== "undefined") && (start != ""))
 	{
 		startYear = start.substring(0,start.indexOf("-"));
 		startMonth = start.substring(start.indexOf("-")+1,start.indexOf("-", start.indexOf("-")+1));

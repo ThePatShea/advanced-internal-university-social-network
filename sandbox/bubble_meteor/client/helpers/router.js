@@ -16,7 +16,7 @@ Meteor.Router.add({
   //Onboarding page
   '/onboarding': 'onboarding',
 
-  '/bubbleanalytics': 'bubbleAnalytics',
+  //'/bubbleanalytics': 'bubbleAnalytics',
 
   '/browser_unsupported': {
     to: 'browserUnsupported'
