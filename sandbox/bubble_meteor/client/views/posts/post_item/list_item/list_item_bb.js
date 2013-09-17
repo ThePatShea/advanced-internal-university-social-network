@@ -1,6 +1,7 @@
 Template.listItemBB.helpers({
     getPostAsUser: function() {
-      return Meteor.users.findOne(this.postAsId);
+      //return Meteor.users.findOne(this.postAsId);
+      return this.user;
     },
     /*
     getPostAsBubble: function() {
@@ -8,8 +9,8 @@ Template.listItemBB.helpers({
       return bubble;
     },*/
     getPostAsBubble: function() {
-      var bubble = new BBubble({_id: this.postAsId}).fetch();
-      return bubble;
+      //var bubble = new BBubble({_id: this.postAsId}).fetch();
+      return this.bubble;
     },
     postedAsUser: function() {
       if (this.postAsType == "user") {
@@ -30,8 +31,8 @@ Template.listItemBB.helpers({
         return this.author;
       } else if (this.postAsType == "bubble") {
         //var bubble = Bubbles.findOne(this.postAsId);
-        var bubble = new BBBubble({id: this.postAsId});
-        return bubble.toJSON().title;
+        //var bubble = new BBBubble({id: this.postAsId});
+        return this.bubble.title;
       }
     },
     isGoing : function() {
@@ -56,7 +57,7 @@ Template.listItemBB.helpers({
     },
 
     isMe: function(){
-     return(this._id == Meteor.userId());
+     return(this.id == Meteor.userId());
     },
 
     inBubble: function(){
