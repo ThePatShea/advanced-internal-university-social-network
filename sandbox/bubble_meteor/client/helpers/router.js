@@ -1,6 +1,7 @@
 Meteor.Router.add({
   //Login from authentication system
-
+  '/bbexplore': 'bbExplorePage',
+  '/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
   '/welcome': 'welcomePage',
   '/loggedOut': 'loggedOut',
@@ -15,7 +16,7 @@ Meteor.Router.add({
   //Onboarding page
   '/onboarding': 'onboarding',
 
-  '/bubbleanalytics': 'bubbleAnalytics',
+  //'/bubbleanalytics': 'bubbleAnalytics',
 
   '/browser_unsupported': {
     to: 'browserUnsupported'

@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 var fs = require('fs');
 
 /*
@@ -31,8 +31,8 @@ exports.analytics = function(req, res){
 	var path = "/bubbleanalytics?start="+ start + "&end=" + end;
 
 	var bubbleanalytics_options = {
-		host: 'localhost',
-		port: '3000',
+		host: 'test.emorybubble.com',
+		port: '443',
 		path: path,
 		method: 'GET',
 		headers: {
@@ -40,7 +40,7 @@ exports.analytics = function(req, res){
 		}
 	};
 
-	http.get(bubbleanalytics_options, function(HTTPres) {
+	https.get(bubbleanalytics_options, function(HTTPres) {
 		console.log("STATUS: " + HTTPres.statusCode);
 		HTTPres.on('data', function(chunk) {
 			console.log("Body: " + chunk);

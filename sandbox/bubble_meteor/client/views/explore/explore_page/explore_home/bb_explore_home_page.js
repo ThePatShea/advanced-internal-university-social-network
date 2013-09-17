@@ -1,11 +1,100 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
-Template.explorePage.created = function(){
+Template.bbExplorePage.created = function(){
+  //var currentExploreId = window.location.pathname.split("/")[2];
+  var currentExploreId = "hKPb7ZohcmJEFR78W";
+
+  ExploreUser = Backbone.Model.extend({
+    url: function() {
+      console.log("THIS: ", this);
+      return "/2013-09-11/users/"+this.id;
+    }
+  });
+  ExploreUsers = Backbone.Collection.extend({
+    model: ExploreUser,
+    url: function() {
+      return "/2013-09-11/users";
+    },
+    parse: function(response) {
+      console.log("PARSING: ", response);
+      var retVal = [];
+      _.each(response, function(tmp) {
+        retVal.push(tmp);
+      });
+      return retVal;
+    }
+  });
+
+  ExploreBubble = Backbone.Model.extend({
+    url: function() {
+      return "/2013-09-11/bubbles/"+this.id;
+    }
+  });
+  ExploreBubbles = Backbone.Collection.extend({
+    model: ExploreBubble,
+    url: function() {
+      return "/2013-09-11/bubbles";
+    },
+    parse: function(response) {
+      var retVal = [];
+      _.each(response, function(tmp) {
+        retVal.push(tmp);
+      });
+      return retVal;
+    }
+  });
+
+  ExplorePost = Backbone.Model.extend({
+    url: function() {
+      return "/2013-09-11/posts/"+this.id;
+    }
+  });
+  ExplorePosts = Backbone.Collection.extend({
+    model: ExplorePost,
+    url: function() {
+      return "/2013-09-11/explores/"+currentExploreId+"/posts";
+    },
+    parse: function(response) {
+      console.log("Parse response: ", response);
+      exploreusers = new ExploreUsers();
+      explorebubbles = new ExploreBubbles();
+      retVal = [];
+      //response.posts.each(post)
+      _.each(response.posts, function(post)
+      {
+        console.log("POST: ", post);
+        if(post.postAsType === "user")
+        {
+          var tmp = new ExploreUser({id: post.postAsId}).fetch({"async": false});
+          exploreusers.add(tmp);
+        }
+        if(post.postAsType === "bubble")
+        {
+          var tmp = new ExploreBubble({id: post.postAsId}).fetch({"async": false});
+          explorebubbles.add(tmp);
+        }
+        retVal.push(post);
+      })
+      exploreusers.fetch({"async": false, "success": function(collection, response) {
+        console.log("User Success");
+        console.log("User Collection: ", collection);
+        console.log("User Response: ", response);
+      }});
+      return retVal;
+    }
+  });
+
+  exploreposts = new ExplorePosts();
+  exploreposts.fetch({"async": false, "success": function(collection, response) {
+    console.log("success");
+    console.log("Post Collection: ", collection);
+    console.log("Post Response: ", response);
+  }});
+
   Session.set("isLoading", true);
   max_scrolltop = 100;
   virtualPage = 0;
-  var currentExploreId = window.location.pathname.split("/")[2];
   //console.log('Explore Page Created');
   postIds = [];
   Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
@@ -39,7 +128,7 @@ Template.explorePage.created = function(){
 }
 
 
-Template.explorePage.rendered = function(){
+Template.bbExplorePage.rendered = function(){
   var currentExploreId = window.location.pathname.split("/")[2];
   console.log('Explore Page Rendered: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
   //var posts = Posts.find({exploreId: currentExploreId}).fetch();
@@ -77,7 +166,7 @@ Template.explorePage.rendered = function(){
 
 }
 
-Template.explorePage.helpers({ 
+Template.bbExplorePage.helpers({ 
   currentExplore: function(){
     var currentExploreId = Session.get('currentExploreId');
     var currentExplore = Explores.findOne({_id: currentExploreId});
@@ -164,7 +253,7 @@ Template.explorePage.helpers({
   }
 });
 
-Template.explorePage.events({
+Template.bbExplorePage.events({
   'btn .clear-updates': function() {
     Meteor.call('clearUpdates', Session.get('currentBubbleId'));
   }

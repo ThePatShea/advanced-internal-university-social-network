@@ -25,15 +25,29 @@
             </button>
           </a>
         {{/if}}
+
+
+        
+
+
+
+
+{{#if ownsPostExplore}}
         <button class="pull-right std-btn-light with-left-icon btn-edit" data-toggle="collapse" data-target="#edit-{{postType}}">
           <span class="left-icon">{{> icon-edit}}</span>
           <span>edit</span>
         </button>
 
-        <button class="visible-{{isAdmin}} pull-right std-btn-light with-left-icon btn-delete">
+        <button class="pull-right std-btn-light with-left-icon btn-delete">
           <span class="left-icon">{{> icon-cancel}}</span>
           <span>delete</span>
         </button>
+{{/if}}
+
+
+
+
+
       </div>
 
       {{#if isEvent}}
@@ -64,9 +78,11 @@
           </div>
         </a>
       {{else}}
-        <div class="pull-left category-{{getPostAsBubbleCategory}}-fill post-as-bubble-single">
-          {{> icon-bubble}}
-        </div>
+        <a href="{{bubblePagePath this.postAsId}}">
+          <div class="pull-left category-{{getPostAsBubbleCategory}}-fill post-as-bubble-single">
+            {{> icon-bubble}}
+          </div>
+        </a>
       {{/if}}
         <div class="name">{{decodeURI name}}</div>
         <div class="subtitle">posted {{timestampToFromNow submitted}} by {{displayName}}</div>
