@@ -1,12 +1,15 @@
 Template.bubbleMembersPage.created = function() {
-	page = 0;
-	max_scrolltop = 700;
+	virtualPage = 0;
+	max_scrolltop = 200;
+	Session.set("isLoading", true);
 }
 
 
 Template.bubbleMembersPage.rendered = function () {
 	var currentBubbleId = window.location.pathname.split('/')[2];
-	Meteor.subscribe('singleBubble', currentBubbleId);
+	Meteor.subscribe('singleBubble', currentBubbleId, function() {
+		Session.set("isLoading", false);
+	});
 	console.log(currentBubbleId);
 	var currentBubble = Bubbles.findOne({_id: currentBubbleId});
 	var adminIds = currentBubble.users.admins;
@@ -54,10 +57,10 @@ Template.bubbleMembersPage.rendered = function () {
 		    //console.log('Pre paginating: ', page, $("#main").scrollTop(), $("#main").height(), $(document).height());
 		    //console.log('Scrolling: ', page, userIds.slice(oldpage*10, page*10));
 		    max_scrolltop = $("#main").scrollTop() + 200;
-		    page = page + 1;
-		    var pageUserIds = userIds.slice((page)*5, (page+1)*5);
+		    virtualPage = virtualPage + 1;
+		    var pageUserIds = userIds.slice((virtualPage)*5, (virtualPage+1)*5);
 		    Meteor.subscribe('findUsersById', pageUserIds);
-		    console.log('Paginating: ', (page)*5, (page+1)*5);
+		    console.log('Paginating: ', (virtualPage)*5, (virtualPage+1)*5);
 		    console.log('End of Page');
 		}
 	    

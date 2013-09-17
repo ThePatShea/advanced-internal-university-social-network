@@ -286,6 +286,10 @@ Template.updatesDropdown.helpers({
       }); 
       return updateList.length;
     }
+  },
+  'click .set-loading' : function() {
+    console.log("SET LOADING");
+    Session.set("isLoading", true);
   }
 });
 

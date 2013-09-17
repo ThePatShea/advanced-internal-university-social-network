@@ -1,0 +1,54 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install', 'http' ]
+2 info using npm@1.3.2
+3 info using node@v0.10.13
+4 verbose readDependencies using package.json deps
+5 verbose cache add [ 'http', null ]
+6 verbose cache add name=undefined spec="http" args=["http",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'http',
+7 verbose parsed url   path: 'http',
+7 verbose parsed url   href: 'http' }
+8 silly lockFile 77b5f8e3-http http
+9 verbose lock http /home/taggart/.npm/77b5f8e3-http.lock
+10 silly lockFile 77b5f8e3-http http
+11 silly lockFile 77b5f8e3-http http
+12 verbose addNamed [ 'http', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile c1086ff9-http http@
+15 verbose lock http@ /home/taggart/.npm/c1086ff9-http.lock
+16 silly addNameRange { name: 'http', range: '*', hasData: false }
+17 verbose url raw http
+18 verbose url resolving [ 'https://registry.npmjs.org/', './http' ]
+19 verbose url resolved https://registry.npmjs.org/http
+20 info trying registry request attempt 1 at 18:54:58
+21 http GET https://registry.npmjs.org/http
+22 http 404 https://registry.npmjs.org/http
+23 silly registry.get cb [ 404,
+23 silly registry.get   { server: 'CouchDB/1.3.1 (Erlang OTP/R15B03)',
+23 silly registry.get     date: 'Thu, 22 Aug 2013 22:55:01 GMT',
+23 silly registry.get     'content-type': 'application/json',
+23 silly registry.get     'content-length': '52',
+23 silly registry.get     'cache-control': 'must-revalidate' } ]
+24 silly lockFile c1086ff9-http http@
+25 silly lockFile c1086ff9-http http@
+26 error 404 'http' is not in the npm registry.
+26 error 404 You should bug the author to publish it
+26 error 404
+26 error 404 Note that you can also install from a
+26 error 404 tarball, folder, or http url, or git url.
+27 error System Linux 3.2.0-52-generic-pae
+28 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "http"
+29 error cwd /home/taggart/Documents/CampusBubble/bubble-3/sandbox/bubble_authentication
+30 error node -v v0.10.13
+31 error npm -v 1.3.2
+32 error code E404
+33 verbose exit [ 1, true ]

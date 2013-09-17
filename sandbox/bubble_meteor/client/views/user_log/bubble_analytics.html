@@ -1,0 +1,16 @@
+<template name="bubbleAnalytics">
+  <div class="cb-form-container cb-form-container-search">
+    <form class="cb-form search-form">
+      <input class="search-text first" name="searchText" type="text" placeholder="Type in a username ..." autofocus/>
+        <button class="std-btn-form search-btn" type="submit">
+            Search
+        </button>
+    </form>
+
+    <hr />
+
+  <h4>Number of Users Logged In More Than Once</h4>
+  Count: {{countUsersWithMultipleLogin}}
+  <hr>
+
+</template>

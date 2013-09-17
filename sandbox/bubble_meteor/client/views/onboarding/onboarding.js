@@ -176,6 +176,7 @@ Template.onboarding.rendered = function() {
     Meteor.Router.to("/dashboard");
   } else {
     $("#cb-form-container-onboarding").show();
+    $('.cb-form-onboarding').show();
   }
 
 

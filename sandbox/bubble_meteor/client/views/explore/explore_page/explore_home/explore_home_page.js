@@ -1,9 +1,58 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
+Template.explorePage.created = function(){
+  Session.set("isLoading", true);
+  max_scrolltop = 100;
+  virtualPage = 0;
+  var currentExploreId = window.location.pathname.split("/")[2];
+  //console.log('Explore Page Created');
+  postIds = [];
+  Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
+    console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
+    posts = Posts.find({exploreId: currentExploreId}).fetch()
+    postIds = _.pluck(posts, "_id");
+    virtualPagePostIds = postIds.slice(0, 10);
+  });
+}
+
+
 Template.explorePage.rendered = function(){
   var currentExploreId = window.location.pathname.split("/")[2];
-  Meteor.subscribe('currentExplore', currentExploreId);
+  console.log('Explore Page Rendered: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
+  //var posts = Posts.find({exploreId: currentExploreId}).fetch();
+  //var postIds = _.pluck(posts, "_id");
+  //Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+  Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
+    console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
+    posts = Posts.find({exploreId: currentExploreId}).fetch()
+    postIds = _.pluck(posts, "_id");
+    virtualPagePostIds = postIds.slice(0, 10)
+    Meteor.subscribe('findExplorePostsById', virtualPagePostIds, function() {
+      Session.set("isLoading", false);
+      console.log("DONE");
+    });
+  });
+  //console.log('Post Ids: ', postIds);
+
+  $("#main").scroll(function(){
+    console.log('Scrolltop, mainheight, documentheight, windowheight: ', $("#main").scrollTop(), $("#main").height(), $(document).height(), $(window).height());
+      if($("#main").scrollTop() > max_scrolltop){
+        //console.log('Pre paginating: ', virtualPage, $("#main").scrollTop(), $("#main").height(), $(document).height());
+        //console.log('Scrolling: ', virtualPage, userIds.slice(oldpage*10, page*10));
+        max_scrolltop = $("#main").scrollTop() + 200;
+        virtualPage = virtualPage + 1;
+        //var pageUserIds = userIds.slice((page)*5, (page+1)*5);
+        //Meteor.subscribe('findUsersById', pageUserIds);
+        var virtualPagePostIds = postIds.slice((virtualPage)*10, (virtualPage+1)*10);
+        Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+        //console.log('Paginating: ', (virtualPage)*10, (virtualPage+1)*10);
+        //console.log('Explore post Ids: ', virtualPagePostIds);
+        //console.log('End of Page');
+      }
+      
+    });
+
 }
 
 Template.explorePage.helpers({ 

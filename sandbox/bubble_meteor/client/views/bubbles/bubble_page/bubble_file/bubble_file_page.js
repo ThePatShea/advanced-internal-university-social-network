@@ -14,7 +14,9 @@ Template.bubbleFilePage.rendered = function() {
   var currentUrl  =  window.location.pathname;
   var urlArray    =  currentUrl.split("/");
   var currentBubbleId  =  urlArray[2];
-  filesHandle = Meteor.subscribe('files', currentBubbleId);
+  filesHandle = Meteor.subscribe('files', currentBubbleId, function() {
+    Session.set("isLoading", false);
+  });
 
 
 /*
@@ -24,4 +26,8 @@ Template.bubbleFilePage.rendered = function() {
     }
   });
 //*/
+}
+
+Template.bubbleFilePage.created = function(){
+  Session.set("isLoading", true);
 }

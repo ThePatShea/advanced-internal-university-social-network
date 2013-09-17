@@ -2,8 +2,14 @@
     {{#with getCurrentBubble}}
       {{> bubbleCover}}
       {{> bubbleSectionSelector}}
+
+      <div class="visible-{{isLoading}}">
+        {{> gifLoaderToParent}}
+      </div>
+        
       <div class="bubble-page-content bubble-members">
         {{> bubbleMembersHeading}}
+
     	  {{> bubbleInvitation}}
 
         {{#unless isSuperBubble this}}

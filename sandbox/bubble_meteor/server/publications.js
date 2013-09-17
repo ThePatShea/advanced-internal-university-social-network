@@ -44,7 +44,7 @@ getBubbleId =  function(userId) {
 // Posts Related Publications
   Meteor.publish('bubbleHomeEvents', function(bubbleId) {
     var events = Posts.find({bubbleId: bubbleId, postType: 'event'}, {
-      sort: {dateTime: 1}, 
+      //sort: {dateTime: 1}, 
       limit: 3, 
       fields: {
         'retinaEventPhoto': 0,
@@ -58,7 +58,7 @@ getBubbleId =  function(userId) {
 
   Meteor.publish('bubbleHomeDiscussions', function(bubbleId) {
     var discussions = Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
-      sort: {submitted: -1},
+      //sort: {submitted: -1},
       limit: 3, 
     });
 
@@ -67,7 +67,7 @@ getBubbleId =  function(userId) {
 
   Meteor.publish('bubbleHomeFiles', function(bubbleId) {
     var files = Posts.find({bubbleId: bubbleId, postType: 'file'}, {
-      sort: {submitted: -1},
+      //sort: {submitted: -1},
       limit: 3, 
       fields: {
         'retinaEventPhoto': 0,
@@ -103,7 +103,7 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('events', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'event'}, {
-      sort: {submitted: -1},
+      //sort: {submitted: -1},
       limit: limit,
       fields: {
         'file': 0,
@@ -129,7 +129,7 @@ getBubbleId =  function(userId) {
 
   Meteor.publish('discussions', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
-      sort: {submitted: -1},
+      //sort: {submitted: -1},
       limit: limit,
       fields: {
         'file': 0,
@@ -140,7 +140,7 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('files', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'file'}, {
-      sort: {submitted: -1},
+      //sort: {submitted: -1},
       limit: limit,
       fields: {
         'file': 0,
@@ -154,7 +154,7 @@ getBubbleId =  function(userId) {
     var flags = Flags.find().fetch();
     var postsList = _.pluck(flags, 'postId');
     return Posts.find({_id: {$in: postsList}}, {
-      sort: {submitted: -1},
+      //sort: {submitted: -1},
       limit: limit,
       fields: {
         'file': 0,
@@ -175,7 +175,7 @@ getBubbleId =  function(userId) {
           {location: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'file': 0,
@@ -193,7 +193,7 @@ getBubbleId =  function(userId) {
           {body: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'file': 0,
@@ -211,7 +211,7 @@ getBubbleId =  function(userId) {
           {file: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'file': 0,
@@ -230,7 +230,7 @@ getBubbleId =  function(userId) {
           {location: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'file': 0,
@@ -247,7 +247,7 @@ getBubbleId =  function(userId) {
           {body: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'file': 0,
@@ -264,7 +264,7 @@ getBubbleId =  function(userId) {
           {file: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'file': 0,
@@ -371,7 +371,7 @@ getBubbleId =  function(userId) {
   });
   Meteor.publish('bubbles', function(limit) {
     return Bubbles.find({}, {
-      sort: {submitted: -1}, 
+      //sort: {submitted: -1}, 
       limit: limit,
       fields: {
         'coverPhoto': 0,
@@ -388,7 +388,7 @@ getBubbleId =  function(userId) {
           {description: new RegExp(searchText,'i')}
         ]
       }, {
-        sort: {submitted: -1}, 
+        //sort: {submitted: -1}, 
         limit: limit,
         fields: {
           'coverPhoto': 0,
@@ -425,13 +425,13 @@ Meteor.publish('sidebarBubbles', function(userId) {
           'profilePicture': 0,
           'retinaProfilePicture': 0,
          },
-    sort: {submitted: -1}, 
+    //sort: {submitted: -1}, 
   });
 });
 
   Meteor.publish('invitedBubbles', function(userId, limit) {
     return Bubbles.find({'users.invitees':userId}, {
-      sort: {submitted: -1}, 
+      //sort: {submitted: -1}, 
       limit: limit,
       fields: {
         'coverPhoto': 0,
@@ -451,11 +451,17 @@ Meteor.publish('sidebarBubbles', function(userId) {
         'description': 1,
         'exploreIcon': 1,
         'exploreType': 1,
+        'submitted': 1
       }
     });
   });
   Meteor.publish('currentExplore', function(exploreId){
-    var posts = Posts.find({'exploreId': exploreId});
+    var posts = Posts.find({'exploreId': exploreId}, {
+      'fields': {
+        'body': 0,
+        'file': 0
+      }
+    });
     var posts2 = posts.fetch();
 
     //Users
@@ -484,11 +490,12 @@ Meteor.publish('sidebarBubbles', function(userId) {
   Meteor.publish('currentExplorePostIds', function(exploreId){
     return posts = Posts.find({'exploreId': exploreId}, {
       'fields': {
-        'body': 0,
-        'file': 0
+        'exploreId': 1,
+        'name': 1
       }
     });
   });
+
   Meteor.publish('findExplorePostsById', function(postIdList){
     var posts = Posts.find({_id: {$in: postIdList}}, {
       'fields': {
@@ -561,6 +568,14 @@ Meteor.publish('sidebarBubbles', function(userId) {
     });
   }); 
 
+  Meteor.publish('allUserNames', function(){
+    return Meteor.users.find({}, {
+      fields: {
+        'username': 1
+      }
+    })
+  });
+
   Meteor.publish('relatedUsers', function(bubbleId, postId, usernameList) {
     if (!usernameList) {
       usernameList = [];
@@ -607,6 +622,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
        'neverLoggedIn': 1
       }
     });
+  });
+
+  Meteor.publish('findUsersByUsername', function(username){
+    return Meteor.users.find({'username': username});
   });
 
   Meteor.publish('findUsersById', function(userIdList) {
