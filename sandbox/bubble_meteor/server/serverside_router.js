@@ -715,6 +715,16 @@ function getPosts(limit, offset, fields, objectId){
 
 
 function getUsers(limit, offset, fields, objectId){
+
+    var RawUsers = MongoHelper.getRawCollection(Meteor.users);
+
+    //var c = new Meteor.Collection('posts');
+    var rawC = MongoHelper.getRawCollection(Meteor.users);
+
+    rawC.find({}).toArray(function(err, items){
+        console.log('Raw Results: ', items);
+    });
+
     var userCount = Meteor.users.find().count();
     var pages = Math.floor(userCount/limit);
     console.log('getUsers: ', limit, offset, fields);
@@ -904,6 +914,24 @@ function randomInt(min, max){
 }
 
 
-
+MongoHelper = {
+      getRawCollection: function(collection) {
+        var coll, db, future;
+        db = collection.find()._mongo.db;
+        coll = db.collection(collection._name);
+        if (!coll) {
+          future = new async.Future();
+          db.getCollection(collection._name, function(error, collection) {
+            if (error) {
+              future["throw"](error);
+              return;
+            }
+            return future["return"](collection);
+          });
+          coll = future.wait();
+        }
+        return coll;
+      }
+}
 
 
