@@ -1,9 +1,17 @@
 <template name="explorePageBackbone">
 
+    <div class="visible-{{isLoading}}">
+      {{> gifLoaderToParent}}
+    </div>
+
     {{#with exploreInfo}}
       {{> exploreCover}}
     {{/with}}
     <div class="explore-page-content">
+
+      <div class="visible-0">
+        {{getExploreId}}
+      </div>
   
       <div class="bubble-list">
         <div></div>

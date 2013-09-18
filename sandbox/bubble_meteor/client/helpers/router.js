@@ -129,7 +129,7 @@ Meteor.Router.add({
   //Explore Related Routes
     '/explore/create': 'exploreSubmit',
     '/explore/:id/home': {
-      to: 'explorePage',
+      to: 'explorePageBackbone',
       and: function(id){Session.set('currentExploreId', id);}
     },
     '/explore/:_expId/posts/:_pId': {

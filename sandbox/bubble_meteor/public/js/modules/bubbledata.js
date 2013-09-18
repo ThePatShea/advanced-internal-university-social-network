@@ -51,7 +51,12 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
-			_.each(response.posts, function(item){listObjects.push(item);});
+			_.each(response.posts, function(item){
+				if(item.postType !== "file")
+				{
+					listObjects.push(item);
+				}
+			});
 			return listObjects;
 		}
 	});

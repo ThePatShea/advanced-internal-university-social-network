@@ -1,32 +1,56 @@
 Template.explorePageBackbone.created = function(){
-	//var currentExploreId = window.location.pathname.split("/")[2];
-	console.log("URL: ", window.location.pathname);
-	es = undefined;
-	Session.set("ExploreHome", "render");
-	currentExploreId = 'hKPb7ZohcmJEFR78W';
-	es = new BubbleData.ExploreSection({
-		exploreId: currentExploreId,
-		limit: 10,
-		fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
-	});
+  	Session.set("isLoading", true);
+	//currentExploreId = window.location.pathname.split("/")[2];
+	//currentExploreId = 'hKPb7ZohcmJEFR78W';
+	//currentExploreId = Session.get("currentExploreId");
 	exploreDep = new Deps.Dependency;
-	es.explorePosts.on("change", function() {
-		console.log("explore posts changed");
-		exploreDep.changed();
-	})
-	es.exploreBubbles.on("change", function() {
-		console.log("explore bubbles changed");
-		exploreDep.changed();
-	});
-	es.exploreUsers.on("change", function() {
-		console.log("explore users changed");
-		exploreDep.changed();
-	});
+	es = undefined;
+	currentExploreId = undefined;
+	// es = new BubbleData.ExploreSection({
+	// 	exploreId: currentExploreId,
+	// 	limit: 10,
+	// 	fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
+	// });
+	// es.explorePosts.on("change", function() {
+	// 	console.log("explore posts changed");
+	// 	exploreDep.changed();
+	// })
+	// es.exploreBubbles.on("change", function() {
+	// 	console.log("explore bubbles changed");
+	// 	exploreDep.changed();
+	// });
+	// es.exploreUsers.on("change", function() {
+	// 	console.log("explore users changed");
+	// 	exploreDep.changed();
+	// });
 }
 
 Template.explorePageBackbone.rendered = function(){
 	console.log("RENDERED!");
 	//es.getPage(0);
+	if(currentExploreId != window.location.pathname.split("/")[2])
+	{
+		currentExploreId = window.location.pathname.split("/")[2];
+		es = new BubbleData.ExploreSection({
+			exploreId: currentExploreId,
+			limit: 10,
+			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
+		});
+		es.explorePosts.on("change", function() {
+			console.log("explore posts changed");
+			exploreDep.changed();
+		})
+		es.exploreBubbles.on("change", function() {
+			console.log("explore bubbles changed");
+			exploreDep.changed();
+      		Session.set("isLoading", false);
+		});
+		es.exploreUsers.on("change", function() {
+			console.log("explore users changed");
+			exploreDep.changed();
+      		Session.set("isLoading", false);
+		});
+	}
 }
 
 Template.explorePageBackbone.helpers({ 
@@ -67,5 +91,8 @@ Template.explorePageBackbone.helpers({
 	{
 		return es.exploreInfo.toJSON();
 	}
+  },
+  getExploreId: function(){
+  	return Session.get("currentExploreId");
   }
 });
