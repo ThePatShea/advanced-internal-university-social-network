@@ -1,3 +1,5 @@
+Future = Npm.require('fibers/future');
+
 Meteor.Router.add( '/posts/:id/getfile', 'GET', function (id) { 
 
     console.log('Attempting to get ' + id);
@@ -453,6 +455,47 @@ Meteor.Router.add('/2013-09-11/users/:id/?:q', 'GET', function(id){
 Meteor.Router.add('/2013-09-11/users?:q', 'GET', function(q){
     console.log('Users Selected Fields: ', this.request.originalUrl);
     return [200, 'Success'];
+});
+
+
+/*
+Urls of the form:
+/2013-09-17/users
+/2013-09-17/users?fields=username,emails
+/2013-09-17/users/xwdf34234ksdkdvkv
+/2013-09-17/users?fields=username,emails/xwdf34234ksdkdvkv
+/2013-09-17/users?fields=username,emails/limit=10&offset=0
+/2013-09-17/users/limit=10&offset=0
+*/
+Meteor.Router.add('/2013-09-17/users?:q', 'GET', function(q){
+    var RawUsers = MongoHelper.getRawCollection(Meteor.users);
+    console.log('Raw: ', this.request.originalUrl);
+    var urlFields = this.request.originalUrl.split('/');
+    console.log('Url fields: ', urlFields.length);
+    var future = new Future();
+    
+
+    if(urlFields.length == 3){
+        collectionNameAndModifier = urlFields[2];
+        if(collectionNameAndModifier.indexOf('&') == -1){    // No collection modifier
+            var response = RawUsers.find().toArray(function(err, items){
+                if(err){
+                    future.throw(err);
+                }
+                else{
+                    future.return(items);
+                }
+            });
+
+            var items = future.wait();
+            var stringifiedResponse = JSON.stringify(items);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
+    }
+    else if(urlFields.length == 4){
+
+    }
+
 });
 
 //*********************************End REST GET*************************************
