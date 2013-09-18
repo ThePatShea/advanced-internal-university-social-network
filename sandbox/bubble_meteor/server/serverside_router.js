@@ -553,7 +553,7 @@ function getItem(collectionName, itemId){
         }
         else{
             explore.id = explore._id;
-            delete explore.id;
+            delete explore._id;
             return explore;
         }
     }
@@ -660,6 +660,7 @@ function getExplores(limit, offset, fields, objectId){
                 explore.id = explore._id;
                 delete explore._id;
                 var response = explore;
+                console.log("EXPLORE POST: ", response);
                 return response;
             }
         }
