@@ -5,6 +5,10 @@ Template.wysiwyg2.rendered = function() {
 Template.wysiwyg2.events({
     'click .wysiwyg': function() {
       $('.wysiwyg').children('.wysiwyg-placeholder').remove();
+    },
+    
+    'click .btn-activate-hyperlink-dropdown': function() {
+      $('.hyperlink-input').focus();
     }
 });
 
