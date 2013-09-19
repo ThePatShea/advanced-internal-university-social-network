@@ -172,16 +172,35 @@ Template.onboarding.rendered = function() {
   $("#cb-form-container-onboarding").hide();
 
   var user = Meteor.users.findOne({_id: Meteor.userId()});
-  console.log("neverLoggedIn: " , user );  //TESTING
 
 if (typeof user.neverLoggedIn != "undefined") {
-  if (user.neverLoggedIn == false) {
-    Meteor.Router.to("/dashboard");
-  } else {
-    $("#cb-form-container-onboarding").show();
-    $(".onboarding-wrapper-outer").show();
-    $('.cb-form-onboarding').show();
-  }
+  var userEmails    =  user.emails;
+  var isHealthcare  =  false;
+
+  _.each(userEmails, function(email) {
+
+    if (email.address.indexOf("@") != -1) {
+      var healthCareCheck = email.address.split("@");
+
+      if (healthCareCheck[1] === "emoryhealthcare.org") { 
+        isHealthcare = true;
+      }
+
+    }
+  });
+    if (isHealthcare == false) {
+      if (user.neverLoggedIn == false) {
+        Meteor.Router.to("/dashboard");
+      } else {
+        $("#cb-form-container-onboarding").show();
+        $(".onboarding-wrapper-outer").show();
+        $('.cb-form-onboarding').show();
+      }
+    } else {
+      alert("Get out of this website!"); //TESTING
+      //Meteor.Router.to(/*TODO: You're not allowed here page*/);
+    }
+  
 }
 
   var termsAccepted = Session.get("termsAccepted");
