@@ -490,8 +490,10 @@ Template.dashboard.events({
 });
 
 Template.dashboard.rendered = function () {
-Meteor.subscribe('fiveExplorePosts');
-Meteor.subscribe('updatedPosts', Meteor.userId());
+  Session.set("isLoading", false);
+
+  Meteor.subscribe('fiveExplorePosts');
+  Meteor.subscribe('updatedPosts', Meteor.userId());
 
 	$('.carousel').carousel();
 
@@ -502,3 +504,8 @@ Meteor.subscribe('updatedPosts', Meteor.userId());
 		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
 	});
 };
+
+
+Template.dashboard.created = function() {
+  Session.set("isLoading", true);
+}
