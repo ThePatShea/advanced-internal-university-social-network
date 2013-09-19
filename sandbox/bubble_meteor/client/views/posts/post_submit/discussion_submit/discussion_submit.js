@@ -116,8 +116,9 @@ function makeDiscussionPost(){
     if (href.indexOf("http://") != 0) {
       href = "http://" + href;
       $(link).attr("href", href);
-      $(link).attr("target", "_blank");
     }
+
+    $(link).attr("target", "_blank");
   });
 
   var newBody = startingBody.html();
