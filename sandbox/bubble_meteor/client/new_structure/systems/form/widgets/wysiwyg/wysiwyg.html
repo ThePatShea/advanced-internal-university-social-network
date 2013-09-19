@@ -10,6 +10,19 @@
         </label>
         <div class="pull-right btn-toolbar btns-formatting" data-role="editor-toolbar" data-target=".wysiwyg">
           <div class="btn-group">
+            <a class="std-btn-form btn-wysiwyg " data-toggle="dropdown" data-original-title="Hyperlink">
+              <i class="icon-link"></i>
+            </a>
+            <div class="dropdown-menu input-append wysiwyg-hyperlink-dropdown">
+              <input class="hyperlink-input" placeholder="URL" type="text" data-edit="createLink"/>
+              <button class="hyperlink-btn std-btn-form" type="button">Add</button>
+            </div>
+          </div>
+
+
+
+
+          <div class="btn-group">
             <a class="std-btn-form btn-wysiwyg" data-edit="underline" title="Underline (Ctrl/Cmd+U)">{{> icon-wysiwyg-underline}}</a>
             <a class="std-btn-form btn-wysiwyg" data-edit="italic" title="Italic (Ctrl/Cmd+I)">{{> icon-wysiwyg-italic}}</a>
             <a class="std-btn-form btn-wysiwyg" data-edit="bold" title="Bold (Ctrl/Cmd+B)">{{> icon-wysiwyg-bold}}</a>
