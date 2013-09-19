@@ -106,10 +106,23 @@ function processAttachmentSelections(fileAttachments){
 
 
 function makeDiscussionPost(){
-  var startingBody = $('.cb-discussionSubmit-form').find('.wysiwyg').html();
+  var startingBody = $('.cb-discussionSubmit-form').find('.wysiwyg');
 
-  var newBody = startingBody.replace("href=","target='_blank' href=");
+  var links   = $(startingBody).find("a");
 
+  _.each(links, function(link) {
+    var href = $(link).attr("href");
+
+    if (href.indexOf("http://") != 0) {
+      href = "http://" + href;
+      $(link).attr("href", href);
+      $(link).attr("target", "_blank");
+    }
+  });
+
+  var newBody = startingBody.html();
+
+  //var newBody = newBody.replace("href=","target='_blank' href=");
 
   var postAttributes = {
     name: $('.cb-discussionSubmit-form').find('[name=name]').val(),
