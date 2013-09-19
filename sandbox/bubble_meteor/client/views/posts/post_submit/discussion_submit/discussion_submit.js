@@ -106,9 +106,14 @@ function processAttachmentSelections(fileAttachments){
 
 
 function makeDiscussionPost(){
+  var startingBody = $('.cb-discussionSubmit-form').find('.wysiwyg').html();
+
+  var newBody = startingBody.replace("href=","target='_blank' href=");
+
+
   var postAttributes = {
     name: $('.cb-discussionSubmit-form').find('[name=name]').val(),
-    body: $('.cb-discussionSubmit-form').find('.wysiwyg').html(),
+    body: newBody,
     postType: 'discussion',
     bubbleId: Session.get('currentBubbleId'),
     children: []
