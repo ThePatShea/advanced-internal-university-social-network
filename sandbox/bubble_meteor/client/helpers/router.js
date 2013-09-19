@@ -1,5 +1,6 @@
 Meteor.Router.add({
   //Login from authentication system
+  '/siteAccessDenied': 'siteAccessDenied',
   '/bbexplore': 'bbExplorePage',
   '/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
@@ -304,7 +305,7 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
+Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
 Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});

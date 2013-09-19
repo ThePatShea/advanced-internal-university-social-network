@@ -197,8 +197,9 @@ if (typeof user.neverLoggedIn != "undefined") {
         $('.cb-form-onboarding').show();
       }
     } else {
-      alert("Get out of this website!"); //TESTING
-      //Meteor.Router.to(/*TODO: You're not allowed here page*/);
+      Meteor.logout(function(){
+        Meteor.Router.to("siteAccessDenied");
+      });
     }
   
 }
