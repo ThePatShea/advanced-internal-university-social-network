@@ -174,13 +174,15 @@ Template.onboarding.rendered = function() {
   var user = Meteor.users.findOne({_id: Meteor.userId()});
   console.log("neverLoggedIn: " , user );  //TESTING
 
+if (typeof user.neverLoggedIn != "undefined") {
   if (user.neverLoggedIn == false) {
     Meteor.Router.to("/dashboard");
   } else {
     $("#cb-form-container-onboarding").show();
+    $(".onboarding-wrapper-outer").show();
     $('.cb-form-onboarding').show();
   }
-
+}
 
   var termsAccepted = Session.get("termsAccepted");
 
