@@ -1,14 +1,14 @@
 Template.wysiwyg2.rendered = function() {
   $(".wysiwyg").wysiwyg();
+
+  $(".wysiwyg-hyperlink-dropdown").hover(function() { 
+    $('.hyperlink-input').focus();
+  });
 }
 
 Template.wysiwyg2.events({
     'click .wysiwyg': function() {
       $('.wysiwyg').children('.wysiwyg-placeholder').remove();
-    },
-    
-    'click .btn-activate-hyperlink-dropdown': function() {
-      $('.hyperlink-input').focus();
     }
 });
 
