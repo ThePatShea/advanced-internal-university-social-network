@@ -491,7 +491,8 @@ Meteor.publish('sidebarBubbles', function(userId) {
     return posts = Posts.find({'exploreId': exploreId}, {
       'fields': {
         'exploreId': 1,
-        'name': 1
+        'name': 1,
+        'dateTime': 1,
       }
     });
   });

@@ -2,11 +2,12 @@
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.explorePage.created = function(){
+  validPostIds = [];
+
   Session.set("isLoading", true);
   max_scrolltop = 100;
   virtualPage = 0;
   var currentExploreId = window.location.pathname.split("/")[2];
-  //console.log('Explore Page Created');
   postIds = [];
   Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
     console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
@@ -18,7 +19,25 @@ Template.explorePage.created = function(){
     var params_find     =  {exploreId: currentExploreId};
 
 
-    var currentExplore  =  Explores.findOne({_id: currentExploreId});
+    var currentExplore  =  Explores.findOne({_id: currentExploreId}, function(currentExplore) {
+      var inputPostType   =  currentExplore.exploreType;
+
+    if (inputPostType == 'event') {
+      params_find.dateTime  =  {$gt: moment().add('hours',-4).valueOf()}
+      var params_sort       =  {dateTime:     1}
+    } else if (inputPostType == 'file') {
+      var params_sort       =  {lastDownloadTime: -1}
+    } else {
+      var params_sort       =  {lastCommentTime:  -1}
+    }
+
+    posts = Posts.find(params_find, {sort: params_sort}).fetch();
+
+
+    postIds = _.pluck(posts, "_id");
+    virtualPagePostIds = postIds.slice(0, 10);
+    });
+  /*
     var inputPostType   =  currentExplore.exploreType;
 
     if (inputPostType == 'event') {
@@ -35,11 +54,51 @@ Template.explorePage.created = function(){
 
     postIds = _.pluck(posts, "_id");
     virtualPagePostIds = postIds.slice(0, 10);
+  //*/
   });
 }
 
 
 Template.explorePage.rendered = function(){
+
+    var currentExploreId      =  Session.get('currentExploreId');
+    var currentExplore        =  Explores.findOne({_id: currentExploreId});
+
+    var params_find           =  {exploreId: currentExploreId};
+    var inputPostType         =  currentExplore.exploreType;
+
+    if (inputPostType == 'event') {
+      //params_find.dateTime    =  {$gt: moment().add('hours',-4).valueOf()}
+      var params_sort         =  {dateTime:           1}
+    } else if (inputPostType  == 'file') {
+      var params_sort         =  {lastDownloadTime:  -1}
+    } else {
+      var params_sort         =  {lastCommentTime:   -1}
+    }
+
+    var posts = Posts.find(params_find, {sort: params_sort}).fetch();
+
+    validPostIds = [];
+
+    _.each(posts, function(post) {
+      validPostIds.push(post._id);
+    });
+
+    console.log("Printing the correct thing? ",validPostIds); //TESTING
+
+    var firstTenPostIds = validPostIds.slice(0,10);
+
+    Meteor.subscribe("findPostsById", firstTenPostIds);
+
+
+
+
+
+
+
+
+
+
   var currentExploreId = window.location.pathname.split("/")[2];
   console.log('Explore Page Rendered: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
   //var posts = Posts.find({exploreId: currentExploreId}).fetch();
@@ -127,7 +186,16 @@ Template.explorePage.helpers({
   },
 
   posts: function() {
+    var orderedPosts = [];
+    _.each(validPostIds, function(postId) {
+      var post = Posts.findOne(postId);
 
+      orderedPosts.push(post);
+    });
+
+    return orderedPosts;
+
+/*
     var currentExploreId      =  Session.get('currentExploreId');
     var currentExplore        =  Explores.findOne({_id: currentExploreId});
 
@@ -135,17 +203,35 @@ Template.explorePage.helpers({
     var inputPostType         =  currentExplore.exploreType;
 
     if (inputPostType == 'event') {
-      params_find.dateTime    =  {$gt: moment().add('hours',-4).valueOf()}
-      var params_sort         =  {dateTime:     1}
+      //params_find.dateTime    =  {$gt: moment().add('hours',-4).valueOf()}
+      var params_sort         =  {dateTime:           1}
     } else if (inputPostType  == 'file') {
-      var params_sort         =  {lastDownloadTime: -1}
+      var params_sort         =  {lastDownloadTime:  -1}
     } else {
-      var params_sort         =  {lastCommentTime:  -1}
+      var params_sort         =  {lastCommentTime:   -1}
     }
 
     var posts = Posts.find(params_find, {sort: params_sort}).fetch();
 
+    var validPostIds = [];
 
+    _.each(posts, function(post) {
+      validPostIds.push(post._id);
+    });
+
+    var firstTenPostIds = validPostIds.slice(0,10);
+
+    Meteor.subscribe("findPostsById", firstTenPostIds, function() {
+      params_find._id     =  {$in: firstTenPostIds};
+
+      var posts_filtered  =  Posts.find(params_find, {sort: params_sort}).fetch();
+      
+      return posts_filtered;
+    });
+*/
+
+
+/*
     var validPostIds = [];
     for(var i=0; i < posts.length; i++) {
       var postAsId = posts[i].postAsId;
@@ -155,12 +241,13 @@ Template.explorePage.helpers({
       }
     }
 
-
-    params_find._id     =  {$in: validPostIds};
+    //params_find._id     =  {$in: validPostIds};
 
     var posts_filtered  =  Posts.find(params_find, {sort: params_sort}).fetch();
+*/
+    
 
-    return posts_filtered;
+ //   return posts_filtered;
   }
 });
 
