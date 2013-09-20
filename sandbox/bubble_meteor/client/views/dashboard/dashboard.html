@@ -1,4 +1,5 @@
 <template name="dashboard">
+
 	<div class="dashboard-cover">		
 		<div id="carousel-dashboard" class="carousel slide">
 		  <!-- Indicators -->
@@ -61,7 +62,7 @@
 					<div class="v-middle dashboard-icon-container">
 						<div class="v-inner dashboard-icon" id="dashboard-icon-3a">
 							<div>{{> icon-official}}</div>
-							<div class="dashboard-icon-text">Official<br>Events</div>
+							<div class="dashboard-icon-text">Campus<br>Events</div>
 						</div>
 						<div class="v-inner dashboard-icon" id="dashboard-icon-3b">
 							<div>{{> icon-classifieds}}</div>
@@ -69,11 +70,11 @@
 						</div>
 						<div class="v-inner dashboard-icon" id="dashboard-icon-3c">
 							<div>{{> icon-professorreviews}}</div>
-							<div class="dashboard-icon-text">Professor<br>Reviews</div>
+							<div class="dashboard-icon-text">Things to<br>do in ATL</div>
 						</div>
 						<div class="v-inner dashboard-icon" id="dashboard-icon-3d">
 							<div>{{> icon-controversial}}</div>
-							<div class="dashboard-icon-text">Controversial<br>Topics</div>
+							<div class="dashboard-icon-text">Open<br>Forum</div>
 						</div>
 					</div>
 		    	</div>
@@ -177,6 +178,8 @@
             <div></div>
             {{#each getFiveExplorePosts}}
               {{> listItem}}
+            {{else}}
+              {{> gifLoaderToParent}}
             {{/each}}
           </div>
         </div>
