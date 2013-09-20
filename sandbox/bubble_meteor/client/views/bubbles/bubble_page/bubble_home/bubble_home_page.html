@@ -1,6 +1,6 @@
 <template name="bubblePage">
 
-  <div class="visible-{{isLoading}}">
+  <div id="form-loader" class="form-loader visible-{{isLoading}}">
     {{> gifLoaderToParent}}
   </div>
     
@@ -9,6 +9,10 @@
     {{> bubbleCover}}
     {{> bubbleSectionSelector}}
     
+    <div class="visible-{{isLoading}}">
+      {{> gifLoaderToParent}}
+    </div>
+
     <div class="bubble-page-content">
         {{#if compressedUpdates _id '1'}}
           <div class="bubble-list">

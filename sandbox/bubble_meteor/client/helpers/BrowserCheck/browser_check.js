@@ -13,8 +13,10 @@ Template.browserCheck.rendered = function(){
 		//$(location).attr('href', 'https://test.emorybubble.com/browser_unsupported');
 		Meteor.Router.to('/browser_unsupported');
 	}
+/*
 	else{
 		//console.log('Browser supported.');
 		Meteor.Router.to('/dashboard');
 	}
+*/
 }

@@ -562,7 +562,8 @@ Meteor.publish('sidebarBubbles', function(userId) {
        'userType': 1,
        'lastActionTimestamp': 1,
        'neverLoggedIn': 1,
-       'profilePicture': 1
+       'profilePicture': 1,
+       'deviceToken': 1
       }
     });
   }); 
@@ -599,7 +600,8 @@ Meteor.publish('sidebarBubbles', function(userId) {
          'userType': 1,
          'lastActionTimestamp': 1,
          'profilePicture': 1,
-         'neverLoggedIn': 1,
+         'deviceToken': 1,
+         'neverLoggedIn': 1
         }
       });
     }
@@ -616,7 +618,8 @@ Meteor.publish('sidebarBubbles', function(userId) {
        'userType': 1,
        'lastActionTimestamp': 1,
        'profilePicture': 1,
-       'neverLoggedIn': 1,
+       'deviceToken': 1,
+       'neverLoggedIn': 1
       }
     });
   });
@@ -634,7 +637,8 @@ Meteor.publish('sidebarBubbles', function(userId) {
          'userType': 1,
          'lastActionTimestamp': 1,
          'profilePicture': 1,
-         'neverLoggedIn': 1,
+         'deviceToken': 1,
+         'neverLoggedIn': 1
         }
       });
     }
@@ -651,6 +655,7 @@ Meteor.publish('sidebarBubbles', function(userId) {
        'phone': 1,
        'profilePicture': 1,
        'retinaProfilePicture': 1,
+       'deviceToken': 1,
        'neverLoggedIn': 1,
        'lastUpdated': 1
       }

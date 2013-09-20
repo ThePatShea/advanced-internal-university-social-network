@@ -550,7 +550,7 @@ Meteor.Router.add('/bubbleanalytics','GET', function() {
 	var retVal = {};
 
 	start = this.request.query.start;
-	if((typeof start !== undefined) && (start != ""))
+	if((typeof start !== "undefined") && (start != ""))
 	{
 		startYear = start.substring(0,start.indexOf("-"));
 		startMonth = start.substring(start.indexOf("-")+1,start.indexOf("-", start.indexOf("-")+1));
@@ -619,4 +619,21 @@ Meteor.Router.add('/bubbleanalytics','GET', function() {
 	});
 	console.log(retVal);
 	return(200, JSON.stringify(retVal));
+});
+
+Meteor.Router.add('/mybubbles/:id/emails','GET', function(id) {
+	var bubble = Bubbles.findOne({_id: id});
+	members = [];
+	invitees = [];
+	for(i in bubble.users.members)
+	{
+		var user = Meteor.users.findOne({_id: bubble.users.members[i]});
+		members = members.concat(user.emails[0].address);
+	}
+	for(i in bubble.users.invitees)
+	{
+		var user = Meteor.users.findOne({_id: bubble.users.invitees[i]});
+		invitees = invitees.concat(user.emails[0].address);
+	}
+	return(200, "Members: " + members.toString() + "\nInvitees: " + invitees.toString());
 });

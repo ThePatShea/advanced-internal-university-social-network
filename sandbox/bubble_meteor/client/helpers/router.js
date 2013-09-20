@@ -1,5 +1,8 @@
 Meteor.Router.add({
   //Login from authentication system
+  '/siteAccessDenied': 'siteAccessDenied',
+  '/bbexplore': 'bbExplorePage',
+  '/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
   '/welcome': 'welcomePage',
   '/loggedOut': 'loggedOut',
@@ -14,7 +17,7 @@ Meteor.Router.add({
   //Onboarding page
   '/onboarding': 'onboarding',
 
-  '/bubbleanalytics': 'bubbleAnalytics',
+  //'/bubbleanalytics': 'bubbleAnalytics',
 
   '/browser_unsupported': {
     to: 'browserUnsupported'
@@ -149,7 +152,6 @@ Meteor.Router.add({
     },
 
 
-
   // Flags Related Routes
     '/flags/all': 'flagsList',
 
@@ -163,7 +165,24 @@ Meteor.Router.add({
 
   // Etc Routes
     //Capturing rogue urls, hopefully this will be a 404 page in the future
-    '/': '/',
+    '/': {
+      to: '/',
+      and: function(){
+        query = this.querystring.split('=');
+        if(query.length >0 && query[0] == 'deviceToken'){
+          if(Meteor.user()){
+            Meteor.users.update(Meteor.userId(), {$set: {deviceToken :query[1]}},  function(error) {
+              if (error) {
+                // display the error to the user
+                throwError(error.reason);
+              }
+            });
+          }else{
+            Session.set('deviceToken', query[1]);
+          }
+        }
+      }
+    },
     '/bubblevisor': {
       to: 'bubblevisor'
     },
@@ -286,7 +305,7 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
+Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
 Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});

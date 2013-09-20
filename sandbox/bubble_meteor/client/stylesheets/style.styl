@@ -1697,6 +1697,9 @@ transform(args...)
   svg
     height            42px
     width             42px
+  &:hover
+    svg
+      fill              main-light
   
 /**********  post-as-bubble-single  **********/
 
@@ -1745,6 +1748,8 @@ body
     position relative
     display block
     height 100%
+    @media (max-width: 767px)
+      display none
   .cb-form-container-onboarding
     position relative
     display block
@@ -3450,6 +3455,8 @@ cover-btns-width-small  =  130px
       background-color  main-light
       cursor            pointer
 
+.form-loader
+  display             none
 /**********          dashbaord         **********/
 
 /*********************************************************/
