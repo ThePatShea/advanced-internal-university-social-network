@@ -458,11 +458,29 @@ Template.dashboard.events({
   },
 
   'click #dashboard-icon-2a': function() {
-	location.href="https://play.google.com/store/apps/details?id=io.cordova.emorybubble";
+	//location.href="https://play.google.com/store/apps/details?id=io.cordova.emorybubble";
+        window.open('https://play.google.com/store/apps/details?id=io.cordova.emorybubble', '_blank');
   },
 
   'click #dashboard-icon-2b': function() {
-	location.href="https://itunes.apple.com/us/app/emory-bubble/id538091098";
+	//location.href="https://itunes.apple.com/us/app/emory-bubble/id538091098";
+        window.open('https://itunes.apple.com/us/app/emory-bubble/id538091098', '_blank');
+  },
+
+  'click #dashboard-icon-3a': function() {
+        Meteor.Router.to('explorePage','hk3Crz5rY4LwBfbTS');
+  },
+
+  'click #dashboard-icon-3b': function() {
+        Meteor.Router.to('explorePage','9G3DYCXWbi3uJAQkj');
+  },
+
+  'click #dashboard-icon-3c': function() {
+        Meteor.Router.to('explorePage','uuaWh9sgTM7YmPEBM');
+  },
+
+  'click #dashboard-icon-3d': function() {
+        Meteor.Router.to('explorePage','ycDfNiYzwj5TqyYvT');
   },
 
   'click .dashboard-more-updates': function() {
@@ -472,8 +490,10 @@ Template.dashboard.events({
 });
 
 Template.dashboard.rendered = function () {
-Meteor.subscribe('fiveExplorePosts');
-Meteor.subscribe('updatedPosts', Meteor.userId());
+  Session.set("isLoading", false);
+
+  Meteor.subscribe('fiveExplorePosts');
+  Meteor.subscribe('updatedPosts', Meteor.userId());
 
 	$('.carousel').carousel();
 
@@ -484,3 +504,8 @@ Meteor.subscribe('updatedPosts', Meteor.userId());
 		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
 	});
 };
+
+
+Template.dashboard.created = function() {
+  Session.set("isLoading", true);
+}
