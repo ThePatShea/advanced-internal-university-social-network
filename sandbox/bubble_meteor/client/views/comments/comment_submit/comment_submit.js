@@ -22,6 +22,8 @@ Template.commentSubmit.events({
     };
     
     Meteor.call('comment', comment, function(error, commentId) {
+      //Log creation of comment
+      Meteor.call('createLog',  "postPage", 'comment', 'submitNewComment', false);
       error && throwError(error.reason);
     });
 
@@ -30,6 +32,7 @@ Template.commentSubmit.events({
 });
 
 Template.commentSubmit.rendered = function() {
+
   $('.comment-form > .cb-submit-container > .submit-comment').click(function() {
     setTimeout(function(){
       if (!$('.cb-error').length) {

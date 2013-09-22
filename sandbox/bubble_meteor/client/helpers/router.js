@@ -203,9 +203,9 @@ Meteor.Router.filters({
       var oldLogCollection = Userlogs.find();
       var oldLogList = _.toArray(oldLogCollection.collection.docs);
       if(oldLogList.length > 0) {
-        var timestamp = oldLogList[oldLogList.length-1].submitted;
+        var timestamp = oldLogList[oldLogList.length-1].timestamp;
         //Checks if lastActionTimestamp of user is more than an hour ago
-        if(moment(new Date().getTime()).diff(moment(timestamp), 'minutes', true) >= 5){
+        if(moment(new Date().getTime()).diff(moment(timestamp), 'minutes', true) >= 30){
           hasLoggedIn = true;
         }
       }else{
@@ -213,7 +213,7 @@ Meteor.Router.filters({
       }
         
       //Logs the page that the user has switched to
-      Meteor.call('createLog', page, hasLoggedIn);
+      Meteor.call('createLog', page, "null", "login", hasLoggedIn);
       return page;
     }else if(Meteor.loggingIn()) {
       return 'loading';
