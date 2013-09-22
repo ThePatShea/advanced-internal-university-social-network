@@ -1,3 +1,5 @@
+Future = Npm.require('fibers/future');
+
 Meteor.Router.add( '/posts/:id/getfile', 'GET', function (id) { 
 
     console.log('Attempting to get ' + id);
@@ -455,6 +457,47 @@ Meteor.Router.add('/2013-09-11/users?:q', 'GET', function(q){
     return [200, 'Success'];
 });
 
+
+/*
+Urls of the form:
+/2013-09-17/users
+/2013-09-17/users?fields=username,emails
+/2013-09-17/users/xwdf34234ksdkdvkv
+/2013-09-17/users?fields=username,emails/xwdf34234ksdkdvkv
+/2013-09-17/users?fields=username,emails/limit=10&offset=0
+/2013-09-17/users/limit=10&offset=0
+*/
+Meteor.Router.add('/2013-09-17/users?:q', 'GET', function(q){
+    var RawUsers = MongoHelper.getRawCollection(Meteor.users);
+    console.log('Raw: ', this.request.originalUrl);
+    var urlFields = this.request.originalUrl.split('/');
+    console.log('Url fields: ', urlFields.length);
+    var future = new Future();
+    
+
+    if(urlFields.length == 3){
+        collectionNameAndModifier = urlFields[2];
+        if(collectionNameAndModifier.indexOf('&') == -1){    // No collection modifier
+            var response = RawUsers.find().toArray(function(err, items){
+                if(err){
+                    future.throw(err);
+                }
+                else{
+                    future.return(items);
+                }
+            });
+
+            var items = future.wait();
+            var stringifiedResponse = JSON.stringify(items);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
+    }
+    else if(urlFields.length == 4){
+
+    }
+
+});
+
 //*********************************End REST GET*************************************
 
 
@@ -510,7 +553,7 @@ function getItem(collectionName, itemId){
         }
         else{
             explore.id = explore._id;
-            delete explore.id;
+            delete explore._id;
             return explore;
         }
     }
@@ -617,6 +660,7 @@ function getExplores(limit, offset, fields, objectId){
                 explore.id = explore._id;
                 delete explore._id;
                 var response = explore;
+                console.log("EXPLORE POST: ", response);
                 return response;
             }
         }
@@ -715,6 +759,16 @@ function getPosts(limit, offset, fields, objectId){
 
 
 function getUsers(limit, offset, fields, objectId){
+
+    var RawUsers = MongoHelper.getRawCollection(Meteor.users);
+
+    //var c = new Meteor.Collection('posts');
+    var rawC = MongoHelper.getRawCollection(Meteor.users);
+
+    rawC.find({}).toArray(function(err, items){
+        console.log('Raw Results: ', items);
+    });
+
     var userCount = Meteor.users.find().count();
     var pages = Math.floor(userCount/limit);
     console.log('getUsers: ', limit, offset, fields);
@@ -904,6 +958,24 @@ function randomInt(min, max){
 }
 
 
-
+MongoHelper = {
+      getRawCollection: function(collection) {
+        var coll, db, future;
+        db = collection.find()._mongo.db;
+        coll = db.collection(collection._name);
+        if (!coll) {
+          future = new async.Future();
+          db.getCollection(collection._name, function(error, collection) {
+            if (error) {
+              future["throw"](error);
+              return;
+            }
+            return future["return"](collection);
+          });
+          coll = future.wait();
+        }
+        return coll;
+      }
+}
 
 

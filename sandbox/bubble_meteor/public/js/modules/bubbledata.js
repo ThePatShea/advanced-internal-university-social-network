@@ -18,6 +18,12 @@
 			return '/2013-09-11/users/' + this.id;
 		}
 	});
+	var ExploreInfo = Backbone.Model.extend({
+		url: function(){
+			console.log('/2013-09-11/explores/' + this.exploreId)
+			return '/2013-09-11/explores?fields=title,description,submited,lastUpdated,exploreType,exploreIcon/' + this.exploreId;
+		}
+	})
 
 
 	var ExplorePosts = Backbone.Collection.extend({
@@ -99,6 +105,10 @@
 		this.explorePosts.limit = properties.limit;
 		this.explorePosts.fields = properties.fields;
 		this.explorePosts.fetch();
+
+		this.exploreInfo = new ExploreInfo();
+		this.exploreInfo.exploreId = properties.exploreId;
+		this.exploreInfo.fetch();
 
 		this.getPage = function(page){
 			that.explorePosts.page = page;
