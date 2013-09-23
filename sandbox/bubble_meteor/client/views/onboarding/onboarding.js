@@ -44,11 +44,13 @@ Template.onboarding.events({
       } else {
           if(typeof currentUser.neverOnboarded == 'undefined'){
             Meteor.users.update({_id: currentProfileId}, {$set: {neverOnboarded: false}});
-            Meteor.Router.to('onboardingWalkThrough');
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
           }
           else if(currentUser.neverOnboarded == true){
             Meteor.users.update({_id: currentProfileId}, {$set: {neverOnboarded: false}});
-            Meteor.Router.to('onboardingWalkThrough');
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
           }
           else{
             Meteor.Router.to('/dashboard');
@@ -205,7 +207,8 @@ if (typeof user.neverLoggedIn != "undefined") {
           Meteor.Router.to("/dashboard");
         }
         else{
-          Meteor.Router.to('onboardingWalkThrough');
+          //Meteor.Router.to('onboardingWalkThrough');
+          window.location.href = '/tour/index.html';
         }
       } else {
         $("#cb-form-container-onboarding").show();
