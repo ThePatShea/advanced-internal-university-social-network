@@ -17,6 +17,8 @@ Meteor.Router.add({
   //Onboarding page
   '/onboarding': 'onboarding',
 
+  '/onboarding_walkthrough': 'onboardingWalkThrough',
+
   //'/bubbleanalytics': 'bubbleAnalytics',
 
   '/browser_unsupported': {
