@@ -1,5 +1,11 @@
+Template.updatesDropdown.created = function(){
+  //numberOfUpdates = 0;
+  updateIds = [];
+}
+
 Template.updatesDropdown.rendered = function() {
   mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+  bubblepop = new Audio('/sounds/bubblepop.wav');
 }
 
 
@@ -16,8 +22,24 @@ Template.updatesDropdown.helpers({
   compressUpdates: function(){
     var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
+
     //To combine updates with same userId, invokerId, updateType and postId
     if(updateList.length > 0) {
+      //If there are new updates then play the bubble pop sound
+      var playPop = false;
+      _.each(updateList, function(update){
+        var updateId = update._id;
+        if(updateIds.indexOf(updateId) == -1){
+          playPop = true;
+          updateIds.push(updateId);
+        }
+      });
+
+      if(playPop == true){
+        bubblepop.play();
+      }
+
+
       //To combine updates with same userId, invokerId, updateType and postId
       _.each(updateList, function(update){
         updateList = _.reject(updateList, function(newUpdate) {
