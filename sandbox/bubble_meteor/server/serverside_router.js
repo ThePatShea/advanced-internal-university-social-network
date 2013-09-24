@@ -452,10 +452,39 @@ Meteor.Router.add('/2013-09-11/users/:id/?:q', 'GET', function(id){
 });
 
 
-Meteor.Router.add('/2013-09-11/users?:q', 'GET', function(q){
+/*Meteor.Router.add('/2013-09-11/users?:q', 'GET', function(q){
     console.log('Users Selected Fields: ', this.request.originalUrl);
     return [200, 'Success'];
+});*/
+
+
+Meteor.Router.add('/2013-09-11/posts/:id', 'PUT', function(id){
+    console.log('PUT: ', this.request.body);
+
+    var properties = this.request.body;
+    var postProperties = {
+        name: properties.name,
+        body: properties.body,
+        postAsType: properties.postAsType,
+        postAsId: properties.postAsId,
+        postType: properties.postType,
+        exploreId: properties.exploreId,
+        //children: properties.children
+    }
+
+    updatePost(id, postProperties);
+    var post = Posts.findOne(id);
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(post)];
 });
+
+Meteor.Router.add('/2013-09-11/posts', 'POST', function(){
+    console.log('POST: ', this.request.body);
+    createPost(postPropeerties);
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(this.request.body)];
+});
+
+
+
 
 
 /*
@@ -837,6 +866,16 @@ function getUsers(limit, offset, fields, objectId){
 
 
 function getExplorePosts(limit, offset, fields, exploreId){
+    var explore = Explores.findOne(exploreId);
+    if(explore.exploreType == 'discussion'){
+        console.log('Disccusion');
+        var sortParams = {submitted: -1};
+    }
+    else{
+        console.log('Events');
+        var sortParams = {dateTime: -1};
+    }
+
     var postCount = Posts.find({'exploreId': exploreId}).count();
     var pages = Math.floor(postCount/limit);
     console.log('getPosts: ', limit, offset, fields);
@@ -845,7 +884,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
     }
     //var posts = Posts.find({}).skip((offset-1)*limit).limit(limit).fetch();
     if(fields.length == 0){
-        var allPosts = Posts.find({'exploreId': exploreId}).fetch();
+        var allPosts = Posts.find({'exploreId': exploreId}, {sort: sortParams}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
@@ -859,7 +898,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
         console.log('fieldString: ', fieldString);
-        var allPosts = Posts.find({'exploreId': exploreId}, {fields: JSON.parse(fieldString)}).fetch();
+        var allPosts = Posts.find({'exploreId': exploreId}, {sort: {submitted: -1}}, {fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
@@ -963,6 +1002,24 @@ function getUsersBubbles(limit, offset, fields, userId){
         var response = {'count': bubbleCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
         return response;
     }
+}
+
+
+
+function updatePost(id, postAttributes){
+    Posts.update({_id: id}, {$set: postAttributes }, function(err, response){
+        if(err){
+            return 'Error updating post';
+        }
+        else{
+            return 'Success';
+        }
+    });
+}
+
+
+function createPost(postAttributes){
+    //Meteor.call(post, postAttributes);
 }
 
 
