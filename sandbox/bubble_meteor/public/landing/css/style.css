@@ -71,14 +71,42 @@ h5.intro {
 *****************************************************************************************/body {
   background-color: #011126;
 }
+.top-message {
+  display: inline-block;
+  background-color: #B0606D;
+  width: 100%;
+  text-align: center;
+  min-height: 60px;
+  padding: 15px 0;
+}
+.top-message p {
+  font-size: 12px;
+  color: #fff;
+  font-family: 'brandon_grotesquebold';
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1.7em;
+}
+.top-message p a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 14px 3px 14px;
+  font-family: 'brandon_grotesque_regularRg';
+  font-weight: 300;
+  background-color: #944955;
+  -webkit-border-radius: 21px;
+  -moz-border-radius: 21px;
+  border-radius: 21px;
+  display: inline-block;
+}
+.top-message p a:hover {
+  background-color: #fff;
+  color: #944955;
+}
 /***************************************************************************************** 
 *********************** ICONS
 *****************************************************************************************/.icon-classifieds,
-.top-message {  display: inline-block; background-color: #B0606D; width: 100%;  text-align: center; min-height: 60px; padding: 15px 0; }
-.top-message p { font-size: 12px; color: #fff; font-family: 'brandon_grotesquebold'; text-transform: uppercase; font-weight: 900;  letter-spacing: 0.1em;  line-height: 1.7em; }
-.top-message p a { color: #fff; text-decoration: none; padding: 5px 14px 3px 14px; font-family: 'brandon_grotesque_regularRg';  font-weight: 300; background-color: #944955;  -webkit-border-radius: 21px;  -moz-border-radius: 21px; border-radius: 21px; display: inline-block; }
-.top-message p a:hover { background-color: #fff; /* change the hover color as you see fit */ color: #944955; }
-
 .icon-professor,
 .icon-deals,
 .icon-events,
@@ -883,6 +911,8 @@ h5.intro {
 }
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) {
+  .top-message p a { margin-top: 10px; }
+  .top-message p a:hover { background-color: #fff; color: #944955; }
   /*-------------- SECTION 4 --------------*/#section-4 .info-colors {
     margin-left: -95px;
     text-align: left!important;

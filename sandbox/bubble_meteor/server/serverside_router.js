@@ -1,3 +1,5 @@
+Future = Npm.require('fibers/future');
+
 Meteor.Router.add( '/posts/:id/getfile', 'GET', function (id) { 
 
     console.log('Attempting to get ' + id);
@@ -455,6 +457,70 @@ Meteor.Router.add('/2013-09-11/users?:q', 'GET', function(q){
     return [200, 'Success'];
 });
 
+
+/*
+Urls of the form:
+/2013-09-17/users
+/2013-09-17/users?fields=username,emails
+/2013-09-17/users/xwdf34234ksdkdvkv
+/2013-09-17/users?fields=username,emails/xwdf34234ksdkdvkv
+/2013-09-17/users?fields=username,emails/limit=10&offset=0
+/2013-09-17/users/limit=10&offset=0
+*/
+Meteor.Router.add('/2013-09-17/users?:q', 'GET', function(q){
+    var RawUsers = MongoHelper.getRawCollection(Meteor.users);
+    console.log('Raw: ', this.request.originalUrl);
+    var urlFields = this.request.originalUrl.split('/');
+    console.log('Url fields: ', urlFields.length);
+    var future = new Future();
+    
+
+    if(urlFields.length == 3){
+        collectionNameAndModifier = urlFields[2];
+        if(collectionNameAndModifier.indexOf('&') == -1){    // No collection modifier
+            var response = RawUsers.find().toArray(function(err, items){
+                if(err){
+                    future.throw(err);
+                }
+                else{
+                    future.return(items);
+                }
+            });
+
+            var items = future.wait();
+            var stringifiedResponse = JSON.stringify(items);
+            return [200, {'Content-type': 'application/json'}, stringifiedResponse];
+        }
+    }
+    else if(urlFields.length == 4){
+
+    }
+
+});
+
+
+
+Meteor.Router.add('/api/v0_1/:collection/:params?:modifier', 'GET', function(collection, params){
+    var paginationParams = (this.request.originalUrl.split('/')[4]).split('?')[0];
+    if(this.request.headers['x-auth-username'] != undefined && this.request.headers['x-auth-key'] != undefined){
+        var username = this.request.headers['x-auth-username'];
+        var key = this.request.headers['x-auth-key'];
+        if(paginationParams.indexOf('&') != -1){
+            var limit = (paginationParams.split('&')[0]).split('=')[0];
+            var page = (paginationParams.split('&')[1]).split('=')[0];
+        }
+        else{
+            var id = paginationParams;
+            console.log('API v0.1: ', collection, id, this.request.query);
+        }
+        console.log('API v0.1: ', collection, paginationParams, this.request.query, username, key);
+        return [200, collection];
+    }
+    else{
+        return [500, 'Permission denied.'];
+    }
+});
+
 //*********************************End REST GET*************************************
 
 
@@ -716,6 +782,16 @@ function getPosts(limit, offset, fields, objectId){
 
 
 function getUsers(limit, offset, fields, objectId){
+
+    var RawUsers = MongoHelper.getRawCollection(Meteor.users);
+
+    //var c = new Meteor.Collection('posts');
+    var rawC = MongoHelper.getRawCollection(Meteor.users);
+
+    rawC.find({}).toArray(function(err, items){
+        console.log('Raw Results: ', items);
+    });
+
     var userCount = Meteor.users.find().count();
     var pages = Math.floor(userCount/limit);
     console.log('getUsers: ', limit, offset, fields);
@@ -905,6 +981,24 @@ function randomInt(min, max){
 }
 
 
-
+MongoHelper = {
+      getRawCollection: function(collection) {
+        var coll, db, future;
+        db = collection.find()._mongo.db;
+        coll = db.collection(collection._name);
+        if (!coll) {
+          future = new async.Future();
+          db.getCollection(collection._name, function(error, collection) {
+            if (error) {
+              future["throw"](error);
+              return;
+            }
+            return future["return"](collection);
+          });
+          coll = future.wait();
+        }
+        return coll;
+      }
+}
 
 

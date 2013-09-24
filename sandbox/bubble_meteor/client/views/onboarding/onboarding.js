@@ -24,6 +24,7 @@ Template.onboarding.events({
     e.preventDefault();
 
     var currentProfileId = Meteor.userId();
+    var currentUser = Meteor.users.findOne(currentProfileId);
 
     var profileProperties = {
       lastUpdated: new Date().getTime(),
@@ -41,7 +42,19 @@ Template.onboarding.events({
       if (error) {
         throwError(error.reason);
       } else {
-        Meteor.Router.to('dashboard');
+          if(typeof currentUser.neverOnboarded == 'undefined'){
+            Meteor.users.update({_id: currentProfileId}, {$set: {neverOnboarded: false}});
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
+          }
+          else if(currentUser.neverOnboarded == true){
+            Meteor.users.update({_id: currentProfileId}, {$set: {neverOnboarded: false}});
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
+          }
+          else{
+            Meteor.Router.to('/dashboard');
+          }
       }
     });
 
@@ -172,15 +185,43 @@ Template.onboarding.rendered = function() {
   $("#cb-form-container-onboarding").hide();
 
   var user = Meteor.users.findOne({_id: Meteor.userId()});
-  console.log("neverLoggedIn: " , user );  //TESTING
 
-  if (user.neverLoggedIn == false) {
-    Meteor.Router.to("/dashboard");
-  } else {
-    $("#cb-form-container-onboarding").show();
-    $('.cb-form-onboarding').show();
-  }
+if (typeof user.neverLoggedIn != "undefined") {
+  var userEmails    =  user.emails;
+  var isHealthcare  =  false;
 
+  _.each(userEmails, function(email) {
+
+    if (email.address.indexOf("@") != -1) {
+      var healthCareCheck = email.address.split("@");
+
+      if (healthCareCheck[1] === "emoryhealthcare.org") { 
+        isHealthcare = true;
+      }
+
+    }
+  });
+    if (isHealthcare == false) {
+      if (user.neverLoggedIn == false) {
+        if(user.neverOnboarded == false){
+          Meteor.Router.to("/dashboard");
+        }
+        else{
+          //Meteor.Router.to('onboardingWalkThrough');
+          window.location.href = '/tour/index.html';
+        }
+      } else {
+        $("#cb-form-container-onboarding").show();
+        $(".onboarding-wrapper-outer").show();
+        $('.cb-form-onboarding').show();
+      }
+    } else {
+      Meteor.logout(function(){
+        Meteor.Router.to("siteAccessDenied");
+      });
+    }
+  
+}
 
   var termsAccepted = Session.get("termsAccepted");
 
