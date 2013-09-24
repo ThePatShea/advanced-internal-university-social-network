@@ -498,6 +498,29 @@ Meteor.Router.add('/2013-09-17/users?:q', 'GET', function(q){
 
 });
 
+
+
+Meteor.Router.add('/api/v0_1/:collection/:params?:modifier', 'GET', function(collection, params){
+    var paginationParams = (this.request.originalUrl.split('/')[4]).split('?')[0];
+    if(this.request.headers['x-auth-username'] != undefined && this.request.headers['x-auth-key'] != undefined){
+        var username = this.request.headers['x-auth-username'];
+        var key = this.request.headers['x-auth-key'];
+        if(paginationParams.indexOf('&') != -1){
+            var limit = (paginationParams.split('&')[0]).split('=')[0];
+            var page = (paginationParams.split('&')[1]).split('=')[0];
+        }
+        else{
+            var id = paginationParams;
+            console.log('API v0.1: ', collection, id, this.request.query);
+        }
+        console.log('API v0.1: ', collection, paginationParams, this.request.query, username, key);
+        return [200, collection];
+    }
+    else{
+        return [500, 'Permission denied.'];
+    }
+});
+
 //*********************************End REST GET*************************************
 
 
