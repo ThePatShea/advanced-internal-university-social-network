@@ -92,7 +92,7 @@
         </div>
         {{#each userBubbles}}
           <a href="{{bubblePagePath this}}" class="set-loading">
-            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}}">
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}} mybubble title-{{title}}">
               {{#if compressedUpdatesCount this._id}}
                 <div class="pull-left num-in-bubble updates-count">
                   <span class="cb-icon cb-icon-bubble">{{> icon-bubble}}</span>

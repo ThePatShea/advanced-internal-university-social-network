@@ -230,10 +230,20 @@ Template.sidebar.rendered = function() {
     adjustInterface();
 
   //Log clicking of submit error button
-  $(".btn-heading").on("click", function() {
+  $(".add-bubble").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       Meteor.call('createLog',  "sidebar", 'bubble', 'addBubbleButton', false);
+    }, 500);
+  });
+
+  //Log clicking of individual bubble
+  $(".mybubble").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Extract the bubble's title
+      var title = $(".mybubble").attr('class').split('title-')[1];
+      Meteor.call('createLog',  "sidebar", null, title, false);
     }, 500);
   });
 }

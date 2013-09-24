@@ -200,9 +200,8 @@ Meteor.Router.filters({
     if(Meteor.userId()){
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
-        console.log("this ran");
         //Logs the page that the user has switched to
-        Meteor.call('createLog', page, "null", "login");
+        Meteor.call('createLog', page, null, "login");
       }, 500);
       return page;
     }else if(Meteor.loggingIn()) {

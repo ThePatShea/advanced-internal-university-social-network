@@ -47,7 +47,7 @@ Template.bubbleCover.events({
 
 Template.bubbleCover.rendered = function(){
   //Log clicking of edit bubble button
-  $(".lbl").on("click", function() {
-    Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
+  $(".edit-bubble").on("click", function() {
+    Meteor.call('createLog',  "bubblecover", 'editBubble', 'clickEditBubbleButton', false);
   });
 }
