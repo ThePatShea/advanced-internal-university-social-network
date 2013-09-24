@@ -90,13 +90,13 @@ Deps.autorun(function() {
 		}
 */
 
-/*
+
 	// UserLog Related Subscriptions
 		currentUserLogsHandle = Meteor.subscribeWithPagination('currentUserlogs', Meteor.userId(), 10);
 		if(Meteor.user() && '3' == Meteor.user().userType) {
 			mainUserLogsHandle = Meteor.subscribeWithPagination('allUserlogs', 10);
 		}
-*/
+
 
 	// Updates Related Subscriptions
 

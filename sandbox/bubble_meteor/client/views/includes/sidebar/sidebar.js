@@ -6,8 +6,6 @@ Template.sidebar.helpers({
     }
   , subsectionPaneVisible  : function() {
       var currentSection = window.location.pathname.split("/")[1];
-      //console.log(currentSection);
-
       if ( (currentSection == 'mybubbles') || (currentSection == 'explore') || (currentSection == 'settings') )
         return true;
       else
@@ -144,8 +142,9 @@ Template.sidebar.events({
     }
 });
 
-
-
+Template.bubbleCover.created = function(){
+  mto = "";
+}
 
 Template.sidebar.rendered = function() {
   Meteor.subscribe('sidebarBubbles', Meteor.userId()); //TODO: Make this infinite scroll and put it in sidebar. TODO: Move this to sidebar.js
@@ -229,4 +228,12 @@ Template.sidebar.rendered = function() {
     });
 
     adjustInterface();
+
+  //Log clicking of submit error button
+  $(".btn-heading").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog',  "sidebar", 'bubble', 'addBubbleButton', false);
+    }, 500);
+  });
 }

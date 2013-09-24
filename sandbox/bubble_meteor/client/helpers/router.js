@@ -1,5 +1,8 @@
+var mto = "";
+
 Meteor.Router.add({
   //Login from authentication system
+  '/siteAccessDenied': 'siteAccessDenied',
   '/bbexplore': 'bbExplorePage',
   '/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
@@ -15,6 +18,13 @@ Meteor.Router.add({
 
   //Onboarding page
   '/onboarding': 'onboarding',
+
+  '/onboarding_walkthrough': {
+    to: 'onboardingWalkThrough',
+    and: function(){
+      Session.set('isLoading', true);
+    }
+  },
 
   //'/bubbleanalytics': 'bubbleAnalytics',
 
@@ -195,24 +205,12 @@ Meteor.Router.filters({
   },
   'checkLoginStatus': function(page) {
     if(Meteor.userId()){
-      //This checks if user logged in after an inactivity of 1 hour.
-      //This is done here as it is at the client side and has access
-      //to the hack around by using LocalCollections.collection.docs
-      var hasLoggedIn = false;
-      var oldLogCollection = Userlogs.find();
-      var oldLogList = _.toArray(oldLogCollection.collection.docs);
-      if(oldLogList.length > 0) {
-        var timestamp = oldLogList[oldLogList.length-1].submitted;
-        //Checks if lastActionTimestamp of user is more than an hour ago
-        if(moment(new Date().getTime()).diff(moment(timestamp), 'minutes', true) >= 5){
-          hasLoggedIn = true;
-        }
-      }else{
-        hasLoggedIn = true;
-      }
-        
-      //Logs the page that the user has switched to
-      Meteor.call('createLog', page, hasLoggedIn);
+      Meteor.clearTimeout(mto);
+      mto = Meteor.setTimeout(function() {
+        console.log("this ran");
+        //Logs the page that the user has switched to
+        Meteor.call('createLog', page, "null", "login");
+      }, 500);
       return page;
     }else if(Meteor.loggingIn()) {
       return 'loading';
@@ -304,7 +302,7 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
+Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
 Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
