@@ -115,22 +115,77 @@
 		this.exploreInfo.exploreId = properties.exploreId;
 		this.exploreInfo.fetch();
 
-		this.getPage = function(page){
+		this.fetchPage = function(page){
+			if(page == undefined) {page = that.explorePosts.page};
+			if(page >= that.explorePosts.pages) {page = that.explorePosts.pages-1};
+			if(page < 0) {page = 0};
 			that.explorePosts.page = page;
 			that.explorePosts.fetch();
-		}
+			return page;
+		};
 
-		this.nextPage = function(){
+		this.fetchNextPage = function(callback){
 			if(that.explorePosts.page < that.explorePosts.pages){
 				that.explorePosts.page = that.explorePosts.page + 1;
 				that.explorePosts.fetch();
 			}
-		}
+			callback(that.explorePosts.page);
+			//return that.explorePosts.page;
+		};
 
-		this.prevPage = function(){
+		this.fetchPrevPage = function(callback){
 			if(that.explorePosts.page > 0){
 				that.explorePosts.page = that.explorePosts.page - 1;
 				that.explorePosts.fetch();
+			}
+			//callback();
+			return that.explorePosts.page;
+		};
+
+		this.getCurrentPage = function(){
+			return that.explorePosts.page;
+		};
+
+		this.getNumPages = function(){
+			return that.explorePosts.pages;
+		};
+
+		this.setFields = function(fieldsString){
+			if(fieldString === "long")
+			{
+				fields = [];
+			}
+			else if(fieldString === "medium")
+			{
+				fields = [];
+			}
+			else if(fieldString === "short")
+			{
+				fields = [];
+			}
+			else
+			{
+				fields = fieldString.split(",");
+			}
+			that.explorePosts.fields = fields;
+			return fields;
+		};
+
+		this.setLimit = function(limit){
+			that.explorePosts.limit = limit;
+			return limit;
+		}
+
+		this.setExplore = function(id){
+			if(id != undefined)
+			{
+				that.exploreId = id;
+				return id;
+			}
+			else
+			{
+				that.exploreId = this.exploreId;
+				return;
 			}
 		}
 	}

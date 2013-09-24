@@ -33,13 +33,13 @@ Template.explorePageBackbone.rendered = function(){
 		currentExploreId = window.location.pathname.split("/")[2];
 		es = new BubbleData.ExploreSection({
 			exploreId: currentExploreId,
-			limit: 10,
+			limit: 2,
 			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
 		});
 		es.explorePosts.on("change", function() {
 			console.log("explore posts changed");
 			exploreDep.changed();
-		})
+		});
 		es.exploreBubbles.on("change", function() {
 			console.log("explore bubbles changed");
 			exploreDep.changed();
@@ -85,7 +85,32 @@ Template.explorePageBackbone.helpers({
 	  	console.log("RETVAL: ", retVal);
 	    return retVal;
 	}
-  }, 
+  },
+  pages: function() {
+  	var retVal = []
+	if(es != undefined)
+	{
+		for(var i=0; i<es.getNumPages(); i++)
+		{
+			retVal.push(i+1);
+		}
+	}
+	else
+	{
+		retVal = [1];
+	}
+	return retVal;
+  },
+  isActivePage: function() {
+	if(es != undefined)
+	{
+	  	if(this == es.getCurrentPage()+1)
+	  	{
+	  		return true;
+	  	}
+	}
+  	return false;
+  },
   exploreInfo: function(){
   	if(es != undefined)
 	{
@@ -95,4 +120,32 @@ Template.explorePageBackbone.helpers({
   getExploreId: function(){
   	return Session.get("currentExploreId");
   }
+});
+
+Template.explorePageBackbone.events({
+	'click .pageitem': function() {
+		console.log("PAGEITEM: ", this);
+	},
+	'click .prev': function() {
+		es.fetchPrevPage(function(res){
+			exploreDep.changed();
+			console.log("CALLED", res);
+		});
+		//var currentPage = es.getCurrentPage();
+		//es.fetchPage(currentPage - 1);
+		// es.explorePosts.on("change", function() {
+		// 	console.log("explore posts changed");
+		// 	exploreDep.changed();
+		// });
+		
+	},
+	'click .next': function() {
+		//es.fetchNextPage();
+		var currentPage = es.getCurrentPage();
+		es.fetchPage(currentPage + 1);
+		es.explorePosts.on("change", function() {
+			console.log("explore posts changed");
+			exploreDep.changed();
+		});
+	}
 });
