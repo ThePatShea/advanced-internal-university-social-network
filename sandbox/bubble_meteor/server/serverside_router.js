@@ -898,7 +898,7 @@ function getExplorePosts(limit, offset, fields, exploreId){
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
         console.log('fieldString: ', fieldString);
-        var allPosts = Posts.find({'exploreId': exploreId}, {sort: {submitted: -1}}, {fields: JSON.parse(fieldString)}).fetch();
+        var allPosts = Posts.find({'exploreId': exploreId}, {fields: JSON.parse(fieldString)}, {sort: {submitted: -1}}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
