@@ -36,7 +36,10 @@ Template.explorePageBackbone.rendered = function(){
 			limit: 2,
 			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
 		});
-		es.explorePosts.on("change", function() {
+		es.fetchPage(es.getCurrentPage(), function() {
+			Session.set("isLoading", false);
+		});
+		/*es.explorePosts.on("change", function() {
 			console.log("explore posts changed");
 			exploreDep.changed();
 		});
@@ -49,7 +52,7 @@ Template.explorePageBackbone.rendered = function(){
 			console.log("explore users changed");
 			exploreDep.changed();
       		Session.set("isLoading", false);
-		});
+		});*/
 	}
 }
 
@@ -123,8 +126,12 @@ Template.explorePageBackbone.helpers({
 });
 
 Template.explorePageBackbone.events({
-	'click .pageitem': function() {
-		console.log("PAGEITEM: ", this);
+	'click .pageitem': function(e) {
+		console.log("PAGEITEM: ", e.target.id);
+		es.fetchPage(parseInt(e.target.id)-1, function(res){
+			exploreDep.changed();
+			console.log("CALLED", res);
+		});
 	},
 	'click .prev': function() {
 		es.fetchPrevPage(function(res){
@@ -140,12 +147,9 @@ Template.explorePageBackbone.events({
 		
 	},
 	'click .next': function() {
-		//es.fetchNextPage();
-		var currentPage = es.getCurrentPage();
-		es.fetchPage(currentPage + 1);
-		es.explorePosts.on("change", function() {
-			console.log("explore posts changed");
+		es.fetchNextPage(function(res){
 			exploreDep.changed();
+			console.log("CALLED", res);
 		});
 	}
 });

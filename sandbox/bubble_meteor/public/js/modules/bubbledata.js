@@ -45,7 +45,7 @@
 				return '/2013-09-11/explores/' + this.exploreId + '/posts?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
 			}
 			else{
-				return '/2013-09-11/explores/' + this.exploreId + '/posts/limit=' + this.limit + '&page=' + this.page;
+				return '/2013-09-11/explores/' + this.exploreId + '/posts?fields=name/limit=' + this.limit + '&page=' + this.page;
 			}
 		},
 		parse: function(response){
@@ -115,31 +115,48 @@
 		this.exploreInfo.exploreId = properties.exploreId;
 		this.exploreInfo.fetch();
 
-		this.fetchPage = function(page){
+		this.fetchPage = function(page, callback){
 			if(page == undefined) {page = that.explorePosts.page};
 			if(page >= that.explorePosts.pages) {page = that.explorePosts.pages-1};
 			if(page < 0) {page = 0};
 			that.explorePosts.page = page;
-			that.explorePosts.fetch();
+			that.explorePosts.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(page);
+						}
+					}
+				});
 			return page;
 		};
 
-		this.fetchNextPage = function(){
-			if(that.explorePosts.page < that.explorePosts.pages){
+		this.fetchNextPage = function(callback){
+			if(that.explorePosts.page < that.explorePosts.pages-1){
 				that.explorePosts.page = that.explorePosts.page + 1;
-				that.explorePosts.fetch();
+				that.explorePosts.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(that.explorePosts.page);
+						}
+					}
+				});
 			}
-			//callback(that.explorePosts.page);
-			//return that.explorePosts.page;
 		};
 
-		this.fetchPrevPage = function(){
+		this.fetchPrevPage = function(callback){
 			if(that.explorePosts.page > 0){
 				that.explorePosts.page = that.explorePosts.page - 1;
-				that.explorePosts.fetch();
+				that.explorePosts.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(that.explorePosts.page);
+						}
+					}
+				});
 			}
-			//callback();
-			return that.explorePosts.page;
 		};
 
 		this.getCurrentPage = function(){
