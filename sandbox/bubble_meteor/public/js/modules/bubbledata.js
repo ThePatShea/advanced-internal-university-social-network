@@ -124,16 +124,16 @@
 			return page;
 		};
 
-		this.fetchNextPage = function(callback){
+		this.fetchNextPage = function(){
 			if(that.explorePosts.page < that.explorePosts.pages){
 				that.explorePosts.page = that.explorePosts.page + 1;
 				that.explorePosts.fetch();
 			}
-			callback(that.explorePosts.page);
+			//callback(that.explorePosts.page);
 			//return that.explorePosts.page;
 		};
 
-		this.fetchPrevPage = function(callback){
+		this.fetchPrevPage = function(){
 			if(that.explorePosts.page > 0){
 				that.explorePosts.page = that.explorePosts.page - 1;
 				that.explorePosts.fetch();
