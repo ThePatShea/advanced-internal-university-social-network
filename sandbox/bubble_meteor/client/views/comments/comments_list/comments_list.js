@@ -10,10 +10,10 @@ Template.commentsList.rendered = function() {
     //Checks if "add comment" button hides or shows comment text input
     if($('.btn-add').attr('class').indexOf('collapsed') == -1){
       //Logs when user clicks on add new comment
-      Meteor.call('createLog',  "postPage", 'comment', 'addCommentButton', false);
+      Meteor.call('createLog', Meteor.Router.page(), 'createComment', 'addCommentButton');
     }else{
       //Logs when user clicks on cancel add new comment
-      Meteor.call('createLog',  "postPage", 'comment', 'cancelAddCommentButton', false);
+      Meteor.call('createLog', Meteor.Router.page(), 'createComment', 'cancelAddCommentButton');
     }
 
     $('[name=body]').focus();

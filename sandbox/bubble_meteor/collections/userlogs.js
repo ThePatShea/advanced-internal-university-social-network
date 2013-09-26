@@ -3,9 +3,6 @@ Userlogs = new Meteor.Collection('userlogs');
 Meteor.methods({
   createLog: function(page, form, action){
     //This checks if user logged in after an inactivity of 1 hour.
-    //This is done here as it is at the client side and has access
-    //to the hack around by using LocalCollections.collection.docs
-
     var hasLoggedIn = false;
     var oldLogCollection = Userlogs.find();
     if(oldLogCollection.collection){
@@ -20,7 +17,7 @@ Meteor.methods({
         hasLoggedIn = true;
       }
     }
-
+    
     var log = {
       timestamp: new Date().getTime(),
       userId: Meteor.userId(),

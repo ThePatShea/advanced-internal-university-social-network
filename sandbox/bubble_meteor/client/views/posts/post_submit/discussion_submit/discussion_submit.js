@@ -1,6 +1,7 @@
 Template.discussionSubmit.created = function () {
   discussionFiles = [];
   discussionDeletedFileIndices = [];
+  var mto = "";
   this.validateForm = function() {
     var count = 0;
 
@@ -24,6 +25,46 @@ Template.discussionSubmit.created = function () {
 
 Template.discussionSubmit.rendered = function () {
   this.validateForm();
+
+  //Log clicking of description wisiwyg
+  $(".discussion-title").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'titleTextbox');
+    }, 500);
+  });
+
+  //Log clicking of description wisiwyg
+  $(".wysiwyg").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'descriptionTextbox');
+    }, 500);
+  });
+
+  //Log clicking of description wisiwyg
+  $(".file-chooser-invisible").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'attachFiles');
+    }, 500);
+  });
+
+  //Log clicking of submit button
+  $(".words-main").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'submitButton');
+    }, 500);
+  });
+
+  //Log clicking of submit error button
+  $(".words-error").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'submitErrorButton');
+    }, 500);
+  });
 }
 
 Template.discussionSubmit.events({

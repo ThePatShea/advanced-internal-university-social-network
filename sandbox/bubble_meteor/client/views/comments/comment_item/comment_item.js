@@ -22,7 +22,7 @@ Template.commentItem.events({
 		if (confirm("Delete this comment?")) {
 			Meteor.call('deleteComment', this._id);
       //Log deleting of comment
-      Meteor.call('createLog',  "postPage", 'comment', 'deleteCommentButton', false);
+      Meteor.call('createLog', Meteor.Router.page(), 'comment', 'deleteCommentButton');
     }
   }
 });

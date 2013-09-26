@@ -1,6 +1,7 @@
 Template.eventSubmit.created = function(){
   eventMainURL = "/img/Event.jpg";
   eventRetinaURL = "/img/Event.jpg";
+  var mto = "";
   this.validateForm = function() {
     var count = 0;
 
@@ -217,5 +218,70 @@ Template.eventSubmit.rendered = function() {
   } else {
     Session.set("DisableCrop","");
   }
+
+
+  //Log clicking of name textbox
+  $(".event-name").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'nameTextbox');
+    }, 500);
+  });
+
+  //Log clicking of location textbox
+  $(".event-location").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'locationTextbox');
+    }, 500);
+  });
+
+  //Log clicking of date 
+  $(".date").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'date');
+    }, 500);
+  });
+
+  //Log clicking of time 
+  $(".time").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'time');
+    }, 500);
+  });
+
+  //Log clicking of picture 
+  $(".event-picture").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'picture');
+    }, 500);
+  });
+
+  //Log clicking of details 
+  $(".event-details").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'details');
+    }, 500);
+  });
+
+  //Log clicking of submit button
+  $(".words-main").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'submitButton');
+    }, 500);
+  });
+
+  //Log clicking of submit error button
+  $(".words-error").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'submitErrorButton');
+    }, 500);
+  });
 
 }

@@ -233,7 +233,7 @@ Template.sidebar.rendered = function() {
   $(".add-bubble").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "sidebar", 'bubble', 'addBubbleButton', false);
+      Meteor.call('createLog', 'createbubble', 'addBubbleButton');
     }, 500);
   });
 
@@ -243,7 +243,7 @@ Template.sidebar.rendered = function() {
     mto = Meteor.setTimeout(function() {
       //Extract the bubble's title
       var title = $(".mybubble").attr('class').split('title-')[1];
-      Meteor.call('createLog',  "sidebar", null, title, false);
+      Meteor.call('createLog', null, title);
     }, 500);
   });
 }
