@@ -3,7 +3,10 @@
 	
 	var ExplorePost = Backbone.Model.extend({
 		url: function(){
-			return '/2013-09-11/post/' + this.id;
+			return '/2013-09-11/posts/' + this.id;
+		},
+		initialize: function(){
+			console.log("ExplorePost Model initiated", this.id);
 		}
 	});
 
@@ -71,14 +74,17 @@
 					var serverModel = model.toJSON();
 					if(serverModel.postAsType == 'user'){
 						var newUser = new ExploreUser({id: serverModel.postAsId});
-						newUser.fetch();
+						newUser.fetch({
+							success: function(){
+								exploreDep.changed();
+							}
+						});
 						that.add(newUser);
 					}
 				});
 			}
 		}
 	});
-
 
 	var ExploreBubbles = Backbone.Collection.extend({
 		model: ExploreBubble,
@@ -89,13 +95,23 @@
 					var serverModel = model.toJSON();
 					if(serverModel.postAsType == 'bubble'){
 						var newBubble = new ExploreBubble({id: serverModel.postAsId});
-						newBubble.fetch();
+						newBubble.fetch({
+							success: function(){
+								exploreDep.changed();
+							}
+						});
 						that.add(newBubble);
 					}
 				});
 			}
 		}
 	});
+
+	var CurrentPost = function(id){
+		this.explorePost = new ExplorePost();
+		this.explorePost.id = id;
+		this.explorePost.fetch();
+	};
 
 	var ExploreSection = function(properties){
 		var that = this;
@@ -210,5 +226,6 @@
 	BubbleData.ExploreSection = ExploreSection;
 	BubbleData.ExploreUsers = ExploreUsers;
 	BubbleData.ExploreBubbles = ExploreBubbles;
+	BubbleData.CurrentPost = CurrentPost;
 
 }());

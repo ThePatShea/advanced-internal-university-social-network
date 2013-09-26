@@ -1,0 +1,109 @@
+<template name="explorePostPageBB">
+  {{#with currentExplore}}
+    {{> exploreCover}}
+  {{/with}}
+  {{#with getCurrentPost}}
+    <div class="bubble-page-content post-page">
+      <div class="top-btns">
+        <a href="/explore/{{currentExplore._id}}/home">
+          <button class="pull-left std-btn-light with-left-icon btn-back">
+            <span class="left-icon">{{> icon-back}}</span>
+            <span>back</span>
+          </button>
+        </a>
+
+        <button class="pull-right std-btn-light btn-flag">
+          <span>{{> icon-flag}}</span>
+          <span class="flag-text visible-{{isFlagged}}">flagged</span>
+        </button>
+
+        {{#if returnFalse}}<!--This is commenting out code-->
+          <a class="visible-{{isAdmin}}" href="/mybubbles/{{bubbleId}}/posts/{{_id}}/edit/{{postType}}">
+            <button class="pull-right std-btn-light with-left-icon btn-edit">
+              <span class="left-icon">{{> icon-edit}}</span>
+              <span>edit</span>
+            </button>
+          </a>
+        {{/if}}
+
+
+        
+
+
+
+
+{{#if ownsPostExplore}}
+        <button class="pull-right std-btn-light with-left-icon btn-edit" data-toggle="collapse" data-target="#edit-{{postType}}">
+          <span class="left-icon">{{> icon-edit}}</span>
+          <span>edit</span>
+        </button>
+
+        <button class="pull-right std-btn-light with-left-icon btn-delete">
+          <span class="left-icon">{{> icon-cancel}}</span>
+          <span>delete</span>
+        </button>
+{{/if}}
+
+
+
+
+
+      </div>
+
+      {{#if isEvent}}
+        <div id="edit-event" class="collapse">
+          {{> exploreEditEvent}}
+        </div>
+      {{/if}}
+     {{#if notEvent}}
+        {{#if isDiscussion}}
+          <div id="edit-discussion" class="collapse">
+            {{> exploreDiscussionEdit}}
+          </div>
+        {{/if}}
+
+
+        {{#if isFile}}
+          <div id="edit-file" class="collapse">
+            {{> editFile}}
+          </div>
+        {{/if}}
+     {{/if}}
+      <div class="post-heading">
+      {{#if postedAsUser}}
+        <a href="{{userProfilePath this.userId}}">
+          <div class="author-pic">
+            <div class="bubble-bg">{{> icon-bubble}}</div>
+            <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
+          </div>
+        </a>
+      {{else}}
+        <a href="{{bubblePagePath this.postAsId}}">
+          <div class="pull-left category-{{getPostAsBubbleCategory}}-fill post-as-bubble-single">
+            {{> icon-bubble}}
+          </div>
+        </a>
+      {{/if}}
+        <div class="name">{{decodeURI name}}</div>
+        <div class="subtitle">posted {{timestampToFromNow submitted}} by {{displayName}}</div>
+      </div>
+
+      {{> postAttributes}}
+      {{> commentsList}}
+
+      {{#if isEvent}}
+        
+        </br>
+        {{#if notAttending}}
+          <button class="btn btn-small btn-success attending" type="button">I'M GOING</button>
+        {{/if}}
+        {{#if isAttending}}
+          <button class="btn btn-small btn-success attending" type="button">I'M NOT GOING</button>
+        {{/if}}
+        {{#with attendees}}
+          <br />
+        {{/with}}
+      {{/if}}
+    </div>
+  {{/with}}
+</template>
