@@ -134,6 +134,9 @@ Meteor.methods({
   attendEvent: function(postId,username){
     post = Posts.findOne(postId);
     if (!_.contains(post.attendees,username)) {
+      //Log user clicking on I'm Going
+      Meteor.call('createLog', "bubblePage", null, 'imgoing');
+
       Posts.update({_id:postId},
       {
         $addToSet: {attendees:username}
@@ -141,6 +144,9 @@ Meteor.methods({
       //Create an update for user who are in the event
       createNewAttendeeUpdate(postId);
     }else{
+      //Log user clicking on Not Going
+      Meteor.call('createLog', "bubblePage", null, 'notgoing');
+
       Posts.update({_id:postId},
       {
         $pull: {attendees:username}
