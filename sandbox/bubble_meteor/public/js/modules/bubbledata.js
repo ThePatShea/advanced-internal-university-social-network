@@ -26,7 +26,7 @@
 			console.log('/2013-09-11/explores/' + this.exploreId)
 			return '/2013-09-11/explores?fields=title,description,submited,lastUpdated,exploreType,exploreIcon/' + this.exploreId;
 		}
-	})
+	});
 
 
 	var ExplorePosts = Backbone.Collection.extend({
@@ -107,11 +107,204 @@
 		}
 	});
 
-	var CurrentPost = function(id){
-		this.explorePost = new ExplorePost();
-		this.explorePost.id = id;
-		this.explorePost.fetch();
-	};
+	var BubbleInfo = Backbone.Model.extend({
+		url: function(){
+			console.log('/2013-09-11/bubbles/' + this.bubbleId)
+			return '/2013-09-11/bubbles?fields=title,description,submited,lastUpdated,profilePicture/' + this.bubbleId;
+		}
+	});
+
+	var BubblePost = Backbone.Model.extend({
+		url: function(){
+			return '/2013-09-11/posts/' + this.id;
+		}
+	});
+
+	var BubbleUser = Backbone.Model.extend({
+		url: function(){
+			return '/2013-09-11/users/' + this.id;
+		}
+	});
+
+	var BubblePosts = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: [],
+		model: BubblePost,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/posts?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/posts?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.posts, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+	var BubbleUsers = Backbone.Collection.extend({
+		model: BubbleUser,
+		initialize: function(){
+			this.watch = function(collection){
+				var that = this;
+				collection.on('add', function(model){
+					var serverModel = model.toJSON();
+					var newUser = new BubbleUser({id: serverModel.userId});
+					newUser.fetch();
+					that.add(newUser);
+				});
+			}
+		}
+	});
+
+	var BubbleMembers = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: [],
+		model: BubbleUser,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/users?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/users?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.users, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+	var MyBubbles = function(properties){
+		var that = this;
+
+		this.bubblePosts = new BubblePosts();
+		this.bubbleUsers = new BubbleUsers();
+		this.bubbleMembers = new BubbleMembers()
+		this.bubbleUsers.watch(this.bubblePosts);
+
+		this.bubblePosts.bubbleId = properties.bubbleId;
+		this.bubblePosts.limit = properties.limit;
+		this.bubblePosts.fields = properties.fields;
+		this.bubblePosts.fetch();
+
+		this.bubbleInfo = new BubbleInfo();
+		this.bubbleInfo.bubbleId = properties.bubbleId;
+		this.bubbleInfo.fetch();
+
+		this.fetchPage = function(page, callback){
+			if(page == undefined) {page = that.bubblePosts.page};
+			if(page >= that.bubblePosts.pages) {page = that.bubblePosts.pages-1};
+			if(page < 0) {page = 0};
+			that.bubblePosts.page = page;
+			that.bubblePosts.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(page);
+						}
+					}
+				});
+			return page;
+		};
+
+		this.fetchNextPage = function(callback){
+			if(that.bubblePosts.page < that.bubblePosts.pages-1){
+				that.bubblePosts.page = that.bubblePosts.page + 1;
+				that.bubblePosts.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(that.bubblePosts.page);
+						}
+					}
+				});
+			}
+		};
+
+		this.fetchPrevPage = function(callback){
+			if(that.bubblePosts.page > 0){
+				that.bubblePosts.page = that.bubblePosts.page - 1;
+				that.bubblePosts.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(that.bubblePosts.page);
+						}
+					}
+				});
+			}
+		};
+
+		this.getCurrentPage = function(){
+			return that.bubblePosts.page;
+		};
+
+		this.getNumPages = function(){
+			return that.bubblePosts.pages;
+		};
+
+		this.setFields = function(fieldsString){
+			if(fieldString === "long")
+			{
+				fields = [];
+			}
+			else if(fieldString === "medium")
+			{
+				fields = [];
+			}
+			else if(fieldString === "short")
+			{
+				fields = [];
+			}
+			else
+			{
+				fields = fieldString.split(",");
+			}
+			that.bubblePosts.fields = fields;
+			return fields;
+		};
+
+		this.setLimit = function(limit){
+			that.bubblePosts.limit = limit;
+			return limit;
+		}
+
+		this.setBubble = function(id){
+			if(id != undefined)
+			{
+				that.bubbleId = id;
+				return id;
+			}
+			else
+			{
+				that.bubbleId = this.bubbleId;
+				return;
+			}
+		}
+	}
 
 	var ExploreSection = function(properties){
 		var that = this;
@@ -226,6 +419,6 @@
 	BubbleData.ExploreSection = ExploreSection;
 	BubbleData.ExploreUsers = ExploreUsers;
 	BubbleData.ExploreBubbles = ExploreBubbles;
-	BubbleData.CurrentPost = CurrentPost;
+	BubbleData.MyBubbles = MyBubbles;
 
 }());
