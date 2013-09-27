@@ -8,8 +8,6 @@ function parseApiOptions(ctx) {
 	};
 }
 
-// Related management
-
 // Security related stuff
 function postsFilterBubbles(ctx) {
 	return {
@@ -29,28 +27,114 @@ function postsDeleteCheck(ctx, id) {
 	return postsSecurityCheck(ctx, obj);
 }
 
+
 // Endpoints
 Meteor.startup(function() {
 	// Posts
-	Meteor.Router.add('/api/v1_0/posts', 'GET', RestCrud.apiQuery(Posts, {
-		name: 'posts',
-		apiOptsFn: parseApiOptions,
-		queryFn: postsFilterBubbles,
-	}));
+	RestCrud.makeGenericApi('/api/v1_0/posts', Posts, {
+		query: {
+			name: 'posts',
+			apiOpts: parseApiOptions,
+			query: postsFilterBubbles
+		},
+		queryOne: {
+			apiOpts: parseApiOptions,
+			check: postsSecurityCheck
+		},
+		create: {
+			check: postsSecurityCheck
+		},
+		update: {
+			check: postsSecurityCheck
+		},
+		remove: {
+			check: postsDeleteCheck
+		}
+	});
 
-	Meteor.Router.add('/api/v1_0/posts', 'POST', RestCrud.apiCreate(Posts, {
-		check: postsSecurityCheck
-	}));
+	// Explores
+	RestCrud.makeGenericApi('/api/v1_0/explores', Explores, {
+		query: {
+			name: 'explores',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
 
-	Meteor.Router.add('/api/v1_0/posts/:id', 'GET', RestCrud.apiQueryOne(Posts, {
-		check: postsSecurityCheck
-	}));
+	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Posts, 'exploreId', {
+		query: {
+			name: 'posts',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
 
-	Meteor.Router.add('/api/v1_0/posts/:id', 'PUT', RestCrud.apiUpdate(Posts, {
-		check: postsSecurityCheck
-	}));
+	// Bubbles
+	RestCrud.makeGenericApi('/api/v1_0/bubbles', Bubbles, {
+		query: {
+			name: 'bubbles',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
 
-	Meteor.Router.add('/api/v1_0/posts/:id', 'DELETE', RestCrud.apiDelete(Posts, {
-		check: postsDeleteCheck
-	}));
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/posts', Posts, 'bubbleId', {
+		query: {
+			name: 'posts',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
+
+	// Comments
+	RestCrud.makeGenericApi('/api/v1_0/comments', Comments, {
+		query: {
+			name: 'comments',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
+
+	// Updates
+	RestCrud.makeGenericApi('/api/v1_0/updates', Updates, {
+		query: {
+			name: 'updates',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
+
+	// Users
+	RestCrud.makeGenericApi('/api/v1_0/users', Meteor.users, {
+		query: {
+			name: 'users',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
+
+	// Userlogs
+	RestCrud.makeGenericApi('/api/v1_0/userlogs', Userlogs, {
+		query: {
+			name: 'userlogs',
+			apiOpts: parseApiOptions
+		},
+		queryOne: {
+			apiOpts: parseApiOptions
+		}
+	});
 });

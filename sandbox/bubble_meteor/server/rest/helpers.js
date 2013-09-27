@@ -16,6 +16,18 @@ this.RestHelpers = {
 		};
 	},
 
+	mergeObjects: function(target, source) {
+		var result = {};
+
+		for (var n in target)
+			result[n] = target[n];
+
+		for (var n in source)
+			result[n] = source[n];
+
+		return result;
+	},
+
 	// Get list of fields from query string value
 	getFieldList: function(fieldList) {
 		if (fieldList) {
@@ -127,8 +139,28 @@ this.RestHelpers = {
 		return future.wait() === 1;
 	},
 
-	// HTTP helpers
+	// Response helpers
 	jsonResponse: function(code, payload) {
 		return [code, {'Content-Type': 'application/json'}, JSON.stringify(payload)];
+	},
+
+	makeQueryResponse: function(apiOptions, queryOptions, data, viewOptions) {
+		// Generate result
+		var name = (viewOptions && viewOptions.name) || 'items';
+
+		var result = {
+			count: data.count,
+			pages: Math.floor(data.count / queryOptions.limit) + ((data.count % queryOptions.limit > 0) ? 1 : 0),
+			page: apiOptions.page
+		};
+
+		// Rename _id to id
+		for (var n in data.items) {
+			this.fromMongoModel(data.items[n]);
+		}
+
+		result[name] = data.items;
+
+		return this.jsonResponse(200, result);
 	}
 };

@@ -1,134 +1,185 @@
 this.RestCrud = {
-	apiQuery: function(collection, opts) {
-		return function() {
-			// Get API options
-			var apiOptions = {};
+	apiQuery: function(ctx, collection, opts) {
+		// Get API options
+		var apiOptions = {};
 
-			if (opts && opts.apiOptsFn)
-				apiOptions = opts.apiOptsFn(this);
+		if (opts.apiOpts)
+			apiOptions = opts.apiOpts(ctx);
 
-			// Make query
-			var queryOptions = RestHelpers.buildOptions(apiOptions);
+		// Make query
+		var queryOptions = RestHelpers.buildOptions(apiOptions);
 
-			var query = null;
-			if (opts && opts.queryFn)
-				query = opts.queryFn(this);
+		var query = null;
+		if (opts.query)
+			query = opts.query(ctx, query);
 
-			var data = RestHelpers.mongoFind(collection, query, apiOptions.fields || null, queryOptions);
+		var data = RestHelpers.mongoFind(collection, query, apiOptions.fields, queryOptions);
 
-			// Generate result
-			var name = (opts && opts.name) || 'items';
-
-			var result = {
-				count: data.count,
-				pages: Math.floor(data.count / queryOptions.limit) + ((data.count % queryOptions.limit > 0) ? 1 : 0),
-				page: apiOptions.page
-			};
-
-			// Rename _id to id
-			for (var n in data.items)
-				RestHelpers.fromMongoModel(data.items[n]);
-
-			result[name] = data.items;
-
-			return RestHelpers.jsonResponse(200, result);
-		};
+		// Generate result
+		return RestHelpers.makeQueryResponse(apiOptions, queryOptions, data, opts);
 	},
 
-	apiQueryOne: function(collection, opts) {
-		return function(id) {
-			// Get API options
-			var apiOptions = {};
+	apiQueryOne: function(ctx, id, collection, opts) {
+		// Get API options
+		var apiOptions = {};
 
-			if (opts && opts.apiOptsFn)
-				apiOptions = opts.apiOptsFn(this);
+		if (opts.apiOpts)
+			apiOptions = opts.apiOpts(ctx);
 
-			// Run query
-			var obj = RestHelpers.mongoFindOne(collection, id, apiOptions.fields || null);
-			if (!obj) {
-				// TODO: Better error logging/reporting
-				return RestHelpers.jsonResponse(404, 'Not found.');
+		// Run query
+		var obj = RestHelpers.mongoFindOne(collection, id, apiOptions.fields);
+		if (!obj) {
+			// TODO: Better error logging/reporting
+			return RestHelpers.jsonResponse(404, 'Not found.');
+		}
+
+		if (opts && opts.check) {
+			if (!opts.check(ctx, obj)) {
+				return RestHelpers.jsonResponse(401, 'Access denied.');
 			}
+		}
 
-			if (opts && opts.check) {
-				if (!opts.check(obj)) {
-					return RestHelpers.jsonResponse(401, 'Access denied.');
-				}
-			}
+		// Rename _id to id
+		obj = RestHelpers.fromMongoModel(obj);
 
-			// Rename _id to id
-			obj = RestHelpers.fromMongoModel(obj);
-
-			return RestHelpers.jsonResponse(200, obj);
-		};
+		return RestHelpers.jsonResponse(200, obj);
 	},
 
-	apiCreate: function(collection, opts) {
-		return function() {
-			// Safety checks
-			var obj = this.request.body;
+	apiCreate: function(ctx, collection, opts) {
+		// Safety checks
+		var obj = ctx.request.body;
 
-			if (obj.id) {
+		if (obj.id) {
+			// TODO: Better error logging/reporting
+			return RestHelpers.jsonResponse(401, 'Access denied.');
+		}
+		obj.id = new Meteor.Collection.ObjectID().toHexString()
+
+		if (opts && opts.check) {
+			if (!opts.check(ctx, obj)) {
 				// TODO: Better error logging/reporting
 				return RestHelpers.jsonResponse(401, 'Access denied.');
 			}
-			obj.id = new Meteor.Collection.ObjectID().toHexString()
+		}
 
-			if (opts && opts.check) {
-				if (!opts.check(this, obj)) {
-					// TODO: Better error logging/reporting
-					return RestHelpers.jsonResponse(401, 'Access denied.');
-				}
-			}
+		// Rename id to _id
+		obj = RestHelpers.toMongoModel(obj);
 
-			// Rename id to _id
-			obj = RestHelpers.toMongoModel(obj);
+		if (opts.preprocess)
+			obj = opts.preprocess(ctx, obj);
 
-			var result = RestHelpers.mongoInsert(collection, obj)
-			return RestHelpers.jsonResponse(200, result);
-		};
+		var result = RestHelpers.mongoInsert(collection, obj)
+		return RestHelpers.jsonResponse(200, result);
 	},
 
-	apiUpdate: function(collection, opts) {
-		return function(id) {
-			// Safety checks
-			var obj = this.request.body;
+	apiUpdate: function(ctx, id, collection, opts) {
+		// Safety checks
+		var obj = ctx.request.body;
 
-			if (obj.id != id) {
+		if (obj.id != id) {
+			// TODO: Better error logging/reporting
+			return RestHelpers.jsonResponse(401, 'Access denied.');
+		}
+
+		if (opts.check) {
+			if (!opts.check(ctx, obj)) {
 				// TODO: Better error logging/reporting
 				return RestHelpers.jsonResponse(401, 'Access denied.');
 			}
+		}
 
-			if (opts && opts.check) {
-				if (!opts.check(this, obj)) {
-					// TODO: Better error logging/reporting
-					return RestHelpers.jsonResponse(401, 'Access denied.');
-				}
-			}
+		obj = RestHelpers.toMongoModel(obj);
 
-			obj = RestHelpers.fromMongoModel(obj);
+		if (opts.preprocess)
+			obj = opts.preprocess(ctx, obj);
 
-			var result = RestHelpers.mongoUpdate(collection, id, obj)
+		var result = RestHelpers.mongoUpdate(collection, id, obj)
 
-			if (result)
-				return RestHelpers.jsonResponse(200, 'Model was updated.');
+		if (result)
+			return RestHelpers.jsonResponse(200, 'Model was updated.');
 
+		return RestHelpers.jsonResponse(404, 'Model not found');
+	},
+
+	apiDelete: function(ctx, id, collection, opts) {
+		var obj = RestHelpers.mongoFindOne(collection, id);
+
+		if (!obj)
 			return RestHelpers.jsonResponse(404, 'Model not found');
+
+		if (opts.check) {
+			if (!opts.check(ctx, obj))
+				return RestHelpers.jsonResponse(401, 'Access denied.');
 		}
+
+		var result = RestHelpers.mongoDelete(collection, id);
+		if (result)
+			return RestHelpers.jsonResponse(200, 'Model was deleted.');
+
+		return RestHelpers.jsonResponse(404, 'Model not found.');
 	},
 
-	apiDelete: function(collection, opts) {
+	// Handler generation functions
+	makeQuery: function(collection, opts) {
+		var self = this;
+		opts = opts || {};
+
+		return function() {
+			return self.apiQuery(this, collection, opts);
+		};
+	},
+
+	makeCreate: function(collection, opts) {
+		var self = this;
+		opts = opts || {};
+
+		return function() {
+			return self.apiCreate(this, collection, opts);
+		};
+	},
+
+	makeQueryOne: function(collection, opts) {
+		var self = this;
+		opts = opts || {};
+
 		return function(id) {
-			if (opts && opts.check) {
-				if (!opts.check(this, id))
-					return RestHelpers.jsonResponse(401, 'Access denied.');
-			}
+			return self.apiQueryOne(this, id, collection, opts);
+		};
+	},
 
-			var result = RestHelpers.mongoDelete(collection, id);
-			if (result)
-				return RestHelpers.jsonResponse(200, 'Model was deleted.');
+	makeUpdate: function(collection, opts) {
+		var self = this;
+		opts = opts || {};
 
-			return RestHelpers.jsonResponse(404, 'Model not found.');
-		}
+		return function(id) {
+			return self.apiUpdate(this, id, collection, opts);
+		};
+	},
+
+	makeDelete: function(collection, opts) {
+		var self = this;
+		opts = opts || {};
+
+		return function(id) {
+			return self.apiDelete(this, id, collection, opts);
+		};
+	},
+	/**
+	 * Create and register CRUD endpoints
+	 * @param  {string} baseUrl
+	 * @param  {Meteor.Collection} collection
+	 * @param  {object} opts
+	 * @param {object} opts.query GET endpoint options
+	 * @param {object} opts.create POST endpoint options
+	 * @param {object} opts.queryOne GET one endpoint options
+	 * @param {object} opts.update PUT endpoint options
+	 * @param {object} opts.remove DELETE endpoint options
+	 */
+	makeGenericApi: function(baseUrl, collection, opts) {
+		Meteor.Router.add(baseUrl, 'GET', this.makeQuery(collection, opts.query || null));
+		Meteor.Router.add(baseUrl, 'POST', this.makeCreate(collection, opts.create || null));
+		Meteor.Router.add(baseUrl + '/:id', 'GET', this.makeQueryOne(collection, opts.queryOne || null));
+		Meteor.Router.add(baseUrl + '/:id', 'PUT', this.makeUpdate(collection, opts.update || null));
+		Meteor.Router.add(baseUrl + '/:id', 'DELETE', this.makeDelete(collection, opts.remove || null));
 	}
 };
