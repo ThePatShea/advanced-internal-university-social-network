@@ -381,6 +381,7 @@ Meteor.Router.add('/2013-09-11/explores/:id/?:q', 'GET', function(id){
 
 
 Meteor.Router.add('/2013-09-11/bubbles/:id/?:q', 'GET', function(id){
+    console.log('Bubbles with subcollection: ', this.request.originalUrl);
     var urlSections = this.request.originalUrl.split('/');
     var fields = [];
     var limit = 10;
@@ -660,8 +661,14 @@ function getSubCollection(collectionName, collectionId, subCollectionName, limit
     }
     else if(collectionName == 'bubbles'){
         var bubbleId = collectionId;
-        var response = getBubblePosts(limit, offset, fields, bubbleId);
-        return response;
+        if(subCollectionName == 'posts'){
+            var response = getBubblePosts(limit, offset, fields, bubbleId);
+            return response;
+        }
+        else if(subCollectionName == 'users'){
+            var response = getBubbleUsers(limit, offset, fields, bubbleId);
+            return response;
+        }
     }
     else if(collectionName == 'users'){
         var userId = collectionId;
@@ -932,6 +939,38 @@ function getBubblePosts(limit, offset, fields, bubbleId){
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
+        return response;
+    }
+}
+
+
+function getBubbleUsers(limit, offset, fields, bubbleId){
+    var bubble = Bubbles.findOne({_id: bubbleId});
+    var bubbleUserIds = bubble.users.admins.concat(bubble.users.members);
+    var userCount = Meteor.users.find({_id: {$in: bubbleUserIds}}).count();
+
+    var pages = Math.floor(userCount/limit);
+    if(pages*limit < userCount){
+        pages = pages + 1;
+    }
+
+    if(fields.length == 0){
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'users': bubbleUsers};
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'users': bubbleUsers};
         return response;
     }
 }
