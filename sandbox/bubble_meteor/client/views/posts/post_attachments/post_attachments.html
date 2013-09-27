@@ -4,10 +4,12 @@
   
   <div class="post-attachments">
     <h4 class="small-heading attachments-heading">attachments:</h4>
-    {{#each attachmentList}}
-      <a href="{{file}}" download="{{decodeURI name}}">
-	      {{> listItem}}
-	  </a>
-    {{/each}}
+      {{#each attachmentList}}
+        {{#if listAttachments}}
+          <a href="{{file}}" download="{{decodeURI name}}">
+    	      {{> listItemBB}}
+          </a>
+        {{/if}}
+      {{/each}}
   </div>
 </template>

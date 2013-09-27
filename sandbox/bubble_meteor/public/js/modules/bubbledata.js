@@ -7,6 +7,7 @@
 		},
 		initialize: function(){
 			console.log("ExplorePost Model initiated", this.id);
+			console.log("THIS: ", this);
 		}
 	});
 
@@ -414,8 +415,37 @@
 				return;
 			}
 		}
-	}
+	};
 
+	var ExplorePostPage = function(id, callback){
+		this.explorePost = new ExplorePost();
+		this.explorePost.id = id;
+		this.explorePost.fetch({
+			async: false,
+			success: function() {
+				if(callback && typeof callback == "function")
+				{
+					callback();
+				}
+			}
+		});
+
+		// this.getBubbleTitle = function(callback){
+		// 	this.exploreBubble = new ExploreBubble();
+		// 	this.post = this.explorePost.toJSON();
+		// 	this.exploreBubble.id = this.post.postAsId;
+		// 	this.exploreBubble.fetch({
+		// 		success: function() {
+		// 			if(callback && typeof callback == "function")
+		// 			{
+		// 				callback();
+		// 			}
+		// 		}
+		// 	});
+		// };
+	};
+
+	BubbleData.ExplorePostPage = ExplorePostPage;
 	BubbleData.ExploreSection = ExploreSection;
 	BubbleData.ExploreUsers = ExploreUsers;
 	BubbleData.ExploreBubbles = ExploreBubbles;

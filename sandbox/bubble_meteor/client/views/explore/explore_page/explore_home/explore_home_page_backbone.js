@@ -34,7 +34,7 @@ Template.explorePageBackbone.rendered = function(){
 		es = new BubbleData.ExploreSection({
 			exploreId: currentExploreId,
 			limit: 10,
-			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
+			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount']
 		});
 		es.fetchPage(es.getCurrentPage(), function() {
 			Session.set("isLoading", false);
