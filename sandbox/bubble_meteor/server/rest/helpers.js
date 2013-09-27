@@ -1,8 +1,11 @@
 var Future = Npm.require('fibers/future');
 
+var DEFAULT_LIMIT = 10;
+var MAX_LIMIT = 50;
+
 this.RestHelpers = {
-	/* Return callback function that will either rethrow exception or
-	   satisfy future with a result */
+	// Return callback function that will either rethrow exception or
+	// satisfy future with a result
 	bindFuture: function(future) {
 		return function(err, result) {
 			if (err) {
@@ -13,7 +16,7 @@ this.RestHelpers = {
 		};
 	},
 
-	/* Get list of fields from query string value */
+	// Get list of fields from query string value
 	getFieldList: function(fieldList) {
 		if (fieldList) {
 			var fields = fieldList.split(',');
@@ -28,19 +31,39 @@ this.RestHelpers = {
 		return null;
 	},
 
-	/* Generate MongoDB options */
-	buildOptions: function(sort, page, limit) {
-		var options = {
-			limit: limit
+	// Generate MongoDB options
+	buildOptions: function(apiOptions) {
+		if (apiOptions) {
+			var options = {};
+
+			options.limit = apiOptions.limit || DEFAULT_LIMIT;
+
+			if (options.limit > MAX_LIMIT) {
+				options.limit = MAX_LIMIT;
+			}
+
+			if (apiOptions.page) {
+				options.skip = apiOptions.page * options.limit;
+			}
+
+			return options;
+		}
+
+		return {
+			limit: DEFAULT_LIMIT
 		};
+	},
 
-		if (sort)
-			options['sort'] = sort;
+	fromMongoModel: function(model) {
+		model.id = model._id;
+		delete model._id;
+		return model;
+	},
 
-		if (page)
-			options['skip'] = page * limit;
-
-		return options;
+	toMongoModel: function(model) {
+		model._id = model.id;
+		delete model.id;
+		return model;
 	},
 
 	// MongoDB helpers
@@ -102,5 +125,10 @@ this.RestHelpers = {
 
 		rawCollection.remove({_id: id}, {w: 1}, this.bindFuture(future));
 		return future.wait() === 1;
+	},
+
+	// HTTP helpers
+	jsonResponse: function(code, payload) {
+		return [code, {'Content-Type': 'application/json'}, JSON.stringify(payload)];
 	}
 };
