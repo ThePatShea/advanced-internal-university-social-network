@@ -162,6 +162,7 @@
 				var that = this;
 				collection.on('add', function(model){
 					var serverModel = model.toJSON();
+					console.log('Servermodel userId: ', serverModel.userId);
 					var newUser = new BubbleUser({id: serverModel.userId});
 					newUser.fetch();
 					that.add(newUser);
@@ -174,7 +175,7 @@
 		bubbleId : 'none',
 		limit: 10,
 		page: 0,
-		fields: [],
+		fields: ['username', 'name', 'profilePicture'],
 		model: BubbleUser,
 		url: function(){
 			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
@@ -210,6 +211,9 @@
 		this.bubblePosts.limit = properties.limit;
 		this.bubblePosts.fields = properties.fields;
 		this.bubblePosts.fetch();
+
+		this.bubbleMembers.bubbleId = properties.bubbleId;
+		this.bubbleMembers.fetch();
 
 		this.bubbleInfo = new BubbleInfo();
 		this.bubbleInfo.bubbleId = properties.bubbleId;
@@ -292,6 +296,86 @@
 			that.bubblePosts.limit = limit;
 			return limit;
 		}
+
+
+		this.fetchMembersPage = function(page, callback){
+			if(page == undefined) {page = that.bubbleMembers.page};
+			if(page >= that.bubbleMembers.pages) {page = that.bubbleMembers.pages-1};
+			if(page < 0) {page = 0};
+			that.bubbleMembers.page = page;
+			that.bubbleMembers.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(page);
+						}
+					}
+				});
+			return page;
+		};
+
+		this.fetchNextMembersPage = function(callback){
+			if(that.bubbleMembers.page < that.bubbleMembers.pages-1){
+				that.bubbleMembers.page = that.bubbleMembers.page + 1;
+				that.bubbleMembers.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(that.bubbleMembers.page);
+						}
+					}
+				});
+			}
+		};
+
+		this.fetchPrevMembersPage = function(callback){
+			if(that.bubbleMembers.page > 0){
+				that.bubbleMembers.page = that.bubbleMembers.page - 1;
+				that.bubbleMembers.fetch({
+					success: function() {
+						if(callback && (typeof callback === "function"))
+						{
+							callback(that.bubbleMembers.page);
+						}
+					}
+				});
+			}
+		};
+
+		this.getCurrentMembersPage = function(){
+			return that.bubbleMembers.page;
+		};
+
+		this.getNumMembersPages = function(){
+			return that.bubbleMembers.pages;
+		};
+
+		this.setMembersFields = function(fieldsString){
+			if(fieldString === "long")
+			{
+				fields = [];
+			}
+			else if(fieldString === "medium")
+			{
+				fields = [];
+			}
+			else if(fieldString === "short")
+			{
+				fields = [];
+			}
+			else
+			{
+				fields = fieldString.split(",");
+			}
+			that.bubbleMembers.fields = fields;
+			return fields;
+		};
+
+		this.setMembersLimit = function(limit){
+			that.bubbleMembers.limit = limit;
+			return limit;
+		}
+
 
 		this.setBubble = function(id){
 			if(id != undefined)
