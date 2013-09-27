@@ -112,4 +112,5 @@ Template.listItemBB.events({
 });
 
 Template.listItemBB.rendered = function(){
+  console.log("LIBB: ", this);
 }
