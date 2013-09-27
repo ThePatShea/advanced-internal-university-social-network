@@ -143,7 +143,7 @@ Meteor.Router.add({
       and: function(id){Session.set('currentExploreId', id);}
     },
     '/explore/:_expId/posts/:_pId': {
-      to: 'explorePostPage',
+      to: 'explorePostPageBB',
       and: function(expId, pId){
         Session.set('currentExploreId', expId);
         Session.set('currentPostId', pId);

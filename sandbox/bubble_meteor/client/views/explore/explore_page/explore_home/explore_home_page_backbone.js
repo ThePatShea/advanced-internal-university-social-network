@@ -33,7 +33,7 @@ Template.explorePageBackbone.rendered = function(){
 		currentExploreId = window.location.pathname.split("/")[2];
 		es = new BubbleData.ExploreSection({
 			exploreId: currentExploreId,
-			limit: 2,
+			limit: 10,
 			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime']
 		});
 		es.fetchPage(es.getCurrentPage(), function() {

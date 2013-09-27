@@ -1,6 +1,7 @@
 Template.listItemBB.helpers({
     getPostAsUser: function() {
       //return Meteor.users.findOne(this.postAsId);
+      console.log("ES: ", es.exploreUsers.toJSON());
       return this.user;
     },
     /*
@@ -96,7 +97,7 @@ Template.listItemBB.events({
           }
       }
       else if(typeof this.exploreId != 'undefined'){
-        Meteor.Router.to('explorePostPage', this.exploreId, this.id);
+        Meteor.Router.to('explorePostPageBB', this.exploreId, this.id);
       }
       else if(typeof this.userType != 'undefined'){
         Meteor.Router.to('userProfile', this.id);
