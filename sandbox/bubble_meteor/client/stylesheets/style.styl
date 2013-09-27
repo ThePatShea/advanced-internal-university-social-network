@@ -1777,6 +1777,7 @@ align-with-post-item(n)
     cursor                 pointer
     background             white
     .profile-pic-container
+      position: relative;
       .profile-pic
         border-color           main-light
     .update-icon-container
@@ -1984,7 +1985,6 @@ navbar-height        =  60px
     border-left            1px solid navbar-border-color
 
 .navbar
-  border-bottom          1px solid navbar-border-color
   text-transform         uppercase
   width                  100%
   letter-spacing         1px
@@ -2183,6 +2183,8 @@ navbar-height        =  60px
   .pane
     overflow-y         auto
     float              left
+    border-top      1px solid navbar-border-color // Removed the border top from the .navbar and made it a border top here as gio requsted / Joe
+
     .btn-nav
       width            100%
     &.section
@@ -2191,7 +2193,7 @@ navbar-height        =  60px
       overflow           visible
       width              100px
       height             100%
-      z-index            30
+      z-index            100 // Arrow z-index problem / Joe
       .btn-nav
         fontize(main, medium, uppercase, 10px)
         border-bottom      1px solid #436C88
@@ -2543,6 +2545,16 @@ cover-btns-width-small  =  130px
     position                   relative
     height                     76px
     width                      76px
+    .profile-pic
+      -moz-border-radius       70px;
+      -webkit-border-radius    70px;
+      border-radius            70px;
+      width                    67px;
+      height                   67px;
+      position                 absolute;
+      left                     3px;
+      top                      3px;
+      // A fix to position the bubble icon picture. / Joe
     @media (min-width: 768px)
       display                  block
     @media (max-width: 767px)
