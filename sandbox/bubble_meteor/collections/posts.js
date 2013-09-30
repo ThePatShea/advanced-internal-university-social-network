@@ -244,6 +244,7 @@ createPostWithAttachments = function(postAttributes, fileList){
 
 updatePostWithAttachments = function(id, postAttributes, fileList){
   var discussionPost = Posts.findOne({_id: id});
+  console.log("DISCUSSION POST: ", discussionPost); 
   var newChildren = [];
 
   for(var i=0; i < discussionPost.children.length; i++){
@@ -329,7 +330,7 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
         }
         else{
           console.log('Successfully updated');
-          Meteor.Router.to('postPage', discussionPost.bubbleId, discussionPost._id);
+            Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
         }
       });
     }
@@ -341,7 +342,8 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
         }
         else{
           console.log('Successfully updated');
-          Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
+          //explorePageDep.changed();
+          Meteor.Router.to('explorePostPage', discussionPost.exploreId, discussionPost._id);
         }
       });
     }

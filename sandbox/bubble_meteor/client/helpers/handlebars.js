@@ -204,7 +204,10 @@ Handlebars.registerHelper('ownsPost', function() {
 Handlebars.registerHelper('ownsPostExplore', function() {
   if ( this.postAsId == Meteor.userId() ) {
     return true;
-  } else {
+  } else if(this.postAsType === "bubble" && this.userId == Meteor.userId()){
+    return true;
+  }
+  else {
     return false;
   }
 });

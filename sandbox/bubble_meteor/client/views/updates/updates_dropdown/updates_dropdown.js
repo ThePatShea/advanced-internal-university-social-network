@@ -335,7 +335,9 @@ Template.update.helpers({
       if(nameList.length > 1){
         content = content.replace('is', 'are');
       }
-      return this.invokerName + content;
+      this.user = Meteor.users.findOne({'username': this.invokerName}, {'fields': 'name'});
+      return this.user.name + content;
+      //return this.invokerName + content;
     }else{
       return this.content;
     }

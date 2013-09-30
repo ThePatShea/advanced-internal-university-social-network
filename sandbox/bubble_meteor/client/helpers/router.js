@@ -152,6 +152,16 @@ Meteor.Router.add({
         Meteor.subscribe('singlePost', pId);
       }
     },
+    '/explore/:_expId/posts/:_pId/updated': {
+      to: 'explorePostPage',
+      and: function(expId, pId){
+        Session.set('currentExploreId', expId);
+        Session.set('currentPostId', pId);
+        Meteor.subscribe('comments', pId);
+        //Meteor.subscribe('currentExplore', expId);
+        Meteor.subscribe('singlePost', pId);
+      }
+    },
     '/explore': {
       to: 'exploreAll',
       and: function(){
