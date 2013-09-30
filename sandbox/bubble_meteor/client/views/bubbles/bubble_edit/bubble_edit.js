@@ -346,6 +346,7 @@ Template.bubbleEdit.events({
 
 
 Template.bubbleEdit.created = function(){
+  mto = "";
   discussionFiles = [];
   discussionDeletedFileIndices = [];
   this.validateForm = function() {
@@ -498,5 +499,65 @@ Template.bubbleEdit.rendered = function(){
     $(this).addClass("active");
   });
 
+  //Log clicking of title textbox
+  $(".required").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickNameTextbox', false);
+    }, 500);
+  });
+
+  //Log clicking of category
+  $(".categoryBox").on("click", function() {
+    var category = _.find($('.categoryBox'), function(category){
+      if(category.className.indexOf('active') !== -1){
+        return category;
+      }
+    });
+    Meteor.call('createLog',  "createBubble", 'createBubble', 'clickCategory', false);
+
+  });
+
+  //Log clicking of cover photo
+  $(".attach-cover-photo").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickCoverPhoto', false);
+    }, 500);
+  });
+
+  //Log clicking of profile photo
+  $(".attach-profile-photo").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickProfilePhoto', false);
+    }, 500);
+  });
+
+  //Log clicking of description wisiwyg
+  $(".wysiwyg").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickDescriptionTextbox', false);
+    }, 500);
+  });
+
+  //Log clicking of submit button
+  $(".words-main").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      console.log("this ran");
+      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickSubmitButton', false);
+    }, 500);
+  });
+
+  //Log clicking of submit error button
+  $(".words-error").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      console.log("this ran");
+      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickSubmitErrorButton', false);
+    }, 500);
+  });
 
 }

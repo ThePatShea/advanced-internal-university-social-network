@@ -129,7 +129,7 @@
           {{/if}}
         </div>
         {{#each publicExplores}}
-          <a href="{{explorePagePath this._id}}" class="set-loading">
+          <a href="/explore/{{this._id}}/home" class="set-loading">
             <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this._id}}">
 
             <span class="cb-icon cb-icon-other {{getExploreIconName this}}">
@@ -176,6 +176,13 @@
           <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3">
             <span class="cb-icon cb-icon-other">{{> icon-support}}</span>
             <span class="lbl">Support & Feedback</span>
+            <div class="selected-arrow">{{> icon-arrow-right}}</div>
+          </button>
+        </a>
+        <a href="{{onboardingWalkThroughPath}}" class="set-loading">
+          <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3">
+            <span class="cb-icon cb-icon-other">{{> icon-tutorial}}</span>
+            <span class="lbl">Tour</span>
             <div class="selected-arrow">{{> icon-arrow-right}}</div>
           </button>
         </a>

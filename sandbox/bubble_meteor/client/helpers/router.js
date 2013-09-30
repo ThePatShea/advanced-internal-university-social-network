@@ -1,3 +1,5 @@
+var mto = "";
+
 Meteor.Router.add({
   //Login from authentication system
   '/siteAccessDenied': 'siteAccessDenied',
@@ -16,6 +18,13 @@ Meteor.Router.add({
 
   //Onboarding page
   '/onboarding': 'onboarding',
+
+  '/onboarding_walkthrough': {
+    to: 'onboardingWalkThrough',
+    and: function(){
+      Session.set('isLoading', true);
+    }
+  },
 
   //'/bubbleanalytics': 'bubbleAnalytics',
 
@@ -130,11 +139,11 @@ Meteor.Router.add({
   //Explore Related Routes
     '/explore/create': 'exploreSubmit',
     '/explore/:id/home': {
-      to: 'explorePage',
+      to: 'explorePageBackbone',
       and: function(id){Session.set('currentExploreId', id);}
     },
     '/explore/:_expId/posts/:_pId': {
-      to: 'explorePostPage',
+      to: 'explorePostPageBB',
       and: function(expId, pId){
         Session.set('currentExploreId', expId);
         Session.set('currentPostId', pId);
@@ -196,24 +205,12 @@ Meteor.Router.filters({
   },
   'checkLoginStatus': function(page) {
     if(Meteor.userId()){
-      //This checks if user logged in after an inactivity of 1 hour.
-      //This is done here as it is at the client side and has access
-      //to the hack around by using LocalCollections.collection.docs
-      var hasLoggedIn = false;
-      var oldLogCollection = Userlogs.find();
-      var oldLogList = _.toArray(oldLogCollection.collection.docs);
-      if(oldLogList.length > 0) {
-        var timestamp = oldLogList[oldLogList.length-1].submitted;
-        //Checks if lastActionTimestamp of user is more than an hour ago
-        if(moment(new Date().getTime()).diff(moment(timestamp), 'minutes', true) >= 5){
-          hasLoggedIn = true;
-        }
-      }else{
-        hasLoggedIn = true;
-      }
-        
-      //Logs the page that the user has switched to
-      Meteor.call('createLog', page, hasLoggedIn);
+      Meteor.clearTimeout(mto);
+      mto = Meteor.setTimeout(function() {
+        console.log("this ran");
+        //Logs the page that the user has switched to
+        Meteor.call('createLog', page, "null", "login");
+      }, 500);
       return page;
     }else if(Meteor.loggingIn()) {
       return 'loading';

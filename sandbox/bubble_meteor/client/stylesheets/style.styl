@@ -1716,6 +1716,44 @@ transform(args...)
   
 /**********  post-as-bubble-single  **********/
 
+/**********   Explicit Pagination   **********/
+ul.pagination
+ margin 30px 0 20px 0
+ text-align center
+ li
+  display inline-block
+  a.active
+   background-color #A5BBC9
+   color #fff
+  a.next,
+  a.prev
+   font-size 11px
+   padding 8px 16px 6px 16px
+   line-height 14px
+  a 
+   text-align center
+   font-size 14px
+   margin 0 3px
+   text-decoration none
+   text-transform uppercase
+   font-family "brandon-grotesque" sans-serif
+   font-weight 700
+   border 1px solid #BECDD5
+   padding 10px 0 8px 0
+   min-width 30px
+   display inline-block
+   line-height 1em
+   vertical-align middle
+   -webkit-border-radius 32px
+   -moz-border-radius 32px
+   border-radius 32px
+   color #2D5972
+
+   &:hover
+    background-color #A5BBC9
+    color #fff
+/**********   Explicit Pagination   **********/
+
 
 /***************  Multi-Purpose Elements   ***************/
 
@@ -1790,6 +1828,7 @@ align-with-post-item(n)
     cursor                 pointer
     background             white
     .profile-pic-container
+      position: relative;
       .profile-pic
         border-color           main-light
     .update-icon-container
@@ -1997,7 +2036,6 @@ navbar-height        =  60px
     border-left            1px solid navbar-border-color
 
 .navbar
-  border-bottom          1px solid navbar-border-color
   text-transform         uppercase
   width                  100%
   letter-spacing         1px
@@ -2196,6 +2234,7 @@ navbar-height        =  60px
   .pane
     overflow-y         auto
     float              left
+
     .btn-nav
       width            100%
     &.section
@@ -2204,7 +2243,7 @@ navbar-height        =  60px
       overflow           visible
       width              100px
       height             100%
-      z-index            30
+      z-index            100 // Arrow z-index problem / Joe
       .btn-nav
         fontize(main, medium, uppercase, 10px)
         border-bottom      1px solid #436C88
@@ -2392,6 +2431,8 @@ body
 
 #main
   overflow-y               auto
+  border-top      1px solid navbar-border-color // Removed the border top from the .navbar and made it a border top here as gio requsted / Joe
+
 
 .sidebar-collapse
   line-height              navbar-height
@@ -2556,6 +2597,16 @@ cover-btns-width-small  =  130px
     position                   relative
     height                     76px
     width                      76px
+    .profile-pic
+      -moz-border-radius       70px;
+      -webkit-border-radius    70px;
+      border-radius            70px;
+      width                    67px;
+      height                   67px;
+      position                 absolute;
+      left                     3px;
+      top                      3px;
+      // A fix to position the bubble icon picture. / Joe
     @media (min-width: 768px)
       display                  block
     @media (max-width: 767px)
@@ -3450,9 +3501,9 @@ cover-btns-width-small  =  130px
     margin               50px 30px 20px 30px
   @media (max-width: 767px)
     margin               40px 20px 20px 20px
-.dashboard-updates
-  width               100%
-  margin-bottom       50px
+  .dashboard-updates
+    width               100%
+    margin-bottom       50px
   .dashboard-more-updates
     padding             2px 10px
     color               main-xlight
@@ -3474,3 +3525,69 @@ cover-btns-width-small  =  130px
 
 /*********************************************************/
 
+
+
+/********************************************Added by Joe ***********************************************************/
+/*-------------- CSS3 Animations --------------*/ 
+
+// This is the class the initiates the animation it needs to be on the element itself
+// .animated
+//   -webkit-animation-fill-mode both
+//   -moz-animation-fill-mode both
+//   -ms-animation-fill-mode both
+//   -o-animation-fill-mode both
+//   animation-fill-mode both
+//   -webkit-animation-duration 2s
+//   -moz-animation-duration 2s
+//   -ms-animation-duration 2s
+//   -o-animation-duration 2s
+//   animation-duration 2s
+//   &.hinge
+//     -webkit-animation-duration 2s
+//     -moz-animation-duration 2s
+//     -ms-animation-duration 2s
+//     -o-animation-duration 2s
+//     animation-duration 2s
+
+// @-webkit-keyframes
+//   fadeInRight
+//     0% {
+//     opacity 0
+//     -webkit-transform translateX(20px)
+
+// 100%
+//   opacity 1
+//   -webkit-transform translateX(0)
+//   opacity 1
+//   -moz-transform translateX(0)
+//   opacity 1
+//   -o-transform translateX(0)
+//   opacity 1
+//   transform translateX(0)
+
+// }
+//   @-moz-keyframes
+//     fadeInRight
+//       0% {
+//     opacity 0
+//       -moz-transform translateX(20px)
+//   @-o-keyframes
+//     fadeInRight
+//       0% {
+//     opacity 0
+//       -o-transform translateX(20px)
+//   @keyframes
+//     fadeInRight
+//       0% {
+//     opacity 0
+//       transform translateX(20px)
+
+//   // This is the animation class fade in right
+//   .fadeInRight
+//     -webkit-animation-name fadeInRight
+//     -moz-animation-name fadeInRight
+//     -o-animation-name fadeInRight
+//     animation-name fadeInRight
+
+
+/********************************************************************************************************************/

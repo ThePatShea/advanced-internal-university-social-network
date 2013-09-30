@@ -21,6 +21,8 @@ Template.commentItem.events({
 		event.preventDefault();
 		if (confirm("Delete this comment?")) {
 			Meteor.call('deleteComment', this._id);
+      //Log deleting of comment
+      Meteor.call('createLog',  "postPage", 'comment', 'deleteCommentButton', false);
     }
   }
 });

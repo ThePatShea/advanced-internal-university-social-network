@@ -32,7 +32,7 @@ exports.analytics = function(req, res){
 
 	var bubbleanalytics_options = {
 		host: 'test.emorybubble.com',
-		port: '443',
+		port: '443,'
 		path: path,
 		method: 'GET',
 		headers: {

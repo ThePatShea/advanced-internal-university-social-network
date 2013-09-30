@@ -22,6 +22,7 @@ Template.explorePostPage.helpers({
       }
     },
     displayName: function() {
+      console.log("DISPLAY NAME: ", this);
       if (this.postAsType == "user") {
         return this.author;
       } else if (this.postAsType == "bubble") {
