@@ -327,6 +327,8 @@ Template.update.helpers({
     return updateType == this.updateType;
   },
   getContent: function() {
+    console.log("CONTENT: ", this.content);
+    console.log("INVOKERNAME: ", this.invokerName);
     if(this.updateType == "replied" ||
         this.updateType == "new attendee" ||
         this.updateType == "new applicant"){

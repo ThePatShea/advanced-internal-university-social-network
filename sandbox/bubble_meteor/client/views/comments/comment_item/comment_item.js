@@ -1,17 +1,25 @@
 Template.commentItem.helpers({
 	allowDelete: function() {
-		var post = Posts.findOne(Session.get('currentPostId'));
-		var bubble = Bubbles.findOne(post.bubbleId);
-		if (bubble) {
-			var admins = bubble.users.admins;
-			if(Meteor.userId()) {
-				var userId = Meteor.userId();
-				if(userId == post.userId || userId == this.userId || _.contains(admins, userId)) {
-					return true;
-				}else{
-					return false;
-				}
-			}
+		// var post = Posts.findOne(Session.get('currentPostId'));
+		// var bubble = Bubbles.findOne(post.bubbleId);
+		// if (bubble) {
+		// 	var admins = bubble.users.admins;
+		// 	if(Meteor.userId()) {
+		// 		var userId = Meteor.userId();
+		// 		if(userId == post.userId || userId == this.userId || _.contains(admins, userId)) {
+		// 			return true;
+		// 		}else{
+		// 			return false;
+		// 		}
+		// 	}
+		// }
+		if(this.userId == Meteor.userId())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 });

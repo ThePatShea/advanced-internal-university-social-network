@@ -64,7 +64,6 @@ Template.explorePostPageBB.helpers({
   },
 
   isEvent: function(){
-    explorePageDep.depend();
     if(this.postType == 'event'){
       return true;
     }
