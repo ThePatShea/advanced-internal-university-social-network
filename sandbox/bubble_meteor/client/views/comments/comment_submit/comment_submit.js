@@ -1,3 +1,7 @@
+Template.commentSubmit.created = function() {
+  mto = "";
+}
+
 Template.commentSubmit.helpers({
   validateForm: function(event, template) {
     if ( $(event.target).find('[name=body]').val() == "" )
@@ -22,6 +26,8 @@ Template.commentSubmit.events({
     };
     
     Meteor.call('comment', comment, function(error, commentId) {
+      //Log creation of comment
+      Meteor.call('createLog',  "postPage", 'comment', 'submitNewComment', false);
       error && throwError(error.reason);
     });
 
@@ -30,6 +36,15 @@ Template.commentSubmit.events({
 });
 
 Template.commentSubmit.rendered = function() {
+  //Log clicking of comment box
+  $(".required").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog',  "postPage", 'comment', 'clickTextbox', false);
+    }, 500);
+  });
+
+
   $('.comment-form > .cb-submit-container > .submit-comment').click(function() {
     setTimeout(function(){
       if (!$('.cb-error').length) {

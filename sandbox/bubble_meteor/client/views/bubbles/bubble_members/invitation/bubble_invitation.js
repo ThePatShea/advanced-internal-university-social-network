@@ -91,6 +91,10 @@ Template.bubbleInvitation.helpers({
   potentialInvitees: function() {
     return Session.get('inviteeList'+Session.get('currentBubbleId'));
   },
+  nameFromNetID: function(netID) {
+    var user = Meteor.users.findOne({'username': netID}, {'fields': 'name'});
+    return user.name;
+  },
   hasSearchText: function() {
     return Session.get('selectedUsername');
   },

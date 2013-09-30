@@ -657,6 +657,7 @@ Meteor.publish('sidebarBubbles', function(userId) {
        'retinaProfilePicture': 1,
        'deviceToken': 1,
        'neverLoggedIn': 1,
+       'neverOnboarded': 1,
        'lastUpdated': 1
       }
     });
@@ -666,6 +667,7 @@ Meteor.publish('sidebarBubbles', function(userId) {
     return Meteor.users.find({'secret': secret}, {
       fields: {
         'neverLoggedIn': 1,
+        'neverOnboarded': 1,
         'username': 1,
         'secret': 1
       }

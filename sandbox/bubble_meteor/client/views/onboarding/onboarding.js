@@ -24,6 +24,7 @@ Template.onboarding.events({
     e.preventDefault();
 
     var currentProfileId = Meteor.userId();
+    var currentUser = Meteor.users.findOne(currentProfileId);
 
     var profileProperties = {
       lastUpdated: new Date().getTime(),
@@ -41,7 +42,19 @@ Template.onboarding.events({
       if (error) {
         throwError(error.reason);
       } else {
-        Meteor.Router.to('dashboard');
+          if(typeof currentUser.neverOnboarded == 'undefined'){
+            Meteor.users.update({_id: currentProfileId}, {$set: {neverOnboarded: false}});
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
+          }
+          else if(currentUser.neverOnboarded == true){
+            Meteor.users.update({_id: currentProfileId}, {$set: {neverOnboarded: false}});
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
+          }
+          else{
+            Meteor.Router.to('/dashboard');
+          }
       }
     });
 
@@ -190,7 +203,13 @@ if (typeof user.neverLoggedIn != "undefined") {
   });
     if (isHealthcare == false) {
       if (user.neverLoggedIn == false) {
-        Meteor.Router.to("/dashboard");
+        if(user.neverOnboarded == false){
+          Meteor.Router.to("/dashboard");
+        }
+        else{
+          //Meteor.Router.to('onboardingWalkThrough');
+          window.location.href = '/tour/index.html';
+        }
       } else {
         $("#cb-form-container-onboarding").show();
         $(".onboarding-wrapper-outer").show();
