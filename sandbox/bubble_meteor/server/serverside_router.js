@@ -665,8 +665,36 @@ function getSubCollection(collectionName, collectionId, subCollectionName, limit
             var response = getBubblePosts(limit, offset, fields, bubbleId);
             return response;
         }
+        else if(subCollectionName == 'events'){
+            var response = getBubbleEvents(limit, offset, fields, bubbleId);
+            return response;   
+        }
+        else if(subCollectionName == 'discussions'){
+            var response = getBubbleDiscussions(limit, offset, fields, bubbleId);
+            return response;
+        }
+        else if(subCollectionName == 'files'){
+            var response = getBubbleFiles(limit, offset, fields, bubbleId);
+            return response;
+        }
         else if(subCollectionName == 'users'){
             var response = getBubbleUsers(limit, offset, fields, bubbleId);
+            return response;
+        }
+        else if(subCollectionName == 'members'){
+            var response = getBubbleMembers(limit, offset, fields, bubbleId);
+            return response;
+        }
+        else if(subCollectionName == 'admins'){
+            var response = getBubbleAdmins(limit, offset, fields, bubbleId);
+            return response;
+        }
+        else if(subCollectionName == 'applicants'){
+            var response = getBubbleApplicants(limit, offset, fields, bubbleId);
+            return response;
+        }
+        else if(subCollectionName == 'invitees'){
+            var response = getBubbleInvitees(limit, offset, fields, bubbleId);
             return response;
         }
     }
@@ -737,7 +765,7 @@ function getBubbles(limit, offset, fields, objectId){
         var allBubbles = Bubbles.find({}).fetch();
         var bubbles = allBubbles.slice(offset*limit, (offset+1)*limit);
         var response = {'count': bubblesCount, 'pages': pages, 'page': offset, 'bubbles': bubbles};
-        renameIdAttributes(bubbles);
+        renameIdAttribute(bubbles);
         return response;
     }
     else{
@@ -945,6 +973,97 @@ function getBubblePosts(limit, offset, fields, bubbleId){
 }
 
 
+function getBubbleEvents(limit, offset, fields, bubbleId){
+    var postCount = Posts.find({'bubbleId': bubbleId, 'postType': 'event'}).count();
+    var pages = Math.floor(postCount/limit);
+    console.log('getPosts: ', limit, offset, fields);
+    if(pages*limit < postCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'event'}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
+        var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'event'}, {fields: JSON.parse(fieldString)}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
+        var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
+        return response;
+    }
+}
+
+
+function getBubbleDiscussions(limit, offset, fields, bubbleId){
+    var postCount = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}).count();
+    var pages = Math.floor(postCount/limit);
+    console.log('getPosts: ', limit, offset, fields);
+    if(pages*limit < postCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
+        var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}, {fields: JSON.parse(fieldString)}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
+        var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
+        return response;
+    }
+}
+
+
+
+function getBubbleFiles(limit, offset, fields, bubbleId){
+    var postCount = Posts.find({'bubbleId': bubbleId, 'postType': 'file'}).count();
+    var pages = Math.floor(postCount/limit);
+    console.log('getPosts: ', limit, offset, fields);
+    if(pages*limit < postCount){
+        pages = pages + 1;
+    }
+    if(fields.length == 0){
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'file'}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
+        var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
+        return response;
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'file'}, {fields: JSON.parse(fieldString)}).fetch();
+        var posts = allPosts.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(posts);
+        var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
+        return response;
+    }
+}
+
+
 function getBubbleUsers(limit, offset, fields, bubbleId){
     var bubble = Bubbles.findOne({_id: bubbleId});
     var bubbleUserIds = bubble.users.admins.concat(bubble.users.members);
@@ -972,6 +1091,134 @@ function getBubbleUsers(limit, offset, fields, bubbleId){
         var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(bubbleUsers);
         var response = {'count': userCount, 'pages': pages, 'page': offset, 'users': bubbleUsers};
+        return response;
+    }
+}
+
+
+function getBubbleMembers(limit, offset, fields, bubbleId){
+    var bubble = Bubbles.findOne({_id: bubbleId});
+    var bubbleUserIds = bubble.users.members;
+    var userCount = Meteor.users.find({_id: {$in: bubbleUserIds}}).count();
+
+    var pages = Math.floor(userCount/limit);
+    if(pages*limit < userCount){
+        pages = pages + 1;
+    }
+
+    if(fields.length == 0){
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'members': bubbleUsers};
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'members': bubbleUsers};
+        return response;
+    }
+}
+
+
+function getBubbleAdmins(limit, offset, fields, bubbleId){
+    var bubble = Bubbles.findOne({_id: bubbleId});
+    var bubbleUserIds = bubble.users.admins;
+    var userCount = Meteor.users.find({_id: {$in: bubbleUserIds}}).count();
+
+    var pages = Math.floor(userCount/limit);
+    if(pages*limit < userCount){
+        pages = pages + 1;
+    }
+
+    if(fields.length == 0){
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'admins': bubbleUsers};
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'admins': bubbleUsers};
+        return response;
+    }
+}
+
+
+function getBubbleInvitees(limit, offset, fields, bubbleId){
+    var bubble = Bubbles.findOne({_id: bubbleId});
+    var bubbleUserIds = bubble.users.invitees;
+    var userCount = Meteor.users.find({_id: {$in: bubbleUserIds}}).count();
+
+    var pages = Math.floor(userCount/limit);
+    if(pages*limit < userCount){
+        pages = pages + 1;
+    }
+
+    if(fields.length == 0){
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'invitees': bubbleUsers};
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'invitees': bubbleUsers};
+        return response;
+    }
+}
+
+
+function getBubbleApplicants(limit, offset, fields, bubbleId){
+    var bubble = Bubbles.findOne({_id: bubbleId});
+    var bubbleUserIds = bubble.users.applicants;
+    var userCount = Meteor.users.find({_id: {$in: bubbleUserIds}}).count();
+
+    var pages = Math.floor(userCount/limit);
+    if(pages*limit < userCount){
+        pages = pages + 1;
+    }
+
+    if(fields.length == 0){
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'applicants': bubbleUsers};
+    }
+    else{
+        var fieldString = '{';
+        for(var i = 0; i < fields.length; i++){
+            fieldString = fieldString + '"' + fields[i] + '": 1,';
+        }
+        fieldString = fieldString.slice(0, fieldString.length-1);
+        fieldString = fieldString + '}';
+        var allUsers = Meteor.users.find({_id: {$in: bubbleUserIds}}, {fields: JSON.parse(fieldString)}).fetch();
+        var bubbleUsers = allUsers.slice(offset*limit, (offset+1)*limit);
+        renameIdAttribute(bubbleUsers);
+        var response = {'count': userCount, 'pages': pages, 'page': offset, 'applicants': bubbleUsers};
         return response;
     }
 }
