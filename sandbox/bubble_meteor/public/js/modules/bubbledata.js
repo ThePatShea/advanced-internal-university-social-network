@@ -155,6 +155,108 @@
 		}
 	});
 
+	var BubbleEvent = Backbone.Model.extend({
+		url: function(){
+			return '/2013-09-11/bubbles/' + this.id + 'events';
+		}
+	});
+
+	var BubbleDiscussion = Backbone.Model.extend({
+		url: function(){
+			return '/2013-09-11/posts/' + this.id + 'discussions';
+		}
+	});
+
+	var BubbleFile = Backbone.Model.extend({
+		url: function(){
+			return '/2013-09-11/posts/' + this.id + 'files';
+		}
+	});
+
+	var BubbleEvents = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: [],
+		model: BubbleEvent,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/events?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/events?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.posts, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+	var BubbleDiscussions = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: [],
+		model: BubbleDiscussion,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/discussions?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/discussions?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.posts, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+	var BubbleFiles = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: [],
+		model: BubbleFile,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/files?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/files?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.posts, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
 	var BubbleUsers = Backbone.Collection.extend({
 		model: BubbleUser,
 		initialize: function(){
@@ -201,17 +303,50 @@
 
 	var MyBubbles = function(properties){
 		var that = this;
+		
+		this.bubblePosts = new BubblePosts();
+		this.bubbleEvents = new BubbleEvents();
+		this.bubbleDiscussions = new BubbleDiscussions();
+		this.bubbleFiles = new BubbleFiles();
+		this.bubbleUsers = new BubbleUsers();
+		this.bubbleMembers = new BubbleMembers();
 
-		var EventPosts = function() {
+		this.bubbleUsers.watch(this.bubblePosts);
+		this.bubbleUsers.watch(this.bubbleEvents);
+		this.bubbleUsers.watch(this.bubbleDiscussions);
+		this.bubbleUsers.watch(this.bubbleFiles);
 
+		this.bubblePosts.bubbleId = properties.bubbleId;
+		this.bubblePosts.limit = properties.limit;
+		this.bubblePosts.fields = properties.fields;
+		this.bubblePosts.fetch();
+
+		this.bubbleMembers.bubbleId = properties.bubbleId;
+		this.bubbleMembers.fetch();
+
+		this.bubbleInfo = new BubbleInfo();
+		this.bubbleInfo.bubbleId = properties.bubbleId;
+		this.bubbleInfo.fetch();
+
+		var Events = function() {
+			this.bubbleEvents.bubbleId = properties.bubbleId;
+			this.bubbleEvents.limit = properties.limit;
+			this.bubbleEvents.fields = properties.fields;
+			this.bubbleEvents.fetch();
 		};
 
-		var DiscussionPosts = function() {
-
+		var Discussions = function() {
+			this.bubbleDiscussions.bubbleId = properties.bubbleId;
+			this.bubbleDiscussions.limit = properties.limit;
+			this.bubbleDiscussions.fields = properties.fields;
+			this.bubbleDiscussions.fetch();
 		};
 
-		var FilePosts = function() {
-
+		var Files = function() {
+			this.bubbleFiles.bubbleId = properties.bubbleId;
+			this.bubbleFiles.limit = properties.limit;
+			this.bubbleFiles.fields = properties.fields;
+			this.bubbleFiles.fetch();
 		};
 
 		var Members = function() {
@@ -229,23 +364,6 @@
 		var Invitees = function() {
 
 		};
-		
-		this.bubblePosts = new BubblePosts();
-		this.bubbleUsers = new BubbleUsers();
-		this.bubbleMembers = new BubbleMembers();
-		this.bubbleUsers.watch(this.bubblePosts);
-
-		this.bubblePosts.bubbleId = properties.bubbleId;
-		this.bubblePosts.limit = properties.limit;
-		this.bubblePosts.fields = properties.fields;
-		this.bubblePosts.fetch();
-
-		this.bubbleMembers.bubbleId = properties.bubbleId;
-		this.bubbleMembers.fetch();
-
-		this.bubbleInfo = new BubbleInfo();
-		this.bubbleInfo.bubbleId = properties.bubbleId;
-		this.bubbleInfo.fetch();
 
 		this.fetchPage = function(page, callback){
 			if(page == undefined) {page = that.bubblePosts.page};

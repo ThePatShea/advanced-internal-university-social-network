@@ -39,8 +39,11 @@ Template.updateItem.helpers({
           return object;
       } else {
         var object = { };
-        this.user = Meteor.users.findOne({'username': this.invokerName}, {'fields': 'name'});
-        object.name      =  this.user.name;
+        //this.user = Meteor.users.findOne({'username': this.invokerName}, {'fields': 'name'});
+        //console.log("User: ", this.user, " | invokerName: ", this.invokerName);
+        //object.name      =  this.user.name;
+
+        object.name = this.invokerName;
 
         object.postType  =  'member';
 
