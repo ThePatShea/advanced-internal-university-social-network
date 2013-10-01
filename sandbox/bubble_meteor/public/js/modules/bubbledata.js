@@ -285,16 +285,101 @@
 			console.log("FIELDS: ", fieldString);
 			if(fieldString.length > 0){
 				//fieldString = fieldString.slice(0, fieldString.length-1);
-				return '/2013-09-11/bubbles/' + this.bubbleId + '/users?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/members?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
 			}
 			else{
-				return '/2013-09-11/bubbles/' + this.bubbleId + '/users?fields=name/limit=' + this.limit + '&page=' + this.page;
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/members?fields=name/limit=' + this.limit + '&page=' + this.page;
 			}
 		},
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
-			_.each(response.users, function(item){
+			_.each(response.members, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+	var BubbleAdmins = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: ['username', 'name', 'profilePicture'],
+		model: BubbleUser,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/admins?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/admins?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.admins, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+	var BubbleApplicants = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: ['username', 'name', 'profilePicture'],
+		model: BubbleUser,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/applicants?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/applicants?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.applicants, function(item){
+				listObjects.push(item);
+			});
+			return listObjects;
+		}
+	});
+
+
+	var BubbleInvitees = Backbone.Collection.extend({
+		bubbleId : 'none',
+		limit: 10,
+		page: 0,
+		fields: ['username', 'name', 'profilePicture'],
+		model: BubbleUser,
+		url: function(){
+			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
+			var fieldString = (this.fields && this.fields.toString()) || "";
+			console.log("FIELDS: ", fieldString);
+			if(fieldString.length > 0){
+				//fieldString = fieldString.slice(0, fieldString.length-1);
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/invitees?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
+			}
+			else{
+				return '/2013-09-11/bubbles/' + this.bubbleId + '/invitees?fields=name/limit=' + this.limit + '&page=' + this.page;
+			}
+		},
+		parse: function(response){
+			var listObjects = [];
+			this.pages = response.pages;
+			_.each(response.invitees, function(item){
 				listObjects.push(item);
 			});
 			return listObjects;
