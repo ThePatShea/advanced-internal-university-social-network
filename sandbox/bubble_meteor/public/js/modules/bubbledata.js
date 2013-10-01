@@ -202,9 +202,37 @@
 	var MyBubbles = function(properties){
 		var that = this;
 
+		var EventPosts = function() {
+
+		};
+
+		var DiscussionPosts = function() {
+
+		};
+
+		var FilePosts = function() {
+
+		};
+
+		var Members = function() {
+
+		};
+
+		var Admins = function() {
+
+		};
+
+		var Applicants = function() {
+
+		};
+
+		var Invitees = function() {
+
+		};
+		
 		this.bubblePosts = new BubblePosts();
 		this.bubbleUsers = new BubbleUsers();
-		this.bubbleMembers = new BubbleMembers()
+		this.bubbleMembers = new BubbleMembers();
 		this.bubbleUsers.watch(this.bubblePosts);
 
 		this.bubblePosts.bubbleId = properties.bubbleId;
