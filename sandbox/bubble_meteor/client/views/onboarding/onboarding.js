@@ -191,14 +191,15 @@ if (typeof user.neverLoggedIn != "undefined") {
   var isHealthcare  =  false;
 
   _.each(userEmails, function(email) {
+    if(typeof email.address != 'undefined'){
+      if (email.address.indexOf("@") != -1) {
+        var healthCareCheck = email.address.split("@");
 
-    if (email.address.indexOf("@") != -1) {
-      var healthCareCheck = email.address.split("@");
+        if (healthCareCheck[1] === "emoryhealthcare.org") { 
+          isHealthcare = true;
+        }
 
-      if (healthCareCheck[1] === "emoryhealthcare.org") { 
-        isHealthcare = true;
       }
-
     }
   });
     if (isHealthcare == false) {
