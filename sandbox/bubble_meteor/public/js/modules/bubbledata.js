@@ -264,8 +264,10 @@
 				var that = this;
 				collection.on('add', function(model){
 					var serverModel = model.toJSON();
+					console.log('Post: ', serverModel);
 					console.log('Servermodel userId: ', serverModel.userId);
 					var newUser = new BubbleUser({id: serverModel.userId});
+					console.log('Getting user');
 					newUser.fetch();
 					that.add(newUser);
 				});
@@ -394,7 +396,7 @@
 		this.bubbleDiscussions = new BubbleDiscussions();
 		this.bubbleFiles = new BubbleFiles();
 		this.bubbleUsers = new BubbleUsers();
-		this.bubbleMembers = new BubbleMembers();
+		//this.bubbleMembers = new BubbleMembers();
 
 		this.bubbleUsers.watch(this.bubblePosts);
 		this.bubbleUsers.watch(this.bubbleEvents);
@@ -406,8 +408,8 @@
 		this.bubblePosts.fields = properties.fields;
 		this.bubblePosts.fetch();
 
-		this.bubbleMembers.bubbleId = properties.bubbleId;
-		this.bubbleMembers.fetch();
+		//this.bubbleMembers.bubbleId = properties.bubbleId;
+		//this.bubbleMembers.fetch();
 
 		this.bubbleInfo = new BubbleInfo();
 		this.bubbleInfo.bubbleId = properties.bubbleId;
@@ -435,20 +437,358 @@
 		};
 
 		var Members = function() {
+			var that = this;
 
+			this.bubbleMembers = new BubbleMembers();
+			this.bubbleMembers.bubbleId = properties.bubbleId;
+			this.bubbleMembers.limit = properties.membersLimit;
+			this.bubbleMembers.fields = properties.membersFields;
+			this.bubbleMembers.fetch();
+
+			this.fetchPage = function(page, callback){
+				if(page == undefined) {page = that.bubbleMembers.page};
+				if(page >= that.bubbleMembers.pages) {page = that.bubbleMembers.pages-1};
+				if(page < 0) {page = 0};
+				that.bubbleMembers.page = page;
+				that.bubbleMembers.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(page);
+							}
+						}
+					});
+				return page;
+			};
+
+			this.fetchNextPage = function(callback){
+				if(that.bubbleMembers.page < that.bubbleMembers.pages-1){
+					that.bubbleMembers.page = that.bubbleMembers.page + 1;
+					that.bubbleMembers.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleMembers.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.fetchPrevPage = function(callback){
+				if(that.bubbleMembers.page > 0){
+					that.bubbleMembers.page = that.bubbleMembers.page - 1;
+					that.bubbleMembers.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleMembers.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.getCurrentPage = function(){
+				return that.bubbleMembers.page;
+			};
+
+			this.getNumPages = function(){
+				return that.bubbleMembers.pages;
+			};
+
+			this.setFields = function(fieldsString){
+				if(fieldString === "long")
+				{
+					fields = [];
+				}
+				else if(fieldString === "medium")
+				{
+					fields = [];
+				}
+				else if(fieldString === "short")
+				{
+					fields = [];
+				}
+				else
+				{
+					fields = fieldString.split(",");
+				}
+				that.bubbleMembers.fields = fields;
+				return fields;
+			};
+
+			this.setLimit = function(limit){
+				that.bubbleMembers.limit = limit;
+				return limit;
+			}
 		};
 
 		var Admins = function() {
+			var that = this;
 
+			this.bubbleAdmins = new BubbleAdmins();
+			this.bubbleAdmins.bubbleId = properties.bubbleId;
+			this.bubbleAdmins.limit = properties.adminsLimit;
+			this.bubbleAdmins.fields = properties.adminsFields;
+			this.bubbleAdmins.fetch();
+
+			this.fetchPage = function(page, callback){
+				if(page == undefined) {page = that.bubbleAdmins.page};
+				if(page >= that.bubbleAdmins.pages) {page = that.bubbleAdmins.pages-1};
+				if(page < 0) {page = 0};
+				that.bubbleAdmins.page = page;
+				that.bubbleAdmins.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(page);
+							}
+						}
+					});
+				return page;
+			};
+
+			this.fetchNextPage = function(callback){
+				if(that.bubbleAdmins.page < that.bubbleAdmins.pages-1){
+					that.bubbleAdmins.page = that.bubbleAdmins.page + 1;
+					that.bubbleAdmins.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleAdmins.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.fetchPrevPage = function(callback){
+				if(that.bubbleAdmins.page > 0){
+					that.bubbleAdmins.page = that.bubbleAdmins.page - 1;
+					that.bubbleAdmins.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleAdmins.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.getCurrentPage = function(){
+				return that.bubbleAdmins.page;
+			};
+
+			this.getNumPages = function(){
+				return that.bubbleAdmins.pages;
+			};
+
+			this.setFields = function(fieldsString){
+				if(fieldString === "long")
+				{
+					fields = [];
+				}
+				else if(fieldString === "medium")
+				{
+					fields = [];
+				}
+				else if(fieldString === "short")
+				{
+					fields = [];
+				}
+				else
+				{
+					fields = fieldString.split(",");
+				}
+				that.bubbleAdmins.fields = fields;
+				return fields;
+			};
+
+			this.setLimit = function(limit){
+				that.bubbleAdmins.limit = limit;
+				return limit;
+			}
 		};
 
 		var Applicants = function() {
+			var that = this;
 
+			this.bubbleApplicants = new BubbleApplicants();
+			this.bubbleApplicants.bubbleId = properties.bubbleId;
+			this.bubbleApplicants.limit = properties.applicantsLimit;
+			this.bubbleApplicants.fields = properties.applicantsFields;
+			this.bubbleApplicants.fetch();
+
+			this.fetchPage = function(page, callback){
+				if(page == undefined) {page = that.bubbleApplicants.page};
+				if(page >= that.bubbleApplicants.pages) {page = that.bubbleApplicants.pages-1};
+				if(page < 0) {page = 0};
+				that.bubbleApplicants.page = page;
+				that.bubbleApplicants.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(page);
+							}
+						}
+					});
+				return page;
+			};
+
+			this.fetchNextPage = function(callback){
+				if(that.bubbleApplicants.page < that.bubbleApplicants.pages-1){
+					that.bubbleApplicants.page = that.bubbleApplicants.page + 1;
+					that.bubbleApplicants.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleApplicants.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.fetchPrevPage = function(callback){
+				if(that.bubbleApplicants.page > 0){
+					that.bubbleApplicants.page = that.bubbleApplicants.page - 1;
+					that.bubbleApplicants.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleApplicants.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.getCurrentPage = function(){
+				return that.bubbleApplicants.page;
+			};
+
+			this.getNumPages = function(){
+				return that.bubbleApplicants.pages;
+			};
+
+			this.setFields = function(fieldsString){
+				if(fieldString === "long")
+				{
+					fields = [];
+				}
+				else if(fieldString === "medium")
+				{
+					fields = [];
+				}
+				else if(fieldString === "short")
+				{
+					fields = [];
+				}
+				else
+				{
+					fields = fieldString.split(",");
+				}
+				that.bubbleApplicants.fields = fields;
+				return fields;
+			};
+
+			this.setLimit = function(limit){
+				that.bubbleApplicants.limit = limit;
+				return limit;
+			}
 		};
 
 		var Invitees = function() {
+			var that = this;
+			
+			this.bubbleInvitees = new BubbleInvitees();
+			this.bubbleInvitees.bubbleId = properties.bubbleId;
+			this.bubbleInvitees.limit = properties.inviteesLimit;
+			this.bubbleInvitees.fields = properties.inviteesFields;
+			this.bubbleInvitees.fetch();
 
+			this.fetchPage = function(page, callback){
+				if(page == undefined) {page = that.bubbleInvitees.page};
+				if(page >= that.bubbleInvitees.pages) {page = that.bubbleInvitees.pages-1};
+				if(page < 0) {page = 0};
+				that.bubbleInvitees.page = page;
+				that.bubbleInvitees.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(page);
+							}
+						}
+					});
+				return page;
+			};
+
+			this.fetchNextPage = function(callback){
+				if(that.bubbleInvitees.page < that.bubbleInvitees.pages-1){
+					that.bubbleInvitees.page = that.bubbleInvitees.page + 1;
+					that.bubbleInvitees.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleInvitees.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.fetchPrevPage = function(callback){
+				if(that.bubbleInvitees.page > 0){
+					that.bubbleInvitees.page = that.bubbleInvitees.page - 1;
+					that.bubbleInvitees.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(that.bubbleInvitees.page);
+							}
+						}
+					});
+				}
+			};
+
+			this.getCurrentPage = function(){
+				return that.bubbleInvitees.page;
+			};
+
+			this.getNumPages = function(){
+				return that.bubbleInvitees.pages;
+			};
+
+			this.setFields = function(fieldsString){
+				if(fieldString === "long")
+				{
+					fields = [];
+				}
+				else if(fieldString === "medium")
+				{
+					fields = [];
+				}
+				else if(fieldString === "short")
+				{
+					fields = [];
+				}
+				else
+				{
+					fields = fieldString.split(",");
+				}
+				that.bubbleInvitees.fields = fields;
+				return fields;
+			};
+
+			this.setLimit = function(limit){
+				that.bubbleInvitees.limit = limit;
+				return limit;
+			}
 		};
+
+
 
 		this.fetchPage = function(page, callback){
 			if(page == undefined) {page = that.bubblePosts.page};
@@ -620,6 +960,11 @@
 				return;
 			}
 		}
+
+		this.Members = new Members();
+		this.Admins = new Admins();
+		this.Invitees = new Invitees();
+		this.Applicants = new Applicants();
 	}
 
 	var ExploreSection = function(properties){
