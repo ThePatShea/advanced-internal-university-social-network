@@ -123,6 +123,7 @@
 
 	var BubbleUser = Backbone.Model.extend({
 		url: function(){
+			console.log("Bubble User: ", this);
 			return '/2013-09-11/users/' + this.id;
 		}
 	});
@@ -393,16 +394,13 @@
 		this.bubbleId = properties.bubbleId;
 		
 		//this.bubblePosts = new BubblePosts();
-		this.bubbleEvents = new BubbleEvents();
-		this.bubbleDiscussions = new BubbleDiscussions();
-		this.bubbleFiles = new BubbleFiles();
-		this.bubbleUsers = new BubbleUsers();
+		//this.bubbleDiscussions = new BubbleDiscussions();
+		//this.bubbleFiles = new BubbleFiles();
 		//this.bubbleMembers = new BubbleMembers();
 
 		//this.bubbleUsers.watch(this.bubblePosts);
-		this.bubbleUsers.watch(this.bubbleEvents);
-		this.bubbleUsers.watch(this.bubbleDiscussions);
-		this.bubbleUsers.watch(this.bubbleFiles);
+		//this.bubbleUsers.watch(this.bubbleDiscussions);
+		//this.bubbleUsers.watch(this.bubbleFiles);
 
 		// this.bubblePosts.bubbleId = properties.bubbleId;
 		// this.bubblePosts.limit = properties.limit;
@@ -412,59 +410,71 @@
 		//this.bubbleMembers.bubbleId = properties.bubbleId;
 		//this.bubbleMembers.fetch();
 
+		this.bubbleUsers = new BubbleUsers();
+
 		this.bubbleInfo = new BubbleInfo();
 		this.bubbleInfo.bubbleId = properties.bubbleId;
 		this.bubbleInfo.fetch();
 
-		this.Events = function(properties) {
-			this.bubbleEvents.bubbleId = this.bubbleId;
+		var Events = function(properties) {
+			this.bubbleEvents = new BubbleEvents();
+			that.bubbleUsers.watch(this.bubbleEvents);
+			this.bubbleEvents.bubbleId = that.bubbleId;
 			this.bubbleEvents.limit = properties.limit;
 			this.bubbleEvents.fields = properties.fields;
 			this.bubbleEvents.fetch({async: false});
 
-			this.Events.test = new testHelper(this.bubbleEvents);
-
-			this.Events.fetchPage = new fetchPageHelper(this.bubbleEvents);
-			this.Events.fetchNextPage = new fetchNextPageHelper(this.bubbleEvents);
-			this.Events.fetchPrevPage = new fetchPrevPageHelper(this.bubbleEvents);
-			this.Events.getCurrentPage = new getCurrentPageHelper(this.bubbleEvents);
-			this.Events.getNumPages = new getNumPagesHelper(this.bubbleEvents);
-			this.Events.setFields = new setFieldsHelper(this.bubbleEvents);
-			this.Events.setLimit = new setLimitHelper(this.bubbleEvents);
+			var scope = this.bubbleEvents;
+			this.fetchPage = new fetchPageHelper(scope);
+			this.fetchNextPage = new fetchNextPageHelper(scope);
+			this.fetchPrevPage = new fetchPrevPageHelper(scope);
+			this.getCurrentPage = new getCurrentPageHelper(scope);
+			this.getNumPages = new getNumPagesHelper(scope);
+			this.setFields = new setFieldsHelper(scope);
+			this.setLimit = new setLimitHelper(scope);
+			this.getJSON = new getJSONHelper(scope);
 
 			return this.bubbleEvents.toJSON();
 		};
 
-		this.Discussions = function(properties) {
-			this.bubbleDiscussions.bubbleId = this.bubbleId;
+		var Discussions = function(properties) {
+			this.bubbleDiscussions = new BubbleDiscussions();
+			that.bubbleUsers.watch(this.bubbleDiscussions);
+			this.bubbleDiscussions.bubbleId = that.bubbleId;
 			this.bubbleDiscussions.limit = properties.limit;
 			this.bubbleDiscussions.fields = properties.fields;
 			this.bubbleDiscussions.fetch({async: false});
 
-			this.Discussions.fetchPage = new fetchPageHelper(this.bubbleDiscussions);
-			this.Discussions.fetchNextPage = new fetchNextPageHelper(this.bubbleDiscussions);
-			this.Discussions.fetchPrevPage = new fetchPrevPageHelper(this.bubbleDiscussions);
-			this.Discussions.getCurrentPage = new getCurrentPageHelper(this.bubbleDiscussions);
-			this.Discussions.getNumPages = new getNumPagesHelper(this.bubbleDiscussions);
-			this.Discussions.setFields = new setFieldsHelper(this.bubbleDiscussions);
-			this.Discussions.setLimit = new setLimitHelper(this.bubbleDiscussions);
+			var scope = this.bubbleDiscussions;
+			this.fetchPage = new fetchPageHelper(scope);
+			this.fetchNextPage = new fetchNextPageHelper(scope);
+			this.fetchPrevPage = new fetchPrevPageHelper(scope);
+			this.getCurrentPage = new getCurrentPageHelper(scope);
+			this.getNumPages = new getNumPagesHelper(scope);
+			this.setFields = new setFieldsHelper(scope);
+			this.setLimit = new setLimitHelper(scope);
+			this.getJSON = new getJSONHelper(scope);
 
 			return this.bubbleDiscussions.toJSON();
 		};
 
-		this.Files = function(properties) {
-			this.bubbleFiles.bubbleId = this.bubbleId;
+		var Files = function(properties) {
+			this.bubbleFiles = new BubbleFiles();
+			that.bubbleUsers.watch(this.bubbleFiles);
+			this.bubbleFiles.bubbleId = that.bubbleId;
 			this.bubbleFiles.limit = properties.limit;
 			this.bubbleFiles.fields = properties.fields;
 			this.bubbleFiles.fetch({async: false});
 
-			this.Files.fetchPage = new fetchPageHelper(this.bubbleFiles);
-			this.Files.fetchNextPage = new fetchNextPageHelper(this.bubbleFiles);
-			this.Files.fetchPrevPage = new fetchPrevPageHelper(this.bubbleFiles);
-			this.Files.getCurrentPage = new getCurrentPageHelper(this.bubbleFiles);
-			this.Files.getNumPages = new getNumPagesHelper(this.bubbleFiles);
-			this.Files.setFields = new setFieldsHelper(this.bubbleFiles);
-			this.Files.setLimit = new setLimitHelper(this.bubbleFiles);
+			var scope = this.bubbleFiles;
+			this.fetchPage = new fetchPageHelper(scope);
+			this.fetchNextPage = new fetchNextPageHelper(scope);
+			this.fetchPrevPage = new fetchPrevPageHelper(scope);
+			this.getCurrentPage = new getCurrentPageHelper(scope);
+			this.getNumPages = new getNumPagesHelper(scope);
+			this.setFields = new setFieldsHelper(scope);
+			this.setLimit = new setLimitHelper(scope);
+			this.getJSON = new getJSONHelper(scope);
 
 			return this.bubbleFiles.toJSON();
 		};
@@ -485,6 +495,7 @@
 			this.getNumPages = new getNumPagesHelper(this.bubbleMembers);
 			this.setFields = new setFieldsHelper(this.bubbleMembers);
 			this.setLimit = new setLimitHelper(this.bubbleMembers);
+			this.getJSON = new getJSONHelper(this.bubbleMembers);
 		};
 
 		var Admins = function() {
@@ -503,6 +514,7 @@
 			this.getNumPages = new getNumPagesHelper(this.bubbleAdmins);
 			this.setFields = new setFieldsHelper(this.bubbleAdmins);
 			this.setLimit = new setLimitHelper(this.bubbleAdmins);
+			this.getJSON = new getJSONHelper(this.bubbleAdmins);
 		};
 
 		var Applicants = function() {
@@ -521,6 +533,7 @@
 			this.getNumPages = new getNumPagesHelper(this.bubbleApplicants);
 			this.setFields = new setFieldsHelper(this.bubbleApplicants);
 			this.setLimit = new setLimitHelper(this.bubbleApplicants);
+			this.getJSON = new getJSONHelper(this.bubbleApplicants);
 		};
 
 		var Invitees = function() {
@@ -539,6 +552,7 @@
 			this.getNumPages = new getNumPagesHelper(this.bubbleInvitees);
 			this.setFields = new setFieldsHelper(this.bubbleInvitees);
 			this.setLimit = new setLimitHelper(this.bubbleInvitees);
+			this.getJSON = new getJSONHelper(this.bubbleInvitees);
 		};
 
 
@@ -561,6 +575,9 @@
 		this.Admins = new Admins();
 		this.Invitees = new Invitees();
 		this.Applicants = new Applicants();
+		this.Events = new Events({limit: properties.limit, fields: properties.fields});
+		this.Discussions = new Discussions({limit: properties.limit, fields: properties.fields});
+		this.Files = new Files({limit: properties.limit, fields: properties.fields});
 	}
 
 	var ExploreSection = function(properties){
@@ -798,6 +815,12 @@
 		return function(limit){
 			scope.limit = limit;
 			return limit;
+		};
+	};
+
+	var getJSONHelper = function(scope) {
+		return function(){
+			return scope.toJSON();
 		};
 	};
 
