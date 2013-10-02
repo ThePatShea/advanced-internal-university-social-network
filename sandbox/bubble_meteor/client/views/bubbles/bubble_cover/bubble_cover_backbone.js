@@ -1,46 +1,59 @@
-Template.bubbleCoverBackbone.created = function(){
-  mybubbles = undefined;
-  currentBubbleId = undefined;
-}
-
-
 Template.bubbleCoverBackbone.rendered = function(){
   //Log clicking of edit bubble button
   $(".lbl").on("click", function() {
     Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
   });
-
-
-  if(currentBubbleId != window.location.pathname.split('/')[2]){
-    currentBubbleId = window.location.pathname.split('/')[2];
-    mybubbles = new BubbleData.MyBubbles({
-      bubbleId: currentBubbleId,
-      fields: ['title', 'profilePicture', 'category', 'bubbleType']
-    });
-  }
-
-
 }
 
 
 Template.bubbleCoverBackbone.helpers({
   hasBeenInvited: function() {
-    return _.contains(this.users.invitees, Meteor.userId());
+    //return _.contains(this.users.invitees, Meteor.userId());
+    var inviteePages = mybubbles.Invitees.getNumPages();
   },
 
 	hasApplied: function() {
 		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-		return _.contains(this.users.applicants, Meteor.userId());
+    var isApplicantAjax = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    if(isApplicantAjax.responseText == 'True'){
+      return true;
+    }
+    else{
+      return false;
+    }
 	},
 
 	hasJoinedBubble: function() {
-		return _.contains(this.users.members, Meteor.userId())
-					|| _.contains(this.users.admins, Meteor.userId());
+    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    if(isMemberAjax.responseText == 'True' || isAdminAjax.responseText == 'True'){
+      return true;
+    }
+    else{
+      return false;
+    }
 	},
 
+  isAdminBackbone: function(){
+    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    if(isAdminAjax.responseText == 'True'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
   isSuperBubbleBackbone: function(){
-    var bubbleInfo = mybubbles.bubbleIndo.toJSON();
+    var bubbleInfo = mybubbles.bubbleInfo.toJSON();
     return 'super' == bubbleInfo.bubbleType;
+  },
+
+  getBubbleUsersCountBackbone: function(){
+    var userCount = mybubbles.Members.bubbleMembers.count + mybubbles.Admins.bubbleAdmins.count;
+    bubbleDep.changed();
+
+    return userCount;
   }
 });
 

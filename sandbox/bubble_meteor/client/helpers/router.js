@@ -33,8 +33,22 @@ Meteor.Router.add({
   },
 
   // Bubbles Related Routes
+    '/oldmybubbles/:_id/home': {
+      //to: 'bubblePage', 
+      to: 'bubblePage',
+      and: function(id) {
+        var prevBubble  =  Session.get('currentBubbleId');
+        Session.set('currentBubbleId', id); 
+        var currBubble  =  Session.get('currentBubbleId');
+
+        if (currBubble != prevBubble) {
+          Session.set('bubbleLoading', 'true');  // Handles loading graphic
+        }
+      }
+    },
     '/mybubbles/:_id/home': {
-      to: 'bubblePage', 
+      //to: 'bubblePage', 
+      to: 'bubblePageBackbone',
       and: function(id) {
         var prevBubble  =  Session.get('currentBubbleId');
         Session.set('currentBubbleId', id); 

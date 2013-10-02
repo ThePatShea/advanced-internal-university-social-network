@@ -111,7 +111,7 @@
 	var BubbleInfo = Backbone.Model.extend({
 		url: function(){
 			console.log('/2013-09-11/bubbles/' + this.bubbleId)
-			return '/2013-09-11/bubbles?fields=title,description,submited,lastUpdated,profilePicture/' + this.bubbleId;
+			return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture/' + this.bubbleId;
 		}
 	});
 
@@ -149,6 +149,7 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
+			this.count = response.count;
 			_.each(response.posts, function(item){
 				listObjects.push(item);
 			});
@@ -251,6 +252,7 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
+			this.count = response.count;
 			_.each(response.posts, function(item){
 				listObjects.push(item);
 			});
@@ -297,6 +299,7 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
+			this.count = response.count;
 			_.each(response.members, function(item){
 				listObjects.push(item);
 			});
@@ -325,6 +328,7 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
+			this.count = response.count;
 			_.each(response.admins, function(item){
 				listObjects.push(item);
 			});
@@ -353,6 +357,7 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
+			this.count = response.count;
 			_.each(response.applicants, function(item){
 				listObjects.push(item);
 			});
@@ -382,6 +387,7 @@
 		parse: function(response){
 			var listObjects = [];
 			this.pages = response.pages;
+			this.count = response.count;
 			_.each(response.invitees, function(item){
 				listObjects.push(item);
 			});
@@ -392,6 +398,7 @@
 	var MyBubbles = function(properties){
 		var that = this;
 		this.bubbleId = properties.bubbleId;
+		//properties.callback();
 		
 		//this.bubblePosts = new BubblePosts();
 		//this.bubbleDiscussions = new BubbleDiscussions();
@@ -413,6 +420,7 @@
 		this.bubbleUsers = new BubbleUsers();
 
 		this.bubbleInfo = new BubbleInfo();
+		this.bubbleInfo.on('change', properties.callback);
 		this.bubbleInfo.bubbleId = properties.bubbleId;
 		this.bubbleInfo.fetch();
 

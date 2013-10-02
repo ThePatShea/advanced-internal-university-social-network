@@ -168,9 +168,83 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 //REST api for retreiving selected fields from collections with pagination support
 Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
-    console.log('2013-09-11 REST API: ', q, this.request.originalUrl);
-
+    console.log('2013-09-11 REST API: ', q, this.request.originalUrl, this.request.query);
+    
     var urlSections = this.request.originalUrl.split('/');
+
+    if(q == 'ismember'){
+        console.log('ismember: ', this.request.query.bubbleid, this.request.query.userid);
+        var bubbleId = this.request.query.bubbleid;
+        var userId = this.request.query.userid;
+        var bubble = Bubbles.findOne(bubbleId);
+        var user = Meteor.users.findOne(userId);
+        if(bubble && user){
+            if(_.contains(bubble.users.members, userId)){
+                return [200, 'True'];
+            }
+            else{
+                return [200, 'False'];
+            }
+        }
+        else{
+            return [400, 'Not found']
+        }
+    }
+    else if(q == 'isadmin'){
+        console.log('isadmin: ', this.request.query.bubbleid, this.request.query.userid);
+        var bubbleId = this.request.query.bubbleid;
+        var userId = this.request.query.userid;
+        var bubble = Bubbles.findOne(bubbleId);
+        var user = Meteor.users.findOne(userId);
+        if(bubble && user){
+            if(_.contains(bubble.users.admins, userId)){
+                return [200, 'True'];
+            }
+            else{
+                return [200, 'False'];
+            }
+        }
+        else{
+            return [400, 'Not found']
+        }
+    }
+    if(q == 'isinvitee'){
+        console.log('isinvitee: ', this.request.query.bubbleid, this.request.query.userid);
+        var bubbleId = this.request.query.bubbleid;
+        var userId = this.request.query.userid;
+        var bubble = Bubbles.findOne(bubbleId);
+        var user = Meteor.users.findOne(userId);
+        if(bubble && user){
+            if(_.contains(bubble.users.invitees, userId)){
+                return [200, 'True'];
+            }
+            else{
+                return [200, 'False'];
+            }
+        }
+        else{
+            return [400, 'Not found']
+        }
+    }
+    else if(q == 'isapplicant'){
+        console.log('isapplicant: ', this.request.query.bubbleid, this.request.query.userid);
+        var bubbleId = this.request.query.bubbleid;
+        var userId = this.request.query.userid;
+        var bubble = Bubbles.findOne(bubbleId);
+        var user = Meteor.users.findOne(userId);
+        if(bubble && user){
+            if(_.contains(bubble.users.applicants, userId)){
+                return [200, 'True'];
+            }
+            else{
+                return [200, 'False'];
+            }
+        }
+        else{
+            return [400, 'Not found']
+        }
+    }
+
     var fields = [];
     var limit = 10;
     var offset = 0;
@@ -483,8 +557,6 @@ Meteor.Router.add('/2013-09-11/posts', 'POST', function(){
     createPost(postPropeerties);
     return [200, {'Content-type': 'application/json'}, JSON.stringify(this.request.body)];
 });
-
-
 
 
 

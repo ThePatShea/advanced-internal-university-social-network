@@ -17,13 +17,13 @@
           <h1 class="bubble-name">{{title}}</h1>
           <h2 class="bubble-subtitle">
             <span class="category-{{category}}-color">{{getLongCategory}}</span>
-            <span> | {{pluralize getBubbleUsersCount "member" ""}}</span>
+            <span> | {{pluralize getBubbleUsersCountBackbone "member" ""}}</span>
           </h2>
         </div>
       </div>
       <div class="v-middle cover-btns">
         <div class="v-inner">
-          {{#if isAdmin}}
+          {{#if isAdminBackbone}}
             <a href="{{bubbleEditPath this}}">
               <button class="std-btn-dark cover-btn">
                 <span class="cb-icon-xlight cb-icon-settings">{{> icon-settings}}</span>
