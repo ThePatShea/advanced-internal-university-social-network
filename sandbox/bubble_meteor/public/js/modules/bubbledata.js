@@ -477,83 +477,13 @@
 			this.bubbleMembers.fields = properties.membersFields;
 			this.bubbleMembers.fetch();
 
-			this.fetchPage = function(page, callback){
-				if(page == undefined) {page = that.bubbleMembers.page};
-				if(page >= that.bubbleMembers.pages) {page = that.bubbleMembers.pages-1};
-				if(page < 0) {page = 0};
-				that.bubbleMembers.page = page;
-				that.bubbleMembers.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(page);
-							}
-						}
-					});
-				return page;
-			};
-
-			this.fetchNextPage = function(callback){
-				if(that.bubbleMembers.page < that.bubbleMembers.pages-1){
-					that.bubbleMembers.page = that.bubbleMembers.page + 1;
-					that.bubbleMembers.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleMembers.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.fetchPrevPage = function(callback){
-				if(that.bubbleMembers.page > 0){
-					that.bubbleMembers.page = that.bubbleMembers.page - 1;
-					that.bubbleMembers.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleMembers.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.getCurrentPage = function(){
-				return that.bubbleMembers.page;
-			};
-
-			this.getNumPages = function(){
-				return that.bubbleMembers.pages;
-			};
-
-			this.setFields = function(fieldsString){
-				if(fieldString === "long")
-				{
-					fields = [];
-				}
-				else if(fieldString === "medium")
-				{
-					fields = [];
-				}
-				else if(fieldString === "short")
-				{
-					fields = [];
-				}
-				else
-				{
-					fields = fieldString.split(",");
-				}
-				that.bubbleMembers.fields = fields;
-				return fields;
-			};
-
-			this.setLimit = function(limit){
-				that.bubbleMembers.limit = limit;
-				return limit;
-			}
+			this.fetchPage = new fetchPageHelper(this.bubbleMembers);
+			this.fetchNextPage = new fetchNextPageHelper(this.bubbleMembers);
+			this.fetchPrevPage = new fetchPrevPageHelper(this.bubbleMembers);
+			this.getCurrentPage = new getCurrentPageHelper(this.bubbleMembers);
+			this.getNumPages = new getNumPagesHelper(this.bubbleMembers);
+			this.setFields = new setFieldsHelper(this.bubbleMembers);
+			this.setLimit = new setLimitHelper(this.bubbleMembers);
 		};
 
 		var Admins = function() {
@@ -565,83 +495,13 @@
 			this.bubbleAdmins.fields = properties.adminsFields;
 			this.bubbleAdmins.fetch();
 
-			this.fetchPage = function(page, callback){
-				if(page == undefined) {page = that.bubbleAdmins.page};
-				if(page >= that.bubbleAdmins.pages) {page = that.bubbleAdmins.pages-1};
-				if(page < 0) {page = 0};
-				that.bubbleAdmins.page = page;
-				that.bubbleAdmins.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(page);
-							}
-						}
-					});
-				return page;
-			};
-
-			this.fetchNextPage = function(callback){
-				if(that.bubbleAdmins.page < that.bubbleAdmins.pages-1){
-					that.bubbleAdmins.page = that.bubbleAdmins.page + 1;
-					that.bubbleAdmins.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleAdmins.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.fetchPrevPage = function(callback){
-				if(that.bubbleAdmins.page > 0){
-					that.bubbleAdmins.page = that.bubbleAdmins.page - 1;
-					that.bubbleAdmins.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleAdmins.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.getCurrentPage = function(){
-				return that.bubbleAdmins.page;
-			};
-
-			this.getNumPages = function(){
-				return that.bubbleAdmins.pages;
-			};
-
-			this.setFields = function(fieldsString){
-				if(fieldString === "long")
-				{
-					fields = [];
-				}
-				else if(fieldString === "medium")
-				{
-					fields = [];
-				}
-				else if(fieldString === "short")
-				{
-					fields = [];
-				}
-				else
-				{
-					fields = fieldString.split(",");
-				}
-				that.bubbleAdmins.fields = fields;
-				return fields;
-			};
-
-			this.setLimit = function(limit){
-				that.bubbleAdmins.limit = limit;
-				return limit;
-			}
+			this.fetchPage = new fetchPageHelper(this.bubbleAdmins);
+			this.fetchNextPage = new fetchNextPageHelper(this.bubbleAdmins);
+			this.fetchPrevPage = new fetchPrevPageHelper(this.bubbleAdmins);
+			this.getCurrentPage = new getCurrentPageHelper(this.bubbleAdmins);
+			this.getNumPages = new getNumPagesHelper(this.bubbleAdmins);
+			this.setFields = new setFieldsHelper(this.bubbleAdmins);
+			this.setLimit = new setLimitHelper(this.bubbleAdmins);
 		};
 
 		var Applicants = function() {
@@ -653,83 +513,13 @@
 			this.bubbleApplicants.fields = properties.applicantsFields;
 			this.bubbleApplicants.fetch();
 
-			this.fetchPage = function(page, callback){
-				if(page == undefined) {page = that.bubbleApplicants.page};
-				if(page >= that.bubbleApplicants.pages) {page = that.bubbleApplicants.pages-1};
-				if(page < 0) {page = 0};
-				that.bubbleApplicants.page = page;
-				that.bubbleApplicants.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(page);
-							}
-						}
-					});
-				return page;
-			};
-
-			this.fetchNextPage = function(callback){
-				if(that.bubbleApplicants.page < that.bubbleApplicants.pages-1){
-					that.bubbleApplicants.page = that.bubbleApplicants.page + 1;
-					that.bubbleApplicants.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleApplicants.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.fetchPrevPage = function(callback){
-				if(that.bubbleApplicants.page > 0){
-					that.bubbleApplicants.page = that.bubbleApplicants.page - 1;
-					that.bubbleApplicants.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleApplicants.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.getCurrentPage = function(){
-				return that.bubbleApplicants.page;
-			};
-
-			this.getNumPages = function(){
-				return that.bubbleApplicants.pages;
-			};
-
-			this.setFields = function(fieldsString){
-				if(fieldString === "long")
-				{
-					fields = [];
-				}
-				else if(fieldString === "medium")
-				{
-					fields = [];
-				}
-				else if(fieldString === "short")
-				{
-					fields = [];
-				}
-				else
-				{
-					fields = fieldString.split(",");
-				}
-				that.bubbleApplicants.fields = fields;
-				return fields;
-			};
-
-			this.setLimit = function(limit){
-				that.bubbleApplicants.limit = limit;
-				return limit;
-			}
+			this.fetchPage = new fetchPageHelper(this.bubbleApplicants);
+			this.fetchNextPage = new fetchNextPageHelper(this.bubbleApplicants);
+			this.fetchPrevPage = new fetchPrevPageHelper(this.bubbleApplicants);
+			this.getCurrentPage = new getCurrentPageHelper(this.bubbleApplicants);
+			this.getNumPages = new getNumPagesHelper(this.bubbleApplicants);
+			this.setFields = new setFieldsHelper(this.bubbleApplicants);
+			this.setLimit = new setLimitHelper(this.bubbleApplicants);
 		};
 
 		var Invitees = function() {
@@ -741,243 +531,16 @@
 			this.bubbleInvitees.fields = properties.inviteesFields;
 			this.bubbleInvitees.fetch();
 
-			this.fetchPage = function(page, callback){
-				if(page == undefined) {page = that.bubbleInvitees.page};
-				if(page >= that.bubbleInvitees.pages) {page = that.bubbleInvitees.pages-1};
-				if(page < 0) {page = 0};
-				that.bubbleInvitees.page = page;
-				that.bubbleInvitees.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(page);
-							}
-						}
-					});
-				return page;
-			};
-
-			this.fetchNextPage = function(callback){
-				if(that.bubbleInvitees.page < that.bubbleInvitees.pages-1){
-					that.bubbleInvitees.page = that.bubbleInvitees.page + 1;
-					that.bubbleInvitees.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleInvitees.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.fetchPrevPage = function(callback){
-				if(that.bubbleInvitees.page > 0){
-					that.bubbleInvitees.page = that.bubbleInvitees.page - 1;
-					that.bubbleInvitees.fetch({
-						success: function() {
-							if(callback && (typeof callback === "function"))
-							{
-								callback(that.bubbleInvitees.page);
-							}
-						}
-					});
-				}
-			};
-
-			this.getCurrentPage = function(){
-				return that.bubbleInvitees.page;
-			};
-
-			this.getNumPages = function(){
-				return that.bubbleInvitees.pages;
-			};
-
-			this.setFields = function(fieldsString){
-				if(fieldString === "long")
-				{
-					fields = [];
-				}
-				else if(fieldString === "medium")
-				{
-					fields = [];
-				}
-				else if(fieldString === "short")
-				{
-					fields = [];
-				}
-				else
-				{
-					fields = fieldString.split(",");
-				}
-				that.bubbleInvitees.fields = fields;
-				return fields;
-			};
-
-			this.setLimit = function(limit){
-				that.bubbleInvitees.limit = limit;
-				return limit;
-			}
+			this.fetchPage = new fetchPageHelper(this.bubbleInvitees);
+			this.fetchNextPage = new fetchNextPageHelper(this.bubbleInvitees);
+			this.fetchPrevPage = new fetchPrevPageHelper(this.bubbleInvitees);
+			this.getCurrentPage = new getCurrentPageHelper(this.bubbleInvitees);
+			this.getNumPages = new getNumPagesHelper(this.bubbleInvitees);
+			this.setFields = new setFieldsHelper(this.bubbleInvitees);
+			this.setLimit = new setLimitHelper(this.bubbleInvitees);
 		};
 
-		/*
-		this.fetchPage = function(page, callback){
-			if(page == undefined) {page = that.bubblePosts.page};
-			if(page >= that.bubblePosts.pages) {page = that.bubblePosts.pages-1};
-			if(page < 0) {page = 0};
-			that.bubblePosts.page = page;
-			that.bubblePosts.fetch({
-					success: function() {
-						if(callback && (typeof callback === "function"))
-						{
-							callback(page);
-						}
-					}
-				});
-			return page;
-		};
 
-		this.fetchNextPage = function(callback){
-			if(that.bubblePosts.page < that.bubblePosts.pages-1){
-				that.bubblePosts.page = that.bubblePosts.page + 1;
-				that.bubblePosts.fetch({
-					success: function() {
-						if(callback && (typeof callback === "function"))
-						{
-							callback(that.bubblePosts.page);
-						}
-					}
-				});
-			}
-		};
-
-		this.fetchPrevPage = function(callback){
-			if(that.bubblePosts.page > 0){
-				that.bubblePosts.page = that.bubblePosts.page - 1;
-				that.bubblePosts.fetch({
-					success: function() {
-						if(callback && (typeof callback === "function"))
-						{
-							callback(that.bubblePosts.page);
-						}
-					}
-				});
-			}
-		};
-
-		this.getCurrentPage = function(){
-			return that.bubblePosts.page;
-		};
-
-		this.getNumPages = function(){
-			return that.bubblePosts.pages;
-		};
-
-		this.setFields = function(fieldsString){
-			if(fieldString === "long")
-			{
-				fields = [];
-			}
-			else if(fieldString === "medium")
-			{
-				fields = [];
-			}
-			else if(fieldString === "short")
-			{
-				fields = [];
-			}
-			else
-			{
-				fields = fieldString.split(",");
-			}
-			that.bubblePosts.fields = fields;
-			return fields;
-		};
-
-		this.setLimit = function(limit){
-			that.bubblePosts.limit = limit;
-			return limit;
-		}
-		*/
-
-
-		this.fetchMembersPage = function(page, callback){
-			if(page == undefined) {page = that.bubbleMembers.page};
-			if(page >= that.bubbleMembers.pages) {page = that.bubbleMembers.pages-1};
-			if(page < 0) {page = 0};
-			that.bubbleMembers.page = page;
-			that.bubbleMembers.fetch({
-					success: function() {
-						if(callback && (typeof callback === "function"))
-						{
-							callback(page);
-						}
-					}
-				});
-			return page;
-		};
-
-		this.fetchNextMembersPage = function(callback){
-			if(that.bubbleMembers.page < that.bubbleMembers.pages-1){
-				that.bubbleMembers.page = that.bubbleMembers.page + 1;
-				that.bubbleMembers.fetch({
-					success: function() {
-						if(callback && (typeof callback === "function"))
-						{
-							callback(that.bubbleMembers.page);
-						}
-					}
-				});
-			}
-		};
-
-		this.fetchPrevMembersPage = function(callback){
-			if(that.bubbleMembers.page > 0){
-				that.bubbleMembers.page = that.bubbleMembers.page - 1;
-				that.bubbleMembers.fetch({
-					success: function() {
-						if(callback && (typeof callback === "function"))
-						{
-							callback(that.bubbleMembers.page);
-						}
-					}
-				});
-			}
-		};
-
-		this.getCurrentMembersPage = function(){
-			return that.bubbleMembers.page;
-		};
-
-		this.getNumMembersPages = function(){
-			return that.bubbleMembers.pages;
-		};
-
-		this.setMembersFields = function(fieldsString){
-			if(fieldString === "long")
-			{
-				fields = [];
-			}
-			else if(fieldString === "medium")
-			{
-				fields = [];
-			}
-			else if(fieldString === "short")
-			{
-				fields = [];
-			}
-			else
-			{
-				fields = fieldString.split(",");
-			}
-			that.bubbleMembers.fields = fields;
-			return fields;
-		};
-
-		this.setMembersLimit = function(limit){
-			that.bubbleMembers.limit = limit;
-			return limit;
-		}
 
 
 		this.setBubble = function(id){
