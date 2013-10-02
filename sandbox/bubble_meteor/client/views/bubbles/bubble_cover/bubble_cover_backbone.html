@@ -1,0 +1,51 @@
+<template name="bubbleCoverBackbone">
+    <div class="bubble-cover">
+    {{#codeComment}}
+      <img class="cover-pic" src="{{coverPhoto}}"/>
+      <div class="cover-mask"></div>
+    {{/codeComment}}
+      <div class="v-middle pull-left">
+        <div class="v-inner">
+          <div class="profile-pic-container">
+            <span class="category-{{category}}-fill profile-pic-bg">{{> icon-bubble-big}}</span>
+            <img src="{{profilePicture}}" class="profile-pic">
+          </div>
+        </div>
+      </div>
+      <div class="v-middle bubble-name-and-subtitle">
+        <div class="v-inner">
+          <h1 class="bubble-name">{{title}}</h1>
+          <h2 class="bubble-subtitle">
+            <span class="category-{{category}}-color">{{getLongCategory}}</span>
+            <span> | {{pluralize getBubbleUsersCount "member" ""}}</span>
+          </h2>
+        </div>
+      </div>
+      <div class="v-middle cover-btns">
+        <div class="v-inner">
+          {{#if isAdmin}}
+            <a href="{{bubbleEditPath this}}">
+              <button class="std-btn-dark cover-btn">
+                <span class="cb-icon-xlight cb-icon-settings">{{> icon-settings}}</span>
+                <span class="lbl">edit bubble</span>
+              </button>
+            </a>
+          {{/if}}
+          {{#unless isSuperBubbleBackbone}}
+            {{#unless hasJoinedBubble}}
+              {{#if hasApplied}}
+                <button class="std-btn-dark cover-btn cancel-apply">Cancel Application</button>
+              {{else}}
+                {{#if hasBeenInvited}}
+                  <button class="std-btn-dark cover-btn invite-accept">accept invite</button>
+                  <button class="std-btn-dark cover-btn invite-deny">deny invite</button>
+                {{else}}
+                  <button class="std-btn-dark cover-btn join-apply">Join Bubble</button>
+                {{/if}}
+              {{/if}}
+            {{/unless}}
+          {{/unless}}
+        </div>
+      </div>
+    </div>
+</template>
