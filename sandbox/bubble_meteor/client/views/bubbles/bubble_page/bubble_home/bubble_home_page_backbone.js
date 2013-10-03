@@ -17,17 +17,17 @@ Template.bubblePageBackbone.created = function() {
 
     events: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount', 'attendees']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
     },
 
     discussions: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
     },
 
     files: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
     },
 
     members: {
