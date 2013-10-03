@@ -70,7 +70,8 @@ Meteor.Router.add({
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/file': {
-      to: 'bubbleFilePage', 
+      //to: 'bubbleFilePage', 
+      to: 'bubbleFilePageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/public': {
@@ -82,7 +83,7 @@ Meteor.Router.add({
       and: function(id) { Session.set('currentBubbleId', id); }
     }, 
     '/mybubbles/:_id/members': {
-      to: 'bubbleMembersPage',
+      to: 'bubbleMembersPageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
 
