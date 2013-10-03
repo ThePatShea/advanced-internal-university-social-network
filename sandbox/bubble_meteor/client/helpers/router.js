@@ -60,11 +60,13 @@ Meteor.Router.add({
       }
     },
     '/mybubbles/:_id/event': {
-      to: 'bubbleEventPage', 
+      //to: 'bubbleEventPage',
+      to: 'bubbleEventPageBackbone', 
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/discussion': {
-      to: 'bubbleDiscussionPage', 
+      //to: 'bubbleDiscussionPage',
+      to: 'bubbleDiscussionPageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/file': {
