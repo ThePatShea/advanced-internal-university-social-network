@@ -1,4 +1,4 @@
-Template.bubbleEventPageBackbone.created = function(){
+Template.bubbleFilePage.created = function(){
   Session.set("isLoading", true);
 
   bubbleDep = new Deps.Dependency;
@@ -14,8 +14,8 @@ Template.bubbleEventPageBackbone.created = function(){
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
 
     events: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount']
+      limit: 1,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
     },
 
     discussions: {
@@ -24,8 +24,8 @@ Template.bubbleEventPageBackbone.created = function(){
     },
 
     files: {
-      limit: 1,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
+      limit: 10,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
     },
 
     members: {
@@ -54,14 +54,14 @@ Template.bubbleEventPageBackbone.created = function(){
       Session.set('isLoading', false);
     }
   });
+
 }
 
-
-Template.bubbleEventPageBackbone.rendered = function(){
-var currentUrl  =  window.location.pathname;
-var urlArray    =  currentUrl.split("/");
-var currentBubbleId  =  urlArray[2];
-eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
+Template.bubbleFilePage.rendered = function() {
+  var currentUrl  =  window.location.pathname;
+  var urlArray    =  currentUrl.split("/");
+  var currentBubbleId  =  urlArray[2];
+  filesHandle = Meteor.subscribe('files', currentBubbleId, function() {
     Session.set("isLoading", false);
   });
 
@@ -82,8 +82,8 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
       fields: ['title', 'profilePicture', 'category', 'bubbleType'],
 
       events: {
-        limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount']
+        limit: 1,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
       },
 
       discussions: {
@@ -92,8 +92,8 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
       },
 
       files: {
-        limit: 1,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
+        limit: 10,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
       },
 
       members: {
@@ -126,35 +126,30 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
 
 }
 
-
-
-
-Template.bubbleEventPageBackbone.helpers({
+Template.bubbleFilePageBackbone.helpers({
+  getCurrentBubbleBackbone: function(){
+    var bubble = mybubbles.bubbleInfo.toJSON();
+    return bubble;
+  },
   //Get posts assigned to this bubble
-  getEventPosts: function() {
+  getFilePosts: function(){
     var currentUrl  =  window.location.pathname;
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
 
-    return mybubbles.Events.getJSON();
-
-    //return Posts.find({bubbleId: currentBubbleId, postType: 'event', dateTime: {$gt: moment().add('hours',-4).valueOf()}}, {/*limit: eventsHandle.limit(),*/ sort: {dateTime: 1} });
+    //return Posts.find({bubbleId: currentBubbleId, postType:'file'}, {/*limit: filesHandle.limit(),*/ sort: {lastDownloadTime: -1} });
+    return mybubbles.Files.getJSON();
   },
 
-  postPropertiesBackboneEvent: function(){
-    bubbleDep.depend();
-    var eventPosts = mybubbles.Events.getJSON();
-    var topEventPosts = eventPosts.slice(0, 3);
+  postPropertiesBackboneFile: function(){
+    var discussionPosts = mybubbles.Discussions.getJSON();
+    var topDiscussionPosts = discussionPosts.slice(0, 3);
     return {
-      'posts': topEventPosts,
-      'postType': 'event',
-      'word1': 'upcoming'
+      'posts': topDiscussionPosts,
+      'postType': 'discussion',
+      'word1': 'active'
     }
-  },
-
-  getCurrentBubbleBackbone: function(){
-    var bubble = mybubbles.bubbleInfo.toJSON();
-    return bubble;
   }
-  
 });
+
+
