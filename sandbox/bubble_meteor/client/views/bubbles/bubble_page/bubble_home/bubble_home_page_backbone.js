@@ -53,6 +53,7 @@ Template.bubblePageBackbone.created = function() {
     callback: function(){
       console.log('Bubbledata changed');
       bubbleDep.changed();
+      Session.set('isLoading', false);
     }
   });
 
@@ -67,37 +68,70 @@ Template.bubblePageBackbone.created = function() {
 
 Template.bubblePageBackbone.rendered = function() {
   //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+  console.log('Rendered bubble page');
 
-  currentBubbleId = window.location.pathname.split('/')[2];
+  //currentBubbleId = window.location.pathname.split('/')[2];
 
-  var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
-  var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
-  if(isMemberAjax.responseText == 'False' && isAdminAjax.responseText == 'False'){
-    Meteor.Router.to('bubblePublicPage', bubble._id);
-  }
+
 
 
   if(currentBubbleId != window.location.pathname.split("/")[2])
   {
+    console.log('Bubble chenged');
     currentBubbleId = window.location.pathname.split("/")[2];
 
-    mybubbles = new BubbleData.MyBubbles({
-      bubbleId: currentBubbleId,
+    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    if(isMemberAjax.responseText == 'False' && isAdminAjax.responseText == 'False'){
+      Meteor.Router.to('bubblePublicPage', bubble._id);
+    }
+
+  mybubbles = new BubbleData.MyBubbles({
+    bubbleId: currentBubbleId,
+    limit: 10,
+    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+
+    events: {
       limit: 10,
-      fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
+    },
 
-      membersFields: ['username', 'name', 'profilePicture'],
-      membersLimit: 10,
+    discussions: {
+      limit: 10,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
+    },
 
-      adminsFields: ['username', 'name', 'profilePicture'],
-      adminsLimit: 10,
+    files: {
+      limit: 10,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
+    },
 
-      applicantsFields: ['username', 'name', 'profilePicture'],
-      applicantsLimit: 10,
+    members: {
+      limit: 10,
+      fields: ['username', 'name', 'profilePicture']
+    },
 
-      inviteesFields: ['username', 'name', 'profilePicture'],
-      inviteesLimit: 10
-    });
+    admins: {
+      limit: 10,
+      fields: ['username', 'name', 'profilePicture']
+    },
+
+    applicants: {
+      limit: 10,
+      fields: ['username', 'name', 'profilePicture']
+    },
+
+    invitees: {
+      limit: 10,
+      fields: ['username', 'name', 'profilePicture']
+    },
+
+    callback: function(){
+      console.log('Bubbledata changed');
+      bubbleDep.changed();
+      Session.set('isLoading', false);
+    }
+  });
   }
 
 }
@@ -183,6 +217,7 @@ Template.bubblePageBackbone.helpers({
   },
 
   postPropertiesBackboneEvent: function(){
+    bubbleDep.depend();
     var eventPosts = mybubbles.Events.getJSON();
     var topEventPosts = eventPosts.slice(0, 3);
     return {

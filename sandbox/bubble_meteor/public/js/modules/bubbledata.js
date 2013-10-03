@@ -483,7 +483,7 @@
 		this.bubbleInfo = new BubbleInfo();
 		this.bubbleInfo.on('change', properties.callback);
 		this.bubbleInfo.bubbleId = properties.bubbleId;
-		this.bubbleInfo.fetch();
+		this.bubbleInfo.fetch({'success': properties.callback});
 
 		var Events = function() {
 			this.bubbleEvents = new BubbleEvents();
@@ -491,7 +491,7 @@
 			this.bubbleEvents.bubbleId = that.bubbleId;
 			this.bubbleEvents.limit = properties.events.limit;
 			this.bubbleEvents.fields = properties.events.fields;
-			this.bubbleEvents.fetch({async: false});
+			this.bubbleEvents.fetch({'success': properties.callback});
 
 			var scope = this.bubbleEvents;
 			this.fetchPage = new fetchPageHelper(scope);
@@ -512,7 +512,7 @@
 			this.bubbleDiscussions.bubbleId = that.bubbleId;
 			this.bubbleDiscussions.limit = properties.discussions.limit;
 			this.bubbleDiscussions.fields = properties.discussions.fields;
-			this.bubbleDiscussions.fetch({async: false});
+			this.bubbleDiscussions.fetch({'success': properties.callback});
 
 			var scope = this.bubbleDiscussions;
 			this.fetchPage = new fetchPageHelper(scope);
@@ -533,7 +533,7 @@
 			this.bubbleFiles.bubbleId = that.bubbleId;
 			this.bubbleFiles.limit = properties.files.limit;
 			this.bubbleFiles.fields = properties.files.fields;
-			this.bubbleFiles.fetch({async: false});
+			this.bubbleFiles.fetch({'success': properties.callback});
 
 			var scope = this.bubbleFiles;
 			this.fetchPage = new fetchPageHelper(scope);
@@ -555,7 +555,7 @@
 			this.bubbleMembers.bubbleId = properties.bubbleId;
 			this.bubbleMembers.limit = properties.members.limit;
 			this.bubbleMembers.fields = properties.members.fields;
-			this.bubbleMembers.fetch();
+			this.bubbleMembers.fetch({'success': properties.callback});
 
 			this.fetchPage = new fetchPageHelper(this.bubbleMembers);
 			this.fetchNextPage = new fetchNextPageHelper(this.bubbleMembers);
@@ -574,7 +574,7 @@
 			this.bubbleAdmins.bubbleId = properties.bubbleId;
 			this.bubbleAdmins.limit = properties.admins.limit;
 			this.bubbleAdmins.fields = properties.admins.fields;
-			this.bubbleAdmins.fetch();
+			this.bubbleAdmins.fetch({'success': properties.callback});
 
 			this.fetchPage = new fetchPageHelper(this.bubbleAdmins);
 			this.fetchNextPage = new fetchNextPageHelper(this.bubbleAdmins);
@@ -593,7 +593,7 @@
 			this.bubbleApplicants.bubbleId = properties.bubbleId;
 			this.bubbleApplicants.limit = properties.applicants.limit;
 			this.bubbleApplicants.fields = properties.applicants.fields;
-			this.bubbleApplicants.fetch();
+			this.bubbleApplicants.fetch({'success': properties.callback});
 
 			this.fetchPage = new fetchPageHelper(this.bubbleApplicants);
 			this.fetchNextPage = new fetchNextPageHelper(this.bubbleApplicants);
@@ -612,7 +612,7 @@
 			this.bubbleInvitees.bubbleId = properties.bubbleId;
 			this.bubbleInvitees.limit = properties.invitees.limit;
 			this.bubbleInvitees.fields = properties.invitees.fields;
-			this.bubbleInvitees.fetch();
+			this.bubbleInvitees.fetch({'success': properties.callback});
 
 			this.fetchPage = new fetchPageHelper(this.bubbleInvitees);
 			this.fetchNextPage = new fetchNextPageHelper(this.bubbleInvitees);
