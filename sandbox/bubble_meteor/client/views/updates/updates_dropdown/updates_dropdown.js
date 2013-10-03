@@ -328,6 +328,7 @@ Template.update.helpers({
   },
   getContent: function() {
     Meteor.subscribe('findUsersByUsername',this.invokerName);
+    Meteor.subscribe('findUserByName', this.invokerName);
     console.log("CONTENT: ", this.content);
     console.log("INVOKERNAME: ", this.invokerName);
     if(this.updateType == "replied" ||
@@ -338,10 +339,16 @@ Template.update.helpers({
       if(nameList.length > 1){
         content = content.replace('is', 'are');
       };
-      this.user = Meteor.users.findOne({'username': this.invokerName}, {'fields': 'name'});
+      /*
+      this.user = Meteor.users.findOne({'username': this.invokerName});
+      if(typeof this.user !== "undefined")
+        this.user = Meteor.users.findOne({'name': this.invokerName});
       console.log("USER: ", this.user);
-      return this.user.name + content;
-      //return this.invokerName + content;
+      if(typeof this.user !== "undefined")
+        return this.user.name + content;
+      return this.content;
+      */
+      return this.invokerName + content;
     }else{
       return this.content;
     }
