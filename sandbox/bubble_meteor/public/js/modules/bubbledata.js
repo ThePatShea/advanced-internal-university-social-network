@@ -424,12 +424,12 @@
 		this.bubbleInfo.bubbleId = properties.bubbleId;
 		this.bubbleInfo.fetch();
 
-		var Events = function(properties) {
+		var Events = function() {
 			this.bubbleEvents = new BubbleEvents();
 			that.bubbleUsers.watch(this.bubbleEvents);
 			this.bubbleEvents.bubbleId = that.bubbleId;
-			this.bubbleEvents.limit = properties.limit;
-			this.bubbleEvents.fields = properties.fields;
+			this.bubbleEvents.limit = properties.events.limit;
+			this.bubbleEvents.fields = properties.events.fields;
 			this.bubbleEvents.fetch({async: false});
 
 			var scope = this.bubbleEvents;
@@ -442,15 +442,15 @@
 			this.setLimit = new setLimitHelper(scope);
 			this.getJSON = new getJSONHelper(scope);
 
-			return this.bubbleEvents.toJSON();
+			//return this.bubbleEvents.toJSON();
 		};
 
-		var Discussions = function(properties) {
+		var Discussions = function() {
 			this.bubbleDiscussions = new BubbleDiscussions();
 			that.bubbleUsers.watch(this.bubbleDiscussions);
 			this.bubbleDiscussions.bubbleId = that.bubbleId;
-			this.bubbleDiscussions.limit = properties.limit;
-			this.bubbleDiscussions.fields = properties.fields;
+			this.bubbleDiscussions.limit = properties.discussions.limit;
+			this.bubbleDiscussions.fields = properties.discussions.fields;
 			this.bubbleDiscussions.fetch({async: false});
 
 			var scope = this.bubbleDiscussions;
@@ -463,15 +463,15 @@
 			this.setLimit = new setLimitHelper(scope);
 			this.getJSON = new getJSONHelper(scope);
 
-			return this.bubbleDiscussions.toJSON();
+			//return this.bubbleDiscussions.toJSON();
 		};
 
-		var Files = function(properties) {
+		var Files = function() {
 			this.bubbleFiles = new BubbleFiles();
 			that.bubbleUsers.watch(this.bubbleFiles);
 			this.bubbleFiles.bubbleId = that.bubbleId;
-			this.bubbleFiles.limit = properties.limit;
-			this.bubbleFiles.fields = properties.fields;
+			this.bubbleFiles.limit = properties.files.limit;
+			this.bubbleFiles.fields = properties.files.fields;
 			this.bubbleFiles.fetch({async: false});
 
 			var scope = this.bubbleFiles;
@@ -484,7 +484,7 @@
 			this.setLimit = new setLimitHelper(scope);
 			this.getJSON = new getJSONHelper(scope);
 
-			return this.bubbleFiles.toJSON();
+			//return this.bubbleFiles.toJSON();
 		};
 
 		var Members = function() {
@@ -492,8 +492,8 @@
 
 			this.bubbleMembers = new BubbleMembers();
 			this.bubbleMembers.bubbleId = properties.bubbleId;
-			this.bubbleMembers.limit = properties.membersLimit;
-			this.bubbleMembers.fields = properties.membersFields;
+			this.bubbleMembers.limit = properties.members.limit;
+			this.bubbleMembers.fields = properties.members.fields;
 			this.bubbleMembers.fetch();
 
 			this.fetchPage = new fetchPageHelper(this.bubbleMembers);
@@ -511,8 +511,8 @@
 
 			this.bubbleAdmins = new BubbleAdmins();
 			this.bubbleAdmins.bubbleId = properties.bubbleId;
-			this.bubbleAdmins.limit = properties.adminsLimit;
-			this.bubbleAdmins.fields = properties.adminsFields;
+			this.bubbleAdmins.limit = properties.admins.limit;
+			this.bubbleAdmins.fields = properties.admins.fields;
 			this.bubbleAdmins.fetch();
 
 			this.fetchPage = new fetchPageHelper(this.bubbleAdmins);
@@ -530,8 +530,8 @@
 
 			this.bubbleApplicants = new BubbleApplicants();
 			this.bubbleApplicants.bubbleId = properties.bubbleId;
-			this.bubbleApplicants.limit = properties.applicantsLimit;
-			this.bubbleApplicants.fields = properties.applicantsFields;
+			this.bubbleApplicants.limit = properties.applicants.limit;
+			this.bubbleApplicants.fields = properties.applicants.fields;
 			this.bubbleApplicants.fetch();
 
 			this.fetchPage = new fetchPageHelper(this.bubbleApplicants);
@@ -549,8 +549,8 @@
 			
 			this.bubbleInvitees = new BubbleInvitees();
 			this.bubbleInvitees.bubbleId = properties.bubbleId;
-			this.bubbleInvitees.limit = properties.inviteesLimit;
-			this.bubbleInvitees.fields = properties.inviteesFields;
+			this.bubbleInvitees.limit = properties.invitees.limit;
+			this.bubbleInvitees.fields = properties.invitees.fields;
 			this.bubbleInvitees.fetch();
 
 			this.fetchPage = new fetchPageHelper(this.bubbleInvitees);
@@ -583,9 +583,12 @@
 		this.Admins = new Admins();
 		this.Invitees = new Invitees();
 		this.Applicants = new Applicants();
-		this.Events = new Events({limit: properties.limit, fields: properties.fields});
-		this.Discussions = new Discussions({limit: properties.limit, fields: properties.fields});
-		this.Files = new Files({limit: properties.limit, fields: properties.fields});
+		//this.Events = new Events({limit: properties.limit, fields: properties.fields});
+		//this.Discussions = new Discussions({limit: properties.limit, fields: properties.fields});
+		//this.Files = new Files({limit: properties.limit, fields: properties.fields});
+		this.Events = new Events();
+		this.Discussions = new Discussions();
+		this.Files = new Files();
 	}
 
 	var ExploreSection = function(properties){
