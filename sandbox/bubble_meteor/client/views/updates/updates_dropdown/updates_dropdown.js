@@ -327,6 +327,7 @@ Template.update.helpers({
     return updateType == this.updateType;
   },
   getContent: function() {
+    Meteor.subscribe('findUsersByUsername',this.invokerName);
     console.log("CONTENT: ", this.content);
     console.log("INVOKERNAME: ", this.invokerName);
     if(this.updateType == "replied" ||
@@ -336,8 +337,9 @@ Template.update.helpers({
       var nameList = this.invokerName.split('and');
       if(nameList.length > 1){
         content = content.replace('is', 'are');
-      }
+      };
       this.user = Meteor.users.findOne({'username': this.invokerName}, {'fields': 'name'});
+      console.log("USER: ", this.user);
       return this.user.name + content;
       //return this.invokerName + content;
     }else{
