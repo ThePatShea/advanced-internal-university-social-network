@@ -166,6 +166,21 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 //**************************Begin REST GET****************************************
 
+//Explore Posts for dashboard
+Meteor.Router.add('/2013-09-11/dashboard', 'GET', function(){
+    var limit = this.request.query.limit || 5;
+    console.log("Limit: ", limit);
+
+    var retVal = getDashboardPosts(limit);
+    _.each(retVal, function(val){
+        console.log("RetVal: ", val);
+        val.id = val._id;
+        delete val._id;
+    })
+
+    return[200, JSON.stringify(retVal)];
+});
+
 //REST api for retreiving selected fields from collections with pagination support
 Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
     console.log('2013-09-11 REST API: ', q, this.request.originalUrl, this.request.query);
@@ -308,8 +323,6 @@ Meteor.Router.add('/2013-09-11/?:q', 'GET', function(q){
     return [400, 'Malformed request'];
 
 });
-
-
 
 
 //REST API for retreiving particular items from Collections
@@ -1042,6 +1055,11 @@ function getBubblePosts(limit, offset, fields, bubbleId){
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};
         return response;
     }
+}
+
+function getDashboardPosts(limit){
+    var posts = Posts.find({exploreId: {$exists: true}},{limit: limit}).fetch();
+    return posts;
 }
 
 

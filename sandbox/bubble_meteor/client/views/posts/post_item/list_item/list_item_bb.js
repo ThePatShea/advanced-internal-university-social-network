@@ -1,7 +1,7 @@
 Template.listItemBB.helpers({
     getPostAsUser: function() {
       //return Meteor.users.findOne(this.postAsId);
-      console.log("ES: ", es.exploreUsers.toJSON());
+      //console.log("ES: ", es.exploreUsers.toJSON());
       return this.user;
     },
     /*
