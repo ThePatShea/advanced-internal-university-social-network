@@ -37,7 +37,7 @@ Template.listItemBB.helpers({
       }
     },
     isGoing : function() {
-      return _.contains(this.attendees,Meteor.user().username)
+      return _.contains(this.attendees, Meteor.userId());
     },
 
     hasChildren : function() {

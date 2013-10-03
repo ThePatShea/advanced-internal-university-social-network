@@ -151,6 +151,7 @@
 	})
 
 	var Dashboard = function() {
+		that = this;
 		this.dashboardUsers = new DashboardUsers();
 		this.dashboardBubbles = new DashboardBubbles();
 		this.dashboardPosts = new DashboardPosts();
@@ -160,9 +161,22 @@
 
 		this.dashboardPosts.fetch({async: false});
 
+		var posts = this.dashboardPosts.toJSON();
+		_.each(posts, function(post){
+			if(post.postAsType === "bubble")
+			{
+				post.bubble = that.dashboardBubbles.get(post.postAsId).toJSON();
+			}
+			if(post.postAsType === "user")
+			{
+				post.user = that.dashboardUsers.get(post.postAsId).toJSON();
+			}
+		});
+
 		this.getBubbles = new getJSONHelper(this.dashboardBubbles);
 		this.getUsers = new getJSONHelper(this.dashboardUsers);
 		this.getPosts = new getJSONHelper(this.dashboardPosts);
+		this.getData = function() {return posts};
 
 		//return this.dashboardPosts.toJSON();
 	}

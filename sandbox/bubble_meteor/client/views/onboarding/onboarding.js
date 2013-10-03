@@ -1,6 +1,7 @@
 Template.onboarding.helpers({
   getCurrentName: function() {
-    return Meteor.user().name;
+    var user = Meteor.users.findOne(Meteor.userId());
+    return user.name;
   },
 });
 

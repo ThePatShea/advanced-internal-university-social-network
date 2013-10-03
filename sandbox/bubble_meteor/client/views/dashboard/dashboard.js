@@ -15,22 +15,8 @@ Template.dashboard.helpers({
         },
         */
         getFiveExplorePostsBB: function(){
-        	var dashboardData = new BubbleData.Dashboard();
-        	var retVal = dashboardData.getPosts();
-        	var bubbles = dashboardData.getBubbles();
-        	var users = dashboardData.getUsers();
-        	_.each(retVal, function(post){
-        		_.each(bubbles, function(bubble){
-					if(post.postAsId === bubble.id)
-						post.bubble = bubble;
-        		});
-        		_.each(users, function(user){
-					if(post.postAsId === user.id)
-						post.user = user;
-        		});
-        	});
-        	
-        	return retVal;
+        	var dashboardData = new BubbleData.Dashboard();        	
+        	return dashboardData.getData();
         },
 	numBubbles: function() {
 		var uid = Meteor.userId();

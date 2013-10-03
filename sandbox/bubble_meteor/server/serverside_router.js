@@ -1058,7 +1058,7 @@ function getBubblePosts(limit, offset, fields, bubbleId){
 }
 
 function getDashboardPosts(limit){
-    var posts = Posts.find({exploreId: {$exists: true}},{limit: limit}).fetch();
+    var posts = Posts.find({exploreId: {$exists: true}},{limit: limit, sort: {submitted: -1}}).fetch();
     return posts;
 }
 
