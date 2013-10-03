@@ -8,7 +8,7 @@ Updates.allow({
 Meteor.methods({
   update: function(updateAttributes){
     console.log("this ran");
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId());
    
     var update = _.extend(_.pick(updateAttributes, 
       'userId', 'postId', 'commentId', 'bubbleId', 'invokerId',
@@ -117,15 +117,16 @@ createEditEventUpdate = function(userId, postId) {
     });
     _.each(attendees, function(uId){
       var user = Meteor.users.findOne({_id:uId});
+      var invoker = Meteor.users.findOne(Meteor.userId());
       Meteor.call('update',{
         userId: user._id,
         postId: post._id,
         bubbleId: bubble._id,
         invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
+        invokerName: invoker.username,
         updateType: "edited post",
         url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
-        content: Meteor.user().username + " edited " + post.name
+        content: invoker.username + " edited " + post.name
       });
     });
   }
@@ -149,11 +150,12 @@ createRemoveMemberUpdate = function(userId) {
     Meteor.call('setRead', update);
   });
 
+  invoker = Meteor.users.findOne(Meteor.userId());
   Meteor.call('update',{
     userId: userId,
     bubbleId: bubble._id,
     invokerId: Meteor.userId(),
-    invokerName: Meteor.user().username,
+    invokerName: invoker.username,
     updateType: "removed from bubble",
     url: '/searchAll',
     content: "You have been removed from " + bubble.title
@@ -163,11 +165,12 @@ createRemoveMemberUpdate = function(userId) {
 //For users who are rejected by bubble
 createRejectApplicationUpdate = function(userId) {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  invoker = Meteor.users.findOne(Meteor.userId());
   Meteor.call('update',{
     userId: userId,
     bubbleId: bubble._id,
     invokerId: Meteor.userId(),
-    invokerName: Meteor.user().username,
+    invokerName: invoker.username,
     updateType: "application rejected",
     url: '/searchAll',
     content: bubble.title + " rejected your application"
@@ -185,9 +188,11 @@ createDeleteEventUpdate = function(post) {
     Meteor.call('setRead', update);
   });
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   //Remove post owner from list of attendees
   var attendees = post.attendees;
-  var index = attendees.indexOf(Meteor.user().username);
+  var index = attendees.indexOf(invoker.username);
   attendees.splice(index,1);
 
   _.each(attendees, function(username){
@@ -197,10 +202,10 @@ createDeleteEventUpdate = function(post) {
       postId: post._id,
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
+      invokerName: invoker.username,
       updateType: "event cancelled",
       url: '/mybubbles/'+bubble._id+"/home",
-      content: Meteor.user().username + " canceled the event " + post.name
+      content: invoker.username + " canceled the event " + post.name
     });
   });
 
@@ -208,23 +213,24 @@ createDeleteEventUpdate = function(post) {
 
 //For users who have received an invitation
 createInvitationUpdate = function(userList) {
+  var invoker = Meteor.users.findOne(Meteor.userId());
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   _.each(userList, function(userId){
     Meteor.call('update',{
       userId: userId,
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
+      invokerName: invoker.username,
       updateType: "invitation",
       url: '/settings/invites',
-      content: Meteor.user().username + " invited you to " + bubble.title
+      content: invoker.username + " invited you to " + bubble.title
     });
 
     //Create mobile update
     if(Meteor.users.findOne(userId).deviceToken){
       Meteor.call(
         'getUA', 
-        Meteor.user().username + " invited you to " + bubble.title, 
+        invoker.username + " invited you to " + bubble.title, 
         Meteor.users.findOne(userId).deviceToken
       );
     }
@@ -250,6 +256,8 @@ createNewAttendeeUpdate = function(postId) {
     var index = attendees.indexOf( Meteor.userId() );
     attendees.splice(index,1);
 
+    var invoker = Meteor.users.findOne(Meteor.userId());
+
     _.each(attendees, function(userId){
       var user = Meteor.users.findOne(userId);
       Meteor.call('update',{
@@ -257,7 +265,7 @@ createNewAttendeeUpdate = function(postId) {
         postId: postId,
         bubbleId: bubble._id,
         invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
+        invokerName: invoker.username,
         updateType: "new attendee",
         url: '/mybubbles/'+bubble._id+'/members',
         content: " is attending " + post.name
@@ -323,15 +331,17 @@ createBubbleEditUpdate = function() {
   var index = everyone.indexOf(Meteor.userId());
   everyone.splice(index,1);
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   _.each(everyone, function(userId){  
     Meteor.call('update',{
       userId: userId,
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
+      invokerName: invoker.username,
       updateType: "edited bubble",
       url: '/mybubbles/'+bubble._id+"/home",
-      content: Meteor.user().username + " edited the bubble " + bubble.title
+      content: invoker.username + " edited the bubble " + bubble.title
     });
   });
 }
@@ -346,14 +356,16 @@ createMemberPromoteUpdate = function(userId) {
     Meteor.call('setRead', update);
   });
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   Meteor.call('update',{
     userId: userId,
     bubbleId: Session.get('currentBubbleId'),
     invokerId: Meteor.userId(),
-    invokerName: Meteor.user().username,
+    invokerName: invoker.username,
     updateType: "member promoted",
       url: '/mybubbles/'+bubble._id+'/members',
-    content: Meteor.user().username + " promoted you to admin of the bubble " + bubble.title
+    content: invoker.username + " promoted you to admin of the bubble " + bubble.title
   });
 }
 
@@ -367,14 +379,16 @@ createAdminDemoteUpdate = function(userId) {
     Meteor.call('setRead', update);
   });
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   Meteor.call('update',{
     userId: userId,
     bubbleId: Session.get('currentBubbleId'),
     invokerId: Meteor.userId(),
-    invokerName: Meteor.user().username,
+    invokerName: invoker.username,
     updateType: "member demoted",
       url: '/mybubbles/'+bubble._id+'/members',
-    content: Meteor.user().username + " demoted you to member of the bubble " + bubble.title
+    content: invoker.username + " demoted you to member of the bubble " + bubble.title
   });
 }
 
@@ -388,12 +402,14 @@ createNewApplicantUpdate = function(bubbleId) {
     Meteor.call('setRead', update);
   });
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   _.each(bubble.users.admins, function(adminId){
     Meteor.call('update',{
       userId: adminId,
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
+      invokerName: invoker.username,
       updateType: "new applicant",
       url: '/mybubbles/'+bubble._id+'/members',
       content: " applied to be a member of the bubble " + bubble.title
@@ -403,7 +419,7 @@ createNewApplicantUpdate = function(bubbleId) {
     if(Meteor.users.findOne(adminId).deviceToken){
       Meteor.call(
         'getUA', 
-        Meteor.user().username + " applied to be a member of the bubble " + bubble.title, 
+        invoker.username + " applied to be a member of the bubble " + bubble.title, 
         Meteor.users.findOne(adminId).deviceToken
       );
     }
@@ -420,6 +436,8 @@ createPostFlagUpdate = function(flag) {
     Meteor.call('setRead', update);
   });
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   var superUsers = Meteor.users.find({userType:'superuser'}).fetch();
   _.each(superUsers, function(user) {
     if(user._id != Meteor.userId()){
@@ -428,7 +446,7 @@ createPostFlagUpdate = function(flag) {
         bubbleId: flag.bubbleId,
         postId: flag.postId,
         invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
+        invokerName: invoker.username,
         updateType: "post flagged",
         url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
         content: post.name + " has been flagged"
@@ -447,6 +465,8 @@ createPostUnflagUpdate = function(flag) {
     Meteor.call('setRead', update);
   });
 
+  var invoker = Meteor.users.findOne(Meteor.userId());
+
   var superUsers = Meteor.users.find({userType:'2'}).fetch();
   _.each(superUsers, function(user) {
     if(user._id != Meteor.userId()){
@@ -455,7 +475,7 @@ createPostUnflagUpdate = function(flag) {
         bubbleId: flag.bubbleId,
         postId: flag.postId,
         invokerId: Meteor.userId(),
-        invokerName: Meteor.user().username,
+        invokerName: invoker.username,
         updateType: "post unflagged",
         url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
         content: post.name + " has been unflagged"
@@ -469,12 +489,13 @@ createDeleteBubbleUpdate = function(bubbleId) {
   var bubble = Bubbles.findOne(bubbleId);
   var admins = bubble.users.admins;
   var users = admins.concat(bubble.users.members);
+  var invoker = Meteor.users.findOne(Meteor.userId());
   _.each(users, function(userId) {
     Meteor.call('update', {
       userId: userId,
       bubbleId: bubble._id,
       invokerId: Meteor.userId(),
-      invokerName: Meteor.user().username,
+      invokerName: invoker.username,
       updateType: "bubble deleted",
       url: '/searchAll',
       content: bubble.title + " has been deleted"
@@ -484,16 +505,17 @@ createDeleteBubbleUpdate = function(bubbleId) {
 
 //Sends an update to the owner when lvl 3 users delete posts due to flags
 createPostDeletedUpdate = function(postId) {
+  var invoker = Meteor.users.findOne(Meteor.userId());
   var post = Posts.findOne(postId);
   var bubble = Bubbles.findOne(post.bubbleId);
   Meteor.call('update', {
     userId: post.userId,
     bubbleId: bubble._id,
     invokerId: Meteor.userId(),
-    invokerName: Meteor.user().username,
+    invokerName: Minvoker.username,
     updateType: "post deleted",
     url: '/mybubbles/'+bubble._id+'/home',
-    content: post.name + " has been deleted by " + Meteor.user().username
+    content: post.name + " has been deleted by " + invoker.username
   });
 }
 
