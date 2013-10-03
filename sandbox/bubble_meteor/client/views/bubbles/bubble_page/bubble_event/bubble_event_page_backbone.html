@@ -1,0 +1,30 @@
+<template name="bubbleEventPageBackbone">
+  {{#with getCurrentBubbleBackbone}}
+    {{> bubbleCoverBackbone}}
+    {{> bubbleSectionSelectorBackbone}}
+
+    <div class="visible-{{isLoading}}">
+      {{> gifLoaderToParent}}
+    </div>
+    
+    <div class="bubble-page-content">
+      <div class="bubble-list">
+        <div></div>
+        {{#with postPropertiesBackboneEvent}}
+          {{> listHeading}}
+        {{/with}}
+        {{#each getEventPosts}}
+          {{> listItemBB}}
+        {{else}}
+          <div class="post-item">
+            <div class="v-middle">
+              <div class="v-inner">
+                No events yet. Schedule meetings and other members-only events here!
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/with}}
+</template>
