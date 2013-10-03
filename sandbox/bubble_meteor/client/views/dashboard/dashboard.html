@@ -176,11 +176,19 @@
           </div>
           <div>
             <div></div>
-            {{#each getFiveExplorePosts}}
-              {{> listItem}}
+            {{#codeComment}}
+	            {{#each getFiveExplorePosts}}
+	              {{> listItem}}
+	            {{else}}
+	              {{> gifLoaderToParent}}
+	            {{/each}}
+            {{/codeComment}}
+
+            {{#each getFiveExplorePostsBB}}
+           		{{> listItemBB}}
             {{else}}
-              {{> gifLoaderToParent}}
-            {{/each}}
+            	{{> gifLoaderToParent}}
+        	{{/each}}
           </div>
         </div>
 </template>

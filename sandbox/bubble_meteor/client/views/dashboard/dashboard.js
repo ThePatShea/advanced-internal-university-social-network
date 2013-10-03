@@ -1,6 +1,5 @@
-
-
 Template.dashboard.helpers({
+		/*
         getFiveExplorePosts: function() {
 		    var posts = Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}}).fetch();
 		    var validPostIds = [];
@@ -13,6 +12,25 @@ Template.dashboard.helpers({
 		    }
 		    //console.log('Dashboard Valid posts: ', validPostIds);
           return Posts.find({_id: {$in: validPostIds} },{limit: 5, sort: {submitted: -1}});
+        },
+        */
+        getFiveExplorePostsBB: function(){
+        	var dashboardData = new BubbleData.Dashboard();
+        	var retVal = dashboardData.getPosts();
+        	var bubbles = dashboardData.getBubbles();
+        	var users = dashboardData.getUsers();
+        	_.each(retVal, function(post){
+        		_.each(bubbles, function(bubble){
+					if(post.postAsId === bubble.id)
+						post.bubble = bubble;
+        		});
+        		_.each(users, function(user){
+					if(post.postAsId === user.id)
+						post.user = user;
+        		});
+        	});
+        	
+        	return retVal;
         },
 	numBubbles: function() {
 		var uid = Meteor.userId();

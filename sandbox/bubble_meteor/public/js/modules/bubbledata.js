@@ -29,7 +29,6 @@
 		}
 	});
 
-
 	var ExplorePosts = Backbone.Collection.extend({
 		exploreId : 'none',
 		limit: 10,
@@ -107,6 +106,68 @@
 			}
 		}
 	});
+
+	//Sync version of ExploreUsers
+	var DashboardUsers = Backbone.Collection.extend({
+		model: ExploreUser,
+		initialize: function(){
+			this.watch = function(collection){
+				var that = this;
+				collection.on('add', function(model){
+					var serverModel = model.toJSON();
+					if(serverModel.postAsType == 'user'){
+						var newUser = new ExploreUser({id: serverModel.postAsId});
+						newUser.fetch({async: false});
+						that.add(newUser);
+					}
+				});
+			}
+		}
+	});
+
+	//Sync version of ExploreBubbles
+	var DashboardBubbles = Backbone.Collection.extend({
+		model: ExploreBubble,
+		initialize: function(){
+			this.watch = function(collection){
+				var that = this;
+				collection.on('add', function(model){
+					var serverModel = model.toJSON();
+					if(serverModel.postAsType == 'bubble'){
+						var newBubble = new ExploreBubble({id: serverModel.postAsId});
+						newBubble.fetch({async: false});
+						that.add(newBubble);
+					}
+				});
+			}
+		}
+	});
+
+	var DashboardPosts = Backbone.Collection.extend({
+		model: ExplorePost,
+		url: function(){
+			return '/2013-09-11/dashboard';
+		}
+	})
+
+	var Dashboard = function() {
+		this.dashboardUsers = new DashboardUsers();
+		this.dashboardBubbles = new DashboardBubbles();
+		this.dashboardPosts = new DashboardPosts();
+
+		this.dashboardUsers.watch(this.dashboardPosts);
+		this.dashboardBubbles.watch(this.dashboardPosts);
+
+		this.dashboardPosts.fetch({async: false});
+
+		this.getBubbles = new getJSONHelper(this.dashboardBubbles);
+		this.getUsers = new getJSONHelper(this.dashboardUsers);
+		this.getPosts = new getJSONHelper(this.dashboardPosts);
+
+		//return this.dashboardPosts.toJSON();
+	}
+
+	BubbleData.Dashboard = Dashboard;
 
 	var BubbleInfo = Backbone.Model.extend({
 		url: function(){
