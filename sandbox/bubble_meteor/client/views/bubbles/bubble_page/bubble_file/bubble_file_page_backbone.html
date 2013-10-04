@@ -1,4 +1,4 @@
-<template name="bubbleDiscussionPageBackbone">
+<template name="bubbleFilePageBackbone">
   {{#with getCurrentBubbleBackbone}}
     {{> bubbleCoverBackbone}}
     {{> bubbleSectionSelectorBackbone}}
@@ -10,16 +10,16 @@
     <div class="bubble-page-content">
       <div class="bubble-list">
         <div></div>
-        {{#with postPropertiesBackboneDiscussion}}
+        {{#with postPropertiesBackboneFile}}
           {{> listHeading}}
         {{/with}}
-        {{#each getDiscussionPosts}}
+        {{#each getFilePosts}}
           {{> listItemBB}}
         {{else}}
           <div class="post-item">
             <div class="v-middle">
               <div class="v-inner">
-                No discussions? Start discussions for any topic here!
+                No files? Add some here!
               </div>
             </div>
           </div>

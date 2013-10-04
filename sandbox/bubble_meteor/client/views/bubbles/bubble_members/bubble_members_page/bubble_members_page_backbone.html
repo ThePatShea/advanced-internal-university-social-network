@@ -1,7 +1,8 @@
-<template name="bubbleMembersPageBB">
-    {{#with getCurrentBubble}}
-      {{> bubbleCover}}
-      {{> bubbleSectionSelector}}
+
+<template name="bubbleMembersPageBackbone">
+    {{#with getCurrentBubbleBackbone}}
+      {{> bubbleCoverBackbone}}
+      {{> bubbleSectionSelectorBackbone}}
 
       <div class="visible-{{isLoading}}">
         {{> gifLoaderToParent}}

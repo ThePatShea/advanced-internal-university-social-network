@@ -1,4 +1,4 @@
-Template.bubbleMembersPageBB.created = function() {
+Template.bubbleMembersPageBackbone.created = function() {
 	virtualPage = 0;
 	max_scrolltop = 200;
 	Session.set("isLoading", true);
@@ -54,8 +54,7 @@ Template.bubbleMembersPageBB.created = function() {
 	}
 }
 
-
-Template.bubbleMembersPageBB.rendered = function () {
+Template.bubbleMembersPageBackbone.rendered = function () {
 	var currentBubbleId = window.location.pathname.split('/')[2];
 	Meteor.subscribe('singleBubble', currentBubbleId, function() {
 		Session.set("isLoading", false);
@@ -118,7 +117,11 @@ Template.bubbleMembersPageBB.rendered = function () {
 
 };
 
-Template.bubbleMembersPageBB.helpers({
+Template.bubbleMembersPageBackbone.helpers({
+	getCurrentBubbleBackbone: function(){
+		var bubble = mybubbles.bubbleInfo.toJSON();
+		return bubble;
+	},
 	members: function() {
 		return mybubbles.Members.getJSON();
 	},
