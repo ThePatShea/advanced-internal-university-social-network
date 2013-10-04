@@ -132,6 +132,7 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
 Template.bubbleEventPageBackbone.helpers({
   //Get posts assigned to this bubble
   getEventPosts: function() {
+    bubbleDep.depend();
     var currentUrl  =  window.location.pathname;
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
