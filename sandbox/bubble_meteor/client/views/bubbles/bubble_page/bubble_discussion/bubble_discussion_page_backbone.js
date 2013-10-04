@@ -20,7 +20,7 @@ Template.bubbleDiscussionPageBackbone.created = function(){
 
     discussions: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'children']
     },
 
     files: {
@@ -89,7 +89,7 @@ discussionsHandle = Meteor.subscribe('discussions', currentBubbleId, function() 
 
       discussions: {
         limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'children']
       },
 
       files: {
