@@ -833,7 +833,7 @@
 	var fetchNextPageHelper = function(scope) {
 		return function(callback){
 			if(scope.page < scope.pages-1){
-				scope.page = that.bubbleEvents.page + 1;
+				scope.page = scope.page + 1;
 				scope.fetch({
 					success: function() {
 						if(callback && (typeof callback === "function"))

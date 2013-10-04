@@ -155,6 +155,64 @@ Template.bubbleEventPageBackbone.helpers({
   getCurrentBubbleBackbone: function(){
     var bubble = mybubbles.bubbleInfo.toJSON();
     return bubble;
+  },
+
+  pages: function() {
+    var retVal = []
+      if(mybubbles != undefined)
+      {
+        for(var i=0; i<mybubbles.Events.getNumPages(); i++)
+        {
+          retVal.push(i+1);
+        }
+      }
+      else
+      {
+        retVal = [1];
+      }
+    return retVal;
+  },
+
+  isActivePage: function(n) {
+  if(mybubbles != undefined)
+  {
+      if(this == mybubbles.Events.getCurrentPage()+1)
+      {
+        return 'active';
+      }
+  }
+    return '';
   }
   
+});
+
+
+
+Template.bubbleEventPageBackbone.events({
+  'click .pageitem': function(e) {
+    console.log("PAGEITEM: ", e.target.id);
+    mybubbles.Events.fetchPage(parseInt(e.target.id)-1, function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+  },
+  'click .prev': function() {
+    mybubbles.Events.fetchPrevPage(function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+    //var currentPage = es.getCurrentPage();
+    //es.fetchPage(currentPage - 1);
+    // es.explorePosts.on("change", function() {
+    //  console.log("explore posts changed");
+    //  exploreDep.changed();
+    // });
+    
+  },
+  'click .next': function() {
+    mybubbles.Events.fetchNextPage(function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+  }
 });
