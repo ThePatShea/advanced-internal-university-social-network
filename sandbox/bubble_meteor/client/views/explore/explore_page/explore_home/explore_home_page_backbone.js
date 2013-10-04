@@ -109,10 +109,10 @@ Template.explorePageBackbone.helpers({
 	{
 	  	if(this == es.getCurrentPage()+1)
 	  	{
-	  		return true;
+	  		return "active";
 	  	}
 	}
-  	return false;
+  	return "";
   },
   exploreInfo: function(){
   	if(es != undefined)

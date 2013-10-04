@@ -1,0 +1,39 @@
+<template name="bubbleMembersPageBB">
+    {{#with getCurrentBubble}}
+      {{> bubbleCover}}
+      {{> bubbleSectionSelector}}
+
+      <div class="visible-{{isLoading}}">
+        {{> gifLoaderToParent}}
+      </div>
+        
+      <div class="bubble-page-content bubble-members">
+        {{> bubbleMembersHeading}}
+
+    	  {{> bubbleInvitation}}
+
+        {{#unless isSuperBubble this}}
+          {{#if applicantsHasMembers}}
+            {{#each applicants}}
+              {{> listItemBB}}
+            {{/each}}
+          {{/if}}
+        {{/unless}}
+        {{#if adminsHasMembers}}
+          {{#each admins}}
+            {{> listItemBB}}
+          {{/each}}
+        {{/if}}
+        {{#if membersHasMembers}}
+          {{#each members}}
+            {{> listItemBB}}
+          {{/each}}
+        {{/if}}
+        {{#if inviteesHasMembers}}
+          {{#each invitees}}
+            {{> listItemBB}}
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/with}}
+</template>
