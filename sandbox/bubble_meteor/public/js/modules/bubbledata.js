@@ -473,6 +473,8 @@
 	var MyBubbles = function(properties){
 		var that = this;
 		this.bubbleId = properties.bubbleId;
+
+		this.BubblePost = BubblePost;
 		//properties.callback();
 		
 		//this.bubblePosts = new BubblePosts();

@@ -15,7 +15,7 @@ Template.bubbleEventPageBackbone.created = function(){
 
     events: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
     },
 
     discussions: {
@@ -83,7 +83,7 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
 
       events: {
         limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount']
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
       },
 
       discussions: {

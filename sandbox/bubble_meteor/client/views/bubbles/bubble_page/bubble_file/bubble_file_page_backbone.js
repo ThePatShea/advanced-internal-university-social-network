@@ -25,7 +25,7 @@ Template.bubbleFilePageBackbone.created = function(){
 
     files: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent', 'userId']
     },
 
     members: {
@@ -93,7 +93,7 @@ Template.bubbleFilePageBackbone.rendered = function() {
 
       files: {
         limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent']
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent', 'userId']
       },
 
       members: {
