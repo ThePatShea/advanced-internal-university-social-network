@@ -162,5 +162,26 @@ this.RestHelpers = {
 		result[name] = data.items;
 
 		return this.jsonResponse(200, result);
+	},
+
+	// Authentication
+	headerAuth: function(ctx) {
+		var authHeader = ctx.request.headers['x-authentication'];
+		if (!authHeader)
+			return false;
+
+		var userId = RestCrypto.verifyToken(authHeader);
+		if (!userId)
+			return false;
+
+		ctx.userId = userId;
+		return true;
+	},
+
+	authUser: function(ctx, opts) {
+		if (opts.authUser)
+			return opts.authUser(ctx, opts);
+
+		return this.headerAuth(ctx);
 	}
 };

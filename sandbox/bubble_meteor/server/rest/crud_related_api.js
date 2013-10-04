@@ -29,6 +29,9 @@ this.RestRelatedCrud = {
 		});
 
 		return function(parentId) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return RestCrud.apiQuery(this, collection, newOpts);
 		};
 	},
@@ -41,6 +44,9 @@ this.RestRelatedCrud = {
 		});
 
 		return function(parentId, id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return RestCrud.apiQueryOne(this, id, collection, newOpts);
 		};
 	},
@@ -60,6 +66,9 @@ this.RestRelatedCrud = {
 		});
 
 		return function(parentId) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return RestCrud.apiCreate(this, collection, newOpts);
 		};
 	},
@@ -72,6 +81,9 @@ this.RestRelatedCrud = {
 		});
 
 		return function(parentId, id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return RestCrud.apiUpdate(this, id, collection, newOpts);
 		};
 	},
@@ -84,6 +96,9 @@ this.RestRelatedCrud = {
 		});
 
 		return function(parentId, id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return RestCrud.apiDelete(this, id, collection, newOpts);
 		};
 	},

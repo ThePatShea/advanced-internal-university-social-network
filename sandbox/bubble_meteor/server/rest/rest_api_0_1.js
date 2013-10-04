@@ -27,6 +27,34 @@ function postsDeleteCheck(ctx, id) {
 	return postsSecurityCheck(ctx, obj);
 }
 
+// Sub-post filters
+function subPostFilter(name) {
+	return function(ctx, query) {
+		query['postType'] = name;
+		return query;
+	};
+}
+
+function subPostSecurityCheck(name) {
+	return function(ctx, obj) {
+		if (obj && obj.postType != name)
+			return false;
+
+		return true;
+	};
+}
+
+function subPostDeleteCheck(name) {
+	return function(ctx, id) {
+		var obj = RestHelpers.mongoFindOne(Posts, id);
+
+		if (obj && obj.postType != name)
+			return false;
+
+		return true;
+	};
+}
+
 
 // Endpoints
 Meteor.startup(function() {
@@ -91,6 +119,69 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		}
+	});
+
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/events', Posts, 'bubbleId', {
+		query: {
+			name: 'events',
+			apiOpts: parseApiOptions,
+			query: subPostFilter('event')
+		},
+		queryOne: {
+			apiOpts: parseApiOptions,
+			check: subPostSecurityCheck('event')
+		},
+		create: {
+			check: subPostSecurityCheck('event')
+		},
+		update: {
+			check: subPostSecurityCheck('event')
+		},
+		remove: {
+			check: subPostDeleteCheck('event')
+		}
+	});
+
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/discussions', Posts, 'bubbleId', {
+		query: {
+			name: 'discussions',
+			apiOpts: parseApiOptions,
+			query: subPostFilter('discussion')
+		},
+		queryOne: {
+			apiOpts: parseApiOptions,
+			check: subPostSecurityCheck('discussion')
+		},
+		create: {
+			check: subPostSecurityCheck('discussion')
+		},
+		update: {
+			check: subPostSecurityCheck('discussion')
+		},
+		remove: {
+			check: subPostDeleteCheck('discussion')
+		}
+	});
+
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/files', Posts, 'bubbleId', {
+		query: {
+			name: 'files',
+			apiOpts: parseApiOptions,
+			query: subPostFilter('file')
+		},
+		queryOne: {
+			apiOpts: parseApiOptions,
+			check: subPostSecurityCheck('file')
+		},
+		create: {
+			check: subPostSecurityCheck('file')
+		},
+		update: {
+			check: subPostSecurityCheck('file')
+		},
+		remove: {
+			check: subPostDeleteCheck('file')
 		}
 	});
 

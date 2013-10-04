@@ -125,6 +125,9 @@ this.RestCrud = {
 		opts = opts || {};
 
 		return function() {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return self.apiQuery(this, collection, opts);
 		};
 	},
@@ -134,6 +137,9 @@ this.RestCrud = {
 		opts = opts || {};
 
 		return function() {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return self.apiCreate(this, collection, opts);
 		};
 	},
@@ -143,6 +149,9 @@ this.RestCrud = {
 		opts = opts || {};
 
 		return function(id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return self.apiQueryOne(this, id, collection, opts);
 		};
 	},
@@ -152,6 +161,9 @@ this.RestCrud = {
 		opts = opts || {};
 
 		return function(id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return self.apiUpdate(this, id, collection, opts);
 		};
 	},
@@ -161,6 +173,9 @@ this.RestCrud = {
 		opts = opts || {};
 
 		return function(id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Access Denied.');
+
 			return self.apiDelete(this, id, collection, opts);
 		};
 	},
