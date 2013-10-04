@@ -32,22 +32,22 @@ Template.bubblePageBackbone.created = function() {
 
     members: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture', 'userType']
     },
 
     admins: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture', 'userType']
     },
 
     applicants: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture', 'userType']
     },
 
     invitees: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture', 'userType']
     },
 
     callback: function(){

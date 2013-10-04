@@ -2,9 +2,7 @@
 Template.bubbleInvitation.created = function() {
   findResponse = false;
   rejectList = [];
-  var users = Bubbles.findOne({_id: Session.get('currentBubbleId')}).users;
-  rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
-  rejectList.push(Meteor.userId());
+  var currentBubbleId = currentBubbleId = window.location.pathname.split('/')[2];
   mto = [];
   Session.set('potentialUserIdList',[]);
 }

@@ -3,38 +3,29 @@
     {{#with getCurrentBubbleBackbone}}
       {{> bubbleCoverBackbone}}
       {{> bubbleSectionSelectorBackbone}}
-
-      <div class="visible-{{isLoading}}">
-        {{> gifLoaderToParent}}
-      </div>
         
       <div class="bubble-page-content bubble-members">
         {{> bubbleMembersHeading}}
 
     	  {{> bubbleInvitation}}
 
-        {{#unless isSuperBubble this}}
-          {{#if applicantsHasMembers}}
-            {{#each applicants}}
-              {{> listItemBB}}
-            {{/each}}
-          {{/if}}
+        {{#unless isSuperBubble}}
+          {{#with applicantsObj}}
+            {{> userList}}
+          {{/with}}
         {{/unless}}
-        {{#if adminsHasMembers}}
-          {{#each admins}}
-            {{> listItemBB}}
-          {{/each}}
-        {{/if}}
-        {{#if membersHasMembers}}
-          {{#each members}}
-            {{> listItemBB}}
-          {{/each}}
-        {{/if}}
-        {{#if inviteesHasMembers}}
-          {{#each invitees}}
-            {{> listItemBB}}
-          {{/each}}
-        {{/if}}
-      </div>
+
+        {{#with adminsObj}}
+          {{> userList}}
+        {{/with}}
+
+        {{#with membersObj}}
+          {{> userList}}
+        {{/with}}
+
+        {{#with inviteesObj}}
+          {{> userList}}
+        {{/with}}
+
     {{/with}}
 </template>
