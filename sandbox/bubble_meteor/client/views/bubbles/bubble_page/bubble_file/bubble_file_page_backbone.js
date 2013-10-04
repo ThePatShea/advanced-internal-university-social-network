@@ -148,7 +148,7 @@ Template.bubbleFilePageBackbone.helpers({
     var topDiscussionPosts = discussionPosts.slice(0, 3);
     return {
       'posts': topDiscussionPosts,
-      'postType': 'discussion',
+      'postType': 'file',
       'word1': 'active'
     }
   },
