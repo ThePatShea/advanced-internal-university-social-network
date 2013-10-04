@@ -90,7 +90,8 @@ Meteor.Router.add({
 
   // Posts Related Routes
     '/mybubbles/:_bId/posts/:_pId': {
-      to: 'postPage', 
+      //to: 'postPage', 
+      to: 'postPageBackbone',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
