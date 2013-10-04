@@ -85,15 +85,15 @@ Template.listItemBB.events({
       if(typeof this.bubbleId != 'undefined'){
         // Links to parent post if the post is a file attachment. Otherwise, links to the post itself.
           if (this.postType == 'file' && this.parent){
-            Meteor.Router.to('postPage', this.bubbleId, this.parent);
+            Meteor.Router.to('postPageBackbone', this.bubbleId, this.parent);
           }
           else if(this.postType == 'file'){
             console.log('List item click.');
-            Meteor.Router.to('postPage', this.bubbleId, this.id);
+            Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
           else if(typeof this.postType != 'undefined'){
             console.log(this.id);
-            Meteor.Router.to('postPage', this.bubbleId, this.id);
+            Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
       }
       else if(typeof this.exploreId != 'undefined'){

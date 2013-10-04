@@ -1,4 +1,4 @@
-Template.bubbleFilePage.created = function(){
+Template.bubbleFilePageBackbone.created = function(){
   Session.set("isLoading", true);
 
   bubbleDep = new Deps.Dependency;
@@ -25,7 +25,7 @@ Template.bubbleFilePage.created = function(){
 
     files: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent', 'userId']
     },
 
     members: {
@@ -57,7 +57,7 @@ Template.bubbleFilePage.created = function(){
 
 }
 
-Template.bubbleFilePage.rendered = function() {
+Template.bubbleFilePageBackbone.rendered = function() {
   var currentUrl  =  window.location.pathname;
   var urlArray    =  currentUrl.split("/");
   var currentBubbleId  =  urlArray[2];
@@ -93,7 +93,7 @@ Template.bubbleFilePage.rendered = function() {
 
       files: {
         limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent', 'userId']
       },
 
       members: {
@@ -133,6 +133,7 @@ Template.bubbleFilePageBackbone.helpers({
   },
   //Get posts assigned to this bubble
   getFilePosts: function(){
+    bubbleDep.depend();
     var currentUrl  =  window.location.pathname;
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
@@ -142,14 +143,72 @@ Template.bubbleFilePageBackbone.helpers({
   },
 
   postPropertiesBackboneFile: function(){
+    bubbleDep.depend();
     var discussionPosts = mybubbles.Discussions.getJSON();
     var topDiscussionPosts = discussionPosts.slice(0, 3);
     return {
       'posts': topDiscussionPosts,
-      'postType': 'discussion',
+      'postType': 'file',
       'word1': 'active'
     }
+  },
+
+  pages: function() {
+    var retVal = []
+      if(mybubbles != undefined)
+      {
+        for(var i=0; i<mybubbles.Files.getNumPages(); i++)
+        {
+          retVal.push(i+1);
+        }
+      }
+      else
+      {
+        retVal = [1];
+      }
+    return retVal;
+  },
+
+  isActivePage: function(n) {
+  if(mybubbles != undefined)
+  {
+      if(this == mybubbles.Files.getCurrentPage()+1)
+      {
+        return 'active';
+      }
   }
+    return '';
+  }
+
 });
 
 
+
+Template.bubbleFilePageBackbone.events({
+  'click .pageitem': function(e) {
+    console.log("Files PAGEITEM: ", e.target.id);
+    mybubbles.Files.fetchPage(parseInt(e.target.id)-1, function(res){
+      bubbleDep.changed();
+      console.log("Discussions CALLED", res);
+    });
+  },
+  'click .prev': function() {
+    mybubbles.Files.fetchPrevPage(function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+    //var currentPage = es.getCurrentPage();
+    //es.fetchPage(currentPage - 1);
+    // es.explorePosts.on("change", function() {
+    //  console.log("explore posts changed");
+    //  exploreDep.changed();
+    // });
+    
+  },
+  'click .next': function() {
+    mybubbles.Files.fetchNextPage(function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+  }
+});

@@ -20,7 +20,7 @@ Template.bubbleDiscussionPageBackbone.created = function(){
 
     discussions: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'children', 'userId']
     },
 
     files: {
@@ -89,7 +89,7 @@ discussionsHandle = Meteor.subscribe('discussions', currentBubbleId, function() 
 
       discussions: {
         limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount']
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'children', 'userId']
       },
 
       files: {
@@ -138,6 +138,7 @@ Template.bubbleDiscussionPageBackbone.helpers({
   },
   //Get posts assigned to this bubble
   getDiscussionPosts: function(){
+    bubbleDep.depend();
     var currentUrl  =  window.location.pathname;
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
@@ -147,6 +148,7 @@ Template.bubbleDiscussionPageBackbone.helpers({
   },
 
   postPropertiesBackboneDiscussion: function(){
+    bubbleDep.depend();
     var discussionPosts = mybubbles.Discussions.getJSON();
     var topDiscussionPosts = discussionPosts.slice(0, 3);
     return {
@@ -154,7 +156,65 @@ Template.bubbleDiscussionPageBackbone.helpers({
       'postType': 'discussion',
       'word1': 'active'
     }
+  },
+
+  pages: function() {
+    var retVal = []
+      if(mybubbles != undefined)
+      {
+        for(var i=0; i<mybubbles.Discussions.getNumPages(); i++)
+        {
+          retVal.push(i+1);
+        }
+      }
+      else
+      {
+        retVal = [1];
+      }
+    return retVal;
+  },
+
+  isActivePage: function(n) {
+  if(mybubbles != undefined)
+  {
+      if(this == mybubbles.Discussions.getCurrentPage()+1)
+      {
+        return 'active';
+      }
+  }
+    return '';
   }
 
+});
+
+
+
+Template.bubbleDiscussionPageBackbone.events({
+  'click .pageitem': function(e) {
+    console.log("Discussion PAGEITEM: ", e.target.id);
+    mybubbles.Discussions.fetchPage(parseInt(e.target.id)-1, function(res){
+      bubbleDep.changed();
+      console.log("Discussions CALLED", res);
+    });
+  },
+  'click .prev': function() {
+    mybubbles.Discussions.fetchPrevPage(function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+    //var currentPage = es.getCurrentPage();
+    //es.fetchPage(currentPage - 1);
+    // es.explorePosts.on("change", function() {
+    //  console.log("explore posts changed");
+    //  exploreDep.changed();
+    // });
+    
+  },
+  'click .next': function() {
+    mybubbles.Discussions.fetchNextPage(function(res){
+      bubbleDep.changed();
+      console.log("CALLED", res);
+    });
+  }
 });
 

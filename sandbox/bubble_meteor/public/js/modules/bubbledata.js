@@ -473,6 +473,9 @@
 	var MyBubbles = function(properties){
 		var that = this;
 		this.bubbleId = properties.bubbleId;
+
+		this.BubblePost = BubblePost;
+		this.BubbleUser = BubbleUser;
 		//properties.callback();
 		
 		//this.bubblePosts = new BubblePosts();
@@ -652,6 +655,47 @@
 				that.bubbleId = this.bubbleId;
 				return;
 			}
+		}
+
+
+		this.isAdmin = function(id){
+		    var ajaxresponse = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    if(ajaxresponse.responseText == 'True'){
+		      return true;
+		    }
+		    else{
+		      return false;
+		    }
+		}
+
+		this.isMember = function(id){
+		    var ajaxresponse = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    if(ajaxresponse.responseText == 'True'){
+		      return true;
+		    }
+		    else{
+		      return false;
+		    }
+		}
+
+		this.isApplicant = function(id){
+		    var ajaxresponse = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    if(ajaxresponse.responseText == 'True'){
+		      return true;
+		    }
+		    else{
+		      return false;
+		    }
+		}
+
+		this.isInvitee = function(id){
+		    var ajaxresponse = $.ajax({url: '/2013-09-11/isinvitee?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    if(ajaxresponse.responseText == 'True'){
+		      return true;
+		    }
+		    else{
+		      return false;
+		    }
 		}
 
 		this.Members = new Members();
