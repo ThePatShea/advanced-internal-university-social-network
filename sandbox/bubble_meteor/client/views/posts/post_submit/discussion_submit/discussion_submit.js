@@ -30,7 +30,13 @@ Template.discussionSubmit.rendered = function () {
   $(".discussion-title").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'titleTextbox');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-discussionNameTextbox',
+          overwritePage: 'create-discussion' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -38,15 +44,27 @@ Template.discussionSubmit.rendered = function () {
   $(".wysiwyg").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'descriptionTextbox');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-discussionDescriptionTextbox',
+          overwritePage: 'create-discussion' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
-  //Log clicking of description wisiwyg
+  //Log clicking of attaching files
   $(".file-chooser-invisible").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'attachFiles');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-discussionAttachFiles',
+          overwritePage: 'create-discussion' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -54,7 +72,13 @@ Template.discussionSubmit.rendered = function () {
   $(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'submitButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-discussionSubmitButton',
+          overwritePage: 'create-discussion' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -62,7 +86,13 @@ Template.discussionSubmit.rendered = function () {
   $(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createDiscussion', 'submitErrorButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-discussionErrorSubmitButton',
+          overwritePage: 'create-discussion' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 }

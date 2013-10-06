@@ -224,7 +224,13 @@ Template.eventSubmit.rendered = function() {
   $(".event-name").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'nameTextbox');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventNameTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -232,7 +238,13 @@ Template.eventSubmit.rendered = function() {
   $(".event-location").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'locationTextbox');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventLocationTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -240,7 +252,13 @@ Template.eventSubmit.rendered = function() {
   $(".date").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'date');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventDateTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -248,7 +266,13 @@ Template.eventSubmit.rendered = function() {
   $(".time").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'time');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventTimeTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -256,7 +280,13 @@ Template.eventSubmit.rendered = function() {
   $(".event-picture").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'picture');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventAttachPicture',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -264,7 +294,13 @@ Template.eventSubmit.rendered = function() {
   $(".event-details").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'details');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventDetailsTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -272,7 +308,13 @@ Template.eventSubmit.rendered = function() {
   $(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'submitButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventSubmitButton',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -280,7 +322,13 @@ Template.eventSubmit.rendered = function() {
   $(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createEvent', 'submitErrorButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventErrorSubmitButton',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 

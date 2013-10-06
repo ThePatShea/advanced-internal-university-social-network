@@ -514,7 +514,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'nameTextbox');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleTitleTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -525,15 +530,25 @@ Template.bubbleSubmit.rendered = function(){
         return category;
       }
     });
-    Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'category');
-
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-bubbleCategory' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+    
   });
 
   //Log clicking of cover photo
   $(".attach-cover-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'coverPhoto');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleCoverPhoto' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -541,7 +556,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".attach-profile-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'profilePhoto');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleProfilepicture' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -549,7 +569,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".wysiwyg").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'descriptionTextbox');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleDescriptionTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -557,7 +582,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'submitButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -565,7 +595,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'submitErrorButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleErrorSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 }

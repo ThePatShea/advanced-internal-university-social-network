@@ -9,11 +9,19 @@ Template.commentsList.rendered = function() {
   $('.btn-add').click(function() {
     //Checks if "add comment" button hides or shows comment text input
     if($('.btn-add').attr('class').indexOf('collapsed') == -1){
-      //Logs when user clicks on add new comment
-      Meteor.call('createLog', Meteor.Router.page(), 'createComment', 'addCommentButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-addCommentButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }else{
-      //Logs when user clicks on cancel add new comment
-      Meteor.call('createLog', Meteor.Router.page(), 'createComment', 'cancelAddCommentButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-cancelAddCommentButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }
 
     $('[name=body]').focus();

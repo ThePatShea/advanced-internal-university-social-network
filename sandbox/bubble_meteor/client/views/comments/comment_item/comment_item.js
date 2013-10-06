@@ -21,8 +21,12 @@ Template.commentItem.events({
 		event.preventDefault();
 		if (confirm("Delete this comment?")) {
 			Meteor.call('deleteComment', this._id);
-      //Log deleting of comment
-      Meteor.call('createLog', Meteor.Router.page(), 'comment', 'deleteCommentButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+      	{ action: 'click-deleteCommentButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }
   }
 });

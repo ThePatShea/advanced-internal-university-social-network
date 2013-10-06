@@ -80,7 +80,13 @@ Template.fileSubmit.rendered = function(){
   $(".file-chooser-invisible").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createFile', 'uploadFile');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-fileAttachFile',
+          overwritePage: 'create-file' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -88,7 +94,13 @@ Template.fileSubmit.rendered = function(){
   $(".file-submit").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog', Meteor.Router.page(), 'createFile', 'submitButton');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-fileSubmitButton',
+          overwritePage: 'create-file' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 

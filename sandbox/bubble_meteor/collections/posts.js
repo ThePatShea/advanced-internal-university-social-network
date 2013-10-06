@@ -134,8 +134,12 @@ Meteor.methods({
   attendEvent: function(postId,username){
     post = Posts.findOne(postId);
     if (!_.contains(post.attendees,username)) {
-      //Log user clicking on I'm Going
-      Meteor.call('createLog', "bubblePage", null, 'imgoing');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventGoing' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
 
       Posts.update({_id:postId},
       {
@@ -144,8 +148,12 @@ Meteor.methods({
       //Create an update for user who are in the event
       createNewAttendeeUpdate(postId);
     }else{
-      //Log user clicking on Not Going
-      Meteor.call('createLog', "bubblePage", null, 'notgoing');
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventNotGoing' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
 
       Posts.update({_id:postId},
       {

@@ -10,7 +10,7 @@ Template.exploreAll.rendered = function(){
 			Meteor.Router.to('/explore/' + firstExplore._id + '/home');
 		}
 		else if(userType == '4'){
-			Meteor.Router.to('/explore/create');
+			Meteor.Router.to('/create/explore');
 		}
 	});
 }
