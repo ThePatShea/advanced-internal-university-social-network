@@ -36,5 +36,5 @@ this.RestPost = {
         author: user.name,
         submitted: currentTime
     });
-  }
+  },
 };

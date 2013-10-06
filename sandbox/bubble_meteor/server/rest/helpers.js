@@ -28,6 +28,31 @@ this.RestHelpers = {
 		return result;
 	},
 
+	getField: function(obj, path) {
+		var parts = path.split('.');
+
+		for (var n in parts) {
+			var p = parts[n];
+			obj = obj[p];
+
+			if (!obj)
+				break;
+		}
+
+		return obj;
+	},
+
+	haveChangedFields: function(o1, o2, fields) {
+		for (var n in fields) {
+			var f = fields[n];
+
+			if (this.getField(o1, f) !== this.getField(o2, f))
+				return false;
+		}
+
+		return true;
+	},
+
 	// Get list of fields from query string value
 	getFieldList: function(fieldList) {
 		if (fieldList) {
