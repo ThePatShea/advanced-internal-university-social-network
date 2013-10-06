@@ -16,6 +16,25 @@ this.RestSecurity = {
       return RestHelpers.jsonResponse(401, 'Bubble posts are disallowed');
   },
 
+  // Explores
+  isUniqueExplore: function(ctx, obj) {
+    if (!obj.title || !obj.title.length)
+      return RestHelpers.jsonResponse(422, 'Please fill in a headline');
+
+    if (RestHelpers.mongoFindOne(Bubbles, {title: obj.title}))
+      return RestHelpers.jsonResponse(302, 'This explore has already been created');
+  },
+
+  ownsExplore: function(ctx, obj) {
+    // TODO: Fix me
+    return true;
+  },
+
+  isExploreAdmin: function(ctx, obj) {
+    if (ctx.user.userType != UserType.ADMIN)
+      return RestHelpers.jsonResponse(401, 'Not admin');
+  },
+
   // Bubbles
   isUniqueBubble: function(ctx, obj) {
     if (!obj.title || !obj.title.length)

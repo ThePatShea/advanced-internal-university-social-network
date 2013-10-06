@@ -40,6 +40,16 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.isUniqueExplore,
+			preprocess: RestPost.createExplore
+		},
+		update: {
+			check: RestSecurity.ownsExplore
+		},
+		remove: {
+			check: RestSecurity.isExploreAdmin
 		}
 	});
 
