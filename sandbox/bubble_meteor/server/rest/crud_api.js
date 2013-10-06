@@ -57,7 +57,7 @@ this.RestCrud = {
 
 		if (obj.id) {
 			// TODO: Better error logging/reporting
-			return RestHelpers.jsonResponse(401, 'Access denied');
+			return RestHelpers.jsonResponse(401, 'Cant create item with id');
 		}
 		obj.id = new Meteor.Collection.ObjectID().toHexString()
 
