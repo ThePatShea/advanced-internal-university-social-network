@@ -8,54 +8,6 @@ function parseApiOptions(ctx) {
 	};
 }
 
-// Security related stuff
-function postsFilterBubbles(ctx) {
-	return {
-		bubbleId: {$exists: false}
-	};
-}
-
-function postsSecurityCheck(ctx, obj) {
-	if (obj && obj.bubbleId)
-		return false;
-
-	return true;
-}
-
-function postsDeleteCheck(ctx, id) {
-	var obj = RestHelpers.mongoFindOne(Posts, id);
-	return postsSecurityCheck(ctx, obj);
-}
-
-// Sub-post filters
-function subPostFilter(name) {
-	return function(ctx, query) {
-		query['postType'] = name;
-		return query;
-	};
-}
-
-function subPostSecurityCheck(name) {
-	return function(ctx, obj) {
-		if (obj && obj.postType != name)
-			return false;
-
-		return true;
-	};
-}
-
-function subPostDeleteCheck(name) {
-	return function(ctx, id) {
-		var obj = RestHelpers.mongoFindOne(Posts, id);
-
-		if (obj && obj.postType != name)
-			return false;
-
-		return true;
-	};
-}
-
-
 // Endpoints
 Meteor.startup(function() {
 	// Posts
@@ -63,20 +15,20 @@ Meteor.startup(function() {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions,
-			query: postsFilterBubbles
+			query: RestSecurity.filterBubblePosts
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: postsSecurityCheck
+			check: RestSecurity.canMakePost
 		},
 		create: {
-			check: postsSecurityCheck
+			check: RestSecurity.canMakePost
 		},
 		update: {
-			check: postsSecurityCheck
+			check: RestSecurity.canMakePost
 		},
 		remove: {
-			check: postsDeleteCheck
+			check: RestSecurity.canMakePost
 		}
 	});
 
@@ -109,6 +61,16 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.isUniqueBubble,
+			preprocess: RestPost.createBubble
+		},
+		update: {
+			check: RestSecurity.isConnectedToBubble
+		},
+		remove: {
+			check: RestSecurity.ownsBubble
 		}
 	});
 
@@ -126,20 +88,20 @@ Meteor.startup(function() {
 		query: {
 			name: 'events',
 			apiOpts: parseApiOptions,
-			query: subPostFilter('event')
+			query: RestSecurity.makeBubblePostFilter('event')
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: subPostSecurityCheck('event')
+			check: RestSecurity.makeBubblePostCheck('event')
 		},
 		create: {
-			check: subPostSecurityCheck('event')
+			check: RestSecurity.makeBubblePostCheck('event')
 		},
 		update: {
-			check: subPostSecurityCheck('event')
+			check: RestSecurity.makeBubblePostCheck('event')
 		},
 		remove: {
-			check: subPostDeleteCheck('event')
+			check: RestSecurity.makeBubblePostCheck('event')
 		}
 	});
 
@@ -147,20 +109,20 @@ Meteor.startup(function() {
 		query: {
 			name: 'discussions',
 			apiOpts: parseApiOptions,
-			query: subPostFilter('discussion')
+			query: RestSecurity.makeBubblePostFilter('discussion')
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: subPostSecurityCheck('discussion')
+			check: RestSecurity.makeBubblePostCheck('discussion')
 		},
 		create: {
-			check: subPostSecurityCheck('discussion')
+			check: RestSecurity.makeBubblePostCheck('discussion')
 		},
 		update: {
-			check: subPostSecurityCheck('discussion')
+			check: RestSecurity.makeBubblePostCheck('discussion')
 		},
 		remove: {
-			check: subPostDeleteCheck('discussion')
+			check: RestSecurity.makeBubblePostCheck('discussion')
 		}
 	});
 
@@ -168,20 +130,20 @@ Meteor.startup(function() {
 		query: {
 			name: 'files',
 			apiOpts: parseApiOptions,
-			query: subPostFilter('file')
+			query: RestSecurity.makeBubblePostFilter('file')
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: subPostSecurityCheck('file')
+			check: RestSecurity.makeBubblePostCheck('file')
 		},
 		create: {
-			check: subPostSecurityCheck('file')
+			check: RestSecurity.makeBubblePostCheck('file')
 		},
 		update: {
-			check: subPostSecurityCheck('file')
+			check: RestSecurity.makeBubblePostCheck('file')
 		},
 		remove: {
-			check: subPostDeleteCheck('file')
+			check: RestSecurity.makeBubblePostCheck('file')
 		}
 	});
 

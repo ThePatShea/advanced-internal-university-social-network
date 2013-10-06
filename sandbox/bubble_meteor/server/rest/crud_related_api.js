@@ -2,12 +2,10 @@
 function makeSecurityCheck(childField, next) {
 	return function(ctx, obj) {
 		if (obj[childField] !== ctx.params.parentId)
-			return false;
+			return RestHelpers.jsonResponse(404, 'Invalid parent ID');
 
 		if (next)
 			return next(ctx, obj);
-
-		return true;
 	};
 }
 
@@ -30,7 +28,7 @@ this.RestRelatedCrud = {
 
 		return function(parentId) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return RestCrud.apiQuery(this, collection, newOpts);
 		};
@@ -45,7 +43,7 @@ this.RestRelatedCrud = {
 
 		return function(parentId, id) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return RestCrud.apiQueryOne(this, id, collection, newOpts);
 		};
@@ -67,7 +65,7 @@ this.RestRelatedCrud = {
 
 		return function(parentId) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return RestCrud.apiCreate(this, collection, newOpts);
 		};
@@ -82,7 +80,7 @@ this.RestRelatedCrud = {
 
 		return function(parentId, id) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return RestCrud.apiUpdate(this, id, collection, newOpts);
 		};
@@ -97,7 +95,7 @@ this.RestRelatedCrud = {
 
 		return function(parentId, id) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return RestCrud.apiDelete(this, id, collection, newOpts);
 		};

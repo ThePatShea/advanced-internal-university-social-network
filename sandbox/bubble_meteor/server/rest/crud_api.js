@@ -1,5 +1,11 @@
 this.RestCrud = {
 	apiQuery: function(ctx, collection, opts) {
+		if (opts && opts.check) {
+			var response = opts.check(ctx, obj);
+			if (response)
+				return response;
+		}
+
 		// Get API options
 		var apiOptions = {};
 
@@ -30,13 +36,13 @@ this.RestCrud = {
 		var obj = RestHelpers.mongoFindOne(collection, id, apiOptions.fields);
 		if (!obj) {
 			// TODO: Better error logging/reporting
-			return RestHelpers.jsonResponse(404, 'Not found.');
+			return RestHelpers.jsonResponse(404, 'Not found');
 		}
 
 		if (opts && opts.check) {
-			if (!opts.check(ctx, obj)) {
-				return RestHelpers.jsonResponse(401, 'Access denied.');
-			}
+			var response = opts.check(ctx, obj);
+			if (response)
+				return response;
 		}
 
 		// Rename _id to id
@@ -51,22 +57,20 @@ this.RestCrud = {
 
 		if (obj.id) {
 			// TODO: Better error logging/reporting
-			return RestHelpers.jsonResponse(401, 'Access denied.');
+			return RestHelpers.jsonResponse(401, 'Access denied');
 		}
 		obj.id = new Meteor.Collection.ObjectID().toHexString()
 
 		if (opts && opts.check) {
-			if (!opts.check(ctx, obj)) {
-				// TODO: Better error logging/reporting
-				return RestHelpers.jsonResponse(401, 'Access denied.');
-			}
+			var response = opts.check(ctx, obj);
+			if (response)
+				return response;
 		}
-
-		// Rename id to _id
-		obj = RestHelpers.toMongoModel(obj);
 
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
+
+		obj = RestHelpers.toMongoModel(obj);
 
 		var result = RestHelpers.mongoInsert(collection, obj)
 		return RestHelpers.jsonResponse(200, result);
@@ -78,25 +82,24 @@ this.RestCrud = {
 
 		if (obj.id != id) {
 			// TODO: Better error logging/reporting
-			return RestHelpers.jsonResponse(401, 'Access denied.');
+			return RestHelpers.jsonResponse(401, 'Mismatched id');
 		}
 
 		if (opts.check) {
-			if (!opts.check(ctx, obj)) {
-				// TODO: Better error logging/reporting
-				return RestHelpers.jsonResponse(401, 'Access denied.');
-			}
+			var response = opts.check(ctx, obj);
+			if (response)
+				return response;
 		}
-
-		obj = RestHelpers.toMongoModel(obj);
 
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
 
+		obj = RestHelpers.toMongoModel(obj);
+
 		var result = RestHelpers.mongoUpdate(collection, id, obj)
 
 		if (result)
-			return RestHelpers.jsonResponse(200, 'Model was updated.');
+			return RestHelpers.jsonResponse(200, 'Successfully updated');
 
 		return RestHelpers.jsonResponse(404, 'Model not found');
 	},
@@ -108,15 +111,16 @@ this.RestCrud = {
 			return RestHelpers.jsonResponse(404, 'Model not found');
 
 		if (opts.check) {
-			if (!opts.check(ctx, obj))
-				return RestHelpers.jsonResponse(401, 'Access denied.');
+			var response = opts.check(ctx, obj);
+			if (response)
+				return response;
 		}
 
 		var result = RestHelpers.mongoDelete(collection, id);
 		if (result)
-			return RestHelpers.jsonResponse(200, 'Model was deleted.');
+			return RestHelpers.jsonResponse(200, 'Successfully deleted');
 
-		return RestHelpers.jsonResponse(404, 'Model not found.');
+		return RestHelpers.jsonResponse(404, 'Model not found');
 	},
 
 	// Handler generation functions
@@ -126,7 +130,7 @@ this.RestCrud = {
 
 		return function() {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return self.apiQuery(this, collection, opts);
 		};
@@ -138,7 +142,7 @@ this.RestCrud = {
 
 		return function() {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return self.apiCreate(this, collection, opts);
 		};
@@ -150,7 +154,7 @@ this.RestCrud = {
 
 		return function(id) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return self.apiQueryOne(this, id, collection, opts);
 		};
@@ -162,7 +166,7 @@ this.RestCrud = {
 
 		return function(id) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return self.apiUpdate(this, id, collection, opts);
 		};
@@ -174,7 +178,7 @@ this.RestCrud = {
 
 		return function(id) {
 			if (!RestHelpers.authUser(this, opts))
-				return RestHelpers.jsonResponse(403, 'Access Denied.');
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
 			return self.apiDelete(this, id, collection, opts);
 		};

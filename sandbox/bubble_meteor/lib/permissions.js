@@ -15,7 +15,7 @@ ownsPost = function(userId, doc) {
   		|| _.contains(bubble.users.admins,Meteor.userId()));
   }
   else{
-    return ('3' == Meteor.user().userType 
+    return ('3' == Meteor.user().userType
           || doc.userId == Meteor.userId());
   }
 }
@@ -27,9 +27,9 @@ ownsComment = function(userId, doc) {
     var admins = bubble.users.admins;
     if(Meteor.userId()) {
       var userId = Meteor.userId();
-      if('3' == Meteor.user().userType 
-        || userId == post.userId 
-        || userId == doc.userId 
+      if('3' == Meteor.user().userType
+        || userId == post.userId
+        || userId == doc.userId
         || _.contains(admins, userId)) {
         return true;
       }else{
@@ -40,7 +40,7 @@ ownsComment = function(userId, doc) {
 }
 
 ownsBubble = function(userId, doc, onChange) {
-  return _.contains('3' == Meteor.user().userType 
+  return _.contains('3' == Meteor.user().userType
     || doc.users.admins, Meteor.userId());
 }
 

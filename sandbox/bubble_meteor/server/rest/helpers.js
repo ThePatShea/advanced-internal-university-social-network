@@ -93,11 +93,14 @@ this.RestHelpers = {
 	    };
 	},
 
-	mongoFindOne: function(collection, id, fields) {
+	mongoFindOne: function(collection, query, fields) {
 	    var rawCollection = MongoHelper.getRawCollection(collection);
 	    var future = new Future();
 
-	    rawCollection.findOne({_id: id}, this.bindFuture(future));
+	    if (typeof query == 'string')
+	    	query = {_id: query};
+
+	    rawCollection.findOne(query, this.bindFuture(future));
 	    var obj = future.wait()
 
 	    // MongoDB does not support field filtering with findOne
@@ -174,7 +177,12 @@ this.RestHelpers = {
 		if (!userId)
 			return false;
 
+		var user = Meteor.users.findOne(userId);
+		if (!user)
+			return false;
+
 		ctx.userId = userId;
+		ctx.user = user;
 		return true;
 	},
 
