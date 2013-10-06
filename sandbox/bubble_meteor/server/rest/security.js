@@ -84,5 +84,40 @@ this.RestSecurity = {
       if (obj && obj.postType != name)
         return RestHelpers.jsonResponse(401, 'Invalid post type');
     };
+  },
+
+  // Comments
+  canCreateComment: function(ctx, obj) {
+    if (!obj.postId)
+      return RestHelpers.jsonResponse(422, 'Please comment on post');
+
+    var post = RestHelpers.mongoFindOne(Posts, obj.postId);
+    if (!post)
+      return RestHelpers.jsonResponse(422, 'Please comment on post');
+  },
+
+  canChangeComment: function(ctx, obj) {
+    if (!obj.postId)
+      return RestHelpers.jsonResponse(422, 'Please comment on post');
+
+    var post = RestHelpers.mongoFindOne(Posts, obj.postId);
+    if (!post)
+      return RestHelpers.jsonResponse(422, 'Please comment on post');
+
+    if (!obj.bubbleId)
+      return RestHelpers.jsonResponse(422, 'Can only comment bubble posts');
+
+    var bubble = RestHelpers.mongoFindOne(Bubbles, obj.bubbleId);
+    if (!bubble)
+      return RestHelpers.jsonResponse(422, 'Can only comment bubble posts');
+
+    var admins = bubble.users.admins;
+    if (_.contains(bubble.users.admins, ctx.userId))
+      return;
+
+    if (post.userId == ctx.userId)
+      return;
+
+    return RestHelpers.jsonResponse(401, 'Can not edit others comment')
   }
 };

@@ -12,13 +12,13 @@ Meteor.methods({
     // ensure the user is logged in
     if (!user)
       throw new Meteor.Error(401, "Please sign in to make comment");
-      
+
     if (!commentAttributes.body)
       throw new Meteor.Error(422, 'Please type a message before submitting your comment');
-      
+
     if (!commentAttributes.postId)
       throw new Meteor.Error(422, 'Please comment on a post');
-    
+
     currentTime = new Date().getTime();
 
     comment = _.extend(_.pick(commentAttributes, 'postId', 'body'), {
@@ -26,15 +26,15 @@ Meteor.methods({
       author: user.name,
       submitted: currentTime
     });
-    
+
     // update the post with the number of comments
     Posts.update(comment.postId, {$set: {lastCommentTime: currentTime}, $inc: {commentsCount: 1}});
-    
+
     // create the comment, save the id
     comment._id = Comments.insert(comment);
-    
+
     createCommentUpdate(comment);
-    
+
     return comment._id;
   },
 

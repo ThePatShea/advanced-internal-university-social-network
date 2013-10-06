@@ -165,7 +165,18 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.canCreateComment,
+			preprocess: RestPost.createComment
+		},
+		update: {
+			check: RestSecurity.canChangeComment
+		},
+		remove: {
+			check: RestSecurity.canChangeComment
 		}
+
 	});
 
 	// Updates
