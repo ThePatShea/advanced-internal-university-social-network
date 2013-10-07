@@ -33,8 +33,22 @@ Meteor.Router.add({
   },
 
   // Bubbles Related Routes
+    '/oldmybubbles/:_id/home': {
+      //to: 'bubblePage', 
+      to: 'bubblePage',
+      and: function(id) {
+        var prevBubble  =  Session.get('currentBubbleId');
+        Session.set('currentBubbleId', id); 
+        var currBubble  =  Session.get('currentBubbleId');
+
+        if (currBubble != prevBubble) {
+          Session.set('bubbleLoading', 'true');  // Handles loading graphic
+        }
+      }
+    },
     '/mybubbles/:_id/home': {
-      to: 'bubblePage', 
+      //to: 'bubblePage', 
+      to: 'bubblePageBackbone',
       and: function(id) {
         var prevBubble  =  Session.get('currentBubbleId');
         Session.set('currentBubbleId', id); 
@@ -46,15 +60,18 @@ Meteor.Router.add({
       }
     },
     '/mybubbles/:_id/event': {
-      to: 'bubbleEventPage', 
+      //to: 'bubbleEventPage',
+      to: 'bubbleEventPageBackbone', 
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/discussion': {
-      to: 'bubbleDiscussionPage', 
+      //to: 'bubbleDiscussionPage',
+      to: 'bubbleDiscussionPageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/file': {
-      to: 'bubbleFilePage', 
+      //to: 'bubbleFilePage', 
+      to: 'bubbleFilePageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/public': {
@@ -66,14 +83,15 @@ Meteor.Router.add({
       and: function(id) { Session.set('currentBubbleId', id); }
     }, 
     '/mybubbles/:_id/members': {
-      to: 'bubbleMembersPage',
+      to: 'bubbleMembersPageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
 
 
   // Posts Related Routes
     '/mybubbles/:_bId/posts/:_pId': {
-      to: 'postPage', 
+      //to: 'postPage', 
+      to: 'postPageBackbone',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
@@ -139,10 +157,20 @@ Meteor.Router.add({
   //Explore Related Routes
     '/explore/create': 'exploreSubmit',
     '/explore/:id/home': {
-      to: 'explorePage',
+      to: 'explorePageBackbone',
       and: function(id){Session.set('currentExploreId', id);}
     },
     '/explore/:_expId/posts/:_pId': {
+      to: 'explorePostPageBB',
+      and: function(expId, pId){
+        Session.set('currentExploreId', expId);
+        Session.set('currentPostId', pId);
+        Meteor.subscribe('comments', pId);
+        //Meteor.subscribe('currentExplore', expId);
+        Meteor.subscribe('singlePost', pId);
+      }
+    },
+    '/explore/:_expId/posts/:_pId/updated': {
       to: 'explorePostPage',
       and: function(expId, pId){
         Session.set('currentExploreId', expId);

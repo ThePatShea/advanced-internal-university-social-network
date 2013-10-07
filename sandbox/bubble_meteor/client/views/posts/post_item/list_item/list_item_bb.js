@@ -1,6 +1,7 @@
 Template.listItemBB.helpers({
     getPostAsUser: function() {
       //return Meteor.users.findOne(this.postAsId);
+      //console.log("ES: ", es.exploreUsers.toJSON());
       return this.user;
     },
     /*
@@ -36,7 +37,7 @@ Template.listItemBB.helpers({
       }
     },
     isGoing : function() {
-      return _.contains(this.attendees,Meteor.user().username)
+      return _.contains(this.attendees, Meteor.userId());
     },
 
     hasChildren : function() {
@@ -84,25 +85,25 @@ Template.listItemBB.events({
       if(typeof this.bubbleId != 'undefined'){
         // Links to parent post if the post is a file attachment. Otherwise, links to the post itself.
           if (this.postType == 'file' && this.parent){
-            Meteor.Router.to('postPage', this.bubbleId, this.parent);
+            Meteor.Router.to('postPageBackbone', this.bubbleId, this.parent);
           }
           else if(this.postType == 'file'){
             console.log('List item click.');
-            Meteor.Router.to('postPage', this.bubbleId, this._id);
+            Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
           else if(typeof this.postType != 'undefined'){
-            console.log(this._id);
-            Meteor.Router.to('postPage', this.bubbleId, this._id);
+            console.log(this.id);
+            Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
       }
       else if(typeof this.exploreId != 'undefined'){
-        Meteor.Router.to('explorePostPage', this.exploreId, this._id);
+        Meteor.Router.to('explorePostPageBB', this.exploreId, this.id);
       }
       else if(typeof this.userType != 'undefined'){
-        Meteor.Router.to('userProfile', this._id);
+        Meteor.Router.to('userProfile', this.id);
       }
       else if(typeof this.category != 'undefined'){
-        Meteor.Router.to('bubblePage', this._id);
+        Meteor.Router.to('bubblePage', this.id);
       }
       else{
         Meteor.Router.to('404NotFoundPage');
@@ -111,4 +112,5 @@ Template.listItemBB.events({
 });
 
 Template.listItemBB.rendered = function(){
+  console.log("LIBB: ", this);
 }

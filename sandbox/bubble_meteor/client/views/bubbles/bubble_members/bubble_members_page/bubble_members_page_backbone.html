@@ -1,0 +1,31 @@
+
+<template name="bubbleMembersPageBackbone">
+    {{#with getCurrentBubbleBackbone}}
+      {{> bubbleCoverBackbone}}
+      {{> bubbleSectionSelectorBackbone}}
+        
+      <div class="bubble-page-content bubble-members">
+        {{> bubbleMembersHeading}}
+
+    	  {{> bubbleInvitation}}
+
+        {{#unless isSuperBubble}}
+          {{#with applicantsObj}}
+            {{> userList}}
+          {{/with}}
+        {{/unless}}
+
+        {{#with adminsObj}}
+          {{> userList}}
+        {{/with}}
+
+        {{#with membersObj}}
+          {{> userList}}
+        {{/with}}
+
+        {{#with inviteesObj}}
+          {{> userList}}
+        {{/with}}
+
+    {{/with}}
+</template>

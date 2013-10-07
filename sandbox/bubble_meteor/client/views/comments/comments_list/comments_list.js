@@ -1,6 +1,9 @@
 Template.commentsList.helpers({
   comments: function() {
-    return Comments.find({postId: this._id},{sort: {submitted: 1}});
+    this._id = this.id;
+    if(typeof this._id !== "undefined")
+      return Comments.find({postId: this._id},{sort: {submitted: 1}});
+    return Comments.find({postId: this.id}, {sort: {submitted: 1}});
   }
 });
 

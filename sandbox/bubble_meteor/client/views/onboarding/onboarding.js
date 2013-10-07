@@ -1,6 +1,7 @@
 Template.onboarding.helpers({
   getCurrentName: function() {
-    return Meteor.user().name;
+    var user = Meteor.users.findOne(Meteor.userId());
+    return user.name;
   },
 });
 
@@ -191,17 +192,18 @@ Template.onboarding.rendered = function() {
     var isHealthcare  =  false;
 
     _.each(userEmails, function(email) {
+      if(typeof email.address != 'undefined'){
+        if (email.address.indexOf("@") != -1) {
+          var healthCareCheck = email.address.split("@");
 
-      if (email.address.indexOf("@") != -1) {
-        var healthCareCheck = email.address.split("@");
+          if (healthCareCheck[1] === "emoryhealthcare.org") { 
+            isHealthcare = true;
+          }
 
-        if (healthCareCheck[1] === "emoryhealthcare.org") { 
-          isHealthcare = true;
         }
-
       }
     });
-
+    
     if (isHealthcare == false) {
       if (user.neverLoggedIn == false) {
         if(user.neverOnboarded == false){

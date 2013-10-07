@@ -233,13 +233,23 @@ function updateDiscussionPost(){
     var discussionAttributes = {
       name: $('.cb-explore-editDiscussion-form > .discussionTitle').val(),
       body: $('.cb-explore-editDiscussion-form > .wysiwyg_group').find('[name=body]').html(),
-      postAsType: $('.cb-explore-editDiscussion-form .post-as-type').val(),
-      postAsId:   $('.cb-explore-editDiscussion-form .post-as-id').val(),
+      //postAsType: $('.cb-explore-editDiscussion-form .post-as-type').val(),
+      //postAsId:   $('.cb-explore-editDiscussion-form .post-as-id').val(),
       //exploreId: currentExploreId,
       children: newChildren
     };
 
-    console.log(discussionAttributes);
+    //WORK AROUND FOR POSTASTYPE = 'POSTASTYPE' BUG
+    if($('.cb-explore-editDiscussion-form .post-as-type').val() !== 'postAsType')
+    {
+      discussionAttributes.postAsType = $('.cb-explore-editDiscussion-form .post-as-type').val();
+    }
+    if($('.cb-explore-editDiscussion-form .post-as-id').val() !== 'postAsId')
+    {
+      discussionAttributes.postAsId = $('.cb-explore-editDiscussion-form .post-as-id').val();
+    }
+
+    console.log("Discussion attributes: ", discussionAttributes);
 
     
 

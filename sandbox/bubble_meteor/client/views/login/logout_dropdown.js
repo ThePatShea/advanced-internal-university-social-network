@@ -1,6 +1,7 @@
 Template.logoutDropdown.helpers({
   getUsername: function(){
-    return Meteor.user().name;
+    user = Meteor.users.findOne(Meteor.userId());
+    return user.name;
   }
 });
 
