@@ -315,6 +315,18 @@ Template.updatesDropdown.helpers({
   }
 });
 
+Template.updatesDropdown.events({
+  'click #seeall': function() {
+    Meteor.Router.to('dashboard');
+  },
+  'click #clearall': function() {
+    var updates = Updates.find({userId: Meteor.userId(), read:false}).fetch();
+    _.each(updates, function(update) {
+      Meteor.call('setRead', update);
+    });
+  }
+})
+
 Template.update.events({
   'click a': function() {
     Meteor.call('setRead', this);

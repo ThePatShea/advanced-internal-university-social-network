@@ -31,7 +31,7 @@ Template.explorePageBackbone.rendered = function(){
 	if(currentExploreId != window.location.pathname.split("/")[2])
 	{
 		currentExploreId = window.location.pathname.split("/")[2];
-		es = new BubbleData.ExploreSection({
+		es = new ExploreData.ExploreSection({
 			exploreId: currentExploreId,
 			limit: 10,
 			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount']

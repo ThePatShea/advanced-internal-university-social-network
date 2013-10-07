@@ -121,7 +121,7 @@ Template.explorePostPageBB.rendered = function(){
   {
     currentPostId = window.location.pathname.split("/")[4];
     console.log("THISDOTUNDERSCOREID: ", currentPostId);
-    pageData = new BubbleData.ExplorePostPage(currentPostId, function(){explorePageDep.changed()});
+    pageData = new ExploreData.ExplorePostPage(currentPostId, function(){explorePageDep.changed()});
     Meteor.subscribe('comments', currentPostId);
     Session.set("currentPostId", currentPostId);
   }
