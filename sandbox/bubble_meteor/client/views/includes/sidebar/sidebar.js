@@ -16,7 +16,7 @@ Template.sidebar.helpers({
       if(bubbles.length > 0) {
         return '/mybubbles/' + bubbles[0]._id + '/home';
       }else {
-        return '/create/bubble';
+        return '/mybubbles/create';
       }
     },
 
@@ -26,7 +26,7 @@ Template.sidebar.helpers({
         return '/explore/' + explores[0]._id + '/home';
       }
       else{
-        return '/create/explore';
+        return '/explore/create';
       }
     }
   , dashboardLink          : function() {

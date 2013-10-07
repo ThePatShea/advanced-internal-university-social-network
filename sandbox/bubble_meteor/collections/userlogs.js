@@ -55,7 +55,12 @@ Meteor.methods({
       //Checks if its a creation of bubble or explore
       objIndex = urlList.indexOf('create');
       if(objIndex != -1) {
-        userlog.page = 'create-'+urlList[objIndex+1];
+        if(urlList[objIndex+1]){
+          userlog.page = 'create-'+urlList[objIndex+1];
+        }else{
+          userlog.page = 'create-'+urlList[objIndex-1];
+        }
+        
       }
     }
 

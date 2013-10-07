@@ -103,7 +103,7 @@ Meteor.Router.add({
       to: 'fileSubmit',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
-    '/create/bubble': 'bubbleSubmit',
+    '/mybubbles/create': 'bubbleSubmit',
 
     '/settings/invites': 'invitationsPage',
 
@@ -137,7 +137,7 @@ Meteor.Router.add({
 
 
   //Explore Related Routes
-    '/create/explore': 'exploreSubmit',
+    '/explore/create': 'exploreSubmit',
     '/explore/:id/home': {
       to: 'explorePage',
       and: function(id){Session.set('currentExploreId', id);}
