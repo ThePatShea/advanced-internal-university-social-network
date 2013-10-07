@@ -20,8 +20,9 @@ Template.bubbleSubmit.events({
       if (error) {
         throwError(error.reason);
       } else {
+        console.log('Create Bubble');
         Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
-        Meteor.Router.to('bubbleMembersPage', bubbleId);
+        Meteor.Router.to('bubbleMembersPageBackbone', bubbleId);
       }
     });
   },
