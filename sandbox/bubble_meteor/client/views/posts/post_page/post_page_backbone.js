@@ -63,6 +63,7 @@ Template.postPageBackbone.created = function() {
   postAuthorObject = new mybubbles.BubbleUser({id: currentPostObject.toJSON().userId});
   postAuthorObject.fetch();
   postAuthor = postAuthorObject.toJSON();
+  var mto = "";
 
 }
 
@@ -144,6 +145,22 @@ Template.postPageBackbone.rendered = function() {
   postAuthor = postAuthorObject.toJSON();
 
   }
+
+  //Log clicking of edit button
+  $(".btn-edit").on("click", function() {
+    //Retrieve the post type via data-targets
+    var page = $(".btn-edit").data().target.replace('#','');
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-postEditBtn',
+          overwritePage: page }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
 
 }
 
