@@ -10,8 +10,12 @@
     {{#each compressUpdates}}
       {{> updateBubble}}
     {{else}}
-      <li><span>No Updates</span></li>
+      <li class="no-updates"><span>No Updates</span></li>
     {{/each}}
+    <li class="options">
+      <a href="#" id="seeall">see all</a>
+      <a href="#" id="clearall">clear all</a>
+    </li> 
   </ul>
 </template>
 
