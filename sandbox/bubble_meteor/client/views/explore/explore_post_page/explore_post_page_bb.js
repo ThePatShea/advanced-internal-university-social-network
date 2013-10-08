@@ -116,6 +116,7 @@ Template.explorePostPageBB.events({
 
 
 Template.explorePostPageBB.rendered = function(){
+  console.log("Explore Post Page Backbone Rendered.");
 
   if(currentPostId != window.location.pathname.split("/")[4])
   {

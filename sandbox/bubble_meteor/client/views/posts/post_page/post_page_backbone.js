@@ -172,6 +172,8 @@ Template.postPageBackbone.helpers({
   },
 
   getCurrentPostBackbone: function(){
+    bubbleDep.depend();
+    currentPostObject.fetch();
     return currentPostObject.toJSON();
   },
 
