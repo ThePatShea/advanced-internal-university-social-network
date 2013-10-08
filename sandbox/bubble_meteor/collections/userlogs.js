@@ -22,6 +22,10 @@ Meteor.methods({
     else if(urlList[0] == 'search') {
       userlog.page = urlList[0] + '-' + urlList[1];
     }
+    //Checks if its settings page
+    else if(urlList[0] == 'settings') {
+      userlog.page = urlList[0] + '-' + urlList[1];
+    }
     //Retrieves id for the specific page
     else{
       //Checks if its a bubble and extracts the id
