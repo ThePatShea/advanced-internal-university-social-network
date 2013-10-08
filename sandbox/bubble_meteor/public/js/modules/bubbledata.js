@@ -522,6 +522,36 @@
 			this.setLimit = new setLimitHelper(scope);
 			this.getJSON = new getJSONHelper(scope);
 
+			this.toggleGoing = function(postId,userId,callback){
+				var test = function(){bubbleDep.changed();}
+				tmp = this.bubbleEvents.get(postId);
+				tmp.on("change",callback);
+				console.log("TMP: ", tmp);
+				tmpData = tmp.get("attendees");
+				if(tmpData.indexOf(userId) == -1)
+				{
+					var retVal = [];
+					_.each(tmpData,function(data){
+						retVal.push(data);
+					})
+					retVal.push(userId);
+				}
+				else
+				{
+					//tmpData.splice(tmpData.indexOf(userId), 1);
+					tmpData = tmpData.slice(tmpData.indexOf("GAd9sexEBsk58X4t6")+1, tmpData.length);
+					var retVal = [];
+					_.each(tmpData,function(data){
+						retVal.push(data);
+					});
+				}
+				tmp.set("attendees",retVal);
+				tmp.trigger("change");
+				//bubbleDep.changed();
+				/*if(typeof callback === "function")
+					callback();*/
+			};
+
 			//return this.bubbleEvents.toJSON();
 		};
 

@@ -131,8 +131,9 @@ Meteor.methods({
     });
   },
 
-  attendEvent: function(postId,username){
+  attendEvent: function(postId,username,callback){
     post = Posts.findOne(postId);
+    console.log("Post? ", post, postId);
     if (!_.contains(post.attendees,username)) {
       Posts.update({_id:postId},
       {
@@ -146,6 +147,7 @@ Meteor.methods({
         $pull: {attendees:username}
       });
     }
+    return postId;
   },
   getNumOfEvents: function(bubbleId, postType ) {
     return Posts.find({'bubbleId': bubbleId, 'postType': postType}).count();
