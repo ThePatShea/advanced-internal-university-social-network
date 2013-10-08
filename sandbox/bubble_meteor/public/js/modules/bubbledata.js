@@ -1,6 +1,7 @@
 (function(){
 	BubbleData = {};
 	
+	/******************* REMOVE *****************/
 	var ExplorePost = Backbone.Model.extend({
 		url: function(){
 			return '/2013-09-11/posts/' + this.id;
@@ -182,6 +183,7 @@
 	}
 
 	BubbleData.Dashboard = Dashboard;
+	/******************* /REMOVE *****************/
 
 	var BubbleInfo = Backbone.Model.extend({
 		url: function(){

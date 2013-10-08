@@ -15,7 +15,7 @@ Template.dashboard.helpers({
         },
         */
         getFiveExplorePostsBB: function(){
-        	var dashboardData = new BubbleData.Dashboard();        	
+        	var dashboardData = new ExploreData.Dashboard();        	
         	return dashboardData.getData();
         },
 	numBubbles: function() {
