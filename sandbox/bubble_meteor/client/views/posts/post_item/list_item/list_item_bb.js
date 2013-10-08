@@ -92,7 +92,6 @@ Template.listItemBB.events({
             Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
           else if(typeof this.postType != 'undefined'){
-            console.log(this.id);
             Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
       }
@@ -111,6 +110,24 @@ Template.listItemBB.events({
     }
 });
 
+Template.listItemBB.created = function() {
+  mto = "";
+}
+
 Template.listItemBB.rendered = function(){
-  console.log("LIBB: ", this);
+  // console.log("LIBB: ", this);
+  //Log clicking of individual bubble
+  $(".post-item").on("click", function() {
+    // Meteor.clearTimeout(mto);
+    // mto = Meteor.setTimeout(function() {
+      //Extract and append the bubble's title to action string
+      var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: title }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    // }, 500);
+  });
 }

@@ -293,6 +293,18 @@ Template.postPageBackbone.events({
       if (confirm("Delete this post?")) {
         var currentPostId = Session.get('currentPostId');
         Posts.remove(currentPostId);
+
+        //Logs the action that user is doing
+        Meteor.clearTimeout(mto);
+        mto = Meteor.setTimeout(function() {
+          Meteor.call('createLog', 
+            { action: 'click-postDeleteBtn',
+              postId: currentPostId}, 
+            window.location.pathname, 
+            function(error) { if(error) { throwError(error.reason); }
+          });
+        }, 500);
+
         Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
       }
     }

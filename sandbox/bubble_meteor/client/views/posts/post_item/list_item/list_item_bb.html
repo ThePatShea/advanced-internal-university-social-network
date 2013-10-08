@@ -1,5 +1,5 @@
 <template name="listItemBB">
-  <div class="post-item">
+  <div class="post-item name-{{name}}">
     <div class="visible-{{matchPostType 'event'}} pull-left post-date">
       <div class="day">{{timestampToDayLong dateTime}}</div>
       <div class="month">{{timestampToMonthShort dateTime}}</div>
