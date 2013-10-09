@@ -3,9 +3,14 @@ Template.discussionEdit.events({
     e.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Edit Discussion', this.name]);
+
+    var urlSegments = window.location.pathname.split('/');
+    var currentBubbleId = urlSegments[2];
+    var currentPostId = urlSegments[4];
+    console.log('Discussion Edit: ', currentBubbleId, currentPostId);
     
-    var currentPostId = Session.get('currentPostId');
-    var currentBubbleId = Session.get('currentBubbleId');
+    //var currentPostId = Session.get('currentPostId');
+    //var currentBubbleId = Session.get('currentBubbleId');
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
     var currentpost = Posts.findOne({_id: currentPostId});
     var currentChildren = currentpost.children;
@@ -81,7 +86,7 @@ Template.discussionEdit.events({
         throwError(error.reason);
       }
       else{
-        Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+        Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
       }
     });
 
@@ -91,9 +96,13 @@ Template.discussionEdit.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Delete Discussion', this.name]);
     e.preventDefault();
+    var urlSegments = window.location.pathname.split('/');
+    var currentBubbleId = urlSegments[2];
+    var currentPostId = urlSegments[4];
+    console.log('Discussion Edit: ', currentBubbleId, currentPostId);
     if (confirm("Delete this post?")) {
-      Meteor.call('deletePost', Session.get('currentPostId'));
-      Meteor.Router.to('bubblePage', Session.get('currentBubbleId'));
+      Meteor.call('deletePost', currentPostId);
+      Meteor.Router.to('bubblePageBackbone', currentBubb);
     }
   }
 });

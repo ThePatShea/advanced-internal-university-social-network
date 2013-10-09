@@ -345,8 +345,8 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
           throwError(error.reason);
         }
         else{
-          console.log('Successfully updated');
-            Meteor.Router.to('postPageBackbone', discussionPost.exploreId, discussionPost._id);
+          console.log('Successfully updated bubble post');
+            Meteor.Router.to('postPage', discussionPost.bubbleId, discussionPost._id);
         }
       });
     }
@@ -359,7 +359,7 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
         else{
           console.log('Successfully updated');
           //explorePageDep.changed();
-          Meteor.Router.to('explorePostPageBB', discussionPost.exploreId, discussionPost._id);
+          Meteor.Router.to('explorePostPage', discussionPost.exploreId, discussionPost._id);
         }
       });
     }

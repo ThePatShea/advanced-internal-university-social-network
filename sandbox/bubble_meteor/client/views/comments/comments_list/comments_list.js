@@ -1,9 +1,14 @@
 Template.commentsList.helpers({
   comments: function() {
-    this._id = this.id;
-    if(typeof this._id !== "undefined")
-      return Comments.find({postId: this._id},{sort: {submitted: 1}});
-    return Comments.find({postId: this.id}, {sort: {submitted: 1}});
+    if(typeof this._id == 'undefined'){
+      this._id = this.id;
+    }
+    else{
+      this.id = this._id;
+    }
+    /*if(typeof this._id !== "undefined")
+      return Comments.find({postId: this._id},{sort: {submitted: 1}});*/
+    return Comments.find({postId: this.id}, {sort: {submitted: 1}}).fetch();
   }
 });
 
