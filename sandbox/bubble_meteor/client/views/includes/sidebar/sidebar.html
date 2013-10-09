@@ -23,7 +23,7 @@
     </div>
     <div class="pane section">
       <a href="{{dashboardLink}}">
-        <button class="btn-nav btn-nav-section active-{{selectedSection 'dashboard'}}">
+        <button class="btn-nav btn-nav-section active-{{selectedSection 'dashboard'}} sidebar-dashboard">
           <div class="inner">
             <div class="cb-icon dashboard-icon">{{> icon-dashboard-big}}</div>
             <div class="lbl">dashboard</div>
@@ -32,7 +32,7 @@
         </button>
       </a>
       <a href="{{myBubblesLink}}">
-        <button class="btn-nav btn-nav-section active-{{selectedSection 'mybubbles'}}">
+        <button class="btn-nav btn-nav-section active-{{selectedSection 'mybubbles'}} sidebar-mybubbles">
           <div class="inner">
             <div class="cb-icon">{{> icon-two-bubbles}}</div>
             <div class="lbl">my bubbles</div>
@@ -41,7 +41,7 @@
         </button>
       </a>
       <a href="{{exploreLink}}">
-        <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectedSection 'explore'}}">
+        <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectedSection 'explore'}} sidebar-explore">
           <div class="inner">
             <div class="cb-icon explore">{{> icon-explore}}</div>
             <div class="lbl">explore</div>
@@ -50,7 +50,7 @@
         </button>
       </a>
       <a href="{{searchAllPath}}">
-        <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectedSection 'search'}}">
+        <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectedSection 'search'}} sidebar-search">
           <div class="inner">
             <div class="cb-icon">{{> icon-search-thin}}</div>
             <div class="lbl">search</div>
@@ -59,7 +59,7 @@
         </button>
       </a>
       <a href="{{userProfilePath Meteor.userId}}">
-        <button class="btn-nav btn-nav-section active-{{selectedSection 'settings'}}">
+        <button class="btn-nav btn-nav-section active-{{selectedSection 'settings'}} sidebar-settings">
           <div class="inner">
             <div class="cb-icon-settings">{{> icon-settings-big}}</div>
             <div class="lbl">settings</div>

@@ -142,7 +142,7 @@ Template.sidebar.events({
     }
 });
 
-Template.bubbleCover.created = function(){
+Template.sidebar.created = function(){
   mto = "";
 }
 
@@ -284,4 +284,70 @@ Template.sidebar.rendered = function() {
       });
     }, 500);
   });
+
+  //Log clicking of settings in sidebar
+  $(".sidebar-settings").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-settingsButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of search in sidebar
+  $(".sidebar-search").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-searchButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of explore in sidebar
+  $(".sidebar-explore").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-exploreButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of search in mybubbles
+  $(".sidebar-mybubbles").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-mybubblesButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of dashboard in sidebar
+  $(".sidebar-dashboard").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-dashboardButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
 }
