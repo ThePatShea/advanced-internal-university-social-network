@@ -178,10 +178,10 @@ createPost = function(postAttributes){
       throwError(error.reason);
     } else {
         if(typeof postAttributes.bubbleId != 'undefined'){
-          Meteor.Router.to('postPage', post.bubbleId, post._id);
+          Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
         }
         else{
-          Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+          Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
         }
     }
   });
@@ -248,10 +248,10 @@ createPostWithAttachments = function(postAttributes, fileList){
       }
 
       if(typeof postAttributes.bubbleId != 'undefined'){
-        Meteor.Router.to('postPage', post.bubbleId, post._id);
+        Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
       }
       else{
-        Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+        Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
       }
 
     }
@@ -348,8 +348,8 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
           throwError(error.reason);
         }
         else{
-          console.log('Successfully updated');
-            Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
+          console.log('Successfully updated bubble post');
+            Meteor.Router.to('postPage', discussionPost.bubbleId, discussionPost._id);
         }
       });
     }

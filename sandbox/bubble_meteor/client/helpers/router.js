@@ -106,7 +106,10 @@ Meteor.Router.add({
       to: 'fileobjectEdit',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
-
+    '/mybubbles/:_bId/posts/:_pId/updated': {
+      to: 'postPage', 
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
+    },
 
   // Creation Related Routes
     '/mybubbles/:_id/create/discussion': {
