@@ -283,6 +283,9 @@ Template.exploreSubmit.events({
 
 });
 
+Template.exploreSubmit.created = function() {
+  mto = "";
+}
 
 Template.exploreSubmit.rendered = function(){
   $("#profilepicture_retina").hide();
@@ -291,6 +294,78 @@ Template.exploreSubmit.rendered = function(){
   $("#coverphoto_preview").hide();
   $("#tempbubbleprofile").hide();
   $("#tempbubblecoverphoto").hide();
+
+  //Log clicking of title
+  $(".explore-title").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      Meteor.call('createLog', 
+        { action: 'click-exploreTitleTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+  //Log clicking of category
+  $(".explore-category").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-exploreCategory' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+  //Log clicking of description
+  $(".explore-description").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-exploreDescriptionTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+  //Log clicking of image
+  $(".explore-image").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-exploreImage' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+  //Log clicking of types
+  $(".explore-type").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-exploreType' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+  //Log clicking of types
+  $(".explore-submit").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-exploreSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
 };
 
 

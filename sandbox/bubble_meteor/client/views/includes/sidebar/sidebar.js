@@ -229,7 +229,7 @@ Template.sidebar.rendered = function() {
 
     adjustInterface();
 
-  //Log clicking of submit error button
+  //Log clicking of add bubble button
   $(".add-bubble").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
@@ -248,6 +248,34 @@ Template.sidebar.rendered = function() {
     mto = Meteor.setTimeout(function() {
       //Extract and append the bubble's title to action string
       var title = 'click-bubble_'+$(".mybubble").attr('class').split('title-')[1];
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: title }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of add explore button
+  $(".add-explore").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-addExploreButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of individual explore
+  $(".myexplore").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Extract and append the bubble's title to action string
+      var title = 'click-explore_'+$(".myexplore").attr('class').split('title-')[1];
       //Logs the action that user is doing
       Meteor.call('createLog', 
         { action: title }, 

@@ -13,27 +13,27 @@ margin: 10px 5px 0 0;
     {{#if hasLevel4Permission}}
         <div class="control-group">
             <label class="control-label" for="title">Title</label>
-            <div class="controls">
+            <div class="controls explore-title">
                 <input name="title" type="text" value="" placeholder="Title of Explore Section"/>
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="category">Icon</label>
-            <div class="controls">
+            <div class="controls explore-category">
                 {{> exploreIconSelector}}
             </div>
         </div>
 
         <div class="control-group">
             <label class="control-label" for="description">Description</label>
-            <div class="controls">
+            <div class="controls explore-description">
                 <input name="description" type="text" value="" placeholder="Description of Explore Section"/>
             </div>
         </div>
 
         <div class="control-group">
-            <div id="bubble_image">
+            <div id="bubble_image explore-image">
                 <div id="cover_dropzone" class="dropzone">Drop cover photo here.</div>
                 <input name="filesToUpload[]" id="coverfilesToUpload" type="file">
                     <img id="coverphoto_upload" src="" />
@@ -44,14 +44,14 @@ margin: 10px 5px 0 0;
 
         <div class="control-group">
             <label class="control-label" for="category">Explore Type</label>
-            <div class="controls">
+            <div class="controls explore-type">
                 {{> exploreTypeSelector}}
             </div>
         </div>
 
         <hr>
         <div class="control-group">
-            <div class="controls">
+            <div class="controls explore-submit">
                 <input type="submit" value="Submit" class="btn btn-primary"/>
             </div>
         </div>

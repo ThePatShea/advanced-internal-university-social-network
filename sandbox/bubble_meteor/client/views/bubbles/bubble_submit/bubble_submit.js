@@ -511,7 +511,7 @@ Template.bubbleSubmit.rendered = function(){
     Session.set("DisableCrop","");
   }
 
-  //Log clicking of Add bubble button
+  //Log clicking of title textbox
   $(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {

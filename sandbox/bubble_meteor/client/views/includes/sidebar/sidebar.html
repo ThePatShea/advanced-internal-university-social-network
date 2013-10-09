@@ -117,7 +117,7 @@
           <div class="pull-left section-name explore">explore</div>
           {{#if hasLevel4Permission}}
             <div class="pull-right v-middle">
-              <div class="v-inner">
+              <div class="v-inner add-explore">
                 <a href="{{exploreSubmitPath}}">
                   <button class="btn-heading">
                     <span class="cb-icon-add">{{> icon-add}}</span>
@@ -129,8 +129,8 @@
           {{/if}}
         </div>
         {{#each publicExplores}}
-          <a href="/explore/{{this._id}}/home" class="set-loading">
-            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this._id}}">
+          <a href="/explore/{{this._id}}/home" class="set-loading ">
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this._id }} myexplore title-{{title}}">
 
             <span class="cb-icon cb-icon-other {{getExploreIconName this}}">
               {{{getExploreIcon this}}}
