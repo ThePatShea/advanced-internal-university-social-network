@@ -1,6 +1,12 @@
+Template.imGoing.created = function(){
+
+  if(typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
+}
+
 Template.imGoing.helpers({
     mainWords : function() {
-      bubbleDep.depend();
+      goingDep.depend();
       console.log(">im-going", this);
       if (_.contains(this.attendees,Meteor.userId()))
         return "not going"
@@ -17,7 +23,7 @@ Template.imGoing.events({
       // Add/remove the user to/from list of attendees
       console.log("CLICK IM GOING: ", this);
       if(typeof this.id !== "undefined")
-        Meteor.call('attendEvent',this.id,Meteor.userId(),function(err,res){
+        Meteor.call('attendEvent',this,function(err,res){
           if(!err)
           {
             var section = window.location.pathname.split("/")[1];

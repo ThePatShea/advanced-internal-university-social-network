@@ -523,7 +523,7 @@
 			this.getJSON = new getJSONHelper(scope);
 
 			this.toggleGoing = function(postId,userId,callback){
-				var test = function(){bubbleDep.changed();}
+				//var test = function(){bubbleDep.changed();}
 				tmp = this.bubbleEvents.get(postId);
 				tmp.on("change",callback);
 				console.log("TMP: ", tmp);
@@ -532,7 +532,7 @@
 				{
 					var retVal = [];
 					_.each(tmpData,function(data){
-						retVal.push(data);
+						retVal.push(_.clone(data));
 					})
 					retVal.push(userId);
 				}
@@ -542,11 +542,12 @@
 					tmpData = tmpData.slice(tmpData.indexOf("GAd9sexEBsk58X4t6")+1, tmpData.length);
 					var retVal = [];
 					_.each(tmpData,function(data){
-						retVal.push(data);
+						retVal.push(_.clone(data));
 					});
 				}
+				console.log("Setting this data: ", retVal);
 				tmp.set("attendees",retVal);
-				tmp.trigger("change");
+				//tmp.trigger("change");
 				//bubbleDep.changed();
 				/*if(typeof callback === "function")
 					callback();*/

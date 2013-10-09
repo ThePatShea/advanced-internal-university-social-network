@@ -131,16 +131,19 @@ Meteor.methods({
     });
   },
 
-  attendEvent: function(postId,username,callback){
-    post = Posts.findOne(postId);
-    console.log("Post? ", post, postId);
+  attendEvent: function(post,callback){
+    //Meteor.subscribe('findPostsById',[postId]);
+    //post = Posts.findOne({_id: postId});
+    console.log("Post? ", post);
+    username = Meteor.userId();
+    postId = post.id;
     if (!_.contains(post.attendees,username)) {
       //Logs the action that user is doing
-      Meteor.call('createLog', 
+      /*Meteor.call('createLog', 
         { action: 'click-eventGoing' }, 
         window.location.pathname, 
         function(error) { if(error) { throwError(error.reason); }
-      });
+      });*/
 
       Posts.update({_id:postId},
       {
@@ -150,11 +153,11 @@ Meteor.methods({
       createNewAttendeeUpdate(postId);
     }else{
       //Logs the action that user is doing
-      Meteor.call('createLog', 
+      /*Meteor.call('createLog', 
         { action: 'click-eventNotGoing' }, 
         window.location.pathname, 
         function(error) { if(error) { throwError(error.reason); }
-      });
+      });*/
 
       Posts.update({_id:postId},
       {

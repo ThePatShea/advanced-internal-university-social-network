@@ -4,6 +4,8 @@ referenceDateTime = moment().add('hours',-4).valueOf();
 Template.bubblePageBackbone.created = function() {
 
   bubbleDep = new Deps.Dependency;
+  if(typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
@@ -217,7 +219,7 @@ Template.bubblePageBackbone.helpers({
   },
 
   postPropertiesBackboneEvent: function(){
-    bubbleDep.depend();
+    goingDep.depend();
     var eventPosts = mybubbles.Events.getJSON();
     var topEventPosts = eventPosts.slice(0, 3);
     return {
