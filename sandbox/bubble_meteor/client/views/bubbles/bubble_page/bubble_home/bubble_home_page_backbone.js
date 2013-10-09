@@ -219,7 +219,7 @@ Template.bubblePageBackbone.helpers({
   },
 
   postPropertiesBackboneEvent: function(){
-    goingDep.depend();
+    bubbleDep.depend();
     var eventPosts = mybubbles.Events.getJSON();
     var topEventPosts = eventPosts.slice(0, 3);
     return {
