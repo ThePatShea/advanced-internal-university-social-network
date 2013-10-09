@@ -96,7 +96,14 @@ Template.listItemBB.events({
           }
       }
       else if(typeof this.exploreId != 'undefined'){
-        Meteor.Router.to('explorePostPageBB', this.exploreId, this.id);
+        if(this.postType == 'file')
+        {
+          window.open(this.file,'_.blank');
+        }
+        else
+        {
+          Meteor.Router.to('explorePostPageBB', this.exploreId, this.id);
+        }
       }
       else if(typeof this.userType != 'undefined'){
         Meteor.Router.to('userProfile', this.id);
