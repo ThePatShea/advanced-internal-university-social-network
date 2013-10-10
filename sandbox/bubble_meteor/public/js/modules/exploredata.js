@@ -275,7 +275,7 @@
 		this.setLimit = function(limit){
 			that.explorePosts.limit = limit;
 			return limit;
-		}
+		};
 
 		this.setExplore = function(id){
 			if(id != undefined)
@@ -288,7 +288,34 @@
 				that.exploreId = this.exploreId;
 				return;
 			}
-		}
+		};
+
+		this.toggleGoing = function(postId,userId,callback){
+			//var test = function(){bubbleDep.changed();}
+			tmp = this.explorePosts.get(postId);
+			tmp.on("change",callback);
+			console.log("TMP: ", tmp);
+			tmpData = tmp.get("attendees");
+			if(tmpData.indexOf(userId) == -1)
+			{
+				var retVal = [];
+				_.each(tmpData,function(data){
+					retVal.push(_.clone(data));
+				})
+				retVal.push(userId);
+			}
+			else
+			{
+				//tmpData.splice(tmpData.indexOf(userId), 1);
+				tmpData = tmpData.slice(tmpData.indexOf("GAd9sexEBsk58X4t6")+1, tmpData.length);
+				var retVal = [];
+				_.each(tmpData,function(data){
+					retVal.push(_.clone(data));
+				});
+			}
+			console.log("Setting this data: ", retVal);
+			tmp.set("attendees",retVal);
+		};
 	};
 
 	var ExplorePostPage = function(id, callback){

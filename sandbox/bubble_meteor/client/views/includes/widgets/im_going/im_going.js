@@ -29,7 +29,11 @@ Template.imGoing.events({
             var section = window.location.pathname.split("/")[1];
             if(section === "explore")
             {
-              //exploreStuff
+              console.log("Toggle Going");
+              es.toggleGoing(res,Meteor.userId(),function(){
+                console.log("Toggle Callback");
+                explorePageDep.changed();
+              });
             }
             if(section === "mybubbles")
             {
