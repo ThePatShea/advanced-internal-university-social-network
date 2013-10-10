@@ -18,6 +18,7 @@ Template.dashboard.helpers({
         	var dashboardData = new ExploreData.Dashboard();        	
         	return dashboardData.getData();
         },
+    /*
 	numBubbles: function() {
 		var uid = Meteor.userId();
 		var numBubbles = Bubbles.find({$or:
@@ -34,265 +35,152 @@ Template.dashboard.helpers({
 		}).count();
 		return numInvites;
 	},
+	*/
 
-	numUpdates: function() {
-		var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
+	
+	// numUpdates: function() {
+	// dashboardDep.depend();
 
-	  if(updateList.length > 0) {
-	    //To combine updates with same userId, invokerId, updateType and postId
-	    _.each(updateList, function(update){
-	      updateList = _.reject(updateList, function(newUpdate) {
-	        return  update.bubbleId == newUpdate.bubbleId && 
-	                update.userId == newUpdate.userId && 
-	                update.invokerId == newUpdate.invokerId && 
-	                update.updateType == newUpdate.updateType &&
-	                update.postId == newUpdate.postId;
-	      });
-	      if(!_.contains(updateList,update)){
-	        updateList.push(update);
-	      }
-	    });
+	// if(typeof updateList !== "undefined")
+	// {
+	//     return updateList.length;
+	// } else {
+	//   	return 0;
+	// }
+	// },
 
-	    /**
-	    * To combine updates for comments in the same post
-	    **/
-	    _.each(updateList, function(update){
+	// numUpdatesMinusThree: function() {
+	// 	var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
-	      var commentUpdates = _.reject(updateList, function(update) {
-	        return update.updateType != "replied";
-	      });
+	//   if(updateList.length > 0) {
+	//     //To combine updates with same userId, invokerId, updateType and postId
+	//     _.each(updateList, function(update){
+	//       updateList = _.reject(updateList, function(newUpdate) {
+	//         return  update.bubbleId == newUpdate.bubbleId && 
+	//                 update.userId == newUpdate.userId && 
+	//                 update.invokerId == newUpdate.invokerId && 
+	//                 update.updateType == newUpdate.updateType &&
+	//                 update.postId == newUpdate.postId;
+	//       });
+	//       if(!_.contains(updateList,update)){
+	//         updateList.push(update);
+	//       }
+	//     });
 
-	      //Combine and chain the names together
-	      if (commentUpdates.length > 0) {
-	        updateList = _.reject(updateList, function(newUpdate) {
-	          return update.postId == newUpdate.postId && 
-	                  update.updateType == newUpdate.updateType &&
-	                  update.updateType == "replied";
-	        });
-	        if(!_.contains(updateList,update)) {
-	          //Pull out comment updates that belong to the same post
-	          singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-	            return update.postId != newUpdate.postId;
-	          });
-	          if (singleTypeUpdates.length > 0) {
-	            //Create the chained name
-	            var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-	            var chainedName = nameArray.join();
-	            var maxLength = 13;
+	//     /**
+	//     * To combine updates for comments in the same post
+	//     **/
+	//     _.each(updateList, function(update){
 
-	            //Checks to see if the length of names exceed a certain limit
-	            if(chainedName.length > maxLength) {
-	              chainedName = chainedName.substring(0,maxLength);
-	              var nameList = chainedName.split(',');
-	              if(nameArray[0].length > maxLength) {
-	                nameList[0] = nameArray[0];
-	              }else{
-	                nameList.pop();
-	              }
-	              var excessCount = nameArray.length - nameList.length;
-	              chainedName = nameList.join();
-	              if(excessCount == 1) {
-	                chainedName = chainedName + " and " + excessCount + " other";
-	              }else if(excessCount > 1){
-	                chainedName = chainedName + " and " + excessCount + " others";
-	              }
-	            }else{
-	              chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-	            }
+	//       var commentUpdates = _.reject(updateList, function(update) {
+	//         return update.updateType != "replied";
+	//       });
 
-	            //Add the chained name to the invokerName
-	            update.invokerName = chainedName;
-	          }
-	          updateList.push(update);
-	        }
-	      }
-	    });
+	//       //Combine and chain the names together
+	//       if (commentUpdates.length > 0) {
+	//         updateList = _.reject(updateList, function(newUpdate) {
+	//           return update.postId == newUpdate.postId && 
+	//                   update.updateType == newUpdate.updateType &&
+	//                   update.updateType == "replied";
+	//         });
+	//         if(!_.contains(updateList,update)) {
+	//           //Pull out comment updates that belong to the same post
+	//           singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
+	//             return update.postId != newUpdate.postId;
+	//           });
+	//           if (singleTypeUpdates.length > 0) {
+	//             //Create the chained name
+	//             var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+	//             var chainedName = nameArray.join();
+	//             var maxLength = 13;
 
-	    /**
-	    *  To combine and chain up names for similar updates
-	    **/
-	    _.each(updateList, function(originalUpdate) {
-	      if(originalUpdate.collapsible == true){
-	        var type = originalUpdate.updateType;
-	        var singleTypeUpdates = _.reject(updateList, function(update) {
-	          return update.updateType != type;
-	        });
-	        if (singleTypeUpdates.length > 0) {
-	          var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-	          var chainedName = nameArray.join();
-	          var maxLength = 13;
+	//             //Checks to see if the length of names exceed a certain limit
+	//             if(chainedName.length > maxLength) {
+	//               chainedName = chainedName.substring(0,maxLength);
+	//               var nameList = chainedName.split(',');
+	//               if(nameArray[0].length > maxLength) {
+	//                 nameList[0] = nameArray[0];
+	//               }else{
+	//                 nameList.pop();
+	//               }
+	//               var excessCount = nameArray.length - nameList.length;
+	//               chainedName = nameList.join();
+	//               if(excessCount == 1) {
+	//                 chainedName = chainedName + " and " + excessCount + " other";
+	//               }else if(excessCount > 1){
+	//                 chainedName = chainedName + " and " + excessCount + " others";
+	//               }
+	//             }else{
+	//               chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+	//             }
 
-	          if(chainedName.length > maxLength) {
-	            chainedName = chainedName.substring(0,maxLength);
-	            var nameList = chainedName.split(',');
-	            if(nameArray[0].length > maxLength) {
-	              nameList[0] = nameArray[0];
-	            }else{
-	              nameList.pop();
-	            }
-	            var excessCount = nameArray.length - nameList.length;
-	            chainedName = nameList.join();
-	            if(excessCount == 1) {
-	              chainedName = chainedName + " and " + excessCount + " other";
-	            }else{
-	              chainedName = chainedName + " and " + excessCount + " others";
-	            } 
-	          }else{
-	            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-	          }
+	//             //Add the chained name to the invokerName
+	//             update.invokerName = chainedName;
+	//           }
+	//           updateList.push(update);
+	//         }
+	//       }
+	//     });
 
-	          originalUpdate.invokerName = chainedName;
-	          // Next remove all applicants
-	          updateList = _.reject(updateList, function(newUpdate) {
-	            return newUpdate.updateType == type;
-	          });
-	          //Now add back with the applicant that has a changed invoker name
-	          if(firstUpdate){
-	            updateList.push(firstUpdate);
-	          }
-	        }
-	      }
-	    });
+	//     /**
+	//     *  To combine and chain up names for similar updates
+	//     **/
+	//     _.each(updateList, function(originalUpdate) {
+	//       if(originalUpdate.collapsible == true){
+	//         var type = originalUpdate.updateType;
+	//         var singleTypeUpdates = _.reject(updateList, function(update) {
+	//           return update.updateType != type;
+	//         });
+	//         if (singleTypeUpdates.length > 0) {
+	//           var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+	//           var chainedName = nameArray.join();
+	//           var maxLength = 13;
 
-	    Session.set('numUpdates', updateList.length);
+	//           if(chainedName.length > maxLength) {
+	//             chainedName = chainedName.substring(0,maxLength);
+	//             var nameList = chainedName.split(',');
+	//             if(nameArray[0].length > maxLength) {
+	//               nameList[0] = nameArray[0];
+	//             }else{
+	//               nameList.pop();
+	//             }
+	//             var excessCount = nameArray.length - nameList.length;
+	//             chainedName = nameList.join();
+	//             if(excessCount == 1) {
+	//               chainedName = chainedName + " and " + excessCount + " other";
+	//             }else{
+	//               chainedName = chainedName + " and " + excessCount + " others";
+	//             } 
+	//           }else{
+	//             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+	//           }
 
-	    return updateList.length;
-	  } else {
-	  	return 0;
-	  }
-	},
+	//           originalUpdate.invokerName = chainedName;
+	//           // Next remove all applicants
+	//           updateList = _.reject(updateList, function(newUpdate) {
+	//             return newUpdate.updateType == type;
+	//           });
+	//           //Now add back with the applicant that has a changed invoker name
+	//           if(firstUpdate){
+	//             updateList.push(firstUpdate);
+	//           }
+	//         }
+	//       }
+	//     });
 
-	numUpdatesMinusThree: function() {
-		var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
+	//     return (updateList.length - Session.get('numUpdates'));
+	//   }
+	// },
 
-	  if(updateList.length > 0) {
-	    //To combine updates with same userId, invokerId, updateType and postId
-	    _.each(updateList, function(update){
-	      updateList = _.reject(updateList, function(newUpdate) {
-	        return  update.bubbleId == newUpdate.bubbleId && 
-	                update.userId == newUpdate.userId && 
-	                update.invokerId == newUpdate.invokerId && 
-	                update.updateType == newUpdate.updateType &&
-	                update.postId == newUpdate.postId;
-	      });
-	      if(!_.contains(updateList,update)){
-	        updateList.push(update);
-	      }
-	    });
+	// showMoreUpdates: function(numUpdates) {
 
-	    /**
-	    * To combine updates for comments in the same post
-	    **/
-	    _.each(updateList, function(update){
+	// 	if(Session.get('numUpdates') != 0 && numUpdates > Session.get('numUpdates'))
+	// 		return true;
+	// 	else
+	// 		return false;
+	// },
 
-	      var commentUpdates = _.reject(updateList, function(update) {
-	        return update.updateType != "replied";
-	      });
-
-	      //Combine and chain the names together
-	      if (commentUpdates.length > 0) {
-	        updateList = _.reject(updateList, function(newUpdate) {
-	          return update.postId == newUpdate.postId && 
-	                  update.updateType == newUpdate.updateType &&
-	                  update.updateType == "replied";
-	        });
-	        if(!_.contains(updateList,update)) {
-	          //Pull out comment updates that belong to the same post
-	          singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-	            return update.postId != newUpdate.postId;
-	          });
-	          if (singleTypeUpdates.length > 0) {
-	            //Create the chained name
-	            var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-	            var chainedName = nameArray.join();
-	            var maxLength = 13;
-
-	            //Checks to see if the length of names exceed a certain limit
-	            if(chainedName.length > maxLength) {
-	              chainedName = chainedName.substring(0,maxLength);
-	              var nameList = chainedName.split(',');
-	              if(nameArray[0].length > maxLength) {
-	                nameList[0] = nameArray[0];
-	              }else{
-	                nameList.pop();
-	              }
-	              var excessCount = nameArray.length - nameList.length;
-	              chainedName = nameList.join();
-	              if(excessCount == 1) {
-	                chainedName = chainedName + " and " + excessCount + " other";
-	              }else if(excessCount > 1){
-	                chainedName = chainedName + " and " + excessCount + " others";
-	              }
-	            }else{
-	              chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-	            }
-
-	            //Add the chained name to the invokerName
-	            update.invokerName = chainedName;
-	          }
-	          updateList.push(update);
-	        }
-	      }
-	    });
-
-	    /**
-	    *  To combine and chain up names for similar updates
-	    **/
-	    _.each(updateList, function(originalUpdate) {
-	      if(originalUpdate.collapsible == true){
-	        var type = originalUpdate.updateType;
-	        var singleTypeUpdates = _.reject(updateList, function(update) {
-	          return update.updateType != type;
-	        });
-	        if (singleTypeUpdates.length > 0) {
-	          var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-	          var chainedName = nameArray.join();
-	          var maxLength = 13;
-
-	          if(chainedName.length > maxLength) {
-	            chainedName = chainedName.substring(0,maxLength);
-	            var nameList = chainedName.split(',');
-	            if(nameArray[0].length > maxLength) {
-	              nameList[0] = nameArray[0];
-	            }else{
-	              nameList.pop();
-	            }
-	            var excessCount = nameArray.length - nameList.length;
-	            chainedName = nameList.join();
-	            if(excessCount == 1) {
-	              chainedName = chainedName + " and " + excessCount + " other";
-	            }else{
-	              chainedName = chainedName + " and " + excessCount + " others";
-	            } 
-	          }else{
-	            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-	          }
-
-	          originalUpdate.invokerName = chainedName;
-	          // Next remove all applicants
-	          updateList = _.reject(updateList, function(newUpdate) {
-	            return newUpdate.updateType == type;
-	          });
-	          //Now add back with the applicant that has a changed invoker name
-	          if(firstUpdate){
-	            updateList.push(firstUpdate);
-	          }
-	        }
-	      }
-	    });
-
-	    return (updateList.length - Session.get('numUpdates'));
-	  }
-	},
-
-	showMoreUpdates: function(numUpdates) {
-
-		if(Session.get('numUpdates') != 0 && numUpdates > Session.get('numUpdates'))
-			return true;
-		else
-			return false;
-	},
-
+	/*
 	numComments: function() {
 		var uid = Meteor.userId();
 		var numComments = Comments.find({
@@ -321,136 +209,277 @@ Template.dashboard.helpers({
 		var uid = Meteor.userId();
 		return Posts.find({'attendees': {$in: [Meteor.userId()]}}).count();
 	},
+	*/
+	
+	// getUpdates: function() {
+	// var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
-	getUpdates: function() {
+	// if(updateList.length > 0) {
+	//     //To combine updates with same userId, invokerId, updateType and postId
+	//     _.each(updateList, function(update){
+	//       updateList = _.reject(updateList, function(newUpdate) {
+	//         return  update.bubbleId == newUpdate.bubbleId && 
+	//                 update.userId == newUpdate.userId && 
+	//                 update.invokerId == newUpdate.invokerId && 
+	//                 update.updateType == newUpdate.updateType &&
+	//                 update.postId == newUpdate.postId;
+	//       });
+	//       if(!_.contains(updateList,update)){
+	//         updateList.push(update);
+	//       }
+	//     });
+
+	//     /**
+	//     * To combine updates for comments in the same post
+	//     **/
+	//     _.each(updateList, function(update){
+
+	//       var commentUpdates = _.reject(updateList, function(update) {
+	//         return update.updateType != "replied";
+	//       });
+
+	//       //Combine and chain the names together
+	//       if (commentUpdates.length > 0) {
+	//         updateList = _.reject(updateList, function(newUpdate) {
+	//           return update.postId == newUpdate.postId && 
+	//                   update.updateType == newUpdate.updateType &&
+	//                   update.updateType == "replied";
+	//         });
+	//         if(!_.contains(updateList,update)) {
+	//           //Pull out comment updates that belong to the same post
+	//           singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
+	//             return update.postId != newUpdate.postId;
+	//           });
+	//           if (singleTypeUpdates.length > 0) {
+	//             //Create the chained name
+	//             var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+	//             var chainedName = nameArray.join();
+	//             var maxLength = 13;
+
+	//             //Checks to see if the length of names exceed a certain limit
+	//             if(chainedName.length > maxLength) {
+	//               chainedName = chainedName.substring(0,maxLength);
+	//               var nameList = chainedName.split(',');
+	//               if(nameArray[0].length > maxLength) {
+	//                 nameList[0] = nameArray[0];
+	//               }else{
+	//                 nameList.pop();
+	//               }
+	//               var excessCount = nameArray.length - nameList.length;
+	//               chainedName = nameList.join();
+	//               if(excessCount == 1) {
+	//                 chainedName = chainedName + " and " + excessCount + " other";
+	//               }else if(excessCount > 1){
+	//                 chainedName = chainedName + " and " + excessCount + " others";
+	//               }
+	//             }else{
+	//               chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+	//             }
+
+	//             //Add the chained name to the invokerName
+	//             update.invokerName = chainedName;
+	//           }
+	//           updateList.push(update);
+	//         }
+	//       }
+	//     });
+
+	//     /**
+	//     *  To combine and chain up names for similar updates
+	//     **/
+	//     _.each(updateList, function(originalUpdate) {
+	//       if(originalUpdate.collapsible == true){
+	//         var type = originalUpdate.updateType;
+	//         var singleTypeUpdates = _.reject(updateList, function(update) {
+	//           return update.updateType != type;
+	//         });
+	//         if (singleTypeUpdates.length > 0) {
+	//           var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+	//           var chainedName = nameArray.join();
+	//           var maxLength = 13;
+
+	//           if(chainedName.length > maxLength) {
+	//             chainedName = chainedName.substring(0,maxLength);
+	//             var nameList = chainedName.split(',');
+	//             if(nameArray[0].length > maxLength) {
+	//               nameList[0] = nameArray[0];
+	//             }else{
+	//               nameList.pop();
+	//             }
+	//             var excessCount = nameArray.length - nameList.length;
+	//             chainedName = nameList.join();
+	//             if(excessCount == 1) {
+	//               chainedName = chainedName + " and " + excessCount + " other";
+	//             }else{
+	//               chainedName = chainedName + " and " + excessCount + " others";
+	//             } 
+	//           }else{
+	//             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+	//           }
+
+	//           originalUpdate.invokerName = chainedName;
+	//           // Next remove all applicants
+	//           updateList = _.reject(updateList, function(newUpdate) {
+	//             return newUpdate.updateType == type;
+	//           });
+	//           //Now add back with the applicant that has a changed invoker name
+	//           if(firstUpdate){
+	//             updateList.push(firstUpdate);
+	//           }
+	//         }
+	//       }
+	//     });
+
+	//     updateList = _.sortBy(updateList, function(newUpdate) {
+	//       return newUpdate.submitted; 
+	//     });  
+	//     if(Session.get('numUpdates')>0){
+	//       return _.first(updateList.reverse(), Session.get('numUpdates'));
+	//     }else{
+	//       return updateList.reverse();
+	//     }
+	//   }
+	// },
+
+	testNumUpdates: function() {
+		if(Session.get('testNumUpdates') > 0)
+			return Session.get('testNumUpdates');
+		else
+			return 0;
+	},
+
+	testGetUpdates: function() {
 		var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
-	  if(updateList.length > 0) {
-	    //To combine updates with same userId, invokerId, updateType and postId
-	    _.each(updateList, function(update){
-	      updateList = _.reject(updateList, function(newUpdate) {
-	        return  update.bubbleId == newUpdate.bubbleId && 
-	                update.userId == newUpdate.userId && 
-	                update.invokerId == newUpdate.invokerId && 
-	                update.updateType == newUpdate.updateType &&
-	                update.postId == newUpdate.postId;
-	      });
-	      if(!_.contains(updateList,update)){
-	        updateList.push(update);
-	      }
-	    });
+		if(updateList.length > 0) {
+		    //To combine updates with same userId, invokerId, updateType and postId
+		    _.each(updateList, function(update){
+		      updateList = _.reject(updateList, function(newUpdate) {
+		        return  update.bubbleId == newUpdate.bubbleId && 
+		                update.userId == newUpdate.userId && 
+		                update.invokerId == newUpdate.invokerId && 
+		                update.updateType == newUpdate.updateType &&
+		                update.postId == newUpdate.postId;
+		      });
+		      if(!_.contains(updateList,update)){
+		        updateList.push(update);
+		      }
+		    });
 
-	    /**
-	    * To combine updates for comments in the same post
-	    **/
-	    _.each(updateList, function(update){
+		    /**
+		    * To combine updates for comments in the same post
+		    **/
+		    _.each(updateList, function(update){
 
-	      var commentUpdates = _.reject(updateList, function(update) {
-	        return update.updateType != "replied";
-	      });
+		      var commentUpdates = _.reject(updateList, function(update) {
+		        return update.updateType != "replied";
+		      });
 
-	      //Combine and chain the names together
-	      if (commentUpdates.length > 0) {
-	        updateList = _.reject(updateList, function(newUpdate) {
-	          return update.postId == newUpdate.postId && 
-	                  update.updateType == newUpdate.updateType &&
-	                  update.updateType == "replied";
-	        });
-	        if(!_.contains(updateList,update)) {
-	          //Pull out comment updates that belong to the same post
-	          singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-	            return update.postId != newUpdate.postId;
-	          });
-	          if (singleTypeUpdates.length > 0) {
-	            //Create the chained name
-	            var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-	            var chainedName = nameArray.join();
-	            var maxLength = 13;
+		      //Combine and chain the names together
+		      if (commentUpdates.length > 0) {
+		        updateList = _.reject(updateList, function(newUpdate) {
+		          return update.postId == newUpdate.postId && 
+		                  update.updateType == newUpdate.updateType &&
+		                  update.updateType == "replied";
+		        });
+		        if(!_.contains(updateList,update)) {
+		          //Pull out comment updates that belong to the same post
+		          singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
+		            return update.postId != newUpdate.postId;
+		          });
+		          if (singleTypeUpdates.length > 0) {
+		            //Create the chained name
+		            var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+		            var chainedName = nameArray.join();
+		            var maxLength = 13;
 
-	            //Checks to see if the length of names exceed a certain limit
-	            if(chainedName.length > maxLength) {
-	              chainedName = chainedName.substring(0,maxLength);
-	              var nameList = chainedName.split(',');
-	              if(nameArray[0].length > maxLength) {
-	                nameList[0] = nameArray[0];
-	              }else{
-	                nameList.pop();
-	              }
-	              var excessCount = nameArray.length - nameList.length;
-	              chainedName = nameList.join();
-	              if(excessCount == 1) {
-	                chainedName = chainedName + " and " + excessCount + " other";
-	              }else if(excessCount > 1){
-	                chainedName = chainedName + " and " + excessCount + " others";
-	              }
-	            }else{
-	              chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-	            }
+		            //Checks to see if the length of names exceed a certain limit
+		            if(chainedName.length > maxLength) {
+		              chainedName = chainedName.substring(0,maxLength);
+		              var nameList = chainedName.split(',');
+		              if(nameArray[0].length > maxLength) {
+		                nameList[0] = nameArray[0];
+		              }else{
+		                nameList.pop();
+		              }
+		              var excessCount = nameArray.length - nameList.length;
+		              chainedName = nameList.join();
+		              if(excessCount == 1) {
+		                chainedName = chainedName + " and " + excessCount + " other";
+		              }else if(excessCount > 1){
+		                chainedName = chainedName + " and " + excessCount + " others";
+		              }
+		            }else{
+		              chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+		            }
 
-	            //Add the chained name to the invokerName
-	            update.invokerName = chainedName;
-	          }
-	          updateList.push(update);
-	        }
-	      }
-	    });
+		            //Add the chained name to the invokerName
+		            update.invokerName = chainedName;
+		          }
+		          updateList.push(update);
+		        }
+		      }
+		    });
 
-	    /**
-	    *  To combine and chain up names for similar updates
-	    **/
-	    _.each(updateList, function(originalUpdate) {
-	      if(originalUpdate.collapsible == true){
-	        var type = originalUpdate.updateType;
-	        var singleTypeUpdates = _.reject(updateList, function(update) {
-	          return update.updateType != type;
-	        });
-	        if (singleTypeUpdates.length > 0) {
-	          var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-	          var chainedName = nameArray.join();
-	          var maxLength = 13;
+		    /**
+		    *  To combine and chain up names for similar updates
+		    **/
+		    _.each(updateList, function(originalUpdate) {
+		      if(originalUpdate.collapsible == true){
+		        var type = originalUpdate.updateType;
+		        var singleTypeUpdates = _.reject(updateList, function(update) {
+		          return update.updateType != type;
+		        });
+		        if (singleTypeUpdates.length > 0) {
+		          var nameArray = _.pluck(singleTypeUpdates,"invokerName");
+		          var chainedName = nameArray.join();
+		          var maxLength = 13;
 
-	          if(chainedName.length > maxLength) {
-	            chainedName = chainedName.substring(0,maxLength);
-	            var nameList = chainedName.split(',');
-	            if(nameArray[0].length > maxLength) {
-	              nameList[0] = nameArray[0];
-	            }else{
-	              nameList.pop();
-	            }
-	            var excessCount = nameArray.length - nameList.length;
-	            chainedName = nameList.join();
-	            if(excessCount == 1) {
-	              chainedName = chainedName + " and " + excessCount + " other";
-	            }else{
-	              chainedName = chainedName + " and " + excessCount + " others";
-	            } 
-	          }else{
-	            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-	          }
+		          if(chainedName.length > maxLength) {
+		            chainedName = chainedName.substring(0,maxLength);
+		            var nameList = chainedName.split(',');
+		            if(nameArray[0].length > maxLength) {
+		              nameList[0] = nameArray[0];
+		            }else{
+		              nameList.pop();
+		            }
+		            var excessCount = nameArray.length - nameList.length;
+		            chainedName = nameList.join();
+		            if(excessCount == 1) {
+		              chainedName = chainedName + " and " + excessCount + " other";
+		            }else{
+		              chainedName = chainedName + " and " + excessCount + " others";
+		            } 
+		          }else{
+		            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
+		          }
 
-	          originalUpdate.invokerName = chainedName;
-	          // Next remove all applicants
-	          updateList = _.reject(updateList, function(newUpdate) {
-	            return newUpdate.updateType == type;
-	          });
-	          //Now add back with the applicant that has a changed invoker name
-	          if(firstUpdate){
-	            updateList.push(firstUpdate);
-	          }
-	        }
-	      }
-	    });
+		          originalUpdate.invokerName = chainedName;
+		          // Next remove all applicants
+		          updateList = _.reject(updateList, function(newUpdate) {
+		            return newUpdate.updateType == type;
+		          });
+		          //Now add back with the applicant that has a changed invoker name
+		          if(firstUpdate){
+		            updateList.push(firstUpdate);
+		          }
+		        }
+		      }
+		    });
 
-	    updateList = _.sortBy(updateList, function(newUpdate) {
-	      return newUpdate.submitted; 
-	    });  
-	    if(Session.get('numUpdates')>0){
-	      return _.first(updateList.reverse(), Session.get('numUpdates'));
-	    }else{
-	      return updateList.reverse();
-	    }
-	  }
-	}
+		    updateList = _.sortBy(updateList, function(newUpdate) {
+		      return newUpdate.submitted; 
+		    });  
+		    
+			Session.set("testNumUpdates",updateList.length);
+
+		    if(Session.get('updatesToShow')>0){
+		    	return _.first(updateList.reverse(), Session.get('updatesToShow'));
+		    }else{
+		    	return updateList.reverse();
+		    }
+		}
+	},
 });
 
 Template.dashboard.events({
@@ -459,6 +488,7 @@ Template.dashboard.events({
     _.each(updates, function(update) {
       Meteor.call('setRead', update);
     });
+    Session.set("testNumUpdates",0);
   },
 
   'click #dashboard-icon-2a': function() {
@@ -488,16 +518,14 @@ Template.dashboard.events({
   },
 
   'click .dashboard-more-updates': function() {
-  	Session.set('numUpdates', 0);
-  	console.log(Session.get('numUpdates'));
+  	Session.set('updatesToShow', 0);
   }
 });
 
 Template.dashboard.rendered = function () {
-  Session.set("isLoading", false);
+	Session.set("isLoading", false);
 
-  Meteor.subscribe('fiveExplorePosts');
-  Meteor.subscribe('updatedPosts', Meteor.userId());
+	Meteor.subscribe('fiveExplorePosts');
 
 	$('.carousel').carousel();
 
@@ -511,5 +539,8 @@ Template.dashboard.rendered = function () {
 
 
 Template.dashboard.created = function() {
-  Session.set("isLoading", true);
+	Session.set("isLoading", true);
+	Session.set('updatesToShow',3);
+	dashboardDep = new Deps.Dependency;
+	Meteor.subscribe('updatedPosts', Meteor.userId());
 }

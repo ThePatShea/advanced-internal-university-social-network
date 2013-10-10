@@ -145,7 +145,7 @@
 	</div>
 {{/codeComment}}
 
-
+		{{#codeComment}}
         <div class="visible-{{numUpdates}}">
           <div class="dashboard-section-header">
           	{{pluralize numUpdates 'update' ""}}
@@ -171,6 +171,23 @@
           </div>
         </div>
         <div>
+    	{{/codeComment}}
+    	<div class="visible-{{testNumUpdates}}">
+    		<div class="dashboard-section-header">
+    			{{pluralize testNumUpdates 'update' ""}}
+          		<button class="std-btn-light pull-right clear-updates">clear all</button> 
+          	</div>
+          	<div class="dashboard-updates">
+    			{{#each testGetUpdates}}
+    				{{>updateItem}}
+    			{{/each}}
+	    		<div class="dashboard-more-updates">
+	    			See All Updates
+	    		</div>
+    		</div>
+    	</div>
+
+
           <div class="dashboard-section-header">
             latest posts from explore
           </div>
