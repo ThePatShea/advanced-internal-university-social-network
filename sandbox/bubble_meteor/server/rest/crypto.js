@@ -9,20 +9,20 @@ var SAFEGUARD = 'abc';
 
 this.RestCrypto = {
 	generateToken: function(userId) {
-		var rnd = (Math.random() + '').substr(0, 6) * 123;
+		var rnd = (Math.random() * 123 + '').substr(0, 6);
 		var time = new Date().getTime();
 		var payload = rnd + '|' + time + '|' + userId + '|' + SAFEGUARD;
 
 		var cipher = crypto.createCipher(MODE, KEY);
-		var data = cipher.update(payload, 'utf-8', 'hex');
-		return data + cipher.final('hex');
+		var data = cipher.update(payload, 'utf-8', 'base64');
+		return data + cipher.final('base64');
 	},
 
 	verifyToken: function(token) {
 		try {
 			var cipher = crypto.createDecipher(MODE, KEY);
-			var payload = cipher.update(token, 'hex');
-			payload += cipher.final('hex');
+			var payload = cipher.update(token, 'base64');
+			payload += cipher.final('base64');
 
 			var items = payload.split('|');
 			if (items.length != 4)
