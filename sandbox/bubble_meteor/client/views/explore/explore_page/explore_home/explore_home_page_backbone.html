@@ -1,9 +1,17 @@
 <template name="explorePageBackbone">
 
+    <div class="visible-{{isLoading}}">
+      {{> gifLoaderToParent}}
+    </div>
+
     {{#with exploreInfo}}
       {{> exploreCover}}
     {{/with}}
     <div class="explore-page-content">
+
+      <div class="visible-0">
+        {{getExploreId}}
+      </div>
   
       <div class="bubble-list">
         <div></div>
@@ -19,6 +27,16 @@
           </div>
         {{/each}}
       </div>
+
+      <ul class="pagination">
+        <li><a href="#" class="prev">prev</a></li>
+        {{#each pages}}
+            <li><a href="#" class="pageitem {{isActivePage}}" id="{{this}}">{{this}}</a></li>
+        {{/each}}
+        <li><a href="#" class="next">next</a></li>
+      </ul>
+
+
 
 
     </div>

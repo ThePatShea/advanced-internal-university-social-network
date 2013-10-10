@@ -119,16 +119,28 @@ Template.exploreEditEvent.events({
 
     var dateTime = $('.cb-explore-edit-event-form > .cb-form-row > .date').val() + " " + $('.cb-explore-edit-event-form > .cb-form-row > .time').val();
 
+  
+
     var eventAttributes = { 
-      author: Meteor.userId(),
+      //author: Meteor.userId(),
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-edit-event-form > .first > .location').val(),
       name: $('.cb-explore-edit-event-form > .first > .title').val(),
       body: $('.cb-explore-edit-event-form > .body').val(),
-      postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
-      postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
+      //postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
+      //postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
    //   eventPhoto: editEventMainURL,
    //   retinaEventPhoto: editEventRetinaURL
+    };
+
+    //WORK AROUND FOR POSTASTYPE = 'POSTASTYPE' BUG
+    if($('.cb-explore-edit-event-form .post-as-type').val() !== 'postAsType')
+    {
+      eventAttributes.postAsType = $('.cb-explore-edit-event-form .post-as-type').val();
+    };
+    if($('.cb-explore-edit-event-form .post-as-id').val() !== 'postAsId')
+    {
+      eventAttributes.postAsId = $('.cb-explore-edit-event-form .post-as-id').val();
     };
 
     console.log(eventAttributes);

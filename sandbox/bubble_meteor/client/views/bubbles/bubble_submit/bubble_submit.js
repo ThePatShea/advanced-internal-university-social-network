@@ -20,8 +20,9 @@ Template.bubbleSubmit.events({
       if (error) {
         throwError(error.reason);
       } else {
+        console.log('Create Bubble');
         Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
-        Meteor.Router.to('bubbleMembersPage', bubbleId);
+        Meteor.Router.to('bubbleMembersPageBackbone', bubbleId);
       }
     });
   },
@@ -510,11 +511,16 @@ Template.bubbleSubmit.rendered = function(){
     Session.set("DisableCrop","");
   }
 
-  //Log clicking of comment box
+  //Log clicking of Add bubble button
   $(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickNameTextbox', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleTitleTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -525,15 +531,25 @@ Template.bubbleSubmit.rendered = function(){
         return category;
       }
     });
-    Meteor.call('createLog',  "createBubble", 'createBubble', 'clickCategory', false);
-
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-bubbleCategory' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+    
   });
 
   //Log clicking of cover photo
   $(".attach-cover-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickCoverPhoto', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleCoverPhoto' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -541,7 +557,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".attach-profile-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickProfilePhoto', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleProfilepicture' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -549,7 +570,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".wysiwyg").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickDescriptionTextbox', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleDescriptionTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -557,8 +583,12 @@ Template.bubbleSubmit.rendered = function(){
   $(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      console.log("this ran");
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickSubmitButton', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 
@@ -566,11 +596,13 @@ Template.bubbleSubmit.rendered = function(){
   $(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      console.log("this ran");
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickSubmitErrorButton', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleErrorSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
-
-
 }
 

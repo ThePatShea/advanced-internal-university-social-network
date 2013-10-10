@@ -91,8 +91,8 @@
           </div>
         </div>
         {{#each userBubbles}}
-          <a href="{{bubblePagePath this}}" class="set-loading">
-            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}}">
+          <a href="{{bubblePageBackbonePath this}}" class="set-loading">
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}} mybubble title-{{title}}">
               {{#if compressedUpdatesCount this._id}}
                 <div class="pull-left num-in-bubble updates-count">
                   <span class="cb-icon cb-icon-bubble">{{> icon-bubble}}</span>
@@ -129,7 +129,7 @@
           {{/if}}
         </div>
         {{#each publicExplores}}
-          <a href="{{explorePagePath this._id}}" class="set-loading">
+          <a href="/explore/{{this._id}}/home" class="set-loading">
             <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this._id}}">
 
             <span class="cb-icon cb-icon-other {{getExploreIconName this}}">

@@ -1,6 +1,5 @@
-
-
 Template.dashboard.helpers({
+		/*
         getFiveExplorePosts: function() {
 		    var posts = Posts.find({exploreId: {$ne: undefined} },{limit: 5, sort: {submitted: -1}}).fetch();
 		    var validPostIds = [];
@@ -13,6 +12,11 @@ Template.dashboard.helpers({
 		    }
 		    //console.log('Dashboard Valid posts: ', validPostIds);
           return Posts.find({_id: {$in: validPostIds} },{limit: 5, sort: {submitted: -1}});
+        },
+        */
+        getFiveExplorePostsBB: function(){
+        	var dashboardData = new ExploreData.Dashboard();        	
+        	return dashboardData.getData();
         },
 	numBubbles: function() {
 		var uid = Meteor.userId();

@@ -26,8 +26,12 @@ Template.commentSubmit.events({
     };
     
     Meteor.call('comment', comment, function(error, commentId) {
-      //Log creation of comment
-      Meteor.call('createLog',  "postPage", 'comment', 'submitNewComment', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-submitNewComment' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
       error && throwError(error.reason);
     });
 
@@ -40,7 +44,12 @@ Template.commentSubmit.rendered = function() {
   $(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "postPage", 'comment', 'clickTextbox', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog',  
+        { action: 'click-commentTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
   });
 

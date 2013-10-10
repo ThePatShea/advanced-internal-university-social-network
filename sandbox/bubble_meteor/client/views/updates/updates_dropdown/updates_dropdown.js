@@ -315,6 +315,18 @@ Template.updatesDropdown.helpers({
   }
 });
 
+Template.updatesDropdown.events({
+  'click #seeall': function() {
+    Meteor.Router.to('dashboard');
+  },
+  'click #clearall': function() {
+    var updates = Updates.find({userId: Meteor.userId(), read:false}).fetch();
+    _.each(updates, function(update) {
+      Meteor.call('setRead', update);
+    });
+  }
+})
+
 Template.update.events({
   'click a': function() {
     Meteor.call('setRead', this);
@@ -327,6 +339,10 @@ Template.update.helpers({
     return updateType == this.updateType;
   },
   getContent: function() {
+    Meteor.subscribe('findUsersByUsername',this.invokerName);
+    Meteor.subscribe('findUserByName', this.invokerName);
+    console.log("CONTENT: ", this.content);
+    console.log("INVOKERNAME: ", this.invokerName);
     if(this.updateType == "replied" ||
         this.updateType == "new attendee" ||
         this.updateType == "new applicant"){
@@ -334,7 +350,16 @@ Template.update.helpers({
       var nameList = this.invokerName.split('and');
       if(nameList.length > 1){
         content = content.replace('is', 'are');
-      }
+      };
+      /*
+      this.user = Meteor.users.findOne({'username': this.invokerName});
+      if(typeof this.user !== "undefined")
+        this.user = Meteor.users.findOne({'name': this.invokerName});
+      console.log("USER: ", this.user);
+      if(typeof this.user !== "undefined")
+        return this.user.name + content;
+      return this.content;
+      */
       return this.invokerName + content;
     }else{
       return this.content;

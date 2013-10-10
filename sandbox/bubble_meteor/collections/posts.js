@@ -31,7 +31,7 @@ files.forEach(function(file) {
 
 Meteor.methods({
   post: function(postAttributes) {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId());
 
     if(typeof postAttributes.bubbleId != 'undefined'){
       var postWithSameName = Posts.findOne({name: postAttributes.name, bubbleId: postAttributes.bubbleId});
@@ -104,7 +104,7 @@ Meteor.methods({
   },
 
   incViewCount: function(postId) {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId());
     // ensure the user is logged in
     if (!user)
       throw new Meteor.Error(401, "You need to login");
@@ -118,7 +118,7 @@ Meteor.methods({
   },
 
   tagBubble: function(postId, bubbleId) {
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId());
     var bubble = Bubble.findOne({bubbleId:bubbleId});
     // ensure the user is logged in
     if (!user)
@@ -134,6 +134,13 @@ Meteor.methods({
   attendEvent: function(postId,username){
     post = Posts.findOne(postId);
     if (!_.contains(post.attendees,username)) {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventGoing' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+
       Posts.update({_id:postId},
       {
         $addToSet: {attendees:username}
@@ -141,6 +148,13 @@ Meteor.methods({
       //Create an update for user who are in the event
       createNewAttendeeUpdate(postId);
     }else{
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventNotGoing' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+
       Posts.update({_id:postId},
       {
         $pull: {attendees:username}
@@ -244,6 +258,7 @@ createPostWithAttachments = function(postAttributes, fileList){
 
 updatePostWithAttachments = function(id, postAttributes, fileList){
   var discussionPost = Posts.findOne({_id: id});
+  console.log("DISCUSSION POST: ", discussionPost); 
   var newChildren = [];
 
   for(var i=0; i < discussionPost.children.length; i++){
@@ -329,7 +344,7 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
         }
         else{
           console.log('Successfully updated');
-          Meteor.Router.to('postPage', discussionPost.bubbleId, discussionPost._id);
+            Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
         }
       });
     }
@@ -341,7 +356,8 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
         }
         else{
           console.log('Successfully updated');
-          Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
+          //explorePageDep.changed();
+          Meteor.Router.to('explorePostPage', discussionPost.exploreId, discussionPost._id);
         }
       });
     }

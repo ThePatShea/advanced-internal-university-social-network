@@ -111,13 +111,14 @@ Template.postPage.events({
     'click .btn-flag': function() {
       //Google Analytics
       _gaq.push(['_trackEvent', 'Flagging', 'Flag', +this.name]);
+      var invoker = Meteor.users.findOne(Meteor.userId());
 
       if (confirm("Flagging a post will report it to Bubble moderators as inappropriate. Are you sure you want to flag this post?")) {
         var flagAttributes = {
           postId: this._id,
           bubbleId: this.bubbleId,
           invokerId: Meteor.userId(),
-          invokerName: Meteor.user().username,
+          invokerName: invoker.username,
         }
         Meteor.call('createFlag',flagAttributes);
       }

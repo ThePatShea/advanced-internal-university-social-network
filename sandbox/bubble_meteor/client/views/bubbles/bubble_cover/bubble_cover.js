@@ -46,8 +46,12 @@ Template.bubbleCover.events({
 });
 
 Template.bubbleCover.rendered = function(){
-  //Log clicking of edit bubble button
-  $(".lbl").on("click", function() {
-    Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
+  $(".edit-bubble").on("click", function() {
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-editBubbleButton' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
   });
 }

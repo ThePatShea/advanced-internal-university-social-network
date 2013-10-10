@@ -1,6 +1,7 @@
 Template.onboarding.helpers({
   getCurrentName: function() {
-    return Meteor.user().name;
+    var user = Meteor.users.findOne(Meteor.userId());
+    return user.name;
   },
 });
 
@@ -178,7 +179,7 @@ Template.onboarding.events({
 
 
 Template.onboarding.rendered = function() {
- uid = Meteor.userId()
+  uid = Meteor.userId()
   user = Meteor.users.findOne({_id: uid});
   mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
   retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
@@ -186,21 +187,23 @@ Template.onboarding.rendered = function() {
 
   var user = Meteor.users.findOne({_id: Meteor.userId()});
 
-if (typeof user.neverLoggedIn != "undefined") {
-  var userEmails    =  user.emails;
-  var isHealthcare  =  false;
+  if (typeof user.neverLoggedIn != "undefined") {
+    var userEmails    =  user.emails;
+    var isHealthcare  =  false;
 
-  _.each(userEmails, function(email) {
+    _.each(userEmails, function(email) {
+      if(typeof email.address != 'undefined'){
+        if (email.address.indexOf("@") != -1) {
+          var healthCareCheck = email.address.split("@");
 
-    if (email.address.indexOf("@") != -1) {
-      var healthCareCheck = email.address.split("@");
+          if (healthCareCheck[1] === "emoryhealthcare.org") { 
+            isHealthcare = true;
+          }
 
-      if (healthCareCheck[1] === "emoryhealthcare.org") { 
-        isHealthcare = true;
+        }
       }
-
-    }
-  });
+    });
+    
     if (isHealthcare == false) {
       if (user.neverLoggedIn == false) {
         if(user.neverOnboarded == false){
@@ -220,6 +223,15 @@ if (typeof user.neverLoggedIn != "undefined") {
         Meteor.Router.to("siteAccessDenied");
       });
     }
+  var userlog = {
+    hasLoggedIn: true
+  }
+  //Logs user logging in
+      Meteor.call('createLog', 
+        { hasLoggedIn: true }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
   
 }
 
@@ -261,8 +273,6 @@ if (typeof user.neverLoggedIn != "undefined") {
 
 Template.onboarding.created = function() {
  
-
-
   // Redirects to dashboard if already had logged in before
     Meteor.subscribe('singleUser', Meteor.userId());
 }

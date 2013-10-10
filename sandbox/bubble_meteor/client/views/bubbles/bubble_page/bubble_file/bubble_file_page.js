@@ -18,7 +18,10 @@ Template.bubbleFilePage.rendered = function() {
     Session.set("isLoading", false);
   });
 
-
+  //Log clicking of add file button
+  $(".btn-add-file").on("click", function() {
+    Meteor.call('createLog', 'addFilePost', 'addFilePost');
+  });
 /*
   $("#main").scroll(function(){
     if ( ($("#main").scrollTop() >= $("#main")[0].scrollHeight - $("#main").height()) ) {

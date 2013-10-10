@@ -1,6 +1,7 @@
 Template.eventSubmit.created = function(){
   eventMainURL = "/img/Event.jpg";
   eventRetinaURL = "/img/Event.jpg";
+  var mto = "";
   this.validateForm = function() {
     var count = 0;
 
@@ -217,5 +218,118 @@ Template.eventSubmit.rendered = function() {
   } else {
     Session.set("DisableCrop","");
   }
+
+
+  //Log clicking of name textbox
+  $(".event-name").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventNameTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of location textbox
+  $(".event-location").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventLocationTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of date 
+  $(".date").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventDateTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of time 
+  $(".time").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventTimeTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of picture 
+  $(".event-picture").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventAttachPicture',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of details 
+  $(".event-details").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventDetailsTextbox',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of submit button
+  $(".words-main").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventSubmitButton',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of submit error button
+  $(".words-error").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-eventErrorSubmitButton',
+          overwritePage: 'create-event' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
 
 }

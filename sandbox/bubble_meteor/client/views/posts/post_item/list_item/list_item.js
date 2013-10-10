@@ -89,7 +89,7 @@ Template.listItem.events({
           }
       }
       else if(typeof this.exploreId != 'undefined'){
-        Meteor.Router.to('explorePostPage', this.exploreId, this._id);
+        Meteor.Router.to('explorePostPageBB', this.exploreId, this._id);
       }
       else if(typeof this.userType != 'undefined'){
         Meteor.Router.to('userProfile', this._id);
