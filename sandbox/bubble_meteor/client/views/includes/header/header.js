@@ -27,3 +27,46 @@ Template.header.helpers({
     return Meteor.user().userType == userType;
   }
 });
+
+
+Template.header.rendered = function() {
+  //Log clicking of support in sidebar
+  $(".header-support").on("click", function() {
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-headerSupportButton' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+  });
+
+  //Log clicking of update in sidebar
+  $(".header-update").on("click", function() {
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-headerUpdateList' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+  });
+
+  //Log clicking of analytics in sidebar
+  $(".header-analytic").on("click", function() {
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-headerAnalyticButton' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+  });
+
+  //Log clicking of flagsList in sidebar
+  $(".header-flag").on("click", function() {
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-headerFlagListButton' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+  });
+}

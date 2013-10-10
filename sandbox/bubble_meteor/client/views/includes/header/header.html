@@ -14,16 +14,16 @@
       </ul>
       <ul class="nav pull-right">
         {{#if currentUser}}
-          <li class="{{activeRouteClass 'analytics'}} visible-{{checkUserType '3'}}">
+          <li class="{{activeRouteClass 'analytics'}} visible-{{checkUserType '3'}} header-analytic">
             <a href="{{userlogPath}}" class="my-bubble">Analytics</a>
           </li>
-          <li class="{{activeRouteClass 'flags'}} visible-{{checkUserType '3'}}">
+          <li class="{{activeRouteClass 'flags'}} visible-{{checkUserType '3'}} header-flag">
             <a href="{{flagsListPath}}" class="my-bubble">Flag List</a>
           </li>
-          <li>
+          <li class="header-support">
             <a href="http://support.emorybubble.com" target="_blank" class="my-bubble username-toggle">support</a>
           </li>
-          <li class="dropdown cb-updates-dropdown">
+          <li class="dropdown cb-updates-dropdown header-update">
             {{> updatesDropdown}}
           </li>
         {{/if}}
