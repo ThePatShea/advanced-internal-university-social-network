@@ -154,8 +154,8 @@
             {{#if inBubble}}
               <span class="visible-{{matchObjectType 'user'}}">
                 {{#unless isMe}}
-                  <span class="invisible-{{isAdmin}}">{{> viewProfile}}</span>
-                  <span class="visible-{{isAdmin}}">{{> adminActions}}</span>
+                  <span class="invisible-{{isAdminBB}}">{{> viewProfile}}</span>
+                  <span class="visible-{{isAdminBB}}">{{> adminActionsBackbone}}</span>
                 {{/unless}}
                 {{#if isMe}}
                   <span>{{> userActions}}</span>

@@ -75,6 +75,12 @@ Template.listItemBB.helpers({
       if(this.postType == 'discussion'){
         return true;
       }
+    },
+
+    isAdminBB: function(){
+      var isadmin = mybubbles.isAdmin(Meteor.userId());
+      console.log('Is Admin: ', isadmin);
+      return isadmin;
     }
 });
 
