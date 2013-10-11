@@ -58,11 +58,28 @@ Template.listItemBB.helpers({
     },
 
     isMe: function(){
-     return(this.id == Meteor.userId());
+      if(typeof this.id == 'undefined'){
+        this.id = this._id;
+      }
+
+      if(this.id == Meteor.userId()){
+        return true;
+      }
+      else{
+        return false;
+      }
+      //return(this.id == Meteor.userId());
     },
 
     inBubble: function(){
-      return(Meteor.Router.page() == "bubbleMembersPage");
+      //return(Meteor.Router.page() == "bubbleMembersPage");
+      var sitePath = window.location.pathname.split('/')[1];
+      if(sitePath == 'mybubbles'){
+        return true;
+      }
+      else{
+        return false
+      }
     },
 
     isFile: function(){
