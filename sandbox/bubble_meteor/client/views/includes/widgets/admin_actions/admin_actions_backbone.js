@@ -163,10 +163,15 @@ Template.adminActionsBackbone.events({
   'click .accept': function(event){
     event.stopPropagation();
     event.preventDefault();
-    Bubbles.update({_id:Session.get('currentBubbleId')},
+
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    Bubbles.update({_id:currentBubbleId},
     {
-      $addToSet: {'users.members': this._id},
-      $pull: {'users.applicants': this._id}
+      $addToSet: {'users.members': this.id},
+      $pull: {'users.applicants': this.id}
     });
 
     //Create update to inform user about accpeted application
@@ -176,9 +181,14 @@ Template.adminActionsBackbone.events({
   'click .deny': function(event){
     event.stopPropagation();
     event.preventDefault();
-    Bubbles.update({_id:Session.get('currentBubbleId')},
+
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    Bubbles.update({_id:currentBubbleId},
     {
-      $pull: {'users.applicants': this._id}
+      $pull: {'users.applicants': this.id}
     });
 
     //Create update to inform user about rejected application
@@ -188,12 +198,17 @@ Template.adminActionsBackbone.events({
   'click .promote-member': function(event) {
     event.stopPropagation();
     event.preventDefault();
-    Bubbles.update({_id:Session.get('currentBubbleId')},
+
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    Bubbles.update({_id:currentBubbleId},
     {
-      $addToSet: {'users.admins': this._id},
-      $pull: {'users.members': this._id}
+      $addToSet: {'users.admins': this.id},
+      $pull: {'users.members': this.id}
     });
-    Session.set(Session.get('currentBubbleId')+this._id,undefined);
+    //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
     //Create update for member who is promoted
     createMemberPromoteUpdate(this._id);
@@ -202,30 +217,40 @@ Template.adminActionsBackbone.events({
   'click .remove-member': function(event) {
     event.stopPropagation();
     event.preventDefault();
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $pull: {'users.members': this._id}
-    });
-    Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
-    if(this._id != Meteor.userId()){
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    Bubbles.update({_id:currentBubbleId},
+    {
+      $pull: {'users.members': this.id}
+    });
+    //Session.set(Session.get('currentBubbleId')+this._id,undefined);
+
+    if(this.id != Meteor.userId()){
       //Create update for member who is removed from bubble
-      createRemoveMemberUpdate(this._id);
+      createRemoveMemberUpdate(this.id);
     }
   },
 
     'click .uninvite': function(event) {
     event.stopPropagation();
     event.preventDefault();
-    Bubbles.update({_id:Session.get('currentBubbleId')},
-    {
-      $pull: {'users.invitees': this._id}
-    });
-    Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
-    if(this._id != Meteor.userId()){
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    Bubbles.update({_id:currentBubbleId},
+    {
+      $pull: {'users.invitees': this.id}
+    });
+    //Session.set(Session.get('currentBubbleId')+this._id,undefined);
+
+    if(this.id != Meteor.userId()){
       //CREATE NEW UPDATE FUNCTION FOR UNINVITE
-      createRemoveMemberUpdate(this._id);
+      createRemoveMemberUpdate(this.id);
     }
   }
 });
