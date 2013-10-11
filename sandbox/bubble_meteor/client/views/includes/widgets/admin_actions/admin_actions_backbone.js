@@ -100,16 +100,22 @@ Template.adminActionsBackbone.events({
 	'click .demote-admin': function(event){
 	// Disable the parent button
     event.stopPropagation();
-    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    //var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    var bubble = mybubbles.bubbleInfo.toJSON();
     var admins = bubble.users.admins;
 
     if(admins.length > 1){
-      Bubbles.update({_id:Session.get('currentBubbleId')},
+      Bubbles.update({_id:currentBubbleId},
       {
-        $addToSet: {'users.members': this._id},
-        $pull: {'users.admins': this._id}
+        $addToSet: {'users.members': this.id},
+        $pull: {'users.admins': this.id}
       });
-      createAdminDemoteUpdate(this._id);
+      createAdminDemoteUpdate(this.id);
     }else{
       alert("You are the last remaining admin. Please promote another member before demoting yourself.");
     }
@@ -119,14 +125,20 @@ Template.adminActionsBackbone.events({
   'click .remove-admin': function(event) {
   	// Disable the parent button
     event.stopPropagation();
-    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
+    //var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+    var bubble = mybubbles.bubbleInfo.toJSON();
     var admins = bubble.users.admins;
     var members = bubble.users.members;
     var count = admins.length + members.length
     if(count > 1){
-      Bubbles.update({_id:Session.get('currentBubbleId')},
+      Bubbles.update({_id:currentBubbleId},
       {
-        $pull: {'users.admins': this._id}
+        $pull: {'users.admins': this.id}
       });
 
       //If no more admins are left, the earliest member will be an admin
@@ -143,11 +155,11 @@ Template.adminActionsBackbone.events({
     }else{
       if(confirm("You are the last remaining member.  Removing yourself will delete this bubble.  Are you sure you want to delete this bubble?"))
       {
-        var updates = Updates.find({bubbleId: Session.get('currentBubbleId')}, {read:false}).fetch();
+        var updates = Updates.find({bubbleId: currentBubbleId}, {read:false}).fetch();
         _.each(updates, function(update){
           Updates.update({_id: update._id}, {read:true});
         });
-        Bubbles.remove({_id:Session.get('currentBubbleId')});
+        Bubbles.remove({_id:currentBubbleId});
 
         //Route to the next available bubble or to the search page
         var bubble = Bubbles.find({$or: [{'users.members': Meteor.userId()},{'users.admins': Meteor.userId()}]}, {sort: {submitted: -1}}).fetch();
