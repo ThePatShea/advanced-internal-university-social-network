@@ -19,16 +19,16 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		},
 		create: {
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		},
 		update: {
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		},
 		remove: {
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		}
 	});
 
@@ -60,6 +60,9 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.canMakePost('exploreId')
 		}
 	});
 
@@ -168,7 +171,8 @@ Meteor.startup(function() {
 		},
 		create: {
 			check: RestSecurity.canCreateComment,
-			preprocess: RestPost.createComment
+			preprocess: RestPost.preComment,
+			afterInsert: RestPost.postComment
 		},
 		update: {
 			check: RestSecurity.canChangeComment

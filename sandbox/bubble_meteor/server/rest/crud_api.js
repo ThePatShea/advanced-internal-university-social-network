@@ -73,6 +73,10 @@ this.RestCrud = {
 		obj = RestHelpers.toMongoModel(obj);
 
 		var result = RestHelpers.mongoInsert(collection, obj)
+
+		if (opts.afterInsert)
+			opts.afterInsert(ctx, result);
+
 		return RestHelpers.jsonResponse(200, result);
 	},
 
@@ -98,8 +102,12 @@ this.RestCrud = {
 
 		var result = RestHelpers.mongoUpdate(collection, id, obj)
 
-		if (result)
+		if (result) {
+			if (opts.afterUpdate)
+				opts.afterUpdate(ctx, obj);
+
 			return RestHelpers.jsonResponse(200, 'Successfully updated');
+		}
 
 		return RestHelpers.jsonResponse(404, 'Model not found');
 	},
@@ -117,8 +125,12 @@ this.RestCrud = {
 		}
 
 		var result = RestHelpers.mongoDelete(collection, id);
-		if (result)
+		if (result) {
+			if (opts.afterDelete)
+				opts.afterDelete(ctx, obj);
+
 			return RestHelpers.jsonResponse(200, 'Successfully deleted');
+		}
 
 		return RestHelpers.jsonResponse(404, 'Model not found');
 	},
