@@ -692,7 +692,7 @@
 
 
 		this.isAdmin = function(id){
-		    var ajaxresponse = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isadmin?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
@@ -702,7 +702,7 @@
 		}
 
 		this.isMember = function(id){
-		    var ajaxresponse = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/ismember?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
@@ -712,7 +712,7 @@
 		}
 
 		this.isApplicant = function(id){
-		    var ajaxresponse = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isapplicant?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
@@ -722,7 +722,7 @@
 		}
 
 		this.isInvitee = function(id){
-		    var ajaxresponse = $.ajax({url: '/2013-09-11/isinvitee?bubbleid=' + that.bubbleId + '&userid=' + id});
+		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isinvitee?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
