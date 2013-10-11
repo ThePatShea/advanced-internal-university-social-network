@@ -22,7 +22,7 @@ this.RestCrypto = {
 		try {
 			var cipher = crypto.createDecipher(MODE, KEY);
 			var payload = cipher.update(token, 'base64');
-			payload += cipher.final('base64');
+			payload += cipher.final();
 
 			var items = payload.split('|');
 			if (items.length != 4)
