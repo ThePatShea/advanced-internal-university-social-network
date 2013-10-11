@@ -1,3 +1,7 @@
+Template.userActionsBackbone.rendered = function(){
+	currentBubbleId = window.location.pathname.split("/")[2];
+}
+
 Template.userActionsBackbone.helpers({
   getAdminStatus: function() {
     //return Bubbles.find({'users.admins': this._id, '_id': Session.get('currentBubbleId')}).count();
@@ -34,16 +38,21 @@ Template.userActionsBackbone.events({
   'click .remove-admin': function() {
   	// Disable the parent button
     event.stopPropagation();
+    if(typeof this.id == 'undefined'){
+      this.id = this._id;
+    }
+
     if(confirm("Are you sure you want to leave this bubble?"))
     {
-	    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+	    //var bubble = Bubbles.findOne(currentBubbleId);
+	    var bubble = mybubbles.bubbleInfo.toJSON();
 	    var admins = bubble.users.admins;
 	    var members = bubble.users.members;
 	    var count = admins.length + members.length
 	    if(count > 1){
-	      Bubbles.update({_id:Session.get('currentBubbleId')},
+	      Bubbles.update({_id:currentBubbleId},
 	      {
-	        $pull: {'users.admins': this._id}
+	        $pull: {'users.admins': this.id}
 	      });
 
 	      //If no more admins are left, the earliest member will be an admin
@@ -60,12 +69,12 @@ Template.userActionsBackbone.events({
 	    }else{
 	      if(confirm("You are the last remaining member.  Removing yourself will delete this bubble.  Are you sure you want to delete this bubble?"))
 	      {
-	        var updates = Updates.find({bubbleId: Session.get('currentBubbleId')}, {read:false}).fetch();
+	        var updates = Updates.find({bubbleId: currentBubbleId}, {read:false}).fetch();
 	        _.each(updates, function(update){
 	          Updates.update({_id: update._id}, {read:true});
 	        });
 	        var updateIds = _.pluck(updates, '_id');
-	        var currentBubbleId = Session.get('currentBubbleId');
+	        //var currentBubbleId = Session.get('currentBubbleId');
 	        var bubbleExplorePosts = Posts.find({postAsId: currentBubbleId}).fetch();
 	        var bubbleOwnPosts = Posts.find({bubbleId: currentBubbleId}).fetch();
 	        var bubblePosts = bubbleOwnPosts.concat(bubbleExplorePosts);
@@ -74,7 +83,7 @@ Template.userActionsBackbone.events({
 
 	        /*Posts.remove({_id: {$in: bubblePostIds}});
 	        Updates.remove({_id: {$in: updateIds}});*/
-	        Bubbles.remove({_id:Session.get('currentBubbleId')});
+	        Bubbles.remove({_id:currentBubbleId});
 
 	        //Route to the next available bubble or to the search page
 	        var bubble = Bubbles.find({$or: [{'users.members': Meteor.userId()},{'users.admins': Meteor.userId()}]}, {sort: {submitted: -1}}).fetch();
