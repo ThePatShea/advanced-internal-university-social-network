@@ -188,7 +188,7 @@
 	var BubbleInfo = Backbone.Model.extend({
 		url: function(){
 			console.log('/2013-09-11/bubbles/' + this.bubbleId)
-			return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture/' + this.bubbleId;
+			return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture,bubbleType/' + this.bubbleId;
 		}
 	});
 

@@ -5,7 +5,7 @@ Template.adminActionsBackbone.created = function(){
   adminDep = new Deps.Dependency;
 
 
-  mybubbles = new BubbleData.MyBubbles({
+  /*mybubbles = new BubbleData.MyBubbles({
     bubbleId: currentBubbleId,
     limit: 1,
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
@@ -50,7 +50,7 @@ Template.adminActionsBackbone.created = function(){
       adminDep.changed();
       Session.set('isLoading', false);
     }
-  });
+  });*/
 }
 
 
@@ -175,7 +175,11 @@ Template.adminActionsBackbone.events({
     });
 
     //Create update to inform user about accpeted application
-    createNewMemberUpdate(this._id);
+    createNewMemberUpdate(this.id, currentBubbleId);
+
+    if(bubbleDep){
+      bubbleDep.changed();
+    }
   },
 
   'click .deny': function(event){
@@ -192,7 +196,12 @@ Template.adminActionsBackbone.events({
     });
 
     //Create update to inform user about rejected application
-    createRejectApplicationUpdate(this._id);
+    createRejectApplicationUpdate(this.id);
+
+    if(bubbleDep){
+      bubbleDep.changed();
+    }
+
   },
 
   'click .promote-member': function(event) {
@@ -211,7 +220,12 @@ Template.adminActionsBackbone.events({
     //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
     //Create update for member who is promoted
-    createMemberPromoteUpdate(this._id);
+    createMemberPromoteUpdate(this.id);
+
+    if(bubbleDep){
+      bubbleDep.changed();
+    }
+
   },
 
   'click .remove-member': function(event) {
@@ -232,6 +246,11 @@ Template.adminActionsBackbone.events({
       //Create update for member who is removed from bubble
       createRemoveMemberUpdate(this.id);
     }
+
+    if(bubbleDep){
+      bubbleDep.changed();
+    }
+
   },
 
     'click .uninvite': function(event) {
@@ -252,5 +271,10 @@ Template.adminActionsBackbone.events({
       //CREATE NEW UPDATE FUNCTION FOR UNINVITE
       createRemoveMemberUpdate(this.id);
     }
+
+    if(bubbleDep){
+      bubbleDep.changed();
+    }
+
   }
 });
