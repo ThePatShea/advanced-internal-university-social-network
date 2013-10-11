@@ -583,21 +583,21 @@ Meteor.Router.add('/bubbleanalytics','GET', function() {
 	retVal.endDate = endDate.toDateString();
 	retVal.data = [];
 
-	users = Meteor.users.find({neverLoggedIn: false}, {fields: {_id: 1, username: 1, name: 1, level: 1}}).fetch();
-	_.each(users, function(user)
+	users = Meteor.users.find({neverLoggedIn: false}, {fields: {_id: 1, username: 1, name: 1, level: 1}});
+	users.forEach(function(user)
 	{
 		var logcount = 0;
 		var postcount = 0;
-		userlogs = Userlogs.find({userId: user._id, login: true}).fetch();
-		_.each(userlogs, function(userlog)
+		userlogs = Userlogs.find({userId: user._id, login: true});
+		userlogs.forEach(function(userlog)
 		{
 			if((userlog.submitted >= startDate.getTime()) && (userlog.submitted <= endDate.getTime()))
 			{
 				logcount++;
 			}
 		});
-		posts = Posts.find({userId: user._id}).fetch();
-		_.each(posts, function(post)
+		posts = Posts.find({userId: user._id});
+		posts.forEach(function(post)
 		{
 			if((post.submitted >= startDate.getTime()) && (post.submitted <= endDate.getTime()))
 			{
@@ -620,6 +620,7 @@ Meteor.Router.add('/bubbleanalytics','GET', function() {
 	console.log(retVal);
 	return(200, JSON.stringify(retVal));
 });
+
 
 Meteor.Router.add('/mybubbles/:id/emails','GET', function(id) {
 	var bubble = Bubbles.findOne({_id: id});

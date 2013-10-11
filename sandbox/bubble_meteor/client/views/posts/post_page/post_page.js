@@ -131,7 +131,7 @@ Template.postPage.events({
       if (confirm("Delete this post?")) {
         var currentPostId = Session.get('currentPostId');
         Posts.remove(currentPostId);
-        Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+        Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
       }
     }
 });

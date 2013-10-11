@@ -157,7 +157,7 @@ createRemoveMemberUpdate = function(userId) {
     invokerId: Meteor.userId(),
     invokerName: invoker.username,
     updateType: "removed from bubble",
-    url: '/searchAll',
+    url: '/dashboard',
     content: "You have been removed from " + bubble.title
   });
 }
@@ -172,7 +172,7 @@ createRejectApplicationUpdate = function(userId) {
     invokerId: Meteor.userId(),
     invokerName: invoker.username,
     updateType: "application rejected",
-    url: '/searchAll',
+    url: '/dashboard',
     content: bubble.title + " rejected your application"
   });
 }
@@ -267,7 +267,7 @@ createNewAttendeeUpdate = function(postId) {
         invokerId: Meteor.userId(),
         invokerName: invoker.username,
         updateType: "new attendee",
-        url: '/mybubbles/'+bubble._id+'/members',
+        url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
         content: " is attending " + post.name
       });
     });
@@ -439,6 +439,14 @@ createPostFlagUpdate = function(flag) {
   var invoker = Meteor.users.findOne(Meteor.userId());
 
   var superUsers = Meteor.users.find({userType:'superuser'}).fetch();
+
+  var parentId = "";
+
+  if(typeof flag.bubbleId !== "undefined")
+    parentId = flag.bubbleId;
+  if(typeof flag.exploreId !== "undefined")
+    parentId = flag.exploreId;
+
   _.each(superUsers, function(user) {
     if(user._id != Meteor.userId()){
       Meteor.call('update',{
@@ -448,7 +456,7 @@ createPostFlagUpdate = function(flag) {
         invokerId: Meteor.userId(),
         invokerName: invoker.username,
         updateType: "post flagged",
-        url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
+        url: '/mybubbles/'+parentId+'/posts/'+flag.postId,
         content: post.name + " has been flagged"
       });
     }
@@ -468,6 +476,14 @@ createPostUnflagUpdate = function(flag) {
   var invoker = Meteor.users.findOne(Meteor.userId());
 
   var superUsers = Meteor.users.find({userType:'2'}).fetch();
+
+  var parentId = "";
+
+  if(typeof flag.bubbleId !== "undefined")
+    parentId = flag.bubbleId;
+  if(typeof flag.exploreId !== "undefined")
+    parentId = flag.exploreId;
+
   _.each(superUsers, function(user) {
     if(user._id != Meteor.userId()){
       Meteor.call('update',{
@@ -477,7 +493,7 @@ createPostUnflagUpdate = function(flag) {
         invokerId: Meteor.userId(),
         invokerName: invoker.username,
         updateType: "post unflagged",
-        url: '/mybubbles/'+flag.bubbleId+'/posts/'+flag.postId,
+        url: '/mybubbles/'+parentId+'/posts/'+flag.postId,
         content: post.name + " has been unflagged"
       });
     }
@@ -497,7 +513,7 @@ createDeleteBubbleUpdate = function(bubbleId) {
       invokerId: Meteor.userId(),
       invokerName: invoker.username,
       updateType: "bubble deleted",
-      url: '/searchAll',
+      url: '/dashboard',
       content: bubble.title + " has been deleted"
     });
   });

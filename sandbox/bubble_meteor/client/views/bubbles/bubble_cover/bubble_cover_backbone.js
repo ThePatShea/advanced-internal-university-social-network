@@ -14,7 +14,7 @@ Template.bubbleCoverBackbone.helpers({
 
 	hasApplied: function() {
 		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-    var isApplicantAjax = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    var isApplicantAjax = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
     if(isApplicantAjax.responseText == 'True'){
       return true;
     }
@@ -24,8 +24,8 @@ Template.bubbleCoverBackbone.helpers({
 	},
 
 	hasJoinedBubble: function() {
-    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
+    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
     if(isMemberAjax.responseText == 'True' || isAdminAjax.responseText == 'True'){
       return true;
     }
@@ -35,7 +35,7 @@ Template.bubbleCoverBackbone.helpers({
 	},
 
   isAdminBackbone: function(){
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
+    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
     if(isAdminAjax.responseText == 'True'){
       return true;
     }

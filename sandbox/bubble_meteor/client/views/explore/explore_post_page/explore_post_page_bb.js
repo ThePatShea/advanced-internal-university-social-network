@@ -3,6 +3,7 @@ Template.explorePostPageBB.helpers({
     explorePageDep.depend();
     if(typeof pageData != "undefined")
     {
+      pageData.explorePost.fetch({async:false});
       return pageData.explorePost.toJSON();
     }
     else
@@ -116,6 +117,7 @@ Template.explorePostPageBB.events({
 
 
 Template.explorePostPageBB.rendered = function(){
+  console.log("Explore Post Page Backbone Rendered.");
 
   if(currentPostId != window.location.pathname.split("/")[4])
   {
@@ -124,6 +126,33 @@ Template.explorePostPageBB.rendered = function(){
     pageData = new ExploreData.ExplorePostPage(currentPostId, function(){explorePageDep.changed()});
     Meteor.subscribe('comments', currentPostId);
     Session.set("currentPostId", currentPostId);
+  }
+
+  if(typeof es === "undefined")
+  {
+    currentExploreId = window.location.pathname.split("/")[2];
+    es = new ExploreData.ExploreSection({
+      exploreId: currentExploreId,
+      limit: 10,
+      fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount','attendees']
+    });
+    es.fetchPage(es.getCurrentPage(), function() {
+      Session.set("isLoading", false);
+    });
+    /*es.explorePosts.on("change", function() {
+      console.log("explore posts changed");
+      exploreDep.changed();
+    });
+    es.exploreBubbles.on("change", function() {
+      console.log("explore bubbles changed");
+      exploreDep.changed();
+          Session.set("isLoading", false);
+    });
+    es.exploreUsers.on("change", function() {
+      console.log("explore users changed");
+      exploreDep.changed();
+          Session.set("isLoading", false);
+    });*/
   }
 }
 

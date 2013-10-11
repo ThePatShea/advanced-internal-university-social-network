@@ -2,7 +2,9 @@ Template.postPageBackbone.created = function() {
   Session.set("isLoadingPost", true);
   Session.set("isLoadingComments", true);
 
-  bubbleDep = new Deps.Dependency;
+    bubbleDep = new Deps.Dependency;
+  if(typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
@@ -172,6 +174,9 @@ Template.postPageBackbone.helpers({
   },
 
   getCurrentPostBackbone: function(){
+    bubbleDep.depend();
+    currentPostObject.fetch({async:false});
+    goingDep.changed();
     return currentPostObject.toJSON();
   },
 
