@@ -67,10 +67,10 @@ this.RestCrud = {
 				return response;
 		}
 
+		obj = RestHelpers.toMongoModel(obj);
+
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
-
-		obj = RestHelpers.toMongoModel(obj);
 
 		var result = RestHelpers.mongoInsert(collection, obj)
 
@@ -95,10 +95,10 @@ this.RestCrud = {
 				return response;
 		}
 
+		obj = RestHelpers.toMongoModel(obj);
+
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
-
-		obj = RestHelpers.toMongoModel(obj);
 
 		var result = RestHelpers.mongoUpdate(collection, id, obj)
 

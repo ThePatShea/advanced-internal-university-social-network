@@ -104,7 +104,8 @@ Meteor.startup(function() {
 			check: RestSecurity.ownsPost
 		},
 		remove: {
-			check: RestSecurity.ownsPost
+			check: RestSecurity.ownsPost,
+			afterDelete: RestPost.deletePost
 		}
 	});
 

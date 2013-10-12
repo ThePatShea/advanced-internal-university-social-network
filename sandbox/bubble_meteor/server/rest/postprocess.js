@@ -2,7 +2,7 @@ this.RestPost = {
   // Bubbles
   createBubble: function(ctx, obj) {
     return _.extend(
-      _.pick(obj, 'id', 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'profilePicture', 'retinaProfilePicture', 'bubbleType'),
+      _.pick(obj, '_id', 'title', 'description', 'category', 'coverPhoto', 'retinaCoverPhoto', 'profilePicture', 'retinaProfilePicture', 'bubbleType'),
       {
         submitted: new Date().getTime(),
         lastUpdated: new Date().getTime(),
@@ -18,7 +18,7 @@ this.RestPost = {
   // Explores
   createExplore: function(ctx, obj) {
     return _.extend(
-      _.pick(obj, 'id', 'title', 'description', 'exploreType', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName', 'exploreIcon'),
+      _.pick(obj, '_id', 'title', 'description', 'exploreType', 'coverPhoto', 'retinaCoverPhoto', 'exploreProfileIconName', 'exploreIcon'),
       {
         submitted: new Date().getTime(),
         lastUpdated: new Date().getTime()
@@ -45,7 +45,7 @@ this.RestPost = {
   // Posts
   createPost: function(ctx, obj) {
     var post = _.extend(
-      _.pick(obj, 'id', 'postAsType', 'postAsId', 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'dateTime', 'location', 'bubbleId', 'exploreId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'),
+      _.pick(obj, '_id', 'postAsType', 'postAsId', 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'dateTime', 'location', 'bubbleId', 'exploreId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'),
       {
         userId: ctx.user._id,
         author: ctx.user.name,
@@ -64,10 +64,67 @@ this.RestPost = {
     if (!post.children)
       post.children = [];
 
+    if (!post.files)
+      post.files = [];
+
     return post;
   },
 
   processPost: function(ctx, obj) {
     createPostUpdate(obj);
+
+    var key = null;
+    if (obj.bubbleId) {
+      key = 'bubbleId';
+    } else
+    if (obj.exploreId) {
+      key = 'exploreId';
+    }
+
+    if (obj.postType == 'file') {
+      // TODO: Assume that file references are in `files` property
+      var ids = [];
+
+      for (var i in obj.files) {
+        var f = obj.files[i];
+
+        var newObj = {
+          id: new Meteor.Collection.ObjectID().toHexString(),
+          name: escape(f.name),
+          file: e.target.result,
+          fileType: f.type,
+          postType: 'file',
+          numDownloads: 0,
+          lastDownloadTime: new Date().getTime(),
+          author: obj.author,
+          parent: obj._id
+        };
+
+        // Copy bubbleId/exploreId, etc
+        if (key)
+          newObj[key] = obj[key];
+
+        var file = this.createPost(ctx, newObj);
+
+        // TODO: Error checks
+        RestHelpers.mongoInsert(collection, obj)
+
+        ids.push(newFile.id);
+      }
+
+      if (ids.length) {
+        // TODO: Error checking
+        RestHelpers.mongoUpdate(obj._id, {
+          children: ids
+        });
+      }
+    }
+  },
+
+  deletePost: function(ctx, obj) {
+    Updates.update({postId: postId}, {$set: {read: true}});
+
+    if (ctx.userId != obj.userId)
+      createPostDeletedUpdate(obj.userId, obj._id);
   }
 };
