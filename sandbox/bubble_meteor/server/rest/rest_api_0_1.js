@@ -94,6 +94,17 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
+		},
+		update: {
+			check: RestSecurity.ownsPost
+		},
+		remove: {
+			check: RestSecurity.ownsPost
 		}
 	});
 

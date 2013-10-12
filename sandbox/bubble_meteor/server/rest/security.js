@@ -71,7 +71,7 @@ this.RestSecurity = {
     if (!post)
       return RestHelpers.jsonResponse(404, 'Post not found');
 
-    // TODO: Prettify me?
+    // TODO: Prettify?
     if (RestHelpers.haveChangedFields(obj, post, [
       'author', 'exploreId', 'postAsType', 'postAsId', 'name', 'body', 'dateTime', 'location',
       'file', 'fileType', 'fileSize', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto',

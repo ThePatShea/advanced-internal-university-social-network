@@ -61,10 +61,13 @@ this.RestPost = {
     if (!post.attendees)
       post.attendees = [];
 
+    if (!post.children)
+      post.children = [];
+
     return post;
   },
 
   processPost: function(ctx, obj) {
-    createPostUpdate(post);
+    createPostUpdate(obj);
   }
 };
