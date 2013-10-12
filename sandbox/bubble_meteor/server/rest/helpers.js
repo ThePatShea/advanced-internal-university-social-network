@@ -47,10 +47,10 @@ this.RestHelpers = {
 			var f = fields[n];
 
 			if (this.getField(o1, f) !== this.getField(o2, f))
-				return false;
+				return true;
 		}
 
-		return true;
+		return false;
 	},
 
 	// Get list of fields from query string value

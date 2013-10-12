@@ -101,7 +101,7 @@ Meteor.startup(function() {
 			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.ownsPost
+			check: RestSecurity.canUpdatePost
 		},
 		remove: {
 			check: RestSecurity.ownsPost,

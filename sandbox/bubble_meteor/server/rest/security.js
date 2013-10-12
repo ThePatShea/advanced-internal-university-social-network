@@ -71,6 +71,10 @@ this.RestSecurity = {
     if (!post)
       return RestHelpers.jsonResponse(404, 'Post not found');
 
+    var response = RestSecurity.ownsPost(ctx, obj);
+    if (response)
+      return response;
+
     // TODO: Prettify?
     if (RestHelpers.haveChangedFields(obj, post, [
       'author', 'exploreId', 'postAsType', 'postAsId', 'name', 'body', 'dateTime', 'location',

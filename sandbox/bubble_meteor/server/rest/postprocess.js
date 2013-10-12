@@ -104,7 +104,7 @@ this.RestPost = {
         if (key)
           newObj[key] = obj[key];
 
-        var file = this.createPost(ctx, newObj);
+        var file = RestPost.createPost(ctx, newObj);
 
         // TODO: Error checks
         RestHelpers.mongoInsert(collection, obj)

@@ -77,6 +77,8 @@ this.RestCrud = {
 		if (opts.afterInsert)
 			opts.afterInsert(ctx, result);
 
+		result = RestHelpers.fromMongoModel(result);
+
 		return RestHelpers.jsonResponse(200, result);
 	},
 
