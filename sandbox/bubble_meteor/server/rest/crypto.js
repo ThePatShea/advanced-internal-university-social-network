@@ -8,6 +8,11 @@ var SAFEGUARD = 'abc';
 
 
 this.RestCrypto = {
+	/**
+	 * Generate encrypted token with random salt, userId and timestamp
+	 * @param  {string} userId user ID
+	 * @return {string}        token
+	 */
 	generateToken: function(userId) {
 		var rnd = (Math.random() * 123 + '').substr(0, 6);
 		var time = new Date().getTime();
@@ -18,6 +23,11 @@ this.RestCrypto = {
 		return data + cipher.final('base64');
 	},
 
+	/**
+	 * Verify token
+	 * @param  {string} token encrypted token
+	 * @return {string}       user ID or null if error
+	 */
 	verifyToken: function(token) {
 		try {
 			var cipher = crypto.createDecipher(MODE, KEY);
