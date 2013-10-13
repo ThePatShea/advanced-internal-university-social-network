@@ -1,3 +1,23 @@
+/*
+ * Fetch the setting INTERCOM_APP_TOKEN since it's only
+ * available server-side.
+ */
+Meteor.call('getIntercomToken', function(err, result) {
+  if (!err && result) {
+    Meteor.settings = {};
+    Meteor.settings.INTERCOM_APP_TOKEN = result;
+    Deps.autorun(function() {
+      if (Meteor.userId() &&
+          Session.get('intercomLoaded')) {
+        window.Intercom('boot', 
+          { email: Meteor.user().emails[0].address,
+            app_id: "f6ffd81e9c7f63a3fefb3e9258d110a8ea99bdbc",
+            created_at: Meteor.user().createdAt});
+      }
+    });
+  }
+});
+
 // Handles site loading gif
 /*
     Meteor.startup(function () {

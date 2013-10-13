@@ -1,3 +1,26 @@
+//Implementation of intercom
+Meteor.settings = {
+  INTERCOM_APP_TOKEN : "f6ffd81e9c7f63a3fefb3e9258d110a8ea99bdbc",
+  INTERCOM_APP_SECRET : ""
+}
+
+var crypto = Npm.require('crypto');
+Meteor.users.find({}).forEach(function(user) {
+  var hmac = crypto.createHmac('sha256', Meteor.settings.INTERCOM_APP_SECRET);
+  Meteor.users.update(user._id, {$set: {
+    intercomHashedId: hmac.update(user._id).digest('hex')
+  }});
+});
+
+Meteor.methods({
+  getIntercomToken: function() {
+    return Meteor.settings.INTERCOM_APP_TOKEN;
+  }
+})
+
+
+
+//Creation of userlog collection
 Userlogs = new Meteor.Collection('userlogs');
 
 Meteor.methods({

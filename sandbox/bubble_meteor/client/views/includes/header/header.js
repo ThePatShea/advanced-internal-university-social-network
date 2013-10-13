@@ -30,7 +30,7 @@ Template.header.helpers({
 
 
 Template.header.rendered = function() {
-  //Log clicking of support in sidebar
+  //Log clicking of support in header
   $(".header-support").on("click", function() {
     //Logs the action that user is doing
     Meteor.call('createLog', 
@@ -40,7 +40,7 @@ Template.header.rendered = function() {
     });
   });
 
-  //Log clicking of update in sidebar
+  //Log clicking of update in header
   $(".header-update").on("click", function() {
     //Logs the action that user is doing
     Meteor.call('createLog', 
@@ -50,7 +50,7 @@ Template.header.rendered = function() {
     });
   });
 
-  //Log clicking of analytics in sidebar
+  //Log clicking of analytics in header
   $(".header-analytic").on("click", function() {
     //Logs the action that user is doing
     Meteor.call('createLog', 
@@ -60,7 +60,7 @@ Template.header.rendered = function() {
     });
   });
 
-  //Log clicking of flagsList in sidebar
+  //Log clicking of flagsList in header
   $(".header-flag").on("click", function() {
     //Logs the action that user is doing
     Meteor.call('createLog', 
