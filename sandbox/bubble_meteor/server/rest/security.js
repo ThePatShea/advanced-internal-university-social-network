@@ -77,7 +77,7 @@ this.RestSecurity = {
 
     // TODO: Prettify?
     if (RestHelpers.haveChangedFields(obj, post, [
-      'author', 'exploreId', 'postAsType', 'postAsId', 'name', 'body', 'dateTime', 'location',
+      'author', 'exploreId', 'postAsType', 'postAsId', 'dateTime', 'location',
       'file', 'fileType', 'fileSize', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto',
       'numDownloads', 'children', 'flagged', 'lastDownloadTime']))
       return RestHelpers.jsonResponse(401, 'Not allowed to change core field')
