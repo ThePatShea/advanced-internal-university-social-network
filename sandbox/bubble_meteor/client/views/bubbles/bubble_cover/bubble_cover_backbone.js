@@ -51,7 +51,9 @@ Template.bubbleCoverBackbone.helpers({
 
   getBubbleUsersCountBackbone: function(){
     var userCount = mybubbles.Members.bubbleMembers.count + mybubbles.Admins.bubbleAdmins.count;
-    bubbleDep.changed();
+    if(typeof bubbleDep != 'undefined'){
+      bubbleDep.changed();
+    }
 
     return userCount;
   }

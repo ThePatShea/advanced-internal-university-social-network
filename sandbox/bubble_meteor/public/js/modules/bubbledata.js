@@ -615,6 +615,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleMembers);
 			this.setLimit = new setLimitHelper(this.bubbleMembers);
 			this.getJSON = new getJSONHelper(this.bubbleMembers);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleMembers);
 		};
 
 		var Admins = function() {
@@ -634,6 +635,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleAdmins);
 			this.setLimit = new setLimitHelper(this.bubbleAdmins);
 			this.getJSON = new getJSONHelper(this.bubbleAdmins);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleAdmins)
 		};
 
 		var Applicants = function() {
@@ -653,6 +655,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleApplicants);
 			this.setLimit = new setLimitHelper(this.bubbleApplicants);
 			this.getJSON = new getJSONHelper(this.bubbleApplicants);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleApplicants);
 		};
 
 		var Invitees = function() {
@@ -672,6 +675,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleInvitees);
 			this.setLimit = new setLimitHelper(this.bubbleInvitees);
 			this.getJSON = new getJSONHelper(this.bubbleInvitees);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleInvitees);
 		};
 
 
@@ -986,5 +990,21 @@
 			return scope.toJSON();
 		};
 	};
+
+	var refreshCollectionHelper = function(scope) {
+		return function(callback){
+			var currentPage = scope.page;
+			scope.reset([]);
+				scope.page = currentPage;
+				scope.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(page);
+							}
+						}
+				});
+		}
+	}
 
 }());

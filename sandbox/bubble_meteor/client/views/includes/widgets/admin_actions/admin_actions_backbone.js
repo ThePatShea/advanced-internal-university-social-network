@@ -189,9 +189,17 @@ Template.adminActionsBackbone.events({
     //Create update to inform user about accpeted application
     createNewMemberUpdate(this.id, currentBubbleId);
 
-    if(bubbleDep){
+    //if(bubbleDep){
+    //  bubbleDep.changed();
+    //}
+    mybubbles.Admins.refreshCollection();
+    mybubbles.Members.refreshCollection();
+    mybubbles.Invitees.refreshCollection();
+    mybubbles.Applicants.refreshCollection(function(){
       bubbleDep.changed();
-    }
+    });
+    //membersDep.changed();
+    //bubbleDep.changed();
   },
 
   'click .deny': function(event){
@@ -210,9 +218,17 @@ Template.adminActionsBackbone.events({
     //Create update to inform user about rejected application
     createRejectApplicationUpdate(this.id);
 
-    if(bubbleDep){
+    //if(bubbleDep){
+    //  bubbleDep.changed();
+    //}
+    mybubbles.Admins.refreshCollection();
+    mybubbles.Members.refreshCollection();
+    mybubbles.Invitees.refreshCollection();
+    mybubbles.Applicants.refreshCollection(function(){
       bubbleDep.changed();
-    }
+    });
+    //membersDep.changed();
+    //bubbleDep.changed();
 
   },
 
@@ -234,9 +250,17 @@ Template.adminActionsBackbone.events({
     //Create update for member who is promoted
     createMemberPromoteUpdate(this.id);
 
-    if(bubbleDep){
+    //if(bubbleDep){
+    //  bubbleDep.changed();
+    //}
+    mybubbles.Admins.refreshCollection();
+    mybubbles.Members.refreshCollection();
+    mybubbles.Invitees.refreshCollection();
+    mybubbles.Applicants.refreshCollection(function(){
       bubbleDep.changed();
-    }
+    });
+    //membersDep.changed();
+    //bubbleDep.changed();
 
   },
 
@@ -259,9 +283,17 @@ Template.adminActionsBackbone.events({
       createRemoveMemberUpdate(this.id);
     }
 
-    if(bubbleDep){
+    //if(bubbleDep){
+    //  bubbleDep.changed();
+    //}
+    mybubbles.Admins.refreshCollection();
+    mybubbles.Members.refreshCollection();
+    mybubbles.Invitees.refreshCollection();
+    mybubbles.Applicants.refreshCollection(function(){
       bubbleDep.changed();
-    }
+    });
+    //membersDep.changed();
+    //bubbleDep.changed();
 
   },
 
@@ -284,9 +316,17 @@ Template.adminActionsBackbone.events({
       createRemoveMemberUpdate(this.id);
     }
 
-    if(bubbleDep){
+    //if(bubbleDep){
+    //  bubbleDep.changed();
+    //}
+    mybubbles.Admins.refreshCollection();
+    mybubbles.Members.refreshCollection();
+    mybubbles.Invitees.refreshCollection();
+    mybubbles.Applicants.refreshCollection(function(){
       bubbleDep.changed();
-    }
+    });
+    //membersDep.changed();
+    //bubbleDep.changed();
 
   }
 });
