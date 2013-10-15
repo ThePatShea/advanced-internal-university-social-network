@@ -125,7 +125,7 @@ Meteor.methods({
                   created_at: Meteor.user().createdAt,
                   //I believe this is to ensure that the userid is not sent in cleartext
                   user_id: Meteor.user().intercomHashedId,
-                  action: "test test"});
+                  page: userlog.page});
             }
           });
         }

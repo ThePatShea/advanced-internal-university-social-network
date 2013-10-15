@@ -2,6 +2,8 @@
  * Fetch the setting INTERCOM_APP_TOKEN since it's only
  * available server-side.
  */
+
+
 Meteor.call('getIntercomToken', function(err, result) {
   if (!err && result) {
     Meteor.settings = {};
