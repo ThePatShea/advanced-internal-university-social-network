@@ -140,9 +140,9 @@ Template.bubblePageBackbone.rendered = function() {
 }
 
 Template.bubblePageBackbone.helpers({
-    testNumUpdates: function() {
-    if(Session.get('testNumUpdates') > 0)
-      return Session.get('testNumUpdates');
+  testNumUpdates: function() {
+    if(Session.get(currentBubbleId+'testNumUpdates') > 0)
+      return Session.get(currentBubbleId+'testNumUpdates');
     else
       return 0;
   },
@@ -270,7 +270,7 @@ Template.bubblePageBackbone.helpers({
           return newUpdate.submitted; 
         });  
         
-      Session.set("testNumUpdates",updateList.length);
+      Session.set(currentBubbleId+"testNumUpdates",updateList.length);
 
         if(Session.get('updatesToShow')>0){
           return _.first(updateList.reverse(), Session.get('updatesToShow'));
@@ -387,6 +387,11 @@ Template.bubblePageBackbone.helpers({
       'postType': 'file',
       'word1': 'latest'
     }
+  },
+  showUpdates: function() {
+    if(Session.get(currentBubbleId+'testNumUpdates'))
+      return true;
+    return false;
   }
 });
 
@@ -395,7 +400,7 @@ Template.bubblePageBackbone.events({
     var updates = Updates.find({bubbleId: currentBubbleId, userId: Meteor.userId(), read:false}).fetch();
     _.each(updates, function(update) {
       Meteor.call('setRead', update);
-      Session.set('testNumUpdates',0);
+      Session.set(currentBubbleId+'testNumUpdates',0);
     });
   },
 
