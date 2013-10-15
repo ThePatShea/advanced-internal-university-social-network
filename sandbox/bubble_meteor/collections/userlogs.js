@@ -4,13 +4,15 @@ Meteor.settings = {
   INTERCOM_APP_SECRET : ""
 }
 
-var crypto = Npm.require('crypto');
-Meteor.users.find({}).forEach(function(user) {
-  var hmac = crypto.createHmac('sha256', Meteor.settings.INTERCOM_APP_SECRET);
-  Meteor.users.update(user._id, {$set: {
-    intercomHashedId: hmac.update(user._id).digest('hex')
-  }});
-});
+if(Meteor.isServer){
+  var crypto = Npm.require('crypto');
+  Meteor.users.find({}).forEach(function(user) {
+    var hmac = crypto.createHmac('sha256', Meteor.settings.INTERCOM_APP_SECRET);
+    Meteor.users.update(user._id, {$set: {
+      intercomHashedId: hmac.update(user._id).digest('hex')
+    }});
+  });
+}
 
 Meteor.methods({
   getIntercomToken: function() {
@@ -102,12 +104,33 @@ Meteor.methods({
     
     console.log(userlog);
     var log = _.extend(_.pick(userlog, 
-      'page', 'postId', 'bubbleId', 'exploreId', 'action', 'hasLoggedIn'), {
+      'postId', 'bubbleId', 'exploreId', 'action', 'hasLoggedIn'), {
       userId: Meteor.userId(),
       timestamp: new Date().getTime()
     });
     
     log._id = Userlogs.insert(log);
+
+    //Updates user activities in intercom
+    if(Meteor.isClient){
+      Meteor.call('getIntercomToken', function(err, result) {
+        if (!err && result) {
+          Meteor.settings = {};
+          Meteor.settings.INTERCOM_APP_TOKEN = result;
+          Deps.autorun(function() {
+            if (Meteor.userId()) {
+              window.Intercom('update', 
+                { email: Meteor.user().emails[0].address,
+                  app_id: "f6ffd81e9c7f63a3fefb3e9258d110a8ea99bdbc",
+                  created_at: Meteor.user().createdAt,
+                  //I believe this is to ensure that the userid is not sent in cleartext
+                  user_id: Meteor.user().intercomHashedId,
+                  action: "test test"});
+            }
+          });
+        }
+      });
+    }
     return log;
   }
 });

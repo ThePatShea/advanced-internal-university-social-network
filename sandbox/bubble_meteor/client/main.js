@@ -12,7 +12,10 @@ Meteor.call('getIntercomToken', function(err, result) {
         window.Intercom('boot', 
           { email: Meteor.user().emails[0].address,
             app_id: "f6ffd81e9c7f63a3fefb3e9258d110a8ea99bdbc",
-            created_at: Meteor.user().createdAt});
+            created_at: Meteor.user().createdAt,
+            //I believe this is to ensure that the userid is not sent in cleartext
+            user_id: Meteor.user().intercomHashedId,
+            action: "test test"});
       }
     });
   }
