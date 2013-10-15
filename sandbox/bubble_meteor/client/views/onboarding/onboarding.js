@@ -179,100 +179,106 @@ Template.onboarding.events({
 
 
 Template.onboarding.rendered = function() {
-  uid = Meteor.userId()
-  user = Meteor.users.findOne({_id: uid});
-  mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
-  retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
-  $("#cb-form-container-onboarding").hide();
+  //uid = Meteor.userId();
+  //user = Meteor.users.findOne({_id: uid});
+  Meteor.subscribe('singleUser', Meteor.userId(), function(){
+    var user = Meteor.users.findOne({_id: Meteor.userId()});
+    console.log("User: ",user);
 
-  var user = Meteor.users.findOne({_id: Meteor.userId()});
+    mainURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+    retinaURL = '/img/letterprofiles/'+user.username.substring(0,1).toLowerCase()+'.jpg';
+    $("#cb-form-container-onboarding").hide();
 
-  if (typeof user.neverLoggedIn != "undefined") {
-    var userEmails    =  user.emails;
-    var isHealthcare  =  false;
+    if (typeof user.neverLoggedIn != "undefined") {
+      var userEmails    =  user.emails;
+      var isHealthcare  =  false;
 
-    _.each(userEmails, function(email) {
-      if(typeof email.address != 'undefined'){
-        if (email.address.indexOf("@") != -1) {
-          var healthCareCheck = email.address.split("@");
+      _.each(userEmails, function(email) {
+        if(typeof email.address != 'undefined'){
+          if (email.address.indexOf("@") != -1) {
+            var healthCareCheck = email.address.split("@");
 
-          if (healthCareCheck[1] === "emoryhealthcare.org") { 
-            isHealthcare = true;
+            if (healthCareCheck[1] === "emoryhealthcare.org") { 
+              isHealthcare = true;
+            }
+
           }
-
         }
-      }
-    });
-    
-    if (isHealthcare == false) {
-      if (user.neverLoggedIn == false) {
-        if(user.neverOnboarded == false){
-          Meteor.Router.to("/dashboard");
-        }
-        else{
-          //Meteor.Router.to('onboardingWalkThrough');
-          window.location.href = '/tour/index.html';
+      });
+      
+      console.log("User: ",user);
+      if (isHealthcare == false) {
+        if (user.neverLoggedIn == false) {
+          console.log("User.neverOnboarded: ", user.neverOnboarded);
+          if(user.neverOnboarded == false){
+            Meteor.Router.to("/dashboard");
+          }
+          else{
+            //Meteor.Router.to('onboardingWalkThrough');
+            window.location.href = '/tour/index.html';
+          }
+        } else {
+          $("#cb-form-container-onboarding").show();
+          $(".onboarding-wrapper-outer").show();
+          $('.cb-form-onboarding').show();
         }
       } else {
-        $("#cb-form-container-onboarding").show();
-        $(".onboarding-wrapper-outer").show();
-        $('.cb-form-onboarding').show();
+        Meteor.logout(function(){
+          Meteor.Router.to("siteAccessDenied");
+        });
       }
-    } else {
-      Meteor.logout(function(){
-        Meteor.Router.to("siteAccessDenied");
-      });
-    }
-  var userlog = {
-    hasLoggedIn: true
-  }
-  //Logs user logging in
+      var userlog = {
+        hasLoggedIn: true
+      }
+      //Logs user logging in
       Meteor.call('createLog', 
         { hasLoggedIn: true }, 
         window.location.pathname, 
         function(error) { if(error) { throwError(error.reason); }
       });
-  
-}
+    }
 
-  var termsAccepted = Session.get("termsAccepted");
+    var termsAccepted = Session.get("termsAccepted");
 
-  if (termsAccepted != "true") {
-    $('#cb-form-container-onboarding .cb-submit').addClass('ready-false');
-    $('#cb-form-container-onboarding .cb-submit').prop('disabled', true);
-  } else {
-    $('#accept-terms').addClass('selected');
-  }
-
-
-
-  Meteor.subscribe('authenticatedUser', Session.get('secret'));
-  Meteor.subscribe('singleUser', Meteor.userId());
-
-  var cropArea;
-  var mainURL;
-  var retinaURL;
-
-  if($(window).width() < 768)
-  {
-    Session.set("DisableCrop","1");
+    if (termsAccepted != "true") {
+      $('#cb-form-container-onboarding .cb-submit').addClass('ready-false');
+      $('#cb-form-container-onboarding .cb-submit').prop('disabled', true);
     } else {
-    Session.set("DisableCrop","");
-  }
+      $('#accept-terms').addClass('selected');
+    }
 
-  var adjustMain = function() {
-    $('#main').css('height', $(window).height()/* - $('.navbar').height()*/);
-  }
 
-  $(window).resize(function() {
+
+    Meteor.subscribe('authenticatedUser', Session.get('secret'));
+
+    var cropArea;
+    var mainURL;
+    var retinaURL;
+
+    if($(window).width() < 768)
+    {
+      Session.set("DisableCrop","1");
+      } else {
+      Session.set("DisableCrop","");
+    }
+
+    var adjustMain = function() {
+      $('#main').css('height', $(window).height()/* - $('.navbar').height()*/);
+    }
+
+    $(window).resize(function() {
+      adjustMain();
+    });
+
     adjustMain();
   });
-
-  adjustMain();
 }
 
 Template.onboarding.created = function() {
  
   // Redirects to dashboard if already had logged in before
-    Meteor.subscribe('singleUser', Meteor.userId());
+  // Meteor.subscribe('singleUser', Meteor.userId(), function(){
+  //   var testUser = Meteor.users.findOne({_id: Meteor.userId()});
+  //   console.log("Callback: ", testUser);
+  // });
 }
