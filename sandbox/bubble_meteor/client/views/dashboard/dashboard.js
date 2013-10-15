@@ -502,19 +502,19 @@ Template.dashboard.events({
   },
 
   'click #dashboard-icon-3a': function() {
-        Meteor.Router.to('explorePage','hk3Crz5rY4LwBfbTS');
+        Meteor.Router.to('/explore/hk3Crz5rY4LwBfbTS/home');
   },
 
   'click #dashboard-icon-3b': function() {
-        Meteor.Router.to('explorePage','9G3DYCXWbi3uJAQkj');
+        Meteor.Router.to('/explore/9G3DYCXWbi3uJAQkj/home');
   },
 
   'click #dashboard-icon-3c': function() {
-        Meteor.Router.to('explorePage','uuaWh9sgTM7YmPEBM');
+        Meteor.Router.to('/explore/uuaWh9sgTM7YmPEBM/home');
   },
 
   'click #dashboard-icon-3d': function() {
-        Meteor.Router.to('explorePage','ycDfNiYzwj5TqyYvT');
+        Meteor.Router.to('/explore/ycDfNiYzwj5TqyYvT/home');
   },
 
   'click .dashboard-more-updates': function() {
@@ -525,7 +525,7 @@ Template.dashboard.events({
 Template.dashboard.rendered = function () {
 	Session.set("isLoading", false);
 
-	Meteor.subscribe('fiveExplorePosts');
+	//Meteor.subscribe('fiveExplorePosts');
 
 	$('.carousel').carousel();
 
