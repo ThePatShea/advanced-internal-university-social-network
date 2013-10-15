@@ -172,6 +172,9 @@
 				post.user = that.dashboardUsers.get(post.postAsId).toJSON();
 			}
 		});
+		posts = _.reject(posts, function(post){
+			return post.postType === "file";
+		});
 
 		this.getBubbles = new getJSONHelper(this.dashboardBubbles);
 		this.getUsers = new getJSONHelper(this.dashboardUsers);
