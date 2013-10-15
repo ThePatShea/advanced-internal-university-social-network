@@ -80,7 +80,7 @@ Template.bubblePageBackbone.rendered = function() {
 
   if(currentBubbleId != window.location.pathname.split("/")[2])
   {
-    console.log('Bubble chenged');
+    console.log('Bubble changed');
     currentBubbleId = window.location.pathname.split("/")[2];
 
     var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
@@ -111,22 +111,22 @@ Template.bubblePageBackbone.rendered = function() {
 
     members: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     admins: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     applicants: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     invitees: {
       limit: 10,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     callback: function(){
