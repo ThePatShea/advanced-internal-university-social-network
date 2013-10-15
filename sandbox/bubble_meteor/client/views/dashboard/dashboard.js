@@ -525,7 +525,7 @@ Template.dashboard.events({
 Template.dashboard.rendered = function () {
 	Session.set("isLoading", false);
 
-	Meteor.subscribe('fiveExplorePosts');
+	//Meteor.subscribe('fiveExplorePosts');
 
 	$('.carousel').carousel();
 
