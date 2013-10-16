@@ -513,7 +513,7 @@ Template.bubbleSubmit.rendered = function(){
   }
 
   //Log clicking of Add bubble button
-  $(".required").on("click", function() {
+  /*$(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -523,10 +523,10 @@ Template.bubbleSubmit.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
   //Log clicking of category
-  $(".categoryBox").on("click", function() {
+  /*$(".categoryBox").on("click", function() {
     var category = _.find($('.categoryBox'), function(category){
       if(category.className.indexOf('active') !== -1){
         return category;
@@ -539,10 +539,10 @@ Template.bubbleSubmit.rendered = function(){
       function(error) { if(error) { throwError(error.reason); }
     });
     
-  });
+  });*/
 
   //Log clicking of cover photo
-  $(".attach-cover-photo").on("click", function() {
+  /*$(".attach-cover-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -552,10 +552,10 @@ Template.bubbleSubmit.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
   //Log clicking of profile photo
-  $(".attach-profile-photo").on("click", function() {
+  /*$(".attach-profile-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -565,10 +565,10 @@ Template.bubbleSubmit.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
   //Log clicking of description wisiwyg
-  $(".wysiwyg").on("click", function() {
+  /*$(".wysiwyg").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -578,10 +578,10 @@ Template.bubbleSubmit.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
   //Log clicking of submit button
-  $(".words-main").on("click", function() {
+  /*$(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -591,10 +591,10 @@ Template.bubbleSubmit.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
   //Log clicking of submit error button
-  $(".words-error").on("click", function() {
+  /*$(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -604,6 +604,6 @@ Template.bubbleSubmit.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 }
 

@@ -230,7 +230,7 @@ Template.sidebar.rendered = function() {
     adjustInterface();
 
   //Log clicking of submit error button
-  $(".add-bubble").on("click", function() {
+  /*$(".add-bubble").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
@@ -240,10 +240,10 @@ Template.sidebar.rendered = function() {
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
   //Log clicking of individual bubble
-  $(".mybubble").on("click", function() {
+  /*$(".mybubble").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Extract and append the bubble's title to action string
@@ -255,5 +255,5 @@ Template.sidebar.rendered = function() {
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 }

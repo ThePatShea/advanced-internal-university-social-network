@@ -14,7 +14,7 @@ Template.commentsList.helpers({
 
 Template.commentsList.rendered = function() {
 
-  $('.btn-add').click(function() {
+  /*$('.btn-add').click(function() {
     //Checks if "add comment" button hides or shows comment text input
     if($('.btn-add').attr('class').indexOf('collapsed') == -1){
       //Logs the action that user is doing
@@ -33,5 +33,5 @@ Template.commentsList.rendered = function() {
     }
 
     $('[name=body]').focus();
-  });
+  });*/
 }

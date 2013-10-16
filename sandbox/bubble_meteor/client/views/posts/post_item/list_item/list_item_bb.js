@@ -147,7 +147,7 @@ Template.listItemBB.created = function() {
 Template.listItemBB.rendered = function(){
   // console.log("LIBB: ", this);
   //Log clicking of individual bubble
-  $(".post-item").on("click", function() {
+  /*$(".post-item").on("click", function() {
     // Meteor.clearTimeout(mto);
     // mto = Meteor.setTimeout(function() {
       //Extract and append the bubble's title to action string
@@ -159,5 +159,5 @@ Template.listItemBB.rendered = function(){
         function(error) { if(error) { throwError(error.reason); }
       });
     // }, 500);
-  });
+  });*/
 }

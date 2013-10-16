@@ -1,8 +1,8 @@
 Template.bubbleCoverBackbone.rendered = function(){
   //Log clicking of edit bubble button
-  $(".lbl").on("click", function() {
+  /*$(".lbl").on("click", function() {
     Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
-  });
+  });*/
 }
 
 
