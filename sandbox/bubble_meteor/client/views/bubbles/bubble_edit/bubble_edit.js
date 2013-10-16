@@ -500,15 +500,15 @@ Template.bubbleEdit.rendered = function(){
   });
 
   //Log clicking of title textbox
-  $(".required").on("click", function() {
+  /*$(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'nameTextbox');
     }, 500);
-  });
+  });*/
 
   //Log clicking of category
-  $(".categoryBox").on("click", function() {
+  /*$(".categoryBox").on("click", function() {
     var category = _.find($('.categoryBox'), function(category){
       if(category.className.indexOf('active') !== -1){
         return category;
@@ -516,48 +516,48 @@ Template.bubbleEdit.rendered = function(){
     });
     Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'category');
 
-  });
+  });*/
 
   //Log clicking of cover photo
-  $(".attach-cover-photo").on("click", function() {
+  /*$(".attach-cover-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'coverPhoto');
     }, 500);
-  });
+  });*/
 
   //Log clicking of profile photo
-  $(".attach-profile-photo").on("click", function() {
+  /*$(".attach-profile-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'profilePhoto');
     }, 500);
-  });
+  });*/
 
   //Log clicking of description wisiwyg
-  $(".wysiwyg").on("click", function() {
+  /*$(".wysiwyg").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'descriptionTextbox');
     }, 500);
-  });
+  });*/
 
   //Log clicking of submit button
-  $(".words-main").on("click", function() {
+  /*$(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       console.log("this ran");
       Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'submitButton');
     }, 500);
-  });
+  });*/
 
   //Log clicking of submit error button
-  $(".words-error").on("click", function() {
+  /*$(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       console.log("this ran");
       Meteor.call('createLog', Meteor.Router.page(), 'createBubble', 'submitErrorButton');
     }, 500);
-  });
+  });*/
 
 }

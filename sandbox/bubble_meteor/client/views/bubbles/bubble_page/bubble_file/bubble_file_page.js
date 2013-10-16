@@ -19,9 +19,9 @@ Template.bubbleFilePage.rendered = function() {
   });
 
   //Log clicking of add file button
-  $(".btn-add-file").on("click", function() {
+  /*$(".btn-add-file").on("click", function() {
     Meteor.call('createLog', 'addFilePost', 'addFilePost');
-  });
+  });*/
 /*
   $("#main").scroll(function(){
     if ( ($("#main").scrollTop() >= $("#main")[0].scrollHeight - $("#main").height()) ) {
