@@ -126,5 +126,11 @@ this.RestPost = {
 
     if (ctx.userId != obj.userId)
       createPostDeletedUpdate(obj.userId, obj._id);
+  },
+
+  // Files
+  postprocessFile: function(obj) {
+    delete obj['body'];
+    return RestHelpers.fromMongoModel(obj);
   }
 };

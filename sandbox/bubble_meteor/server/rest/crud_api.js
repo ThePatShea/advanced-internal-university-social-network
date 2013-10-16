@@ -10,7 +10,7 @@ this.RestCrud = {
 	 */
 	apiQuery: function(ctx, collection, opts) {
 		if (opts && opts.check) {
-			var response = opts.check(ctx, obj);
+			var response = opts.check(ctx);
 			if (response)
 				return response;
 		}
@@ -88,7 +88,7 @@ this.RestCrud = {
 			// TODO: Better error logging/reporting
 			return RestHelpers.jsonResponse(401, 'Cant create item with id');
 		}
-		obj.id = new Meteor.Collection.ObjectID().toHexString()
+		obj.id = new Meteor.Collection.ObjectID().toHexString();
 
 		if (opts && opts.check) {
 			var response = opts.check(ctx, obj);
@@ -101,7 +101,12 @@ this.RestCrud = {
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
 
-		var result = RestHelpers.mongoInsert(collection, obj)
+		var results = RestHelpers.mongoInsert(collection, obj);
+
+		if (results.length == 0)
+			return RestHelpers.jsonResponse(500, 'Failed to create model');
+
+		var result = results[0];
 
 		if (opts.afterInsert)
 			opts.afterInsert(ctx, result);
@@ -293,10 +298,21 @@ this.RestCrud = {
 	 * @param {object} opts.remove 		DELETE endpoint options
 	 */
 	makeGenericApi: function(baseUrl, collection, opts) {
-		Meteor.Router.add(baseUrl, 'GET', this.makeQuery(collection, opts.query || null));
-		Meteor.Router.add(baseUrl, 'POST', this.makeCreate(collection, opts.create || null));
-		Meteor.Router.add(baseUrl + '/:id', 'GET', this.makeQueryOne(collection, opts.queryOne || null));
-		Meteor.Router.add(baseUrl + '/:id', 'PUT', this.makeUpdate(collection, opts.update || null));
-		Meteor.Router.add(baseUrl + '/:id', 'DELETE', this.makeDelete(collection, opts.remove || null));
+		var handler;
+
+		handler = (opts.query && opts.query.handler) || this.makeQuery(collection, opts.query || null);
+		Meteor.Router.add(baseUrl, 'GET', handler);
+
+		handler = (opts.create && opts.create.handler) || this.makeCreate(collection, opts.create || null);
+		Meteor.Router.add(baseUrl, 'POST', handler);
+
+		handler = (opts.queryOne && opts.queryOne.handler) || this.makeQueryOne(collection, opts.queryOne || null);
+		Meteor.Router.add(baseUrl + '/:id', 'GET', handler);
+
+		handler = (opts.update && opts.update.handler) || this.makeUpdate(collection, opts.update || null);
+		Meteor.Router.add(baseUrl + '/:id', 'PUT', handler);
+
+		handler = (opts.remove && opts.remove.handler) || this.makeDelete(collection, opts.remove || null);
+		Meteor.Router.add(baseUrl + '/:id', 'DELETE', handler);
 	}
 };

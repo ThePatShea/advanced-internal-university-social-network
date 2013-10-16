@@ -4,6 +4,8 @@ var DEFAULT_LIMIT = 10;
 var MAX_LIMIT = 50;
 
 this.RestHelpers = {
+  Future: Future,
+
   /**
    * Return callback function that will either finish `Future` or rethrow exception
    * @param  {Future} future
@@ -308,9 +310,42 @@ this.RestHelpers = {
    * @return {bool}        true if authenticated
    */
   authUser: function(ctx, opts) {
-    if (opts.authUser)
+    if (opts && opts.authUser)
       return opts.authUser(ctx, opts);
 
     return this.headerAuth(ctx);
+  },
+
+  /**
+   * Create express.js raw request body parser. Not used at the moment.
+   */
+  rawBodyParser: function() {
+    var connect = Npm.require('connect');
+    var defaultParser = connect.bodyParser;
+
+    var needle = '/api/v1_0';
+
+    return function(req, response, next) {
+      // TODO: Fix me - need to remove once there are no other REST endpoints anymore
+      if (req.url.slice(-needle.length) != needle)
+        return defaultParser(req, response, next);
+
+      var buf;
+      if (req._body) {
+        return next();
+      }
+
+      req._body = true;
+
+      buf = '';
+      req.on('data', function(chunk) {
+        return buf += chunk;
+      });
+
+      return req.on('end', function() {
+        req.body = buf;
+        return next();
+      });
+    };
   }
 };

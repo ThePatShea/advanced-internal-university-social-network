@@ -184,5 +184,16 @@ this.RestSecurity = {
       return;
 
     return RestHelpers.jsonResponse(401, 'Can not edit others comment')
+  },
+
+  // Files
+  canChangeFile: function(ctx, obj) {
+    if (ctx.user.userType != UserType.ADMIN && obj.userId != ctx.userId)
+      return RestHelpers.jsonResponse(403, 'Access denied.');
+  },
+
+  // Helpers
+  deny: function(ctx, obj) {
+    return RestHelpers.jsonResponse(403, 'Access denied.');
   }
 };

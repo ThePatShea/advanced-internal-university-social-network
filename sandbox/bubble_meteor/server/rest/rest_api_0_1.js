@@ -8,6 +8,12 @@ function parseApiOptions(ctx) {
 	};
 }
 
+function getFileApiOptions(ctx) {
+	return {
+		fields: RestHelpers.getFieldList('name,type,userId,size,url')
+	};
+}
+
 // Endpoints
 Meteor.startup(function() {
 	// Posts
@@ -227,4 +233,26 @@ Meteor.startup(function() {
 			apiOpts: parseApiOptions
 		}
 	});
+
+	// File upload
+	RestCrud.makeGenericApi('/api/v1_0/file', Files, {
+		query: {
+			check: RestSecurity.deny
+		},
+		queryOne: {
+			apiOpts: getFileApiOptions
+		},
+		create: {
+			handler: RestHandlers.handleFileUpload
+		},
+		update: {
+			check: RestSecurity.canChangeFile,
+			preprocess: RestPost.preFile
+		},
+		remove: {
+			check: RestSecurity.canChangeFile
+		}
+	});
+
+	Meteor.Router.add('/api/v1_0/file/:id/get', 'GET', RestHandlers.handleFileRequest);
 });
