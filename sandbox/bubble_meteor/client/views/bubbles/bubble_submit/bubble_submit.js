@@ -22,7 +22,8 @@ Template.bubbleSubmit.events({
       } else {
         console.log('Create Bubble');
         Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
-        Meteor.Router.to('bubbleMembersPageBackbone', bubbleId);
+        //Meteor.Router.to('bubbleMembersPageBackbone', bubbleId);
+        window.location.href = "/mybubbles/" + bubbleId + "/members";
       }
     });
   },

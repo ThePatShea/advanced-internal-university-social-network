@@ -1,6 +1,7 @@
 Template.bubbleMembersPageBackbone.created = function() {
 	virtualPage = 0;
 	max_scrolltop = 200;
+	var test = Session.get('currentBubbleId');
 	currentBubbleId = window.location.pathname.split('/')[2];
 	Session.set("currentBubbleId", currentBubbleId);
 	Meteor.subscribe("findBubblesById", [currentBubbleId], function(){
