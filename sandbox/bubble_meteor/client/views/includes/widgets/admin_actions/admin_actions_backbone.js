@@ -91,7 +91,7 @@ Template.adminActionsBackbone.helpers({
     if(typeof this.id == 'undefined'){
       this.id = this._id;
     }
-
+    
     return mybubbles.isInvitee(this.id);
   }
 });
