@@ -2,6 +2,8 @@ Template.bubbleEventPageBackbone.created = function(){
   Session.set("isLoading", true);
 
   bubbleDep = new Deps.Dependency;
+  if(typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );

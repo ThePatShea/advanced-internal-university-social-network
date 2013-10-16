@@ -1,6 +1,5 @@
-Template.imGoing.created = function(){
-
-  if((typeof goingDep === "undefined") && (window.location.pathname.split("/")[1] === "explore"))
+Template.imGoing.rendered = function(){
+  if(typeof goingDep === "undefined")
     goingDep = new Deps.Dependency;
 }
 
