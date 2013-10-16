@@ -116,6 +116,18 @@ Template.adminActionsBackbone.events({
         $pull: {'users.admins': this.id}
       });
       createAdminDemoteUpdate(this.id);
+      var reRoute = function(id, currentBubbleId){
+        //bubbleDep.changed();
+        return function(){
+          Session.set('currentBubbleId', currentBubbleId);
+          Meteor.Router.to('/settings/userprofile/' + id);
+          console.log('Admin Actions: ', id);
+        }
+      }
+      mybubbles.Admins.refreshCollection();
+      mybubbles.Members.refreshCollection();
+      mybubbles.Invitees.refreshCollection();
+      mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
     }else{
       alert("You are the last remaining admin. Please promote another member before demoting yourself.");
     }
@@ -150,6 +162,18 @@ Template.adminActionsBackbone.events({
             $addToSet: {'users.admins': members[0]},
             $pull: {'users.members': members[0]}
           });
+          var reRoute = function(id, currentBubbleId){
+            //bubbleDep.changed();
+            return function(){
+              Session.set('currentBubbleId', currentBubbleId);
+              Meteor.Router.to('/settings/userprofile/' + id);
+              console.log('Admin Actions: ', id);
+            }
+          }
+          mybubbles.Admins.refreshCollection();
+          mybubbles.Members.refreshCollection();
+          mybubbles.Invitees.refreshCollection();
+          mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
         }
       }
     }else{
@@ -192,12 +216,18 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
+    var reRoute = function(id, currentBubbleId){
+      //bubbleDep.changed();
+      return function(){
+        Session.set('currentBubbleId', currentBubbleId);
+        Meteor.Router.to('/settings/userprofile/' + id);
+        console.log('Admin Actions: ', id);
+      }
+    }
     mybubbles.Admins.refreshCollection();
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
-    mybubbles.Applicants.refreshCollection(function(){
-      bubbleDep.changed();
-    });
+    mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
     //membersDep.changed();
     //bubbleDep.changed();
   },
@@ -221,12 +251,18 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
+    var reRoute = function(id, currentBubbleId){
+      //bubbleDep.changed();
+      return function(){
+        Session.set('currentBubbleId', currentBubbleId);
+        Meteor.Router.to('/settings/userprofile/' + id);
+        console.log('Admin Actions: ', id);
+      }
+    }
     mybubbles.Admins.refreshCollection();
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
-    mybubbles.Applicants.refreshCollection(function(){
-      bubbleDep.changed();
-    });
+    mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -253,12 +289,18 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
+    var reRoute = function(id, currentBubbleId){
+      //bubbleDep.changed();
+      return function(){
+        Session.set('currentBubbleId', currentBubbleId);
+        Meteor.Router.to('/settings/userprofile/' + id);
+        console.log('Admin Actions: ', id);
+      }
+    }
     mybubbles.Admins.refreshCollection();
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
-    mybubbles.Applicants.refreshCollection(function(){
-      bubbleDep.changed();
-    });
+    mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -286,12 +328,18 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
+  var reRoute = function(id, currentBubbleId){
+      //bubbleDep.changed();
+      return function(){
+        Session.set('currentBubbleId', currentBubbleId);
+        Meteor.Router.to('/settings/userprofile/' + id);
+        console.log('Admin Actions: ', id);
+      }
+    }
     mybubbles.Admins.refreshCollection();
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
-    mybubbles.Applicants.refreshCollection(function(){
-      bubbleDep.changed();
-    });
+    mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -319,12 +367,18 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
+    var reRoute = function(id, currentBubbleId){
+      //bubbleDep.changed();
+      return function(){
+        Session.set('currentBubbleId', currentBubbleId);
+        Meteor.Router.to('/settings/userprofile/' + id);
+        console.log('Admin Actions: ', id);
+      }
+    }
     mybubbles.Admins.refreshCollection();
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
-    mybubbles.Applicants.refreshCollection(function(){
-      bubbleDep.changed();
-    });
+    mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
     //membersDep.changed();
     //bubbleDep.changed();
 
