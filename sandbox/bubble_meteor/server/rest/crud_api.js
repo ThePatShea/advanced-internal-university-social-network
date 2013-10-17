@@ -103,6 +103,8 @@ this.RestCrud = {
 
 		var results = RestHelpers.mongoInsert(collection, obj);
 
+		console.log('inserted', obj);
+
 		if (results.length == 0)
 			return RestHelpers.jsonResponse(500, 'Failed to create model');
 

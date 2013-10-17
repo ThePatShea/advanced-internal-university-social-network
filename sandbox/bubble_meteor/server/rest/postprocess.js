@@ -45,7 +45,7 @@ this.RestPost = {
   // Posts
   createPost: function(ctx, obj) {
     var post = _.extend(
-      _.pick(obj, '_id', 'postAsType', 'postAsId', 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'dateTime', 'location', 'bubbleId', 'exploreId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime'),
+      _.pick(obj, '_id', 'postAsType', 'postAsId', 'postType', 'name', 'body', 'file', 'fileType', 'fileSize', 'fileUrl', 'dateTime', 'location', 'bubbleId', 'exploreId', 'attendees', 'eventPhoto', 'numDownloads', 'parent', 'children', 'lastDownloadTime', 'files'),
       {
         userId: ctx.user._id,
         author: ctx.user.name,
@@ -81,43 +81,52 @@ this.RestPost = {
       key = 'exploreId';
     }
 
-    if (obj.postType == 'file') {
-      // TODO: Assume that file references are in `files` property
-      var ids = [];
+    var ids = [];
 
-      for (var i in obj.files) {
-        var f = obj.files[i];
+    for (var i in obj.files) {
+      var fileId = obj.files[i];
 
-        var newObj = {
-          id: new Meteor.Collection.ObjectID().toHexString(),
-          name: escape(f.name),
-          file: e.target.result,
-          fileType: f.type,
-          postType: 'file',
-          numDownloads: 0,
-          lastDownloadTime: new Date().getTime(),
-          author: obj.author,
-          parent: obj._id
-        };
+      var file = RestHelpers.mongoFindOne(Files, fileId);
 
-        // Copy bubbleId/exploreId, etc
-        if (key)
-          newObj[key] = obj[key];
-
-        var file = RestPost.createPost(ctx, newObj);
-
-        // TODO: Error checks
-        RestHelpers.mongoInsert(collection, obj)
-
-        ids.push(newFile.id);
+      // TODO: Better error logging
+      if (!file) {
+        console.log("Failed to get file by ID")
+        continue;
       }
 
-      if (ids.length) {
-        // TODO: Error checking
-        RestHelpers.mongoUpdate(obj._id, {
+      var newObj = {
+        id: new Meteor.Collection.ObjectID().toHexString(),
+        name: escape(file.name),
+        file: fileId,
+        fileType: file.type,
+        fileSize: file.size,
+        fileUrl: file.url,
+        postType: 'file',
+        numDownloads: 0,
+        lastDownloadTime: new Date().getTime(),
+        author: obj.author,
+        parent: obj._id
+      };
+
+      // Copy bubbleId/exploreId, etc
+      if (key)
+        newObj[key] = obj[key];
+
+      var file = RestPost.createPost(ctx, newObj);
+
+      var doc = RestHelpers.toMongoModel(newObj);
+      // TODO: Error checks
+      RestHelpers.mongoInsert(Posts, doc);
+      ids.push(doc._id);
+    }
+
+    if (ids.length) {
+      // TODO: Error checking
+      RestHelpers.mongoUpdate(Posts, obj._id, {
+        $set: {
           children: ids
-        });
-      }
+        }
+      });
     }
   },
 

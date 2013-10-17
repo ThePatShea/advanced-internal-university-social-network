@@ -9,9 +9,23 @@ function makeSecurityCheck(childField, next) {
 	};
 }
 
+function makeExtendedSecurityCheck(parent, childField, next) {
+	return function(ctx, obj) {
+		if (obj[childField] !== ctx.params.parentId)
+			return RestHelpers.jsonResponse(404, 'Invalid parent ID');
+
+		var parentDoc = RestHelpers.mongoFindOne(parent, obj[childField]);
+		if (!parentDoc)
+			return RestHelpers.jsonResponse(404, 'Parent was not found');
+
+		if (next)
+			return next(ctx, obj);
+	};
+}
+
 // Public API
 this.RestRelatedCrud = {
-	makeQuery: function(collection, childField, opts) {
+	makeQuery: function(parent, child, childField, opts) {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
@@ -30,11 +44,11 @@ this.RestRelatedCrud = {
 			if (!RestHelpers.authUser(this, opts))
 				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
-			return RestCrud.apiQuery(this, collection, newOpts);
+			return RestCrud.apiQuery(this, child, newOpts);
 		};
 	},
 
-	makeQueryOne: function(collection, childField, opts) {
+	makeQueryOne: function(parent, child, childField, opts) {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
@@ -45,14 +59,15 @@ this.RestRelatedCrud = {
 			if (!RestHelpers.authUser(this, opts))
 				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
-			return RestCrud.apiQueryOne(this, id, collection, newOpts);
+			return RestCrud.apiQueryOne(this, id, child, newOpts);
 		};
 	},
 
-	makeCreate: function(collection, childField, opts) {
+	makeCreate: function(parent, child, childField, opts) {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
+			check: makeExtendedSecurityCheck(parent, childField, opts.check),
 			preprocess: function(ctx, obj) {
 				obj[childField] = ctx.params.parentId;
 
@@ -67,44 +82,45 @@ this.RestRelatedCrud = {
 			if (!RestHelpers.authUser(this, opts))
 				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
-			return RestCrud.apiCreate(this, collection, newOpts);
+			return RestCrud.apiCreate(this, child, newOpts);
 		};
 	},
 
-	makeUpdate: function(collection, childField, opts) {
+	makeUpdate: function(parent, child, childField, opts) {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
-			check: makeSecurityCheck(childField, opts.check)
+			check: makeExtendedSecurityCheck(parent, childField, opts.check)
 		});
 
 		return function(parentId, id) {
 			if (!RestHelpers.authUser(this, opts))
 				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
-			return RestCrud.apiUpdate(this, id, collection, newOpts);
+			return RestCrud.apiUpdate(this, id, child, newOpts);
 		};
 	},
 
-	makeDelete: function(collection, childField, opts) {
+	makeDelete: function(parent, child, childField, opts) {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
-			check: makeSecurityCheck(childField, opts.check)
+			check: makeSecurityCheck(parent, opts.check)
 		});
 
 		return function(parentId, id) {
 			if (!RestHelpers.authUser(this, opts))
 				return RestHelpers.jsonResponse(403, 'Not authenticated');
 
-			return RestCrud.apiDelete(this, id, collection, newOpts);
+			return RestCrud.apiDelete(this, id, child, newOpts);
 		};
 	},
 
 	/**
 	 * Create and register related model CRUD endpoints
 	 * @param  {string} baseUrl
-	 * @param  {Meteor.Collection} collection
+	 * @param  {Meteor.Collection} parent parent collection
+	 * @param  {Meteor.Collection} child child collection
 	 * @param {string} childField child field name that links to parent
 	 * @param  {object} opts
 	 * @param {object} opts.query GET endpoint options
@@ -113,11 +129,11 @@ this.RestRelatedCrud = {
 	 * @param {object} opts.update PUT endpoint options
 	 * @param {object} opts.remove DELETE endpoint options
 	 */
-	makeGenericApi: function(baseUrl, collection, childField, opts) {
-		Meteor.Router.add(baseUrl, 'GET', this.makeQuery(collection, childField, opts.query || null));
-		Meteor.Router.add(baseUrl, 'POST', this.makeCreate(collection, childField, opts.create || null));
-		Meteor.Router.add(baseUrl + '/:id', 'GET', this.makeQueryOne(collection, childField, opts.queryOne || null));
-		Meteor.Router.add(baseUrl + '/:id', 'PUT', this.makeUpdate(collection, childField, opts.update || null));
-		Meteor.Router.add(baseUrl + '/:id', 'DELETE', this.makeDelete(collection, childField, opts.remove || null));
+	makeGenericApi: function(baseUrl, parent, child, childField, opts) {
+		Meteor.Router.add(baseUrl, 'GET', this.makeQuery(parent, child, childField, opts.query || null));
+		Meteor.Router.add(baseUrl, 'POST', this.makeCreate(parent, child, childField, opts.create || null));
+		Meteor.Router.add(baseUrl + '/:id', 'GET', this.makeQueryOne(parent, child, childField, opts.queryOne || null));
+		Meteor.Router.add(baseUrl + '/:id', 'PUT', this.makeUpdate(parent, child, childField, opts.update || null));
+		Meteor.Router.add(baseUrl + '/:id', 'DELETE', this.makeDelete(parent, child, childField, opts.remove || null));
 	}
 };

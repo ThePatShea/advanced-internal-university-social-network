@@ -25,6 +25,7 @@ this.RestHandlers = {
       userId: this.userId,
       size: file.size,
       body: new MongoDB.Binary(contents),
+      submitted: new Date().getTime(),
       // TODO: configurable endpoint
       url: Meteor.absoluteUrl('api/v1_0/file/' + newId + '/get')
     };

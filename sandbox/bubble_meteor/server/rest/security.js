@@ -35,6 +35,8 @@ this.RestSecurity = {
 
   canMakePost: function(fieldName) {
     return function(ctx, obj) {
+      console.log('y', obj, fieldName);
+
       // Check if post has a name
       if (!obj.name)
         return RestHelpers.jsonResponse(422, 'Please fill in post name');
@@ -44,8 +46,12 @@ this.RestSecurity = {
       };
       query[fieldName] = obj[fieldName];
 
-      if (RestHelpers.mongoFindOne(Posts, query))
+      console.log(query);
+
+      if (RestHelpers.mongoFindOne(Posts, query)) {
+        console.log('no');
         return RestHelpers.jsonResponse(302, 'Duplicate post name');
+      }
 
       switch (obj.postType) {
         case 'discussion':
@@ -57,7 +63,7 @@ this.RestSecurity = {
             return RestHelpers.jsonResponse(422, 'Event body and location are required');
           break;
         case 'file':
-          if (!obj.file)
+          if (!obj.files)
             return RestHelpers.jsonResponse(422, 'Missing file');
           break;
         default:

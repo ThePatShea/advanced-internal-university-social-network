@@ -59,7 +59,7 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Posts, 'exploreId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Explores, Posts, 'exploreId', {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions
@@ -93,7 +93,7 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/posts', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/posts', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions
@@ -115,7 +115,7 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/events', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/events', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'events',
 			apiOpts: parseApiOptions,
@@ -136,7 +136,7 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/discussions', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/discussions', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'discussions',
 			apiOpts: parseApiOptions,
@@ -157,7 +157,7 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/files', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/files', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'files',
 			apiOpts: parseApiOptions,
