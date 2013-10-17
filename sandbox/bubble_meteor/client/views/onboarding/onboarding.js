@@ -193,7 +193,7 @@ Template.onboarding.rendered = function() {
       var userEmails    =  user.emails;
       var isHealthcare  =  false;
 
-      _.each(userEmails, function(email) {
+      /*_.each(userEmails, function(email) {
         if(typeof email.address != 'undefined'){
           if (email.address.indexOf("@") != -1) {
             var healthCareCheck = email.address.split("@");
@@ -204,7 +204,7 @@ Template.onboarding.rendered = function() {
 
           }
         }
-      });
+      });*/
       
       console.log("User: ",user);
       if (isHealthcare == false) {
