@@ -128,6 +128,7 @@ Template.adminActionsBackbone.events({
       mybubbles.Members.refreshCollection();
       mybubbles.Invitees.refreshCollection();
       mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+      Meteor.Router.to('/settings/userprofile/' + this.id);
     }else{
       alert("You are the last remaining admin. Please promote another member before demoting yourself.");
     }
@@ -174,6 +175,7 @@ Template.adminActionsBackbone.events({
           mybubbles.Members.refreshCollection();
           mybubbles.Invitees.refreshCollection();
           mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+          Meteor.Router.to('/settings/userprofile/' + this.id);
         }
       }
     }else{
@@ -228,6 +230,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+    Meteor.Router.to('/settings/userprofile/' + this.id);
     //membersDep.changed();
     //bubbleDep.changed();
   },
@@ -263,6 +266,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+    Meteor.Router.to('/settings/userprofile/' + this.id);
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -301,6 +305,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+    Meteor.Router.to('/settings/userprofile/' + this.id);
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -340,6 +345,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+    Meteor.Router.to('/settings/userprofile/' + this.id);
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -379,6 +385,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
+    Meteor.Router.to('/settings/userprofile/' + this.id);
     //membersDep.changed();
     //bubbleDep.changed();
 
