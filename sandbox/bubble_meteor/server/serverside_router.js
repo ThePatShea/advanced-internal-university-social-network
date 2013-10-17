@@ -702,7 +702,9 @@ function getItem(collectionName, itemId){
             'name': 1,
             'profilePicture': 1,
             'userType': 1,
-            'username': 1
+            'username': 1,
+            'neverLoggedIn': 1,
+            'neverOnboarded': 1
         }});
 
         if(!user){
