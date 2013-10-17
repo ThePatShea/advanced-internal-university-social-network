@@ -255,4 +255,7 @@ Meteor.startup(function() {
 	});
 
 	Meteor.Router.add('/api/v1_0/file/:id/get', 'GET', RestHandlers.handleFileRequest);
+
+	// CORS file uploading
+	Meteor.Router.add('/api/v1_0/file', 'OPTIONS', RestHandlers.handleCorsRequest);
 });

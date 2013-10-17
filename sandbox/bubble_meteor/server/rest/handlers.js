@@ -35,7 +35,13 @@ this.RestHandlers = {
       return RestHelpers.jsonResponse(500, 'Failed to create model');
 
     var result = results[0];
-    return RestHelpers.jsonResponse(200, RestPost.postprocessFile(result));
+
+    // CORS
+    var headers = {
+      'Access-Control-Allow-Origin': '*'
+    };
+
+    return RestHelpers.jsonResponse(200, RestPost.postprocessFile(result), headers);
   },
 
   handleFileRequest: function(id) {
@@ -50,5 +56,15 @@ this.RestHandlers = {
     };
 
     return [200, headers, obj.body.buffer];
+  },
+
+  handleCorsRequest: function() {
+    var headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'x-authentication'
+    };
+
+    return [200, headers, ''];
   }
 };

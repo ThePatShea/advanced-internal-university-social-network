@@ -247,8 +247,10 @@ this.RestHelpers = {
    * @param  {any} payload Payload to be sent
    * @return {object}      response object
    */
-  jsonResponse: function(code, payload) {
-    return [code, {'Content-Type': 'application/json'}, JSON.stringify(payload)];
+  jsonResponse: function(code, payload, headers) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+    return [code, headers, JSON.stringify(payload)];
   },
 
   /**
