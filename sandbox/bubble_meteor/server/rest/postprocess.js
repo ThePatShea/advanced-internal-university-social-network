@@ -70,7 +70,39 @@ this.RestPost = {
     return post;
   },
 
+  updatePost: function(ctx, obj) {
+    ctx.oldPost = RestHelpers.mongoFindOne(Posts, obj.id);
+    return _.extend(obj, {
+      lastUpdated: new Date().getTime()
+    });
+  },
+
   processPost: function(ctx, obj) {
+    // If it is post update, then old post should exist
+    var newFiles = obj.files;
+
+    if (ctx.oldPost) {
+      // Delete child posts that are no longer referenced
+      var missing = _.difference(ctx.oldPost.files, obj.files);
+
+      for (var m in missing) {
+        var fileId = missing[m];
+
+        var post = RestHelpers.mongoFindOne(Posts, {
+          postType: 'file',
+          file: fileId
+        });
+
+        if (post) {
+          RestHelpers.mongoDelete(Posts, post._id);
+          obj.children = _.without(obj.children, post._id);
+        }
+      }
+
+      newFiles = _.difference(obj.children, ctx.oldPost.children);
+    }
+
+    // Children creation logic
     createPostUpdate(obj);
 
     var key = null;
@@ -83,8 +115,8 @@ this.RestPost = {
 
     var ids = [];
 
-    for (var i in obj.files) {
-      var fileId = obj.files[i];
+    for (var i in newFiles) {
+      var fileId = newFiles[i];
 
       var file = RestHelpers.mongoFindOne(Files, fileId);
 
@@ -127,6 +159,8 @@ this.RestPost = {
           children: ids
         }
       });
+
+      obj.children = ids;
     }
   },
 
@@ -135,6 +169,9 @@ this.RestPost = {
 
     if (ctx.userId != obj.userId)
       createPostDeletedUpdate(obj.userId, obj._id);
+
+    for (var c in obj.children)
+      RestHelpers.mongoDelete(Posts, obj.children[c]);
   },
 
   // Files

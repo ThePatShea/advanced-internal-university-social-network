@@ -1,6 +1,8 @@
 this.UserType = {
-  ADMIN: '3',
-  SUPERADMIN: '4'
+  USER: '1',
+  SUPERUSER: '2',
+  CAMPUSMOD: '3',
+  BUBBLEMASTER: '4'
 };
 
 this.RestSecurity = {
@@ -35,8 +37,6 @@ this.RestSecurity = {
 
   canMakePost: function(fieldName) {
     return function(ctx, obj) {
-      console.log('y', obj, fieldName);
-
       // Check if post has a name
       if (!obj.name)
         return RestHelpers.jsonResponse(422, 'Please fill in post name');
@@ -46,10 +46,7 @@ this.RestSecurity = {
       };
       query[fieldName] = obj[fieldName];
 
-      console.log(query);
-
       if (RestHelpers.mongoFindOne(Posts, query)) {
-        console.log('no');
         return RestHelpers.jsonResponse(302, 'Duplicate post name');
       }
 
@@ -82,11 +79,12 @@ this.RestSecurity = {
       return response;
 
     // TODO: Prettify?
-    if (RestHelpers.haveChangedFields(obj, post, [
+    var field = RestHelpers.haveChangedFields(obj, post, [
       'author', 'exploreId', 'postAsType', 'postAsId', 'dateTime', 'location',
       'file', 'fileType', 'fileSize', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto',
-      'numDownloads', 'children', 'flagged', 'lastDownloadTime']))
-      return RestHelpers.jsonResponse(401, 'Not allowed to change core field')
+      'numDownloads', 'children', 'flagged', 'lastDownloadTime']);
+    if (field)
+      return RestHelpers.jsonResponse(401, 'Not allowed to change core field ' + field);
   },
 
   // Explores

@@ -107,7 +107,9 @@ Meteor.startup(function() {
 			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.canUpdatePost
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.ownsPost,
@@ -126,10 +128,14 @@ Meteor.startup(function() {
 			check: RestSecurity.makeBubblePostCheck('event')
 		},
 		create: {
-			check: RestSecurity.makeBubblePostCheck('event')
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.makeBubblePostCheck('event')
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('event')
@@ -147,10 +153,14 @@ Meteor.startup(function() {
 			check: RestSecurity.makeBubblePostCheck('discussion')
 		},
 		create: {
-			check: RestSecurity.makeBubblePostCheck('discussion')
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.makeBubblePostCheck('discussion')
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('discussion')
@@ -168,10 +178,14 @@ Meteor.startup(function() {
 			check: RestSecurity.makeBubblePostCheck('file')
 		},
 		create: {
-			check: RestSecurity.makeBubblePostCheck('file')
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.makeBubblePostCheck('file')
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('file')
