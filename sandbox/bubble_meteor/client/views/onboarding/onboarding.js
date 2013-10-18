@@ -292,7 +292,7 @@ Template.onboarding.rendered = function() {
         }
       });*/
       
-      console.log("User: ",user);
+      /*console.log("User: ",user);
       if (isHealthcare == false) {
         if (user.neverLoggedIn == false) {
           console.log("User.neverOnboarded: ", user.neverOnboarded);
