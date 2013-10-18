@@ -10,7 +10,7 @@ server {
 server {
     listen      8000;
 
-    location /2013-09-11/ {
+    location /2013-09-11/explores/ {
         proxy_pass http://localhost:3000;
         proxy_cache microcache;
         proxy_cache_key "$request_uri";

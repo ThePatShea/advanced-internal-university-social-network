@@ -194,7 +194,7 @@ Template.onboarding.rendered = function() {
   var newUser = userObject.toJSON();
   if(typeof newUser.neverOnboarded == 'undefined'){
     if(typeof newUser.neverLoggedIn == 'undefined'){
-      console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
+      //console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
       $("#cb-form-container-onboarding").show();
       $(".onboarding-wrapper-outer").show();
       $('.cb-form-onboarding').show();
@@ -207,7 +207,7 @@ Template.onboarding.rendered = function() {
       }
     }
     else if(newUser.neverLoggedIn == true){
-      console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
+      //console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
       $("#cb-form-container-onboarding").show();
       $(".onboarding-wrapper-outer").show();
       $('.cb-form-onboarding').show();
@@ -229,7 +229,7 @@ Template.onboarding.rendered = function() {
   }
   else if(newUser.neverOnboarded == true){
     if(typeof newUser.neverLoggedIn == 'undefined'){
-      console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
+      //console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
       $("#cb-form-container-onboarding").show();
       $(".onboarding-wrapper-outer").show();
       $('.cb-form-onboarding').show();
@@ -242,7 +242,7 @@ Template.onboarding.rendered = function() {
       }
     }
     else if(newUser.neverLoggedIn == true){
-      console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
+      //console.log('neverOnboarded, neverLoggedIn: ', newUser.neverOnboarded, newUser.neverLoggedIn);
       $("#cb-form-container-onboarding").show();
       $(".onboarding-wrapper-outer").show();
       $('.cb-form-onboarding').show();
