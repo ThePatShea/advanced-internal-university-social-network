@@ -33,6 +33,13 @@ Meteor.Router.add('/loadtest/:number', 'GET', function(number){
 });
 
 
+Meteor.Router.add('/reindex', 'GET', function(){
+    Meteor.call('reindex');
+
+    return [200, 'Successfully Reindexed'];
+});
+
+
 Meteor.Router.add('/2013-09-09/posts?:q', 'GET', function(q){
     console.log('REST API: ', this.request.originalUrl);
     urlLevels = this.request.originalUrl.split('/');
