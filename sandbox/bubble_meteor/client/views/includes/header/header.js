@@ -31,7 +31,9 @@ Template.header.helpers({
     }
   },
   checkUserType: function(userType) {
-    return Meteor.user().userType == userType;
+    //return Meteor.user().userType == userType;
+    var user = userObject.toJSON();
+    return user.userType
   },
   currentUser: function(){
     headerDep.depend();

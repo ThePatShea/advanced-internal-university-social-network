@@ -1,11 +1,12 @@
 Template.updatesDropdown.created = function(){
   //numberOfUpdates = 0;
   updateIds = [];
+  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
+  bubblepop = new Audio('/sounds/bubblepop.wav');
 }
 
 Template.updatesDropdown.rendered = function() {
-  mainUpdatesHandle = Meteor.subscribeWithPagination('updates', Meteor.userId(), 1);
-  bubblepop = new Audio('/sounds/bubblepop.wav');
+
 }
 
 
