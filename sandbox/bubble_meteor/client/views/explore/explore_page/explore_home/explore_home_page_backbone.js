@@ -115,6 +115,7 @@ Template.explorePageBackbone.helpers({
   	return "";
   },
   exploreInfo: function(){
+  	exploreDep.depend();
   	if(es != undefined)
 	{
 		return es.exploreInfo.toJSON();
