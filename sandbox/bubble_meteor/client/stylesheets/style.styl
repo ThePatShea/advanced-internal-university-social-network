@@ -2819,7 +2819,7 @@ attachment-height  =  75px
         .bubble-bg
           fill           main-light
   .author-pic
-    positionize(auto, auto, auto, 0 15px 0 0, auto, left)
+    positionize(auto, auto, auto, 13px 15px 0 0, auto, left)
     move-position(relative, -2px)
     .bubble-bg
       fill          white-xdark
@@ -2971,9 +2971,10 @@ attachment-height  =  75px
           display        none
   .comments-list
     .comments
-      /* Hack for bullet points and spacing showing up in comments list */
-      list-style        none
-      margin            0 0 0 -15px
+      /* Hack for bullet points and spacing showing up in comments list // We no longer need this I fixed it, Joe */
+      margin                    0
+      list-style-type           none
+
       .comment-item
         positionize(auto, auto, 15px 30px)
         position        relative

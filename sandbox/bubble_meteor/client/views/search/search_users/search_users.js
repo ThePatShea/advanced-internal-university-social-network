@@ -62,6 +62,7 @@ Template.searchUsers.rendered = function(){
       });
     }, 500);
   });
+  $(document).attr('title', 'Search Users - Emory Bubble');
 }
 
 Template.searchUsers.helpers({

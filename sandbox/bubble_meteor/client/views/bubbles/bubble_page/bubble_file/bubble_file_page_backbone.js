@@ -123,7 +123,6 @@ Template.bubbleFilePageBackbone.rendered = function() {
       }
     });
   }
-
 }
 
 Template.bubbleFilePageBackbone.helpers({

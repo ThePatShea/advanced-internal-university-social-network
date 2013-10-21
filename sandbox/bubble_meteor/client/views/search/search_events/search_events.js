@@ -66,6 +66,8 @@ Template.searchEvents.rendered = function(){
       });
     }, 500);
   });
+
+  $(document).attr('title', 'Search Events - Emory Bubble');
 }
 
 Template.searchEvents.created = function() {

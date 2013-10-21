@@ -53,4 +53,5 @@ Template.searchPage.rendered = function() {
     });
   }
   */
+  $(document).attr('title', 'Search - Emory Bubble');
 }

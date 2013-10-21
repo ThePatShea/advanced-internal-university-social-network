@@ -71,6 +71,7 @@ Template.searchFiles.rendered = function(){
       });
     }, 500);
   });
+  $(document).attr('title', 'Search Files - Emory Bubble');
 }
 
 Template.searchFiles.created = function() {
