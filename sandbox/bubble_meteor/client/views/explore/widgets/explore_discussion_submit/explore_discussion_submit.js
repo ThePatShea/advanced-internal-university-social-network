@@ -195,7 +195,7 @@ function processAttachmentSelections(fileAttachments){
 function makeDiscussionPost(){
   var postAttributes = {
     name: encodeURIComponent($('.cb-explore-discussionSubmit-form').find('[name=name]').val()),
-    body: $('.cb-explore-discussionSubmit-form').find('.wysiwyg').html(),
+    body: encodeURIComponent($('.cb-explore-discussionSubmit-form').find('.wysiwyg').html()),
     postAsType: $('.cb-explore-discussionSubmit-form .post-as-type').val(),
     postAsId:   $('.cb-explore-discussionSubmit-form .post-as-id').val(),
     postType: 'discussion',

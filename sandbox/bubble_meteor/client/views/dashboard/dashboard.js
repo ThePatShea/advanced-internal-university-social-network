@@ -536,6 +536,8 @@ Template.dashboard.rendered = function () {
 		$('.dashboard-more-updates').addClass('visible-0');
 		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
 	});
+
+	$(document).attr('title', 'Dashboard - Emory Bubble');
 };
 
 

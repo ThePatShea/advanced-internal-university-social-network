@@ -66,8 +66,8 @@ Template.exploreEventSubmit.events({
     var eventAttributes = { 
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
-      name: $('.cb-explore-eventSubmit-form > .first > .event-name').val(),
-      body: $('.cb-explore-eventSubmit-form > .event-details').val(),
+      name: encodeURIComponent($('.cb-explore-eventSubmit-form > .first > .event-name').val()),
+      body: encodeURIComponent($('.cb-explore-eventSubmit-form > .event-details').val()),
       postAsType: $('.cb-explore-eventSubmit-form .post-as-type').val(),
       postAsId:   $('.cb-explore-eventSubmit-form .post-as-id').val(),
       postType: 'event',
