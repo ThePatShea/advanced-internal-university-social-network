@@ -2,6 +2,8 @@ Template.bubbleEventPageBackbone.created = function(){
   Session.set("isLoading", true);
 
   bubbleDep = new Deps.Dependency;
+  if(typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
@@ -30,22 +32,22 @@ Template.bubbleEventPageBackbone.created = function(){
 
     members: {
       limit: 1,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     admins: {
       limit: 1,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     applicants: {
       limit: 1,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     invitees: {
       limit: 1,
-      fields: ['username', 'name', 'profilePicture']
+      fields: ['username', 'name', 'profilePicture','userType']
     },
 
     callback: function(){

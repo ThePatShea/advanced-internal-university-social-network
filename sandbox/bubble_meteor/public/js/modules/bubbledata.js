@@ -188,7 +188,7 @@
 	var BubbleInfo = Backbone.Model.extend({
 		url: function(){
 			console.log('/2013-09-11/bubbles/' + this.bubbleId)
-			return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture/' + this.bubbleId;
+			return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture,bubbleType,users/' + this.bubbleId;
 		}
 	});
 
@@ -615,6 +615,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleMembers);
 			this.setLimit = new setLimitHelper(this.bubbleMembers);
 			this.getJSON = new getJSONHelper(this.bubbleMembers);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleMembers);
 		};
 
 		var Admins = function() {
@@ -634,6 +635,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleAdmins);
 			this.setLimit = new setLimitHelper(this.bubbleAdmins);
 			this.getJSON = new getJSONHelper(this.bubbleAdmins);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleAdmins)
 		};
 
 		var Applicants = function() {
@@ -653,6 +655,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleApplicants);
 			this.setLimit = new setLimitHelper(this.bubbleApplicants);
 			this.getJSON = new getJSONHelper(this.bubbleApplicants);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleApplicants);
 		};
 
 		var Invitees = function() {
@@ -672,6 +675,7 @@
 			this.setFields = new setFieldsHelper(this.bubbleInvitees);
 			this.setLimit = new setLimitHelper(this.bubbleInvitees);
 			this.getJSON = new getJSONHelper(this.bubbleInvitees);
+			this.refreshCollection = new refreshCollectionHelper(this.bubbleInvitees);
 		};
 
 
@@ -691,45 +695,90 @@
 		}
 
 
-		this.isAdmin = function(id){
-		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isadmin?bubbleid=' + that.bubbleId + '&userid=' + id});
+		var isAdminHelper = function(bubbleInfo){
+		    /*var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isadmin?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
 		    else{
 		      return false;
+		    }*/
+		    return function(id){
+		    	var bInfo = bubbleInfo.toJSON();
+		    	var users = bInfo.users;
+		    	if(users.admins.indexOf(id) != -1){
+		    		return true;
+		    	}
+		    	else{
+		    		return false;
+		    	}
 		    }
 		}
 
-		this.isMember = function(id){
-		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/ismember?bubbleid=' + that.bubbleId + '&userid=' + id});
+		var isMemberHelper = function(bubbleInfo){
+		    /*var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/ismember?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
 		    else{
 		      return false;
+		    }*/
+		    return function(id){
+		    	var bInfo = bubbleInfo.toJSON();
+		    	var users = bInfo.users;
+		    	if(users.members.indexOf(id) != -1){
+		    		return true;
+		    	}
+		    	else{
+		    		return false;
+		    	}
 		    }
 		}
 
-		this.isApplicant = function(id){
-		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isapplicant?bubbleid=' + that.bubbleId + '&userid=' + id});
+		var isApplicantHelper = function(bubbleInfo){
+		    /*var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isapplicant?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
 		    else{
 		      return false;
+		    }*/
+		    return function(id){
+		    	var bInfo = bubbleInfo.toJSON();
+		    	var users = bInfo.users;
+		    	if(users.applicants.indexOf(id) != -1){
+		    		return true;
+		    	}
+		    	else{
+		    		return false;
+		    	}
 		    }
 		}
 
-		this.isInvitee = function(id){
-		    var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isinvitee?bubbleid=' + that.bubbleId + '&userid=' + id});
+		var isInviteeHelper = function(bubbleInfo){
+		    /*var ajaxresponse = $.ajax({async: false, url: '/2013-09-11/isinvitee?bubbleid=' + that.bubbleId + '&userid=' + id});
 		    if(ajaxresponse.responseText == 'True'){
 		      return true;
 		    }
 		    else{
 		      return false;
+		    }*/
+		    return function(id){
+		    	var bInfo = bubbleInfo.toJSON();
+		    	var users = bInfo.users;
+		    	if(users.invitees.indexOf(id) != -1){
+		    		return true;
+		    	}
+		    	else{
+		    		return false;
+		    	}
 		    }
 		}
+
+		this.isAdmin = isAdminHelper(this.bubbleInfo);
+		this.isMember = isMemberHelper(this.bubbleInfo);
+		this.isApplicant = isApplicantHelper(this.bubbleInfo);
+		this.isInvitee = isInviteeHelper(this.bubbleInfo);
 
 		this.Members = new Members();
 		this.Admins = new Admins();
@@ -986,5 +1035,21 @@
 			return scope.toJSON();
 		};
 	};
+
+	var refreshCollectionHelper = function(scope) {
+		return function(callback){
+			var currentPage = scope.page;
+			scope.reset([]);
+				scope.page = currentPage;
+				scope.fetch({
+						success: function() {
+							if(callback && (typeof callback === "function"))
+							{
+								callback(page);
+							}
+						}
+				});
+		}
+	}
 
 }());

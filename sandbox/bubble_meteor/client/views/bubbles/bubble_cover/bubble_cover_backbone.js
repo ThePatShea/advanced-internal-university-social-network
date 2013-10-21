@@ -1,8 +1,8 @@
 Template.bubbleCoverBackbone.rendered = function(){
   //Log clicking of edit bubble button
-  $(".lbl").on("click", function() {
+  /*$(".lbl").on("click", function() {
     Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
-  });
+  });*/
 }
 
 
@@ -51,7 +51,9 @@ Template.bubbleCoverBackbone.helpers({
 
   getBubbleUsersCountBackbone: function(){
     var userCount = mybubbles.Members.bubbleMembers.count + mybubbles.Admins.bubbleAdmins.count;
-    bubbleDep.changed();
+    if(typeof bubbleDep != 'undefined'){
+      bubbleDep.changed();
+    }
 
     return userCount;
   }

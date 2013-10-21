@@ -630,6 +630,9 @@ Meteor.publish('sidebarBubbles', function(userId) {
     Meteor.publish('findUserByName', function(name){
     return Meteor.users.find({'name': name});
   });
+  Meteor.publish('findNameFromUsername', function(username){
+    return Meteor.users.find({'username': username},{fields: {'name': 1}});
+  });
 
   Meteor.publish('findUsersById', function(userIdList) {
     if(userIdList){

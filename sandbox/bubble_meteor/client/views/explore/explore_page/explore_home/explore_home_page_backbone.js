@@ -34,7 +34,7 @@ Template.explorePageBackbone.rendered = function(){
 		es = new ExploreData.ExploreSection({
 			exploreId: currentExploreId,
 			limit: 10,
-			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'commentsCount','attendees']
+			fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'children','commentsCount','attendees']
 		});
 		es.fetchPage(es.getCurrentPage(), function() {
 			Session.set("isLoading", false);
@@ -115,6 +115,7 @@ Template.explorePageBackbone.helpers({
   	return "";
   },
   exploreInfo: function(){
+  	exploreDep.depend();
   	if(es != undefined)
 	{
 		return es.exploreInfo.toJSON();

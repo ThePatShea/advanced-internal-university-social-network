@@ -1,4 +1,4 @@
-Template.listItemBB.helpers({
+Template.listItemUserBB.helpers({
     getPostAsUser: function() {
       //return Meteor.users.findOne(this.postAsId);
       //console.log("ES: ", es.exploreUsers.toJSON());
@@ -95,13 +95,14 @@ Template.listItemBB.helpers({
     },
 
     isAdminBB: function(){
-      var isadmin = mybubbles.isAdmin(Meteor.userId());
+      /*var isadmin = mybubbles.isAdmin(Meteor.userId());
       console.log('Is Admin: ', isadmin);
-      return isadmin;
+      return isadmin;*/
+      return isAdminOfBubble;
     }
 });
 
-Template.listItemBB.events({
+Template.listItemUserBB.events({
     'click .post-item' : function(evt) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -140,13 +141,15 @@ Template.listItemBB.events({
     }
 });
 
-Template.listItemBB.created = function() {
+Template.listItemUserBB.created = function() {
   mto = "";
+  isAdminOfBubble = mybubbles.isAdmin(Meteor.userId());
 }
 
-Template.listItemBB.rendered = function(){
+Template.listItemUserBB.rendered = function(){
   // console.log("LIBB: ", this);
   //Log clicking of individual bubble
+  isAdminOfBubble = mybubbles.isAdmin(Meteor.userId());
   /*$(".post-item").on("click", function() {
     // Meteor.clearTimeout(mto);
     // mto = Meteor.setTimeout(function() {

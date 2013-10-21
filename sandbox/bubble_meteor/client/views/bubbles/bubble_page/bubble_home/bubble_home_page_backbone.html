@@ -32,6 +32,10 @@
             </div>
           {{/if}}
         {{/codeComment}}
+        <div class="visible-false">
+          {{testGetUpdates}}
+        </div>
+        {{#if showUpdates}}
         <div class="visible-{{testNumUpdates}}">
           <div class="bubble-list">
             <div class="bubble-list-heading">
@@ -46,13 +50,14 @@
             </div>
           </div>
         </div>
+        {{/if}}
   
         <div class="bubble-list">
           {{#with postPropertiesBackboneEvent}}
             <div></div>
             {{> listHeading}}
             {{#each posts}}
-              {{> listItemBB}}
+              {{> listItemPostBB}}
             {{else}}
               <div class="post-item">
                 <div class="v-middle">
@@ -73,7 +78,7 @@
             <div></div>
             {{> listHeading}}
             {{#each posts}}
-              {{> listItemBB}}
+              {{> listItemPostBB}}
             {{else}}
               <div class="post-item">
                 <div class="v-middle">
@@ -94,7 +99,7 @@
             <div></div>
             {{> listHeading}}
             {{#each posts}}
-              {{> listItemBB}}
+              {{> listItemPostBB}}
             {{else}}
               <div class="post-item">
                 <div class="v-middle">
@@ -109,12 +114,6 @@
             </a>
           {{/with}}
         </div>
-
-
-
-
     </div>
-
-
   {{/with}}
 </template>

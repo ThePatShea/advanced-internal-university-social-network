@@ -46,12 +46,12 @@ Template.bubbleCover.events({
 });
 
 Template.bubbleCover.rendered = function(){
-  $(".edit-bubble").on("click", function() {
+  /*$(".edit-bubble").on("click", function() {
     //Logs the action that user is doing
     Meteor.call('createLog', 
       { action: 'click-editBubbleButton' }, 
       window.location.pathname, 
       function(error) { if(error) { throwError(error.reason); }
     });
-  });
+  });*/
 }

@@ -1,4 +1,4 @@
-Template.listItemBB.helpers({
+Template.listItemPostBB.helpers({
     getPostAsUser: function() {
       //return Meteor.users.findOne(this.postAsId);
       //console.log("ES: ", es.exploreUsers.toJSON());
@@ -86,11 +86,26 @@ Template.listItemBB.helpers({
       if(this.postType == 'file'){
         return true;
       }
+      else{
+        return false;
+      }
     },
 
     isDiscussion: function(){
       if(this.postType == 'discussion'){
         return true;
+      }
+      else{
+        return false;
+      }
+    },
+
+    isEvent: function(){
+      if(this.postType == 'event'){
+        return true;
+      }
+      else{
+        return false;
       }
     },
 
@@ -101,7 +116,7 @@ Template.listItemBB.helpers({
     }
 });
 
-Template.listItemBB.events({
+Template.listItemPostBB.events({
     'click .post-item' : function(evt) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -140,11 +155,11 @@ Template.listItemBB.events({
     }
 });
 
-Template.listItemBB.created = function() {
+Template.listItemPostBB.created = function() {
   mto = "";
 }
 
-Template.listItemBB.rendered = function(){
+Template.listItemPostBB.rendered = function(){
   // console.log("LIBB: ", this);
   //Log clicking of individual bubble
   /*$(".post-item").on("click", function() {

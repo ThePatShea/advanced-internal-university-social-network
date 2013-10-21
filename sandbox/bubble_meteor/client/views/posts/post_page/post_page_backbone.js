@@ -149,7 +149,7 @@ Template.postPageBackbone.rendered = function() {
   }
 
   //Log clicking of edit button
-  $(".btn-edit").on("click", function() {
+  /*$(".btn-edit").on("click", function() {
     //Retrieve the post type via data-targets
     var page = $(".btn-edit").data().target.replace('#','');
     Meteor.clearTimeout(mto);
@@ -162,7 +162,7 @@ Template.postPageBackbone.rendered = function() {
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
-  });
+  });*/
 
 }
 
@@ -301,14 +301,14 @@ Template.postPageBackbone.events({
 
         //Logs the action that user is doing
         Meteor.clearTimeout(mto);
-        mto = Meteor.setTimeout(function() {
+        /*mto = Meteor.setTimeout(function() {
           Meteor.call('createLog', 
             { action: 'click-postDeleteBtn',
               postId: currentPostId}, 
             window.location.pathname, 
             function(error) { if(error) { throwError(error.reason); }
           });
-        }, 500);
+        }, 500);*/
 
         Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
       }
