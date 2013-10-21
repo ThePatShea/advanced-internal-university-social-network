@@ -34,7 +34,10 @@ Template.postAttributes.helpers({
 });
 
 Template.postAttributes.events({
-    'click .file-download': function(){
+    'click .file-download': function(e){
         console.log("File Download Click: ", this);
+        /*e.stopPropagation();
+        e.preventDefault();
+        window.open(this.file,'_.blank');*/
     }
 })
