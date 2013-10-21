@@ -2,7 +2,9 @@ Template.postPageBackbone.created = function() {
   Session.set("isLoadingPost", true);
   Session.set("isLoadingComments", true);
 
-  bubbleDep = new Deps.Dependency;
+    bubbleDep = new Deps.Dependency;
+  if(typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
@@ -63,6 +65,7 @@ Template.postPageBackbone.created = function() {
   postAuthorObject = new mybubbles.BubbleUser({id: currentPostObject.toJSON().userId});
   postAuthorObject.fetch();
   postAuthor = postAuthorObject.toJSON();
+  var mto = "";
 
 }
 
@@ -145,6 +148,22 @@ Template.postPageBackbone.rendered = function() {
 
   }
 
+  //Log clicking of edit button
+  /*$(".btn-edit").on("click", function() {
+    //Retrieve the post type via data-targets
+    var page = $(".btn-edit").data().target.replace('#','');
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-postEditBtn',
+          overwritePage: page }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });*/
+
 }
 
 
@@ -155,6 +174,9 @@ Template.postPageBackbone.helpers({
   },
 
   getCurrentPostBackbone: function(){
+    bubbleDep.depend();
+    currentPostObject.fetch({async:false});
+    goingDep.changed();
     return currentPostObject.toJSON();
   },
 
@@ -276,6 +298,18 @@ Template.postPageBackbone.events({
       if (confirm("Delete this post?")) {
         var currentPostId = Session.get('currentPostId');
         Posts.remove(currentPostId);
+
+        //Logs the action that user is doing
+        Meteor.clearTimeout(mto);
+        /*mto = Meteor.setTimeout(function() {
+          Meteor.call('createLog', 
+            { action: 'click-postDeleteBtn',
+              postId: currentPostId}, 
+            window.location.pathname, 
+            function(error) { if(error) { throwError(error.reason); }
+          });
+        }, 500);*/
+
         Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
       }
     }

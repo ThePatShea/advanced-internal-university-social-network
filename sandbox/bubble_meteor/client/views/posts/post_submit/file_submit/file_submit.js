@@ -71,6 +71,39 @@ Template.fileSubmit.helpers({
 
 Template.fileSubmit.created = function(){
   files = [];
+  var mto = '';
+}
+
+Template.fileSubmit.rendered = function(){
+
+  //Log clicking of uploading button
+  $(".file-chooser-invisible").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-fileAttachFile',
+          overwritePage: 'create-file' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
+  //Log clicking of submit button
+  $(".file-submit").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-fileSubmitButton',
+          overwritePage: 'create-file' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });
+
 }
 
 

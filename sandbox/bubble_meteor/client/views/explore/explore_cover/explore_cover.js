@@ -50,6 +50,7 @@ Template.exploreCover.helpers({
   },
 
   isExploreType: function(exploretype){
+    exploreDep.depend();
     console.log("Explore Cover: ", this);
     if(this.exploreType == exploretype){
       console.log(exploretype, this.exploreType == exploretype);

@@ -31,7 +31,7 @@
     <span class="visible-{{hasChildren}}">{{> postAttachments}}</span>
 
     <div class="visible-{{matchPostType 'file'}}">
-      <a href="{{file}}" download="{{decodeURI name}}">
+      <a href="{{this.file}}" download="{{decodeURI name}}" class="file-download">
         <div class="attachment">
           <div class="pull-left v-middle">
             <div class="v-inner">
@@ -52,7 +52,7 @@
   <div class="visible-{{matchPostType 'event'}} bubble-list people-going">
     <div class="bubble-list-heading">
       <h3 class="section-name pull-left">{{pluralize numOfAttendees "person" ""}} going</h3>
-      <span class="pull-right">{{> imGoingSmall}}</span>
+      {{#codeComment}}<span class="pull-right">{{> imGoingSmall}}</span>{{/codeComment}}
     </div>
     <div class="people-list">
       {{#each reverseAttendees}}

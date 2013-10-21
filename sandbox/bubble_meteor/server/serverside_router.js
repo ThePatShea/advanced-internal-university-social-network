@@ -33,6 +33,13 @@ Meteor.Router.add('/loadtest/:number', 'GET', function(number){
 });
 
 
+Meteor.Router.add('/reindex', 'GET', function(){
+    Meteor.call('reindex');
+
+    return [200, 'Successfully Reindexed'];
+});
+
+
 Meteor.Router.add('/2013-09-09/posts?:q', 'GET', function(q){
     console.log('REST API: ', this.request.originalUrl);
     urlLevels = this.request.originalUrl.split('/');
@@ -702,7 +709,9 @@ function getItem(collectionName, itemId){
             'name': 1,
             'profilePicture': 1,
             'userType': 1,
-            'username': 1
+            'username': 1,
+            'neverLoggedIn': 1,
+            'neverOnboarded': 1
         }});
 
         if(!user){
@@ -1058,7 +1067,7 @@ function getBubblePosts(limit, offset, fields, bubbleId){
 }
 
 function getDashboardPosts(limit){
-    var posts = Posts.find({exploreId: {$exists: true}},{limit: limit, sort: {submitted: -1}}).fetch();
+    var posts = Posts.find({'exploreId': {$exists: true},'postType': {$ne:'file'}},{fields: {file: 0, body: 0},limit: limit, sort: {submitted: -1}}).fetch();
     return posts;
 }
 

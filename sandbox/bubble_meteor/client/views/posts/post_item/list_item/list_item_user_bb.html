@@ -1,0 +1,43 @@
+<template name="listItemUserBB">
+  <div class="post-item name-{{name}}">
+    <div class="visible-true v-middle pull-left profile-pic-container">
+      <div class="v-inner">
+        <img class="pic-circle profile-pic" src="{{profilePicture}}"/> 
+      </div>
+    </div>
+
+
+    <div class="visible-true pull-left v-middle update-time">
+      <div class="v-inner">
+        <div class="lbl">member of</div>
+        <div class="lbl">{{pluralize membershipCount "bubble" ""}}</div>
+      </div>
+    </div>
+
+    <h4 class="visible-true post-name">
+      <span class="name-text">{{name}}</span>
+    </h4>
+
+    <div class="post-item-attributes">
+      <div class="v-middle pull-right">
+        <div class="v-inner">       
+          <span class="post-actions">    
+            {{#if inBubble}}
+              <span class="visible-{{matchObjectType 'user'}}">
+                {{#unless isMe}}
+                  <span class="invisible-{{isAdminBB}}">{{> viewProfile}}</span>
+                  <span class="visible-{{isAdminBB}}">{{> adminActionsBackbone}}</span>
+                {{/unless}}
+                {{#if isMe}}
+                  <span>{{> userActionsBackbone}}</span>
+                {{/if}}
+              </span>
+            {{else}}
+              <span class="visible-{{matchObjectType 'user'}}">{{> viewProfile}}</span>
+            {{/if}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

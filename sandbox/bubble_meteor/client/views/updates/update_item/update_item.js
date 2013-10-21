@@ -30,6 +30,7 @@ Template.updateItem.helpers({
     	}
     }
   , getDisplayInfo: function() {
+      //Meteor.subscribe('findUsersByUsername',this.invokerName);
       if(this.updateType == "new attendee"
       || this.updateType == "edited post"
       || this.updateType == "replied"
@@ -39,11 +40,14 @@ Template.updateItem.helpers({
           return object;
       } else {
         var object = { };
-        //this.user = Meteor.users.findOne({'username': this.invokerName}, {'fields': 'name'});
-        //console.log("User: ", this.user, " | invokerName: ", this.invokerName);
-        //object.name      =  this.user.name;
+        var user = Meteor.users.findOne({'username': this.invokerName}, {fields: {'name': 1}});
+        console.log("User: ", user, " | invokerName: ", this.invokerName);
+        if(typeof user !== "undefined")
+          object.name = user.name;
+        else
+          object.name = this.invokerName;
 
-        object.name = this.invokerName;
+        //object.name = this.invokerName;
 
         object.postType  =  'member';
 

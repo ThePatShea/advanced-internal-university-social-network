@@ -83,107 +83,28 @@
 		</div>
 	</div>
 
-{{#codeComment}}
-	<div class="dashboard-section-header">
-		{{> icon-dashboard-big}} dashboard
-	</div> 
-
-	<div class="dashboard-item-container">
-		<div class="dashboard-item-container-inner">
-			<div class="dashboard-item-spacer">
-				&nbsp;
-			</div>
-			<div class="dashboard-item-outer">
-				<div class="pull-left v-middle dashboard-item item-1">
-					<div class="v-inner">
-						<div class="number">{{numEvents}}</div>
-						<div class="word">events</div>
-					</div>
-				</div>
-			</div>
-			<div class="dashboard-item-outer">
-				<div class="pull-left v-middle dashboard-item item-2">
-					<div class="v-inner">
-						<div class="number">{{numUpdates}}</div>
-						<div class="word">updates</div>
-					</div>
-				</div>
-			</div>
-			<div class="dashboard-item-outer">
-				<div class="pull-left v-middle dashboard-item item-3">
-					<div class="v-inner">
-						<div class="number">{{numBubbles}}</div>
-						<div class="word">bubbles</div>
-					</div>
-				</div>
-			</div>
-			<div class="dashboard-item-outer">
-				<div class="pull-left v-middle dashboard-item item-4">
-					<div class="v-inner">
-						<div class="number">{{numInvites}}</div>
-						<div class="word">invites</div>
-					</div>
-				</div>
-			</div>
-			<div class="dashboard-item-outer">
-				<div class="pull-left v-middle dashboard-item item-5">
-					<div class="v-inner">
-						<div class="number">{{numComments}}</div>
-						<div class="word">comments</div>
-					</div>
-				</div>
-			</div>
-			<div class="dashboard-item-outer">
-				<div class="pull-left v-middle dashboard-item item-6">
-					<div class="v-inner">
-						<div class="number">{{numPosts}}</div>
-						<div class="word">posts</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-{{/codeComment}}
-
-
-        <div class="visible-{{numUpdates}}">
-          <div class="dashboard-section-header">
-          	{{pluralize numUpdates 'update' ""}}
-          	<button class="std-btn-light pull-right clear-updates">clear all</button> 
-          </div>
-          <div class="dashboard-updates">
-          	<div class="threeUpdates">
-                    <div></div>
-          		{{#each getUpdates 3}}
-          			{{> updateItem}}
-          		{{/each}}
+    	<div class="visible-{{testNumUpdates}}">
+    		<div class="dashboard-section-header">
+    			{{pluralize testNumUpdates 'update' ""}}
+          		<button class="std-btn-light pull-right clear-updates">clear all</button> 
           	</div>
-          	<div class="allUpdates visible-0">
-          		{{#each getUpdates 0}}
-          			{{> updateItem}}
-          		{{/each}}
-          	</div>
-          	{{#if showMoreUpdates numUpdates}}
-          		<div class="dashboard-more-updates">
-          			+{{pluralize numUpdatesMinusThree "update" "more"}}
-          		</div>
-          	{{/if}}
-          </div>
-        </div>
-        <div>
+          	<div class="dashboard-updates">
+    			{{#each testGetUpdates}}
+    				{{>updateItem}}
+    			{{/each}}
+	    		<div class="dashboard-more-updates">
+	    			See All Updates
+	    		</div>
+    		</div>
+    	</div>
+
+
           <div class="dashboard-section-header">
             latest posts from explore
           </div>
           <div>
             <div></div>
-            {{#codeComment}}
-	            {{#each getFiveExplorePosts}}
-	              {{> listItem}}
-	            {{else}}
-	              {{> gifLoaderToParent}}
-	            {{/each}}
-            {{/codeComment}}
-
+			
             {{#each getFiveExplorePostsBB}}
            		{{> listItemBB}}
             {{else}}

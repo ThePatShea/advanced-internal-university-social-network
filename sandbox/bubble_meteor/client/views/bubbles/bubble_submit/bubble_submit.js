@@ -20,8 +20,10 @@ Template.bubbleSubmit.events({
       if (error) {
         throwError(error.reason);
       } else {
+        console.log('Create Bubble');
         Meteor.call('addBubbleToIndex', bubbleId, bubble.title);
-        Meteor.Router.to('bubbleMembersPage', bubbleId);
+        //Meteor.Router.to('bubbleMembersPageBackbone', bubbleId);
+        window.location.href = "/mybubbles/" + bubbleId + "/members";
       }
     });
   },
@@ -510,67 +512,98 @@ Template.bubbleSubmit.rendered = function(){
     Session.set("DisableCrop","");
   }
 
-  //Log clicking of comment box
-  $(".required").on("click", function() {
+  //Log clicking of Add bubble button
+  /*$(".required").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickNameTextbox', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleTitleTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
+  });*/
 
   //Log clicking of category
-  $(".categoryBox").on("click", function() {
+  /*$(".categoryBox").on("click", function() {
     var category = _.find($('.categoryBox'), function(category){
       if(category.className.indexOf('active') !== -1){
         return category;
       }
     });
-    Meteor.call('createLog',  "createBubble", 'createBubble', 'clickCategory', false);
-
-  });
+    //Logs the action that user is doing
+    Meteor.call('createLog', 
+      { action: 'click-bubbleCategory' }, 
+      window.location.pathname, 
+      function(error) { if(error) { throwError(error.reason); }
+    });
+    
+  });*/
 
   //Log clicking of cover photo
-  $(".attach-cover-photo").on("click", function() {
+  /*$(".attach-cover-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickCoverPhoto', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleCoverPhoto' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
+  });*/
 
   //Log clicking of profile photo
-  $(".attach-profile-photo").on("click", function() {
+  /*$(".attach-profile-photo").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickProfilePhoto', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleProfilepicture' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
+  });*/
 
   //Log clicking of description wisiwyg
-  $(".wysiwyg").on("click", function() {
+  /*$(".wysiwyg").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickDescriptionTextbox', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleDescriptionTextbox' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
+  });*/
 
   //Log clicking of submit button
-  $(".words-main").on("click", function() {
+  /*$(".words-main").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      console.log("this ran");
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickSubmitButton', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
+  });*/
 
   //Log clicking of submit error button
-  $(".words-error").on("click", function() {
+  /*$(".words-error").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      console.log("this ran");
-      Meteor.call('createLog',  "createBubble", 'createBubble', 'clickSubmitErrorButton', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-bubbleErrorSubmitButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
-
-
+  });*/
 }
 

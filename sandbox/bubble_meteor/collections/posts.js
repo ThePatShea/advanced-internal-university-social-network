@@ -131,9 +131,20 @@ Meteor.methods({
     });
   },
 
-  attendEvent: function(postId,username){
-    post = Posts.findOne(postId);
+  attendEvent: function(post,callback){
+    //Meteor.subscribe('findPostsById',[postId]);
+    //post = Posts.findOne({_id: postId});
+    console.log("Post? ", post);
+    username = Meteor.userId();
+    postId = post.id;
     if (!_.contains(post.attendees,username)) {
+      //Logs the action that user is doing
+      /*Meteor.call('createLog', 
+        { action: 'click-eventGoing' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });*/
+
       Posts.update({_id:postId},
       {
         $addToSet: {attendees:username}
@@ -141,11 +152,19 @@ Meteor.methods({
       //Create an update for user who are in the event
       createNewAttendeeUpdate(postId);
     }else{
+      //Logs the action that user is doing
+      /*Meteor.call('createLog', 
+        { action: 'click-eventNotGoing' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });*/
+
       Posts.update({_id:postId},
       {
         $pull: {attendees:username}
       });
     }
+    return postId;
   },
   getNumOfEvents: function(bubbleId, postType ) {
     return Posts.find({'bubbleId': bubbleId, 'postType': postType}).count();
@@ -159,10 +178,10 @@ createPost = function(postAttributes){
       throwError(error.reason);
     } else {
         if(typeof postAttributes.bubbleId != 'undefined'){
-          Meteor.Router.to('postPage', post.bubbleId, post._id);
+          Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
         }
         else{
-          Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+          Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
         }
     }
   });
@@ -229,10 +248,10 @@ createPostWithAttachments = function(postAttributes, fileList){
       }
 
       if(typeof postAttributes.bubbleId != 'undefined'){
-        Meteor.Router.to('postPage', post.bubbleId, post._id);
+        Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
       }
       else{
-        Meteor.Router.to('explorePostPage', post.exploreId, post._id);
+        Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
       }
 
     }
@@ -329,8 +348,8 @@ updatePostWithAttachments = function(id, postAttributes, fileList){
           throwError(error.reason);
         }
         else{
-          console.log('Successfully updated');
-            Meteor.Router.to('postPage', discussionPost.exploreId, discussionPost._id);
+          console.log('Successfully updated bubble post');
+            Meteor.Router.to('postPage', discussionPost.bubbleId, discussionPost._id);
         }
       });
     }

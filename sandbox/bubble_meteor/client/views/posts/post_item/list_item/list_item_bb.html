@@ -1,5 +1,5 @@
 <template name="listItemBB">
-  <div class="post-item">
+  <div class="post-item name-{{name}}">
     <div class="visible-{{matchPostType 'event'}} pull-left post-date">
       <div class="day">{{timestampToDayLong dateTime}}</div>
       <div class="month">{{timestampToMonthShort dateTime}}</div>
@@ -154,11 +154,11 @@
             {{#if inBubble}}
               <span class="visible-{{matchObjectType 'user'}}">
                 {{#unless isMe}}
-                  <span class="invisible-{{isAdmin}}">{{> viewProfile}}</span>
-                  <span class="visible-{{isAdmin}}">{{> adminActions}}</span>
+                  <span class="invisible-{{isAdminBB}}">{{> viewProfile}}</span>
+                  <span class="visible-{{isAdminBB}}">{{> adminActionsBackbone}}</span>
                 {{/unless}}
                 {{#if isMe}}
-                  <span>{{> userActions}}</span>
+                  <span>{{> userActionsBackbone}}</span>
                 {{/if}}
               </span>
             {{else}}

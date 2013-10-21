@@ -65,6 +65,6 @@ Template.userlog.events({
   'click .csv-submit': function(evt) {
     evt.stopPropagation();
     evt.preventDefault();
-    window.open("https://login.emorybubble.com/bubbleanalytics.csv?start=" + $("#start-date").val() + "&end=" + $("#end-date").val());
+    window.open("localhost:3030/bubbleanalytics.csv?start=" + $("#start-date").val() + "&end=" + $("#end-date").val());
   }
 })

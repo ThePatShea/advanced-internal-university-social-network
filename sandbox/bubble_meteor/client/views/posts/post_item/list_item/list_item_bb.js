@@ -58,11 +58,28 @@ Template.listItemBB.helpers({
     },
 
     isMe: function(){
-     return(this.id == Meteor.userId());
+      if(typeof this.id == 'undefined'){
+        this.id = this._id;
+      }
+
+      if(this.id == Meteor.userId()){
+        return true;
+      }
+      else{
+        return false;
+      }
+      //return(this.id == Meteor.userId());
     },
 
     inBubble: function(){
-      return(Meteor.Router.page() == "bubbleMembersPage");
+      //return(Meteor.Router.page() == "bubbleMembersPage");
+      var sitePath = window.location.pathname.split('/')[1];
+      if(sitePath == 'mybubbles'){
+        return true;
+      }
+      else{
+        return false
+      }
     },
 
     isFile: function(){
@@ -75,6 +92,12 @@ Template.listItemBB.helpers({
       if(this.postType == 'discussion'){
         return true;
       }
+    },
+
+    isAdminBB: function(){
+      var isadmin = mybubbles.isAdmin(Meteor.userId());
+      console.log('Is Admin: ', isadmin);
+      return isadmin;
     }
 });
 
@@ -92,12 +115,18 @@ Template.listItemBB.events({
             Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
           else if(typeof this.postType != 'undefined'){
-            console.log(this.id);
             Meteor.Router.to('postPageBackbone', this.bubbleId, this.id);
           }
       }
       else if(typeof this.exploreId != 'undefined'){
-        Meteor.Router.to('explorePostPageBB', this.exploreId, this.id);
+        if(this.postType == 'file')
+        {
+          window.open(this.file,'_.blank');
+        }
+        else
+        {
+          Meteor.Router.to('explorePostPageBB', this.exploreId, this.id);
+        }
       }
       else if(typeof this.userType != 'undefined'){
         Meteor.Router.to('userProfile', this.id);
@@ -111,6 +140,24 @@ Template.listItemBB.events({
     }
 });
 
+Template.listItemBB.created = function() {
+  mto = "";
+}
+
 Template.listItemBB.rendered = function(){
-  console.log("LIBB: ", this);
+  // console.log("LIBB: ", this);
+  //Log clicking of individual bubble
+  /*$(".post-item").on("click", function() {
+    // Meteor.clearTimeout(mto);
+    // mto = Meteor.setTimeout(function() {
+      //Extract and append the bubble's title to action string
+      var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: title }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    // }, 500);
+  });*/
 }

@@ -14,20 +14,42 @@
     </div>
 
     <div class="bubble-page-content">
-        {{#if compressedUpdates id '1'}}
+
+        {{#codeComment}}
+          {{#if compressedUpdates id '1'}}
+            <div class="bubble-list">
+              <div class="bubble-list-heading">
+                <h3 class="section-name pull-left">{{compressedUpdatesCount this.id}} updates</h3>
+
+                <button class="std-btn-light pull-right clear-updates">clear all</button> 
+                
+                {{#if showMoreUpdates compressedUpdatesCount}}
+                  <button class="std-btn-light pull-right more-updates">see all</button>
+                {{/if}}
+                
+              </div>
+              {{> updatesList}}
+            </div>
+          {{/if}}
+        {{/codeComment}}
+        <div class="visible-false">
+          {{testGetUpdates}}
+        </div>
+        {{#if showUpdates}}
+        <div class="visible-{{testNumUpdates}}">
           <div class="bubble-list">
             <div class="bubble-list-heading">
-              <h3 class="section-name pull-left">{{compressedUpdatesCount this.id}} updates</h3>
-
-              <button class="std-btn-light pull-right clear-updates">clear all</button> 
-              
-              {{#if showMoreUpdates compressedUpdatesCount}}
-                <button class="std-btn-light pull-right more-updates">see all</button>
-              {{/if}}
-              
+              <h3 class="section-name pull-left">{{pluralize testNumUpdates 'update' ""}}</h3>
+                  <button class="std-btn-light pull-right clear-updates">clear all</button> 
+                </div>
+                <div class="dashboard-updates">
+              {{#each testGetUpdates}}
+                {{>updateItem}}
+              {{/each}}
+              <button class="pull-left btn-tiny more-updates" style="margin: 15px 0 0 25px">+ see all</button>
             </div>
-            {{> updatesList}}
           </div>
+        </div>
         {{/if}}
   
         <div class="bubble-list">
@@ -35,7 +57,7 @@
             <div></div>
             {{> listHeading}}
             {{#each posts}}
-              {{> listItemBB}}
+              {{> listItemEventPostBB}}
             {{else}}
               <div class="post-item">
                 <div class="v-middle">
@@ -56,7 +78,7 @@
             <div></div>
             {{> listHeading}}
             {{#each posts}}
-              {{> listItemBB}}
+              {{> listItemDiscussionPostBB}}
             {{else}}
               <div class="post-item">
                 <div class="v-middle">
@@ -77,7 +99,7 @@
             <div></div>
             {{> listHeading}}
             {{#each posts}}
-              {{> listItemBB}}
+              {{> listItemFilePostBB}}
             {{else}}
               <div class="post-item">
                 <div class="v-middle">
@@ -92,12 +114,6 @@
             </a>
           {{/with}}
         </div>
-
-
-
-
     </div>
-
-
   {{/with}}
 </template>

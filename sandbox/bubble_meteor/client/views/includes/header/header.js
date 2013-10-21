@@ -1,5 +1,12 @@
 Template.header.created = function() {
   Session.set('sidebarOpen', false);
+  headerDep = new Deps.Dependency;
+  uId = Meteor.userId();
+  userObject = new UserData.UserInfo({id: uId});
+  userObject.fetch({success: function(){
+    headerDep.changed();
+  }});
+  //user = userObject.toJSON();
 }
 
 Template.header.helpers({
@@ -24,6 +31,12 @@ Template.header.helpers({
     }
   },
   checkUserType: function(userType) {
-    return Meteor.user().userType == userType;
+    //return Meteor.user().userType == userType;
+    var user = userObject.toJSON();
+    return (user.userType == userType);
+  },
+  currentUser: function(){
+    headerDep.depend();
+    return userObject.toJSON();
   }
 });

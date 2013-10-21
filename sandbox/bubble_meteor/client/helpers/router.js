@@ -106,7 +106,10 @@ Meteor.Router.add({
       to: 'fileobjectEdit',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
-
+    '/mybubbles/:_bId/posts/:_pId/updated': {
+      to: 'postPage', 
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
+    },
 
   // Creation Related Routes
     '/mybubbles/:_id/create/discussion': {
@@ -121,7 +124,7 @@ Meteor.Router.add({
       to: 'fileSubmit',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
-    '/mybubbles/create/bubble': 'bubbleSubmit',
+    '/mybubbles/create': 'bubbleSubmit',
 
     '/settings/invites': 'invitationsPage',
 
@@ -134,7 +137,7 @@ Meteor.Router.add({
       and: function(id) { Session.set('selectedUserId',id); }
     },
 
-    '/editprofile/:id': {
+    '/edit_profile/:id': {
       to: 'userProfileEdit',
       and: function(id) { Session.set('selectedUserId',id)}
     },
@@ -190,7 +193,7 @@ Meteor.Router.add({
 
 
   // Flags Related Routes
-    '/flags/all': 'flagsList',
+    '/all-flags': 'flagsList',
 
 
   // Analytics Related Routes
@@ -231,13 +234,21 @@ Meteor.Router.filters({
     clearErrors();
     return page;
   },
-  'checkLoginStatus': function(page) {
+  'logCurrentPage': function(page) {
     if(Meteor.userId()){
+      //Clears timeout that prevents simultanous logging of user's action
       Meteor.clearTimeout(mto);
       mto = Meteor.setTimeout(function() {
-        console.log("this ran");
+        //Creation of userlog object
+        var userlog = {
+          action: 'view'
+        }
         //Logs the page that the user has switched to
-        Meteor.call('createLog', page, "null", "login");
+        Meteor.call('createLog', userlog, window.location.pathname, function(error) {
+          if(error) {
+            throwError(error.reason);
+          }
+        });
       }, 500);
       return page;
     }else if(Meteor.loggingIn()) {
@@ -330,7 +341,7 @@ Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'se
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('clearErrors');
-Meteor.Router.filter('checkLoginStatus', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported']});
+Meteor.Router.filter('logCurrentPage', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported', '404NotFound']});
 Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});

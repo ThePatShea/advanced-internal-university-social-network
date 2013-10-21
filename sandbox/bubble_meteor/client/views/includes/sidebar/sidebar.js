@@ -16,7 +16,7 @@ Template.sidebar.helpers({
       if(bubbles.length > 0) {
         return '/mybubbles/' + bubbles[0]._id + '/home';
       }else {
-        return '/mybubbles/create/bubble';
+        return '/mybubbles/create';
       }
     },
 
@@ -230,10 +230,30 @@ Template.sidebar.rendered = function() {
     adjustInterface();
 
   //Log clicking of submit error button
-  $(".btn-heading").on("click", function() {
+  /*$(".add-bubble").on("click", function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
-      Meteor.call('createLog',  "sidebar", 'bubble', 'addBubbleButton', false);
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: 'click-addBubbleButton' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
     }, 500);
-  });
+  });*/
+
+  //Log clicking of individual bubble
+  /*$(".mybubble").on("click", function() {
+    Meteor.clearTimeout(mto);
+    mto = Meteor.setTimeout(function() {
+      //Extract and append the bubble's title to action string
+      var title = 'click-bubble_'+$(".mybubble").attr('class').split('title-')[1];
+      //Logs the action that user is doing
+      Meteor.call('createLog', 
+        { action: title }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+    }, 500);
+  });*/
 }

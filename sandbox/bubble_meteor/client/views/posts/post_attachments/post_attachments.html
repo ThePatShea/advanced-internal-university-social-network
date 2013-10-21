@@ -6,9 +6,9 @@
     <h4 class="small-heading attachments-heading">attachments:</h4>
       {{#each attachmentList}}
         {{#if listAttachments}}
-          <a href="{{file}}" download="{{decodeURI name}}">
+          <div class="file-download">
     	      {{> listItemBB}}
-          </a>
+          </div>
         {{/if}}
       {{/each}}
   </div>
