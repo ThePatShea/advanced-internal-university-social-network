@@ -2,7 +2,7 @@ Template.download.events({
     'click .download': function(event) {
       // Disable the parent button
         event.stopPropagation();
-        event.preventDefault();
+        //event.preventDefault();
 
         if(typeof this.id == 'undefined'){
           this.id = this._id;
@@ -11,7 +11,10 @@ Template.download.events({
         currentPostObject = new mybubbles.BubblePost({id: this.id});
         currentPostObject.fetch({async: false});
         currentPost = currentPostObject.toJSON();
-        console.log('Download: ', currentPost);
+        $("#" + this.id).attr('href', currentPost.file);
+        //console.log('Download: ', currentPost);
+        //console.log('Download: ', $("#" + this.id).attr('href'));
+
 
       // Track action on Google Analytics
         _gaq.push(['_trackEvent', 'File', 'Download', this.name]);
@@ -28,6 +31,6 @@ Template.download.events({
           }
         });
 
-        window.open(currentPost.file,'_.blank');
+        //window.open(currentPost.file,'_.blank');
     }
 });
