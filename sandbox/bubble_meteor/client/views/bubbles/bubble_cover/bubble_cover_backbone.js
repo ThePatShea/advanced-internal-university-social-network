@@ -62,8 +62,8 @@ Template.bubbleCoverBackbone.helpers({
 Template.bubbleCoverBackbone.events({
   'click #bubble-pic': function() {
     var imgSrc = $("#bubble-pic").attr('src');
-    if (imgSrc == "/img/Bubble-Profile.jpg") {
-      Meteor.Router.to('bubbleEdit',Session.get('currentBubbleId'))
+    if (imgSrc == "/img/Bubble-Profile.jpg" && mybubbles.isAdmin(Meteor.userId()) ) {
+      Meteor.Router.to('bubbleEdit',Session.get('currentBubbleId'));
     } else {
       console.log("Changed")
     }
