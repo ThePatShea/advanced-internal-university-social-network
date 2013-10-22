@@ -140,6 +140,8 @@ Template.bubblePageBackbone.rendered = function() {
     }
   }
 
+  $(document).attr('title', 'My Bubbles - Emory Bubble');
+
 }
 
 Template.bubblePageBackbone.helpers({

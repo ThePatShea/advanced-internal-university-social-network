@@ -62,6 +62,8 @@ Template.searchDiscussions.rendered = function(){
       });
     }, 500);
   });
+
+  $(document).attr('title', 'Search Discussions - Emory Bubble');
 }
 
 Template.searchDiscussions.created = function() {

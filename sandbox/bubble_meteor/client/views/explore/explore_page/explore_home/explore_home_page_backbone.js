@@ -54,6 +54,7 @@ Template.explorePageBackbone.rendered = function(){
       		Session.set("isLoading", false);
 		});*/
 	}
+	$(document).attr('title', 'Explore - Emory Bubble');
 }
 
 Template.explorePageBackbone.helpers({ 

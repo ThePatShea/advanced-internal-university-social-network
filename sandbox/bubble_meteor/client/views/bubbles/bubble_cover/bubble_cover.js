@@ -26,6 +26,13 @@ Template.bubbleCover.helpers({
 });
 
 Template.bubbleCover.events({
+  'click #profile-pic': function() {
+    if (imgSrc == "/img/Bubble-Profile.jpg") {
+      Meteor.router.to('edit',Session.get('currentBubbleId'))
+    } else {
+
+    }
+  },
   'click .invite-accept': function() {
     Meteor.call('acceptInvitation', this._id);
   },

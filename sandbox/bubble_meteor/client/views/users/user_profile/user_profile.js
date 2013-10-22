@@ -89,6 +89,8 @@ Template.userProfile.rendered = function() {
 		Session.set("DisableCrop","");
 	}
 
+	$(document).attr('title', 'Settings - Emory Bubble');
+
     //This line NEEDS to be removed later!!!!!!!!!!!
 	goingDep = new Deps.Dependency;
 };

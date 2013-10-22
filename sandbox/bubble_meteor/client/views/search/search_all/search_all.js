@@ -276,6 +276,8 @@ Template.searchAll.rendered = function() {
       }
     }
   });*/
+
+  $(document).attr('title', 'Search - Emory Bubble');
 };
 
 

@@ -2018,6 +2018,9 @@ navbar-height        =  60px
   std-white-light-fill       0
   main-dark-bg               0
 
+
+
+
 .username-toggle
   @media (min-width: 768px)
     border-left            1px solid navbar-border-color
@@ -2816,7 +2819,7 @@ attachment-height  =  75px
         .bubble-bg
           fill           main-light
   .author-pic
-    positionize(auto, auto, auto, 0 15px 0 0, auto, left)
+    positionize(auto, auto, auto, 3px 15px 0 0, auto, left)
     move-position(relative, -2px)
     .bubble-bg
       fill          white-xdark
@@ -2825,7 +2828,7 @@ attachment-height  =  75px
         width         42px
     .author-circle
       move-position(absolute, 3px, auto, auto, 3px)
-      border        0
+      border        
   .small-heading
     &.event-body-heading
       positionize(auto, auto, auto, 15px 30px 10px 30px)
@@ -2872,6 +2875,10 @@ attachment-height  =  75px
         move-position(relative, 2px)
   .post-heading
     positionize(auto, auto, 0 30px 15px 30px)
+    a
+      .author-pic // This is added to fix a style problem that was resulted in because of 2 different elemetns inheriting the same style. //Joe
+        top                 -10px
+        margin-top          0
     .name
       fontize(alt, light, auto, 28px)
       colorize(main-light)
@@ -2968,9 +2975,9 @@ attachment-height  =  75px
           display        none
   .comments-list
     .comments
-      /* Hack for bullet points and spacing showing up in comments list */
-      list-style        none
-      margin            0 0 0 -15px
+      margin                    0
+      list-style-type           none
+
       .comment-item
         positionize(auto, auto, 15px 30px)
         position        relative
@@ -2987,7 +2994,7 @@ attachment-height  =  75px
         .comment-time
           font-size        11px
         .comment-body
-          fontize(alt, regular, auto, 14px, 22px)
+          fontize(alt, semibold, auto, 14px, 22px)
           positionize(auto, auto, 0 0 0 58px)
           colorize(#929292)
         .delete-comment
@@ -3526,12 +3533,15 @@ cover-btns-width-small  =  130px
 // New options bar styles.
 ul.update
   padding-bottom            0
+  li.no-updates
+    text-align: center;
+    padding: 10px 0;
+    color: white;
 
 li.options
   background-color            main-light 
   padding                     12px 0
   text-align                  center
-  margin-top                  28px
   -webkit-border-radius       0 0 6px 6px!important
   -moz-border-radius          0 0 6px 6px!important
   border-radius               0 0 6px 6px!important
