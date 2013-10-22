@@ -5,8 +5,8 @@ Template.bubblePageBackbone.created = function() {
   Session.set('updatesToShow',3);
 
   bubbleDep = new Deps.Dependency;
-  if(typeof goingDep === "undefined")
-    goingDep = new Deps.Dependency;
+  //if(typeof goingDep === "undefined")
+  //  goingDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
@@ -89,52 +89,55 @@ Template.bubblePageBackbone.rendered = function() {
       Meteor.Router.to('bubblePublicPage', bubble._id);
     }
 
-  mybubbles = new BubbleData.MyBubbles({
-    bubbleId: currentBubbleId,
-    limit: 10,
-    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+    if(typeof mybubbles == "undefined"){
 
-    events: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
-    },
+      mybubbles = new BubbleData.MyBubbles({
+        bubbleId: currentBubbleId,
+        limit: 10,
+        fields: ['title', 'profilePicture', 'category', 'bubbleType'],
 
-    discussions: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
-    },
+        events: {
+          limit: 10,
+          fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+        },
 
-    files: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
-    },
+        discussions: {
+          limit: 10,
+          fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+        },
 
-    members: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
+        files: {
+          limit: 10,
+          fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+        },
 
-    admins: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
+        members: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture','userType']
+        },
 
-    applicants: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
+        admins: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture','userType']
+        },
 
-    invitees: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
+        applicants: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture','userType']
+        },
 
-    callback: function(){
-      console.log('Bubbledata changed');
-      bubbleDep.changed();
-      Session.set('isLoading', false);
+        invitees: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture','userType']
+        },
+
+        callback: function(){
+          console.log('Bubbledata changed');
+          bubbleDep.changed();
+          Session.set('isLoading', false);
+        }
+      });
     }
-  });
   }
 
 }

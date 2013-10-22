@@ -4,36 +4,10 @@
       <div class="day">{{timestampToDayLong dateTime}}</div>
       <div class="month">{{timestampToMonthShort dateTime}}</div>
     </div>
-    <div class="visible-{{matchPostType 'discussion'}} v-middle pull-left">
-      <div class="v-inner">
-        <div class="num-in-bubble comments-count">
-          <span class="cb-icon">{{> icon-bubble-big}}</span>
-          <span class="lbl">{{commentsCount}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="visible-{{matchPostType 'file'}} v-middle pull-left">
-      <div class="v-inner">
-        <div class="file-type">
-          <span class="cb-icon">{{> icon-file-type}}</span>
-          <span class="lbl">{{getTextAfterDot name}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="visible-{{matchObjectType 'bubble'}} v-middle pull-left bubble-icon-container">
-      <div class="v-inner">
-        <span class="category-{{category}}-fill">
-          {{> icon-bubble}}
-        </span>
-      </div>
-    </div>
-
-
     <h4 class="post-name visible-{{matchObjectType 'post'}}">
-      <span class="name-text">{{decodeURI name}}</span>
+      <span class="name-text">{{name}}</span>
       <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
     </h4>
-
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
         <div class="v-inner">
@@ -55,24 +29,6 @@
           </div>
         </div>
         {{else}}
-          <span class="visible-{{matchObjectType 'bubble'}} attribute-items">
-            <span class="attribute">
-              <div class="pull-right post-item-lbl going-{{isGoing}} category-{{category}}-color">
-                <span class="post-item-icon">
-                  <span class="category-{{category}}-fill">
-                    {{> icon-bubble}}
-                  </span>
-                </span>
-                {{category}}
-              </div>
-            </span>
-            <span class="attribute">
-              <div class="pull-right post-item-lbl going-{{isGoing}}">
-                <span class="post-item-icon">{{> icon-member}}</span>
-                {{numOfMembers}}
-              </div>
-            </span>
-          </span>
           <span class="visible-{{matchPostType 'event'}} attribute-items">
             <span class="attribute">
               <div class="pull-right post-item-lbl">
@@ -93,41 +49,8 @@
               </div>
             </span>
           </span>
-          <span class="visible-{{matchPostType 'discussion'}} attribute-items">
-            <span class="attribute">
-              <div class="pull-right post-item-lbl">
-                <span class="post-item-icon">{{> icon-time}}</span>
-                {{timestampToFromNow lastCommentTime}}
-              </div>
-            </span>
-            <span class="attribute">
-              <div class="pull-right post-item-lbl">
-                <span class="post-item-icon icon-views">{{> icon-views}}</span>
-                {{viewCount}}
-              </div>
-            </span>
-          </span>
-          <span class="visible-{{matchPostType 'file'}} attribute-items">
-            <span class="attribute">
-              <div class="pull-right post-item-lbl">
-                <span class="post-item-icon">{{> icon-time}}</span>
-                {{timestampToFromNow lastCommentTime}}
-              </div>
-            </span>
-            <span class="attribute">
-              <div class="pull-right post-item-lbl">
-                <span class="post-item-icon">{{> icon-download}}</span>
-                {{numDownloads}}
-              </div>
-            </span>
-          </span>
-          <span class="post-actions">
-            {{#if isEvent}}
+          <span class="post-actions">          
               <span class="visible-{{matchPostType 'event'}}">{{> imGoing}}</span>
-            {{/if}}
-            <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
-            <span class="visible-{{matchPostType 'file'}}">{{> download}}</span>
-            <span class="visible-{{matchObjectType 'bubble'}}">{{> connectBubble}}</span>
           </span>
         {{/if}}
         </div>

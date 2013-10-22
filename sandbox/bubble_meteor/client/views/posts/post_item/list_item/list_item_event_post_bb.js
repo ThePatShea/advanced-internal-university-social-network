@@ -176,3 +176,7 @@ Template.listItemEventPostBB.rendered = function(){
     // }, 500);
   });*/
 }
+
+Template.listItemEventPostBB.destroyed = function() {
+  mto = "";
+}
