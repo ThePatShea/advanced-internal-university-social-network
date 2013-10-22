@@ -123,6 +123,24 @@ Template.explorePageBackbone.helpers({
   },
   getExploreId: function(){
   	return Session.get("currentExploreId");
+  },
+
+  isEvent: function(){
+  	if(this.postType == 'event'){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
+  },
+
+  isDiscussion: function(){
+  	if(this.postType == 'discussion'){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
   }
 });
 
