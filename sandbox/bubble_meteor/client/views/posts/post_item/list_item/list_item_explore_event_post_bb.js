@@ -1,4 +1,4 @@
-Template.listItemEventPostBB.helpers({
+Template.listItemExploreEventPostBB.helpers({
     getPostAsUser: function() {
       //return Meteor.users.findOne(this.postAsId);
       //console.log("ES: ", es.exploreUsers.toJSON());
@@ -116,7 +116,7 @@ Template.listItemEventPostBB.helpers({
     }
 });
 
-Template.listItemEventPostBB.events({
+Template.listItemExploreEventPostBB.events({
     'click .post-item' : function(evt) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -155,11 +155,11 @@ Template.listItemEventPostBB.events({
     }
 });
 
-Template.listItemEventPostBB.created = function() {
+Template.listItemExploreEventPostBB.created = function() {
   mto = "";
 }
 
-Template.listItemEventPostBB.rendered = function(){
+Template.listItemExploreEventPostBB.rendered = function(){
   // console.log("LIBB: ", this);
   //Log clicking of individual bubble
   /*$(".post-item").on("click", function() {
@@ -177,6 +177,6 @@ Template.listItemEventPostBB.rendered = function(){
   });*/
 }
 
-Template.listItemEventPostBB.destroyed = function() {
+Template.listItemExploreEventPostBB.destroyed = function() {
   mto = "";
 }

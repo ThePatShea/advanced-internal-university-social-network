@@ -36,7 +36,7 @@ Template.eventSubmit.events({
     var eventAttributes = { 
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-eventSubmit-form > .first > .event-location').val(),
-      name: $('.cb-eventSubmit-form > .first > .event-name').val(),
+      name: encodeURIComponent($('.cb-eventSubmit-form > .first > .event-name').val()),
       body: $('.cb-eventSubmit-form > .event-details').val(),
       postType: 'event',
       bubbleId: Session.get('currentBubbleId'),
