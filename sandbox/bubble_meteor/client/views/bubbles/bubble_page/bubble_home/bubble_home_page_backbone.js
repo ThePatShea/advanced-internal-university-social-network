@@ -10,8 +10,6 @@ Template.bubblePageBackbone.created = function() {
   console.log("Home Page Created!");
   Session.set('updatesToShow',3);
 
-  // if(typeof bubbleDep !== "undefined")
-  //   delete bubbleDep;
   bubbleHomeDep = new Deps.Dependency;
   if(typeof goingDep === "undefined")
     goingDep = new Deps.Dependency;
@@ -40,6 +38,8 @@ Template.bubblePageBackbone.rendered = function() {
 
     bubbleHomeHelper();
   };
+
+  $(document).attr('title', 'My Bubbles - Emory Bubble');
 };
 
 Template.bubblePageBackbone.helpers({

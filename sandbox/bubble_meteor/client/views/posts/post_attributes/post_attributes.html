@@ -3,68 +3,84 @@
   <script language="JavaScript" src="js/FileSaver.js"></script>
 
   <div class="post-main post-type-{{postType}}">
-    <div class="visible-{{matchPostType 'event'}} event-controls">
-      <div class="left"><img src="{{eventPhoto}}"/></div>
-      <div class="right">
-        <div class="right-controls">
-          <div class="attributes">
-            <div class="small-heading attribute">
-              <div class="pull-left cb-icon">{{> icon-time}}</div>
-              <div class="lbl">{{timestampToTime dateTime}} | {{timestampToDateLong dateTime}}</div>
-            </div>
-            <div class="small-heading attribute">
-              <div class="pull-left cb-icon">{{> icon-location}}</div>
-              <div class="lbl">{{location}}</div>
-            </div>
-            <div class="small-heading attribute attribute-going">
-              <div class="pull-left cb-icon cb-icon-member">{{> icon-member}}</div>
-              <div class="lbl lbl-member">{{pluralize numOfAttendees "person" ""}} going</div>
-            </div>
-          </div>
-          <div>{{> imGoing}}</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="visible-{{matchPostType 'event'}} small-heading event-body-heading">details:</div>
-    <pre class="invisible-{{matchPostType 'file'}} post-body post-body-{{postType}}">{{{body}}}</pre>
-    <span class="visible-{{hasChildren}}">{{> postAttachments}}</span>
-
-    <div class="visible-{{matchPostType 'file'}}">
-      <a href="#" download="{{decodeURI name}}" class="file-download">
-        <div class="attachment">
-          <div class="pull-left v-middle">
-            <div class="v-inner">
-              <div class="file-type file-type-attachment">
-                <span class="cb-icon">{{> icon-file-type}}</span>
-                <span class="lbl">{{getTextAfterDot name}}</span>
+    {{#if isEvent}}
+      <div class="visible-{{matchPostType 'event'}} event-controls">
+        <div class="left"><img src="{{eventPhoto}}"/></div>
+        <div class="right">
+          <div class="right-controls">
+            <div class="attributes">
+              <div class="small-heading attribute">
+                <div class="pull-left cb-icon">{{> icon-time}}</div>
+                <div class="lbl">{{timestampToTime dateTime}} | {{timestampToDateLong dateTime}}</div>
+              </div>
+              <div class="small-heading attribute">
+                <div class="pull-left cb-icon">{{> icon-location}}</div>
+                <div class="lbl">{{location}}</div>
+              </div>
+              <div class="small-heading attribute attribute-going">
+                <div class="pull-left cb-icon cb-icon-member">{{> icon-member}}</div>
+                <div class="lbl lbl-member">{{pluralize numOfAttendees "person" ""}} going</div>
               </div>
             </div>
+            <div>{{> imGoing}}</div>
           </div>
-          <span class="attachment-name">{{decodeURI this.name}}</span>
-          <span class="attachment-size">{{fileSizeWords}}</span>
-          <button class="std-btn-xdark post-action">download</button>
         </div>
-      </a>
-    </div>
-  </div>
+      </div>
+      <div class="visible-{{matchPostType 'event'}} small-heading event-body-heading">details:</div>
+    {{/if}}
 
-  <div class="visible-{{matchPostType 'event'}} bubble-list people-going">
-    <div class="bubble-list-heading">
-      <h3 class="section-name pull-left">{{pluralize numOfAttendees "person" ""}} going</h3>
-      {{#codeComment}}<span class="pull-right">{{> imGoingSmall}}</span>{{/codeComment}}
-    </div>
-    <div class="people-list">
-      {{#each reverseAttendees}}
-        <a href="{{userProfilePath this}}">
-          <div class="author-pic person-going">
-            <div class="bubble-bg">{{> icon-bubble}}</div>
-            <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this}}"/>
-            <div class="user-name">{{getSelectedName this}}</div>
+    {{#if isEvent}}
+      <pre class="invisible-{{matchPostType 'file'}} post-body post-body-{{postType}}">{{{body}}}</pre>
+    {{else}}
+      {{#if isDiscussion}}
+        <pre class="invisible-{{matchPostType 'file'}} post-body post-body-{{postType}}">{{{body}}}</pre>
+      {{/if}}
+    {{/if}}
+
+    {{#if isDiscussion}}
+      <span class="visible-{{hasChildren}}">{{> postAttachments}}</span>
+    {{/if}}
+
+    {{#if isFile}}
+      <div class="visible-{{matchPostType 'file'}}">
+        <a href="{{this.file}}" download="{{decodeURI name}}" class="file-download">
+          <div class="attachment">
+            <div class="pull-left v-middle">
+              <div class="v-inner">
+                <div class="file-type file-type-attachment">
+                  <span class="cb-icon">{{> icon-file-type}}</span>
+                  <span class="lbl">{{getTextAfterDot name}}</span>
+                </div>
+              </div>
+            </div>
+            <span class="attachment-name">{{decodeURI this.name}}</span>
+            <span class="attachment-size">{{fileSizeWords}}</span>
+            <button class="std-btn-xdark post-action">download</button>
           </div>
         </a>
-      {{/each}}
-    </div>
+      </div>
+    {{/if}}
   </div>
+
+  {{#if isEvent}}
+    <div class="visible-{{matchPostType 'event'}} bubble-list people-going">
+      <div class="bubble-list-heading">
+        <h3 class="section-name pull-left">{{pluralize numOfAttendees "person" ""}} going</h3>
+        {{#codeComment}}<span class="pull-right">{{> imGoingSmall}}</span>{{/codeComment}}
+      </div>
+      <div class="people-list">
+        {{#each reverseAttendees}}
+          <a href="{{userProfilePath this}}">
+            <div class="author-pic person-going">
+              <div class="bubble-bg">{{> icon-bubble}}</div>
+              <img class="pic-circle author-circle" src="{{getSelectedUserProfilePic this}}"/>
+              <div class="user-name">{{getSelectedName this}}</div>
+            </div>
+          </a>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
 
 </template>

@@ -1,11 +1,15 @@
+Template.imGoing.created = function(){
+}
+
 Template.imGoing.rendered = function(){
-  if(typeof goingDep === "undefined")
-    goingDep = new Deps.Dependency;
+}
+
+Template.imGoing.destroyed = function(){
+  //delete goingDep;
 }
 
 Template.imGoing.helpers({
     mainWords : function() {
-      goingDep.depend();
       console.log(">im-going", this);
       if (_.contains(this.attendees,Meteor.userId()))
         return "not going"
@@ -35,26 +39,18 @@ Template.imGoing.events({
               
               es.toggleGoing(res,Meteor.userId(),function(){
                 console.log("Toggle Callback");
-                explorePageDep.changed();
+                if(exploreDep){
+                  explorePageDep.changed();
+                }
               });
-              /*
-              if(subsection === "posts")
-                exploreDep.changed();
-              else
-                Meteor.Router.to('explorePostPageBB',that.exploreId,that.id);
-              */
             }
             if(section === "mybubbles")
             {
               console.log("Toggle Going: ",that);
-              /*
-              mybubbles.Events.toggleGoing(res,Meteor.userId(),function(){
-                console.log("Toggle Callback");
-                bubbleDep.changed();
-              });
-              */
               if(subsection === "posts")
-                bubbleDep.changed();
+                if(bubbleDep){
+                  bubbleDep.changed();
+                }
               else
                 Meteor.Router.to('postPageBackbone',that.bubbleId,that.id);
             }
@@ -94,23 +90,11 @@ Template.imGoingSmall.events({
             if(section === "explore")
             {
               console.log("Toggle Going: ",that);
-              /*
-              es.toggleGoing(res,Meteor.userId(),function(){
-                console.log("Toggle Callback");
-                explorePageDep.changed();
-              });
-              */
               Meteor.Router.to('explorePostPageBB',that.exploreId,that.id);
             }
             if(section === "mybubbles")
             {
               console.log("Toggle Going: ",that);
-              /*
-              mybubbles.Events.toggleGoing(res,Meteor.userId(),function(){
-                console.log("Toggle Callback");
-                bubbleDep.changed();
-              });
-              */
               Meteor.Router.to('postPageBackbone',that.bubbleId,that.id);
             }
           }

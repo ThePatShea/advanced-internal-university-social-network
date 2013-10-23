@@ -1,0 +1,58 @@
+<template name="listItemExploreDiscussionPostBB">
+  <div class="post-item name-{{name}}">
+    <div class="visible-{{matchPostType 'discussion'}} v-middle pull-left">
+      <div class="v-inner">
+        <div class="num-in-bubble comments-count">
+          <span class="cb-icon">{{> icon-bubble-big}}</span>
+          <span class="lbl">{{commentsCount}}</span>
+        </div>
+      </div>
+    </div>
+    <h4 class="post-name visible-{{matchObjectType 'post'}}">
+      <span class="name-text">{{decodeURI name}}</span>
+      <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
+    </h4>
+    <div class="post-item-attributes">
+      <div class="v-middle pull-right">
+        <div class="v-inner">
+        {{#if exploreId}}
+        <div style="width: 165px">
+          {{#with getPostAsBubble}}
+            <div class="pull-left category-{{category}}-fill post-as-bubble-list">
+              {{> icon-bubble}}
+            </div>
+          {{/with}}
+          {{#with getPostAsUser}}
+            <div class="pull-left profile-pic-container">
+              <img class="pic-circle profile-pic" src="{{profilePicture}}"/>
+            </div>
+          {{/with}}
+          <div style="position: relative; top: 2px;" class="pull-left">
+            <div class="list-item-post-as">{{displayName}}</div>
+            <div style="width: auto" class="update-time">{{submittedText submitted}}</div>
+          </div>
+        </div>
+        {{else}}
+          <span class="visible-{{matchPostType 'discussion'}} attribute-items">
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon">{{> icon-time}}</span>
+                {{timestampToFromNow lastCommentTime}}
+              </div>
+            </span>
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon icon-views">{{> icon-views}}</span>
+                {{viewCount}}
+              </div>
+            </span>
+          </span>
+          <span class="post-actions">
+            <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
+          </span>
+        {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

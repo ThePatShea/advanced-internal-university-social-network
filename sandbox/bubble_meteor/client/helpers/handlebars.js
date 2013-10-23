@@ -305,6 +305,7 @@ Handlebars.registerHelper('convertSpacesToDashes',function(word) {
 });
 
 Handlebars.registerHelper('decodeURI',function(uri) {
+  console.log('Decode URI: ', uri, decodeURI(uri));
   return decodeURI(uri);
 });
 

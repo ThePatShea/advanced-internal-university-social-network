@@ -54,6 +54,7 @@ Template.explorePageBackbone.rendered = function(){
       		Session.set("isLoading", false);
 		});*/
 	}
+	$(document).attr('title', 'Explore - Emory Bubble');
 }
 
 Template.explorePageBackbone.helpers({ 
@@ -115,6 +116,7 @@ Template.explorePageBackbone.helpers({
   	return "";
   },
   exploreInfo: function(){
+  	exploreDep.depend();
   	if(es != undefined)
 	{
 		return es.exploreInfo.toJSON();
@@ -122,6 +124,24 @@ Template.explorePageBackbone.helpers({
   },
   getExploreId: function(){
   	return Session.get("currentExploreId");
+  },
+
+  isEvent: function(){
+  	if(this.postType == 'event'){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
+  },
+
+  isDiscussion: function(){
+  	if(this.postType == 'discussion'){
+  		return true;
+  	}
+  	else{
+  		return false;
+  	}
   }
 });
 

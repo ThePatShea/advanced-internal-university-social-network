@@ -4,217 +4,441 @@ var DEFAULT_LIMIT = 10;
 var MAX_LIMIT = 50;
 
 this.RestHelpers = {
-	// Return callback function that will either rethrow exception or
-	// satisfy future with a result
-	bindFuture: function(future) {
-		return function(err, result) {
-			if (err) {
-				future.throw(err);
-			} else {
-				future.return(result);
-			}
-		};
-	},
+  Future: Future,
 
-	mergeObjects: function(target, source) {
-		var result = {};
+  /**
+   * Return callback function that will either finish `Future` or rethrow exception
+   * @param  {Future} future
+   */
+  bindFuture: function(future) {
+    return function(err, result) {
+      if (err) {
+        future.throw(err);
+      } else {
+        future.return(result);
+      }
+    };
+  },
 
-		for (var n in target)
-			result[n] = target[n];
+  /**
+   * Merge source into target object
+   * @param  {object} target
+   * @param  {object} source
+   * @return {object} new object with combined properties
+   */
+  mergeObjects: function(target, source) {
+    var result = {};
 
-		for (var n in source)
-			result[n] = source[n];
+    for (var n in target)
+      result[n] = target[n];
 
-		return result;
-	},
+    for (var n in source)
+      result[n] = source[n];
 
-	getField: function(obj, path) {
-		var parts = path.split('.');
+    return result;
+  },
 
-		for (var n in parts) {
-			var p = parts[n];
-			obj = obj[p];
+  deepCompare: function(left, right) {
+    var leftChain = [];
+    var rightChain = [];
 
-			if (!obj)
-				break;
-		}
+    function compare(x, y) {
+      var p;
 
-		return obj;
-	},
+      // remember that NaN === NaN returns false
+      // and isNaN(undefined) returns true
+      if (isNaN(x) && isNaN(y) && typeof x === 'number' && typeof y === 'number')
+        return true;
 
-	haveChangedFields: function(o1, o2, fields) {
-		for (var n in fields) {
-			var f = fields[n];
+      // Compare primitives and functions.
+      // Check if both arguments link to the same object.
+      // Especially useful on step when comparing prototypes
+      if (x === y)
+        return true;
 
-			if (this.getField(o1, f) !== this.getField(o2, f))
-				return false;
-		}
+      // Works in case when functions are created in constructor.
+      // Comparing dates is a common scenario. Another built-ins?
+      // We can even handle functions passed across iframes
+      if ((typeof x === 'function' && typeof y === 'function') ||
+         (x instanceof Date && y instanceof Date) ||
+         (x instanceof RegExp && y instanceof RegExp) ||
+         (x instanceof String && y instanceof String) ||
+         (x instanceof Number && y instanceof Number)) {
+          return x.toString() === y.toString();
+      }
 
-		return true;
-	},
+      // At last checking prototypes as good a we can
+      if (!(x instanceof Object && y instanceof Object))
+        return false;
 
-	// Get list of fields from query string value
-	getFieldList: function(fieldList) {
-		if (fieldList) {
-			var fields = fieldList.split(',');
-			var result = {};
+      if (x.isPrototypeOf(y) || y.isPrototypeOf(x))
+        return false;
 
-			for (var f in fields)
-				result[fields[f]] = true;
+      if (x.constructor !== y.constructor)
+        return false;
 
-			return result;
-		}
+      if (x.prototype !== y.prototype)
+        return false;
 
-		return null;
-	},
+      // check for infinitive linking loops
+      if (leftChain.indexOf(x) > -1 || rightChain.indexOf(y) > -1)
+        return false;
 
-	// Generate MongoDB options
-	buildOptions: function(apiOptions) {
-		if (apiOptions) {
-			var options = {};
+      // Quick checking of one object beeing a subset of another.
+      // todo: cache the structure of arguments[0] for performance
+      for (p in y) {
+        if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+          return false;
+        }
+        else if (typeof y[p] !== typeof x[p]) {
+          return false;
+        }
+      }
 
-			options.limit = apiOptions.limit || DEFAULT_LIMIT;
+      for (p in x) {
+        if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+          return false;
+        }
+        else if (typeof y[p] !== typeof x[p]) {
+          return false;
+        }
 
-			if (options.limit > MAX_LIMIT) {
-				options.limit = MAX_LIMIT;
-			}
+        switch (typeof (x[p])) {
+          case 'object':
+          case 'function':
+            leftChain.push(x);
+            rightChain.push(y);
 
-			if (apiOptions.page) {
-				options.skip = apiOptions.page * options.limit;
-			}
+            if (!compare(x[p], y[p]))
+              return false;
 
-			return options;
-		}
+            leftChain.pop();
+            rightChain.pop();
+            break;
+          default:
+            if (x[p] !== y[p])
+              return false;
+            break;
+        }
+      }
 
-		return {
-			limit: DEFAULT_LIMIT
-		};
-	},
+      return true;
+    }
 
-	fromMongoModel: function(model) {
-		model.id = model._id;
-		delete model._id;
-		return model;
-	},
+    return compare(left, right);
+  },
 
-	toMongoModel: function(model) {
-		model._id = model.id;
-		delete model.id;
-		return model;
-	},
+  /**
+   * Get property value from dot-separated path
+   * @param  {object} obj  object
+   * @param  {string} path property to get
+   * @return          value or undefined
+   */
+  getField: function(obj, path) {
+    var parts = path.split('.');
 
-	// MongoDB helpers
-	mongoFind: function(collection, query, fields, options) {
-	    var rawCollection = MongoHelper.getRawCollection(collection);
-	    var countFuture = new Future();
-	    var itemsFuture = new Future();
+    for (var n in parts) {
+      var p = parts[n];
+      obj = obj[p];
 
-	    rawCollection.find(query).count(this.bindFuture(countFuture));
-	    rawCollection.find(query, fields, options).toArray(this.bindFuture(itemsFuture));
+      if (!obj)
+        break;
+    }
 
-	    return {
-			count: countFuture.wait(),
-			items: itemsFuture.wait()
-	    };
-	},
+    return obj;
+  },
 
-	mongoFindOne: function(collection, query, fields) {
-	    var rawCollection = MongoHelper.getRawCollection(collection);
-	    var future = new Future();
+  /**
+   * Check if objects have different fields
+   * @param  {object} o1     first object
+   * @param  {object} o2     second object
+   * @param  {list} fields list of field names to check
+   * @return {bool}        true or false
+   */
+  haveChangedFields: function(o1, o2, fields) {
+    for (var n in fields) {
+      var f = fields[n];
 
-	    if (typeof query == 'string')
-	    	query = {_id: query};
+      if (!this.deepCompare(this.getField(o1, f), this.getField(o2, f))) {
+        return f;
+      }
+    }
 
-	    rawCollection.findOne(query, this.bindFuture(future));
-	    var obj = future.wait()
+    return null;
+  },
 
-	    // MongoDB does not support field filtering with findOne
-	    if (fields) {
-			var result = {};
+  /**
+   * Parse requested field list into object
+   * @param  {string} fieldList field list
+   * @return {object}           filters
+   */
+  getFieldList: function(fieldList) {
+    if (fieldList) {
+      var fields = fieldList.split(',');
+      var result = {};
 
-			for (var n in obj) {
-				if (n === '_id' || fields[n])
-					result[n] = obj[n];
-			}
+      for (var f in fields)
+        result[fields[f]] = true;
 
-			return result;
-	    }
+      return result;
+    }
 
-	    return obj;
-	},
+    return null;
+  },
 
-	mongoInsert: function(collection, obj) {
-		var rawCollection = MongoHelper.getRawCollection(collection);
-		var future = new Future();
+  /**
+   * Build MongoDB filter options out of parsed API options
+   * @param  {object} apiOptions options
+   * @return {object}            MongoDB filter
+   */
+  buildOptions: function(apiOptions) {
+    if (apiOptions) {
+      var options = {};
 
-		rawCollection.insert(obj, this.bindFuture(future));
-		return future.wait();
-	},
+      options.limit = apiOptions.limit || DEFAULT_LIMIT;
 
-	mongoUpdate: function(collection, id, obj) {
-		var rawCollection = MongoHelper.getRawCollection(collection);
-		var future = new Future();
+      if (options.limit > MAX_LIMIT) {
+        options.limit = MAX_LIMIT;
+      }
 
-		rawCollection.update({_id: id}, obj, {w: 1}, this.bindFuture(future));
-		return future.wait() === 1;
-	},
+      if (apiOptions.page) {
+        options.skip = apiOptions.page * options.limit;
+      }
 
-	mongoDelete: function(collection, id) {
-		var rawCollection = MongoHelper.getRawCollection(collection);
-		var future = new Future();
+      return options;
+    }
 
-		rawCollection.remove({_id: id}, {w: 1}, this.bindFuture(future));
-		return future.wait() === 1;
-	},
+    return {
+      limit: DEFAULT_LIMIT
+    };
+  },
 
-	// Response helpers
-	jsonResponse: function(code, payload) {
-		return [code, {'Content-Type': 'application/json'}, JSON.stringify(payload)];
-	},
+  /**
+   * Convert model from MongoDB to application format
+   * @param  {object} model
+   * @return {object}       model
+   */
+  fromMongoModel: function(model) {
+    model.id = model._id;
+    delete model._id;
+    return model;
+  },
 
-	makeQueryResponse: function(apiOptions, queryOptions, data, viewOptions) {
-		// Generate result
-		var name = (viewOptions && viewOptions.name) || 'items';
+  /**
+   * Convert model from application format to MongoDB
+   * @param  {[type]} model [description]
+   * @return {[type]}       [description]
+   */
+  toMongoModel: function(model) {
+    model._id = model.id;
+    delete model.id;
+    return model;
+  },
 
-		var result = {
-			count: data.count,
-			pages: Math.floor(data.count / queryOptions.limit) + ((data.count % queryOptions.limit > 0) ? 1 : 0),
-			page: apiOptions.page
-		};
+  /**
+   * Run MongoDB .find() through raw MongoDB API to get count and records
+   * @param  {Collection} collection Meteor collection
+   * @param  {object} query      query
+   * @param  {object} fields     fields
+   * @param  {object} options    options
+   * @return {array}             result
+   */
+  mongoFind: function(collection, query, fields, options) {
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var countFuture = new Future();
+    var itemsFuture = new Future();
 
-		// Rename _id to id
-		for (var n in data.items) {
-			this.fromMongoModel(data.items[n]);
-		}
+    rawCollection.find(query).count(this.bindFuture(countFuture));
+    rawCollection.find(query, fields, options).toArray(this.bindFuture(itemsFuture));
 
-		result[name] = data.items;
+    return {
+      count: countFuture.wait(),
+      items: itemsFuture.wait()
+      };
+  },
 
-		return this.jsonResponse(200, result);
-	},
+  /**
+   * Run findOne through raw MongoDB API
+   * @param  {collection} collection Meteor collection
+   * @param  {object} query      filter or record ID
+   * @param  {object} fields     fields object
+   * @return result
+   */
+  mongoFindOne: function(collection, query, fields) {
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var future = new Future();
 
-	// Authentication
-	headerAuth: function(ctx) {
-		var authHeader = ctx.request.headers['x-authentication'];
-		if (!authHeader)
-			return false;
+    if (typeof query == 'string')
+      query = {_id: query};
 
-		var userId = RestCrypto.verifyToken(authHeader);
-		if (!userId)
-			return false;
+    rawCollection.findOne(query, this.bindFuture(future));
+    var obj = future.wait()
 
-		var user = Meteor.users.findOne(userId);
-		if (!user)
-			return false;
+    // MongoDB does not support field filtering with findOne
+    if (fields) {
+      var result = {};
 
-		ctx.userId = userId;
-		ctx.user = user;
-		return true;
-	},
+      for (var n in obj) {
+        if (n === '_id' || fields[n])
+          result[n] = obj[n];
+      }
 
-	authUser: function(ctx, opts) {
-		if (opts.authUser)
-			return opts.authUser(ctx, opts);
+      return result;
+    }
 
-		return this.headerAuth(ctx);
-	}
+    return obj;
+  },
+
+  /**
+   * Insert through MongoDB raw API
+   * @param  {Collection} collection Meteor collection
+   * @param  {object} obj        record to insert
+   * @return inserted document
+   */
+  mongoInsert: function(collection, obj) {
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var future = new Future();
+
+    rawCollection.insert(obj, this.bindFuture(future));
+    return future.wait();
+  },
+
+  /**
+   * Update through MongoDB raw API
+   * @param  {Collection} collection Meteor collection
+   * @param  {string} id         record ID
+   * @param  {object} obj        new record data
+   * @return true if updated
+   */
+  mongoUpdate: function(collection, id, obj) {
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var future = new Future();
+
+    rawCollection.update({_id: id}, obj, {w: 1}, this.bindFuture(future));
+    return future.wait() === 1;
+  },
+
+  /**
+   * Delete through MongoDB raw API
+   * @param  {Collection} collection Meteor collection
+   * @param  {string} id         record ID
+   * @return true if updated
+   */
+  mongoDelete: function(collection, id) {
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var future = new Future();
+
+    rawCollection.remove({_id: id}, {w: 1}, this.bindFuture(future));
+    return future.wait() === 1;
+  },
+
+  /**
+   * Create JSON response with proper encoding
+   * @param  {int} code    HTTP status code
+   * @param  {any} payload Payload to be sent
+   * @return {object}      response object
+   */
+  jsonResponse: function(code, payload, headers) {
+    headers = headers || {};
+    headers['Content-Type'] = 'application/json';
+    return [code, headers, JSON.stringify(payload)];
+  },
+
+  /**
+   * Create query response
+   * @param  {object} apiOptions   API options
+   * @param  {object} queryOptions query filter
+   * @param  {object} data         request data
+   * @param  {object} viewOptions  view options
+   * @return {object}              response object
+   */
+  makeQueryResponse: function(apiOptions, queryOptions, data, viewOptions) {
+    // Generate result
+    var name = (viewOptions && viewOptions.name) || 'items';
+
+    var result = {
+      count: data.count,
+      pages: Math.floor(data.count / queryOptions.limit) + ((data.count % queryOptions.limit > 0) ? 1 : 0),
+      page: apiOptions.page
+    };
+
+    // Rename _id to id
+    for (var n in data.items) {
+      this.fromMongoModel(data.items[n]);
+    }
+
+    result[name] = data.items;
+
+    return this.jsonResponse(200, result);
+  },
+
+  /**
+   * Authenticate user with x-authentication header. After successful authentication
+   * will contribute userId and user to context.
+   * @param  {object} ctx request context
+   * @return {bool}       true if successfully authenticated
+   */
+  headerAuth: function(ctx) {
+    var authHeader = ctx.request.headers['x-authentication'];
+    if (!authHeader)
+      return false;
+
+    var userId = RestCrypto.verifyToken(authHeader);
+    if (!userId)
+      return false;
+
+    var user = Meteor.users.findOne(userId);
+    if (!user)
+      return false;
+
+    ctx.userId = userId;
+    ctx.user = user;
+    return true;
+  },
+
+  /**
+   * Either run custom authentication function or header-based authentication
+   * @param  {object} ctx  request context
+   * @param  {object} opts options
+   * @return {bool}        true if authenticated
+   */
+  authUser: function(ctx, opts) {
+    if (opts && opts.authUser)
+      return opts.authUser(ctx, opts);
+
+    return this.headerAuth(ctx);
+  },
+
+  /**
+   * Create express.js raw request body parser. Not used at the moment.
+   */
+  rawBodyParser: function() {
+    var connect = Npm.require('connect');
+    var defaultParser = connect.bodyParser;
+
+    var needle = '/api/v1_0';
+
+    return function(req, response, next) {
+      // TODO: Fix me - need to remove once there are no other REST endpoints anymore
+      if (req.url.slice(-needle.length) != needle)
+        return defaultParser(req, response, next);
+
+      var buf;
+      if (req._body) {
+        return next();
+      }
+
+      req._body = true;
+
+      buf = '';
+      req.on('data', function(chunk) {
+        return buf += chunk;
+      });
+
+      return req.on('end', function() {
+        req.body = buf;
+        return next();
+      });
+    };
+  }
 };

@@ -178,7 +178,7 @@ function processAttachmentSelections(fileAttachments){
 
 function makeDiscussionPost(){
   var postAttributes = {
-    name: $('.cb-discussionSubmit-form').find('[name=name]').val(),
+    name: encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val()),
     body: $('.cb-discussionSubmit-form').find('.wysiwyg').html(),
     postType: 'discussion',
     bubbleId: Session.get('currentBubbleId'),

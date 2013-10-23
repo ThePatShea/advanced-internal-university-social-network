@@ -88,9 +88,25 @@ Template.userProfile.rendered = function() {
   	} else {
 		Session.set("DisableCrop","");
 	}
+
+	$(document).attr('title', 'Settings - Emory Bubble');
+
+    //This line NEEDS to be removed later!!!!!!!!!!!
+	goingDep = new Deps.Dependency;
 };
 
 Template.userProfile.events({
+
+	'click #user-profile-pic': function(event){
+		console.log('Profile Picture Click: ', $(event.target).attr('src'));
+
+		var imageSrc = $(event.target).attr('src');
+
+		if(imageSrc.indexOf('/img/letterprofiles/') != -1){
+			Meteor.Router.to('/edit_profile/' + Meteor.userId());
+		}
+
+	},
 
 	'click #btn1': function() {
 		Meteor.call("sendWelcomeEmail", Meteor.userId());

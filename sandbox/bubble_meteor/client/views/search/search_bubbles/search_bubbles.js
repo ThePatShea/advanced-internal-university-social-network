@@ -74,6 +74,7 @@ Template.searchBubbles.rendered = function(){
       });
     }, 500);
   });
+  $(document).attr('title', 'Search Bubbles - Emory Bubble');
 }
 
 Template.searchBubbles.events({

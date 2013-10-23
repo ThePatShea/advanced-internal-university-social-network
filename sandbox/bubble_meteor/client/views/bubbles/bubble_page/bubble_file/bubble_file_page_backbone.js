@@ -37,7 +37,6 @@ Template.bubbleFilePageBackbone.rendered = function() {
     
     bubbleFileHelper();
   }
-
 }
 
 Template.bubbleFilePageBackbone.helpers({

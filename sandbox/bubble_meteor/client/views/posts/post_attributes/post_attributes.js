@@ -30,11 +30,42 @@ Template.postAttributes.helpers({
       if (this.attendees) {
         return this.attendees.reverse();
       }
+    },
+
+  isEvent: function(){
+    if(this.postType == 'event'){
+      return true;
     }
+    else{
+      return false;
+    }
+  },
+
+  isDiscussion: function(){
+    if(this.postType == 'discussion'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  },
+
+  isFile: function(){
+    if(this.postType == 'file' && typeof this.parent == 'undefined'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
 });
 
 Template.postAttributes.events({
-    'click .file-download': function(){
+    'click .file-download': function(e){
         console.log("File Download Click: ", this);
+        /*e.stopPropagation();
+        e.preventDefault();
+        window.open(this.file,'_.blank');*/
     }
 })

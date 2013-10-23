@@ -16,7 +16,13 @@
       <div class="bubble-list">
         <div></div>
         {{#each posts}}
-          {{> listItemBB}}
+          {{#if isEvent}}
+            {{> listItemExploreEventPostBB}}
+          {{else}}
+            {{#if isDiscussion}}
+              {{> listItemExploreDiscussionPostBB}}
+            {{/if}}
+          {{/if}}
         {{else}}
           <div class="post-item">
             <div class="v-middle">

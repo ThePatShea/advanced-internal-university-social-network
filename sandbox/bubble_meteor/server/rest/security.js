@@ -1,6 +1,8 @@
 this.UserType = {
-  ADMIN: '3',
-  SUPERADMIN: '4'
+  USER: '1',
+  SUPERUSER: '2',
+  CAMPUSMOD: '3',
+  BUBBLEMASTER: '4'
 };
 
 this.RestSecurity = {
@@ -11,9 +13,78 @@ this.RestSecurity = {
     };
   },
 
-  postCheck: function(ctx, obj) {
+  notBubbleCheck: function(ctx, obj) {
     if (obj && obj.bubbleId)
       return RestHelpers.jsonResponse(401, 'Bubble posts are disallowed');
+  },
+
+  ownsPost: function(ctx, obj) {
+    if (typeof obj.bubbleId != 'undefined') {
+      var bubble = RestHelpers.mongoFindOne(Bubbles, obj.bubbleId);
+      if (!bubble)
+        return RestHelpers.jsonResponse(422, 'Can only comment bubble posts');
+
+      if (ctx.user.userType != UserType.ADMIN &&
+          obj.userId != ctx.userId &&
+          obj.author != ctx.user.userName &&
+          !_.contains(bubble.users.admins, ctx.userId))
+        return RestHelpers.jsonResponse(401, 'Not bubble post owner');
+    } else {
+      if (ctx.user.userType != UserType.ADMIN && obj.userId != ctx.userId)
+        return RestHelpers.jsonResponse(401, 'Not post owner');
+    }
+  },
+
+  canMakePost: function(fieldName) {
+    return function(ctx, obj) {
+      // Check if post has a name
+      if (!obj.name)
+        return RestHelpers.jsonResponse(422, 'Please fill in post name');
+
+      var query = {
+        name: obj.name
+      };
+      query[fieldName] = obj[fieldName];
+
+      if (RestHelpers.mongoFindOne(Posts, query)) {
+        return RestHelpers.jsonResponse(302, 'Duplicate post name');
+      }
+
+      switch (obj.postType) {
+        case 'discussion':
+          if (!obj.body)
+            return RestHelpers.jsonResponse(422, 'Post body is required');
+          break;
+        case 'event':
+          if (!obj.body || !obj.location)
+            return RestHelpers.jsonResponse(422, 'Event body and location are required');
+          break;
+        case 'file':
+          if (!obj.files)
+            return RestHelpers.jsonResponse(422, 'Missing file');
+          break;
+        default:
+          return RestHelpers.jsonResponse(422, 'Invalid post type');
+      }
+    }
+  },
+
+  canUpdatePost: function(ctx, obj) {
+    var post = RestHelpers.mongoFindOne(Posts, obj.id);
+    if (!post)
+      return RestHelpers.jsonResponse(404, 'Post not found');
+
+    var response = RestSecurity.ownsPost(ctx, obj);
+    if (response)
+      return response;
+
+    // TODO: Prettify?
+    var field = RestHelpers.haveChangedFields(obj, post, [
+      'author', 'exploreId', 'postAsType', 'postAsId', 'dateTime', 'location',
+      'file', 'fileType', 'fileSize', 'lastCommentTime', 'lastUpdated', 'eventPhoto', 'retinaEventPhoto',
+      'numDownloads', 'children', 'flagged', 'lastDownloadTime']);
+    if (field)
+      return RestHelpers.jsonResponse(401, 'Not allowed to change core field ' + field);
   },
 
   // Explores
@@ -26,8 +97,6 @@ this.RestSecurity = {
   },
 
   ownsExplore: function(ctx, obj) {
-    // TODO: Fix me
-    return true;
   },
 
   isExploreAdmin: function(ctx, obj) {
@@ -119,5 +188,16 @@ this.RestSecurity = {
       return;
 
     return RestHelpers.jsonResponse(401, 'Can not edit others comment')
+  },
+
+  // Files
+  canChangeFile: function(ctx, obj) {
+    if (ctx.user.userType != UserType.ADMIN && obj.userId != ctx.userId)
+      return RestHelpers.jsonResponse(403, 'Access denied.');
+  },
+
+  // Helpers
+  deny: function(ctx, obj) {
+    return RestHelpers.jsonResponse(403, 'Access denied.');
   }
 };

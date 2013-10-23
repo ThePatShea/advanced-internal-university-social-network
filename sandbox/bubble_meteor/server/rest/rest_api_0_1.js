@@ -8,6 +8,12 @@ function parseApiOptions(ctx) {
 	};
 }
 
+function getFileApiOptions(ctx) {
+	return {
+		fields: RestHelpers.getFieldList('name,type,userId,size,url')
+	};
+}
+
 // Endpoints
 Meteor.startup(function() {
 	// Posts
@@ -19,16 +25,16 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		},
 		create: {
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		},
 		update: {
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		},
 		remove: {
-			check: RestSecurity.canMakePost
+			check: RestSecurity.notBubbleCheck
 		}
 	});
 
@@ -53,13 +59,16 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Posts, 'exploreId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Explores, Posts, 'exploreId', {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.canMakePost('exploreId')
 		}
 	});
 
@@ -84,17 +93,31 @@ Meteor.startup(function() {
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/posts', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/posts', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
+		},
+		create: {
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
+		},
+		update: {
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
+		},
+		remove: {
+			check: RestSecurity.ownsPost,
+			afterDelete: RestPost.deletePost
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/events', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/events', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'events',
 			apiOpts: parseApiOptions,
@@ -105,17 +128,21 @@ Meteor.startup(function() {
 			check: RestSecurity.makeBubblePostCheck('event')
 		},
 		create: {
-			check: RestSecurity.makeBubblePostCheck('event')
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.makeBubblePostCheck('event')
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('event')
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/discussions', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/discussions', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'discussions',
 			apiOpts: parseApiOptions,
@@ -126,17 +153,21 @@ Meteor.startup(function() {
 			check: RestSecurity.makeBubblePostCheck('discussion')
 		},
 		create: {
-			check: RestSecurity.makeBubblePostCheck('discussion')
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.makeBubblePostCheck('discussion')
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('discussion')
 		}
 	});
 
-	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/files', Posts, 'bubbleId', {
+	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/files', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'files',
 			apiOpts: parseApiOptions,
@@ -147,10 +178,14 @@ Meteor.startup(function() {
 			check: RestSecurity.makeBubblePostCheck('file')
 		},
 		create: {
-			check: RestSecurity.makeBubblePostCheck('file')
+			check: RestSecurity.canMakePost('bubbleId'),
+			preprocess: RestPost.createPost,
+			afterInsert: RestPost.processPost
 		},
 		update: {
-			check: RestSecurity.makeBubblePostCheck('file')
+			check: RestSecurity.canUpdatePost,
+			preprocess: RestPost.updatePost,
+			afterUpdate: RestPost.processPost
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('file')
@@ -168,7 +203,8 @@ Meteor.startup(function() {
 		},
 		create: {
 			check: RestSecurity.canCreateComment,
-			preprocess: RestPost.createComment
+			preprocess: RestPost.preComment,
+			afterInsert: RestPost.postComment
 		},
 		update: {
 			check: RestSecurity.canChangeComment
@@ -211,4 +247,29 @@ Meteor.startup(function() {
 			apiOpts: parseApiOptions
 		}
 	});
+
+	// File upload
+	RestCrud.makeGenericApi('/api/v1_0/file', Files, {
+		query: {
+			check: RestSecurity.deny
+		},
+		queryOne: {
+			apiOpts: getFileApiOptions
+		},
+		create: {
+			handler: RestHandlers.handleFileUpload
+		},
+		update: {
+			check: RestSecurity.canChangeFile,
+			preprocess: RestPost.preFile
+		},
+		remove: {
+			check: RestSecurity.canChangeFile
+		}
+	});
+
+	Meteor.Router.add('/api/v1_0/file/:id/get', 'GET', RestHandlers.handleFileRequest);
+
+	// CORS file uploading
+	Meteor.Router.add('/api/v1_0/file', 'OPTIONS', RestHandlers.handleCorsRequest);
 });
