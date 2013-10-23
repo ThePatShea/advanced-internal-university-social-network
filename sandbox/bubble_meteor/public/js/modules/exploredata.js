@@ -76,7 +76,10 @@
 						var newUser = new ExploreUser({id: serverModel.postAsId});
 						newUser.fetch({
 							success: function(){
-								exploreDep.changed();
+								if(typeof exploreDep !== "undefined")
+									exploreDep.changed();
+								if(typeof explorePageDep !== "undefined")
+									explorePageDep.changed();
 							}
 						});
 						that.add(newUser);
@@ -97,7 +100,10 @@
 						var newBubble = new ExploreBubble({id: serverModel.postAsId});
 						newBubble.fetch({
 							success: function(){
-								exploreDep.changed();
+								if(typeof exploreDep !== "undefined")
+									exploreDep.changed();
+								if(typeof explorePageDep !== "undefined")
+									explorePageDep.changed();
 							}
 						});
 						that.add(newBubble);
