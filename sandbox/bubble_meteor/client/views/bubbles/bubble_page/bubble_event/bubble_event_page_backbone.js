@@ -1,75 +1,39 @@
+Template.bubbleEventPageBackbone.destroyed = function() {
+  delete bubbleEventDep;
+}
+
 Template.bubbleEventPageBackbone.created = function(){
   Session.set("isLoading", true);
 
-  bubbleDep = new Deps.Dependency;
+  console.log ("BUBBLE EVENTS PAGE CREATED!");
+
+  // if(typeof bubbleDep !== "undefined")
+  //   delete bubbleDep;
+  bubbleEventDep = new Deps.Dependency;
   if(typeof goingDep === "undefined")
     goingDep = new Deps.Dependency;
 
-  //Session.set("isLoading", true);
- //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+  Session.set("isLoading", true);
+  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
 
   currentBubbleId = window.location.pathname.split("/")[2];
 
-  mybubbles = new BubbleData.MyBubbles({
-    bubbleId: currentBubbleId,
-    limit: 10,
-    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-    events: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
-    },
-
-    discussions: {
-      limit: 1,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-    },
-
-    files: {
-      limit: 1,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-    },
-
-    members: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    admins: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    applicants: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    invitees: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    callback: function(){
-      console.log('Bubbledata changed');
-      bubbleDep.changed();
-      Session.set('isLoading', false);
-    }
-  });
+  bubbleEventHelper();
 }
 
 
 Template.bubbleEventPageBackbone.rendered = function(){
-var currentUrl  =  window.location.pathname;
+  console.log("BUBBLE EVENTS PAGE RENDERED!");
+/*var currentUrl  =  window.location.pathname;
 var urlArray    =  currentUrl.split("/");
 var currentBubbleId  =  urlArray[2];
 eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
     Session.set("isLoading", false);
-  });
+  });*/
 
   if(currentBubbleId != window.location.pathname.split("/")[2])
   {
-    console.log('Bubble chenged');
+    console.log('Bubble changed');
     currentBubbleId = window.location.pathname.split("/")[2];
 
     var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
@@ -78,52 +42,7 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
       Meteor.Router.to('bubblePublicPage', bubble._id);
     }
 
-    mybubbles = new BubbleData.MyBubbles({
-      bubbleId: currentBubbleId,
-      limit: 10,
-      fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-      events: {
-        limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
-      },
-
-      discussions: {
-        limit: 1,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-      },
-
-      files: {
-        limit: 1,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-      },
-
-      members: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      admins: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      applicants: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      invitees: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      callback: function(){
-        console.log('Bubbledata changed');
-        bubbleDep.changed();
-        Session.set('isLoading', false);
-      }
-    });
+    bubbleEventHelper();
   }
 
 }
@@ -134,7 +53,7 @@ eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
 Template.bubbleEventPageBackbone.helpers({
   //Get posts assigned to this bubble
   getEventPosts: function() {
-    bubbleDep.depend();
+    bubbleEventDep.depend();
     var currentUrl  =  window.location.pathname;
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
@@ -145,11 +64,11 @@ Template.bubbleEventPageBackbone.helpers({
   },
 
   postPropertiesBackboneEvent: function(){
-    bubbleDep.depend();
-    var eventPosts = mybubbles.Events.getJSON();
-    var topEventPosts = eventPosts.slice(0, 3);
+    //bubbleEventDep.depend();
+    //var eventPosts = mybubbles.Events.getJSON();
+    //var topEventPosts = eventPosts.slice(0, 3);
     return {
-      'posts': topEventPosts,
+      //'posts': topEventPosts,
       'postType': 'event',
       'word1': 'upcoming'
     }
@@ -158,6 +77,12 @@ Template.bubbleEventPageBackbone.helpers({
   getCurrentBubbleBackbone: function(){
     var bubble = mybubbles.bubbleInfo.toJSON();
     return bubble;
+  },
+
+  pagination: function() {
+    if(mybubbles.Events.getNumPages() > 1)
+      return true;
+    return false;
   },
 
   pages: function() {
@@ -193,15 +118,19 @@ Template.bubbleEventPageBackbone.helpers({
 
 Template.bubbleEventPageBackbone.events({
   'click .pageitem': function(e) {
+    Session.set('isLoading',true);
     console.log("PAGEITEM: ", e.target.id);
     mybubbles.Events.fetchPage(parseInt(e.target.id)-1, function(res){
-      bubbleDep.changed();
+      bubbleEventDep.changed();
+      Session.set('isLoading',false);
       console.log("CALLED", res);
     });
   },
   'click .prev': function() {
+    Session.set('isLoading',true);
     mybubbles.Events.fetchPrevPage(function(res){
-      bubbleDep.changed();
+      bubbleEventDep.changed();
+      Session.set('isLoading',false);
       console.log("CALLED", res);
     });
     //var currentPage = es.getCurrentPage();
@@ -213,9 +142,73 @@ Template.bubbleEventPageBackbone.events({
     
   },
   'click .next': function() {
+    Session.set('isLoading',true);
     mybubbles.Events.fetchNextPage(function(res){
-      bubbleDep.changed();
+      bubbleEventDep.changed();
+      Session.set('isLoading',false);
       console.log("CALLED", res);
     });
   }
 });
+
+var bubbleEventHelper = function() {
+  if(typeof mybubbles === "undefined")
+  {
+    mybubbles = new BubbleData.MyBubbles({
+      bubbleId: currentBubbleId,
+      limit: 3,
+      fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+
+      events: {
+        limit: 10,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+      },
+
+      discussions: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      },
+
+      files: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      },
+
+      members: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      admins: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      applicants: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      invitees: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      callback: function(){
+        console.log('Bubbledata changed');
+        bubbleEventDep.changed();
+        Session.set('isLoading', false);
+      }
+    });
+  }
+  else
+  {
+    mybubbles.Events.setLimit(10, function(){
+      console.log("Event Limit set to '10'");
+      mybubbles.Events.fetchPage(mybubbles.Events.getCurrentPage(),function(){
+        bubbleEventDep.changed();
+        Session.set('isLoading', false);
+      });
+    });
+  }
+};

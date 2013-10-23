@@ -1,73 +1,32 @@
+Template.bubbleFilePageBackbone.destroyed = function() {
+  delete bubbleFileDep;
+}
+
 Template.bubbleFilePageBackbone.created = function(){
   Session.set("isLoading", true);
 
-  bubbleDep = new Deps.Dependency;
+  bubbleFileDep = new Deps.Dependency;
 
   //Session.set("isLoading", true);
  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
 
   currentBubbleId = window.location.pathname.split("/")[2];
 
-  mybubbles = new BubbleData.MyBubbles({
-    bubbleId: currentBubbleId,
-    limit: 10,
-    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-    events: {
-      limit: 1,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
-    },
-
-    discussions: {
-      limit: 1,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-    },
-
-    files: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent', 'userId']
-    },
-
-    members: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    admins: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    applicants: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    invitees: {
-      limit: 1,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    callback: function(){
-      console.log('Bubbledata changed');
-      bubbleDep.changed();
-      Session.set('isLoading', false);
-    }
-  });
+  bubbleFileHelper();
 
 }
 
 Template.bubbleFilePageBackbone.rendered = function() {
-  var currentUrl  =  window.location.pathname;
-  var urlArray    =  currentUrl.split("/");
-  var currentBubbleId  =  urlArray[2];
-  filesHandle = Meteor.subscribe('files', currentBubbleId, function() {
-    Session.set("isLoading", false);
-  });
+  // var currentUrl  =  window.location.pathname;
+  // var urlArray    =  currentUrl.split("/");
+  // var currentBubbleId  =  urlArray[2];
+  // filesHandle = Meteor.subscribe('files', currentBubbleId, function() {
+  //   Session.set("isLoading", false);
+  // });
 
   if(currentBubbleId != window.location.pathname.split("/")[2])
   {
-    console.log('Bubble chenged');
+    console.log('Bubble changed');
     currentBubbleId = window.location.pathname.split("/")[2];
 
     var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
@@ -75,53 +34,8 @@ Template.bubbleFilePageBackbone.rendered = function() {
     if(isMemberAjax.responseText == 'False' && isAdminAjax.responseText == 'False'){
       Meteor.Router.to('bubblePublicPage', bubble._id);
     }
-
-    mybubbles = new BubbleData.MyBubbles({
-      bubbleId: currentBubbleId,
-      limit: 10,
-      fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-      events: {
-        limit: 1,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
-      },
-
-      discussions: {
-        limit: 1,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-      },
-
-      files: {
-        limit: 10,
-        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'parent', 'userId']
-      },
-
-      members: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      admins: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      applicants: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      invitees: {
-        limit: 1,
-        fields: ['username', 'name', 'profilePicture']
-      },
-
-      callback: function(){
-        console.log('Bubbledata changed');
-        bubbleDep.changed();
-        Session.set('isLoading', false);
-      }
-    });
+    
+    bubbleFileHelper();
   }
 
 }
@@ -133,7 +47,7 @@ Template.bubbleFilePageBackbone.helpers({
   },
   //Get posts assigned to this bubble
   getFilePosts: function(){
-    bubbleDep.depend();
+    bubbleFileDep.depend();
     var currentUrl  =  window.location.pathname;
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
@@ -143,14 +57,20 @@ Template.bubbleFilePageBackbone.helpers({
   },
 
   postPropertiesBackboneFile: function(){
-    bubbleDep.depend();
-    var discussionPosts = mybubbles.Discussions.getJSON();
-    var topDiscussionPosts = discussionPosts.slice(0, 3);
+    // bubbleDep.depend();
+    // var discussionPosts = mybubbles.Discussions.getJSON();
+    // var topDiscussionPosts = discussionPosts.slice(0, 3);
     return {
-      'posts': topDiscussionPosts,
+      //'posts': topDiscussionPosts,
       'postType': 'file',
       'word1': 'active'
     }
+  },
+
+  pagination: function() {
+    if(mybubbles.Files.getNumPages() > 1)
+      return true;
+    return false;
   },
 
   pages: function() {
@@ -186,15 +106,19 @@ Template.bubbleFilePageBackbone.helpers({
 
 Template.bubbleFilePageBackbone.events({
   'click .pageitem': function(e) {
+    Session.set('isLoading',true);
     console.log("Files PAGEITEM: ", e.target.id);
     mybubbles.Files.fetchPage(parseInt(e.target.id)-1, function(res){
-      bubbleDep.changed();
+      bubbleFileDep.changed();
+      Session.set('isLoading',false);
       console.log("Discussions CALLED", res);
     });
   },
   'click .prev': function() {
+    Session.set('isLoading',true);
     mybubbles.Files.fetchPrevPage(function(res){
-      bubbleDep.changed();
+      bubbleFileDep.changed();
+      Session.set('isLoading',false);
       console.log("CALLED", res);
     });
     //var currentPage = es.getCurrentPage();
@@ -206,9 +130,73 @@ Template.bubbleFilePageBackbone.events({
     
   },
   'click .next': function() {
+    Session.set('isLoading',true);
     mybubbles.Files.fetchNextPage(function(res){
-      bubbleDep.changed();
+      bubbleFileDep.changed();
+      Session.set('isLoading',false);
       console.log("CALLED", res);
     });
   }
 });
+
+var bubbleFileHelper = function() {
+  if(typeof mybubbles === "undefined")
+  {
+    mybubbles = new BubbleData.MyBubbles({
+      bubbleId: currentBubbleId,
+      limit: 10,
+      fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+
+      events: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+      },
+
+      discussions: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      },
+
+      files: {
+        limit: 10,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      },
+
+      members: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      admins: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      applicants: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      invitees: {
+        limit: 0,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      callback: function(){
+        console.log('Bubbledata changed');
+        bubbleFileDep.changed();
+        Session.set('isLoading', false);
+      }
+    });
+  }
+  else
+  {
+    mybubbles.Files.setLimit(10, function(){
+      console.log("File Limit set to '10'");
+      mybubbles.Files.fetchPage(mybubbles.Files.getCurrentPage(),function(){
+        bubbleFileDep.changed();
+        Session.set('isLoading', false);
+      });
+    });
+  }
+};

@@ -1,9 +1,14 @@
 Template.bubbleCoverBackbone.rendered = function(){
+  console.log("Cover Rendered");
   //Log clicking of edit bubble button
   /*$(".lbl").on("click", function() {
     Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
   });*/
-}
+};
+
+Template.bubbleCoverBackbone.created = function() {
+  console.log("Cover Created");
+};
 
 
 Template.bubbleCoverBackbone.helpers({
@@ -51,10 +56,6 @@ Template.bubbleCoverBackbone.helpers({
 
   getBubbleUsersCountBackbone: function(){
     var userCount = mybubbles.Members.bubbleMembers.count + mybubbles.Admins.bubbleAdmins.count;
-    if(typeof bubbleDep != 'undefined'){
-      bubbleDep.changed();
-    }
-
     return userCount;
   }
 });

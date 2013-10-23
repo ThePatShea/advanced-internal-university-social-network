@@ -29,25 +29,55 @@ Template.userList.helpers({
 	users: function() {
 		return this.getJSON();
 	},
+	pagination: function() {
+		if(typeof this.bubbleAdmins !== "undefined")
+		{
+		    if(mybubbles.Admins.getNumPages() > 1)
+		    	return true;
+		    return false;
+		}
+		if(typeof this.bubbleMembers !== "undefined")
+		{
+		    if(mybubbles.Members.getNumPages() > 1)
+		    	return true;
+		    return false;
+		}
+		if(typeof this.bubbleApplicants !== "undefined")
+		{
+		    if(mybubbles.Applicants.getNumPages() > 1)
+		    	return true;
+		    return false;
+		}
+		if(typeof this.bubbleInvitees !== "undefined")
+		{
+		    if(mybubbles.Invitees.getNumPages() > 1)
+		    	return true;
+		    return false;
+		}
+	},
 	isActivePage: function(type) {
 		bubbleDep.depend();
 		if(type == "members")
 		{
+			bubbleMembersDep.depend();
 		  	if(this.page == mybubbles.Members.getCurrentPage()+1)
 		  		return "active";
 		}
 		if(type == "admins")
 		{
+			bubbleAdminsDep.depend();
 		  	if(this.page == mybubbles.Admins.getCurrentPage()+1)
 		  		return "active";
 		}
 		if(type == "invitees")
 		{
+			bubbleInviteesDep.depend();
 		  	if(this.page == mybubbles.Invitees.getCurrentPage()+1)
 		  		return "active";
 		}
 		if(type == "applicants")
 		{
+			bubbleApplicantsDep.depend();
 		  	if(this.page == mybubbles.Applicants.getCurrentPage()+1)
 		  		return "active";
 		}
@@ -134,7 +164,7 @@ Template.userList.events({
 		{
 			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
 			mybubbles.Members.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleDep.changed();
+				bubbleMembersDep.changed();
 				Session.set("isLoading", false);
 				console.log("CALLED", res);
 			});
@@ -143,7 +173,7 @@ Template.userList.events({
 		{
 			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
 			mybubbles.Admins.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleDep.changed();
+				bubbleAdminsDep.changed();
 				Session.set("isLoading", false);
 				console.log("CALLED", res);
 			});
@@ -152,7 +182,7 @@ Template.userList.events({
 		{
 			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
 			mybubbles.Inviteess.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleDep.changed();
+				bubbleInviteesDep.changed();
 				Session.set("isLoading", false);
 				console.log("CALLED", res);
 			});
@@ -161,26 +191,32 @@ Template.userList.events({
 		{
 			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
 			mybubbles.Applicants.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleDep.changed();
+				bubbleApplicantsDep.changed();
 				Session.set("isLoading", false);
 				console.log("CALLED", res);
 			});
 		};
 	},
 	'click .prev': function() {
-		Session.set("isLoading", true);
-		this.fetchPrevPage(function(res){
-			bubbleDep.changed();
-			Session.set("isLoading", false);
-			console.log("CALLED", res);
-		});
+		if(this.getCurrentPage > 0)
+		{
+			Session.set("isLoading", true);
+			this.fetchPrevPage(function(res){
+				bubbleDep.changed();
+				Session.set("isLoading", false);
+				console.log("CALLED", res);
+			});
+		}
 	},
 	'click .next': function() {
-		Session.set("isLoading", true);
-		this.fetchNextPage(function(res){
-			bubbleDep.changed();
-			Session.set("isLoading", false);
-			console.log("CALLED", res);
-		});
+		if(this.getCurrentPage < this.getNumPages()-1)
+		{
+			Session.set("isLoading", true);
+			this.fetchNextPage(function(res){
+				bubbleDep.changed();
+				Session.set("isLoading", false);
+				console.log("CALLED", res);
+			});
+		}
 	}
 });

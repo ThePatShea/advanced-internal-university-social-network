@@ -1,7 +1,16 @@
+Template.bubbleMembersPageBackbone.destroyed = function() {
+	delete bubbleDep;
+	delete bubbleMembersDep;
+	delete bubbleAdminsDep;
+	delete bubbleApplicantsDep;
+	delete bubbleInviteesDep;
+}
+
 Template.bubbleMembersPageBackbone.created = function() {
-	virtualPage = 0;
+	/*virtualPage = 0;
 	max_scrolltop = 200;
-	var test = Session.get('currentBubbleId');
+	var test = Session.get('currentBubbleId');*/
+	Session.set("isLoading",true);
 	currentBubbleId = window.location.pathname.split('/')[2];
 	Session.set("currentBubbleId", currentBubbleId);
 	Meteor.subscribe("findBubblesById", [currentBubbleId], function(){
@@ -13,62 +22,14 @@ Template.bubbleMembersPageBackbone.created = function() {
 	    rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
 	    rejectList.push(Meteor.userId());
 	});
-	//membersDep = new Deps.Dependency;
+
 	bubbleDep = new Deps.Dependency;
+	bubbleMembersDep = new Deps.Dependency;
+	bubbleAdminsDep = new Deps.Dependency;
+	bubbleApplicantsDep = new Deps.Dependency;
+	bubbleInviteesDep = new Deps.Dependency;
 
-	//if(typeof bubbleDep === "undefined")
-	//	bubbleDep = new Deps.Dependency;
-	
-	if(typeof mybubbles === "undefined")
-	{
-		mybubbles = new BubbleData.MyBubbles({
-		    bubbleId: currentBubbleId,
-		    limit: 10,
-		    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-		    events: {
-		      limit: 10,
-		      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees']
-		    },
-
-		    discussions: {
-		      limit: 10,
-		      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-		    },
-
-		    files: {
-		      limit: 10,
-		      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount']
-		    },
-
-		    members: {
-		      limit: 10,
-		      fields: ['username', 'name', 'profilePicture', 'userType']
-		    },
-
-		    admins: {
-		      limit: 10,
-		      fields: ['username', 'name', 'profilePicture', 'userType']
-		    },
-
-		    applicants: {
-		      limit: 10,
-		      fields: ['username', 'name', 'profilePicture', 'userType']
-		    },
-
-		    invitees: {
-		      limit: 10,
-		      fields: ['username', 'name', 'profilePicture', 'userType']
-		    },
-
-		    callback: function(){
-		      console.log('Bubbledata changed');
-		      bubbleDep.changed();
-		      //membersDep.changed();
-		      Session.set('isLoading', false);
-		    }
-  		});
-	}
+	bubbleMembersHelper();
 }
 
 Template.bubbleMembersPageBackbone.rendered = function () {
@@ -82,23 +43,19 @@ Template.bubbleMembersPageBackbone.helpers({
 		return bubble;
 	},
 	adminsObj: function() {
-		//membersDep.depend();
-		bubbleDep.depend();
+		bubbleAdminsDep.depend();
 		return mybubbles.Admins;
 	},
 	membersObj: function() {
-		//membersDep.depend();
-		bubbleDep.depend();
+		bubbleMembersDep.depend();
 		return mybubbles.Members;
 	},
 	inviteesObj: function() {
-		//membersDep.depend();
-		bubbleDep.depend();
+		bubbleInviteesDep.depend();
 		return mybubbles.Invitees;
 	},
 	applicantsObj: function() {
-		//membersDep.depend();
-		bubbleDep.depend();
+		bubbleApplicantsDep.depend();
 		return mybubbles.Applicants;
 	},
 	isSuperBubble: function() {
@@ -107,3 +64,95 @@ Template.bubbleMembersPageBackbone.helpers({
 		return 'super' == bubbleInfo.bubbleType;
 	}
 });
+
+var bubbleMembersHelper = function() {
+  if(typeof mybubbles === "undefined")
+  {
+    mybubbles = new BubbleData.MyBubbles({
+      bubbleId: currentBubbleId,
+      limit: 10,
+      fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+
+      events: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+      },
+
+      discussions: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      },
+
+      files: {
+        limit: 0,
+        fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      },
+
+      members: {
+        limit: 10,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      admins: {
+        limit: 10,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      applicants: {
+        limit: 10,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      invitees: {
+        limit: 10,
+        fields: ['username', 'name', 'profilePicture', 'userType']
+      },
+
+      callback: function(){
+        console.log('Bubbledata changed');
+        bubbleDep.changed();
+        Session.set('isLoading', false);
+      }
+    });
+  }
+  else
+  {
+  	var ready = 0;
+    mybubbles.Admins.setLimit(10, function(){
+      console.log("Admins Limit set to '10'");
+      mybubbles.Admins.fetchPage(mybubbles.Admins.getCurrentPage(),function(){
+        bubbleAdminsDep.changed();
+        ready++;
+        if(ready == 4)
+        	Session.set('isLoading', false);
+      });
+    });
+    mybubbles.Members.setLimit(10, function(){
+      console.log("Members Limit set to '10'");
+      mybubbles.Members.fetchPage(mybubbles.Members.getCurrentPage(),function(){
+        bubbleMembersDep.changed();
+        ready++;
+        if(ready == 4)
+        	Session.set('isLoading', false);
+      });
+    });
+    mybubbles.Applicants.setLimit(10, function(){
+      console.log("Applicants Limit set to '10'");
+      mybubbles.Applicants.fetchPage(mybubbles.Applicants.getCurrentPage(),function(){
+        bubbleApplicantsDep.changed();
+        ready++;
+        if(ready == 4)
+        	Session.set('isLoading', false);
+      });
+    });
+    mybubbles.Invitees.setLimit(10, function(){
+      console.log("Invitees Limit set to '10'");
+      mybubbles.Invitees.fetchPage(mybubbles.Invitees.getCurrentPage(),function(){
+        bubbleInviteesDep.changed();
+        ready++;
+        if(ready == 4)
+        	Session.set('isLoading', false);
+      });
+    });
+  }
+};

@@ -1,6 +1,6 @@
 <template name="bubblePageBackbone">
 
-  <div id="form-loader" class="form-loader visible-{{isLoading}}">
+  <div class="visible-{{isLoading}}">
     {{> gifLoaderToParent}}
   </div>
     
@@ -8,10 +8,6 @@
 
     {{> bubbleCoverBackbone}}
     {{> bubbleSectionSelectorBackbone}}
-    
-    <div class="visible-{{isLoading}}">
-      {{> gifLoaderToParent}}
-    </div>
 
     <div class="bubble-page-content">
 

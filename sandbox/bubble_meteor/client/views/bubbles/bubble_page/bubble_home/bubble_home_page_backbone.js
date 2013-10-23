@@ -1,82 +1,31 @@
 //the events past 4 hours will not be listed on the event page
 referenceDateTime = moment().add('hours',-4).valueOf();
 
+Template.bubblePageBackbone.destroyed = function() {
+  console.log("BUBBLE HOME PAGE DESTROYED!");
+  delete bubbleHomeDep;
+}
+
 Template.bubblePageBackbone.created = function() {
+  console.log("Home Page Created!");
   Session.set('updatesToShow',3);
 
-  bubbleDep = new Deps.Dependency;
+  // if(typeof bubbleDep !== "undefined")
+  //   delete bubbleDep;
+  bubbleHomeDep = new Deps.Dependency;
   if(typeof goingDep === "undefined")
     goingDep = new Deps.Dependency;
 
-  //Session.set("isLoading", true);
- //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
+  Session.set("isLoading", true);
 
   currentBubbleId = window.location.pathname.split("/")[2];
 
-  mybubbles = new BubbleData.MyBubbles({
-    bubbleId: currentBubbleId,
-    limit: 10,
-    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-    events: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
-    },
-
-    discussions: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
-    },
-
-    files: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
-    },
-
-    members: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture', 'userType']
-    },
-
-    admins: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture', 'userType']
-    },
-
-    applicants: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture', 'userType']
-    },
-
-    invitees: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture', 'userType']
-    },
-
-    callback: function(){
-      console.log('Bubbledata changed');
-      bubbleDep.changed();
-      Session.set('isLoading', false);
-    }
-  });
-
-
- /*if(typeof bubble != "undefined" &&
-    (!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId()) )
-   ) {
-   Meteor.Router.to('bubblePublicPage', bubble._id);
- }*/
+  bubbleHomeHelper();
 }
 
 
 Template.bubblePageBackbone.rendered = function() {
-  //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
   console.log('Rendered bubble page');
-
-  //currentBubbleId = window.location.pathname.split('/')[2];
-
-
-
 
   if(currentBubbleId != window.location.pathname.split("/")[2])
   {
@@ -89,55 +38,9 @@ Template.bubblePageBackbone.rendered = function() {
       Meteor.Router.to('bubblePublicPage', bubble._id);
     }
 
-  mybubbles = new BubbleData.MyBubbles({
-    bubbleId: currentBubbleId,
-    limit: 10,
-    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
-
-    events: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
-    },
-
-    discussions: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
-    },
-
-    files: {
-      limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
-    },
-
-    members: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    admins: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    applicants: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    invitees: {
-      limit: 10,
-      fields: ['username', 'name', 'profilePicture','userType']
-    },
-
-    callback: function(){
-      console.log('Bubbledata changed');
-      bubbleDep.changed();
-      Session.set('isLoading', false);
-    }
-  });
-  }
-
-}
+    bubbleHomeHelper();
+  };
+};
 
 Template.bubblePageBackbone.helpers({
   testNumUpdates: function() {
@@ -280,6 +183,7 @@ Template.bubblePageBackbone.helpers({
     }
   },
   getCurrentBubbleBackbone: function(){
+    bubbleHomeDep.depend();
     var bubble = mybubbles.bubbleInfo.toJSON();
     return bubble;
   },
@@ -359,7 +263,7 @@ Template.bubblePageBackbone.helpers({
   },
 
   postPropertiesBackboneEvent: function(){
-    bubbleDep.depend();
+    //bubbleDep.depend();
     var eventPosts = mybubbles.Events.getJSON();
     var topEventPosts = eventPosts.slice(0, 3);
     return {
@@ -408,3 +312,52 @@ Template.bubblePageBackbone.events({
     Session.set('updatesToShow', 0);
   }
 });
+
+var bubbleHomeHelper = function() {
+  mybubbles = new BubbleData.MyBubbles({
+    bubbleId: currentBubbleId,
+    limit: 3,
+    fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+
+    events: {
+      limit: 3,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+    },
+
+    discussions: {
+      limit: 3,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+    },
+
+    files: {
+      limit: 3,
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+    },
+
+    members: {
+      limit: 0,
+      fields: ['username', 'name', 'profilePicture', 'userType']
+    },
+
+    admins: {
+      limit: 0,
+      fields: ['username', 'name', 'profilePicture', 'userType']
+    },
+
+    applicants: {
+      limit: 0,
+      fields: ['username', 'name', 'profilePicture', 'userType']
+    },
+
+    invitees: {
+      limit: 0,
+      fields: ['username', 'name', 'profilePicture', 'userType']
+    },
+
+    callback: function(){
+      console.log('Bubbledata changed');
+      bubbleHomeDep.changed();
+      Session.set('isLoading', false);
+    }
+  });
+};
