@@ -34,14 +34,15 @@
         {{/each}}
       </div>
 
-      <ul class="pagination">
-        <li><a href="#" class="prev">prev</a></li>
-        {{#each pages}}
-            <li><a href="#" class="pageitem {{isActivePage}}" id="{{this}}">{{this}}</a></li>
-        {{/each}}
-        <li><a href="#" class="next">next</a></li>
-      </ul>
-
+      {{#if pagination}}
+        <ul class="pagination">
+          <li><a href="#" class="prev">prev</a></li>
+          {{#each pages}}
+              <li><a href="#" class="pageitem {{isActivePage}}" id="{{this}}">{{this}}</a></li>
+          {{/each}}
+          <li><a href="#" class="next">next</a></li>
+        </ul>
+      {{/if}}
 
 
 

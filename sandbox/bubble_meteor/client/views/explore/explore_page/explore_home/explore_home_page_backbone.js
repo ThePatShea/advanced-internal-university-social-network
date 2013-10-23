@@ -90,6 +90,14 @@ Template.explorePageBackbone.helpers({
 	    return retVal;
 	}
   },
+  pagination: function(){
+  	if(es != undefined)
+  	{
+  		if(es.getNumPages() > 1)
+  			return true;
+  	}
+  	return false;
+  },
   pages: function() {
   	var retVal = []
 	if(es != undefined)
