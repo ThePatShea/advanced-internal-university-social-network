@@ -64,8 +64,8 @@ Template.bubbleCoverBackbone.events({
     var imgSrc = $("#bubble-pic").attr('src');
     if (imgSrc == "/img/Bubble-Profile.jpg" && mybubbles.isAdmin(Meteor.userId()) ) {
       Meteor.Router.to('bubbleEdit',Session.get('currentBubbleId'));
-    } else {
-      console.log("Changed")
+    } else if (mybubbles.isMember(Meteor.userId())){
+      Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
     }
   },
   'click .invite-accept': function() {
