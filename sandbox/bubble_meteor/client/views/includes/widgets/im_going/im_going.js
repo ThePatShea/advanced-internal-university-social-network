@@ -48,11 +48,15 @@ Template.imGoing.events({
             {
               console.log("Toggle Going: ",that);
               if(subsection === "posts")
+              {
                 if(bubbleDep){
                   bubbleDep.changed();
                 }
+              }
               else
+              {
                 Meteor.Router.to('postPageBackbone',that.bubbleId,that.id);
+              }
             }
           }
         });
