@@ -2,10 +2,9 @@ Template.adminActionsBackbone.created = function(){
 
   currentBubbleId = window.location.pathname.split("/")[2];
 
-  adminDep = new Deps.Dependency;
-
-
-  /*mybubbles = new BubbleData.MyBubbles({
+  /*adminDep = new Deps.Dependency;
+  
+  mybubbles = new BubbleData.MyBubbles({
     bubbleId: currentBubbleId,
     limit: 1,
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
