@@ -55,6 +55,7 @@ Template.updateItem.helpers({
       }
     }
   ,	getProfilePicture: function() {
+    Meteor.subscribe('getProfilePictureFromId',this.invokerId);
   	var user = Meteor.users.findOne(this.invokerId);
   	// console.log(this.invokerId);
   	return user && user.profilePicture;
