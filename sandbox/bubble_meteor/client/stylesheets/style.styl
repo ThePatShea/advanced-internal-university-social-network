@@ -1573,32 +1573,16 @@ wysiwyg-image(n)
 /**********     errors      **********/
 
 /**********   gif-loader    **********/
-animation(args...)
-  -webkit-animation      args
-  animation              args
-
-transform(args...)
-  -webkit-transform      args
-  -ms-transform          args
-  transform              args
-
-@keyframes rotate
-  0%
-    transform rotateZ(0deg)
-  100%
-    transform rotateZ(360deg)
-
 
 .gif-loader-container-site
-  background        main-xdark
+  background        #F7F8F8
   height            5000px
   position          fixed
   width             100%
   z-index           999
-  
 
 .gif-loader-container
-  background        rgba(1,17,38,.8)
+  background        #F7F8F8
   position          relative
   height            5000px
   width             100%
@@ -1608,31 +1592,17 @@ transform(args...)
     top               -250px
 
 .gif-loader
-  position        absolute
-  left            50%
-  top             100px
-  margin-left     -48px
-  width           75px
-  height          75px
-  border-radius   100%
-  svg
-    height          75px
-    width           75px
-  &:after
-    content         ''
-    background      trasparent
-    width           140%
-    height          140%
-    position        absolute
-    border-radius   100%
-    top             -20%
-    left            -20%
-    opacity         0.7
-    box-shadow      rgba(255, 255, 255, 0.6) -4px -5px 3px -3px
-    animation       rotate 1s infinite linear
+  position              absolute
+  left                  50%
+  top                   100px
+  margin-left           -48px
+  width                 50px
+  height                50px
+  background            url('/img/loading.gif') no-repeat
+  background-position   center center
 
 .loading-container
-  background   rgba(1,17,38,.8)
+  background   #F7F8F8
   position     relative
   height       5000px
   width        100%
@@ -2106,7 +2076,7 @@ navbar-height        =  60px
             top                            -2px
       .dropdown-menu
         background        #A5BBC9
-        top               75px
+        top               55px
         box-shadow        0 0
         border            0
         &::after
@@ -2311,7 +2281,7 @@ navbar-height        =  60px
     &.subsection
       background         main-xlight
       position           relative
-      overflow           auto // make visible for subsection arrows to appear
+      overflow           visible!important // Joe
       width              210px
       height             100%
       z-index            20
@@ -2875,10 +2845,9 @@ attachment-height  =  75px
         move-position(relative, 2px)
   .post-heading
     positionize(auto, auto, 0 30px 15px 30px)
-    a
-      .author-pic // This is added to fix a style problem that was resulted in because of 2 different elemetns inheriting the same style. //Joe
-        top                 -10px
-        margin-top          0
+    .author-pic-main
+      top                -10px
+      margin-top         0
     .name
       fontize(alt, light, auto, 28px)
       colorize(main-light)
@@ -3528,7 +3497,60 @@ cover-btns-width-small  =  130px
 
 /********************************************Added by Joe ***********************************************************/
 
+// New Message Iinfo
+.message-container
+  position relative
+  top -60px
+  opacity 0
+  z-index 100
+  -webkit-transition  all 1s ease-in-out
+  -moz-transition  all 1s ease-in-out
+  -ms-transition  all 1s ease-in-out
+  -o-transition  all 1s ease-in-out
+  transition  all 1s ease-in-out
+.message
+  position relative
+  width 320px
+  margin 0 auto
+  background-color          #B0606D
+  display                   block
+  color                     #F7F8F8
+  padding                   11px 21px 16px 21px
+  border-radius(0 0 10px 10px)
+  
+  .loading-gif-container
+    opacity 0.9
+    position absolute
+    right 20px
+    top 15px
+    .loading-gif
+      display               block
+      width                 44px
+      height                13px
+      background            url('/img/message-loader.gif') no-repeat
+      background-position   center center
+  li
+    display          inline-block
+    font-size        13px
+    .job-type
+      text-transform uppercase
+      font-weight 700
+    .info
+      margin 0
+      padding 0 4px
+      &:before
+      &:after
+        content         '"'
+        padding         0 3px
+    .icon
+      padding-right       14px
+      svg
+        fill            #F7F8F8
+        vertical-align  middle
 
+.message-container-active
+  top 60px
+  opacity 1
 
 // New options bar styles.
 ul.update
