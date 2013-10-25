@@ -3497,7 +3497,39 @@ cover-btns-width-small  =  130px
 
 /********************************************Added by Joe ***********************************************************/
 
+// New Message Iinfo
+.message-container
+  position relative
+  top 60px
+  z-index 100
+.message
+  width 320px
+  margin 0 auto
+  background-color          #B0606D
+  display                   block
+  color                     #F7F8F8
+  padding                   11px 21px 14px 18px
+  border-radius(0 0 10px 10px)
 
+  li
+    display          inline-block
+    font-size        13px
+    .job-type
+      text-transform uppercase
+      font-weight 700
+
+    .info
+      margin 0
+      padding 0 4px
+      &:before
+      &:after
+        content         '"'
+        padding         0 3px
+    .icon
+      padding-right       14px
+      svg
+        fill            #F7F8F8
+        vertical-align  middle
 
 // New options bar styles.
 ul.update

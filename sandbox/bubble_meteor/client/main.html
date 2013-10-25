@@ -56,6 +56,15 @@
   {{/unless}}
 
   <div class="viewport">
+    <div class="message-container">
+      <ul class="message">
+        <li>
+          <span class="icon">{{> icon-edit-message}}</span>
+        </li>
+        <li><span class="job-type">posting</span></li>
+        <li><p class="info">Students Activities Fair</p></li>
+      </ul> 
+    </div><!-- END MESSAGE -->
     <div class="frame">
       {{#if isLoggedIn}}
         {{#unless isOnboarding}}
