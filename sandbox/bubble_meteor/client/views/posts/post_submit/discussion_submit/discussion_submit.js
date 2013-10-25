@@ -110,15 +110,24 @@ Template.discussionSubmit.events({
       makeDiscussionPost();
 
       //Show Post submitted confirmation message
-      setTimeout(function(){
-        $('.message-container').removeClass('visible-false');
-        $('.message-container').addClass('message-container-active');
-        setTimeout(function(){
-          $('.message-container').removeClass('message-container-active');
-          $('.message-container').addClass('visible-false');
-          clearTimeout();
-        },5000);        
-      }, 1000);
+      var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+      var displayPostConfirmationMessage = function(postTitle){
+        return function(){
+          //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+          var message = postTitle.slice(0, 7);
+          var message = message + ' ...';
+          $('.message-container .info').text(message);
+          $('.message-container').removeClass('visible-false');
+          $('.message-container').addClass('message-container-active');
+          setTimeout(function(){
+            $('.message-container').removeClass('message-container-active');
+            $('.message-container').addClass('visible-false');
+            clearTimeout();
+          },5000);
+        }        
+      }
+      console.log('Post Title: ', postTitle);
+      setTimeout(displayPostConfirmationMessage(postTitle), 1000);
 
   },
 
