@@ -112,9 +112,9 @@ Template.discussionSubmit.events({
       //Show Post submitted confirmation message
       setTimeout(function(){
         $('.message-container').removeClass('visible-false');
-        $('.message-container').addClass('visible-true');
+        $('.message-container').addClass('message-container-active');
         setTimeout(function(){
-          $('.message-container').removeClass('visible-true');
+          $('.message-container').removeClass('message-container-active');
           $('.message-container').addClass('visible-false');
           clearTimeout();
         },5000);        
