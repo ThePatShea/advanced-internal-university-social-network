@@ -175,6 +175,7 @@ Template.adminActionsBackbone.events({
   },
 
   //This happens when admin leaves the bubble
+  //NEEDS TO BE WORKED ON IF WE DECIDE TO RE-IMPLEMENT THIS FUNCTIONALITY
   'click .remove-admin': function(event) {
   	// Disable the parent button
     event.stopPropagation();
