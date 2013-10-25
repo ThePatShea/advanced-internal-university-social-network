@@ -83,15 +83,19 @@ Template.userActionsBackbone.events({
 
 	        /*Posts.remove({_id: {$in: bubblePostIds}});
 	        Updates.remove({_id: {$in: updateIds}});*/
-	        Bubbles.remove({_id:currentBubbleId});
+	        //Bubbles.remove({_id:currentBubbleId});
+
+	        //DOESN'T COMPLETELY REMOVE THE BUBBLE!!! NEEDS TO BE RE-EVALUATED!!!
+	        Meteor.call("deleteBubble",currentBubbleId);
 
 	        //Route to the next available bubble or to the search page
-	        var bubble = Bubbles.find({$or: [{'users.members': Meteor.userId()},{'users.admins': Meteor.userId()}]}, {sort: {submitted: -1}}).fetch();
+	        /*var bubble = Bubbles.find({$or: [{'users.members': Meteor.userId()},{'users.admins': Meteor.userId()}]}, {sort: {submitted: -1}}).fetch();
 	        if(bubble.length > 0){
 	          Meteor.Router.to('/mybubbles/'+bubble[0]._id+'/home');
 	        }else{
 	          Meteor.Router.to('/mybubbles/search/bubbles');
-	        }
+	        }*/
+	        Meteor.Router.to('dashboard');
 	      }
 	    }
 	}
@@ -99,18 +103,31 @@ Template.userActionsBackbone.events({
 
   'click .remove-member': function() {
     event.stopPropagation();
+    console.log("THIS USER IS: ",this);
+    that = this;
      if(confirm("Are you sure you want to leave this bubble?"))
     {
 	    Bubbles.update({_id:Session.get('currentBubbleId')},
 	    {
-	      $pull: {'users.members': this._id}
+	      $pull: {'users.members': this.id}
+	    }, function() {
+	    	console.log("THAT: ",that);
+	    	if((that.id != Meteor.userId()) && (typeof bubbleMembersDep !== "undefined"))
+	    	{
+		    	bubbleMembersDep.changed();
+		    }
+		    else
+		    {
+		    	Meteor.Router.to('dashboard');
+		    }
 	    });
-	    Session.set(Session.get('currentBubbleId')+this._id,undefined);
+	    Session.set(Session.get('currentBubbleId')+this.id,undefined);
 
-	    if(this._id != Meteor.userId()){
+	    if(this.id != Meteor.userId()){
 	      //Create update for member who is removed from bubble
-	      createRemoveMemberUpdate(this._id);
+	      createRemoveMemberUpdate(this.id);
 	    }
+
 	}
   }
 });
