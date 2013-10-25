@@ -3500,24 +3500,41 @@ cover-btns-width-small  =  130px
 // New Message Iinfo
 .message-container
   position relative
-  top 60px
+  top -60px
+  opacity 0
   z-index 100
+  -webkit-transition  all 1s ease-in-out
+  -moz-transition  all 1s ease-in-out
+  -ms-transition  all 1s ease-in-out
+  -o-transition  all 1s ease-in-out
+  transition  all 1s ease-in-out
 .message
+  position relative
   width 320px
   margin 0 auto
   background-color          #B0606D
   display                   block
   color                     #F7F8F8
-  padding                   11px 21px 14px 18px
+  padding                   11px 21px 16px 21px
   border-radius(0 0 10px 10px)
-
+  
+  .loading-gif-container
+    opacity 0.9
+    position absolute
+    right 20px
+    top 15px
+    .loading-gif
+      display               block
+      width                 44px
+      height                13px
+      background            url('/img/message-loader.gif') no-repeat
+      background-position   center center
   li
     display          inline-block
     font-size        13px
     .job-type
       text-transform uppercase
       font-weight 700
-
     .info
       margin 0
       padding 0 4px
@@ -3530,6 +3547,10 @@ cover-btns-width-small  =  130px
       svg
         fill            #F7F8F8
         vertical-align  middle
+
+.message-container-active
+  top 60px
+  opacity 1
 
 // New options bar styles.
 ul.update
