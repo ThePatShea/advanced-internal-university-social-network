@@ -107,7 +107,19 @@ Template.discussionSubmit.events({
       //Google Analytics
       _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
-      makeDiscussionPost(); 
+      makeDiscussionPost();
+
+      //Show Post submitted confirmation message
+      setTimeout(function(){
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('visible-true');
+        setTimeout(function(){
+          $('.message-container').removeClass('visible-true');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },5000);        
+      }, 1000);
+
   },
 
   'change .cb-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible': function(evt){
