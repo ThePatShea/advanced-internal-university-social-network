@@ -420,10 +420,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
       ]
     }, { 
          fields: {
-          'coverPhoto': 0,
-          'retinaCoverPhoto': 0,
-          'profilePicture': 0,
-          'retinaProfilePicture': 0,
+          'category': 1,
+          'title': 1,
+          '_id': 1,
+          'users': 1
          },
     //sort: {submitted: -1}, 
   });
@@ -648,6 +648,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
         }
       });
     }
+  });
+
+  Meteor.publish('getProfilePictureFromId', function(id) {
+    return Meteor.users.find({_id: id}, {fields: {'profilePicture': 1, 'retinaProfilePicture': 1}});
   });
 
   Meteor.publish('singleUser', function(userId) { 

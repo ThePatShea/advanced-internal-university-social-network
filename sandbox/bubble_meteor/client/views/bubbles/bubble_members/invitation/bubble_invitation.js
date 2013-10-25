@@ -61,7 +61,7 @@ Template.bubbleInvitation.helpers({
         if(err) {
           console.log(err);
         } else {
-          console.log(res[0]);
+          //console.log(res[0]);
           Session.set('potentialUserIdList', res);
           findResponse = true;
         }
@@ -119,11 +119,20 @@ Template.bubbleInvitation.helpers({
       return 0;
   },
   selected: function(){
-    inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
+    if(typeof Session.get('recentlyAdded') !== "undefined")
+    {
+      var tmp = Session.get('inviteeList'+Session.get('currentBubbleId')).concat(Session.get('recentlyAdded'));
+    }
+    else
+    {
+      var tmp = Session.get('inviteeList'+Session.get('currentBubbleId'));
+    }
+    inviteeIdList = _.map(tmp, function(username){
       if(Meteor.users.findOne({username:username})) {
         return Meteor.users.findOne({username:username})._id;
       }
     });
+    console.log("InviteeIdList: ", inviteeIdList);
     return(_.contains(inviteeIdList,this._id));
   },
     numPosts: function() {
@@ -140,6 +149,13 @@ Template.bubbleInvitation.events({
 
   'click .shortlist-invitee': function(event){
     event.preventDefault();
+    if(typeof Session.get('recentlyAdded') !== "undefined")
+    {
+      if(_.contains(Session.get('recentlyAdded'),(this.username)))
+      {
+        return;
+      }
+    }
     var usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
     if(!usernameList){
       usernameList = [];
@@ -173,15 +189,44 @@ Template.bubbleInvitation.events({
       Meteor.call("sendInvitedEmail", Meteor.userId(), tmp, Session.get('currentBubbleId'));
     });
 
+    Session.set('recentlyAdded',Session.get('inviteeList'+Session.get('currentBubbleId')));
+
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
     if(bubble.bubbleType == 'super') {
       Bubbles.update({_id:bubble._id},
       {
         $addToSet: {'users.members': {$each: userIdList}}
+      }, function(){
+        //ADD REACTIVE CODE HERE
+        Session.set("isLoading",true);
+        Meteor.setTimeout(function(){
+          mybubbles.Members.refreshCollection(function(){
+            if(typeof bubbleMembersDep !== "undefined")
+            {
+              console.log("Members Refreshed");
+              bubbleMembersDep.changed();
+              Session.set("isLoading",false);
+            }
+          });
+        },2000)
       });
     }else{   
       //Add Invitees to the bubble object
-      Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
+      //Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
+      Bubbles.update({_id:bubble._id}, {$addToSet: {'users.invitees': {$each: userIdList}}}, function(){
+        //ADD REACTIVE CODE HERE
+        Session.set("isLoading",true);
+        Meteor.setTimeout(function(){
+          mybubbles.Invitees.refreshCollection(function(){
+            if(typeof bubbleInviteesDep !== "undefined")
+            {
+              console.log("Invitees Refreshed");
+              bubbleInviteesDep.changed();
+              Session.set("isLoading",false);
+            }
+          });
+        },2000)
+      });
     }
 
     //Create notifications

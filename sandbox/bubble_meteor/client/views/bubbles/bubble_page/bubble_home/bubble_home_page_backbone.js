@@ -9,6 +9,7 @@ Template.bubblePageBackbone.destroyed = function() {
 Template.bubblePageBackbone.created = function() {
   console.log("Home Page Created!");
   Session.set('updatesToShow',3);
+  Meteor.subscribe('updatedPosts', Meteor.userId());
 
   bubbleHomeDep = new Deps.Dependency;
   if(typeof goingDep === "undefined")
