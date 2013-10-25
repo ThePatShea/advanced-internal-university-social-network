@@ -61,7 +61,7 @@ Template.bubbleInvitation.helpers({
         if(err) {
           console.log(err);
         } else {
-          console.log(res[0]);
+          //console.log(res[0]);
           Session.set('potentialUserIdList', res);
           findResponse = true;
         }
@@ -119,11 +119,20 @@ Template.bubbleInvitation.helpers({
       return 0;
   },
   selected: function(){
-    inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
+    if(typeof Session.get('recentlyAdded') !== "undefined")
+    {
+      var tmp = Session.get('inviteeList'+Session.get('currentBubbleId')).concat(Session.get('recentlyAdded'));
+    }
+    else
+    {
+      var tmp = Session.get('inviteeList'+Session.get('currentBubbleId'));
+    }
+    inviteeIdList = _.map(tmp, function(username){
       if(Meteor.users.findOne({username:username})) {
         return Meteor.users.findOne({username:username})._id;
       }
     });
+    console.log("InviteeIdList: ", inviteeIdList);
     return(_.contains(inviteeIdList,this._id));
   },
     numPosts: function() {
@@ -140,6 +149,13 @@ Template.bubbleInvitation.events({
 
   'click .shortlist-invitee': function(event){
     event.preventDefault();
+    if(typeof Session.get('recentlyAdded') !== "undefined")
+    {
+      if(_.contains(Session.get('recentlyAdded'),(this.username)))
+      {
+        return;
+      }
+    }
     var usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
     if(!usernameList){
       usernameList = [];
@@ -172,6 +188,8 @@ Template.bubbleInvitation.events({
       userIdList.push(tmp);
       Meteor.call("sendInvitedEmail", Meteor.userId(), tmp, Session.get('currentBubbleId'));
     });
+
+    Session.set('recentlyAdded',Session.get('inviteeList'+Session.get('currentBubbleId')));
 
     var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
     if(bubble.bubbleType == 'super') {
