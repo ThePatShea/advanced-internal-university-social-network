@@ -1,9 +1,21 @@
+Template.adminActionsBackbone.destroyed = function(){
+  getAdminsDep = new Deps.Dependency;
+  getMembersDep = new Deps.Dependency;
+  getApplicantsDep = new Deps.Dependency;
+  getInviteesDep = new Deps.Dependency;
+};
+
 Template.adminActionsBackbone.created = function(){
 
   currentBubbleId = window.location.pathname.split("/")[2];
 
+  getAdminsDep = new Deps.Dependency;
+  getMembersDep = new Deps.Dependency;
+  getApplicantsDep = new Deps.Dependency;
+  getInviteesDep = new Deps.Dependency;
+
   /*adminDep = new Deps.Dependency;
-  
+
   mybubbles = new BubbleData.MyBubbles({
     bubbleId: currentBubbleId,
     limit: 1,
@@ -56,6 +68,7 @@ Template.adminActionsBackbone.created = function(){
 Template.adminActionsBackbone.helpers({
   getAdminStatus: function() {
     //return Bubbles.find({'users.admins': this._id, '_id': Session.get('currentBubbleId')}).count();
+    getAdminsDep.depend();
 
     if(typeof this.id == 'undefined'){
       this.id = this._id;
@@ -66,6 +79,7 @@ Template.adminActionsBackbone.helpers({
 
   getApplicantStatus: function() {
 	 //return Bubbles.find({'users.applicants': this._id, '_id': Session.get('currentBubbleId')}).count();
+    getApplicantsDep.depend();
 
     if(typeof this.id == 'undefined'){
       this.id = this._id;
@@ -76,6 +90,7 @@ Template.adminActionsBackbone.helpers({
 
   getMemberStatus: function() {
 	 //return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
+    getMembersDep.depend();
 
     if(typeof this.id == 'undefined'){
       this.id = this._id;
@@ -86,6 +101,7 @@ Template.adminActionsBackbone.helpers({
 
   getInviteeStatus: function() {
    //return Bubbles.find({'users.invitees': this._id, '_id': Session.get('currentBubbleId')}).count();
+    getInviteesDep.depend();
 
     if(typeof this.id == 'undefined'){
       this.id = this._id;
@@ -113,21 +129,46 @@ Template.adminActionsBackbone.events({
       {
         $addToSet: {'users.members': this.id},
         $pull: {'users.admins': this.id}
+      }, function(){
+        Session.set("isLoading",true);
+        Meteor.setTimeout(function(){
+          console.log("Refresh collections");
+          mybubbles.bubbleInfo.fetch({
+            success: function(){
+              getAdminsDep.changed();
+              getMembersDep.changed();
+            }
+          })
+          mybubbles.Admins.refreshCollection(function(){
+            if(typeof bubbleAdminsDep !== "undefined")
+            {
+              console.log("Admins Refreshed");
+              bubbleAdminsDep.changed();
+              Session.set("isLoading",false);
+            }
+          });
+          mybubbles.Members.refreshCollection(function(){
+            if(typeof bubbleMembersDep !== "undefined")
+            {
+              console.log("Members Refreshed");
+              bubbleMembersDep.changed();
+            }
+          });
+        },2000);
       });
       createAdminDemoteUpdate(this.id);
-      var reRoute = function(id, currentBubbleId){
+      /*var reRoute = function(id, currentBubbleId){
         //bubbleDep.changed();
         return function(){
           Session.set('currentBubbleId', currentBubbleId);
           Meteor.Router.to('/settings/userprofile/' + id);
           console.log('Admin Actions: ', id);
         }
-      }
-      mybubbles.Admins.refreshCollection();
-      mybubbles.Members.refreshCollection();
-      mybubbles.Invitees.refreshCollection();
-      mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-      Meteor.Router.to('/settings/userprofile/' + this.id);
+      }*/
+      
+      //mybubbles.Invitees.refreshCollection();
+      //mybubbles.Applicants.refreshCollection(/*reRoute(this.id, currentBubbleId)*/);
+      //Meteor.Router.to('/settings/userprofile/' + this.id);
     }else{
       alert("You are the last remaining admin. Please promote another member before demoting yourself.");
     }
@@ -209,7 +250,33 @@ Template.adminActionsBackbone.events({
     {
       $addToSet: {'users.members': this.id},
       $pull: {'users.applicants': this.id}
-    });
+    }, function(){
+        Session.set("isLoading",true);
+        Meteor.setTimeout(function(){
+          console.log("Refresh collections");
+          mybubbles.bubbleInfo.fetch({
+            success: function(){
+              getApplicantsDep.changed();
+              getMembersDep.changed();
+            }
+          })
+          mybubbles.Applicants.refreshCollection(function(){
+            if(typeof bubbleApplicantsDep !== "undefined")
+            {
+              console.log("Applicants Refreshed");
+              bubbleApplicantsDep.changed();
+              Session.set("isLoading",false);
+            }
+          });
+          mybubbles.Members.refreshCollection(function(){
+            if(typeof bubbleMembersDep !== "undefined")
+            {
+              console.log("Members Refreshed");
+              bubbleMembersDep.changed();
+            }
+          });
+        },2000);
+      });
 
     //Create update to inform user about accpeted application
     createNewMemberUpdate(this.id, currentBubbleId);
@@ -217,7 +284,7 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
-    var reRoute = function(id, currentBubbleId){
+    /*var reRoute = function(id, currentBubbleId){
       //bubbleDep.changed();
       return function(){
         Session.set('currentBubbleId', currentBubbleId);
@@ -229,7 +296,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-    Meteor.Router.to('/settings/userprofile/' + this.id);
+    Meteor.Router.to('/settings/userprofile/' + this.id);*/
     //membersDep.changed();
     //bubbleDep.changed();
   },
@@ -245,6 +312,24 @@ Template.adminActionsBackbone.events({
     Bubbles.update({_id:currentBubbleId},
     {
       $pull: {'users.applicants': this.id}
+    }, function(){
+      Session.set("isLoading",true);
+      Meteor.setTimeout(function(){
+        console.log("Refresh collections");
+        mybubbles.bubbleInfo.fetch({
+          success: function(){
+            getApplicantsDep.changed();
+          }
+        })
+        mybubbles.Applicants.refreshCollection(function(){
+          if(typeof bubbleApplicantsDep !== "undefined")
+          {
+            console.log("Applicants Refreshed");
+            bubbleApplicantsDep.changed();
+            Session.set("isLoading",false);
+          }
+        });
+      },2000);
     });
 
     //Create update to inform user about rejected application
@@ -253,7 +338,7 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
-    var reRoute = function(id, currentBubbleId){
+    /*var reRoute = function(id, currentBubbleId){
       //bubbleDep.changed();
       return function(){
         Session.set('currentBubbleId', currentBubbleId);
@@ -265,7 +350,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-    Meteor.Router.to('/settings/userprofile/' + this.id);
+    Meteor.Router.to('/settings/userprofile/' + this.id);*/
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -283,6 +368,32 @@ Template.adminActionsBackbone.events({
     {
       $addToSet: {'users.admins': this.id},
       $pull: {'users.members': this.id}
+    }, function(){
+      Session.set("isLoading",true);
+      Meteor.setTimeout(function(){
+        console.log("Refresh collections");
+        mybubbles.bubbleInfo.fetch({
+          success: function(){
+            getAdminsDep.changed();
+            getMembersDep.changed();
+          }
+        })
+        mybubbles.Admins.refreshCollection(function(){
+          if(typeof bubbleAdminsDep !== "undefined")
+          {
+            console.log("Admins Refreshed");
+            bubbleAdminsDep.changed();
+            Session.set("isLoading",false);
+          }
+        });
+        mybubbles.Members.refreshCollection(function(){
+          if(typeof bubbleMembersDep !== "undefined")
+          {
+            console.log("Members Refreshed");
+            bubbleMembersDep.changed();
+          }
+        });
+      },2000);
     });
     //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
@@ -292,7 +403,7 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
-    var reRoute = function(id, currentBubbleId){
+    /*var reRoute = function(id, currentBubbleId){
       //bubbleDep.changed();
       return function(){
         Session.set('currentBubbleId', currentBubbleId);
@@ -304,7 +415,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-    Meteor.Router.to('/settings/userprofile/' + this.id);
+    Meteor.Router.to('/settings/userprofile/' + this.id);*/
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -321,6 +432,24 @@ Template.adminActionsBackbone.events({
     Bubbles.update({_id:currentBubbleId},
     {
       $pull: {'users.members': this.id}
+    }, function(){
+      Session.set("isLoading",true);
+      Meteor.setTimeout(function(){
+        console.log("Refresh collections");
+        mybubbles.bubbleInfo.fetch({
+          success: function(){
+            getMembersDep.changed();
+          }
+        });
+        mybubbles.Members.refreshCollection(function(){
+          if(typeof bubbleMembersDep !== "undefined")
+          {
+            console.log("Members Refreshed");
+            bubbleMembersDep.changed();
+            Session.set("isLoading",false);
+          }
+        });
+      },2000);
     });
     //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
@@ -332,7 +461,7 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
-  var reRoute = function(id, currentBubbleId){
+  /*var reRoute = function(id, currentBubbleId){
       //bubbleDep.changed();
       return function(){
         Session.set('currentBubbleId', currentBubbleId);
@@ -344,7 +473,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-    Meteor.Router.to('/settings/userprofile/' + this.id);
+    Meteor.Router.to('/settings/userprofile/' + this.id);*/
     //membersDep.changed();
     //bubbleDep.changed();
 
@@ -361,6 +490,24 @@ Template.adminActionsBackbone.events({
     Bubbles.update({_id:currentBubbleId},
     {
       $pull: {'users.invitees': this.id}
+    }, function(){
+      Session.set("isLoading",true);
+      Meteor.setTimeout(function(){
+        console.log("Refresh collections");
+        mybubbles.bubbleInfo.fetch({
+          success: function(){
+            getInviteesDep.changed();
+          }
+        })
+        mybubbles.Invitees.refreshCollection(function(){
+          if(typeof bubbleInviteesDep !== "undefined")
+          {
+            console.log("Invitees Refreshed");
+            bubbleInviteesDep.changed();
+            Session.set("isLoading",false);
+          }
+        });
+      },2000);
     });
     //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
@@ -372,7 +519,7 @@ Template.adminActionsBackbone.events({
     //if(bubbleDep){
     //  bubbleDep.changed();
     //}
-    var reRoute = function(id, currentBubbleId){
+    /*var reRoute = function(id, currentBubbleId){
       //bubbleDep.changed();
       return function(){
         Session.set('currentBubbleId', currentBubbleId);
@@ -384,7 +531,7 @@ Template.adminActionsBackbone.events({
     mybubbles.Members.refreshCollection();
     mybubbles.Invitees.refreshCollection();
     mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-    Meteor.Router.to('/settings/userprofile/' + this.id);
+    Meteor.Router.to('/settings/userprofile/' + this.id);*/
     //membersDep.changed();
     //bubbleDep.changed();
 
