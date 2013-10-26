@@ -308,6 +308,10 @@ Handlebars.registerHelper('decodeURI',function(uri) {
   console.log('Decode URI: ', uri, decodeURI(uri));
   return decodeURI(uri);
 });
+Handlebars.registerHelper('decodeURIComponent',function(uri) {
+  console.log('Decode URI: ', uri, decodeURIComponent(uri));
+  return decodeURIComponent(uri);
+});
 
 Handlebars.registerHelper('getTextAfterDot',function(inputText) {
   if (inputText) {

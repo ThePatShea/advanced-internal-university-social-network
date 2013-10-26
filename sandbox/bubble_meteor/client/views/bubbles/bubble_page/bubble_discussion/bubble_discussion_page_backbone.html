@@ -1,11 +1,12 @@
 <template name="bubbleDiscussionPageBackbone">
+
+  <div class="visible-{{isLoading}}">
+    {{> gifLoaderToParent}}
+  </div>
+
   {{#with getCurrentBubbleBackbone}}
     {{> bubbleCoverBackbone}}
     {{> bubbleSectionSelectorBackbone}}
-
-    <div class="visible-{{isLoading}}">
-      {{> gifLoaderToParent}}
-    </div>
     
     <div class="bubble-page-content">
       <div class="bubble-list">
@@ -28,12 +29,14 @@
     </div>
   {{/with}}
 
-  <ul class="pagination">
-    <li><a href="#" class="prev">prev</a></li>
-    {{#each pages}}
-      <li><a href="#" class="pageitem {{isActivePage this}}" id="{{this}}">{{this}}</a></li>
-    {{/each}}
-    <li><a href="#" class="next">next</a></li>
-  </ul>
+  {{#if pagination}}
+    <ul class="pagination">
+      <li><a href="#" class="prev">prev</a></li>
+      {{#each pages}}
+        <li><a href="#" class="pageitem {{isActivePage this}}" id="{{this}}">{{this}}</a></li>
+      {{/each}}
+      <li><a href="#" class="next">next</a></li>
+    </ul>
+  {{/if}}
 
 </template>

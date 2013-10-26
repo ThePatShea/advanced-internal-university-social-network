@@ -161,5 +161,10 @@ Template.explorePostPageBB.created = function() {
   {
     currentPostId = "";
   }
+  exploreDep = new Deps.Dependency;
   explorePageDep = new Deps.Dependency;
+}
+
+Template.explorePostPageBB.destroyed = function() {
+  delete explorePageDep;
 }

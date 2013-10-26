@@ -27,6 +27,26 @@ Template.fileSubmit.events({
     }
 
     files = [];
+
+    //Show Post submitted confirmation message
+    var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+    var displayPostConfirmationMessage = function(postTitle){
+      return function(){
+        //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+        var message = postTitle.slice(0, 7);
+        var message = message + ' ...';
+        $('.message-container .info').text(message);
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('message-container-active');
+        setTimeout(function(){
+          $('.message-container').removeClass('message-container-active');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },5000);
+      }        
+    }
+    console.log('Post Title: ', postTitle);
+    setTimeout(displayPostConfirmationMessage('File'), 1000);
   },
 
   'dragover .cb-fileSubmit-form > .attach-files > .drop-zone': function(evt){

@@ -49,7 +49,7 @@
 
 
     <h4 class="post-name visible-{{matchObjectType 'post'}}">
-      <span class="name-text">{{decodeURI name}}</span>
+      <span class="name-text">{{decodeURIComponent name}}</span>
       <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
     </h4>
     <div class="bubble-name-and-description visible-{{matchObjectType 'bubble'}} v-middle">

@@ -1024,8 +1024,10 @@
 	};
 
 	var setLimitHelper = function(scope) {
-		return function(limit){
+		return function(limit, callback){
 			scope.limit = limit;
+			if(typeof callback === "function")
+				callback();
 			return limit;
 		};
 	};

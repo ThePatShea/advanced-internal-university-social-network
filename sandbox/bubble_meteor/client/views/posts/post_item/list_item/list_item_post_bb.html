@@ -30,7 +30,7 @@
 
 
     <h4 class="post-name visible-{{matchObjectType 'post'}}">
-      <span class="name-text">{{decodeURI name}}</span>
+      <span class="name-text">{{decodeURIComponent name}} | TEST</span>
       <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
     </h4>
 
