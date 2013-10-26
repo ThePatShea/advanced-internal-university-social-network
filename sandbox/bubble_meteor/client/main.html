@@ -56,16 +56,7 @@
   {{/unless}}
 
   <div class="viewport">
-    <div class="message-container">
-      <ul class="message">
-        <li>
-          <span class="icon">{{> icon-edit-message}}</span>
-        </li>
-        <li><span class="job-type">posting</span></li>
-        <li><p class="info">Students Activities Fair</p></li>
-        <li class="loading-gif-container"><span class="loading-gif"></span></li>
-      </ul> 
-    </div><!-- END MESSAGE -->
+
     <div class="frame">
       {{#if isLoggedIn}}
         {{#unless isOnboarding}}
@@ -84,5 +75,15 @@
         </div>
       </div>
     </div>
+    <div class="message-container">
+      <ul class="message">
+        <li>
+          <span class="icon">{{> icon-edit-message}}</span>
+        </li>
+        <li><span class="job-type">posting</span></li>
+        <li><p class="info">Students Activities Fair</p></li>
+        <li class="loading-gif-container"><span class="loading-gif"></span></li>
+      </ul> 
+    </div><!-- END MESSAGE -->
   </div>
 </body>

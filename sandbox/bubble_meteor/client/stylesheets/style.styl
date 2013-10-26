@@ -1696,7 +1696,7 @@ ul.pagination
    font-family "brandon-grotesque" sans-serif
    font-weight 700
    border 1px solid #BECDD5
-   padding 10px 0 8px 0
+   padding 9px 0 6px 0
    min-width 30px
    display inline-block
    line-height 1em
@@ -1785,7 +1785,8 @@ align-with-post-item(n)
     cursor                 pointer
     background             white
     .profile-pic-container
-      position: relative;
+      cursor    pointer
+      position  relative 
       .profile-pic
         border-color           main-light
     .update-icon-container
@@ -2348,7 +2349,7 @@ navbar-height        =  60px
           svg
             vertical-align     middle
           &.section-mybubbles
-            right              -8px
+            right              0
         .cb-icon-other
           position           relative
           top                -2px
@@ -3497,7 +3498,7 @@ cover-btns-width-small  =  130px
 
 /********************************************Added by Joe ***********************************************************/
 
-// New Message Iinfo
+// New Message info
 .message-container
   position relative
   top -60px
@@ -3509,44 +3510,44 @@ cover-btns-width-small  =  130px
   -o-transition  all 1s ease-in-out
   transition  all 1s ease-in-out
 .message
-  position relative
-  width 320px
-  margin 0 auto
   background-color          #B0606D
-  display                   block
-  color                     #F7F8F8
+  position                  relative
   padding                   11px 21px 16px 21px
+  display                   block
+  margin                    0 auto
+  color                     #F7F8F8
+  width                     320px
   border-radius(0 0 10px 10px)
   
   .loading-gif-container
-    opacity 0.9
-    position absolute
-    right 20px
-    top 15px
+    opacity              0.9
+    position             absolute
+    right                20px
+    top                  15px
     .loading-gif
-      display               block
-      width                 44px
-      height                13px
-      background            url('/img/message-loader.gif') no-repeat
-      background-position   center center
+      display                 block
+      width                   44px
+      height                  13px
+      background              url('/img/message-loader.gif') no-repeat
+      background-position     center center
   li
-    display          inline-block
-    font-size        13px
+    display                inline-block
+    font-size              13px
     .job-type
-      text-transform uppercase
-      font-weight 700
+      text-transform       uppercase
+      font-weight          700
     .info
-      margin 0
-      padding 0 4px
+      margin              0
+      padding             0 4px
       &:before
       &:after
-        content         '"'
-        padding         0 3px
+        content           '"'
+        padding           0 3px
     .icon
-      padding-right       14px
+      padding-right          14px
       svg
-        fill            #F7F8F8
-        vertical-align  middle
+        fill                  #F7F8F8
+        vertical-align        middle
 
 .message-container-active
   top 60px
