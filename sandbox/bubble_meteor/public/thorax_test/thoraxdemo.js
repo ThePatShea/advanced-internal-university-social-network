@@ -16,9 +16,15 @@ define(['person_templates', 'jquery', 'thorax'], function(templates) {
 		template: templates.personDetails
 	});
 
+	var anotherChildView = new Thorax.View({
+		name: 'anotherChildView',
+		template: templates.personAddress
+	});
+
 	var parentView = new Thorax.View({
 		model: person,
 		child: childView,
+		anotherChild: anotherChildView,
 		events: {
 			'click #name': function(){
 				this.model.set('name', 'Max');
