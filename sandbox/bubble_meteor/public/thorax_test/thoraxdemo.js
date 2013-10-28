@@ -28,6 +28,19 @@ define(['person_templates', 'jquery', 'thorax'], function(templates) {
 		number: function(){
 			return Math.floor(Math.random()*25+25);
 		},
+		anotherNumber: function(){
+			return Math.floor(Math.random()*25+25);
+		},
+		alive: function(){
+			var num = Math.floor(Math.random()*10);
+			console.log(num);
+			if(num >= 5){
+				return 'true';
+			}
+			else{
+				return 'false';
+			}
+		},
 		events: {
 			'click #name': function(){
 				this.model.set('name', 'Max');
