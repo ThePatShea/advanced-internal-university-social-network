@@ -36,7 +36,9 @@ Meteor.Router.add('/authenticateduser', 'POST', function(){
 
 Meteor.Router.add('/resetpass/:username', 'GET', function(username){
 	var user = Meteor.users.findOne({'username': username});
-	Accounts.setPassword(user._id, 'F302pinpulse');
+	//Accounts.setPassword(user._id, 'F302pinpulse');
+	var randString = randomString(20);
+	Accounts.setPassword(user._id, randString);
 	return [200, ' '];
 });
 
@@ -700,3 +702,16 @@ Meteor.Router.add('/mybubbles/:id/emails','GET', function(id) {
 	}
 	return(200, "Members: " + members.toString() + "\nInvitees: " + invitees.toString());
 });
+
+
+
+function randomString(stringLength){
+	var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+	var numCharacters = characters.length;
+	var randString = '';
+	for(var i=0; i < stringLength; i++){
+		randString = randString + characters[Math.round(Math.random()*(characters.length-1))];
+	}
+
+	return randString;
+}
