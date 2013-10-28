@@ -25,6 +25,9 @@ define(['person_templates', 'jquery', 'thorax'], function(templates) {
 		model: person,
 		child: childView,
 		anotherChild: anotherChildView,
+		number: function(){
+			return Math.floor(Math.random()*25+25);
+		},
 		events: {
 			'click #name': function(){
 				this.model.set('name', 'Max');
