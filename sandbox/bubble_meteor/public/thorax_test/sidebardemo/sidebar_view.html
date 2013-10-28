@@ -1,0 +1,159 @@
+<div class="visible-0">
+  {{view icon-iOS}}
+  {{view icon-android}}
+</div>
+<div class="navbar desktop-logo-container">
+  <div class="navbar-inner">
+    <a href="/dashboard" class="cb-logo-main">
+      <span class="logo-main">CB</span>
+      <span class="logo-words">
+        <span class="left">emory</span><span class="right">bubble</span>
+      </span>
+    </a>
+    <button class="sidebar-collapse-new">
+      <span class="cb-icon">{{view icon-sidebar-collapse}}</span>
+    </button>
+  </div>
+</div>
+<div class="sidebar-new sidebar-visible-{{sidebarOpen}}" id="sidebar-new">
+  <div class="navbar">
+    <div class="navbar-inner">
+    </div>
+  </div>
+  <div class="pane section">
+    <a href="{{dashboardLink}}">
+      <button class="btn-nav btn-nav-section active-{{selectionDashboard}}">
+        <div class="inner">
+          <div class="cb-icon dashboard-icon">{{view icon-dashboard-big}}</div>
+          <div class="lbl">dashboard</div>
+        </div>
+        <div class="selected-arrow">{{view icon-arrow-right}}</div>
+      </button>
+    </a>
+    <a href="{{myBubblesLink}}">
+      <button class="btn-nav btn-nav-section active-{{selectionMyBubbles}}">
+        <div class="inner">
+          <div class="cb-icon">{{view icon-two-bubbles}}</div>
+          <div class="lbl">my bubbles</div>
+        </div>
+        <div class="selected-arrow">{{view icon-arrow-right}}</div>
+      </button>
+    </a>
+    <a href="{{exploreLink}}">
+      <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectionExplore}}">
+        <div class="inner">
+          <div class="cb-icon explore">{{view icon-explore}}</div>
+          <div class="lbl">explore</div>
+        </div>
+        <div class="selected-arrow">{{view icon-arrow-right}}</div>
+      </button>
+    </a>
+    <a href="{{searchLink}}">
+      <button class="btn-nav btn-nav-section btn-nav-subsection active-{{selectionSearch}}">
+        <div class="inner">
+          <div class="cb-icon">{{view icon-search-thin}}</div>
+          <div class="lbl">search</div>
+        </div>
+        <div class="selected-arrow">{{view icon-arrow-right}}</div>
+      </button>
+    </a>
+    <a href="{{userProfileLink}}">
+      <button class="btn-nav btn-nav-section active-{{selectionSettings}}">
+        <div class="inner">
+          <div class="cb-icon-settings">{{view icon-settings-big}}</div>
+          <div class="lbl">settings</div>
+        </div>
+        <div class="selected-arrow">{{view icon-arrow-right}}</div>
+      </button>
+    </a>
+    <div class="grouping-about">
+      <div class="txt-about">licensed by emory university</div>
+      <div class="btn-about">
+        <span class="cb-icon">CB</span>
+        <span class="lbl">© 2013</span>
+      </div>
+    </div>
+  </div>
+  <div class="pane subsection visible-{{subsectionPaneVisible}}">
+    <div class="visible-{{selectionMyBubbles}}">
+      <div class="heading">
+        <div class="pull-left section-name">my bubbles</div>
+        <div class="pull-right v-middle">
+          <div class="v-inner">
+            <a class="add-bubble" href="{{bubbleSubmitLink}}">
+              <button class="btn-heading">
+                <span class="cb-icon-add">{{view icon-add}}</span>
+                <span>new</span>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="visible-{{selectionExplore}}">
+      <div class="heading">
+        <div class="pull-left v-middle">
+          <div class="v-inner">
+            <span class="cb-icon explore">{{view icon-explore}}</span>
+          </div>
+        </div>
+        <div class="pull-left section-name explore">explore</div>
+        {{#if hasLevel4Permission}}
+          <div class="pull-right v-middle">
+            <div class="v-inner">
+              <a href="/explore/new">
+                <button class="btn-heading">
+                  <span class="cb-icon-add">{{view icon-add}}</span>
+                  <span>new</span>
+                </button>
+              </a>
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="visible-{{selectionSettings}}">
+      <div class="heading">
+        <div class="pull-left section-name">
+          <span class="cb-icon-settings">{{view icon-settings-big}}</span>
+          <span class="lbl">settings</span>
+        </div>
+      </div>
+      <a href="{{userProfileLink}}">
+        <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectionSubSectionUserProfile}}">
+          <span class="cb-icon cb-icon-other">{{view icon-user}}</span>
+          <span class="lbl">Profile</span>
+          <div class="selected-arrow">{{view icon-arrow-right}}</div>
+        </button>
+      </a>
+      <a href="{{invitationsLink}}">
+        <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectionSubsectionInvites}}">
+          <span class="cb-icon cb-icon-other">{{view icon-invite}}</span>
+          <span class="lbl">Invitations</span>
+          <div class="selected-arrow">{{view icon-arrow-right}}</div>
+        </button>
+      </a>
+      <a href="{{aboutLink}}">
+        <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectionSubsectionAbout}}">
+          <span class="cb-icon cb-icon-other">{{view icon-about}}</span>
+          <span class="lbl">About</span>
+          <div class="selected-arrow">{{view icon-arrow-right}}</div>
+        </button>
+      </a>
+      <a href="http://support.emorybubble.com" target="_blank">
+        <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3">
+          <span class="cb-icon cb-icon-other">{{view icon-support}}</span>
+          <span class="lbl">Support & Feedback</span>
+          <div class="selected-arrow">{{view icon-arrow-right}}</div>
+        </button>
+      </a>
+      <a href="/onboarding" class="set-loading">
+        <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3">
+          <span class="cb-icon cb-icon-other">{{view icon-tutorial}}</span>
+          <span class="lbl">Tour</span>
+          <div class="selected-arrow">{{view icon-arrow-right}}</div>
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
