@@ -104,6 +104,23 @@ h5.intro {
   background-color: #fff;
   color: #944955;
 }
+
+@media(max-width: 767px){
+  .mobile {
+    display: block;
+  }
+  .nonmobile {
+    display: none;
+  }
+}
+@media(min-width: 768px){
+  .mobile {
+    display: none;
+  }
+  .nonmobile {
+    display: block;
+  }
+}
 /***************************************************************************************** 
 *********************** ICONS
 *****************************************************************************************/.icon-classifieds,

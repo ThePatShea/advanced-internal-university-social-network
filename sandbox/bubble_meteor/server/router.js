@@ -143,6 +143,68 @@ Meteor.Router.add('/','GET', function(){
 });
 */
 
+Meteor.Router.add('/newUser', 'POST', function(){
+	var username = this.request.body.username;
+	var password = this.request.body.password;
+	var email = this.request.body.email;
+	var name = this.request.body.name;
+	var secret = this.request.body.secret;
+
+	console.log("Username: ", username);
+	console.log("Password: ", password);
+	console.log("Email: ", email);
+	console.log("Name: ", name);
+	console.log("Secret: ", secret);
+
+	var uid = "";
+
+	if(secret !== "superSecret")
+	{
+		return ['403', "FORBIDDEN"];
+	}
+
+	if(Meteor.users.findOne({username: username}) != undefined)
+	{
+		return ['500', "User Exists"];
+	}
+
+	if((typeof username !== "undefined") && (typeof password !== "undefined") && (typeof name !== "undefined"))
+	{
+		if(typeof email !== "undefined")
+		{
+			var uid = Accounts.createUser({
+				username: username,
+				email: email,
+				password: password
+			});
+		}
+		else
+		{
+			var uid = Accounts.createUser({
+				username: username,
+				password: password
+			});
+		}
+
+		Meteor.users.update({_id: uid},{
+			$set:
+			{
+				name: name,
+				userType: '1',
+				profilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',
+				retinaProfilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',			
+			}
+		});
+	}
+
+	console.log("UID: ", uid);
+
+
+    Meteor.call("addToIndex", uid, name);
+
+	return ['200',uid];
+});
+
 Meteor.Router.add('/pushUser', 'POST', function() {
 	var email = this.request.body.email;
 	var altEmail = this.request.body.altEmail;
