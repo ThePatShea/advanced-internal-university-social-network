@@ -9,7 +9,7 @@ define(['icon_templates', 'sidebar_templates', 'jquery', 'thorax'], function(ico
 		searchLink: '#',
 		userProfileLink: '#',
 		bubbleSubmitLink: '#',
-		selectionDashboard: true,
+		selectionDashboard: false,
 		selectionMyBubbles: false,
 		selectionExplore: false,
 		selectionSearch: false,
@@ -20,7 +20,7 @@ define(['icon_templates', 'sidebar_templates', 'jquery', 'thorax'], function(ico
 
 	var iconIOSView = new Thorax.View({template: iconTemplates.iconIOS});
 	var iconAndroidView = new Thorax.View({template: iconTemplates.iconAndroid});
-	var iconLogoMainView = new Thorax.View({template: Handlebars.compile('CB')});
+	/*var iconLogoMainView = new Thorax.View({template: Handlebars.compile('CB')});*/
 	var iconSidebarCollapseView = new Thorax.View({template: iconTemplates.iconSidebarCollapse});
 	var iconDashboardBigView = new Thorax.View({template: iconTemplates.iconDashboardBig});
 	var iconArrowRightView = new Thorax.View({template: iconTemplates.iconArrowRight});
@@ -42,7 +42,7 @@ define(['icon_templates', 'sidebar_templates', 'jquery', 'thorax'], function(ico
 		model: sidebarModel,
 		'icon-iOS': iconIOSView,
 		'icon-Android': iconAndroidView,
-		'icon-logo-main': iconLogoMainView,
+		/*'icon-logo-main': iconLogoMainView,*/
 		'icon-sidebar-collapse': iconSidebarCollapseView,
 		'icon-dashboard-big': iconDashboardBigView,
 		'icon-two-bubbles': iconTwoBubblesView,
