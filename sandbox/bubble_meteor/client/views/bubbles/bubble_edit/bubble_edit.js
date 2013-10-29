@@ -65,7 +65,7 @@ Template.bubbleEdit.events({
         throwError(error.reason);
       } else {
         createBubbleEditUpdate();
-        Meteor.Router.to('bubblePage', currentBubbleId);
+        Meteor.Router.to('bubblePageBackbone', currentBubbleId);
       }
     });
   },
