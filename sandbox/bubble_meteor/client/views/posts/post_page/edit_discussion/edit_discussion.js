@@ -219,7 +219,7 @@ function updateDiscussionPost(){
     var currentBubbleId = Session.get('currentBubbleId');
 
     var discussionAttributes = {
-      name: $('.cb-editDiscussion-form > .discussionTitle').val(),
+      name: encodeURIComponent($('.cb-editDiscussion-form > .discussionTitle').val()),
       body: $.trim( $('.cb-editDiscussion-form > .wysiwyg_group').find('.wysiwyg').html() ),
       //bubbleId: currentBubbleId,
       //children: newChildren
