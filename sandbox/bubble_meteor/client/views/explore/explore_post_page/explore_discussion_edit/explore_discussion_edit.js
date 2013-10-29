@@ -231,7 +231,7 @@ function updateDiscussionPost(){
     var currentExploreId = Session.get('currentExploreId');
 
     var discussionAttributes = {
-      name: $('.cb-explore-editDiscussion-form > .discussionTitle').val(),
+      name: encodeURIComponent($('.cb-explore-editDiscussion-form > .discussionTitle').val()),
       body: $('.cb-explore-editDiscussion-form > .wysiwyg_group').find('[name=body]').html(),
       //postAsType: $('.cb-explore-editDiscussion-form .post-as-type').val(),
       //postAsId:   $('.cb-explore-editDiscussion-form .post-as-id').val(),

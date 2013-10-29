@@ -125,7 +125,7 @@ Template.exploreEditEvent.events({
       //author: Meteor.userId(),
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-edit-event-form > .first > .location').val(),
-      name: $('.cb-explore-edit-event-form > .first > .title').val(),
+      name: encodeURIComponent($('.cb-explore-edit-event-form > .first > .title').val()),
       body: $('.cb-explore-edit-event-form > .body').val(),
       //postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
       //postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
