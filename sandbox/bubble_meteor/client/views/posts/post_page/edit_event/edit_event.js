@@ -99,7 +99,7 @@ Template.editEvent.events({
     var eventAttributes = { 
       dateTime: moment(dateTime).valueOf(),
       location: $(event.target).find('[name=location]').val(),
-      name: $(event.target).find('[name=name]').val(),
+      name: encodeURIComponent($(event.target).find('[name=name]').val()),
       body: $(event.target).find('[name=body]').val()
     };
 
