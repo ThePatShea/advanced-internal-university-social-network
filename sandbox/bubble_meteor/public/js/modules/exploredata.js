@@ -340,19 +340,19 @@
 			}
 		});
 
-		// this.getBubbleTitle = function(callback){
-		// 	this.exploreBubble = new ExploreBubble();
-		// 	this.post = this.explorePost.toJSON();
-		// 	this.exploreBubble.id = this.post.postAsId;
-		// 	this.exploreBubble.fetch({
-		// 		success: function() {
-		// 			if(callback && typeof callback == "function")
-		// 			{
-		// 				callback();
-		// 			}
-		// 		}
-		// 	});
-		// };
+		this.getBubbleTitle = function(callback){
+			this.exploreBubble = new ExploreBubble();
+			this.post = this.explorePost.toJSON();
+			this.exploreBubble.id = this.post.postAsId;
+			this.exploreBubble.fetch({
+				success: function() {
+					if(callback && typeof callback == "function")
+					{
+						callback();
+					}
+				}
+			});
+		};
 	};
 
 	ExploreData.ExplorePostPage = ExplorePostPage;

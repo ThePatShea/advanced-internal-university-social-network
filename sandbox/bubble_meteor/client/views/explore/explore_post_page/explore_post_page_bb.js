@@ -12,11 +12,31 @@ Template.explorePostPageBB.helpers({
     }
   },
   getPostAsBubbleCategory: function() {
-    var bubble = Bubbles.findOne(this.postAsId);
+    /*var bubble = Bubbles.findOne(this.postAsId);
     if (bubble) {
       return bubble.category;
     } else {
       return -1;
+    }*/
+    explorePageDep.depend();
+    if(typeof pageData.exploreBubble !== "undefined")
+    {
+      return pageData.exploreBubble.attributes.category;
+    }
+    else
+    {
+      return -1;
+    }
+  },
+  bubbleName: function(){
+    explorePageDep.depend();
+    if(typeof pageData.exploreBubble !== "undefined")
+    {
+      return pageData.exploreBubble.attributes.title;
+    }
+    else
+    {
+      return "a bubble";
     }
   },
   postedAsUser: function() {
@@ -124,6 +144,7 @@ Template.explorePostPageBB.rendered = function(){
     currentPostId = window.location.pathname.split("/")[4];
     console.log("THISDOTUNDERSCOREID: ", currentPostId);
     pageData = new ExploreData.ExplorePostPage(currentPostId, function(){explorePageDep.changed()});
+    pageData.getBubbleTitle(function(){explorePageDep.changed();});
     Meteor.subscribe('comments', currentPostId);
     Session.set("currentPostId", currentPostId);
   }
