@@ -35,7 +35,7 @@ Template.userActionsBackbone.helpers({
 });
 
 Template.userActionsBackbone.events({
-  'click .remove-admin': function() {
+  'click .remove-admin': function(event) {
   	// Disable the parent button
     event.stopPropagation();
     if(typeof this.id == 'undefined'){
@@ -101,7 +101,7 @@ Template.userActionsBackbone.events({
 	}
   },
 
-  'click .remove-member': function() {
+  'click .remove-member': function(event) {
     event.stopPropagation();
     console.log("THIS USER IS: ",this);
     that = this;
