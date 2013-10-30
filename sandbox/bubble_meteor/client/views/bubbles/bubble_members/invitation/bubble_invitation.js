@@ -221,7 +221,7 @@ Template.bubbleInvitation.events({
             if(typeof bubbleInviteesDep !== "undefined")
             {
               console.log("Invitees Refreshed");
-              bubbleInviteesDep.changed();
+              mybubbles.bubbleInfo.fetch({success: function(){bubbleInviteesDep.changed();}})
               Session.set("isLoading",false);
             }
           });
