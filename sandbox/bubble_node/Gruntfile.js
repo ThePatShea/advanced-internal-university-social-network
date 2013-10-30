@@ -3,23 +3,29 @@ var path = require('path');
 module.exports = function(grunt){
 
 	grunt.initConfig({
-		'watch': {
-			files: ['app.js']
-		},
 
+		'watch': {
+			express: {
+				files: ['app.js'],
+				tasks: ['express:dev'],
+				options: {
+					nospawn: true
+				}
+			}
+		},
+		
 		'express': {
-			myServer: {
+			dev: {
 				options: {
 					port: 3000,
-					server: path.resolve('./app')
+					script: path.resolve(__dirname, 'app.js')
 				}
 			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-express');
+	grunt.loadNpmTasks('grunt-express-server');
 
-	grunt.registerTask('default', ['express:myServer', 'express-keepalive']);
-	//grunt.registerTask('express', ['express-keepalive']);
+	grunt.registerTask('default', ['express:dev', 'watch']);
 }

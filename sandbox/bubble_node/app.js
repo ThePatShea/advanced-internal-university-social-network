@@ -2,10 +2,10 @@ var express = require('express');
 var app = express();
 
 app.get('/', function(req, res){
-	res.send('Got me.Z');
+	res.send('Got me.');
 });
 
-//app.listen(3000);
-//console.log('Listening on port 3000');
+console.log('Server listening on 3000');
+app.listen(3000);
 
 module.exports = app;
