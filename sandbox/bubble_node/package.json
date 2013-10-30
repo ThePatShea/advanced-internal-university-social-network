@@ -2,11 +2,13 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-express": "~1.2.1",
-    "grunt-express-server": "~0.4.5"
+    "grunt-express-server": "~0.4.5",
+    "grunt-handlebars-compiler": "0.0.7",
+    "grunt-contrib-handlebars": "~0.5.11"
   },
   "dependencies": {
     "express": "~3.4.4",
-    "stylus": "~0.39.1"
+    "stylus": "~0.39.1",
+    "handlebars": "~1.0.12"
   }
 }

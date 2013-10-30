@@ -3,7 +3,8 @@ var app = express();
 var stylus = require('stylus');
 var path = require('path');
 
-
+//Tell Express to use the Stylus middleware to 
+//compile any .styl files under the public folder
 app.use(express.static(__dirname + '/public'));
 
 app.use(stylus.middleware(path.resolve(__dirname, 'public')));
