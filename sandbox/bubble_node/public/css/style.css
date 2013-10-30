@@ -1,0 +1,518 @@
+/*---------------------------------------------------------
+------------------------ CSS RESET ------------------------
+---------------------------------------------------------*/
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  background: transparent;
+  border: 0;
+  font-size: 100%;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+nav ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '' content none;
+}
+a {
+  background: transparent font-size 100% margin 0 padding 0 vertical-align baseline;
+}
+ins {
+  background-color: #ff9 color #000 text-decoration none;
+}
+mark {
+  background-color: #ff9 color #000 font-style italic font-weight bold;
+}
+del {
+  text-decoration: line-through;
+}
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted cursor help;
+}
+table {
+  border-collapse: collapse border-spacing 0;
+}
+hr {
+  border: 0 border-top 1px solid #ccc display block height 1px margin 1em 0 padding 0;
+}
+input,
+select {
+  vertical-align: middle;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.clearfix {
+  zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+button {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+}
+/*---------------------------------------------------------
+---------------------- MIXINS/VARIBA ----------------------
+---------------------------------------------------------*/
+/**********  Font Palette   **********/
+/*****    Main Font     *****/
+/*****    Main Font     *****/
+/*****  Alternate Font  *****/
+/*****  Alternate Font  *****/
+/**********  Font Palette   **********/
+/**********    Functions    **********/
+/*---------------------------------------------------------
+------------------------- TOP BAR -------------------------
+---------------------------------------------------------*/
+.top-bar {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid #224253;
+  background-color: #011126;
+}
+.top-bar .main-logo {
+  display: inline-block;
+  margin-left: 14px;
+  margin-top: 12px;
+}
+.top-bar .main-logo:hover {
+  opacity: 0.9;
+}
+.drop-down li {
+  border-left: 1px solid #224253;
+  display: inline-block;
+}
+.drop-down li .drop {
+  display: none;
+}
+.main-menu {
+  float: right;
+}
+.main-menu a {
+  letter-spacing: 1px;
+  padding: 24px 16px;
+  display: inline-block;
+  color: #a5bbc9;
+  text-decoration: none;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 700;
+  text-decoration: auto;
+  letter-spacing: auto;
+  line-height: auto;
+  text-align: auto;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.main-menu .notification-menu {
+  padding: 0;
+  margin: 0;
+}
+/*---------------------------------------------------------
+------------------------- SIDEBAR -------------------------
+---------------------------------------------------------*/
+.sidebar-contianer {
+  position: fixed;
+  left: 0;
+  height: 100%;
+}
+.sidebar-contianer .side-bar {
+  z-index: 95;
+  width: 100px;
+  height: 100%;
+  background-color: #2f5973;
+  display: block;
+  position: relative;
+}
+.sidebar-contianer .side-bar .sidebar-menu {
+  padding-top: 60px;
+}
+.sidebar-contianer .side-bar .sidebar-menu li {
+  list-style: none;
+  display: block;
+  border-bottom: 1px solid #436c88;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button {
+  cursor: pointer;
+  color: #95afbf;
+  position: relative;
+  height: 80px;
+  width: 100%;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button.active-true,
+.sidebar-contianer .side-bar .sidebar-menu li button:hover {
+  color: #f7f8f8;
+  background: #274b61;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button.active-true .icon svg,
+.sidebar-contianer .side-bar .sidebar-menu li button:hover .icon svg {
+  fill: #f7f8f8;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button:focus {
+  outline: none;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button span {
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  text-decoration: auto;
+  letter-spacing: auto;
+  line-height: auto;
+  text-align: auto;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button .name {
+  display: block;
+  margin-top: 5px;
+  letter-spacing: 0.5px;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button .icon svg {
+  fill: #95afbf;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button.active {
+  -webkit-transition: border-left 0.1s ease-in-out;
+  -moz-transition: border-left 0.1s ease-in-out;
+  -ms-transition: border-left 0.1s ease-in-out;
+  -o-transition: border-left 0.1s ease-in-out;
+  transition: border-left 0.1s ease-in-out;
+  color: #f7f8f8;
+  background: #274b61;
+  border-left: 3px solid #95afbf;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button.active:after {
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  margin-top: -13px;
+  border: 12px solid transparent;
+  border-left-color: #274b61;
+  border-left-width: 5px;
+  border-right-width: 5px;
+}
+.sidebar-contianer .side-bar .sidebar-menu li button.active .icon svg {
+  fill: #f7f8f8;
+}
+.sidebar-menu-content {
+  position: absolute;
+  left: -100px;
+  background-color: #a5bbc9;
+  top: 60px;
+  width: 210px;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+.sidebar-menu-content .title {
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 900;
+  text-decoration: auto;
+  letter-spacing: auto;
+  line-height: auto;
+  text-align: auto;
+  text-transform: uppercase;
+  font-size: 13px;
+  padding: 14px 17px;
+  border-bottom: 1px solid #89a5b8;
+}
+.sidebar-menu-content .title h3 {
+  color: #2f5973;
+  float: left;
+  vertical-align: middle;
+  padding: 8px 0;
+}
+.sidebar-menu-content .title a {
+  vertical-align: middle;
+  float: right;
+  padding: 7px 9px;
+  border-radius: 21px;
+  background-color: #2f5973;
+  text-decoration: none;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 900;
+  text-decoration: auto;
+  letter-spacing: auto;
+  line-height: auto;
+  text-align: auto;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  color: #a5bbc9;
+}
+.sidebar-menu-content .title a:hover {
+  background-color: #011126;
+}
+.sidebar-menu-content .title a:hover svg {
+  -webkit-transform: rotate(-180deg);
+  -moz-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  -o-transform: rotate(-180deg);
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  -moz-transition: -moz-transform 0.5s ease-in-out;
+  -o-transition: -o-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+}
+.sidebar-menu-content .title a:hover svg rect {
+  fill: #011126;
+}
+.sidebar-menu-content .title a svg {
+  margin-right: 2px;
+  vertical-align: middle;
+  fill: #a5bbc9;
+}
+.sidebar-menu-content .title a svg rect {
+  fill: #2f5973;
+}
+.sidebar-menu-content .bubbles li a {
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+  color: #2f5973;
+  border-bottom: 1px solid #89a5b8;
+  width: 100%;
+  text-align: left;
+  padding: 18px 14px;
+  text-decoration: none;
+}
+.sidebar-menu-content .bubbles li a:hover {
+  background-color: #98b0c0;
+}
+.menu-pull {
+  left: 100px;
+  opacity: 1;
+}
+.mini-footer {
+  position: absolute;
+  bottom: 0;
+}
+.mini-footer li {
+  padding: 7px 0;
+  text-align: center;
+}
+.mini-footer li:first-child {
+  border-top: 1px solid #436c88;
+}
+.mini-footer li p,
+.mini-footer li span {
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  font-weight: 500;
+  text-decoration: auto;
+  letter-spacing: auto;
+  line-height: auto;
+  text-align: auto;
+  text-transform: uppercase;
+  font-size: 8.4px;
+  color: #95afbf;
+}
+.mini-footer li p {
+  padding-bottom: 7px;
+}
+.mini-footer .info {
+  background-color: #011126;
+}
+.mini-footer .info .name {
+  font-size: 10px;
+  vertical-align: middle;
+}
+.mini-footer .info .icon svg {
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 7px;
+}
+/*-------------- BUBBLE COLOR TYPES --------------*/
+.tab-active {
+  background-color: #98b0c0;
+  position: relative;
+}
+.tab-active:after {
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  margin-top: -13px;
+  border: 12px solid transparent;
+  border-left-color: #274b61;
+  border-left-width: 5px;
+  border-right-width: 5px;
+}
+.type-student {
+  border-right: 3px solid #b0606d;
+}
+.type-student:after {
+  border-left-color: #b0606d;
+}
+.type-greek {
+  border-right: 3px solid #70c889;
+}
+.type-greek:after {
+  border-left-color: #70c889;
+}
+.type-arts {
+  border-right: 3px solid #ff8a54;
+}
+.type-arts:after {
+  border-left-color: #ff8a54;
+}
+.type-athletics {
+  border-right: 3px solid #ff6b53;
+}
+.type-athletics:after {
+  border-left-color: #ff6b53;
+}
+.type-academic {
+  border-right: 3px solid #673653;
+}
+.type-academic:after {
+  border-left-color: #673653;
+}
+.type-faculty {
+  border-right: 3px solid #de8275;
+}
+.type-faculty:after {
+  border-left-color: #de8275;
+}
+.type-campus {
+  border-right: 3px solid #6bb6a1;
+}
+.type-campus:after {
+  border-left-color: #6bb6a1;
+}
+.type-class {
+  border-right: 3px solid #f9c148;
+}
+.type-class:after {
+  border-left-color: #f9c148;
+}
+.type-residence {
+  border-right: 3px solid #6dc3ba;
+}
+.type-residence:after {
+  border-left-color: #6dc3ba;
+}
+.type-custom {
+  border-right: 3px solid #462446;
+}
+.type-custom:after {
+  border-left-color: #462446;
+}
+/*-------------- END BUBBLE COLOR TYPE --------------*/
