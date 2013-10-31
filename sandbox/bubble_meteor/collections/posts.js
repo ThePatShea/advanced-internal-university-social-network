@@ -248,10 +248,12 @@ createPostWithAttachments = function(postAttributes, fileList){
       }
 
       if(typeof postAttributes.bubbleId != 'undefined'){
-        Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
+        //Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
+        Meteor.Router.to('postPage', post.bubbleId, post._id);
       }
       else{
-        Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+        //Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+        Meteor.Router.to('explorePostPage', post.exploreId, post._id);
       }
 
     }
