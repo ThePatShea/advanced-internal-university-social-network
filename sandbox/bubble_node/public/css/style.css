@@ -166,7 +166,6 @@ button {
   left: 0;
   width: 100%;
   height: 60px;
-  border-bottom: 1px solid #224253;
   background-color: #011126;
 }
 .top-bar .main-logo {
@@ -188,7 +187,7 @@ button {
   display: inline-block;
   list-style-type: none;
   position: relative;
-  overflow: hidden;
+  max-height: 60px;
 }
 .user-menu li a {
   letter-spacing: 1px;
@@ -203,27 +202,23 @@ button {
   text-transform: uppercase;
   border-left: 1px solid #224253;
 }
+.user-menu li a .updates-number {
+  display: none;
+}
 .user-menu li a:hover {
   background-color: #001f37;
   color: #f7f8f8;
 }
 .user-menu li a:hover:after {
-  border-top-color: #f7f8f8;
+  top: 19px;
+  border-top-color: transparent;
+  border-bottom-color: #f7f8f8;
 }
 .user-menu li a:hover .updates-number {
   background-color: #f7f8f8;
 }
-.user-menu li a .updates-number {
-  margin-right: 10px;
-  background-color: #a5bbc9;
-  border-radius: 24px;
-  color: #011126;
-  padding: 3px 9px;
-  font-family: 'brandon-grotesque', Arial, Sans-Serif;
-  font-size: 14px;
-  font-weight: 900;
-}
 .user-menu li .drop {
+  visibility: hidden;
   position: absolute;
   top: 65px;
   opacity: 0;
@@ -294,12 +289,6 @@ button {
 .user-menu li .drop li a .bold {
   font-weight: 600;
 }
-.user-menu li .drop li .parent-name {
-  padding: 18px 21px;
-  color: #f7f8f8;
-  font-family: 'proxima-nova', Arial, Sans-Serif;
-  font-weight: 600;
-}
 .user-menu li .notif {
   width: 270px;
 }
@@ -309,16 +298,15 @@ button {
   display: block;
   text-transform: none;
   font-size: 13px;
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  font-weight: 600;
+}
+.user-menu li .notif li a .bold {
+  font-weight: 700;
 }
 .user-menu li .notif li a:hover {
   background-color: #89a5b8;
   color: #f7f8f8;
-}
-.user-menu li .notif li .parent-name {
-  padding: 18px 21px;
-  color: #f7f8f8;
-  font-family: 'proxima-nova', Arial, Sans-Serif;
-  font-weight: 600;
 }
 .user-menu li .notif li:first-child >a {
   -webkit-border-radius: 8px 8px 0 0;
@@ -334,12 +322,20 @@ button {
   padding: 14px 0;
   background-color: #2f5973;
 }
+.user-menu li .notif li .parent-name {
+  font-size: 13px;
+  padding: 18px 21px;
+  color: #f7f8f8;
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
 .user-menu li .notif .options a {
   display: inline-block !important;
   min-width: 1px;
   background-color: #2f5973;
   color: #a5bbc9;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 11px;
   text-transform: uppercase;
   padding: 0 4px;
@@ -352,6 +348,45 @@ button {
 }
 .user-menu li .notif .options a:last-child {
   border-right: none;
+}
+.user-menu .user-options {
+  position: relative;
+}
+.user-menu .user-options a {
+  padding-left: 70px;
+}
+.user-menu .user-options a .user-image {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  height: 35px;
+  width: 35px;
+  margin-top: -18px;
+  border: 2px solid #a5bbc9;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+.user-menu .notif-holder {
+  position: relative;
+}
+.user-menu .notif-holder a {
+  padding-left: 60px;
+}
+.user-menu .notif-holder a .updates-number {
+  top: 50%;
+  margin-top: -10px;
+  left: 18px;
+  position: absolute;
+  display: block;
+  margin-right: 10px;
+  background-color: #a5bbc9;
+  border-radius: 24px;
+  color: #011126;
+  padding: 3px 7px;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-size: 13px;
+  font-weight: 900;
 }
 .user-menu .hasItems >a {
   padding-right: 40px;
@@ -368,21 +403,20 @@ button {
   right: 16px;
   top: 26px;
 }
-.user-menu .drop-active {
-  vertical-align: top;
-  overflow: visible;
-}
 .user-menu .drop-active a {
   background-color: #001f37;
   color: #f7f8f8;
 }
 .user-menu .drop-active a:after {
-  border-top-color: #f7f8f8;
+  top: 19px;
+  border-top-color: transparent;
+  border-bottom-color: #f7f8f8;
 }
 .user-menu .drop-active a .updates-number {
   background-color: #f7f8f8;
 }
 .user-menu .drop-active .drop {
+  visibility: visible;
   z-index: 110;
   opacity: 1;
   top: 55px;
@@ -499,9 +533,9 @@ button {
   padding: 8px 0;
 }
 .sidebar-menu-content .title a {
-  vertical-align: middle;
+  position: relative;
   float: right;
-  padding: 7px 9px;
+  padding: 9px 14px 9px 31px;
   border-radius: 21px;
   background-color: #2f5973;
   text-decoration: none;
@@ -510,6 +544,11 @@ button {
   font-family: 'brandon-grotesque', Arial, Sans-Serif;
   font-weight: 800;
   color: #a5bbc9;
+}
+.sidebar-menu-content .title a .icon {
+  position: absolute;
+  left: 9px;
+  top: 6px;
 }
 .sidebar-menu-content .title a:hover {
   background-color: #011126;
