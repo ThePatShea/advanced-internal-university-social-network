@@ -17,8 +17,10 @@
 	<!--[if lt IE 9]>
 		<script scr="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	
-	<script type="text/javascript" src="http//use.typekit.net/yiq3yhp.js"></script>
+	<!-- Activating Typekit Fonts 
+		<script type="text/javascript" src="//use.typekit.net/yiq3yhp.js"></script>
+	    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	--> 
 	<!-- Apple Icons Spot -->
 
 	<link rel="shortcut icon" href="img/icons/favicon.ico">
@@ -93,21 +95,31 @@
 					</span>
 				</a><!-- END LOGO ANCHOR TAG -->
 				<div class="main-menu">
-					<ul class="notification-menu drop-down">
-						<li>
-							<a href="#">updates <span class="arrow"></span></a>
-							<ul class="drop">
-								<li>dropdown</li>
-								<li>dropdown</li>
-								<li>dropdown</li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">Another menu</a>
-						</li>
-						<li>
-							<a href="#">Another menu</a>
-						</li>
+					<ul class="user-menu">
+						<li class="hasItems drop-active">
+							<a href="#"><span class="updates-number">35</span>updates <span class="arrow"></span></a>
+							<ul class="drop notif">
+								<li><a href="#" class="parent-name">This is a bubble name</a></li>
+								<li><a href="#">This is a notification</a></li>
+								<li><a href="#">Another one with a <span class="bold">bold</span> word</a></li>
+								<li><a href="#" class="parent-name">This is an event name</a></li>
+								<li><a href="#">This is a notifcation</a></li>
+								<li class="options">
+									<a href="#">see all</a><!--
+								 --><a href="#">clear all</a><!--
+								 --><a href="#">settings</a>
+								</li><!-- END OPTIONS BAR --> 
+							</ul><!-- END NOTFICATION DROPDOWN --> 
+						</li><!-- END NOTFICATION MENU
+					 --><li class="hasItem">
+					 		<a href="#">Another menu</a>
+					 		<ul class="drop">
+					 			<li><a href="#">Menu Link</a></li>
+					 			<li><a href="#">Menu Link</a></li>
+					 			<li><a href="#">Menu Link</a></li>
+					 		</ul><!-- END DROP (This is a normal dropdown.) --> 
+					 	</li><!-- END HAS ITEM
+					 --><li><a href="#">Another menu</a></li>
 					</ul><!-- END NOTFICATION -->
 				</div><!-- END MAIN MENU --> 
 			</div><!-- END TOP BAR --> 
@@ -115,7 +127,7 @@
 	</header><!-- END HEADER --> 
 
 
-	<div class="sidebar-contianer">
+	<div class="sidebar-container">
 		<div class="side-bar">
 			<ul class="sidebar-menu">
 				<li>
