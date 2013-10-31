@@ -26,12 +26,25 @@ Template.exploreDiscussionSubmit.rendered = function () {
   var postAsType = $("[name=post-as-type]").val();
   //$(".postAsButton." + postAsType).addClass("active-true");
 
-  $(".post-as-button.bubble").mouseover(function() {
+  $(".post-as-bubble-dropdown").hide();//Hide bubble dropdown on render
+
+  /*$(".post-as-button.bubble").mouseover(function() {
     $(".post-as-bubble-dropdown").show();
   });
 
   $(".post-as-button.bubble").mouseout(function() {
     $(".post-as-bubble-dropdown").hide();
+  });*/
+
+  $(".post-as-button.bubble").click(function() {
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
   });
 
   $(".btn-select-post-as-bubble").click(function() {
