@@ -14,7 +14,7 @@
 
   <! Initializes the support widget !>
     <!--
-    <script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script> 
+    <script type="text/javascript" src="https://loader.engage.gsfn.us/loader.js"></script>
     <script type="text/javascript"> if (typeof GSFN !== "undefined") { GSFN.loadWidget(6125,{"containerId":"getsat-widget-6125"}); } </script>
     -->
 
@@ -42,15 +42,16 @@
 
   <! Backbone !>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+    <script type="text/javascript" src="/js/modules/base.js"></script>
     <script type="text/javascript" src="/js/modules/bubbledata.js"></script>
     <script type="text/javascript" src="/js/modules/exploredata.js"></script>
     <script type="text/javascript" src="/js/modules/userdata.js"></script>
-    
+
 </head>
 <body>
   {{> googleAnalytics}}
   {{> browserCheck}}
-   
+
   {{#unless isLoggedIn2}}
     <div class="gif-loader-wrapper">{{> gifLoaderSite}}</div>
   {{/unless}}
@@ -64,7 +65,7 @@
         <li><span class="job-type">posting</span></li>
         <li><p class="info">Students Activities Fair</p></li>
         <li class="loading-gif-container"><span class="loading-gif"></span></li>
-      </ul> 
+      </ul>
     </div><!-- END MESSAGE -->
     <div class="frame">
       {{#if isLoggedIn}}
