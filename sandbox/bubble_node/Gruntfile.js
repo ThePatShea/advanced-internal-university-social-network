@@ -14,7 +14,7 @@ module.exports = function(grunt){
 			},
 
 			handlebars: {
-				files: ['views/*.html'],
+				files: ['views/*.handlebars'],
 				tasks: ['handlebars'],
 				options: {
 					nospawn: true
@@ -34,10 +34,18 @@ module.exports = function(grunt){
 		'handlebars': {
 			some: {
 				options: {
-					namespace: 'BubbleApp.templates'
+					namespace: 'BubbleApp.templates',
+					templateRoot: 'views/',
+					processName: function(filePath){
+						var i = filePath.indexOf('views/');
+						var j = filePath.indexOf('.handlebars');
+						var templateName = filePath.slice(6, j);
+
+						return templateName;
+					}
 				},
 				files: {
-					'./public/js/templates.js': ['./views/*.handlebars']
+					'public/js/templates.js': ['views/*.handlebars']
 				}
 			}
 		}
@@ -46,7 +54,6 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-express-server');
 	grunt.loadNpmTasks('grunt-contrib-handlebars');
-	//grunt.loadNpmTasks('grunt-handlebars-compiler');
 
-	grunt.registerTask('default', ['express:dev', 'watch']);
+	grunt.registerTask('default', ['handlebars', 'express:dev', 'watch']);
 }

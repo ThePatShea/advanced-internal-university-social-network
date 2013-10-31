@@ -3,7 +3,6 @@
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-express-server": "~0.4.5",
-    "grunt-handlebars-compiler": "0.0.7",
     "grunt-contrib-handlebars": "~0.5.11"
   },
   "dependencies": {
