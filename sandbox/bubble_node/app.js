@@ -11,7 +11,7 @@ app.use(stylus.middleware(path.resolve(__dirname, 'public')));
 
 
 app.get('/', function(req, res){
-	res.send('Got me.');
+	res.send('Got me!');
 });
 
 app.get('/bubbles', function(req, res){
