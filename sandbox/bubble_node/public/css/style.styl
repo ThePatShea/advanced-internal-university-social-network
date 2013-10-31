@@ -44,17 +44,10 @@ q:before, q:after
 table 
   border-collapse collapse
   border-spacing 0
-
-
-* 
-  -webkit-box-sizing border-box
-     -moz-box-sizing border-box
-          box-sizing border-box
-
-
+//Box Sizing
 *  
   -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
-
+//ClearFix
 .clearfix
   zoom: 1
 
@@ -135,9 +128,11 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     list-style-type none
     position relative
     overflow hidden
+    //GeneralAnchorRules
     a
       letter-spacing 1px
       padding 24px 16px
+      max-height 60px
       display block
       color light-color
       text-decoration none
@@ -162,8 +157,7 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
         font-family main-font
         font-size 14px
         font-weight 900
-    .notif
-      width 270px
+    //GeneralMenu
     .drop
       position absolute
       top 65px
@@ -194,27 +188,37 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
             -moz-border-radius 8px 8px 0 0
             border-radius 8px 8px 0 0
         &:last-child
-            -webkit-border-radius 0 0 8px 8px
-            -moz-border-radius 0 0 8px 8px
-            border-radius 0 0 8px 8px
-            display list-item
-            text-align center
-            padding 14px 0
-            background-color medium-color
+            a
+              -webkit-border-radius 0 0 8px 8px
+              -moz-border-radius 0 0 8px 8px
+              border-radius 0 0 8px 8px
         a
-          padding 10px 21px
+          min-width 180px
+          padding 16px 42px 16px 21px
           background-color light-color
           display block
           text-transform none
-          font-size 13px
+          text-transform uppercase
+          font-size 12px
           color #2C5972
           font-family main-font
-          font-weight 500
+          font-weight 700
           border none
           border-bottom 1px solid light-color-shade
+          .icon
+            margin-right 7px
+            svg
+              width 20px
+              height 20px
+              vertical-align middle
+              fill #2C5972
           &:hover
             background-color light-color-shade
             color white-light
+            .icon
+              svg
+                vertical-align middle
+                fill white-light
           .bold
             font-weight 600
         .parent-name
@@ -222,9 +226,42 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
           color white-light
           font-family alt-font
           font-weight 600
+    //NotifcationMenu     
+    .notif 
+      width 270px
+      li
+        a
+          padding 10px 21px
+          background-color light-color
+          display block
+          text-transform none
+          font-size 13px
+          &:hover
+            background-color light-color-shade
+            color white-light
+        .parent-name
+          padding 18px 21px
+          color white-light
+          font-family alt-font
+          font-weight 600
+        &:first-child
+          >a
+            -webkit-border-radius 8px 8px 0 0
+            -moz-border-radius 8px 8px 0 0
+            border-radius 8px 8px 0 0
+        &:last-child
+            -webkit-border-radius 0 0 8px 8px
+            -moz-border-radius 0 0 8px 8px
+            border-radius 0 0 8px 8px
+            display list-item
+            text-align center
+            padding 14px 0
+            background-color medium-color
+      //OptionsBar    
       .options
         a
-          display inline-block
+          display inline-block!important
+          min-width 1px //AQuickFix
           background-color medium-color
           color light-color
           font-weight 900
@@ -232,16 +269,18 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
           text-transform uppercase
           padding 0 4px
           border-bottom none
+          border-radius 0px!important //AQuickFix
           border-right 1px solid light-color
           &:hover
             background-color medium-color
           &:last-child
             border-right none
+  //DropdownWithItems
   .hasItems
     >a
       padding-right 28+12px
       &:after
-        content               ' '
+        content               ''
         height                0
         width                 0
         position              absolute
@@ -251,13 +290,18 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
         border-right-width    6px
         right 16px
         top 26px
+  //AnimationClass --> Added to the ListItem   
   .drop-active
     vertical-align top
     overflow visible
-    >a
+    
+    a
+      background-color #001f37
+      color white-light
       &:after
-        border-top-color light-color // HOVER
-
+        border-top-color white-light // ArrowColor
+      .updates-number
+        background-color white-light // NumberColor
     .drop
       z-index 110
       opacity 1
