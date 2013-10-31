@@ -14,11 +14,10 @@ Template.dashboard.helpers({
           return Posts.find({_id: {$in: validPostIds} },{limit: 5, sort: {submitted: -1}});
         },
         */
-        getFiveExplorePostsBB: function(){
-        	var dashboardData = new ExploreData.Dashboard();        	
-        	return dashboardData.getData();
-        	//return {};
-        },
+    getFiveExplorePostsBB: function() {
+    	return Session.get('dashboardPosts');
+    	//return {};
+    },
     /*
 	numBubbles: function() {
 		var uid = Meteor.userId();
@@ -38,7 +37,7 @@ Template.dashboard.helpers({
 	},
 	*/
 
-	
+
 	// numUpdates: function() {
 	// dashboardDep.depend();
 
@@ -57,9 +56,9 @@ Template.dashboard.helpers({
 	//     //To combine updates with same userId, invokerId, updateType and postId
 	//     _.each(updateList, function(update){
 	//       updateList = _.reject(updateList, function(newUpdate) {
-	//         return  update.bubbleId == newUpdate.bubbleId && 
-	//                 update.userId == newUpdate.userId && 
-	//                 update.invokerId == newUpdate.invokerId && 
+	//         return  update.bubbleId == newUpdate.bubbleId &&
+	//                 update.userId == newUpdate.userId &&
+	//                 update.invokerId == newUpdate.invokerId &&
 	//                 update.updateType == newUpdate.updateType &&
 	//                 update.postId == newUpdate.postId;
 	//       });
@@ -80,7 +79,7 @@ Template.dashboard.helpers({
 	//       //Combine and chain the names together
 	//       if (commentUpdates.length > 0) {
 	//         updateList = _.reject(updateList, function(newUpdate) {
-	//           return update.postId == newUpdate.postId && 
+	//           return update.postId == newUpdate.postId &&
 	//                   update.updateType == newUpdate.updateType &&
 	//                   update.updateType == "replied";
 	//         });
@@ -151,7 +150,7 @@ Template.dashboard.helpers({
 	//               chainedName = chainedName + " and " + excessCount + " other";
 	//             }else{
 	//               chainedName = chainedName + " and " + excessCount + " others";
-	//             } 
+	//             }
 	//           }else{
 	//             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
 	//           }
@@ -211,7 +210,7 @@ Template.dashboard.helpers({
 		return Posts.find({'attendees': {$in: [Meteor.userId()]}}).count();
 	},
 	*/
-	
+
 	// getUpdates: function() {
 	// var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
@@ -219,9 +218,9 @@ Template.dashboard.helpers({
 	//     //To combine updates with same userId, invokerId, updateType and postId
 	//     _.each(updateList, function(update){
 	//       updateList = _.reject(updateList, function(newUpdate) {
-	//         return  update.bubbleId == newUpdate.bubbleId && 
-	//                 update.userId == newUpdate.userId && 
-	//                 update.invokerId == newUpdate.invokerId && 
+	//         return  update.bubbleId == newUpdate.bubbleId &&
+	//                 update.userId == newUpdate.userId &&
+	//                 update.invokerId == newUpdate.invokerId &&
 	//                 update.updateType == newUpdate.updateType &&
 	//                 update.postId == newUpdate.postId;
 	//       });
@@ -242,7 +241,7 @@ Template.dashboard.helpers({
 	//       //Combine and chain the names together
 	//       if (commentUpdates.length > 0) {
 	//         updateList = _.reject(updateList, function(newUpdate) {
-	//           return update.postId == newUpdate.postId && 
+	//           return update.postId == newUpdate.postId &&
 	//                   update.updateType == newUpdate.updateType &&
 	//                   update.updateType == "replied";
 	//         });
@@ -313,7 +312,7 @@ Template.dashboard.helpers({
 	//               chainedName = chainedName + " and " + excessCount + " other";
 	//             }else{
 	//               chainedName = chainedName + " and " + excessCount + " others";
-	//             } 
+	//             }
 	//           }else{
 	//             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
 	//           }
@@ -332,8 +331,8 @@ Template.dashboard.helpers({
 	//     });
 
 	//     updateList = _.sortBy(updateList, function(newUpdate) {
-	//       return newUpdate.submitted; 
-	//     });  
+	//       return newUpdate.submitted;
+	//     });
 	//     if(Session.get('numUpdates')>0){
 	//       return _.first(updateList.reverse(), Session.get('numUpdates'));
 	//     }else{
@@ -356,9 +355,9 @@ Template.dashboard.helpers({
 		    //To combine updates with same userId, invokerId, updateType and postId
 		    _.each(updateList, function(update){
 		      updateList = _.reject(updateList, function(newUpdate) {
-		        return  update.bubbleId == newUpdate.bubbleId && 
-		                update.userId == newUpdate.userId && 
-		                update.invokerId == newUpdate.invokerId && 
+		        return  update.bubbleId == newUpdate.bubbleId &&
+		                update.userId == newUpdate.userId &&
+		                update.invokerId == newUpdate.invokerId &&
 		                update.updateType == newUpdate.updateType &&
 		                update.postId == newUpdate.postId;
 		      });
@@ -379,7 +378,7 @@ Template.dashboard.helpers({
 		      //Combine and chain the names together
 		      if (commentUpdates.length > 0) {
 		        updateList = _.reject(updateList, function(newUpdate) {
-		          return update.postId == newUpdate.postId && 
+		          return update.postId == newUpdate.postId &&
 		                  update.updateType == newUpdate.updateType &&
 		                  update.updateType == "replied";
 		        });
@@ -450,7 +449,7 @@ Template.dashboard.helpers({
 		              chainedName = chainedName + " and " + excessCount + " other";
 		            }else{
 		              chainedName = chainedName + " and " + excessCount + " others";
-		            } 
+		            }
 		          }else{
 		            chainedName = chainedName.replace(/,([^,]*)$/," and $1");
 		          }
@@ -469,9 +468,9 @@ Template.dashboard.helpers({
 		    });
 
 		    updateList = _.sortBy(updateList, function(newUpdate) {
-		      return newUpdate.submitted; 
-		    });  
-		    
+		      return newUpdate.submitted;
+		    });
+
 			Session.set("testNumUpdates",updateList.length);
 
 		    if(Session.get('updatesToShow')>0){
@@ -546,4 +545,9 @@ Template.dashboard.created = function() {
 	Session.set('updatesToShow',3);
 	dashboardDep = new Deps.Dependency;
 	Meteor.subscribe('updatedPosts', Meteor.userId());
+
+	var dashboardData = new ExploreData.Dashboard();
+	dashboardData.getData(function(data) {
+		Session.set('dashboardPosts', data);
+	});
 }

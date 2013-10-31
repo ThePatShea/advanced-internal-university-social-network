@@ -142,8 +142,8 @@
 
 		this.getData = function(callback) {
 			this.dashboardPosts.fetch({
-				success: function() {
-					var posts = this.dashboardPosts.toJSON();
+				success: function(collection) {
+					var posts = collection.toJSON();
 
 					posts = _.reject(posts, function(post) {
 						return post.postType === 'file';

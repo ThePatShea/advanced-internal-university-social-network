@@ -82,8 +82,6 @@
   function processOpts(instance, options) {
     var opts = options ? _.clone(options) : {};
 
-    console.log('1111', opts.success);
-
     var success = opts.success;
     opts.success = function(model, data) {
       if (instance.fetchRelated) {
