@@ -6,7 +6,7 @@ module.exports = function(grunt){
 
 		'watch': {
 			express: {
-				files: ['app.js'],
+				files: ['app.js', 'public/css/style.styl'],
 				tasks: ['express:dev'],
 				options: {
 					nospawn: true
