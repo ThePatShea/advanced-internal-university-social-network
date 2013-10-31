@@ -243,9 +243,9 @@ Template.exploreEventSubmit.rendered = function() {
     $(".post-as-bubble-dropdown").show();
   });
 
-  $(".post-as-button.bubble").mouseout(function() {
+  /*$(".post-as-button.bubble").mouseout(function() {
     $(".post-as-bubble-dropdown").hide();
-  });
+  });*/
 
   $(".btn-select-post-as-bubble").click(function() {
     var postAsId = $(this).attr("name");
