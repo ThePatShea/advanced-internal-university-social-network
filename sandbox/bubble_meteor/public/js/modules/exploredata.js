@@ -1,25 +1,21 @@
 (function(){
 	ExploreData = {};
 
-	var ExplorePost = Backbone.Model.extend({
+	var ExplorePost = BubbleRest.Model.extend({
 		url: function(){
-			return '/2013-09-11/posts/' + this.id;
-		},
-		initialize: function(){
-			console.log("ExplorePost Model initiated", this.id);
-			console.log("THIS: ", this);
+			return '/api/v1_0/posts/' + this.id;
 		}
 	});
 
-	var ExploreBubble = Backbone.Model.extend({
+	var ExploreBubble = BubbleRest.Model.extend({
 		url: function(){
-			return '/2013-09-11/bubbles/' + this.id;
+			return '/api/v1_0/bubbles/' + this.id;
 		}
 	});
 
-	var ExploreUser = Backbone.Model.extend({
+	var ExploreUser = BubbleRest.Model.extend({
 		url: function(){
-			return '/2013-09-11/users/' + this.id;
+			return '/api/v1_0/users/' + this.id;
 		}
 	});
 
@@ -103,20 +99,12 @@
 		fields: [],
 		model: ExplorePost,
 		url: function() {
-			// var fieldString = '';
-			// _.each(this.fields, function(field){
-			// 	fieldString = fieldString + field + ',';
-			// });
-			//Explaination of next line: If this.fields.toString() throws a TypeError, use this.fields THEN if this.fields is undefined, use empty string.  Else use this.fields.toString()
-			var fieldString = (this.fields && this.fields.toString()) || "";
-			console.log("FIELDS: ", fieldString);
-			if(fieldString.length > 0){
-				//fieldString = fieldString.slice(0, fieldString.length-1);
-				return '/2013-09-11/explores/' + this.exploreId + '/posts?fields=' + fieldString + '/limit=' + this.limit + '&page=' + this.page;
-			}
-			else{
-				return '/2013-09-11/explores/' + this.exploreId + '/posts?fields=name/limit=' + this.limit + '&page=' + this.page;
-			}
+			var fieldString = (this.fields && this.fields.toString()) || '';
+
+			if (fieldString.length === 0)
+				fieldString = 'name';
+
+			return '/api/v1_0/explores/' + this.exploreId + '/posts?limit=' + this.limit + '&page=' + this.page + '&fields=' + fieldString;
 		},
 		parse: function(response){
 			var listObjects = [];
