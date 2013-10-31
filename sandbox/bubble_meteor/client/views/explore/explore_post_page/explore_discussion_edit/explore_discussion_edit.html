@@ -59,7 +59,7 @@
 
 
 
-      <input class="required width-full first discussionTitle" name="name" type="text" value="{{name}}" placeholder="Discussion title*"/>
+      <input class="required width-full first discussionTitle" name="name" type="text" value="{{decodeURIComponent name}}" placeholder="Discussion title*"/>
       {{> wysiwyg2}}
 
       <div class="cb-form-row discussion-attachments">

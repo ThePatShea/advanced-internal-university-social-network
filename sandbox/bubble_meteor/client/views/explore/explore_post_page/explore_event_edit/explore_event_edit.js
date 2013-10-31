@@ -55,7 +55,7 @@ Template.exploreEditEvent.rendered = function(){
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
 	var date = (currentDatetime.getMonth()+1)+"/"+currentDatetime.getDate()+"/"+currentDatetime.getFullYear();
-	$('.cb-explore-edit-event-form > .first > .title').val(event.name);
+	$('.cb-explore-edit-event-form > .first > .title').val(decodeURIComponent(event.name));
 	$('.cb-explore-edit-event-form > .first > .location').val(event.location);
 	$('.cb-explore-edit-event-form > .cb-form-row > .date').val(date);
 	$('.cb-explore-edit-event-form > .body').val(event.body);
