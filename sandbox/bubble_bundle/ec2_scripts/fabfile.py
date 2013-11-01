@@ -12,6 +12,12 @@ import time
 
 
 
+def connect_to_server(hostname):
+	execute(getlist, hosts=[hostname])
+
+def getlist():
+	run('ls -l')
+
 
 def create_bundle_image(blank_ami_id, new_ami_name, path_to_bundle):
 	"""
@@ -36,13 +42,9 @@ def create_bundle_image(blank_ami_id, new_ami_name, path_to_bundle):
 
 	time.sleep(20)
 
-	env.hosts = [instance.public_dns_name]
-	env.user = 'ubuntu'
-	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle/')
-	run('cd /home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
-	run('./configure.sh')
-	run('sudo ./setup_bubble.sh')
-	run('sudo ./start_bubble.sh')
+	execute(deploy_bundle, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	print(_green("Deployed bundle..."))
+
 	
 	new_ami_id = ec2.create_image(instance.id, new_ami_name)
 	print (_yellow("New AMI created: %s" % new_ami_id))
@@ -59,3 +61,16 @@ def create_bundle_image(blank_ami_id, new_ami_name, path_to_bundle):
 
 	ec2.terminate_instances(instance_ids=[instance.id])
 
+
+
+
+def deploy_bundle(path_to_bundle):
+	run('sudo apt-get update -y')
+	run('sudo apt-get install -y build-essential')
+	run('sudo npm install -g node-gyp')
+	run('sudo npm install -g fibers@1.0.0')
+	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle/')
+	run('cd /home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
+	run('./configure.sh')
+	run('sudo ./setup_bubble.sh')
+	run('sudo ./start_bubble.sh')
