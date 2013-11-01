@@ -357,6 +357,21 @@ Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
     }
 });
 
+Meteor.Router.add('/2013-09-11/userBubbles/:id', 'GET', function(id){
+    console.log("USERBUBBLES: ", id);
+    var retVal = Bubbles.find({
+        $or: [{'users.members': id}, {'users.admins': id}]},
+        {sort: {'submitted': -1}, fields: {category: 1, title: 1}
+    }).fetch();
+    return JSON.stringify(retVal);
+});
+
+Meteor.Router.add('/2013-09-11/allExplores/:id', 'GET', function(id){
+    console.log("All Explores", id);
+    var retVal = Explores.find({}, {sort: {'submitted': 1}}).fetch();
+    return JSON.stringify(retVal);
+});
+
 
 Meteor.Router.add('/2013-09-11/bubbles/:id', 'GET', function(id){
     if(id.indexOf('&') != -1){
