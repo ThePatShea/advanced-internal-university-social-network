@@ -6,28 +6,14 @@ $(document).ready(function(){
 	});
 
 
-
-	$('.user-menu li').click(function(){
-	  var thisClass = $(this).attr('class');
-	  if(thisClass != undefined){
-	    if(thisClass.indexOf('hasItems') != -1){
-	      $(this).addClass('drop-active');
-	    }
-	    else{
-	      $('.user-menu li').removeClass('drop-active');
-	    }
-	  }
-	  else{
-	    $('.user-menu li').removeClass('drop-active');
-	  }
+	$(function(){
+	    $('.hasItems .activate').click(function(e){
+	        var parent = $(this).parent().toggleClass('drop-active'); // Variable
+	        $('.hasItems.drop-active').not(parent).removeClass('drop-active'); // Removes the class dropactive from the <li> on click.
+	        e.stopPropagation();
+	    });
+	    $(document).click(function(e) {
+	       $('.hasItems.drop-active').removeClass('drop-active'); // Makes the dropdown function like the old style(facebook style aswell).
+	    });
 	});
-
-	// $('.user-menu li').click(function(){
-	//   var thisClass = $(this).attr('class');
-	//   if(thisClass.indexOf('hasItems') != -1){
-	//     $(this).addClass('drop-active');
-	//   } else {
-	  	
-	//   }
-	// });
 });

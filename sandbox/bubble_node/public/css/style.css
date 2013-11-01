@@ -150,6 +150,11 @@ button {
   width: auto;
   overflow: visible;
 }
+body {
+  -webkit-font-smoothing: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: antialiased;
+}
 /*---------------------------------------------------------
 ---------------------- MIXINS/VARIBA ----------------------
 ---------------------------------------------------------*/
@@ -355,6 +360,9 @@ button {
 .user-menu .user-options a {
   padding-left: 70px;
 }
+.user-menu .user-options a:hover .user-image {
+  border-color: #f7f8f8;
+}
 .user-menu .user-options a .user-image {
   position: absolute;
   left: 18px;
@@ -406,6 +414,9 @@ button {
 .user-menu .drop-active a {
   background-color: #001f37;
   color: #f7f8f8;
+}
+.user-menu .drop-active a .user-image {
+  border-color: #f7f8f8;
 }
 .user-menu .drop-active a:after {
   top: 19px;

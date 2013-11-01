@@ -68,6 +68,11 @@ button
   width auto
   overflow visible
 
+body
+  -webkit-font-smoothing: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: antialiased;
+
 /*---------------------------------------------------------
 ---------------------- MIXINS/VARIBA ----------------------
 ---------------------------------------------------------*/
@@ -276,6 +281,9 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     position relative
     a
       padding-left 70px
+      &:hover
+        .user-image
+          border-color white-light
       .user-image
         position absolute
         left 18px
@@ -323,6 +331,8 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
   //AnimationClass --> Added to the ListItem   
   .drop-active
     a
+      .user-image
+        border-color white-light
       background-color #001f37
       color white-light
       &:after
