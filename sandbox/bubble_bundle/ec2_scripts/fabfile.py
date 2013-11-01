@@ -16,9 +16,14 @@ def connect_to_server(hostname):
 	execute(getlist, hosts=[hostname])
 	execute(move_file, hosts=[hostname])
 	execute(getlist, hosts=[hostname])
+	execute(pullrepo, hosts=[hostname])
 
 def getlist():
 	run('ls -l')
+
+def pullrepo():
+	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
+		run('git pull')
 
 def move_file():
 	put('/Users/pxferna/amazon/bubble_bundle.tgz', '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
@@ -75,8 +80,8 @@ def deploy_bundle():
 	run('sudo apt-get install -y build-essential')
 	run('sudo npm install -g node-gyp')
 	run('sudo npm install -g fibers@1.0.0')
-	run('cd /home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
-	run('git pull')
-	run('./configure_secure.sh')
-	run('sudo ./setup_bubble_secure.sh')
-	run('sudo ./start_bubble_secure.sh')
+	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
+		run('git pull')
+		run('./configure_secure.sh')
+		run('sudo ./setup_bubble_secure.sh')
+		run('sudo ./start_bubble_secure.sh')
