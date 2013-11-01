@@ -178,6 +178,12 @@ body {
   margin-left: 14px;
   margin-top: 12px;
 }
+.top-bar .main-logo .type {
+  top: 50%;
+  margin-top: -9px;
+  left: 58px;
+  position: absolute;
+}
 .top-bar .main-logo:hover {
   opacity: 0.9;
 }
@@ -718,3 +724,110 @@ body {
   border-left-color: #462446;
 }
 /*-------------- END BUBBLE COLOR TYPE --------------*/
+/*---------------------------------------------------------
+----------------------- RESPONSIVE ------------------------
+---------------------------------------------------------*/
+.side-activator {
+  display: none;
+}
+/***************************************************************************************** 
+*********************** MEDIA QUERIES 
+*****************************************************************************************/
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+}
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+}
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+  .hide {
+    display: none;
+  }
+  .top-bar .main-logo {
+    position: absolute;
+    left: 50%;
+    margin-left: -20px;
+  }
+  .top-bar .main-logo .type {
+    display: none;
+  }
+  .top-bar .main-logo:hover {
+    opacity: 0.9;
+  }
+  .top-bar .main-menu .user-menu li {
+    display: none;
+  }
+  .top-bar .main-menu .user-menu li a {
+    border-left: none;
+  }
+  .top-bar .main-menu .user-menu li a:after {
+    border: none;
+  }
+  .top-bar .main-menu .user-menu .notif-holder {
+    display: inline-block;
+  }
+  .top-bar .main-menu .user-menu .notif-holder .drop {
+    right: 11px;
+  }
+  .top-bar .main-menu .user-menu .notif-holder li {
+    display: list-item;
+  }
+  .top-bar .main-menu .user-menu .notif-holder .r-notif {
+    height: 60px;
+    padding: 0;
+    width: 67px;
+  }
+  .sidebar-container {
+    left: -300px;
+    opacity: 0;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+  }
+  .sidebar-container .side-bar {
+    width: 59px;
+  }
+  .sidebar-container .side-bar .sidebar-menu {
+    padding-top: 60px;
+  }
+  .sidebar-container .side-bar .sidebar-menu li button {
+    height: 59px;
+  }
+  .sidebar-container .side-bar .sidebar-menu li button .name {
+    display: none;
+  }
+  .sidebar-container .menu-pull {
+    left: 59px;
+  }
+  .sidebar-container-active {
+    left: 0;
+    opacity: 1;
+  }
+  .side-activator {
+    display: block;
+    height: 60px;
+    display: inline-block;
+  }
+  .side-activator:hover {
+    background-color: #001f37;
+  }
+  .side-activator .icon {
+    display: inline-block;
+    padding: 20px 20px;
+  }
+  .side-activator .icon:hover svg {
+    fill: #f7f8f8;
+  }
+  .side-activator .icon svg {
+    fill: #a5bbc9;
+  }
+}
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+}
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+}

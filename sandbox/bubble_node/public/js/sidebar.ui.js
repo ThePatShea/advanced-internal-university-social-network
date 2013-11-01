@@ -5,7 +5,7 @@ $(document).ready(function(){
 	  $(this).addClass('active');
 	});
 
-
+	
 	$(function(){
 	    $('.hasItems .activate').click(function(e){
 	        var parent = $(this).parent().toggleClass('drop-active'); // Variable
