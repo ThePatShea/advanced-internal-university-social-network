@@ -1,6 +1,12 @@
 // Private helpers
-function updatePostList(es) {
-  Session.set('explorePosts', es.explorePosts.toJSON());
+// TODO: Fix me. It is not possible to access template instance from template helper,
+// so we will use global state for now
+var state = {
+  es: null
+};
+
+function updatePostList() {
+  Session.set('explorePosts', state.es.explorePosts.toJSON());
 }
 
 function refreshData(template, exploreId) {
@@ -9,7 +15,7 @@ function refreshData(template, exploreId) {
 
   Session.set('isExploreLoading', true);
 
-  var es = template.es = new ExploreData.ExploreSection({
+  var es = state.es = new ExploreData.ExploreSection({
     exploreId: exploreId,
     limit: 10,
     fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'children','commentsCount','attendees'],
@@ -26,29 +32,29 @@ function refreshData(template, exploreId) {
   });
 
   $(document).attr('title', 'Explore - Emory Bubble');
-};
+}
 
 // Events
 Template.explorePageBackbone.events({
   'click .pageitem': function(e, template) {
     Session.set('isExploreLoading', true);
-    template.es.fetchPage(parseInt(e.target.id) - 1, function() {
+    state.es.fetchPage(parseInt(e.target.id) - 1, function() {
       Session.set('isExploreLoading', false);
-      updatePostList(template.es);
+      updatePostList();
     });
   },
   'click .prev': function(e, template) {
     Session.set('isExploreLoading', true);
-    template.es.fetchPrevPage(function() {
+    state.es.fetchPrevPage(function() {
       Session.set('isExploreLoading', false);
-      updatePostList(template.es);
+      updatePostList();
     });
   },
   'click .next': function(e, template) {
     Session.set('isExploreLoading', true);
-    template.es.fetchNextPage(function(){
+    state.es.fetchNextPage(function(){
       Session.set('isExploreLoading', false);
-      updatePostList(template.es);
+      updatePostList();
     });
   }
 });
@@ -59,9 +65,9 @@ Template.explorePageBackbone.helpers({
     return Session.get('explorePosts');
   },
   // Pagination stuff
-  pagination: function() {
-    if (this.es) {
-      if (this.es.getNumPages() > 1)
+  pagination: function(tt, yy) {
+    if (state.es) {
+      if (state.es.getNumPages() > 1)
         return true;
     }
 
@@ -70,8 +76,8 @@ Template.explorePageBackbone.helpers({
   pages: function() {
     var retVal = [];
 
-    if (this.es) {
-      for (var i = 0; i < this.es.getNumPages(); i++) {
+    if (state.es) {
+      for (var i = 0; i < state.es.getNumPages(); i++) {
         retVal.push(i + 1);
       }
     } else {
@@ -80,8 +86,8 @@ Template.explorePageBackbone.helpers({
     return retVal;
   },
   isActivePage: function() {
-    if (this.es) {
-      if (this == this.es.getCurrentPage() + 1) {
+    if (state.es) {
+      if (this == state.es.getCurrentPage() + 1) {
         return 'active';
       }
     }
@@ -90,9 +96,6 @@ Template.explorePageBackbone.helpers({
   // Explore data
   exploreInfo: function() {
     return Session.get('exploreInfo');
-  },
-  getExploreId: function() {
-    return this.currentExploreId;
   },
   // Various helpers
   isEvent: function() {

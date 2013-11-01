@@ -249,6 +249,7 @@
 				retVal.push(userId);
 			}
 			else {
+				// TODO: Fix me, hardcoded id?
 				//tmpData.splice(tmpData.indexOf(userId), 1);
 				tmpData = tmpData.slice(tmpData.indexOf("GAd9sexEBsk58X4t6")+1, tmpData.length);
 				var retVal = [];
