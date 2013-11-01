@@ -14,12 +14,17 @@ import time
 
 def connect_to_server(hostname):
 	execute(getlist, hosts=[hostname])
+	execute(move_file, hosts=[hostname])
+	execute(getlist, hosts=[hostname])
 
 def getlist():
 	run('ls -l')
 
+def move_file():
+	put('/Users/pxferna/amazon/bubble_bundle.tgz', '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
 
-def create_bundle_image(blank_ami_id, new_ami_name, path_to_bundle):
+
+def create_bundle_image(blank_ami_id, new_ami_name):
 	"""
 	Creates an EC2 instance, installs the Emory Bubble Bundle on it. And takes a snapshot to create an AMI
 	"""
@@ -40,9 +45,10 @@ def create_bundle_image(blank_ami_id, new_ami_name, path_to_bundle):
 	print (_green("Instance state: %s" % instance.state))
 	print (_green("Instance public DNS name: %s" % instance.public_dns_name))
 
-	time.sleep(20)
+	time.sleep(30)
 
-	execute(deploy_bundle, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	execute(move_file, hosts=['ubuntu@'+instance.public_dns_name])
+	execute(deploy_bundle, hosts=['ubuntu@'+instance.public_dns_name])
 	print(_green("Deployed bundle..."))
 
 	
@@ -64,13 +70,13 @@ def create_bundle_image(blank_ami_id, new_ami_name, path_to_bundle):
 
 
 
-def deploy_bundle(path_to_bundle):
+def deploy_bundle():
 	run('sudo apt-get update -y')
 	run('sudo apt-get install -y build-essential')
 	run('sudo npm install -g node-gyp')
 	run('sudo npm install -g fibers@1.0.0')
-	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle/')
 	run('cd /home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
-	run('./configure.sh')
-	run('sudo ./setup_bubble.sh')
-	run('sudo ./start_bubble.sh')
+	run('git pull')
+	run('./configure_secure.sh')
+	run('sudo ./setup_bubble_secure.sh')
+	run('sudo ./start_bubble_secure.sh')
