@@ -21,7 +21,8 @@ Meteor.startup(function() {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions,
-			query: RestSecurity.filterBubblePosts
+			// TODO: Fix me, should not allow reading posts from bubbles and explores
+			//query: RestSecurity.filterBubblePosts
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,

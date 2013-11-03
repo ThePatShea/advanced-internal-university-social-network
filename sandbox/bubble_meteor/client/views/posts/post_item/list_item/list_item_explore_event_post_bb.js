@@ -28,6 +28,7 @@ Template.listItemExploreEventPostBB.helpers({
       }
     },
     displayName: function() {
+      console.log(this);
       if (this.postAsType == "user") {
         return this.author;
       } else if (this.postAsType == "bubble") {
@@ -168,9 +169,9 @@ Template.listItemExploreEventPostBB.rendered = function(){
       //Extract and append the bubble's title to action string
       var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
       //Logs the action that user is doing
-      Meteor.call('createLog', 
-        { action: title }, 
-        window.location.pathname, 
+      Meteor.call('createLog',
+        { action: title },
+        window.location.pathname,
         function(error) { if(error) { throwError(error.reason); }
       });
     // }, 500);

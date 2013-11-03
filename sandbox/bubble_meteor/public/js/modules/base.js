@@ -84,15 +84,10 @@
 
     var success = opts.success;
     opts.success = function(model, data) {
-      if (instance.fetchRelated) {
-        instance.fetchRelated(model, function(model) {
-          if (success)
-            success.call(instance, model, data, options);
-        });
-      } else {
+      instance.fetchRelated(model, function(model) {
         if (success)
           success.call(instance, model, data, options);
-      }
+      });
     };
 
     return opts;
@@ -102,6 +97,9 @@
     var parent = type.prototype;
 
     return {
+      fetchRelated: function(data, callback) {
+        callback(data);
+      },
       fetch: function(options) {
         options = processOpts(this, options);
         return parent.fetch.call(this, options);
@@ -123,9 +121,64 @@
     };
   }
 
+  function buildModel(type) {
+    var opts = buildWrapper(type);
+
+    _.extend(opts, {
+      save: function(attrs, options) {
+        if (!options)
+          options = {};
+
+        if (this.excludeFields)
+          attrs = _.omit(attrs, this.excludeFields);
+
+        options.data = JSON.stringify(attrs);
+        return Backbone.Model.prototype.save.call(this, attrs, options);
+      }
+    });
+
+    return opts;
+  }
+
+  function buildCollection(type) {
+    var opts = buildWrapper(type);
+
+    _.extend(opts, {
+      fetchRelated: function(coll, callback) {
+        // If model is not set or model does not have fetchRelated property - skip
+        if (!coll.model || !coll.model.prototype.fetchRelated) {
+          callback(coll);
+          return;
+        }
+
+        var scope = {
+          count: coll.models.length
+        };
+
+        function maybeContinue() {
+          scope.count -= 1;
+
+          if (scope.count <= 0)
+            callback(coll);
+        }
+
+        for (var m = 0; m < coll.models.length; ++m) {
+          var model = coll.models[m];
+          model.fetchRelated.call(model, model, maybeContinue);
+        }
+
+        // If there are no pending dependencies - continue
+        if (!scope.count)
+          callback(coll);
+      }
+    });
+
+    return opts;
+  }
+
   // Public API
   window.BubbleRest = {
-    Model: Backbone.Model.extend(buildWrapper(Backbone.Model)),
-    Collection: Backbone.Collection.extend(buildWrapper(Backbone.Collection))
+    Model: Backbone.Model.extend(buildModel(Backbone.Model)),
+    Collection: Backbone.Collection.extend(buildCollection(Backbone.Collection))
   };
 })();

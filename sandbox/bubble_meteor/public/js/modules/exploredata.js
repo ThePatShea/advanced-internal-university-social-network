@@ -1,23 +1,35 @@
+// TODO: Use require.js instead of global namespace
 (function(){
-	ExploreData = {};
+  var ExplorePost = BubbleRest.Model.extend({
+    url: function(){
+			// TODO: Fix me. Should be linked to exploreId instead of reading from global posts collection.
+      return '/api/v1_0/posts/' + this.id;
+    },
+    fetchRelated: function(model, callback) {
+      function fetch(field, item) {
+        item.fetch({
+          success: function(related) {
+            model.set(field, related);
+            callback(model);
+          },
+          error: function() {
+            callback(model);
+          }
+        });
+      }
 
-	var ExplorePost = BubbleRest.Model.extend({
-		url: function(){
-			return '/api/v1_0/posts/' + this.id;
-		}
-	});
-
-	var ExploreBubble = BubbleRest.Model.extend({
-		url: function(){
-			return '/api/v1_0/bubbles/' + this.id;
-		}
-	});
-
-	var ExploreUser = BubbleRest.Model.extend({
-		url: function(){
-			return '/api/v1_0/users/' + this.id;
-		}
-	});
+      if (model.get('postAsType') === 'user') {
+        var user = new BubbleModels.User({id: model.get('postAsId')});
+        fetch('user', user);
+      } else
+      if (model.get('postAsType') === 'bubble') {
+        var bubble = new BubbleModels.Bubble({id: model.get('postAsId')});
+        fetch('bubble', bubble);
+      } else {
+				callback(model);
+      }
+    }
+  });
 
 	var ExploreInfo = BubbleRest.Model.extend({
 		url: function(){
@@ -26,73 +38,7 @@
 		}
 	});
 
-	var PostsBase = BubbleRest.Collection.extend({
-		// Pre-fetch related models
-		fetchRelated: function(coll, callback) {
-			var scope = {
-				count: 0
-			};
-
-			function maybeContinue() {
-				scope.count -= 1;
-
-				if (scope.count <= 0)
-					callback(coll);
-			}
-
-			function fetch(model, field, item) {
-				scope.count += 1;
-
-				item.fetch({
-					success: function(related) {
-						model[field] = related;
-
-						maybeContinue();
-					},
-					error: function() {
-						maybeContinue();
-					}
-				});
-			}
-
-			for (var m = 0; m < coll.models.length; ++m) {
-				var model = coll.models[m];
-
-				if (model.get('postAsType') === 'user') {
-					var user = new ExploreUser({id: model.get('postAsId')});
-					fetch(model, 'user', user);
-				} else
-				if (model.get('postAsType') === 'bubble') {
-					var bubble = new ExploreBubble({id: model.get('postAsId')});
-					fetch(model, 'bubble', bubble);
-				}
-			}
-
-			if (!scope.count)
-				callback(coll);
-		},
-		toJSON: function() {
-			var result = [];
-
-			for (var i = 0; i < this.models.length; ++i) {
-				var model = this.models[i];
-				var raw = model.toJSON();
-
-				if (raw.postAsType === 'user') {
-					raw.user = model.user;
-				} else
-				if (raw.postAsType === 'bubble') {
-					raw.bubble = model.bubble;
-				}
-
-				result.push(raw);
-			}
-
-			return result;
-		}
-	});
-
-	var ExplorePosts = PostsBase.extend({
+	var ExplorePosts = BubbleRest.Collection.extend({
 		exploreId : 'none',
 		limit: 10,
 		page: 0,
@@ -118,7 +64,8 @@
 		}
 	});
 
-	var DashboardPosts = PostsBase.extend({
+	var DashboardPosts = BubbleRest.Collection.extend({
+		model: ExplorePost,
 		url: function() {
 			return '/2013-09-11/dashboard';
 		}
@@ -258,24 +205,24 @@
 				});
 			}
 			console.log("Setting this data: ", retVal);
-			tmp.set("attendees",retVal);
+			tmp.set("attendees", retVal);
 		};
 	};
 
-	var ExplorePostPage = function(id, callback){
+	var ExplorePostPage = function(id, callback) {
 		this.explorePost = new ExplorePost();
 		this.explorePost.id = id;
 		this.explorePost.fetch({
-			async: false,
 			success: function() {
 				if (callback)
 					callback();
 			}
 		});
 
-		this.getBubbleTitle = function(callback){
-			this.exploreBubble = new ExploreBubble();
+		this.getBubbleTitle = function(callback) {
 			this.post = this.explorePost.toJSON();
+
+			this.exploreBubble = new BubbleModels.Bubble();
 			this.exploreBubble.id = this.post.postAsId;
 			this.exploreBubble.fetch({
 				success: function() {
@@ -286,7 +233,10 @@
 		};
 	};
 
-	ExploreData.ExplorePostPage = ExplorePostPage;
-	ExploreData.ExploreSection = ExploreSection;
-	ExploreData.Dashboard = Dashboard;
+	var api = {};
+	api.ExplorePostPage = ExplorePostPage;
+	api.ExploreSection = ExploreSection;
+	api.Dashboard = Dashboard;
+
+	window.ExploreData = api;
 }());
