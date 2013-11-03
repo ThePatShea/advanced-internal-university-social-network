@@ -28,7 +28,6 @@ Template.listItemExploreEventPostBB.helpers({
       }
     },
     displayName: function() {
-      console.log(this);
       if (this.postAsType == "user") {
         return this.author;
       } else if (this.postAsType == "bubble") {
