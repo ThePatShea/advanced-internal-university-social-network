@@ -140,6 +140,12 @@ this.RestSecurity = {
     return RestHelpers.jsonResponse(401, 'Not bubble owner');
   },
 
+  relatedBubbleExists: function(ctx) {
+    var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.parentId);
+    if (!bubble)
+      return RestHelpers.jsonResponse(404, 'Bubble does not exist');
+  },
+
   // Bubble posts
   makeBubblePostFilter: function(name) {
     return function(ctx, query) {

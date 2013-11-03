@@ -216,8 +216,8 @@
     // Files
     var bubbleFiles = new BubbleFiles();
     bubbleFiles.bubbleId = that.bubbleId;
-    bubbleFiles.limit = properties.discussions.limit;
-    bubbleFiles.fields = properties.discussions.fields;
+    bubbleFiles.limit = properties.files.limit;
+    bubbleFiles.fields = properties.files.fields;
 
     this.Files = new PagedData(bubbleFiles);
 

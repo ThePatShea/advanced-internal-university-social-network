@@ -272,7 +272,7 @@ this.RestHelpers = {
       query = {_id: query};
 
     rawCollection.findOne(query, this.bindFuture(future));
-    var obj = future.wait()
+    var obj = future.wait();
 
     // MongoDB does not support field filtering with findOne
     if (fields) {

@@ -193,6 +193,86 @@ Meteor.startup(function() {
 		}
 	});
 
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/members', Meteor.users, {
+		query: {
+			name: 'members',
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('members')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/admins', Meteor.users, {
+		query: {
+			name: 'admins',
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('admins')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/applicants', Meteor.users, {
+		query: {
+			name: 'applicants',
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('applicants')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/invitees', Meteor.users, {
+		query: {
+			name: 'invitees',
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('invitees')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
 	// Comments
 	RestCrud.makeGenericApi('/api/v1_0/comments', Comments, {
 		query: {
