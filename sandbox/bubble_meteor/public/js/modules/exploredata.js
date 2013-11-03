@@ -1,6 +1,7 @@
 // TODO: Use require.js instead of global namespace
 (function(){
   var ExplorePost = BubbleRest.Model.extend({
+		excludeFields: ['user', 'bubble'],
     url: function(){
 			// TODO: Fix me. Should be linked to exploreId instead of reading from global posts collection.
       return '/api/v1_0/posts/' + this.id;
@@ -52,16 +53,11 @@
 
 			return '/api/v1_0/explores/' + this.exploreId + '/posts?limit=' + this.limit + '&page=' + this.page + '&fields=' + fieldString;
 		},
-		parse: function(response){
-			var listObjects = [];
-			this.pages = response.pages;
-			_.each(response.posts, function(item){
-				if (item.postType !== 'file') {
-					listObjects.push(item);
-				}
-			});
-			return listObjects;
-		}
+    parse: function(response) {
+      return _.filter(BubbleModels.parsePagedData(this, response), function(v) {
+        return v.postType !== 'file';
+      });
+    }
 	});
 
 	var DashboardPosts = BubbleRest.Collection.extend({
