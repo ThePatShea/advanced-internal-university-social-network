@@ -5,8 +5,6 @@ this.RestQuery = {
 
       var bubbleUserIds = bubble.users[name];
 
-      console.log('xxx', bubble, bubbleUserIds);
-
       return {
         _id: {
           $in: bubbleUserIds

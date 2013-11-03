@@ -8,6 +8,21 @@ function parseApiOptions(ctx) {
 	};
 }
 
+function parseBubbleUserOpts(ctx) {
+  return {
+    fields: {
+			createdAt: true,
+			emails: true,
+			name: true,
+			userType: true,
+			username: true
+    },
+    sort: ctx.request.query.sort,
+    page: ctx.request.query.page || 0,
+    limit: ctx.request.query.limit
+  };
+}
+
 function getFileApiOptions(ctx) {
 	return {
 		fields: RestHelpers.getFieldList('name,type,userId,size,url')
@@ -196,6 +211,7 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/members', Meteor.users, {
 		query: {
 			name: 'members',
+			apiOpts: parseBubbleUserOpts,
 			check: RestSecurity.relatedBubbleExists,
 			query: RestQuery.buildBubbleUserQuery('members')
 		},
@@ -216,6 +232,7 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/admins', Meteor.users, {
 		query: {
 			name: 'admins',
+			apiOpts: parseBubbleUserOpts,
 			check: RestSecurity.relatedBubbleExists,
 			query: RestQuery.buildBubbleUserQuery('admins')
 		},
@@ -236,6 +253,7 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/applicants', Meteor.users, {
 		query: {
 			name: 'applicants',
+			apiOpts: parseBubbleUserOpts,
 			check: RestSecurity.relatedBubbleExists,
 			query: RestQuery.buildBubbleUserQuery('applicants')
 		},
@@ -256,6 +274,7 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/invitees', Meteor.users, {
 		query: {
 			name: 'invitees',
+			apiOpts: parseBubbleUserOpts,
 			check: RestSecurity.relatedBubbleExists,
 			query: RestQuery.buildBubbleUserQuery('invitees')
 		},
