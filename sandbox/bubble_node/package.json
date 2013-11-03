@@ -8,6 +8,7 @@
   "dependencies": {
     "express": "~3.4.4",
     "stylus": "~0.39.1",
-    "handlebars": "~1.0.12"
+    "handlebars": "~1.0.12",
+    "hbs": "~2.4.0"
   }
 }

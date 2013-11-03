@@ -6,7 +6,7 @@ module.exports = function(grunt){
 
 		'watch': {
 			express: {
-				files: ['app.js', 'public/css/style.styl'],
+				files: ['./server.js', './server/public/css/style.styl', './server/views/**/*.handlebars.html'],
 				tasks: ['express:dev'],
 				options: {
 					nospawn: true
@@ -14,7 +14,7 @@ module.exports = function(grunt){
 			},
 
 			handlebars: {
-				files: ['views/*.handlebars'],
+				files: ['./client/**/*.handlebars.html'],
 				tasks: ['handlebars'],
 				options: {
 					nospawn: true
@@ -26,7 +26,7 @@ module.exports = function(grunt){
 			dev: {
 				options: {
 					port: 3000,
-					script: path.resolve(__dirname, 'app.js')
+					script: path.resolve(__dirname, 'server.js')
 				}
 			}
 		},
@@ -34,18 +34,16 @@ module.exports = function(grunt){
 		'handlebars': {
 			some: {
 				options: {
-					namespace: 'BubbleApp.templates',
-					templateRoot: 'views/',
+					namespace: 'Templates',
 					processName: function(filePath){
 						var i = filePath.indexOf('views/');
 						var j = filePath.indexOf('.handlebars');
 						var templateName = filePath.slice(6, j);
-
 						return templateName;
 					}
 				},
 				files: {
-					'public/js/templates.js': ['views/*.handlebars']
+					'./client/static/js/templates.js': ['./client/**/*.handlebars.html']
 				}
 			}
 		}
