@@ -6,7 +6,7 @@ module.exports = function(grunt){
 
 		'watch': {
 			express: {
-				files: ['./server.js', './server/public/css/style.styl', './server/views/**/*.handlebars.html'],
+				files: ['./server.js', './server/public/css/style.styl', './server/views/**/*.html.handlebars'],
 				tasks: ['express:dev'],
 				options: {
 					nospawn: true
@@ -14,7 +14,7 @@ module.exports = function(grunt){
 			},
 
 			handlebars: {
-				files: ['./client/**/*.handlebars.html'],
+				files: ['./client/**/*.html.handlebars'],
 				tasks: ['handlebars'],
 				options: {
 					nospawn: true
@@ -36,14 +36,11 @@ module.exports = function(grunt){
 				options: {
 					namespace: 'Templates',
 					processName: function(filePath){
-						var i = filePath.indexOf('views/');
-						var j = filePath.indexOf('.handlebars');
-						var templateName = filePath.slice(6, j);
-						return templateName;
+						return filePath;
 					}
 				},
 				files: {
-					'./client/static/js/templates.js': ['./client/**/*.handlebars.html']
+					'./client/static/js/templates.js': ['./client/**/*.html.handlebars']
 				}
 			}
 		}
