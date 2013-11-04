@@ -1,6 +1,15 @@
 //Backbone-Marionette App goes here
-$(document).ready(function(){
+(function(){
+
+	$(document).ready(function(){
+		app.header.show(view1);
+		app.sidebar.show(view2);
+		app.subpanel.show(view3);
+	});
+
 	var app = new Backbone.Marionette.Application();
+
+	window.app = app;
 
 	app.addRegions({
 		header: '#header_container',
@@ -24,8 +33,6 @@ $(document).ready(function(){
 	var view2 = new SidebarView();
 	var view3 = new SubpanelView();
 
-	app.header.show(view1);
-	app.sidebar.show(view2);
-	app.subpanel.show(view3);
 	console.log('App running');
-});
+
+})(Backbone, Marionette, $, _);
