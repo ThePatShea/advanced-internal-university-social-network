@@ -129,8 +129,9 @@ Template.explorePostPageBB.events({
       e.preventDefault();
       if (confirm("Delete this post?")) {
         var currentPostId = Session.get('currentPostId');
-        Posts.remove(currentPostId);
-        Meteor.Router.to('explorePage',Session.get('currentExploreId'));
+        Posts.remove(currentPostId, function(){
+          window.location.href = "/explore/"+Session.get('currentExploreId')+"/home";
+        });
       }
     }
 });
@@ -142,7 +143,6 @@ Template.explorePostPageBB.rendered = function(){
   if(currentPostId != window.location.pathname.split("/")[4])
   {
     currentPostId = window.location.pathname.split("/")[4];
-    console.log("THISDOTUNDERSCOREID: ", currentPostId);
     pageData = new ExploreData.ExplorePostPage(currentPostId, function(){explorePageDep.changed()});
     pageData.getBubbleTitle(function(){explorePageDep.changed();});
     Meteor.subscribe('comments', currentPostId);
