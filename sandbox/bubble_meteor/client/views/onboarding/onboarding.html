@@ -96,6 +96,9 @@
   <section class="onboarding-section-container">
     <div class="boarding-container">
       <h1>Hey {{getCurrentName}}, Customize your profile.</h1>
+
+      <canvas id="main-canvas" width="160" height="160" class="visible-0"></canvas>
+      <canvas id="retina-canvas" width="320" height="320" class="visible-0"></canvas>
       
       <div class="boarding-form  clearfix">
         <form class="cb-form cb-form-onboarding visible-0" style="display: block;">
@@ -105,17 +108,17 @@
               <div id="drop_zone" class="drop-zone">
                 <div class="dz-title">drag and drop</div>
                   <div class="dz-subtitle">or click here</div>
-                  <ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>
+                  {{#codeComment}}<ul class="nav nav-tabs small-boxes attachments-list" id="list"></ul>{{/codeComment}}
                 <input class="file-chooser-invisible" name="filesToUpload[]" id="filesToUpload" type="file" multiple="">
               </div>
             </div>
-            <div class="crop-container" style="text-align: center;">
+            <div class="crop-container" style="text-align: center; padding-bottom: 20px">
               <img class="crop">
             </div>
           </div>
           <label class="no-typing margin-top-35">Read our <a onclick="window.open('/pdf/termsOfUse.pdf', '_blank')">terms of use</a>, <a onclick="window.open('/pdf/privacyPolicy.pdf', '_blank')">privacy policy</a>, and our <a onclick="window.open('/pdf/ferpaNotice.pdf', '_blank')">FERPA notice</a></label>
 
-          <div id="accept-terms" class="accept-terms invitee-container {{acceptTermsSelected}}">
+          <div id="accept-terms" class="accept-terms invitee-container">
             <div class="agree-terms">
               <a href="#">
                 <span class="icon">
@@ -123,7 +126,13 @@
                     <polygon fill-rule="evenodd" clip-rule="evenodd" points="10,1.5 3.3,8 0,4.34 1.42,2.95 3.37,5.12 8.65,0 "></polygon>
                   </svg>
                 </span>
-                <span class="text">Click here to agree to the Terms of <br> Use and Privacy Policy.</span>
+                <span class="text">
+                  <div class="v-middle text-inner-container">
+                    <div class="v-inner">
+                      Click here to agree to the Terms of <br> Use and Privacy Policy.
+                    </div>
+                  </div>
+                </span>
               </a>
             </div>
           </div>

@@ -8,9 +8,9 @@ Template.onboarding.helpers({
 
 Template.onboarding.events({
   'click #accept-terms': function() {
-    $('#cb-form-container-onboarding .cb-submit').removeClass('ready-false');
-    $('#cb-form-container-onboarding .cb-submit').prop('disabled', false);
-    $('#accept-terms').addClass('selected');
+    $('.cb-submit').removeClass('ready-false');
+    $('.cb-submit').prop('disabled', false);
+    $('.agree-terms').addClass('selected');
 
     Session.set("termsAccepted", "true");
   },
@@ -93,10 +93,11 @@ Template.onboarding.events({
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
+              console.log("FILE!");
               $("#drop_zone").hide();
               $(".crop").attr("src", e.target.result).load(function() {
               profileImage.src = e.target.result;
-              cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+              cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form > .attach-files", handles: true, onInit: function(img, selection) {
                 mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
                 retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
                 mainURL = mainCanvas.toDataURL();
