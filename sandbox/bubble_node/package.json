@@ -3,7 +3,8 @@
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-express-server": "~0.4.5",
-    "grunt-contrib-handlebars": "~0.5.11"
+    "grunt-contrib-handlebars": "~0.5.11",
+    "connect-assets": "~2.5.3"
   },
   "dependencies": {
     "express": "~3.4.4",

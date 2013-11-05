@@ -10,8 +10,23 @@ app.use(stylus.middleware(path.resolve(__dirname, '/server/public')));
 
 //Set Handlebars as the templating engine on files ending in handlebars.html
 //app.set('view engine', 'hbs');
-app.set('view engine', 'handlebars.html');
-app.engine('handlebars.html', require('hbs').__express);
+app.set('view engine', 'html.handlebars');
+app.engine('html.handlebars', require('hbs').__express);
+
+//Register Handlebars helpers
+hbs.registerHelper("JavaScriptAssets", function(){
+  return '/js/compiled.js';
+});
+
+hbs.registerHelper("CSSAssets", function(){
+  return '/css/style.css';
+});
+
+//var environment = process.env.NODE_ENV;
+
+hbs.registerHelper("isProduction", function(environment){
+  return false;
+});
 
 //Set location of static content
 app.use(express.static(__dirname + '/server/public'));
@@ -25,7 +40,7 @@ app.set('views', __dirname + '/server/views');
 
 //Server Routes
 app.get('/server', function(req, res){
-	res.render('simpletemplate', {name: 'Server'});
+	res.render('index');
 });
 
 app.get('/currentdate', function(req, res){
