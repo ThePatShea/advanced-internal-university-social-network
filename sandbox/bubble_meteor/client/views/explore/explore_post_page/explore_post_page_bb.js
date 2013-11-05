@@ -143,6 +143,6 @@ Template.explorePostPageBB.rendered = function() {
 Template.explorePostPageBB.destroyed = function() {
   this.watch.stop();
 
-  if (template.commentSub)
-    template.commentSub.unsubscribe();
+  if (this.commentSub)
+    this.commentSub.unsubscribe();
 };
