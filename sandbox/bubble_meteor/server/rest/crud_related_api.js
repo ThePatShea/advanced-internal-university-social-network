@@ -1,8 +1,9 @@
 // Internal helpers
-function makeSecurityCheck(childField, next) {
+function makeParentLoaderCheck(parent, next) {
 	return function(ctx, obj) {
-		if (obj[childField] !== ctx.params.parentId)
-			return RestHelpers.jsonResponse(404, 'Invalid parent ID');
+		ctx.parentDoc = RestHelpers.mongoFindOne(parent, ctx.params.parentId);
+		if (!ctx.parentDoc)
+			return RestHelpers.jsonResponse(404, 'Parent was not found');
 
 		if (next)
 			return next(ctx, obj);
@@ -14,8 +15,8 @@ function makeExtendedSecurityCheck(parent, childField, next) {
 		if (obj[childField] !== ctx.params.parentId)
 			return RestHelpers.jsonResponse(404, 'Invalid parent ID');
 
-		var parentDoc = RestHelpers.mongoFindOne(parent, obj[childField]);
-		if (!parentDoc)
+		ctx.parentDoc = RestHelpers.mongoFindOne(parent, obj[childField]);
+		if (!ctx.parentDoc)
 			return RestHelpers.jsonResponse(404, 'Parent was not found');
 
 		if (next)
@@ -29,6 +30,7 @@ this.RestRelatedCrud = {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
+			check: makeParentLoaderCheck(parent, opts.check),
 			query: function(ctx) {
 				var query = {};
 				query[childField] = ctx.params.parentId;
@@ -52,7 +54,7 @@ this.RestRelatedCrud = {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
-			check: makeSecurityCheck(childField, opts.check)
+			check: makeExtendedSecurityCheck(childField, opts.check)
 		});
 
 		return function(parentId, id) {
@@ -105,7 +107,7 @@ this.RestRelatedCrud = {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
-			check: makeSecurityCheck(parent, opts.check)
+			check: makeExtendedSecurityCheck(parent, opts.check)
 		});
 
 		return function(parentId, id) {

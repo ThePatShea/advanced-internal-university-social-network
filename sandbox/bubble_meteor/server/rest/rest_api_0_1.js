@@ -9,18 +9,16 @@ function parseApiOptions(ctx) {
 }
 
 function parseBubbleUserOpts(ctx) {
-  return {
-    fields: {
-			createdAt: true,
-			emails: true,
-			name: true,
-			userType: true,
-			username: true
-    },
-    sort: ctx.request.query.sort,
-    page: ctx.request.query.page || 0,
-    limit: ctx.request.query.limit
+	var opts = parseApiOptions(ctx);
+	opts.fields = {
+		createdAt: true,
+		emails: true,
+		name: true,
+		userType: true,
+		username: true
   };
+
+  return opts;
 }
 
 function getFileApiOptions(ctx) {
@@ -78,7 +76,8 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Explores, Posts, 'exploreId', {
 		query: {
 			name: 'posts',
-			apiOpts: parseApiOptions
+			apiOpts: RestQuery.explorePostsOrder(parseApiOptions),
+			query: RestQuery.explorePostsFilter
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
