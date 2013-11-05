@@ -1,5 +1,6 @@
+// Move into a dynamic js file with server-injected vars
 $(function() {
-	App.start()
+	App.start() // pass vars in here
 });
 
 //Backbone-Marionette App goes here
@@ -8,15 +9,20 @@ window.App = (function(Backbone, Marionette, $, _){
 	var App = new Backbone.Marionette.Application();
 
 	App.addRegions({
-		header: '#header_container',
-		sidebar: '#sidebar_container',
-		subpanel: '#subpanel_container'
+		headerRegion: '#header_container',
+		sidebarRegion: '#sidebar_container',
+		subpanelRegion: '#subpanel_container',
+		mainRegion: '#main_region'
+	});
+
+	App.reqres.setHandler('default:region', function() {
+		App.mainRegion;
 	});
 
 	App.addInitializer(function() {
 		App.module("HeaderApp").start()
-		// App.module("FooterApp").start()
-	})
+		App.module("SidebarApp").start()
+	});
 
 	// SidebarView = Backbone.Marionette.ItemView.extend({
 	// 	template: Templates['./client/apps/sidebar/templates/sidebar.html.handlebars']

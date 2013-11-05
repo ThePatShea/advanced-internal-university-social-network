@@ -3,7 +3,7 @@ App.module('HeaderApp', function(HeaderApp, App, Backbone, Marionette, $, _) {
   
   API = {
     list: function() {
-      new HeaderApp.List.Controller({region: App.header});
+      new HeaderApp.List.Controller({region: App.headerRegion});
     }
   }
   
