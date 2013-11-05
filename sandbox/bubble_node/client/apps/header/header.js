@@ -1,11 +1,11 @@
 App.module('HeaderApp', function(HeaderApp, App, Backbone, Marionette, $, _) {
   this.startWithParent = false
   
-  API = {
+  this.API = {
     list: function() {
-      new HeaderApp.List.Controller({region: App.header});
+      HeaderApp.controller = new HeaderApp.List.Controller({region: App.header});
     }
   }
   
-  HeaderApp.on("start", function() { API.list(); });
+  HeaderApp.on("start", function() { HeaderApp.API.list(); });
 });

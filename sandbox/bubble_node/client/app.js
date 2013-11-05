@@ -14,7 +14,10 @@ window.App = (function(Backbone, Marionette, $, _){
 	});
 
 	App.addInitializer(function() {
-		App.module("HeaderApp").start()
+		App.module("HeaderApp").start();
+		App.SidebarApp.start();
+		// var v = new SubpanelView();
+		// App.subpanel.show(v);
 		// App.module("FooterApp").start()
 	})
 
@@ -23,7 +26,7 @@ window.App = (function(Backbone, Marionette, $, _){
 	// });
 
 	// SubpanelView = Backbone.Marionette.ItemView.extend({
-	// 	template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
+	//    template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
 	// });
 
 	console.log('App initialied');
