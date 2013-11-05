@@ -4,9 +4,11 @@
       {{> gifLoaderToParent}}
     </div>
 
-    {{#with exploreInfo}}
-      {{> exploreCover}}
-    {{/with}}
+    {{#if exploreInfo}}
+      {{#with exploreInfo}}
+        {{> exploreCover}}
+      {{/with}}
+    {{/if}}
     <div class="explore-page-content">
       <div class="bubble-list">
         <div></div>

@@ -177,55 +177,59 @@
 				return;
 			}
 		};
-
-		this.toggleGoing = function(postId,userId,callback){
-			//var test = function(){bubbleDep.changed();}
-			tmp = this.explorePosts.get(postId);
-			tmp.on("change",callback);
-			console.log("TMP: ", tmp);
-			tmpData = tmp.get("attendees");
-			if (tmpData.indexOf(userId) == -1) {
-				var retVal = [];
-				_.each(tmpData,function(data){
-					retVal.push(_.clone(data));
-				})
-				retVal.push(userId);
-			}
-			else {
-				// TODO: Fix me, hardcoded id?
-				//tmpData.splice(tmpData.indexOf(userId), 1);
-				tmpData = tmpData.slice(tmpData.indexOf("GAd9sexEBsk58X4t6")+1, tmpData.length);
-				var retVal = [];
-				_.each(tmpData,function(data){
-					retVal.push(_.clone(data));
-				});
-			}
-			console.log("Setting this data: ", retVal);
-			tmp.set("attendees", retVal);
-		};
 	};
 
-	var ExplorePostPage = function(id, callback) {
+	var ExplorePostPage = function(exploreId, postId, callback) {
+		var that = this;
+
+		this.exploreInfo = new ExploreInfo();
+		this.exploreInfo.id = exploreId;
+
 		this.explorePost = new ExplorePost();
-		this.explorePost.id = id;
-		this.explorePost.fetch({
+		this.explorePost.id = postId;
+
+		this.explorebubble = null;
+
+		this.exploreInfo.fetch({
 			success: function() {
-				if (callback)
-					callback();
+				that.explorePost.fetch({
+					success: function(post) {
+						if (post.postAsType === 'bubble') {
+							that.exploreBubble = new BubbleModels.Bubble({id: post.postAsId});
+							that.exploreBubble.fetch({
+								success: function() {
+									if (callback)
+										callback(post);
+								}
+							});
+						} else {
+							callback(post);
+						}
+					}
+				});
 			}
 		});
 
-		this.getBubbleTitle = function(callback) {
-			this.post = this.explorePost.toJSON();
+		this.getExplore = function() {
+			return this.exploreInfo && this.exploreInfo.toJSON();
+		};
 
-			this.exploreBubble = new BubbleModels.Bubble();
-			this.exploreBubble.id = this.post.postAsId;
-			this.exploreBubble.fetch({
-				success: function() {
-					if (callback)
-						callback();
-				}
-			});
+		this.getPost = function() {
+			return this.explorePost && this.explorePost.toJSON();
+		};
+
+		this.getBubble = function() {
+			return this.exploreBubble && this.exploreBubble.toJSON();
+		};
+
+		this.toggleGoing = function(userId) {
+			var attendees = this.explorePost.get('attendees');
+			if (attendees.indexOf(userId) === -1) {
+				attendees.push(userId);
+			} else {
+				attendees = _.without(attendees, userId);
+			}
+			this.explorePost.set('attendees', attendees);
 		};
 	};
 

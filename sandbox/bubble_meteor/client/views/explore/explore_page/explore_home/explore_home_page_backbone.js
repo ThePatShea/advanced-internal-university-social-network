@@ -6,7 +6,6 @@ var state = {
 };
 
 function updatePostList() {
-  console.log('UPDATE WITH', state.es.explorePosts.toJSON());
   Session.set('explorePosts', state.es.explorePosts.toJSON());
 }
 
@@ -28,7 +27,6 @@ function refreshData(template, exploreId) {
 
   Session.set('isExploreLoading', true);
   es.fetchPage(es.getCurrentPage(), function() {
-    console.log("WOOHOO");
     updatePostList(es);
     Session.set('isExploreLoading', false);
   });
@@ -115,7 +113,6 @@ Template.explorePageBackbone.created = function() {
   var that = this;
 
 	this.es = undefined;
-	this.currentExploreId = undefined;
   this.watch = Meteor.autorun(function() {
     refreshData(that, Session.get('currentExploreId'));
   });
@@ -124,4 +121,6 @@ Template.explorePageBackbone.created = function() {
 
 Template.explorePageBackbone.destroyed = function() {
   this.watch.stop();
+
+  console.log('Destroyed');
 };
