@@ -10,8 +10,7 @@ window.App = (function(Backbone, Marionette, $, _){
 
 	App.addRegions({
 		headerRegion: '#header_container',
-		sidebarRegion: '#sidebar_container',
-		subpanelRegion: '#subpanel_container',
+		sidebarRegion: '#sidebar_layout_container',
 		mainRegion: '#main_region'
 	});
 
@@ -29,7 +28,7 @@ window.App = (function(Backbone, Marionette, $, _){
 	// });
 
 	// SubpanelView = Backbone.Marionette.ItemView.extend({
-	// 	template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
+	//    template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
 	// });
 
 	console.log('App initialied');

@@ -1,15 +1,60 @@
-App.module('SidebarApp.List', function(List, App, Backbone, Marionette, $, _) {
-  List.Controller = App.Controllers.Base.extend({
-    initialize: function() {
-      SidebarApp.sidebars = sidebars = App.request("sidebar:entities");
-      // SidebarApp.sidebars = sidebars
+App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 
-      view = new List.View({collection: sidebars});
-      this.show(view);
-    },
+	List.Layout = Marionette.Layout.extend({
+		template: Templates['./client/apps/sidebar/templates/sidebar_layout.html.handlebars'],
 
-    onClose: function() {
-      delete SidebarApp.sidebars
-    }
-  });
+		regions: {
+			sidebarMain: '#sidebar_container',
+			subpanel:    '#subpanel_container'
+		}
+	});
+
+	List.SubpanelView = Marionette.ItemView.extend({
+		template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
+	});
+
+	List.Controller = App.Controllers.Base.extend({
+		initialize: function(options){
+			// sidebarView = this.getView();
+			// options.region.show(sidebarView);
+			this.vent = App.vent;
+			var sidebarLayout = this.getLayout();
+			options.region.show(sidebarLayout);
+			var menuView = this.getView();
+			sidebarLayout.sidebarMain.show(menuView);
+
+			this.vent.on('sidebar:exploreClick', this.showSubpanel(sidebarLayout));
+			this.vent.on('sidebar:mybubblesClick', this.showSubpanel(sidebarLayout));
+			this.vent.on('sidebar:dashboardClick', this.hideSubpanel(sidebarLayout));
+			this.vent.on('sidebar:searchClick', this.hideSubpanel(sidebarLayout));
+			this.vent.on('sidebar:settingsClick', this.hideSubpanel(sidebarLayout));
+		},
+
+		getView: function(){
+			return new List.View();
+		},
+
+		getSubpanelView: function(){
+			return new List.SubpanelView();
+		},
+
+		getLayout: function(){
+			return new List.Layout();
+		},
+
+		showSubpanel: function(sidebarLayout){
+			var subpanelView = this.getSubpanelView();
+
+			return function(){
+				sidebarLayout.subpanel.show(subpanelView);
+			}
+		},
+
+		hideSubpanel: function(sidebarLayout){
+			return function(){
+				sidebarLayout.subpanel.close();
+				//sidebarLayout.subpanel.reset();
+			}
+		}
+	});
 });
