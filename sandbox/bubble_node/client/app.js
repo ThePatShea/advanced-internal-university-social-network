@@ -9,8 +9,8 @@ window.App = (function(Backbone, Marionette, $, _){
 
 	App.addRegions({
 		header: '#header_container',
-		sidebar: '#sidebar_container',
-		subpanel: '#subpanel_container'
+		sidebar: '#sidebar_layout_container'
+		//subpanel: '#subpanel_container'
 	});
 
 	App.addInitializer(function() {
