@@ -1,7 +1,7 @@
 App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 
 	List.Layout = Marionette.Layout.extend({
-		template: Templates['./client/apps/sidebar/templates/sidebar_layout.html.handlebars'],
+		template: 'sidebar/templates/sidebar_layout',
 
 		regions: {
 			sidebarMain: '#sidebar_container',
@@ -10,7 +10,7 @@ App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 	});
 
 	List.SubpanelView = Marionette.ItemView.extend({
-		template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
+		template: 'subpanel/templates/subpanel'
 	});
 
 	List.Controller = App.Controllers.Base.extend({
