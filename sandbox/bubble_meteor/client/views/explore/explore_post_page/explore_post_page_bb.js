@@ -113,7 +113,7 @@ function refreshData(template, exploreId, postId) {
 
   // TODO: Fix me
   if (template.commentSub)
-    template.commentSub.unsubscribe();
+    template.commentSub.stop();
 
   template.commentSub = Meteor.subscribe('comments', postId);
 }
@@ -144,5 +144,5 @@ Template.explorePostPageBB.destroyed = function() {
   this.watch.stop();
 
   if (this.commentSub)
-    this.commentSub.unsubscribe();
+    this.commentSub.stop();
 };
