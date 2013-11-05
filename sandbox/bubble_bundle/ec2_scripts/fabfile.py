@@ -14,7 +14,7 @@ import time
 
 
 
-def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name):
+def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name, secure_flag):
 	"""
 	Creates an EC2 instance, installs the Emory Bubble Bundle on it. And takes a snapshot to create an AMI
 	"""
@@ -37,7 +37,14 @@ def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name):
 
 	time.sleep(30)
 
-	execute(deploy_bundle, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	if(secure_flag == 'secure'):
+		execute(deploy_bundle_secure, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	elif(secure_flag == 'insecure'):
+		execute(deploy_bundle_insecure, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	else:
+		print(_yellow("Error, secure_flag not recognized ..."))
+		return
+
 	print(_green("Deployed bundle..."))
 
 	
@@ -59,7 +66,7 @@ def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name):
 
 
 
-def start_bundle_instance(blank_ami_id, new_instance_name, path_to_bundle):
+def start_bundle_instance(blank_ami_id, new_instance_name, path_to_bundle, secure_flag):
 	"""
 	Starts up a new mi.large instance with the bundle deployed to it and running
 	"""
@@ -80,7 +87,14 @@ def start_bundle_instance(blank_ami_id, new_instance_name, path_to_bundle):
 
 	time.sleep(30)
 
-	execute(deploy_bundle, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	if(secure_flag == 'secure'):
+		execute(deploy_bundle_secure, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	elif(secure_flag == 'insecure'):
+		execute(deploy_bundle_insecure, path_to_bundle, hosts=['ubuntu@'+instance.public_dns_name])
+	else:
+		print(_yellow("Error, secure_flag not recognized ..."))
+		return
+	
 	print(_green("Deployed bundle to %s" % instance.public_dns_name))
 
 
@@ -88,7 +102,7 @@ def start_bundle_instance(blank_ami_id, new_instance_name, path_to_bundle):
 
 
 
-def deploy_bundle(path_to_bundle):
+def deploy_bundle_secure(path_to_bundle):
 	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
 	run('sudo apt-get update -y')
 	run('sudo apt-get install -y build-essential')
@@ -99,3 +113,17 @@ def deploy_bundle(path_to_bundle):
 		run('./configure_secure.sh')
 		run('sudo ./setup_bubble_secure.sh')
 		run('sudo ./start_bubble_secure.sh')
+
+
+
+def deploy_bundle_insecure(path_to_bundle):
+	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
+	run('sudo apt-get update -y')
+	run('sudo apt-get install -y build-essential')
+	run('sudo npm install -g node-gyp')
+	run('sudo npm install -g fibers@1.0.0')
+	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
+		run('git pull')
+		run('./configure.sh')
+		run('sudo ./setup_bubble.sh')
+		run('sudo ./start_bubble.sh')
