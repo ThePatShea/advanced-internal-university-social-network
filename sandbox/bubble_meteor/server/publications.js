@@ -654,6 +654,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
     return Meteor.users.find({_id: id}, {fields: {'profilePicture': 1, 'retinaProfilePicture': 1}});
   });
 
+  Meteor.publish('nameFromId', function(userId) {
+    return Meteor.users.find({_id: userId}, {fields: {'name': 1}})
+  })
+
   Meteor.publish('singleUser', function(userId) { 
     return Meteor.users.find({_id: userId}, {
       fields: {

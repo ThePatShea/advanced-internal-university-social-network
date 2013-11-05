@@ -1,7 +1,7 @@
 Template.onboarding.helpers({
   getCurrentName: function() {
-    var user = Meteor.users.findOne(Meteor.userId());
-    return user.name;
+    //var user = Meteor.users.findOne(Meteor.userId());
+    return Meteor.user().name;
   },
 });
 
@@ -419,6 +419,7 @@ Template.onboarding.rendered = function() {
 }
 
 Template.onboarding.created = function() {
+  Meteor.subscribe('nameFromId',Meteor.userId());
 
   uId = Meteor.userId();
 
