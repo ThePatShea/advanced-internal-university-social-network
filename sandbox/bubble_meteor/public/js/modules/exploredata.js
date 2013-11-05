@@ -224,6 +224,7 @@
 
 		this.toggleGoing = function(userId) {
 			var attendees = this.explorePost.get('attendees');
+
 			if (attendees.indexOf(userId) === -1) {
 				attendees.push(userId);
 			} else {

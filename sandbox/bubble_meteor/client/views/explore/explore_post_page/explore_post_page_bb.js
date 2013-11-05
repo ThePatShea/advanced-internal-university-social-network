@@ -43,7 +43,7 @@ Template.explorePostPageBB.helpers({
     return this.flagged;
   },
   getAuthorProfilePicture: function() {
-    // TODO: Fix me
+    // TODO: Use REST API
     var user = Meteor.users.findOne(this.userId);
     return user && user.profilePicture;
   },
@@ -134,8 +134,7 @@ Template.explorePostPageBB.rendered = function() {
   var that = this;
 
   // Attach custom event handler
-  $('#explore-post-page').on('postGoing', function(e, postId) {
-    console.log('POST UPDATE', postId);
+  $('#explore-post-page').off('postGoing').on('postGoing', function(e, postId) {
     that.pageData.toggleGoing(Meteor.userId());
     Session.set('currentExplorePost', that.pageData.getPost());
   });
