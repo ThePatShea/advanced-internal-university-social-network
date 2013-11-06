@@ -347,7 +347,7 @@ getBubbleId =  function(userId) {
       var commentIds =  _.pluck(comments2, "userId");
 
       var users    =  Meteor.users.find({_id: {$in: commentIds}}, {fields: {
-          'author': 1,
+          'name': 1,
           'username': 1,
           'profilePicture': 1
       }});
