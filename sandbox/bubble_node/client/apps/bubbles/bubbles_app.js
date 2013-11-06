@@ -12,7 +12,7 @@ App.module("BubblesApp", function(BubblesApp, App, Backbone, Marionette, $, _) {
       new BubblesApp.List.Controller();
     },
     show: function(bubble, region) {
-      // new BubblesApp.Show.Controller({ bubble: bubble, region: region });
+      new BubblesApp.Show.Controller({ bubble: bubble, region: region });
     }
   };
 

@@ -16,8 +16,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _){
     getNavs: function(){
       return new Models.NavCollection([
         { name: "Dashboard", cssId: "dashboard" },
-        { name: "Explore",   cssId: "explore"   },
         { name: "Bubbles",   cssId: "mybubbles" },
+        { name: "Explore",   cssId: "explore"   },
         { name: "Search",    cssId: "search"    },
         { name: "Settings",  cssId: "settings"  }
       ])

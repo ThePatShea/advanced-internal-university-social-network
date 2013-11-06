@@ -10,7 +10,10 @@ App.module("BubblesApp.List", function(List, App, Backbone, Marionette, $, _) {
 
   List.Bubble = Marionette.ItemView.extend({
     template: 'bubbles/list/templates/bubble',
-    tagName: 'li'
+    tagName: 'li',
+    triggers: {
+      'click': 'bubble:clicked'
+    }
   });
 
   List.Bubbles = Marionette.CompositeView.extend({
