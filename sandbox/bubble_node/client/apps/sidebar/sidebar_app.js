@@ -14,7 +14,6 @@ App.module("SidebarApp", function(SidebarApp, App, Backbone, Marionette, $, _) {
 
   App.vent.on("nav:clicked", function(nav){
     App.navigate(nav.get("navName"), {trigger: true});
-    // App.vent.trigger("main:app:dashboard")
   });
   
   App.vent.on("sidebar:change", function(name){

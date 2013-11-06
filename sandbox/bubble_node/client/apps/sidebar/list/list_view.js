@@ -21,10 +21,10 @@ App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 		},
 	})
 
-	List.Navs = Marionette.CollectionView.extend({
-		tagName: "ul",
-		className: "sidebar-menu",
-		itemView: List.Nav
-	});
+  List.Navs = Marionette.CompositeView.extend({
+    template: 'sidebar/templates/sidebar',
+    itemView: List.Nav,
+    itemViewContainer: 'ul.sidebar-menu'
+  });
 
 });

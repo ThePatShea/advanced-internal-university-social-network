@@ -7,8 +7,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _){
   })
 
   Models.NavCollection = Backbone.Collection.extend({
+    model: Models.Nav,
     chooseBy: function(name){
-      this.findWhere({name: name}).choose()
+      this.findWhere({navName: name}).choose()
     }
   })
 
