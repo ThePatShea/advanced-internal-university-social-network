@@ -126,24 +126,26 @@ Template.exploreDiscussionSubmit.events({
       makeDiscussionPost();
 
       //Show Post submitted confirmation message
-      var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-      var displayPostConfirmationMessage = function(postTitle){
+      //var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+      var displayPostConfirmationMessage = function(){
         return function(){
           //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-          var message = postTitle.slice(0, 7);
-          var message = message + ' ...';
-          $('.message-container .info').text(message);
+          //var message = postTitle.slice(0, 7);
+          //var message = message + ' ...';
+          //var message = "This will be posted in just a few minutes!";
+          //$('.message-container .info').text(message);
+          $('.job-type').text("This post will be available shortly!");
           $('.message-container').removeClass('visible-false');
           $('.message-container').addClass('message-container-active');
           setTimeout(function(){
             $('.message-container').removeClass('message-container-active');
             $('.message-container').addClass('visible-false');
             clearTimeout();
-          },5000);
+          },10000);
         }        
       }
-      console.log('Post Title: ', postTitle);
-      setTimeout(displayPostConfirmationMessage(postTitle), 1000);
+      //console.log('Post Title: ', postTitle);
+      setTimeout(displayPostConfirmationMessage(), 1000);
       
     },
 
