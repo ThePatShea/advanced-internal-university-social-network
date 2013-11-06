@@ -11,10 +11,10 @@ App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 			"click" : "nav:clicked"
 		},
 		changeChosen: function(model, value, options){
-			this.$el.toggleClass("active", value)
+			$('button', this.$el).toggleClass("active", value)
 		},
 		templateHelpers: function(){
-			var icon = this.model.get("name").toLowerCase()
+			var icon = this.model.get("navName")
 			renderedIcon = App.getTemplate("sidebar/templates/icons/" + icon)
 
 			return { icon: renderedIcon }

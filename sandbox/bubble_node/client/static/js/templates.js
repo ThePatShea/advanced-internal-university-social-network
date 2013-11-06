@@ -46,6 +46,15 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return buffer;
   });
 
+this["Templates"]["./client/apps/dashboard/list/templates/dashboard.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<h1 style=\"position: absolute; top: 60px; left: 100px;\">\n  Dashboard!\n</h1>";
+  });
+
 this["Templates"]["./client/apps/header/templates/header.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};

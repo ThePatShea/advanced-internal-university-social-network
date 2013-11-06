@@ -4,17 +4,17 @@ App.module("DashboardApp", function(DashboardApp, App, Backbone, Marionette, $, 
     appRoutes: {
       "dashboard": "list"
     }
-  })
+  });
 
   var API = {
     list: function(nav) {
-      App.vent.trigger("sidebar:change", "Dashboard")
+      App.vent.trigger("sidebar:change", "dashboard");
       new DashboardApp.List.Controller();
     }
   };
 
   App.addInitializer(function(){
     return new DashboardApp.Router({controller: API})
-  })
+  });
 
 });
