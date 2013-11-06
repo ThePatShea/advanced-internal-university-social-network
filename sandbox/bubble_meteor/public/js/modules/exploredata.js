@@ -182,6 +182,8 @@
 	var ExplorePostPage = function(exploreId, postId, callback) {
 		var that = this;
 
+		this.exploreId = exploreId;
+
 		this.exploreInfo = new ExploreInfo();
 		this.exploreInfo.id = exploreId;
 

@@ -1,5 +1,5 @@
 // Private helpers
-// TODO: Fix me. It is not possible to access template instance from template helper,
+// TODO: Fix me. It is not possible to access template instance from template helper in Meteor,
 // so we will use global state for now
 var state = {
   es: null
@@ -9,11 +9,22 @@ function updatePostList() {
   Session.set('explorePosts', state.es.explorePosts.toJSON());
 }
 
+function updateLoadingFlag(flag) {
+  var count = Deps.nonreactive(function() {
+    return Session.get('isExploreLoading');
+  });
+
+  Session.set('isExploreLoading', count + flag);
+}
+
 function refreshData(template, exploreId) {
   if (!exploreId)
     return;
 
-  Session.set('isExploreLoading', true);
+  if (state.es !== null && state.es.exploreId === exploreId)
+    return;
+
+  updateLoadingFlag(1);
 
   var es = state.es = new ExploreData.ExploreSection({
     exploreId: exploreId,
@@ -21,14 +32,21 @@ function refreshData(template, exploreId) {
     fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'children','commentsCount','attendees'],
     // Callbacks
     onInfoLoaded: function(info) {
-      Session.set('exploreInfo', info);
+      updateLoadingFlag(-1);
+
+      if (es === state.es)
+        Session.set('exploreInfo', info);
     }
   });
 
-  Session.set('isExploreLoading', true);
+  updateLoadingFlag(1);
   es.fetchPage(es.getCurrentPage(), function() {
-    updatePostList(es);
-    Session.set('isExploreLoading', false);
+    updateLoadingFlag(-1);
+
+    if (es === state.es) {
+      updatePostList(es);
+      Session.set('isExploreLoading', false);
+    }
   });
 
   $(document).attr('title', 'Explore - Emory Bubble');
@@ -112,7 +130,6 @@ Template.explorePageBackbone.helpers({
 Template.explorePageBackbone.created = function() {
   var that = this;
 
-	this.es = undefined;
   this.watch = Meteor.autorun(function() {
     refreshData(that, Session.get('currentExploreId'));
   });
@@ -121,6 +138,4 @@ Template.explorePageBackbone.created = function() {
 
 Template.explorePageBackbone.destroyed = function() {
   this.watch.stop();
-
-  console.log('Destroyed');
 };
