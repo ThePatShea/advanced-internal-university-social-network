@@ -2,7 +2,7 @@ App.module("BubblesApp", function(BubblesApp, App, Backbone, Marionette, $, _) {
 
   BubblesApp.Router = Marionette.AppRouter.extend({
     appRoutes: {
-      "Bubbles": "list"
+      "bubbles": "list"
     }
   });
 

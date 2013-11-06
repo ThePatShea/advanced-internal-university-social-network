@@ -15,11 +15,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _){
   var API = {
     getNavs: function(){
       return new Models.NavCollection([
-        { name: "Dashboard", cssId: "dashboard" },
-        { name: "Bubbles",   cssId: "mybubbles" },
-        { name: "Explore",   cssId: "explore"   },
-        { name: "Search",    cssId: "search"    },
-        { name: "Settings",  cssId: "settings"  }
+        { name: "Dashboard", navName: "dashboard", cssId: "dashboard" },
+        { name: "Bubbles",   navName: "bubbles",   cssId: "mybubbles" },
+        { name: "Explore",   navName: "explore",   cssId: "explore"   },
+        { name: "Search",    navName: "search",    cssId: "search"    },
+        { name: "Settings",  navName: "settings",  cssId: "settings"  }
       ])
     }
   };

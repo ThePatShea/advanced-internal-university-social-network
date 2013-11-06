@@ -2,7 +2,7 @@ App.module("DashboardApp", function(DashboardApp, App, Backbone, Marionette, $, 
 
   DashboardApp.Router = Marionette.AppRouter.extend({
     appRoutes: {
-      "Dashboard": "list"
+      "dashboard": "list"
     }
   })
 
