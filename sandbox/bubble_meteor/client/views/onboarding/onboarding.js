@@ -69,7 +69,7 @@ Template.onboarding.events({
   evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'change #filesToUpload': function(evt){
+  'change #onboardingFilesToUpload': function(evt){
     files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -94,7 +94,7 @@ Template.onboarding.events({
         reader.onload = (function(theFile) {
           return function(e) {
               console.log("FILE!");
-              $("#drop_zone").hide();
+              $("#onboarding_drop_zone").hide();
               $(".crop").attr("src", e.target.result).load(function() {
               profileImage.src = e.target.result;
               cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form > .attach-files", handles: true, onInit: function(img, selection) {

@@ -16,6 +16,7 @@ Template.exploreEditEvent.helpers({
 
 
 Template.exploreEditEvent.created = function(){
+  console.log("EXPLORE EDIT EVENT!!!!!!!!!!!!!!!!!!!!!!!", this);
   this.validateForm = function() {
     var count = 0;
 
@@ -41,14 +42,6 @@ Template.exploreEditEvent.created = function(){
 
 
 Template.exploreEditEvent.rendered = function(){
-
-  if($(window).width() < 768)
-  {
-    Session.set("DisableCrop","1");
-  } else {
-    Session.set("DisableCrop","");
-  }
-
   this.validateForm();
 
 	var event = this.data;
@@ -107,15 +100,54 @@ Template.exploreEditEvent.events({
   },
   'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
       tmpl.validateForm();
-  }
-});
+  },
+  'click .post-as-button.bubble': function(){
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(){
+    var postAsId = $(this).attr("name");
+    console.log("Post As Id: ", postAsId);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
 
 
-Template.exploreEditEvent.events({
+
+    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+  },
+  'click .post-as-button.me': function(){
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+  },
   'click .cb-explore-edit-event-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
-    _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
+    //_gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
     var dateTime = $('.cb-explore-edit-event-form > .cb-form-row > .date').val() + " " + $('.cb-explore-edit-event-form > .cb-form-row > .time').val();
 

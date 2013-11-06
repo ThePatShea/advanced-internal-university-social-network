@@ -47,12 +47,13 @@ Template.exploreDiscussionSubmit.rendered = function () {
     }
   });
 
+
   $(".btn-select-post-as-bubble").click(function() {
+    console.log("CLICKED!");
     var postAsId = $(this).attr("name");
+    console.log("Post As Id: ", postAsId);
     $("[name=post-as-id]").val(postAsId);
     $("[name=post-as-type]").val("bubble");
-
-
 
     var bubbleTitle = $(this).children(".bubble-title").attr("name");
     $(".selected-bubble-post-as").html(bubbleTitle);
@@ -64,6 +65,7 @@ Template.exploreDiscussionSubmit.rendered = function () {
     $(".post-as-button.me").addClass("active-false");
 
     $(".post-as-bubble-dropdown").hide();
+    console.log("OVER!");
   });
 
 

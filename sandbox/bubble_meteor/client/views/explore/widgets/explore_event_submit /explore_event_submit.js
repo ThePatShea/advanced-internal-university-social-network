@@ -223,6 +223,49 @@ Template.exploreEventSubmit.events({
           throwError(error.reason);
         }
       }
+  },
+  'click .post-as-button.bubble': function(){
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(){
+    var postAsId = $(this).attr("name");
+    console.log("Post As Id: ", postAsId);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+
+
+    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+  },
+  'click .post-as-button.me': function(){
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
   }
 
 });
@@ -249,6 +292,7 @@ Template.exploreEventSubmit.rendered = function() {
     $(".post-as-bubble-dropdown").hide();
   });*/
 
+  /*
   $(".post-as-button.bubble").click(function() {
     if($(".post-as-bubble-dropdown").css('display') == 'none')
     {
@@ -262,6 +306,7 @@ Template.exploreEventSubmit.rendered = function() {
 
   $(".btn-select-post-as-bubble").click(function() {
     var postAsId = $(this).attr("name");
+    console.log("Post As Id: ", postAsId);
     $("[name=post-as-id]").val(postAsId);
     $("[name=post-as-type]").val("bubble");
 
@@ -294,20 +339,13 @@ Template.exploreEventSubmit.rendered = function() {
 
     $(".selected-bubble-post-as").html("Select a bubble");
   });
+*/
 
 
 
 
 
   this.validateForm();
-
-  $(".date-picker").glDatePicker(
-    {
-      cssName: 'flatwhite',
-      allowMonthSelect: false,
-      allowYearSelect: false
-    }
-  );
 
   //Format the time when the textbox is changed
   $('.cb-explore-eventSubmit-form > .cb-form-row > .time').change(function(){
