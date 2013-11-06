@@ -520,7 +520,7 @@ Template.dashboard.events({
 
   'click .dashboard-more-updates': function() {
   	Session.set('updatesToShow', 0);
-  }
+  },
 });
 
 Template.dashboard.rendered = function () {
@@ -530,12 +530,12 @@ Template.dashboard.rendered = function () {
 
 	$('.carousel').carousel();
 
-	$('.dashboard-more-updates').click(function(){
+	/*$('.dashboard-more-updates').click(function(){
 		$('.threeUpdtes').addClass('visible-0');
 		$('.allUpdates').removeClass('visible-0');
 		$('.dashboard-more-updates').addClass('visible-0');
 		$('.dashboard-updates').css('height',(75*Session.get('numUpdates'))+'px');
-	});
+	});*/
 
 	$(document).attr('title', 'Dashboard - Emory Bubble');
 };
