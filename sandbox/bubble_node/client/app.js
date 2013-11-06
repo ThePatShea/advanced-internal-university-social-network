@@ -23,15 +23,5 @@ window.App = (function(Backbone, Marionette, $, _){
 		App.module("SidebarApp").start()
 	});
 
-	// SidebarView = Backbone.Marionette.ItemView.extend({
-	// 	template: Templates['./client/apps/sidebar/templates/sidebar.html.handlebars']
-	// });
-
-	// SubpanelView = Backbone.Marionette.ItemView.extend({
-	//    template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
-	// });
-
-	console.log('App initialied');
-
 	return App;
 })(Backbone, Marionette, $, _);
