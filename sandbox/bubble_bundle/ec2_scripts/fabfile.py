@@ -110,6 +110,7 @@ def deploy_bundle_secure(path_to_bundle):
 	run('sudo npm install -g fibers@1.0.0')
 	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
 		run('git pull')
+		run('sudo stop bubble')
 		run('./configure_secure.sh')
 		run('sudo ./setup_bubble_secure.sh')
 		run('sudo ./start_bubble_secure.sh')
@@ -124,6 +125,7 @@ def deploy_bundle_insecure(path_to_bundle):
 	run('sudo npm install -g fibers@1.0.0')
 	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
 		run('git pull')
+		run('sudo stop bubble')
 		run('./configure.sh')
 		run('sudo ./setup_bubble.sh')
 		run('sudo ./start_bubble.sh')
