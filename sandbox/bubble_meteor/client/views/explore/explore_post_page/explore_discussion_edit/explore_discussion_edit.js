@@ -141,6 +141,20 @@ Template.exploreDiscussionEdit.events({
     _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
     updateDiscussionPost();
+
+    var displayPostConfirmationMessage = function(){
+      return function(){
+        $('.job-type').text("These edits will be applied shortly!");
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('message-container-active');
+        setTimeout(function(){
+          $('.message-container').removeClass('message-container-active');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },10000);
+      }        
+    }
+    setTimeout(displayPostConfirmationMessage(), 1000);
   },
 
   'change .cb-explore-editDiscussion-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible': function(evt){
