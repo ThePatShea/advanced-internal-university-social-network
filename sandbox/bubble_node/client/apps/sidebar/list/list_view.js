@@ -1,42 +1,30 @@
 App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
-	List.View = Marionette.ItemView.extend({
-		template: 'sidebar/templates/sidebar',
 
-		events: {
-			'click #dashboard': 'dashboardClick',
-			'click #mybubbles': 'mybubblesClick',
-			'click #explore': 'exploreClick',
-			'click #search': 'searchClick',
-			'click #settings': 'settingsClick'
+	List.Nav = Marionette.ItemView.extend({
+		id: function() { return this.model.get('cssId'); },
+		template: "sidebar/templates/nav",
+		tagName: "li",
+		modelEvents: {
+			"change:chosen" : "changeChosen"
 		},
-
-		initialize: function(options){
-			this.vent = App.vent;
+		triggers: {
+			"click" : "nav:clicked"
 		},
-
-		dashboardClick: function(){
-			console.log('view: dashboardClick');
-			this.vent.trigger('sidebar:dashboardClick');
+		changeChosen: function(model, value, options){
+			this.$el.toggleClass("active", value)
 		},
+		templateHelpers: function(){
+			var icon = this.model.get("name").toLowerCase()
+			renderedIcon = App.getTemplate("sidebar/templates/icons/" + icon)
 
-		mybubblesClick: function(){
-			console.log('view: mybubblesClick');
-			this.vent.trigger('sidebar:mybubblesClick');
+			return { icon: renderedIcon }
 		},
+	})
 
-		exploreClick: function(){
-			console.log('view: exploreClick');
-			this.vent.trigger('sidebar:exploreClick');
-		},
-
-		searchClick: function(){
-			console.log('view: searchClick');
-			this.vent.trigger('sidebar:searchClick');
-		},
-
-		settingsClick: function(){
-			console.log('view: settingsClick');
-			this.vent.trigger('sidebar:settingsClick');
-		}
+	List.Navs = Marionette.CollectionView.extend({
+		tagName: "ul",
+		className: "sidebar-menu",
+		itemView: List.Nav
 	});
+
 });

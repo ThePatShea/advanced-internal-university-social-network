@@ -41,7 +41,11 @@
 	<script src="/app/app.js"></script>
 
 	<script src="/app/utilities/get_template.js"></script>
+	<script src="/app/utilities/navigate.js"></script>
 	<script src="/app/controllers/_base.js"></script>
+
+	<script src="/app/models/abstract/nav.js"></script>
+	<script src="/app/models/bubble.js"></script>
 
 	<script src="/app/apps/header/header_app.js"></script>
 	<script src="/app/apps/header/list/list_controller.js"></script>
@@ -51,17 +55,23 @@
 	<script src="/app/apps/sidebar/list/list_controller.js"></script>
 	<script src="/app/apps/sidebar/list/list_view.js"></script>
 
+	<script src="/app/apps/bubbles/bubbles_app.js"></script>
+	<script src="/app/apps/bubbles/list/list_controller.js"></script>
+	<script src="/app/apps/bubbles/list/list_view.js"></script>
 </head>
 
 <body>
 	
 	<header>
-		<div id="header_container" class="container">
-		</div>
+		<div id="header_container" class="container"></div>
 	</header>
 
-  <div id="sidebar_layout_container">
-  </div>
+	<div class="sidebar-container">
+		<div id="sidebar_container" class="side-bar"></div>
+    <div id="subpanel_container"></div>
+	</div>
+
+  <div id="main_region"></div>
 
 </body>
 </html>

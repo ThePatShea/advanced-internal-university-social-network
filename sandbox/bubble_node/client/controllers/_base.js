@@ -2,6 +2,7 @@ App.module("Controllers", function(Controllers, App, Backbone, Marionette, $, _)
   
   Controllers.Base = Marionette.Controller.extend({
     constructor: function(options) {
+      options = options || {};
       this.region = options.region || App.request('default:region');
       Marionette.Controller.prototype.constructor.call(this, options);
     },

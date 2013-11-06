@@ -10,17 +10,21 @@ window.App = (function(Backbone, Marionette, $, _){
 
 	App.addRegions({
 		headerRegion: '#header_container',
-		sidebarRegion: '#sidebar_layout_container',
+		sidebarRegion: '#sidebar_container',
 		mainRegion: '#main_region'
 	});
 
 	App.reqres.setHandler('default:region', function() {
-		App.mainRegion;
+		return App.mainRegion;
 	});
 
 	App.addInitializer(function() {
 		App.module("HeaderApp").start()
 		App.module("SidebarApp").start()
+	});
+
+	App.on("initialize:after", function(){
+		App.startHistory()
 	});
 
 	return App;
