@@ -45,6 +45,7 @@ Template.exploreEditEvent.rendered = function(){
   this.validateForm();
 
 	var event = this.data;
+  console.log("event: ",event);
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
 	var date = (currentDatetime.getMonth()+1)+"/"+currentDatetime.getDate()+"/"+currentDatetime.getFullYear();
@@ -56,16 +57,31 @@ Template.exploreEditEvent.rendered = function(){
 	$("eventRetinaPhoto").attr("src",this.eventRetinaPhoto);
   editEventMainURL = this.eventPhoto;
   editEventRetinaURL = this.eventRetinaPhoto;
-    if (time) {
-      var firstAlphabet  = parseInt(time[0]);
+  if (time) {
+    var firstAlphabet  = parseInt(time[0]);
 
-      if (time.length > 9 || (!firstAlphabet)){
-        $('.cb-explore-edit-event-form > .cb-form-row > .time').val("");
-      }else{
-        formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $('.cb-explore-edit-event-form > .cb-form-row > .time').val(formatedTime);
-      }
+    if (time.length > 9 || (!firstAlphabet)){
+      $('.cb-explore-edit-event-form > .cb-form-row > .time').val("");
+    }else{
+      formatedTime = moment(time,"h:mm a").format("h:mm a");
+      $('.cb-explore-edit-event-form > .cb-form-row > .time').val(formatedTime);
     }
+  }
+  if(event.postAsType == "user")
+  {
+    $("[name=post-as-id]").val(event.postAsId);
+    $("[name=post-as-type]").val("user");
+    $(".post-as-button.me").addClass("active-true");
+  }
+  else if(event.postAsType == "bubble")
+  {
+    $("[name=post-as-id").val(event.postAsId);
+    $("[name=post-as-type").val("bubble")
+    $(".post-as-button.bubble").addClass("active-true");
+    $(".selected-bubble-post-as").html($("[name="+event.postAsId+"] > .bubble-title").attr("name"));
+  }
+
+
 
 	$(".date-picker").glDatePicker(
     {
@@ -111,15 +127,17 @@ Template.exploreEditEvent.events({
       $(".post-as-bubble-dropdown").hide();
     }
   },
-  'click .btn-select-post-as-bubble': function(){
-    var postAsId = $(this).attr("name");
-    console.log("Post As Id: ", postAsId);
+  'click .btn-select-post-as-bubble': function(evt,tmpl){
+    //var postAsId = $(this).attr("title");
+    var postAsId = this._id;
+    console.log("(EDIT)Post As Id: ", this);
     $("[name=post-as-id]").val(postAsId);
     $("[name=post-as-type]").val("bubble");
 
 
 
-    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
     $(".selected-bubble-post-as").html(bubbleTitle);
 
     $(".post-as-button.bubble").removeClass("active-false");
@@ -129,8 +147,9 @@ Template.exploreEditEvent.events({
     $(".post-as-button.me").addClass("active-false");
 
     $(".post-as-bubble-dropdown").hide();
+    tmpl.validateForm();
   },
-  'click .post-as-button.me': function(){
+  'click .post-as-button.me': function(evt,tmpl){
     $("[name=post-as-id]").val( Meteor.userId() );
     $("[name=post-as-type]").val("user");
 
@@ -143,6 +162,7 @@ Template.exploreEditEvent.events({
     $(".post-as-button.me").addClass("active-true");
 
     $(".selected-bubble-post-as").html("Select a bubble");
+    tmpl.validateForm();
   },
   'click .cb-explore-edit-event-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();

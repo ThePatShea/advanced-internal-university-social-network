@@ -25,13 +25,6 @@ Template.exploreEventSubmit.created = function(){
 }
 
 
-Template.exploreEventSubmit.events({
-  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
-      tmpl.validateForm();
-  }
-});
-
-
 
 Template.exploreEventSubmit.helpers({
   getCurrentUserId: function() {
@@ -52,6 +45,10 @@ Template.exploreEventSubmit.helpers({
 
 
 Template.exploreEventSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
+      tmpl.validateForm();
+      console.log("validated");
+  },
   'click .post-as-button': function(event) {
     event.preventDefault();
   },
@@ -234,15 +231,18 @@ Template.exploreEventSubmit.events({
       $(".post-as-bubble-dropdown").hide();
     }
   },
-  'click .btn-select-post-as-bubble': function(){
-    var postAsId = $(this).attr("name");
+  'click .btn-select-post-as-bubble': function(evt,tmpl){
+    //tmpl.validateForm();
+    //var postAsId = $(this).attr("name");
+    var postAsId = this._id;
     console.log("Post As Id: ", postAsId);
     $("[name=post-as-id]").val(postAsId);
     $("[name=post-as-type]").val("bubble");
 
 
 
-    var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
     $(".selected-bubble-post-as").html(bubbleTitle);
 
     $(".post-as-button.bubble").removeClass("active-false");
@@ -252,8 +252,9 @@ Template.exploreEventSubmit.events({
     $(".post-as-button.me").addClass("active-false");
 
     $(".post-as-bubble-dropdown").hide();
+    tmpl.validateForm();
   },
-  'click .post-as-button.me': function(){
+  'click .post-as-button.me': function(evt, tmpl){
     $("[name=post-as-id]").val( Meteor.userId() );
     $("[name=post-as-type]").val("user");
 
@@ -266,6 +267,7 @@ Template.exploreEventSubmit.events({
     $(".post-as-button.me").addClass("active-true");
 
     $(".selected-bubble-post-as").html("Select a bubble");
+    tmpl.validateForm();
   }
 
 });

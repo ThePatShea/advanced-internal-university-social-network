@@ -36,62 +36,6 @@ Template.exploreDiscussionSubmit.rendered = function () {
     $(".post-as-bubble-dropdown").hide();
   });*/
 
-  $(".post-as-button.bubble").click(function() {
-    if($(".post-as-bubble-dropdown").css('display') == 'none')
-    {
-      $(".post-as-bubble-dropdown").show();
-    }
-    else
-    {
-      $(".post-as-bubble-dropdown").hide();
-    }
-  });
-
-
-  $(".btn-select-post-as-bubble").click(function() {
-    console.log("CLICKED!");
-    var postAsId = $(this).attr("name");
-    console.log("Post As Id: ", postAsId);
-    $("[name=post-as-id]").val(postAsId);
-    $("[name=post-as-type]").val("bubble");
-
-    var bubbleTitle = $(this).children(".bubble-title").attr("name");
-    $(".selected-bubble-post-as").html(bubbleTitle);
-
-    $(".post-as-button.bubble").removeClass("active-false");
-    $(".post-as-button.bubble").addClass("active-true");
-
-    $(".post-as-button.me").removeClass("active-true");
-    $(".post-as-button.me").addClass("active-false");
-
-    $(".post-as-bubble-dropdown").hide();
-    console.log("OVER!");
-  });
-
-
-  $(".post-as-button.me").click(function() {
-    $("[name=post-as-id]").val( Meteor.userId() );
-    $("[name=post-as-type]").val("user");
-
-
-
-    $(".post-as-button.bubble").removeClass("active-true");
-    $(".post-as-button.bubble").addClass("active-false");
-
-    $(".post-as-button.me").removeClass("active-false");
-    $(".post-as-button.me").addClass("active-true");
-
-    $(".selected-bubble-post-as").html("Select a bubble");
-  });
-
-
-
-
-
-
-
-
-
   this.validateForm();
 }
 
@@ -114,6 +58,51 @@ Template.exploreDiscussionSubmit.helpers({
 
 
 Template.exploreDiscussionSubmit.events({
+  'click .post-as-button.me': function(evt,tmpl) {
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+
+    tmpl.validateForm();
+  },
+  'click .post-as-button.bubble': function() {
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(evt,tmpl) {
+    //var postAsId = $(this).attr("name");
+    var postAsId = this._id;
+    console.log("Post As Id: ", postAsId);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+
+    tmpl.validateForm();
+  },
   'click .post-as-button': function(event) {
     event.preventDefault();
   },
