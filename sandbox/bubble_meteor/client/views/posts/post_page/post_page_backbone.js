@@ -297,7 +297,8 @@ Template.postPageBackbone.events({
       e.preventDefault();
       if (confirm("Delete this post?")) {
         var currentPostId = Session.get('currentPostId');
-        Posts.remove(currentPostId);
+        //Posts.remove(currentPostId);
+        Meteor.call("deletePost",currentPostId);
 
         //Logs the action that user is doing
         Meteor.clearTimeout(mto);

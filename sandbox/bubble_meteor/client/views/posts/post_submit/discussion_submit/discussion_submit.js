@@ -110,12 +110,13 @@ Template.discussionSubmit.events({
       makeDiscussionPost();
 
       //Show Post submitted confirmation message
-      var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+      var postTitle = $('.cb-discussionSubmit-form').find('[name=name]').val();
       var displayPostConfirmationMessage = function(postTitle){
         return function(){
           //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
           var message = postTitle.slice(0, 7);
           var message = message + ' ...';
+          $('.info').removeClass('visible-false');
           $('.message-container .info').text(message);
           $('.message-container').removeClass('visible-false');
           $('.message-container').addClass('message-container-active');
