@@ -34,7 +34,8 @@ Template.explorePostPageBB.helpers({
     if (this.postAsType === 'bubble') {
       var bubble = Session.get('currentExplorePostBubble');
       if (bubble)
-        return bubble.get('title');
+        //return bubble.get('title');
+      return bubble.title;
       else
         return this.author;
     }
