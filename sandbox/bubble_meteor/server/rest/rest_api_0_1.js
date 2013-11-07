@@ -21,6 +21,20 @@ function parseBubbleUserOpts(ctx) {
   return opts;
 }
 
+function excludeFields(parser, fields) {
+	return function(ctx) {
+		var opts = parseApiOptions(ctx);
+
+		for (var n in fields) {
+			var f = fields[n];
+
+			opts.fields[f] = false;
+		}
+
+		return opts;
+	};
+}
+
 function getFileApiOptions(ctx) {
 	return {
 		fields: RestHelpers.getFieldList('name,type,userId,size,url')
