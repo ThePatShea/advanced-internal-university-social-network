@@ -19,7 +19,7 @@ this.RestQuery = {
       if (ctx.parentDoc.exploreType === 'discussion') {
         opts.sort = {submitted: -1};
       } else {
-        opts.sort = {dateTime: -1};
+        opts.sort = {dateTime: 1};
       }
 
       return opts;
