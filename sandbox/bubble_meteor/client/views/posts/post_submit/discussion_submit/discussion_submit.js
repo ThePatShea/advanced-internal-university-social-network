@@ -128,7 +128,7 @@ Template.discussionSubmit.events({
         }        
       }
       console.log('Post Title: ', postTitle);
-      setTimeout(displayPostConfirmationMessage(postTitle), 1000);
+      setTimeout(displayPostConfirmationMessage(postTitle), 2000);
 
   },
 
