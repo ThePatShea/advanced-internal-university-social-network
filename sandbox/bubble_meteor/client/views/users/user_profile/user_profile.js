@@ -12,11 +12,19 @@ Template.userProfile.helpers({
   	},
 
 	getBubblesAdminList: function() {
-		return Bubbles.find({'users.admins':this._id});
+		var adminBubbles = Bubbles.find({'users.admins':this._id}).fetch();
+		_.each(adminBubbles, function(bubble){
+			bubble.id = bubble._id;
+		});
+		return adminBubbles;
 	},
 
 	getBubblesMemberList: function() {
-		return Bubbles.find({'users.members':this._id});
+		var memberBubbles = Bubbles.find({'users.members':this._id}).fetch();
+		_.each(memberBubbles, function(bubble){
+			bubble.id = bubble._id;
+		});
+		return memberBubbles;
 	},
 
 	getBubbleAdminsCount: function() {
@@ -90,9 +98,6 @@ Template.userProfile.rendered = function() {
 	}
 
 	$(document).attr('title', 'Settings - Emory Bubble');
-
-    //This line NEEDS to be removed later!!!!!!!!!!!
-	goingDep = new Deps.Dependency;
 };
 
 Template.userProfile.events({

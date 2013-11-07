@@ -82,18 +82,31 @@ Template.explorePostPageBB.events({
     }
   },
   'click .btn-delete': function(e) {
-    // Google Analytics
-    _gaq.push(['_trackEvent', 'Post', 'Delete Discussion', this.name]);
+    //Google Analytics
+      _gaq.push(['_trackEvent', 'Post', 'Delete Discussion', this.name]);
 
     e.preventDefault();
-    if (confirm("Delete this post?")) {
+    if (confirm("Are you sure you want to delete this post?")) {
       var currentPostId = Session.get('currentPostId');
-
-      // TODO: Use REST
-      Posts.remove(currentPostId);
-      Meteor.Router.to('explorePage',Session.get('currentExploreId'));
+      Posts.remove(currentPostId, function(){
+        var displayPostConfirmationMessage = function(){
+          return function(){
+            $('.job-type').text("This post will be deleted shortly!");
+            $('.message-container').removeClass('visible-false');
+            $('.message-container').addClass('message-container-active');
+            setTimeout(function(){
+              $('.message-container').removeClass('message-container-active');
+              $('.message-container').addClass('visible-false');
+              clearTimeout();
+            },10000);
+          }        
+        }
+        setTimeout(displayPostConfirmationMessage(), 1000);
+        //window.location.href = "/explore/"+Session.get('currentExploreId')+"/home";
+        Meteor.Router.to("/explore/"+Session.get('currentExploreId')+"/home");
+      });
     }
-  },
+  }
 });
 
 

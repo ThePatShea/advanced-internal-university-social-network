@@ -170,7 +170,7 @@ Template.updatesDropdown.helpers({
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
       }); 
-      return _.toArray(_.groupBy(updateList,'bubbleId'));
+      return _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
     }
   },
   compressedCount: function(){
@@ -318,6 +318,7 @@ Template.updatesDropdown.helpers({
 
 Template.updatesDropdown.events({
   'click #seeall': function() {
+    setTimeout(function(){Session.set('updatesToShow',0);},1000);
     Meteor.Router.to('dashboard');
   },
   'click #clearall': function() {

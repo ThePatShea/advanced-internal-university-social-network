@@ -69,7 +69,7 @@
             <img class="pic-circle author-circle" src="{{getAuthorProfilePicture}}"/>
           </div>
         </a>
-        <div class="name">{{decodeURI name}}</div>
+        <div class="name">{{decodeURIComponent name}}</div>
         <div class="subtitle">posted {{timestampToFromNow submitted}} by {{author}}</div>
       </div>
 

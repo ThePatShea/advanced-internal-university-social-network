@@ -357,6 +357,21 @@ Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
     }
 });
 
+Meteor.Router.add('/2013-09-11/userBubbles/:id', 'GET', function(id){
+    console.log("USERBUBBLES: ", id);
+    var retVal = Bubbles.find({
+        $or: [{'users.members': id}, {'users.admins': id}]},
+        {sort: {'submitted': -1}, fields: {category: 1, title: 1}
+    }).fetch();
+    return JSON.stringify(retVal);
+});
+
+Meteor.Router.add('/2013-09-11/allExplores/:id', 'GET', function(id){
+    console.log("All Explores", id);
+    var retVal = Explores.find({}, {sort: {'submitted': 1}}).fetch();
+    return JSON.stringify(retVal);
+});
+
 
 Meteor.Router.add('/2013-09-11/bubbles/:id', 'GET', function(id){
     if(id.indexOf('&') != -1){
@@ -1110,7 +1125,7 @@ function getBubbleDiscussions(limit, offset, fields, bubbleId){
         pages = pages + 1;
     }
     if(fields.length == 0){
-        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}).fetch();
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'},{sort: {submitted: -1}}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
@@ -1123,7 +1138,7 @@ function getBubbleDiscussions(limit, offset, fields, bubbleId){
         }
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
-        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}, {fields: JSON.parse(fieldString)}).fetch();
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}, {sort: {submitted: -1},fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};

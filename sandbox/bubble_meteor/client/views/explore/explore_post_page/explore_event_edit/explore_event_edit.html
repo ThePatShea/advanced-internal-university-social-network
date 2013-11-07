@@ -1,59 +1,51 @@
 <template name="exploreEditEvent">
-<div class="cb-form-container" id="cb-form-container-edit-event" style="margin-bottom: 20px;">
+  <div class="cb-form-container" id="cb-form-container-edit-event" style="margin-bottom: 20px;">
     <div class="top-arrow-container">
     	<div class="top-arrow">{{> icon-arrow-up}}</div>
     </div>
     <form class="cb-form cb-explore-edit-event-form">
-
-
-
-    {{#if getAdminBubbles}}
-      <input class="required post-as-type" type="hidden" name="post-as-type" value="postAsType"/>
-      <input class="required post-as-id" type="hidden" name="post-as-id" value="postAsId"/>
-    {{else}}
-      <input class="required post-as-type" type="hidden" name="post-as-type" value="user"/>
-      <input class="required post-as-id" type="hidden" name="post-as-id" value="{{getCurrentUserId}}"/>
-    {{/if}}
-
-
-
-    {{#if getAdminBubbles}}
-      <div class="post-as-container first">
-        <label class="no-typing post-as-label">post as</label>
-        <div class="post-as-buttons-container">
-          <button class="active-false post-as-button me">
-            <div class="check-circle">
-              <span class="cb-icon check">{{> icon-check}}</span>
-              <span class="cb-icon x">{{> icon-x}}</span>
-            </div>
-            <div class="lbl-as">me</div>
-          </button>
-          <button class="active-false post-as-button bubble">
-            <div class="check-circle">
-              <span class="cb-icon check">{{> icon-check}}</span>
-              <span class="cb-icon x">{{> icon-x}}</span>
-            </div>
-            <div class="lbl-as selected-bubble-post-as">Select a bubble</div>
-            <div class="arrow-down">{{> icon-arrow-down}}</div>
-
-            <div class="independent-dropdown post-as-bubble-dropdown">
-              <div class="arrow-up">{{> icon-arrow-up}}</div>
-              <div class="dropdown-buttons-container">
-                {{#each getAdminBubbles}}
-                  <div class="dropdown-button btn-select-post-as-bubble" name="{{_id}}">
-                    <input type="hidden" class="bubble-title" name="{{title}}"/>
-                    {{title}}
-                  </div>
-                {{/each}}
+      {{#if getAdminBubbles}}
+        <input class="required post-as-type" type="hidden" name="post-as-type" value="postAsType"/>
+        <input class="required post-as-id" type="hidden" name="post-as-id" value="postAsId"/>
+      {{else}}
+        <input class="required post-as-type" type="hidden" name="post-as-type" value="user"/>
+        <input class="required post-as-id" type="hidden" name="post-as-id" value="{{getCurrentUserId}}"/>
+      {{/if}}
+      {{#if getAdminBubbles}}
+        <div class="post-as-container first">
+          <label class="no-typing post-as-label">post as</label>
+          <div class="post-as-buttons-container">
+            <button class="active-false post-as-button me">
+              <div class="check-circle">
+                <span class="cb-icon check">{{> icon-check}}</span>
+                <span class="cb-icon x">{{> icon-x}}</span>
+              </div>
+              <div class="lbl-as">me</div>
+            </button>
+            <button class="active-false post-as-button bubble">
+              <div class="check-circle">
+                <span class="cb-icon check">{{> icon-check}}</span>
+                <span class="cb-icon x">{{> icon-x}}</span>
+              </div>
+              <div class="lbl-as selected-bubble-post-as">Select a bubble</div>
+              <div class="arrow-down">{{> icon-arrow-down}}</div>
+            </button>
+            <div><!--THIS IS FOR FF COMPATABILITY!  CANNOT HAVE INTERACTIVE BLOCK ELEMENTS INSIDE A BUTTON.  APPARENTLY. -->
+              <div class="independent-dropdown post-as-bubble-dropdown">
+                <div class="arrow-up">{{> icon-arrow-up}}</div>
+                <div class="dropdown-buttons-container">
+                  {{#each getAdminBubbles}}
+                    <div class="dropdown-button btn-select-post-as-bubble" name="{{_id}}">
+                      <input type="hidden" class="bubble-title" name="{{title}}"/>
+                      {{title}}
+                    </div>
+                  {{/each}}
+                </div>
               </div>
             </div>
-          </button>
+          </div>
         </div>
-      </div>
-    {{/if}}
-
-
-
+      {{/if}}
 
       <div class="cb-form-row first">
         <input class="required half-width column-one title" name="name" type="text" value="" placeholder="Event title*"/> 
@@ -72,7 +64,7 @@
         <div id="event_drop_zone" class="drop-zone">
           <div class="dz-title">drag and drop</div>
           <div class="dz-subtitle">or click here</div>
-          <input class="file-chooser-invisible" name="filesToUpload[]" id="eventFilesToUpload" type="file" multiple="">
+          <input class="file-chooser-invisible" name="filesToUpload[]" id="eventFilesToUpload2" type="file" multiple="">
         </div>
         <div class="edit-crop-container" style="text-align: center;">
           <img class="crop"></img>
@@ -81,8 +73,8 @@
       <input class="required search-text full-width body" name="body" type="text" placeholder="Details" />
       <div class="cb-submit-container">
         <button type="submit" class="pull-right std-btn-form cb-submit">
-                  <span class="words-main">submit</span>
-                  <span class="words-error">please fill in all fields before submitting</span>
+          <span class="words-main">submit</span>
+          <span class="words-error">please fill in all fields before submitting</span>
         </button>
       </div>
     </form>

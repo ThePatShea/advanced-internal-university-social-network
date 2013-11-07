@@ -87,14 +87,12 @@
     		<div class="dashboard-section-header">
     			{{pluralize testNumUpdates 'update' ""}}
           		<button class="std-btn-light pull-right clear-updates">clear all</button> 
+          		<button class="std-btn-light pull-right dashboard-more-updates">see all updates</button>
           	</div>
           	<div class="dashboard-updates">
     			{{#each testGetUpdates}}
     				{{>updateItem}}
     			{{/each}}
-	    		<div class="dashboard-more-updates">
-	    			See All Updates
-	    		</div>
     		</div>
     	</div>
 

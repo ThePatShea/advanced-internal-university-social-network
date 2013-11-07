@@ -346,6 +346,7 @@ Template.bubbleEdit.events({
 
 
 Template.bubbleEdit.created = function(){
+  Meteor.subscribe('singleBubble', Session.get('currentBubbleId'));
   mto = "";
   discussionFiles = [];
   discussionDeletedFileIndices = [];
@@ -412,7 +413,7 @@ Template.bubbleEdit.rendered = function(){
   });*/
 
   var currentBubbleId = Session.get('currentBubbleId');
-  var currentbubble = Bubbles.findOne({_id: currentBubbleId});
+  var currentbubble = Bubbles.findOne({_id: currentBubbleId}, function(){console.log("THIS CALLBACK: ", this)});
   /*
   $("#coverfilesToUpload").hide();
   $("#profilefilesToUpload").hide();
@@ -498,6 +499,11 @@ Template.bubbleEdit.rendered = function(){
     $(".categoryBox").removeClass("active");
     $(this).addClass("active");
   });
+
+  if($('.cb-form > .wysiwyg_group > .wysiwyg').html() !== "undefined")
+  {
+    $('.cb-form > .wysiwyg_group > .wysiwyg').html(currentbubble.description);
+  }
 
   //Log clicking of title textbox
   /*$(".required").on("click", function() {

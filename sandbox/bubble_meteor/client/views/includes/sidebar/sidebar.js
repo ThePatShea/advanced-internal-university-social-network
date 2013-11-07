@@ -58,13 +58,25 @@ Template.sidebar.helpers({
       return Session.get('currentBubbleId') == this._id;
     }
   , userBubbles            : function() {
-      return Bubbles.find({
+      /*return Bubbles.find({
         $or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},
         {sort: {'users.members': -1, 'users.admins': -1, 'submitted': -1}, fields: {category: 1, title: 1}
+      });*/
+      var jqXHR = $.ajax({
+        url: "/2013-09-11/userBubbles/"+Meteor.userId(),
+        async: false
       });
+      console.log("jqXHR Object: ", jqXHR);
+      return JSON.parse(jqXHR.responseText);
     }
   , publicExplores         : function() {
-      return Explores.find({}, {sort: {'submitted': 1}});
+      /*return Explores.find({}, {sort: {'submitted': 1}});*/
+      var jqXHR = $.ajax({
+        url: "/2013-09-11/allExplores/"+Meteor.userId(),
+        async: false
+      });
+      console.log("jqXHR Object: ", jqXHR);
+      return JSON.parse(jqXHR.responseText);
   }
   , selectedExploreSubsection : function(exploreId){
       var currentExploreId = Session.get('currentExploreId');
