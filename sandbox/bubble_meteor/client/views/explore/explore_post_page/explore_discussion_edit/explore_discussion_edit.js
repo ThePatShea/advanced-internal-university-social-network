@@ -65,21 +65,75 @@ Template.exploreDiscussionEdit.rendered = function () {
       $(this).parent().remove();
     });
   }
+  if(this.data.postAsType == "user")
+  {
+    $("[name=post-as-id]").val(this.data.postAsId);
+    $("[name=post-as-type]").val("user");
+    $(".post-as-button.me").addClass("active-true");
+  }
+  else if(this.data.postAsType == "bubble")
+  {
+    $("[name=post-as-id").val(this.data.postAsId);
+    $("[name=post-as-type").val("bubble")
+    $(".post-as-button.bubble").addClass("active-true");
+    $(".selected-bubble-post-as").html($("[name="+this.data.postAsId+"] > .bubble-title").attr("name"));
+  }
 }
 
 
 
 Template.exploreDiscussionEdit.events({
+  'click .post-as-button.me': function(evt,tmpl) {
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+
+    tmpl.validateForm();
+  },
+  'click .post-as-button.bubble': function() {
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(evt,tmpl) {
+    //var postAsId = $(this).attr("name");
+    var postAsId = this._id;
+    console.log("Post As Id: ", postAsId);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+
+    tmpl.validateForm();
+  },
   'click .post-as-button': function(event) {
     event.preventDefault();
   },
   'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
     tmpl.validateForm();
-  }
-});
-
-
-Template.exploreDiscussionEdit.events({
+  },
   'click .cb-explore-editDiscussion-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -87,6 +141,20 @@ Template.exploreDiscussionEdit.events({
     _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
     updateDiscussionPost();
+
+    var displayPostConfirmationMessage = function(){
+      return function(){
+        $('.job-type').text("These edits will be applied shortly!");
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('message-container-active');
+        setTimeout(function(){
+          $('.message-container').removeClass('message-container-active');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },10000);
+      }        
+    }
+    setTimeout(displayPostConfirmationMessage(), 1000);
   },
 
   'change .cb-explore-editDiscussion-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible': function(evt){

@@ -86,14 +86,16 @@ createPostUpdate = function(post) {
         url: '/mybubbles/'+bubble._id+'/posts/'+post._id,
         content: post.author + " created a new " + post.postType + " in " + bubble.title
       });
-      //Create mobile update
-      if (Meteor.users.findOne(userId).deviceToken){
+      //Create mobile update - COMMENTED OUT FOR NOW
+      /*
+      if (typeof Meteor.users.findOne(userId).deviceToken != "undefined"){
         Meteor.call(
           'getUA',
           post.author + " created a new " + post.postType + " in " + bubble.title,
           Meteor.users.findOne(userId).deviceToken
         );
       }
+      */
     });
   }
 }

@@ -132,7 +132,7 @@ Template.listItemBB.events({
         Meteor.Router.to('userProfile', this.id);
       }
       else if(typeof this.category != 'undefined'){
-        Meteor.Router.to('bubblePage', this.id);
+        Meteor.Router.to('bubblePageBackbone', this.id);
       }
       else{
         Meteor.Router.to('404NotFoundPage');

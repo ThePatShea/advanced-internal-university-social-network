@@ -1,4 +1,15 @@
 Template.exploreCover.helpers({
+  onExploreHome: function(){
+    if(window.location.pathname.split("/")[3] == 'home')
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  },
+
   getExploreIcon: function(exploreObject){
     if (!exploreObject)
       return;

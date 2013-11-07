@@ -1,13 +1,3 @@
-Template.imGoing.created = function(){
-}
-
-Template.imGoing.rendered = function(){
-}
-
-Template.imGoing.destroyed = function(){
-  //delete goingDep;
-}
-
 Template.imGoing.helpers({
   mainWords : function() {
     console.log(">im-going", this);
