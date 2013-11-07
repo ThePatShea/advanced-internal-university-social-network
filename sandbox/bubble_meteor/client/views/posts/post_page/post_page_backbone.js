@@ -301,7 +301,7 @@ Template.postPageBackbone.events({
         Meteor.call("deletePost",currentPostId);
 
         //Logs the action that user is doing
-        Meteor.clearTimeout(mto);
+        //Meteor.clearTimeout(mto);
         /*mto = Meteor.setTimeout(function() {
           Meteor.call('createLog', 
             { action: 'click-postDeleteBtn',
@@ -310,6 +310,27 @@ Template.postPageBackbone.events({
             function(error) { if(error) { throwError(error.reason); }
           });
         }, 500);*/
+
+      var postTitle = $('.post-heading > .name').text();
+      var displayPostConfirmationMessage = function(postTitle){
+        return function(){
+          //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+          var message = postTitle.slice(0, 7);
+          var message = message + ' ...';
+          $('.info').removeClass('visible-false');
+          $('.info').text(message);
+          $('.job-type').text("deleting");
+          $('.message-container').removeClass('visible-false');
+          $('.message-container').addClass('message-container-active');
+          setTimeout(function(){
+            $('.message-container').removeClass('message-container-active');
+            $('.message-container').addClass('visible-false');
+            clearTimeout();
+          },5000);
+        }        
+      }
+      console.log('Post Title: ', postTitle);
+      setTimeout(displayPostConfirmationMessage(postTitle), 2000);
 
         Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
       }

@@ -35,6 +35,7 @@ Template.fileSubmit.events({
         //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
         var message = postTitle.slice(0, 7);
         var message = message + ' ...';
+        $('.info').removeClass('visible-false');
         $('.message-container .info').text(message);
         $('.message-container').removeClass('visible-false');
         $('.message-container').addClass('message-container-active');
@@ -46,7 +47,7 @@ Template.fileSubmit.events({
       }        
     }
     console.log('Post Title: ', postTitle);
-    setTimeout(displayPostConfirmationMessage('File'), 1000);
+    setTimeout(displayPostConfirmationMessage('File'), 2000);
   },
 
   'dragover .cb-fileSubmit-form > .attach-files > .drop-zone': function(evt){

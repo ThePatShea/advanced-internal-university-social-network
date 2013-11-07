@@ -50,12 +50,12 @@ Template.eventSubmit.events({
     createPost(eventAttributes);
 
     //Show Post submitted confirmation message
-    var postTitle = encodeURIComponent($('.cb-eventSubmit-form > .first > .event-name').val());
+    var postTitle = $('.cb-eventSubmit-form > .first > .event-name').val();
     var displayPostConfirmationMessage = function(postTitle){
       return function(){
-        //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
         var message = postTitle.slice(0, 7);
         var message = message + ' ...';
+        $('.info').removeClass('visible-false');
         $('.message-container .info').text(message);
         $('.message-container').removeClass('visible-false');
         $('.message-container').addClass('message-container-active');
@@ -67,9 +67,7 @@ Template.eventSubmit.events({
       }        
     }
     console.log('Post Title: ', postTitle);
-    setTimeout(displayPostConfirmationMessage(postTitle), 1000);
-
-    $('#form-loader').show();
+    setTimeout(displayPostConfirmationMessage(postTitle), 2000);
   },
 
   'dragover .cb-eventSubmit-form .attach-files > .drop-zone': function(evt){
