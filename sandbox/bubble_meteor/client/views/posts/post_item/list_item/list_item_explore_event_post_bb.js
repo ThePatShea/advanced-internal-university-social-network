@@ -33,7 +33,10 @@ Template.listItemExploreEventPostBB.helpers({
       } else if (this.postAsType == "bubble") {
         //var bubble = Bubbles.findOne(this.postAsId);
         //var bubble = new BBBubble({id: this.postAsId});
-        return this.bubble.title;
+        if (this.bubble)
+          return this.bubble.title;
+
+        return '';
       }
     },
     isGoing : function() {

@@ -196,8 +196,8 @@
 			success: function() {
 				that.explorePost.fetch({
 					success: function(post) {
-						if (post.postAsType === 'bubble') {
-							that.exploreBubble = new BubbleModels.Bubble({id: post.postAsId});
+						if (post.get('postAsType') === 'bubble') {
+							that.exploreBubble = new BubbleModels.Bubble({id: post.get('postAsId')});
 							that.exploreBubble.fetch({
 								success: function() {
 									if (callback)
