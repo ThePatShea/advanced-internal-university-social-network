@@ -50,6 +50,7 @@ def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name, secure_flag,
 	
 	new_ami_id = ec2.create_image(instance.id, new_ami_name)
 	print (_yellow("New AMI created: %s" % new_ami_id))
+	time.sleep(20)
 
 	images = ec2.get_all_images(image_ids=[new_ami_id])
 	new_image = images[0]
@@ -96,6 +97,7 @@ def create_bundle_test_image(blank_ami_id, path_to_bundle, new_ami_name, secure_
 	
 	new_ami_id = ec2.create_image(instance.id, new_ami_name)
 	print (_yellow("New AMI created: %s" % new_ami_id))
+	time.sleep(20)
 
 	images = ec2.get_all_images(image_ids=[new_ami_id])
 	new_image = images[0]
