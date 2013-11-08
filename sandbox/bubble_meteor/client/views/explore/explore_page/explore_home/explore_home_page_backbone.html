@@ -4,15 +4,12 @@
       {{> gifLoaderToParent}}
     </div>
 
-    {{#with exploreInfo}}
-      {{> exploreCover}}
-    {{/with}}
+    {{#if exploreInfo}}
+      {{#with exploreInfo}}
+        {{> exploreCover}}
+      {{/with}}
+    {{/if}}
     <div class="explore-page-content">
-
-      <div class="visible-0">
-        {{getExploreId}}
-      </div>
-  
       <div class="bubble-list">
         <div></div>
         {{#each posts}}
@@ -43,8 +40,5 @@
           <li><a href="#" class="next">next</a></li>
         </ul>
       {{/if}}
-
-
-
     </div>
 </template>

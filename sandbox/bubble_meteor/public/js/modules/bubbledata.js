@@ -1,6 +1,6 @@
 (function(){
 	BubbleData = {};
-	
+
 	/******************* REMOVE *****************/
 	var ExplorePost = Backbone.Model.extend({
 		url: function(){
@@ -472,14 +472,14 @@
 		}
 	});
 
-	var MyBubbles = function(properties){
+	var MyBubbles = function(properties) {
 		var that = this;
 		this.bubbleId = properties.bubbleId;
 
 		this.BubblePost = BubblePost;
 		this.BubbleUser = BubbleUser;
 		//properties.callback();
-		
+
 		//this.bubblePosts = new BubblePosts();
 		//this.bubbleDiscussions = new BubbleDiscussions();
 		//this.bubbleFiles = new BubbleFiles();
@@ -660,7 +660,7 @@
 
 		var Invitees = function() {
 			var that = this;
-			
+
 			this.bubbleInvitees = new BubbleInvitees();
 			this.bubbleInvitees.bubbleId = properties.bubbleId;
 			this.bubbleInvitees.limit = properties.invitees.limit;

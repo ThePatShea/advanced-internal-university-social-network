@@ -1,3 +1,4 @@
+
 Template.exploreEventSubmit.created = function(){
   eventMainURL = "/img/Event.jpg";
   eventRetinaURL = "/img/Event.jpg";
@@ -33,12 +34,12 @@ Template.exploreEventSubmit.helpers({
   getAdminBubbles: function() {
     adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
     adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
-   
+
     if (adminBubblesCount > 0) {
       return adminBubbles;
     } else {
       return false;
-    } 
+    }
   }
 });
 
@@ -60,7 +61,7 @@ Template.exploreEventSubmit.events({
     var dateTime = $('.cb-explore-eventSubmit-form > .cb-form-row > .date').val() + " " + $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val();
     //console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
-    var eventAttributes = { 
+    var eventAttributes = {
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: encodeURIComponent($('.cb-explore-eventSubmit-form > .first > .event-name').val()),

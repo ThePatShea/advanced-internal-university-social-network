@@ -13,11 +13,11 @@ Template.eventEdit.events({
     e.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Edit Event', this.name]);
-    
+
     var currentPostId = Session.get('currentPostId');
     var currentBubbleId = Session.get('currentBubbleId');
-    
-    
+
+
     var postProperties = {
       name: $(e.target).find('[name=name]').val(),
       body: $(e.target).find('[name=body]').val(),
@@ -33,7 +33,7 @@ Template.eventEdit.events({
       postProperties.dateTime = dateTime;
     }
 
-    
+
     Posts.update(currentPostId, {$set: postProperties}, function(error) {
       if (error) {
         // display the error to the user
@@ -217,7 +217,7 @@ Template.eventEdit.events({
 
   },
 
-  
+
   'click #delete_post': function(e) {
     e.preventDefault();
     //Google Analytics

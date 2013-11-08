@@ -96,7 +96,7 @@ Template.editEvent.events({
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
 
-    var eventAttributes = { 
+    var eventAttributes = {
       dateTime: moment(dateTime).valueOf(),
       location: $(event.target).find('[name=location]').val(),
       name: encodeURIComponent($(event.target).find('[name=name]').val()),
@@ -109,7 +109,7 @@ Template.editEvent.events({
       eventAttributes.retinaEventPhoto = eventRetinaURL;
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
-    
+
     var currentPostId = Session.get('currentPostId');
     var currentBubbleId = Session.get('currentBubbleId');
 

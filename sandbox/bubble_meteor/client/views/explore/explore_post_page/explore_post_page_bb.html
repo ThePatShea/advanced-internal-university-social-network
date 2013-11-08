@@ -1,12 +1,15 @@
 <template name="explorePostPageBB">
-  {{#with currentExplore}}
-    {{> exploreCover}}
-  {{/with}}
+  <div id="explore-post-page">
+  {{#if currentExplore}}
+    {{#with currentExplore}}
+      {{> exploreCover}}
+    {{/with}}
+  {{/if}}
   {{#if getCurrentPost}}
     {{#with getCurrentPost}}
       <div class="bubble-page-content post-page">
         <div class="top-btns">
-          <a href="/explore/{{currentExplore._id}}/home">
+          <a href="/explore/{{currentExplore.id}}/home">
             <button class="pull-left std-btn-light with-left-icon btn-back">
               <span class="left-icon">{{> icon-back}}</span>
               <span>back</span>
@@ -74,7 +77,7 @@
             </div>
           </a>
         {{/if}}
-          <div class="name">{{decodeURI name}}</div>
+          <div class="name">{{decodeURIComponent name}}</div>
           <div class="subtitle">
             posted {{timestampToFromNow submitted}} by {{displayName}}
             {{#if postedAsBubble}}
@@ -82,12 +85,11 @@
             {{/if}}
           </div>
         </div>
-        
+
         {{> postAttributes}}
         {{> commentsList}}
 
         {{#if isEvent}}
-          
           </br>
           {{#if notAttending}}
             <button class="btn btn-small btn-success attending" type="button">I'M GOING</button>
@@ -102,4 +104,5 @@
       </div>
     {{/with}}
   {{/if}}
+  </div>
 </template>

@@ -195,6 +195,10 @@ this.RestHelpers = {
     if (apiOptions) {
       var options = {};
 
+      if (apiOptions.sort) {
+        options.sort = apiOptions.sort;
+      }
+
       options.limit = apiOptions.limit || DEFAULT_LIMIT;
 
       if (options.limit > MAX_LIMIT) {
@@ -272,7 +276,7 @@ this.RestHelpers = {
       query = {_id: query};
 
     rawCollection.findOne(query, this.bindFuture(future));
-    var obj = future.wait()
+    var obj = future.wait();
 
     // MongoDB does not support field filtering with findOne
     if (fields) {
@@ -341,6 +345,9 @@ this.RestHelpers = {
   jsonResponse: function(code, payload, headers) {
     headers = headers || {};
     headers['Content-Type'] = 'application/json';
+    headers['Pragma'] = 'no-cache';
+    headers['Expires'] = '0';
+    headers['Cache-Conrol'] = 'no-cache, no-store, must-revalidate';
     return [code, headers, JSON.stringify(payload)];
   },
 

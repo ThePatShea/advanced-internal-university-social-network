@@ -147,7 +147,7 @@ this.RestCrud = {
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
 
-		var result = RestHelpers.mongoUpdate(collection, id, obj)
+		var result = RestHelpers.mongoUpdate(collection, id, obj);
 
 		if (result) {
 			if (opts.afterUpdate)

@@ -8,6 +8,33 @@ function parseApiOptions(ctx) {
 	};
 }
 
+function parseBubbleUserOpts(ctx) {
+	var opts = parseApiOptions(ctx);
+	opts.fields = {
+		createdAt: true,
+		emails: true,
+		name: true,
+		userType: true,
+		username: true
+  };
+
+  return opts;
+}
+
+function excludeFields(parser, fields) {
+	return function(ctx) {
+		var opts = parseApiOptions(ctx);
+
+		for (var n in fields) {
+			var f = fields[n];
+
+			opts.fields[f] = false;
+		}
+
+		return opts;
+	};
+}
+
 function getFileApiOptions(ctx) {
 	return {
 		fields: RestHelpers.getFieldList('name,type,userId,size,url')
@@ -21,7 +48,8 @@ Meteor.startup(function() {
 		query: {
 			name: 'posts',
 			apiOpts: parseApiOptions,
-			query: RestSecurity.filterBubblePosts
+			// TODO: Fix me, should not allow reading posts from bubbles and explores
+			//query: RestSecurity.filterBubblePosts
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
@@ -62,7 +90,8 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Explores, Posts, 'exploreId', {
 		query: {
 			name: 'posts',
-			apiOpts: parseApiOptions
+			apiOpts: RestQuery.explorePostsOrder(parseApiOptions),
+			query: RestQuery.explorePostsFilter
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
@@ -189,6 +218,90 @@ Meteor.startup(function() {
 		},
 		remove: {
 			check: RestSecurity.makeBubblePostCheck('file')
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/members', Meteor.users, {
+		query: {
+			name: 'members',
+			apiOpts: parseBubbleUserOpts,
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('members')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/admins', Meteor.users, {
+		query: {
+			name: 'admins',
+			apiOpts: parseBubbleUserOpts,
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('admins')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/applicants', Meteor.users, {
+		query: {
+			name: 'applicants',
+			apiOpts: parseBubbleUserOpts,
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('applicants')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
+	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/invitees', Meteor.users, {
+		query: {
+			name: 'invitees',
+			apiOpts: parseBubbleUserOpts,
+			check: RestSecurity.relatedBubbleExists,
+			query: RestQuery.buildBubbleUserQuery('invitees')
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
 		}
 	});
 
