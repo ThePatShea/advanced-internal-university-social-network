@@ -79,9 +79,9 @@
         {{/if}}
           <div class="name">{{decodeURIComponent name}}</div>
           <div class="subtitle">
-            posted {{timestampToFromNow submitted}} by {{displayName}}
+            posted {{timestampToFromNow submitted}} by <b>{{displayName}}</b>
             {{#if postedAsBubble}}
-              on behalf of {{bubbleName}}
+              on behalf of <b>{{bubbleName}}</b>
             {{/if}}
           </div>
         </div>
