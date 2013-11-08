@@ -19,6 +19,33 @@ server {
         access_log  /var/log/nginx/microcache.log;
     }
 
+    location /2013-09-11 {
+        proxy_pass http://localhost:3000;
+        proxy_cache microcache;
+        proxy_cache_key "$request_uri";
+        proxy_cache_valid 1s;
+
+        access_log  /var/log/nginx/microcache.log;
+    }
+
+    location /api/v1_0/explores {
+        proxy_pass http://localhost:3000;
+        proxy_cache microcache;
+        proxy_cache_key "$request_uri";
+        proxy_cache_valid 300s;
+
+        access_log  /var/log/nginx/microcache.log;
+    }
+
+    location /api/v1_0 {
+        proxy_pass http://localhost:3000;
+        proxy_cache microcache;
+        proxy_cache_key "$request_uri";
+        proxy_cache_valid 1s;
+
+        access_log  /var/log/nginx/microcache.log;
+    }
+
     location / {
         proxy_pass http://localhost:3000;
     }
