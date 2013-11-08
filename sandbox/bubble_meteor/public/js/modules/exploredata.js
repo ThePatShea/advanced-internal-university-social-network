@@ -54,7 +54,7 @@
 			return '/api/v1_0/explores/' + this.exploreId + '/posts?limit=' + this.limit + '&page=' + this.page + '&fields=' + fieldString;
 		},
     parse: function(response) {
-      return _.filter(BubbleModels.parsePagedData(this, response), function(v) {
+      return _.filter(BubbleModels.parsePagedData(this, response, 'posts'), function(v) {
         return v.postType !== 'file';
       });
     }

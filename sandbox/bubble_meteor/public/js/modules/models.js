@@ -13,11 +13,11 @@
   });
 
   // Helpers
-  function parsePagedData(collection, response) {
+  function parsePagedData(collection, response, field) {
     var listObjects = [];
     collection.pages = response.pages;
     collection.count = response.count;
-    _.each(response.posts, function(item){
+    _.each(response[field], function(item){
       listObjects.push(item);
     });
     return listObjects;

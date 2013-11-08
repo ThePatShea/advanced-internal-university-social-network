@@ -13,50 +13,42 @@ Template.bubbleCoverBackbone.created = function() {
 
 Template.bubbleCoverBackbone.helpers({
   hasBeenInvited: function() {
-    //return _.contains(this.users.invitees, Meteor.userId());
-    var inviteePages = mybubbles.Invitees.getNumPages();
+    if (this.users)
+      return _.contains(this.users.invitees, Meteor.userId());
+
+    return false;
   },
 
 	hasApplied: function() {
-		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-    var isApplicantAjax = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    if(isApplicantAjax.responseText == 'True'){
-      return true;
-    }
-    else{
-      return false;
-    }
+    if (this.users)
+      return _.contains(this.users.applicants, Meteor.userId());
+
+    return false;
 	},
 
 	hasJoinedBubble: function() {
-    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    if(isMemberAjax.responseText == 'True' || isAdminAjax.responseText == 'True'){
-      return true;
+    if (this.users) {
+      var userId = Meteor.userId();
+      return _.contains(this.users.members, userId) || _.contains(this.users.admins, userId);
     }
-    else{
-      return false;
-    }
+
+    return false;
 	},
 
-  isAdminBackbone: function(){
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    if(isAdminAjax.responseText == 'True'){
-      return true;
-    }
-    else{
-      return false;
-    }
+  isAdminBackbone: function() {
+    if (this.users)
+      return _.contains(this.users.admins, Meteor.userId());
   },
 
   isSuperBubbleBackbone: function(){
-    var bubbleInfo = mybubbles.bubbleInfo.toJSON();
-    return 'super' == bubbleInfo.bubbleType;
+    return this.bubbleType === 'super';
   },
 
   getBubbleUsersCountBackbone: function(){
-    var userCount = mybubbles.Members.bubbleMembers.count + mybubbles.Admins.bubbleAdmins.count;
-    return userCount;
+    if (this.users)
+      return this.users.admins.length + this.users.members.length;
+
+    return 0;
   }
 });
 

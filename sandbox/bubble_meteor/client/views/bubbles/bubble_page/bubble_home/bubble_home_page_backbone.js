@@ -1,340 +1,44 @@
-//the events past 4 hours will not be listed on the event page
-referenceDateTime = moment().add('hours',-4).valueOf();
-
-Template.bubblePageBackbone.destroyed = function() {
-  console.log("BUBBLE HOME PAGE DESTROYED!");
-  delete bubbleHomeDep;
-}
-
-Template.bubblePageBackbone.created = function() {
-  console.log("Home Page Created!");
-  Session.set('updatesToShow',3);
-  Meteor.subscribe('updatedPosts', Meteor.userId());
-
-  bubbleHomeDep = new Deps.Dependency;
-  if(typeof goingDep === "undefined")
-    goingDep = new Deps.Dependency;
-
-  Session.set("isLoading", true);
-
-  currentBubbleId = window.location.pathname.split("/")[2];
-
-  bubbleHomeHelper();
-}
-
-
-Template.bubblePageBackbone.rendered = function() {
-  console.log('Rendered bubble page');
-
-  if(currentBubbleId != window.location.pathname.split("/")[2])
-  {
-    console.log('Bubble changed');
-    currentBubbleId = window.location.pathname.split("/")[2];
-
-    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId()});
-    if(isMemberAjax.responseText == 'False' && isAdminAjax.responseText == 'False'){
-      Meteor.Router.to('bubblePublicPage', bubble._id);
-    }
-
-    bubbleHomeHelper();
-  };
-
-  $(document).attr('title', 'My Bubbles - Emory Bubble');
+// Private helpers
+// TODO: Fix me. It is not possible to access template instance from template helper in Meteor,
+// so we will use global state for now
+var state = {
+  mybubbles: null
 };
 
-Template.bubblePageBackbone.helpers({
-  testNumUpdates: function() {
-    if(Session.get(currentBubbleId+'testNumUpdates') > 0)
-      return Session.get(currentBubbleId+'testNumUpdates');
-    else
-      return 0;
-  },
+function refreshData(bubbleId) {
+  Session.set('isLoading', true);
 
-  testGetUpdates: function() {
-    var updateList = Updates.find({userId: Meteor.userId(), bubbleId: window.location.pathname.split("/")[2], read:false}).fetch();
-
-    if(updateList.length > 0) {
-        //To combine updates with same userId, invokerId, updateType and postId
-        _.each(updateList, function(update){
-          updateList = _.reject(updateList, function(newUpdate) {
-            return  update.bubbleId == newUpdate.bubbleId && 
-                    update.userId == newUpdate.userId && 
-                    update.invokerId == newUpdate.invokerId && 
-                    update.updateType == newUpdate.updateType &&
-                    update.postId == newUpdate.postId;
-          });
-          if(!_.contains(updateList,update)){
-            updateList.push(update);
-          }
-        });
-
-        /**
-        * To combine updates for comments in the same post
-        **/
-        _.each(updateList, function(update){
-
-          var commentUpdates = _.reject(updateList, function(update) {
-            return update.updateType != "replied";
-          });
-
-          //Combine and chain the names together
-          if (commentUpdates.length > 0) {
-            updateList = _.reject(updateList, function(newUpdate) {
-              return update.postId == newUpdate.postId && 
-                      update.updateType == newUpdate.updateType &&
-                      update.updateType == "replied";
-            });
-            if(!_.contains(updateList,update)) {
-              //Pull out comment updates that belong to the same post
-              singleTypeUpdates = _.reject(commentUpdates, function(newUpdate) {
-                return update.postId != newUpdate.postId;
-              });
-              if (singleTypeUpdates.length > 0) {
-                //Create the chained name
-                var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-                var chainedName = nameArray.join();
-                var maxLength = 13;
-
-                //Checks to see if the length of names exceed a certain limit
-                if(chainedName.length > maxLength) {
-                  chainedName = chainedName.substring(0,maxLength);
-                  var nameList = chainedName.split(',');
-                  if(nameArray[0].length > maxLength) {
-                    nameList[0] = nameArray[0];
-                  }else{
-                    nameList.pop();
-                  }
-                  var excessCount = nameArray.length - nameList.length;
-                  chainedName = nameList.join();
-                  if(excessCount == 1) {
-                    chainedName = chainedName + " and " + excessCount + " other";
-                  }else if(excessCount > 1){
-                    chainedName = chainedName + " and " + excessCount + " others";
-                  }
-                }else{
-                  chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-                }
-
-                //Add the chained name to the invokerName
-                update.invokerName = chainedName;
-              }
-              updateList.push(update);
-            }
-          }
-        });
-
-        /**
-        *  To combine and chain up names for similar updates
-        **/
-        _.each(updateList, function(originalUpdate) {
-          if(originalUpdate.collapsible == true){
-            var type = originalUpdate.updateType;
-            var singleTypeUpdates = _.reject(updateList, function(update) {
-              return update.updateType != type;
-            });
-            if (singleTypeUpdates.length > 0) {
-              var nameArray = _.pluck(singleTypeUpdates,"invokerName");
-              var chainedName = nameArray.join();
-              var maxLength = 13;
-
-              if(chainedName.length > maxLength) {
-                chainedName = chainedName.substring(0,maxLength);
-                var nameList = chainedName.split(',');
-                if(nameArray[0].length > maxLength) {
-                  nameList[0] = nameArray[0];
-                }else{
-                  nameList.pop();
-                }
-                var excessCount = nameArray.length - nameList.length;
-                chainedName = nameList.join();
-                if(excessCount == 1) {
-                  chainedName = chainedName + " and " + excessCount + " other";
-                }else{
-                  chainedName = chainedName + " and " + excessCount + " others";
-                } 
-              }else{
-                chainedName = chainedName.replace(/,([^,]*)$/," and $1");
-              }
-
-              originalUpdate.invokerName = chainedName;
-              // Next remove all applicants
-              updateList = _.reject(updateList, function(newUpdate) {
-                return newUpdate.updateType == type;
-              });
-              //Now add back with the applicant that has a changed invoker name
-              if(firstUpdate){
-                updateList.push(firstUpdate);
-              }
-            }
-          }
-        });
-
-        updateList = _.sortBy(updateList, function(newUpdate) {
-          return newUpdate.submitted; 
-        });  
-        
-      Session.set(currentBubbleId+"testNumUpdates",updateList.length);
-
-        if(Session.get('updatesToShow')>0){
-          return _.first(updateList.reverse(), Session.get('updatesToShow'));
-        }else{
-          return updateList.reverse();
-        }
-    }
-  },
-  getCurrentBubbleBackbone: function(){
-    bubbleHomeDep.depend();
-    var bubble = mybubbles.bubbleInfo.toJSON();
-    return bubble;
-  },
-  eventsCount: function() {
-    var events = mybubbles.Events.getJSON();
-    return events.count - 3;
-  },
-  discussionsCount: function() {
-    var discussions = mybubbles.Discussions.getJSON();
-    return discussions.count - 3;
-  },
-  filesCount: function() {
-    var files = mybubbles.Files.getJSON();
-    return files.count - 3;
-  },
-
-  // check if there are more posts to view
-  hasMoreEvents: function() {
-    //var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event', dateTime: {$gt: referenceDateTime}}).count() - 3;
-    var events = mybubbles.Events.getJSON();
-    var num = events.count - 3;
-    if (num > 0){
-      return true;
-    }else{
-      return false;
-    }
-  },
-
-  numMoreEvents: function(){
-    //var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'event', dateTime: {$gt: referenceDateTime}}).count() - 3;
-    var events = mybubbles.Events.getJSON();
-    var num = events.count - 3;
-    return num;
-  },
-  hasMoreDiscussions: function() {
-    //var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
-    var discussions = mybubbles.Discussions.getJSON();
-    var num = discussions.count - 3;
-    if (num > 0){
-      return true;
-    }else{
-      return false;
-    }
-  },
-  numMoreDiscussionsCount: function(){
-    //var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'discussion'}).count() - 3;
-    var discussions = mybubbles.Discussions.getJSON();
-    var num = discussions.count - 3;
-    return num;
-  },
-  hasMoreFiles: function() {
-    //var num = Posts.find({bubbleId:Session.get('currentBubbleId'), postType:'file'}).count() - 3;
-    var files = mybubbles.Files.getJSON();
-    var num = files.count - 3;
-    if (num > 0){
-      return true;
-    }else{
-      return false;
-    }
-  },
-
-  // return only latest 3 posts
-  filePosts: function() {
-    var filePosts = mybubbles.Files.toJSON();
-    var latestFilePosts = filePosts.slice(0, 3);
-    return latestFilePosts;
-  },
-  getNumUpdates: function() {
-    return Session.get('numUpdates');
-  }, 
-
-  showMoreUpdates: function(numUpdates) {
-    if(Session.get('numUpdates') != 0 && numUpdates > Session.get('numUpdates'))
-      return true;
-    else
-      return false;
-  },
-
-  postPropertiesBackboneEvent: function(){
-    //bubbleDep.depend();
-    var eventPosts = mybubbles.Events.getJSON();
-    var topEventPosts = eventPosts.slice(0, 3);
-    return {
-      'posts': topEventPosts,
-      'postType': 'event',
-      'word1': 'upcoming'
-    }
-  },
-
-  postPropertiesBackboneDiscussion: function(){
-    var discussionPosts = mybubbles.Discussions.getJSON();
-    var topDiscussionPosts = discussionPosts.slice(0, 3);
-    return {
-      'posts': topDiscussionPosts,
-      'postType': 'discussion',
-      'word1': 'active'
-    }
-  },
-
-  postPropertiesBackboneFile: function(){
-    var filePosts = mybubbles.Files.getJSON();
-    var topFilePosts = filePosts.slice(0, 3);
-    return {
-      'posts': topFilePosts,
-      'postType': 'file',
-      'word1': 'latest'
-    }
-  },
-  showUpdates: function() {
-    if(Session.get(currentBubbleId+'testNumUpdates'))
-      return true;
-    return false;
+  // TODO: This security check will never work
+  var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + bubbleId + '&userid=' + Meteor.userId()});
+  var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + bubbleId + '&userid=' + Meteor.userId()});
+  if (isMemberAjax.responseText == 'False' && isAdminAjax.responseText == 'False'){
+    Meteor.Router.to('bubblePublicPage', bubble._id);
   }
-});
 
-Template.bubblePageBackbone.events({
-  'click .clear-updates': function() {
-    var updates = Updates.find({bubbleId: currentBubbleId, userId: Meteor.userId(), read:false}).fetch();
-    _.each(updates, function(update) {
-      Meteor.call('setRead', update);
-      Session.set(currentBubbleId+'testNumUpdates',0);
-    });
-  },
-
-  'click .more-updates': function() {
-    Session.set('updatesToShow', 0);
-  }
-});
-
-var bubbleHomeHelper = function() {
-  mybubbles = new BubbleData.MyBubbles({
-    bubbleId: currentBubbleId,
+  var mybubbles = state.mybubbles = new BubbleDataNew.MyBubbles({
+    bubbleId: bubbleId,
     limit: 3,
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
 
     events: {
       limit: 3,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId'],
+      load: true
     },
 
     discussions: {
       limit: 3,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId'],
+      load: true
     },
 
     files: {
       limit: 3,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId'],
+      load: true
     },
 
+    /*
     members: {
       limit: 0,
       fields: ['username', 'name', 'profilePicture', 'userType']
@@ -354,11 +58,163 @@ var bubbleHomeHelper = function() {
       limit: 0,
       fields: ['username', 'name', 'profilePicture', 'userType']
     },
+    */
 
-    callback: function(){
-      console.log('Bubbledata changed');
-      bubbleHomeDep.changed();
+    callback: function(bubble) {
       Session.set('isLoading', false);
+
+      if (mybubbles === state.mybubbles) {
+        Session.set('bubbleInfo', bubble);
+      }
     }
   });
+}
+
+// Helpers
+Template.bubblePageBackbone.helpers({
+  // Bubble info
+  getCurrentBubbleBackbone: function(){
+    return Session.get('bubbleInfo');
+  },
+  // Counts
+  eventsCount: function() {
+    return state.mybubbles.Events.getCount();
+  },
+  discussionsCount: function() {
+    return state.mybubbles.Discussions.getCount();
+  },
+  filesCount: function() {
+    return state.mybubbles.Files.getCount();
+  },
+
+  // check if there are more posts to view
+  hasMoreEvents: function() {
+    var count = state.mybubbles.Events.getCount();
+    return count > 3;
+  },
+  numMoreEvents: function(){
+    var count = state.mybubbles.Events.getCount();
+    return count - 3;
+  },
+
+  hasMoreDiscussions: function() {
+    var count = state.mybubbles.Discussions.getCount();
+    return count > 3;
+  },
+  numMoreDiscussionsCount: function(){
+    var count = state.mybubbles.Discussions.getCount();
+    return count - 3;
+  },
+
+  hasMoreFiles: function() {
+    var count = state.mybubbles.Files.getCount();
+    return count > 3;
+  },
+
+  // Updates
+  getUpdateCount: function() {
+    return Session.get('bubbleUpdateCount');
+  },
+
+  getUpdates: function() {
+    var currentBubbleId = Session.get('currentBubbleId');
+    var updatesToShow = Session.get('bubbleUpdatesToShow');
+
+    var query = {
+      userId: Meteor.userId(),
+      bubbleId: currentBubbleId,
+      read: false
+    };
+
+    var opts = {
+      sort: {date: -1}
+    };
+
+    if (updatesToShow)
+      opts.limit = updatesToShow;
+
+    Session.set('bubbleUpdateCount', Updates.find(query).count());
+    var updateList = Updates.find(query, opts).fetch();
+
+    return updateList;
+  },
+
+  haveMoreUpdates: function() {
+    var updateCount = Session.get('bubbleUpdateCount');
+    var toShow = Session.get('bubbleUpdatesToShow');
+    return toShow !== 0 && updateCount > toShow;
+  },
+
+  showUpdates: function() {
+    return Session.get('bubbleUpdateCount') > 0;
+  },
+
+  // Post-type helpers
+  postPropertiesBackboneEvent: function(){
+    return {
+      'posts': state.mybubbles.Events.getJSON(),
+      'postType': 'event',
+      'word1': 'upcoming'
+    };
+  },
+
+  postPropertiesBackboneDiscussion: function(){
+    return {
+      'posts': state.mybubbles.Discussions.getJSON(),
+      'postType': 'discussion',
+      'word1': 'active'
+    };
+  },
+
+  postPropertiesBackboneFile: function(){
+    return {
+      'posts': state.mybubbles.Files.getJSON(),
+      'postType': 'file',
+      'word1': 'latest'
+    };
+  },
+
+  filePosts: function() {
+    var filePosts = state.mybubbles.getFiles();
+    return filePosts;
+  }
+});
+
+Template.bubblePageBackbone.events({
+  'click .clear-updates': function() {
+    var updates = Updates.find({bubbleId: currentBubbleId, userId: Meteor.userId(), read:false}).fetch();
+    _.each(updates, function(update) {
+      Meteor.call('setRead', update);
+      Session.set(currentBubbleId+'testbubbleUpdateCount',0);
+    });
+  },
+
+  'click .more-updates': function() {
+    Session.set('bubbleUpdatesToShow', 0);
+  }
+});
+
+Template.bubblePageBackbone.created = function() {
+  var that = this;
+
+  Session.set('bubbleUpdatesToShow', 3);
+
+  this.updatedPosts = Meteor.subscribe('updatedPosts', Meteor.userId());
+
+  // TODO: Fix me
+  if (typeof goingDep === "undefined")
+    goingDep = new Deps.Dependency;
+
+  this.watch = Meteor.autorun(function() {
+    refreshData(Session.get('currentBubbleId'));
+  });
+};
+
+Template.bubblePageBackbone.rendered = function() {
+  $(document).attr('title', 'My Bubbles - Emory Bubble');
+};
+
+Template.bubblePageBackbone.destroyed = function() {
+  this.watch.stop();
+  this.updatedPosts.stop();
 };

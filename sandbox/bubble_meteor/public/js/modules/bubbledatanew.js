@@ -1,25 +1,27 @@
 // TODO: Use require.js instead of global namespace
 (function(){
-  var BubblePost = Backbone.Model.extend({
+  var BubblePost = BubbleRest.Model.extend({
     url: function(){
       // TODO: Use bubble-related post URL
       return '/api/v1_0/posts/' + this.id;
     }
   });
 
-  var BubbleInfo = Backbone.Model.extend({
+  var BubbleInfo = BubbleRest.Model.extend({
     url: function(){
-      console.log('/2013-09-11/bubbles/' + this.bubbleId)
+      console.log('/2013-09-11/bubbles/' + this.bubbleId);
       return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture,bubbleType,users/' + this.bubbleId;
     }
   });
 
-  var UserRelatedModel = BubbleRest.Collection.extend({
+  var UserRelatedModel = BubbleRest.Model.extend({
     excludeFields: ['user'],
     // Pre-fetch related models
     fetchRelated: function(model, callback) {
-      if (model.userId) {
-        var user = BubbleModels.User({id: model.get('postAsId')});
+      var userId = model.get('userId');
+
+      if (userId) {
+        var user = new BubbleModels.User({id: userId});
         user.fetch({
           success: function(related) {
             model.set('user', related);
@@ -51,12 +53,12 @@
     }
   });
 
-  function makeRelatedCollection(model, name) {
+  function makeRelatedCollection(model, name, fields) {
     return BubbleRest.Collection.extend({
       bubbleId : 'none',
       limit: 10,
       page: 0,
-      fields: [],
+      fields: fields,
       model: model,
       url: function() {
         var fieldString = (this.fields && this.fields.toString()) || '';
@@ -67,7 +69,7 @@
         return '/api/v1_0/bubbles/' + this.bubbleId + '/' + name + '?limit=' + this.limit + '&page=' + this.page + '&fields=' + fieldString;
       },
       parse: function(response) {
-        return BubbleModels.parsePagedData(this, response);
+        return BubbleModels.parsePagedData(this, response, name);
       }
     });
   }
@@ -76,6 +78,12 @@
   var BubbleEvents = makeRelatedCollection(BubbleEvent, 'events');
   var BubbleDiscussions = makeRelatedCollection(BubbleDiscussion, 'discussions');
   var BubbleFiles = makeRelatedCollection(BubbleFile, 'files');
+
+  var userFields = ['username', 'name', 'profilePicture'];
+  var BubbleMembers = makeRelatedCollection(BubbleModels.User, 'members', userFields);
+  var BubbleAdmins = makeRelatedCollection(BubbleModels.User, 'admins', userFields);
+  var BubbleApplicants = makeRelatedCollection(BubbleModels.User, 'applicants', userFields);
+  var BubbleInvitees = makeRelatedCollection(BubbleModels.User, 'invitees', userFields);
 
   // Paged data helpers
   function PagedData(collection) {
@@ -132,6 +140,10 @@
       }
     },
 
+    getCount: function() {
+      return this.collection.count;
+    },
+
     getCurrentPage: function() {
       return this.collection.page;
     },
@@ -154,16 +166,33 @@
     var that = this;
     this.bubbleId = properties.bubbleId;
 
+    // Loading status
+    var loading = 0;
+    var initialized = false;
+
+    function maybeComplete() {
+      loading -= 1;
+
+      if (initialized && !loading && properties.callback)
+        properties.callback(that.bubbleJson);
+    }
+
+    function fetchRelated(pagedData) {
+      loading += 1;
+      pagedData.fetchPage(0, maybeComplete);
+    }
+
     // Fetch bubble info
     this.bubbleInfo = new BubbleInfo();
     this.bubbleInfo.on('change', properties.callback);
     this.bubbleInfo.bubbleId = properties.bubbleId;
+
+    loading += 1;
+
     this.bubbleInfo.fetch({
       success: function(model) {
-        this.bubbleJson = model.toJSON();
-
-        if (properties.callback)
-          properties.callback(model);
+        that.bubbleJson = model.toJSON();
+        maybeComplete();
       }
     });
 
@@ -174,36 +203,8 @@
     bubbleEvents.fields = properties.events.fields;
     this.Events = new PagedData(bubbleEvents);
 
-    this.Events.toggleGoing = function(postId,userId,callback) {
-      //var test = function(){bubbleDep.changed();}
-      tmp = this.bubbleEvents.get(postId);
-      tmp.on("change",callback);
-      console.log("TMP: ", tmp);
-      tmpData = tmp.get("attendees");
-      if(tmpData.indexOf(userId) == -1)
-      {
-        var retVal = [];
-        _.each(tmpData,function(data){
-          retVal.push(_.clone(data));
-        })
-        retVal.push(userId);
-      }
-      else
-      {
-        //tmpData.splice(tmpData.indexOf(userId), 1);
-        tmpData = tmpData.slice(tmpData.indexOf("GAd9sexEBsk58X4t6")+1, tmpData.length);
-        var retVal = [];
-        _.each(tmpData,function(data){
-          retVal.push(_.clone(data));
-        });
-      }
-      console.log("Setting this data: ", retVal);
-      tmp.set("attendees",retVal);
-      //tmp.trigger("change");
-      //bubbleDep.changed();
-      /*if(typeof callback === "function")
-        callback();*/
-    };
+    if (properties.events.load)
+      fetchRelated(this.Events);
 
     // Discussions
     var bubbleDiscussions = new BubbleDiscussions();
@@ -213,6 +214,9 @@
 
     this.Discussions = new PagedData(bubbleDiscussions);
 
+    if (properties.discussions.load)
+      fetchRelated(this.Discussions);
+
     // Files
     var bubbleFiles = new BubbleFiles();
     bubbleFiles.bubbleId = that.bubbleId;
@@ -220,6 +224,67 @@
     bubbleFiles.fields = properties.files.fields;
 
     this.Files = new PagedData(bubbleFiles);
+
+    if (properties.files.load)
+      fetchRelated(this.Files);
+
+    // Members
+    var bubbleMembers = new BubbleMembers();
+    bubbleMembers.bubbleId = that.bubbleId;
+
+    if (properties.members) {
+      bubbleMembers.limit = properties.members.limit;
+      bubbleMembers.fields = properties.members.fields;
+    }
+
+    this.Members = new PagedData(bubbleMembers);
+
+    if (properties.members && properties.members.load)
+      fetchRelated(this.Members);
+
+    // Admins
+    var bubbleAdmins = new BubbleAdmins();
+    bubbleAdmins.bubbleId = that.bubbleId;
+
+    if (properties.admins) {
+      bubbleAdmins.limit = properties.admins.limit;
+      bubbleAdmins.fields = properties.admins.fields;
+    }
+
+    this.Admins = new PagedData(bubbleAdmins);
+
+    if (properties.admin && properties.admins.load)
+      fetchRelated(this.Admins);
+
+    // Applications
+    var bubbleApplicants = new BubbleApplicants();
+    bubbleApplicants.bubbleId = that.bubbleId;
+
+    if (properties.applicants) {
+      bubbleApplicants.limit = properties.applicants.limit;
+      bubbleApplicants.fields = properties.applicants.fields;
+    }
+
+    this.Applicants = new PagedData(bubbleApplicants);
+
+    if (properties.applicants && properties.applicants.load)
+      fetchRelated(this.applicants);
+
+    // Invitees
+    var bubbleInvitees = new BubbleInvitees();
+    bubbleInvitees.bubbleId = that.bubbleId;
+
+    if (properties.invitees) {
+      bubbleInvitees.limit = properties.invitees.limit;
+      bubbleInvitees.fields = properties.invitees.fields;
+    }
+
+    this.Invitees = new PagedData(bubbleInvitees);
+
+    if (properties.invitees && properties.invitees.load)
+      fetchRelated(this.Invitees);
+
+    initialized = true;
 
     // API
     this.isAdmin = function(id) {
@@ -246,5 +311,6 @@
   var api = {
     MyBubbles: MyBubbles
   };
+
   window.BubbleDataNew = api;
 })();
