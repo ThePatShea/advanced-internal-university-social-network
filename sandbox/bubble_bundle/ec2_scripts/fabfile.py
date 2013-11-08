@@ -14,7 +14,7 @@ import time
 
 
 
-def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name, secure_flag, git_logn, git_password):
+def create_bundle_image(blank_ami_id, path_to_bundle, new_ami_name, secure_flag, git_login, git_password):
 	"""
 	Creates an EC2 instance, installs the Emory Bubble Bundle on it. And takes a snapshot to create an AMI
 	"""
@@ -106,7 +106,7 @@ def deploy_bundle_secure(path_to_bundle, git_login, git_password):
 	run('rm -rf /home/ubuntu/emory_bubble')
 	run('mkdir /home/ubuntu/emory_bubble')
 	with cd('/home/ubuntu/emory_bubble'):
-		run('git clone https://' + git_login +':' + git_password '@github.com/campus-bubble/bubble-3.git')
+		run('git clone https://' + git_login +':' + git_password +'@github.com/campus-bubble/bubble-3.git')
 	with cd('/home/ubuntu/emory_bubble/bubble-3'):
 		run('git checkout submaster')
 	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
@@ -127,7 +127,7 @@ def deploy_bundle_insecure(path_to_bundle, git_login, git_password):
 	run('rm -rf /home/ubuntu/emory_bubble')
 	run('mkdir /home/ubuntu/emory_bubble')
 	with cd('/home/ubuntu/emory_bubble'):
-		run('git clone https://' + git_login +':' + git_password '@github.com/campus-bubble/bubble-3.git')
+		run('git clone https://' + git_login +':' + git_password +'@github.com/campus-bubble/bubble-3.git')
 	with cd('/home/ubuntu/emory_bubble/bubble-3'):
 		run('git checkout submaster')
 	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
@@ -147,7 +147,7 @@ def deploy_bundle_test(path_to_bundle, git_login, git_password):
 	run('rm -rf /home/ubuntu/emory_bubble')
 	run('mkdir /home/ubuntu/emory_bubble')
 	with cd('/home/ubuntu/emory_bubble'):
-		run('git clone https://' + git_login +':' + git_password '@github.com/campus-bubble/bubble-3.git')
+		run('git clone https://' + git_login +':' + git_password + '@github.com/campus-bubble/bubble-3.git')
 	with cd('/home/ubuntu/emory_bubble/bubble-3'):
 		run('git checkout submaster')
 	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
