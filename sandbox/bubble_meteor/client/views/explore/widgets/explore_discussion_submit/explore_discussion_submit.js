@@ -123,6 +123,14 @@ Template.exploreDiscussionSubmit.events({
         children: []
       }, files);*/
 
+      var bodySelector = $('.cb-explore-discussionSubmit-form').find('.wysiwyg');
+      var postBody = bodySelector.html();
+      var rmIndex = postBody.indexOf('<span class="wysiwyg-placeholder">Type here...</span>');
+      if(rmIndex != -1)
+      {
+        bodySelector.html(postBody.slice(0,rmIndex));
+      }
+
       makeDiscussionPost();
 
       //Show Post submitted confirmation message
@@ -219,6 +227,7 @@ function processAttachmentSelections(fileAttachments){
 
 
 function makeDiscussionPost(){
+
   var postAttributes = {
     name: encodeURIComponent($('.cb-explore-discussionSubmit-form').find('[name=name]').val()),
     body: $('.cb-explore-discussionSubmit-form').find('.wysiwyg').html(),

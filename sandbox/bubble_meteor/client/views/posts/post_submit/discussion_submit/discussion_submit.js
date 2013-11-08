@@ -107,6 +107,14 @@ Template.discussionSubmit.events({
       //Google Analytics
       _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
+      var bodySelector = $('.cb-discussionSubmit-form').find('.wysiwyg');
+      var postBody = bodySelector.html();
+      var rmIndex = postBody.indexOf('<span class="wysiwyg-placeholder">Type here...</span>');
+      if(rmIndex != -1)
+      {
+        bodySelector.html(postBody.slice(0,rmIndex));
+      }
+
       makeDiscussionPost();
 
       //Show Post submitted confirmation message

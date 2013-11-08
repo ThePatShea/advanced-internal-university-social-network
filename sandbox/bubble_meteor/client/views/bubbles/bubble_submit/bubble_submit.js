@@ -5,6 +5,14 @@ Template.bubbleSubmit.events({
     console.log('Bubble Submit');
     if(profileMainURL)
 
+    var bodySelector = $('.cb-form').find('[name=body]');
+    var postBody = bodySelector.html();
+    var rmIndex = postBody.indexOf('<span class="wysiwyg-placeholder">Type here...</span>');
+    if(rmIndex != -1)
+    {
+      bodySelector.html(postBody.slice(0,rmIndex));
+    }
+
     var bubble = {
       category             : $('.cb-form').find('[name=category]').val(),
       bubbleType           : $('.cb-form').find('[name=bubbleType]').val(),
