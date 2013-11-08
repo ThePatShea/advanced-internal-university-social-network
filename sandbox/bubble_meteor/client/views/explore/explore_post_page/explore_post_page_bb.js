@@ -28,6 +28,8 @@ Template.explorePostPageBB.helpers({
     return this.postAsType === 'bubble';
   },
   displayName: function() {
+    return this.author;
+    /*
     if (this.postAsType === 'user') {
       return this.author;
     } else
@@ -39,6 +41,7 @@ Template.explorePostPageBB.helpers({
       else
         return this.author;
     }
+    */
   },
   isFlagged: function() {
     return this.flagged;
