@@ -154,6 +154,8 @@ body {
   -webkit-font-smoothing: none;
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+/* Added testing v1 */
 }
 /*---------------------------------------------------------
 ---------------------- MIXINS/VARIBA ----------------------
@@ -522,6 +524,7 @@ body {
   fill: #f7f8f8;
 }
 .sidebar-menu-content {
+  visibility: hidden;
   position: absolute;
   left: -100px;
   background-color: #a5bbc9;
@@ -610,6 +613,7 @@ body {
   background-color: #98b0c0;
 }
 .menu-pull {
+  visibility: visible;
   left: 100px;
   opacity: 1;
 }
@@ -725,10 +729,229 @@ body {
 }
 /*-------------- END BUBBLE COLOR TYPE --------------*/
 /*---------------------------------------------------------
+------------------ MID CONTENT TESTING --------------------
+---------------------------------------------------------*/
+.content-container {
+  width: auto;
+  overflow: hidden;
+}
+.content-container h1 {
+  color: #f00;
+  font-size: 50px;
+}
+.content-container #main {
+  height: 100%;
+  margin-top: 60px;
+  overflow-y: scroll;
+}
+/*---------------------------------------------------------
 ----------------------- RESPONSIVE ------------------------
 ---------------------------------------------------------*/
 .side-activator {
   display: none;
+}
+/*---------------------------------------------------------
+----------------------- BOARDING --------------------------
+---------------------------------------------------------*/
+.boarding-container {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+}
+.boarding-container .agree-terms {
+  display: inline-block;
+  margin: 0 0 21px 0;
+  position: relative;
+  cursor: pointer;
+  padding-left: 70px;
+  text-align: left;
+  border-left: none;
+  height: 54px;
+  cursor: none;
+}
+.boarding-container .agree-terms .icon {
+  z-index: 1;
+  background-color: #001f37;
+  position: absolute;
+  left: 0;
+  padding: 11px;
+  border: 3px solid #2f5973;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+.boarding-container .agree-terms .icon svg {
+  fill: #2f5973;
+  vertical-align: top;
+  width: 26px;
+  height: 26px;
+}
+.boarding-container .agree-terms .text {
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  font-weight: 400;
+  color: #a5bbc9;
+  font-size: 15px;
+  white-space: nowrap;
+  height: 54px;
+  display: inline-block;
+  border: 1px solid #2f5973;
+  padding-left: 35px;
+  position: absolute;
+  left: 30px;
+  border-left: 0;
+  padding-top: 10px;
+  padding-right: 30px;
+  -webkit-border-radius: 0 30px 30px 0;
+  -moz-border-radius: 0 30px 30px 0;
+  border-radius: 0 30px 30px 0;
+}
+.boarding-container .agree-terms:hover .text {
+  background-color: #2f5973;
+  color: #001f37;
+}
+.boarding-container .agree-terms:hover .icon {
+  background-color: #2f5973;
+  position: absolute;
+  left: 0;
+  padding: 11px;
+  border: 3px solid #001f37;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+.boarding-container .agree-terms:hover .icon svg {
+  fill: #001f37;
+}
+.boarding-container .cb-submit-container {
+  cursor: pointer;
+  float: right;
+  height: 70px;
+}
+.boarding-container .cb-submit-container button {
+  border: 1px solid #2f5973;
+  color: #f7f8f8;
+  font-weight: 700;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  text-transform: uppercase;
+  -webkit-border-radius: 28px;
+  -moz-border-radius: 28px;
+  border-radius: 28px;
+  font-size: 11px;
+}
+.boarding-container .cb-submit-container .cb-submit {
+  position: relative;
+  padding: 8px 15px 7px 15px;
+  top: 10px;
+}
+.boarding-container .cb-submit-container .cb-submit .words-main {
+  display: inline;
+}
+.boarding-container .cb-submit-container .cb-submit .words-error {
+  display: none;
+}
+.boarding-container .cb-submit-container .cb-submit.ready-false:hover {
+  word-spacing: 2px;
+  background: 0;
+}
+.boarding-container .cb-submit-container .cb-submit.ready-false:hover .words-main {
+  display: none;
+}
+.boarding-container .cb-submit-container .cb-submit.ready-false:hover .words-error {
+  display: inline;
+}
+.boarding-container h1 {
+  text-align: left;
+  padding: 30px 30px 25px 42px;
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  font-weight: 300;
+  text-decoration: auto;
+  letter-spacing: auto;
+  line-height: auto;
+  text-align: auto;
+  font-size: 30px;
+  color: #2f5973;
+  position: relative;
+  display: block;
+  height: 100%;
+}
+.boarding-container .boarding-form {
+  background-color: #001f37;
+  padding: 42px;
+}
+.boarding-container .boarding-form form hr {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #2f5973;
+  display: block;
+}
+.boarding-container .boarding-form form label {
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 18px;
+  border-bottom: 1px solid #2f5973;
+  color: #2f5973;
+  display: block;
+  padding-bottom: 7px;
+  margin-bottom: 21px;
+  cursor: pointer;
+}
+.boarding-container .boarding-form form label a {
+  color: #a5bbc9;
+  text-decoration: underline;
+}
+.boarding-container .boarding-form .attach-files {
+  position: relative;
+  width: 100%;
+}
+.boarding-container .boarding-form .attach-files .drop-zone {
+  height: 240px;
+  border-bottom: 1px solid #2f5973;
+  margin: 42px 0;
+}
+.boarding-container .boarding-form .attach-files .drop-zone .dz-subtitle {
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 300;
+  text-decoration: blank;
+  letter-spacing: blank;
+  line-height: 1em;
+  text-align: center;
+  text-transform: lowercase;
+  font-size: 21px;
+  background: auto;
+  border: auto;
+  color: #2f5973;
+  fill: auto;
+  stroke: auto;
+  padding-bottom: 50px;
+}
+.boarding-container .boarding-form .attach-files .drop-zone .dz-title {
+  padding: 50px 0 0 0;
+  color: #011126;
+  fill: auto;
+  stroke: auto;
+  line-height: 1em;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 78px;
+  font-style: italic;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 700;
+}
+.boarding-container .boarding-form .attach-files .drop-zone .file-chooser-invisible {
+  position: absolute;
+  bottom: auto;
+  right: 0;
+  left: auto;
+  top: 0;
+  cursor: pointer;
+  height: 240px;
+  width: 100%;
+  z-index: 20;
+  opacity: 0;
+  zoom: 1;
 }
 /***************************************************************************************** 
 *********************** MEDIA QUERIES 
