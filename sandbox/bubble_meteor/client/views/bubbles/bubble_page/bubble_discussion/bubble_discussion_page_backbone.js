@@ -57,8 +57,8 @@ Template.bubbleDiscussionPageBackbone.helpers({
     // var urlArray    =  currentUrl.split("/");
     // var currentBubbleId  =  urlArray[2];
 
-    //return Posts.find({bubbleId: currentBubbleId, postType:'discussion'}, {sort: {lastCommentTime:  -1} }); 
-    return mybubbles.Discussions.getJSON();  
+    //return Posts.find({bubbleId: currentBubbleId, postType:'discussion'}, {sort: {lastCommentTime:  -1} });
+    return mybubbles.Discussions.getJSON();
   },
 
   postPropertiesBackboneDiscussion: function(){
@@ -138,7 +138,7 @@ Template.bubbleDiscussionPageBackbone.events({
 });
 
 var bubbleDiscussionHelper = function() {
-  if(typeof mybubbles === "undefined")
+  if (typeof mybubbles === "undefined")
   {
     mybubbles = new BubbleData.MyBubbles({
       bubbleId: currentBubbleId,

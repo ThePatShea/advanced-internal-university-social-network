@@ -9,8 +9,7 @@
 
   var BubbleInfo = BubbleRest.Model.extend({
     url: function(){
-      console.log('/2013-09-11/bubbles/' + this.bubbleId);
-      return '/2013-09-11/bubbles?fields=title,description,category,submited,lastUpdated,profilePicture,bubbleType,users/' + this.bubbleId;
+      return '/api/v1_0/bubbles/' + this.bubbleId + '?fields=title,description,category,submited,lastUpdated,profilePicture,bubbleType,users';
     }
   });
 
@@ -37,19 +36,19 @@
 
   var BubbleEvent = UserRelatedModel.extend({
     url: function(){
-      return '/2013-09-11/bubbles/' + this.id + 'events';
+      return '/api/v1_0/bubbles/' + this.bubbleId + 'events';
     }
   });
 
   var BubbleDiscussion = UserRelatedModel.extend({
     url: function(){
-      return '/2013-09-11/posts/' + this.id + 'discussions';
+      return '/api/v1_0/bubbles/' + this.bubbleId + 'discussions';
     }
   });
 
   var BubbleFile = UserRelatedModel.extend({
     url: function(){
-      return '/2013-09-11/posts/' + this.id + 'files';
+      return '/api/v1_0/bubbles/' + this.bubbleId + 'files';
     }
   });
 
@@ -92,7 +91,7 @@
 
   _.extend(PagedData.prototype, {
     fetchPage: function(page, callback) {
-      if (!page)
+      if (typeof page === 'undefined')
         page = this.collection.page;
 
       if (page >= this.collection.pages)
@@ -122,6 +121,8 @@
               callback(collection.page);
           }
         });
+      } else {
+        callback(collection.page);
       }
     },
 
@@ -137,6 +138,8 @@
               callback(collection.page);
           }
         });
+      } else {
+        callback(collection.page);
       }
     },
 
@@ -171,6 +174,8 @@
     var initialized = false;
 
     function maybeComplete() {
+      console.log('MAYBE!', loading);
+
       loading -= 1;
 
       if (initialized && !loading && properties.callback)
@@ -184,7 +189,6 @@
 
     // Fetch bubble info
     this.bubbleInfo = new BubbleInfo();
-    this.bubbleInfo.on('change', properties.callback);
     this.bubbleInfo.bubbleId = properties.bubbleId;
 
     loading += 1;
@@ -199,33 +203,42 @@
     // Events helper
     var bubbleEvents = new BubbleEvents();
     bubbleEvents.bubbleId = this.bubbleId;
-    bubbleEvents.limit = properties.events.limit;
-    bubbleEvents.fields = properties.events.fields;
+    if (properties.events) {
+      bubbleEvents.limit = properties.events.limit;
+      bubbleEvents.fields = properties.events.fields;
+    }
+
     this.Events = new PagedData(bubbleEvents);
 
-    if (properties.events.load)
+    if (properties.events && properties.events.load)
       fetchRelated(this.Events);
 
     // Discussions
     var bubbleDiscussions = new BubbleDiscussions();
     bubbleDiscussions.bubbleId = that.bubbleId;
-    bubbleDiscussions.limit = properties.discussions.limit;
-    bubbleDiscussions.fields = properties.discussions.fields;
+
+    if (properties.discussions) {
+      bubbleDiscussions.limit = properties.discussions.limit;
+      bubbleDiscussions.fields = properties.discussions.fields;
+    }
 
     this.Discussions = new PagedData(bubbleDiscussions);
 
-    if (properties.discussions.load)
+    if (properties.discussions && properties.discussions.load)
       fetchRelated(this.Discussions);
 
     // Files
     var bubbleFiles = new BubbleFiles();
     bubbleFiles.bubbleId = that.bubbleId;
-    bubbleFiles.limit = properties.files.limit;
-    bubbleFiles.fields = properties.files.fields;
+
+    if (properties.files) {
+      bubbleFiles.limit = properties.files.limit;
+      bubbleFiles.fields = properties.files.fields;
+    }
 
     this.Files = new PagedData(bubbleFiles);
 
-    if (properties.files.load)
+    if (properties.files && properties.files.load)
       fetchRelated(this.Files);
 
     // Members
