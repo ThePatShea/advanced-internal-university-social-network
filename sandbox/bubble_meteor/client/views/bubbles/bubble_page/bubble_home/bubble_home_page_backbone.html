@@ -44,9 +44,11 @@
                 </div>
               </div>
             {{/each}}
+            {{#if hasMoreEvents}}
             <a class="visible" href="{{bubbleEventPageBackbonePath getCurrentBubbleBackbone.id}}">
               <button class="pull-left btn-tiny more-posts">+ view more events</button>
             </a>
+            {{/if}}
           {{/with}}
         </div>
 
@@ -65,9 +67,11 @@
                 </div>
               </div>
             {{/each}}
+            {{#if hasMoreDiscussions}}
             <a class="visible" href="{{bubbleDiscussionPageBackbonePath getCurrentBubbleBackbone.id}}">
               <button class="pull-left btn-tiny more-posts">+ view more discussions</button>
             </a>
+            {{/if}}
           {{/with}}
         </div>
 
@@ -86,9 +90,11 @@
                 </div>
               </div>
             {{/each}}
+            {{#if hasMoreFiles}}
             <a class="visible" href="{{bubbleFilePageBackbonePath getCurrentBubbleBackbone.id}}">
               <button class="pull-left btn-tiny more-posts">+ view more files</button>
             </a>
+            {{/if}}
           {{/with}}
         </div>
     </div>

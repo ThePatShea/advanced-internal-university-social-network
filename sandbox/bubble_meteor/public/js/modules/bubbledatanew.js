@@ -174,8 +174,6 @@
     var initialized = false;
 
     function maybeComplete() {
-      console.log('MAYBE!', loading);
-
       loading -= 1;
 
       if (initialized && !loading && properties.callback)

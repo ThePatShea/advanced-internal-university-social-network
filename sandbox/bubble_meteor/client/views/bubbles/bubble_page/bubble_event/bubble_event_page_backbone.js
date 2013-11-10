@@ -14,7 +14,7 @@ function refreshData(bubbleId) {
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
 
     events: {
-      limit: 3,
+      limit: 10,
       fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId'],
       load: true
     },
