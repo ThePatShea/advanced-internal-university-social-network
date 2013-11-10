@@ -27,8 +27,16 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section 
   display block
 
+html
+  height 100%
+
 body 
   line-height 1
+  height 100%
+  overflow hidden /* Added testing v1 */
+  -webkit-font-smoothing: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: antialiased;
 
 ol, ul 
   list-style none
@@ -67,12 +75,6 @@ button
   padding 0
   width auto
   overflow visible
-
-body
-  -webkit-font-smoothing: none;
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-font-smoothing: antialiased;
-  overflow hidden /* Added testing v1 */
 
 /*---------------------------------------------------------
 ---------------------- MIXINS/VARIBA ----------------------
@@ -366,9 +368,12 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
 ---------------------------------------------------------*/
 
 .sidebar-container
-  position fixed
-  left 0
+  position relative
+  float  left
+  margin-top 60px
   height 100%
+  background-color red
+  max-width 315px
   .side-bar
     z-index 95
     width 100px
@@ -377,12 +382,13 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     display block
     position relative
     .sidebar-menu
-      padding-top 60px
       li
+        float none
         list-style none
         display block
         border-bottom      1px solid #436C88
         button
+          float  none
           cursor pointer
           color              main-xlight
           position           relative
@@ -437,14 +443,17 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
 
 
 .sidebar-menu-content
-  visibility              hidden
-  position                absolute
-  left                    -100px
+  display none
+  z-index                 -1
+  float left
+  // visibility              visible
+  // position                absolute
+  // left                    100px
   background-color        light-color
-  top                     60px
+  // top                     60px
   width                   210px
   height                  100%
-  opacity                 0
+  opacity                 1
   -webkit-transition      all 0.4s ease-in-out
   -moz-transition         all 0.4s ease-in-out
   -ms-transition          all 0.4s ease-in-out
@@ -521,7 +530,8 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
 
 .mini-footer
   position absolute
-  bottom 0
+  left 0
+  bottom 60px
   li
     padding     9px 0
     text-align  center
@@ -635,6 +645,7 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     height 100%
     margin-top 60px
     overflow-y scroll
+    overflow-x hidden
 
 
 
@@ -873,6 +884,8 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
             width 67px
   // Responsive Sidebar
   .sidebar-container
+    width 0px
+    visibility hidden
     left -300px
     opacity 0
     -webkit-transition all 0.5s
@@ -883,7 +896,6 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     .side-bar
       width 59px
       .sidebar-menu
-        padding-top 60px
         li
           button
             height             59px
@@ -892,6 +904,8 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     .menu-pull
       left 59px
   .sidebar-container-active
+    visibility visible
+    width 59px
     left 0
     opacity 1
 

@@ -103,8 +103,17 @@ nav,
 section {
   display: block;
 }
+html {
+  height: 100%;
+}
 body {
   line-height: 1;
+  height: 100%;
+  overflow: hidden;
+/* Added testing v1 */
+  -webkit-font-smoothing: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 ol,
 ul {
@@ -149,13 +158,6 @@ button {
   padding: 0;
   width: auto;
   overflow: visible;
-}
-body {
-  -webkit-font-smoothing: none;
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-/* Added testing v1 */
 }
 /*---------------------------------------------------------
 ---------------------- MIXINS/VARIBA ----------------------
@@ -444,9 +446,12 @@ body {
 ------------------------- SIDEBAR -------------------------
 ---------------------------------------------------------*/
 .sidebar-container {
-  position: fixed;
-  left: 0;
+  position: relative;
+  float: left;
+  margin-top: 60px;
   height: 100%;
+  background-color: #f00;
+  max-width: 315px;
 }
 .sidebar-container .side-bar {
   z-index: 95;
@@ -456,15 +461,14 @@ body {
   display: block;
   position: relative;
 }
-.sidebar-container .side-bar .sidebar-menu {
-  padding-top: 60px;
-}
 .sidebar-container .side-bar .sidebar-menu li {
+  float: none;
   list-style: none;
   display: block;
   border-bottom: 1px solid #436c88;
 }
 .sidebar-container .side-bar .sidebar-menu li button {
+  float: none;
   cursor: pointer;
   color: #95afbf;
   position: relative;
@@ -524,14 +528,13 @@ body {
   fill: #f7f8f8;
 }
 .sidebar-menu-content {
-  visibility: hidden;
-  position: absolute;
-  left: -100px;
+  display: none;
+  z-index: -1;
+  float: left;
   background-color: #a5bbc9;
-  top: 60px;
   width: 210px;
   height: 100%;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;
@@ -619,7 +622,8 @@ body {
 }
 .mini-footer {
   position: absolute;
-  bottom: 0;
+  left: 0;
+  bottom: 60px;
 }
 .mini-footer li {
   padding: 9px 0;
@@ -743,6 +747,7 @@ body {
   height: 100%;
   margin-top: 60px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 /*---------------------------------------------------------
 ----------------------- RESPONSIVE ------------------------
@@ -1002,6 +1007,8 @@ body {
     width: 67px;
   }
   .sidebar-container {
+    width: 0px;
+    visibility: hidden;
     left: -300px;
     opacity: 0;
     -webkit-transition: all 0.5s;
@@ -1013,9 +1020,6 @@ body {
   .sidebar-container .side-bar {
     width: 59px;
   }
-  .sidebar-container .side-bar .sidebar-menu {
-    padding-top: 60px;
-  }
   .sidebar-container .side-bar .sidebar-menu li button {
     height: 59px;
   }
@@ -1026,6 +1030,8 @@ body {
     left: 59px;
   }
   .sidebar-container-active {
+    visibility: visible;
+    width: 59px;
     left: 0;
     opacity: 1;
   }
