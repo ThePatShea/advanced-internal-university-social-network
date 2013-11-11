@@ -9,8 +9,8 @@ window.App = (function(Backbone, Marionette, $, _){
 	var App = new Backbone.Marionette.Application();
 
 	App.addRegions({
-		headerRegion: '#header_container',
-		sidebarRegion: '#sidebar_container',
+		headerRegion: '#header_region',
+		sidebarRegion: '#sidebar_region',
 		mainRegion: '#main_region'
 	});
 
