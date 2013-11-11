@@ -34,7 +34,7 @@ handlebars.registerHelper("js", function(){
     }).join("\n  ");
   } else {
     // Output the <script> tag of the compiled application (see its route below)
-    scripts = "<script src='application.js'></script>";
+    scripts = "<script src='/application.js'></script>";
   }
 
   return scripts;
