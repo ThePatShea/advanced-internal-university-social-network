@@ -75,8 +75,10 @@
         </div>
       </div>
     </div>
+    {{#if subsectionPaneVisible}}
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
-      <div class="visible-{{selectedSection 'mybubbles'}}">
+      {{#if selectedSection 'mybubbles'}}
+      <div>
         <div class="heading">
           <div class="pull-left section-name">my bubbles</div>
           <div class="pull-right v-middle">
@@ -107,7 +109,9 @@
           </a>
         {{/each}}
       </div>
-      <div class="visible-{{selectedSection 'explore'}}">
+      {{/if}}
+      {{#if selectedSection 'explore'}}
+      <div>
         <div class="heading">
           <div class="pull-left v-middle">
             <div class="v-inner">
@@ -144,7 +148,9 @@
           </a>
         {{/each}}
       </div>
-      <div class="visible-{{selectedSection 'settings'}}">
+      {{/if}}
+      {{#if selectedSection 'settings'}}
+      <div>
         <div class="heading">
           <div class="pull-left section-name">
             <span class="cb-icon-settings">{{> icon-settings-big}}</span>
@@ -187,6 +193,8 @@
           </button>
         </a>
       </div>
+      {{/if}}
     </div>
+    {{/if}}
   </div>
 </template>
