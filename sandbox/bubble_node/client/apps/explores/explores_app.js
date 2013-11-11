@@ -1,10 +1,10 @@
-App.module("ExploresApp", function(ExploresApp, App, Backbone, Marionette, $, _){
+App.module('ExploresApp', function(ExploresApp, App, Backbone, Marionette, $, _){
   //Explore app code goes here
 
   ExploresApp.Router = Marionette.AppRouter.extend({
     appRoutes: {
-      "explore": "enterExplore",
-      "explore/:id": "showExplore"
+      'explore': 'enterExplore',
+      'explore/:id': 'showExplore'
     }
   });
 
@@ -24,4 +24,4 @@ App.module("ExploresApp", function(ExploresApp, App, Backbone, Marionette, $, _)
     router = new ExploresApp.Router({controller: API});
   });
 
-})
+});

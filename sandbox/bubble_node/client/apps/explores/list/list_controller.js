@@ -9,4 +9,4 @@ App.module("ExploresApp.List", function(List, App, Backbone, Marionette, $, _){
       this.layout.subpanelRegion.show(listView);
     }
   });
-})
+});
