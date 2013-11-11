@@ -1,3 +1,9 @@
+//= require lib/jquery.min
+//= require lib/underscore.min
+//= require lib/backbone.min
+//= require lib/marionette.min
+//= require lib/handlebars
+//= require_tree static
 //= require app
 //= require_tree utilities
 //= require_tree controllers
