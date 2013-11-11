@@ -270,6 +270,7 @@ Template.bubblePageBackbone.helpers({
     });
     var topEventPosts = eventPosts.slice(0, 3);
     return {
+      'numPosts': eventPosts.length,
       'posts': topEventPosts,
       'postType': 'event',
       'word1': 'upcoming'
@@ -280,6 +281,7 @@ Template.bubblePageBackbone.helpers({
     var discussionPosts = mybubbles.Discussions.getJSON();
     var topDiscussionPosts = discussionPosts.slice(0, 3);
     return {
+      'numPosts': discussionPosts.length,
       'posts': topDiscussionPosts,
       'postType': 'discussion',
       'word1': 'active'
@@ -290,6 +292,7 @@ Template.bubblePageBackbone.helpers({
     var filePosts = mybubbles.Files.getJSON();
     var topFilePosts = filePosts.slice(0, 3);
     return {
+      'numPosts': filePosts.length,
       'posts': topFilePosts,
       'postType': 'file',
       'word1': 'latest'
@@ -319,21 +322,21 @@ Template.bubblePageBackbone.events({
 var bubbleHomeHelper = function() {
   mybubbles = new BubbleData.MyBubbles({
     bubbleId: currentBubbleId,
-    limit: 3,
+    limit: 1,
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
 
     events: {
-      limit: 3,
+      limit: 4,
       fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId','location']
     },
 
     discussions: {
-      limit: 3,
+      limit: 4,
       fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId','lastCommentTime']
     },
 
     files: {
-      limit: 3,
+      limit: 4,
       fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId','lastCommentTime','numDownloads']
     },
 
