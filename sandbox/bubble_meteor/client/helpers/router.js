@@ -4,7 +4,7 @@ Meteor.Router.add({
   //Login from authentication system
   '/siteAccessDenied': 'siteAccessDenied',
   '/bbexplore': 'bbExplorePage',
-  '/backboneexplore': 'explorePageBackbone',
+  //'/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
   '/welcome': 'welcomePage',
   '/loggedOut': 'loggedOut',
@@ -46,15 +46,25 @@ Meteor.Router.add({
         }
       }
     },
-    '/mybubbles/:_id/home': {
+    '/mybubbles/': function() {
+      // TODO: Loading flag
+      var data = new SidebarData.Sidebar();
+      data.getFirstBubbleId(function(bubbleId) {
+        if (bubbleId) {
+          Meteor.Router.to('bubblePageBackbone', bubbleId);
+        } else {
+          Meteor.Router.to('bubbleSubmit');
+        }
+      });
+    },
+    '/mybubbles/:id/home': {
       //to: 'bubblePage',
       to: 'bubblePageBackbone',
       and: function(id) {
         var prevBubble  =  Session.get('currentBubbleId');
-        Session.set('currentBubbleId', id);
-        var currBubble  =  Session.get('currentBubbleId');
 
-        if (currBubble != prevBubble) {
+        if (prevBubble != id) {
+          Session.set('currentBubbleId', id);
           Session.set('bubbleLoading', 'true');  // Handles loading graphic
         }
       }
@@ -159,6 +169,17 @@ Meteor.Router.add({
 
   //Explore Related Routes
     '/explore/create': 'exploreSubmit',
+    '/explore/': function() {
+      // TODO: Loading flag
+      var data = new SidebarData.Sidebar();
+      data.getFirstExploreId(function(exploreId) {
+        if (exploreId) {
+          Meteor.Router.to('explorePageBackbone', exploreId);
+        } else {
+          Meteor.Router.to('exploreSubmit');
+        }
+      });
+    },
     '/explore/:id/home': {
       to: 'explorePageBackbone',
       and: function(id) {
@@ -185,13 +206,14 @@ Meteor.Router.add({
         Meteor.subscribe('singlePost', pId);
       }
     },
+    /*
     '/explore': {
       to: 'exploreAll',
       and: function(){
         var user = Meteor.users.findOne({_id: Meteor.userId()});
         Session.set('selectedUsername', user.username);
       }
-    },
+    },*/
 
 
   // Flags Related Routes

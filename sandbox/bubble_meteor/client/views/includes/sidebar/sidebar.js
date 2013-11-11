@@ -56,23 +56,10 @@ Template.sidebar.helpers({
     return section === 'mybubbles' || section === 'explore' || section === 'settings';
   },
   myBubblesLink: function() {
-    // TODO: Use REST API call
-    var bubbles = Bubbles.find({$or: [{'users.members': Meteor.userId()}, {'users.admins': Meteor.userId()}]},{sort: {'users.members': -1, 'users.admins': -1}, limit: 1}).fetch();
-    if(bubbles.length > 0) {
-      return '/mybubbles/' + bubbles[0]._id + '/home';
-    }else {
-      return '/mybubbles/create';
-    }
+    return '/mybubbles/';
   },
   exploreLink: function(){
-    // TODO: Use REST API call
-    var explores = Explores.find({}, {sort: {'submitted': 1}}).fetch();
-    if(explores.length > 0){
-      return '/explore/' + explores[0]._id + '/home';
-    }
-    else{
-      return '/explore/create';
-    }
+    return '/explore/';
   },
   dashboardLink: function() {
     return '/dashboard';
@@ -98,9 +85,8 @@ Template.sidebar.helpers({
 
     return urlArray[2] == inputName;
   },
-  selectedSubsection: function() {
-    // TODO: Fix me?
-    return Session.get('currentBubbleId') == this._id;
+  selectedBubbleSubsection: function() {
+    return Session.get('currentBubbleId') == this.id;
   },
   userBubbles: function() {
     return Session.get('sidebarCollection-mybubbles');

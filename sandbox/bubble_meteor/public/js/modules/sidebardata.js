@@ -17,9 +17,15 @@
   });
 
   var SidebarExplores = BubbleRest.Collection.extend({
+    limit: 0,
     model: SidebarExplore,
     url: function() {
-      return '/api/v1_0/explores/?fields=' + exploreFields;
+      var url = '/api/v1_0/explores/?fields=' + exploreFields;
+
+      if (this.limit)
+        url += '&limit=' + this.limit;
+
+      return url;
     },
     parse: function(response) {
       return BubbleModels.parsePagedData(this, response, 'explores');
@@ -27,9 +33,15 @@
   });
 
   var SidebarBubbles = BubbleRest.Collection.extend({
+    limit: 0,
     model: SidebarBubble,
     url: function() {
-      return '/api/v1_0/users/' + Meteor.userId() + '/bubbles?fields=' + bubbleFields;
+      var url = '/api/v1_0/users/' + Meteor.userId() + '/bubbles?fields=' + bubbleFields;
+
+      if (this.limit)
+        url += '&limit=' + this.limit;
+
+      return url;
     },
     parse: function(response) {
       return BubbleModels.parsePagedData(this, response, 'bubbles');
@@ -62,6 +74,30 @@
       } else {
         callback(null);
       }
+    };
+
+    function getFirstItemId(collection, callback) {
+      collection.limit = 1;
+      collection.fetch({
+        success: function(collection) {
+          if (collection.count > 0) {
+            callback(collection.models[0].id);
+          } else {
+            callback(null);
+          }
+        },
+        error: function() {
+          callback(null);
+        }
+      });
+    }
+
+    this.getFirstBubbleId = function(callback) {
+      getFirstItemId(this.bubbles, callback);
+    };
+
+    this.getFirstExploreId = function(callback) {
+      getFirstItemId(this.explores, callback);
     };
   };
 
