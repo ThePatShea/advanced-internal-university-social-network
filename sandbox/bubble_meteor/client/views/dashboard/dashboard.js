@@ -348,6 +348,10 @@ Template.dashboard.helpers({
 			return 0;
 	},
 
+	greaterThanThree: function(num) {
+		return num > 3;
+	},
+
 	testGetUpdates: function() {
 		var updateList = Updates.find({userId: Meteor.userId(), read:false}).fetch();
 
