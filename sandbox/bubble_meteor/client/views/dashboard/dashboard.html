@@ -87,7 +87,7 @@
     		<div class="dashboard-section-header">
     			{{pluralize testNumUpdates 'update' ""}}
           		<button class="std-btn-light pull-right clear-updates">clear all</button> 
-          		{{#if greaterThanThree testNumUpdates}}
+          		{{#if greaterThan testNumUpdates 3}}
           			<button class="std-btn-light pull-right dashboard-more-updates">see all</button>
       			{{/if}}
           	</div>
