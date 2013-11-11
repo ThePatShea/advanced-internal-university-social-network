@@ -1,5 +1,6 @@
+// Move into a dynamic js file with server-injected vars
 $(function() {
-	App.start()
+	App.start() // pass vars in here
 });
 
 //Backbone-Marionette App goes here
@@ -8,28 +9,23 @@ window.App = (function(Backbone, Marionette, $, _){
 	var App = new Backbone.Marionette.Application();
 
 	App.addRegions({
-		header: '#header_container',
-		sidebar: '#sidebar_layout_container'
-		//subpanel: '#subpanel_container'
+		headerRegion: '#header_region',
+		sidebarRegion: '#sidebar_region',
+		mainRegion: '#main_region'
+	});
+
+	App.reqres.setHandler('default:region', function() {
+		return App.mainRegion;
 	});
 
 	App.addInitializer(function() {
-		App.module("HeaderApp").start();
-		App.SidebarApp.start();
-		// var v = new SubpanelView();
-		// App.subpanel.show(v);
-		// App.module("FooterApp").start()
-	})
+		App.module("HeaderApp").start()
+		App.module("SidebarApp").start()
+	});
 
-	// SidebarView = Backbone.Marionette.ItemView.extend({
-	// 	template: Templates['./client/apps/sidebar/templates/sidebar.html.handlebars']
-	// });
-
-	// SubpanelView = Backbone.Marionette.ItemView.extend({
-	//    template: Templates['./client/apps/subpanel/templates/subpanel.html.handlebars']
-	// });
-
-	console.log('App initialied');
+	App.on("initialize:after", function(){
+		App.startHistory()
+	});
 
 	return App;
 })(Backbone, Marionette, $, _);
