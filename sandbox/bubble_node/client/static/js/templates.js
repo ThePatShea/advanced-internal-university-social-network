@@ -55,6 +55,38 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<h1 style=\"position: absolute; top: 60px; left: 100px;\">\n  Dashboard!\n</h1>";
   });
 
+this["Templates"]["./client/apps/explores/list/templates/explores.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"title clearfix\">\n  <h3>Explores</h3>\n  <a href=\"#\">\n    <span class=\"icon\">\n      <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"16px\" height=\"16px\" viewBox=\"0 0 16 16\" enable-background=\"new 0 0 16 16\" xml:space=\"preserve\">\n        <circle fill-rule=\"evenodd\" clip-rule=\"evenodd\" cx=\"8\" cy=\"8\" r=\"8\"></circle>\n        <g>\n          <rect x=\"7\" y=\"4\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"#FFFFFF\" width=\"2\" height=\"8\"></rect>\n          <rect x=\"4\" y=\"7\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"#FFFFFF\" width=\"8\" height=\"2\"></rect>\n        </g>\n      </svg>\n    </span>new\n  </a>\n</div>\n\n<ul class=\"explores\"></ul>\n";
+  });
+
+this["Templates"]["./client/apps/explores/list/templates/list_layout.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div id=\"subpanel\" class=\"sidebar-menu-content menu-pull\"></div>\n\n<div id=\"show_region\"></div>\n";
+  });
+
+this["Templates"]["./client/apps/explores/show/templates/explore.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<a href=\"#\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</a>\n";
+  return buffer;
+  });
+
 this["Templates"]["./client/apps/header/templates/header.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
