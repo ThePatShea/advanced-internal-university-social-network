@@ -265,7 +265,9 @@ Template.bubblePageBackbone.helpers({
 
   postPropertiesBackboneEvent: function(){
     //bubbleDep.depend();
-    var eventPosts = mybubbles.Events.getJSON();
+    var eventPosts = _.sortBy(mybubbles.Events.getJSON(), function(obj){
+      return obj.dateTime;
+    });
     var topEventPosts = eventPosts.slice(0, 3);
     return {
       'posts': topEventPosts,

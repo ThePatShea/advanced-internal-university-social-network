@@ -58,7 +58,11 @@ Template.bubbleEventPageBackbone.helpers({
     var urlArray    =  currentUrl.split("/");
     var currentBubbleId  =  urlArray[2];
 
-    return mybubbles.Events.getJSON();
+    var retVal = mybubbles.Events.getJSON();
+    return _.sortBy(retVal,function(obj){
+      return obj.dateTime;
+    });
+
 
     //return Posts.find({bubbleId: currentBubbleId, postType: 'event', dateTime: {$gt: moment().add('hours',-4).valueOf()}}, {/*limit: eventsHandle.limit(),*/ sort: {dateTime: 1} });
   },
