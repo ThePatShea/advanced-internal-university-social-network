@@ -448,10 +448,8 @@ button {
 .sidebar-container {
   position: relative;
   float: left;
-  margin-top: 60px;
+  padding-top: 60px;
   height: 100%;
-  background-color: #f00;
-  max-width: 315px;
 }
 .sidebar-container .side-bar {
   z-index: 95;
@@ -460,6 +458,10 @@ button {
   background-color: #2f5973;
   display: block;
   position: relative;
+  float: left;
+}
+.sidebar-container .side-bar .sidebar-menu {
+  height: 100%;
 }
 .sidebar-container .side-bar .sidebar-menu li {
   float: none;
@@ -528,13 +530,15 @@ button {
   fill: #f7f8f8;
 }
 .sidebar-menu-content {
-  display: none;
-  z-index: -1;
-  float: left;
-  background-color: #a5bbc9;
-  width: 210px;
-  height: 100%;
+  z-index: 80;
+  position: relative;
+  left: -310px;
+  visibility: hidden;
+  width: 0;
   opacity: 1;
+  background-color: #a5bbc9;
+  height: 100%;
+  float: left;
   -webkit-transition: all 0.4s ease-in-out;
   -moz-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;
@@ -597,6 +601,9 @@ button {
 .sidebar-menu-content .title a svg rect {
   fill: #2f5973;
 }
+.sidebar-menu-content .bubbles {
+  height: auto;
+}
 .sidebar-menu-content .bubbles li {
   list-style-type: none;
 }
@@ -616,14 +623,15 @@ button {
   background-color: #98b0c0;
 }
 .menu-pull {
+  left: auto;
   visibility: visible;
-  left: 100px;
+  width: auto;
   opacity: 1;
 }
 .mini-footer {
   position: absolute;
   left: 0;
-  bottom: 60px;
+  bottom: 0;
 }
 .mini-footer li {
   padding: 9px 0;
@@ -652,6 +660,20 @@ button {
   height: 22px;
   vertical-align: middle;
   margin-right: 7px;
+}
+/*-------------- TESTING BODY TRANSTIONS // Don't use. --------------*/
+body.push-menu .sidebar-container {
+  visibility: visible;
+  width: 59px;
+  left: 0;
+  opacity: 1;
+}
+body.push-menu #main {
+  position: relative;
+  left: 60px;
+}
+body.push-menu #main -webkit-transition all 0.5sease-in-out -moz-transition all 0.5sease-in-out -ms-transition all 0.5sease-in-out -o-transition all 0.5sease-in-out {
+  transition: all 0.5s ease-in-out;
 }
 /*-------------- BUBBLE COLOR TYPES --------------*/
 .tab-active {
@@ -744,10 +766,129 @@ button {
   font-size: 50px;
 }
 .content-container #main {
+  border-top: 1px solid #224253;
   height: 100%;
   margin-top: 60px;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.cover {
+  padding: 0 42px;
+  height: 107px;
+  overflow: hidden;
+  max-height: 107px;
+  background-color: rgba(0,0,0,0.7);
+  position: relative;
+}
+@media (max-width: 767px) {
+  .cover {
+    padding: 0 21px;
+  }
+}
+.cover .cover-image {
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.cover .cover-content .button {
+  margin-top: 35px;
+  position: relative;
+  float: right;
+  padding: 9px 14px 9px 38px;
+  border-radius: 21px;
+  background-color: rgba(0,0,0,0.2);
+  text-decoration: none;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  font-weight: 800;
+  color: #a5bbc9;
+  border: 1px solid #a5bbc9;
+}
+.cover .cover-content .button .icon {
+  position: absolute;
+  left: 9px;
+  top: 6px;
+}
+.cover .cover-content .button:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+.cover .cover-content .button:hover svg {
+  -webkit-transform: rotate(-180deg);
+  -moz-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  -o-transform: rotate(-180deg);
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  -moz-transition: -moz-transform 0.5s ease-in-out;
+  -o-transition: -o-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+}
+.cover .cover-content .button:hover svg rect {
+  fill: #011126;
+}
+.cover .cover-content .button svg {
+  margin-right: 2px;
+  vertical-align: middle;
+  fill: #a5bbc9;
+}
+.cover .cover-content .button svg rect {
+  fill: #011126;
+}
+.cover .cover-content .title {
+  margin-top: 24px;
+  position: relative;
+  float: left;
+  padding-left: 50px;
+}
+@media (max-width: 767px) {
+  .cover .cover-content .title {
+    padding-left: 0;
+    width: 50%;
+    margin-top: 30px;
+  }
+}
+.cover .cover-content .title h3 {
+  font-size: 37px;
+  font-family: 'proxima-nova', Arial, Sans-Serif;
+  color: #fff;
+  font-weight: 300;
+}
+@media (max-width: 767px) {
+  .cover .cover-content .title h3 {
+    font-size: 28px;
+  }
+}
+.cover .cover-content .title h5 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: 'brandon-grotesque', Arial, Sans-Serif;
+  color: #a5bbc9;
+  letter-spacing: 1px;
+}
+@media (max-width: 480px) {
+  .cover .cover-content .title h5 {
+    display: none;
+  }
+}
+.cover .cover-content .title .icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -18px;
+}
+.cover .cover-content .title .icon svg {
+  width: 36px;
+  height: 36px;
+  fill: #a5bbc9;
+}
+@media (max-width: 767px) {
+  .cover .cover-content .title .icon svg {
+    display: none;
+  }
 }
 /*---------------------------------------------------------
 ----------------------- RESPONSIVE ------------------------
@@ -961,12 +1102,6 @@ button {
 /***************************************************************************************** 
 *********************** MEDIA QUERIES 
 *****************************************************************************************/
-/* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {
-}
-/* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {
-}
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
   .hide {
@@ -1007,7 +1142,7 @@ button {
     width: 67px;
   }
   .sidebar-container {
-    width: 0px;
+    width: 0;
     visibility: hidden;
     left: -300px;
     opacity: 0;
@@ -1027,11 +1162,14 @@ button {
     display: none;
   }
   .sidebar-container .menu-pull {
-    left: 59px;
+    width: 210px;
+    left: none;
+    visibility: visible;
+    opacity: 1;
   }
   .sidebar-container-active {
+    width: auto;
     visibility: visible;
-    width: 59px;
     left: 0;
     opacity: 1;
   }
@@ -1053,10 +1191,4 @@ button {
   .side-activator .icon svg {
     fill: #a5bbc9;
   }
-}
-/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-}
-/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px) {
 }

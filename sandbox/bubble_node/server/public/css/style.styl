@@ -370,10 +370,8 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
 .sidebar-container
   position relative
   float  left
-  margin-top 60px
+  padding-top 60px
   height 100%
-  background-color red
-  max-width 315px
   .side-bar
     z-index 95
     width 100px
@@ -381,7 +379,9 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     background-color medium-color
     display block
     position relative
+    float left
     .sidebar-menu
+      height 100%
       li
         float none
         list-style none
@@ -415,7 +415,6 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
           .icon
             svg
               fill  main-xlight
-
         button.active
           -webkit-transition          border-left 0.1s ease-in-out
           -moz-transition             border-left 0.1s ease-in-out
@@ -443,17 +442,15 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
 
 
 .sidebar-menu-content
-  display none
-  z-index                 -1
+  z-index 80
+  position relative
+  left -310px
+  visibility hidden
+  width 0
+  opacity 1
+  background-color light-color
+  height 100%
   float left
-  // visibility              visible
-  // position                absolute
-  // left                    100px
-  background-color        light-color
-  // top                     60px
-  width                   210px
-  height                  100%
-  opacity                 1
   -webkit-transition      all 0.4s ease-in-out
   -moz-transition         all 0.4s ease-in-out
   -ms-transition          all 0.4s ease-in-out
@@ -490,14 +487,14 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
       &:hover
         background-color dark-color
         svg
-          -webkit-transform: rotate(-180deg);
-          -moz-transform: rotate(-180deg);
-          -ms-transform: rotate(-180deg);
-          -o-transform: rotate(-180deg);
-          -webkit-transition: -webkit-transform 0.5s ease-in-out;
-          -moz-transition: -moz-transform 0.5s ease-in-out;
-          -o-transition: -o-transform 0.5s ease-in-out;
-          transition: transform 0.5s ease-in-out;
+          -webkit-transform rotate(-180deg)
+          -moz-transform rotate(-180deg)
+          -ms-transform rotate(-180deg)
+          -o-transform rotate(-180deg)
+          -webkit-transition -webkit-transform 0.5s ease-in-out
+          -moz-transition -moz-transform 0.5s ease-in-out
+          -o-transition -o-transform 0.5s ease-in-out
+          transition transform 0.5s ease-in-out
           rect
             fill dark-color
       svg
@@ -507,6 +504,7 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
         rect
           fill medium-color
   .bubbles
+    height auto
     li
       list-style-type none
       a
@@ -524,14 +522,15 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
           background-color #98B0C0
 
 .menu-pull
+  left auto
   visibility visible
-  left 100px
+  width auto
   opacity 1
 
 .mini-footer
   position absolute
   left 0
-  bottom 60px
+  bottom 0
   li
     padding     9px 0
     text-align  center
@@ -556,8 +555,22 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
         margin-right      7px
 
 
-
-
+/*-------------- TESTING BODY TRANSTIONS // Don't use. --------------*/ 
+body.push-menu
+  .sidebar-container
+    visibility visible
+    width 59px
+    left 0
+    opacity 1
+  #main
+    position relative
+    left 60px
+    -webkit-transition all .5s ease-in-out
+       -moz-transition all .5s ease-in-out
+        -ms-transition all .5s ease-in-out
+         -o-transition all .5s ease-in-out
+            transition all .5s ease-in-out
+    
 /*-------------- BUBBLE COLOR TYPES --------------*/
 
 .tab-active
@@ -642,14 +655,102 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
     color red
     font-size 50px
   #main
+    border-top 1px solid dark-color-shade
     height 100%
     margin-top 60px
     overflow-y scroll
     overflow-x hidden
 
-
-
-
+.cover
+  padding 0 42px
+  height 107px
+  overflow hidden
+  max-height 107px
+  background-color rgba(0,0,0, 0.7)
+  position relative
+  @media (max-width: 767px)
+    padding 0 21px
+  .cover-image
+    z-index -1
+    position absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
+  .cover-content
+    .button
+      margin-top 35px
+      position relative
+      float right
+      padding 9px 14px 9px 30+8px
+      border-radius 21px
+      background-color rgba(0,0,0, 0.2)
+      text-decoration none
+      font-size 11px
+      text-transform uppercase
+      font-family main-font
+      font-weight 800
+      color light-color
+      border 1px solid light-color
+      .icon
+        position  absolute
+        left 9px
+        top 6px
+      &:hover
+        background-color rgba(0,0,0, 0.1)
+        svg
+          -webkit-transform rotate(-180deg)
+          -moz-transform rotate(-180deg)
+          -ms-transform rotate(-180deg)
+          -o-transform rotate(-180deg)
+          -webkit-transition -webkit-transform 0.5s ease-in-out
+          -moz-transition -moz-transform 0.5s ease-in-out
+          -o-transition -o-transform 0.5s ease-in-out
+          transition transform 0.5s ease-in-out
+          rect
+            fill dark-color
+      svg
+        margin-right 2px
+        vertical-align middle
+        fill light-color
+        rect
+          fill dark-color
+    .title
+      margin-top 24px
+      position relative
+      float left
+      padding-left 50px
+      @media (max-width: 767px)
+        padding-left 0
+        width 50%
+        margin-top 30px
+      h3
+        font-size 37px
+        font-family alt-font
+        color #fff
+        font-weight 300
+        @media (max-width: 767px)
+          font-size 28px
+      h5
+        font-size 12px
+        font-weight 700
+        text-transform uppercase
+        font-family main-font
+        color light-color
+        letter-spacing 1px
+        @media (max-width: 480px)
+          display none
+      .icon
+        position absolute
+        left 0
+        top 50%
+        margin-top -18px
+        svg
+          width 36px
+          height 36px
+          fill light-color
+          @media (max-width: 767px)
+            display none
 /*---------------------------------------------------------
 ----------------------- RESPONSIVE ------------------------
 ---------------------------------------------------------*/
@@ -843,17 +944,14 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
 *********************** MEDIA QUERIES 
 *****************************************************************************************/ 
 
-/* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {}
-
-/* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {}
-
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px)
   // General Styles
   .hide
     display none
+
+
+
   // Responsive User Menu
   .top-bar
     .main-logo
@@ -884,7 +982,7 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
             width 67px
   // Responsive Sidebar
   .sidebar-container
-    width 0px
+    width 0
     visibility hidden
     left -300px
     opacity 0
@@ -902,13 +1000,16 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
             .name
               display        none
     .menu-pull
-      left 59px
+      width 210px
+      left none
+      visibility visible
+      opacity 1
   .sidebar-container-active
+    width auto
     visibility visible
-    width 59px
     left 0
     opacity 1
-
+  /* Repsonsive MENU Icon */ 
   .side-activator
     display block
     height 60px
@@ -923,9 +1024,4 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
           fill white-light
       svg
         fill light-color
-
-/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
-
-/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px) {}
+  // Responsive Teaser.
