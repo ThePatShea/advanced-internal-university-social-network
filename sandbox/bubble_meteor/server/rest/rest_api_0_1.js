@@ -350,6 +350,27 @@ Meteor.startup(function() {
 		}
 	});
 
+	RestCrud.makeGenericApi('/api/v1_0/users/:parentId/bubbles', Bubbles, {
+		query: {
+			name: 'bubbles',
+			apiOpts: RestQuery.bubbleUserOrder(parseApiOptions),
+			check: RestSecurity.relatedUserExists,
+			query: RestQuery.buildUserBubbleQuery()
+		},
+		queryOne: {
+			check: RestSecurity.deny
+		},
+		create: {
+			check: RestSecurity.deny
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
+		}
+	});
+
 	// Userlogs
 	RestCrud.makeGenericApi('/api/v1_0/userlogs', Userlogs, {
 		query: {

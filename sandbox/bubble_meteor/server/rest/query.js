@@ -1,4 +1,5 @@
 this.RestQuery = {
+  // Explores
   explorePostsFilter: function(ctx, query) {
     query = query || {};
 
@@ -26,6 +27,7 @@ this.RestQuery = {
     };
   },
 
+  // Bubbles
   buildBubbleUserQuery: function(name) {
     return function(ctx) {
       var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.parentId);
@@ -37,6 +39,32 @@ this.RestQuery = {
           $in: bubbleUserIds
         }
       };
+    };
+  },
+
+  // Users
+  buildUserBubbleQuery: function() {
+    return function(ctx) {
+      return {
+        $or: [
+          {'users.members': ctx.userId},
+          {'users.admins': ctx.userId}
+        ]
+      };
+    };
+  },
+
+  bubbleUserOrder: function(apiOpts) {
+    return function(ctx) {
+      var opts = apiOpts(ctx);
+      opts.sort = {
+        'submitted': -1
+      };
+      opts.fields = {
+        category: 1,
+        title: 1
+      };
+      return opts;
     };
   }
 };

@@ -29,12 +29,11 @@
   var SidebarBubbles = BubbleRest.Collection.extend({
     model: SidebarBubble,
     url: function() {
-      // TODO: Create new REST endpoint
-      return '/2013-09-11/userBubbles/' + Meteor.userId() + '?fields=' + bubbleFields;
+      return '/api/v1_0/users/' + Meteor.userId() + '/bubbles?fields=' + bubbleFields;
     },
-    //parse: function(response) {
-    //  return BubbleModels.parsePagedData(this, response, 'bubbles');
-    //}
+    parse: function(response) {
+      return BubbleModels.parsePagedData(this, response, 'bubbles');
+    }
   });
 
   var Sidebar = function(name) {

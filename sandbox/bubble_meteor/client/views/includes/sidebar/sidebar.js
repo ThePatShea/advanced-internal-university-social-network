@@ -25,7 +25,6 @@ function refreshData() {
   Session.set('sidebarCollection-' + name, []);
   data.getData(name, function(collection) {
     Session.set('sidebarCollection-' + name, collection);
-    console.log('GOT DATA', collection);
   });
 }
 

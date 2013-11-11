@@ -193,12 +193,22 @@ this.RestSecurity = {
     if (post.userId == ctx.userId)
       return;
 
-    return RestHelpers.jsonResponse(401, 'Can not edit others comment')
+    return RestHelpers.jsonResponse(401, 'Can not edit others comment');
   },
 
   // Files
   canChangeFile: function(ctx, obj) {
     if (ctx.user.userType != UserType.ADMIN && obj.userId != ctx.userId)
+      return RestHelpers.jsonResponse(403, 'Access denied.');
+  },
+
+  // Users
+  relatedUserExists: function(ctx) {
+    var user = RestHelpers.mongoFindOne(Meteor.users, ctx.params.parentId);
+    if (!user)
+      return RestHelpers.jsonResponse(404, 'User does not exist');
+
+    if (user._id != ctx.userId)
       return RestHelpers.jsonResponse(403, 'Access denied.');
   },
 
