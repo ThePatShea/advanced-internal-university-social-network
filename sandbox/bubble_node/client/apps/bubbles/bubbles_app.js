@@ -8,7 +8,7 @@ App.module("BubblesApp", function(BubblesApp, App, Backbone, Marionette, $, _) {
 
   var API = {
     list: function(nav) {
-      // App.vent.trigger("sidebar:change", "Bubbles")
+      App.vent.trigger("sidebar:change", "bubbles")
       new BubblesApp.List.Controller();
     },
     show: function(bubble, region) {
