@@ -1,5 +1,4 @@
 App.module('ExploresApp', function(ExploresApp, App, Backbone, Marionette, $, _){
-  //Explore app code goes here
 
   ExploresApp.Router = Marionette.AppRouter.extend({
     appRoutes: {
@@ -18,7 +17,7 @@ App.module('ExploresApp', function(ExploresApp, App, Backbone, Marionette, $, _)
       new ExploresApp.List.Controller();
       console.log('Explore: ', id);
     }
-  }
+  };
 
   App.addInitializer(function(){
     router = new ExploresApp.Router({controller: API});

@@ -1,5 +1,5 @@
 App.module('ExploresApp.List', function(List, App, Backbone, Marionette, $, _){
-  //ExploreApp list view code goes here
+
   List.Layout = Marionette.Layout.extend({
     template: 'explores/list/templates/list_layout',
     regions: {
