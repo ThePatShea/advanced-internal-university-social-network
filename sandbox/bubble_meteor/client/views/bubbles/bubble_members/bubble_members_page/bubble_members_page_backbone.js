@@ -19,8 +19,9 @@ Template.bubbleMembersPageBackbone.created = function() {
 	    if(typeof rejectList == 'undefined'){
 	    	rejectList = [];
 	    }
-	    rejectList = rejectList.concat(users.invitees, users.admins, users.members, users.invitees, users.applicants); 
+	    rejectList = rejectList.concat(users.admins, users.members,users.applicants); 
 	    rejectList.push(Meteor.userId());
+      Session.set("selectList",users.invitees);
 	});
 
 	bubbleDep = new Deps.Dependency;
