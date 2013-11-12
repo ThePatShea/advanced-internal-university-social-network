@@ -118,6 +118,55 @@ var bubbleMembersHelper = function() {
   }
   else
   {
+    if(mybubbles.bubbleId != currentBubbleId){
+      mybubbles = new BubbleData.MyBubbles({
+        bubbleId: currentBubbleId,
+        limit: 10,
+        fields: ['title', 'profilePicture', 'category', 'bubbleType'],
+
+        events: {
+          limit: 0,
+          fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId']
+        },
+
+        discussions: {
+          limit: 0,
+          fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+        },
+
+        files: {
+          limit: 0,
+          fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'viewCount', 'userId']
+        },
+
+        members: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture', 'userType']
+        },
+
+        admins: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture', 'userType']
+        },
+
+        applicants: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture', 'userType']
+        },
+
+        invitees: {
+          limit: 10,
+          fields: ['username', 'name', 'profilePicture', 'userType']
+        },
+
+        callback: function(){
+          console.log('Bubbledata changed');
+          bubbleDep.changed();
+          Session.set('isLoading', false);
+        }
+      });
+    }
+
   	var ready = 0;
     mybubbles.Admins.setLimit(10, function(){
       console.log("Admins Limit set to '10'");
