@@ -15,7 +15,7 @@ function refreshData(bubbleId) {
 
     discussions: {
       limit: 10,
-      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId'],
+      fields: ['name', 'author', 'submitted', 'postType', 'bubbleId', 'dateTime', 'commentsCount', 'attendees', 'viewCount', 'userId','lastCommentTime'],
       load: true
     },
 
