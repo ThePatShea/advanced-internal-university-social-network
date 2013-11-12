@@ -9,6 +9,7 @@ Template.postPage.rendered = function() {
 
   var currentBubbleId  =  urlArray[2];
   var currentPostId    =  urlArray[4];
+  console.log('Updated Post: ', currentBubbleId, currentPostId);
 
   Meteor.subscribe('singleBubble', currentBubbleId);
   Meteor.subscribe('singlePost', currentPostId, function() {
