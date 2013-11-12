@@ -238,5 +238,7 @@ Template.sidebar.rendered = function() {
 };
 
 Template.sidebar.destroyed = function() {
-  this.watch.stop();
+  if(typeof this.watch != 'undefined'){
+    this.watch.stop();
+  }
 };
