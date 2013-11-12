@@ -12,6 +12,8 @@ Template.imGoing.events({
     'click .im-going': function(event) {
       // Disable the parent button
       event.stopPropagation();
+      
+      $('.main-words').html("<img src='/img/message-loader.gif' />")
 
       // Add/remove the user to/from list of attendees
       console.log("CLICK IM GOING: ", this);

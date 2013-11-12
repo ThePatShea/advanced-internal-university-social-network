@@ -107,15 +107,24 @@ Template.discussionSubmit.events({
       //Google Analytics
       _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
+      var bodySelector = $('.cb-discussionSubmit-form').find('.wysiwyg');
+      var postBody = bodySelector.html();
+      var rmIndex = postBody.indexOf('<span class="wysiwyg-placeholder">Type here...</span>');
+      if(rmIndex != -1)
+      {
+        bodySelector.html(postBody.slice(0,rmIndex));
+      }
+
       makeDiscussionPost();
 
       //Show Post submitted confirmation message
-      var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+      var postTitle = $('.cb-discussionSubmit-form').find('[name=name]').val();
       var displayPostConfirmationMessage = function(postTitle){
         return function(){
           //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
           var message = postTitle.slice(0, 7);
           var message = message + ' ...';
+          $('.info').removeClass('visible-false');
           $('.message-container .info').text(message);
           $('.message-container').removeClass('visible-false');
           $('.message-container').addClass('message-container-active');
@@ -127,7 +136,7 @@ Template.discussionSubmit.events({
         }        
       }
       console.log('Post Title: ', postTitle);
-      setTimeout(displayPostConfirmationMessage(postTitle), 1000);
+      setTimeout(displayPostConfirmationMessage(postTitle), 2000);
 
   },
 

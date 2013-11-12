@@ -127,13 +127,13 @@ Template.bubbleInvitation.helpers({
     {
       var tmp = Session.get('inviteeList'+Session.get('currentBubbleId'));
     }
-    inviteeIdList = _.map(tmp, function(username){
+    var inviteeIdList = _.map(tmp, function(username){
       if(Meteor.users.findOne({username:username})) {
         return Meteor.users.findOne({username:username})._id;
       }
     });
     console.log("InviteeIdList: ", inviteeIdList);
-    return(_.contains(inviteeIdList,this._id));
+    return(_.contains(inviteeIdList,this._id) || _.contains(Session.get("selectList"),this._id));
   },
     numPosts: function() {
     var uid = this._id;
@@ -149,13 +149,11 @@ Template.bubbleInvitation.events({
 
   'click .shortlist-invitee': function(event){
     event.preventDefault();
-    if(typeof Session.get('recentlyAdded') !== "undefined")
-    {
-      if(_.contains(Session.get('recentlyAdded'),(this.username)))
+    console.log("SHORTLIST ME: ", this);
+      if(_.contains(Session.get('recentlyAdded'),(this.username)) || _.contains(Session.get('selectList'),this._id))
       {
         return;
       }
-    }
     var usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
     if(!usernameList){
       usernameList = [];

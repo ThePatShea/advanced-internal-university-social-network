@@ -28,16 +28,20 @@ Template.explorePostPageBB.helpers({
     return this.postAsType === 'bubble';
   },
   displayName: function() {
+    return this.author;
+    /*
     if (this.postAsType === 'user') {
       return this.author;
     } else
     if (this.postAsType === 'bubble') {
       var bubble = Session.get('currentExplorePostBubble');
       if (bubble)
-        return bubble.get('title');
+        //return bubble.get('title');
+      return bubble.title;
       else
         return this.author;
     }
+    */
   },
   isFlagged: function() {
     return this.flagged;

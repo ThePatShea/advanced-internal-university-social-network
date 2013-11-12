@@ -1,3 +1,4 @@
+
 Handlebars.registerHelper('pluralize', function(n, thing, between) {
   if (between == undefined)
     between = '';
@@ -32,6 +33,10 @@ var getPosts = function(inputPostType) {
 
   return Posts.find(params_find, {limit: 3, sort: params_sort}).fetch();
 }
+
+Handlebars.registerHelper('greaterThan', function(a,b){
+  return a > b;
+})
 
 Handlebars.registerHelper('siteLoading', function() {
   var siteLoading = Session.get('siteLoading');

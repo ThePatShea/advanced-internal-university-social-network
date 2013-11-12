@@ -37,6 +37,24 @@ Template.editFile.events({
             var currentPostId = Session.get('currentPostId');
             var currentBubbleId = Session.get('currentBubbleId');
 
+            var displayPostConfirmationMessage = function(postTitle){
+              return function(){
+                //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+                var message = postTitle.slice(0, 7);
+                var message = message + ' ...';
+                $('.info').removeClass('visible-false');
+                $('.message-container .info').text(message);
+                $('.message-container').removeClass('visible-false');
+                $('.message-container').addClass('message-container-active');
+                setTimeout(function(){
+                  $('.message-container').removeClass('message-container-active');
+                  $('.message-container').addClass('visible-false');
+                  clearTimeout();
+                },5000);
+              }        
+            };
+            setTimeout(displayPostConfirmationMessage('File'), 2000);
+
             Posts.update(currentPostId, {$set: fileAttributes}, function(error) {
               if (error) {
                 // display the error to the user

@@ -127,6 +127,10 @@ getBubbleId =  function(userId) {
     }
   });
 
+  Meteor.publish('numPostsByUser', function(uid) {
+    return Posts.find({userId: uid}, {fields: {_id: 1, userId: 1}});
+  });
+
   Meteor.publish('discussions', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
       //sort: {submitted: -1},

@@ -194,12 +194,14 @@ Template.bubblePageBackbone.events({
   }
 });
 
+
 Template.bubblePageBackbone.created = function() {
   var that = this;
 
   Session.set('bubbleUpdatesToShow', 3);
 
   this.updatedPosts = Meteor.subscribe('updatedPosts', Meteor.userId());
+
 
   // TODO: Fix me
   if (typeof goingDep === "undefined")

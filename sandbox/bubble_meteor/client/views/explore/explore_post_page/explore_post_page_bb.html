@@ -71,7 +71,7 @@
             </div>
           </a>
         {{else}}
-          <a href="{{bubblePagePath this.postAsId}}">
+          <a href="/mybubbles/{{this.postAsId}}/home">
             <div class="pull-left category-{{getPostAsBubbleCategory}}-fill post-as-bubble-single">
               {{> icon-bubble}}
             </div>
@@ -79,9 +79,9 @@
         {{/if}}
           <div class="name">{{decodeURIComponent name}}</div>
           <div class="subtitle">
-            posted {{timestampToFromNow submitted}} by {{displayName}}
+            posted {{timestampToFromNow submitted}} by <b>{{displayName}}</b>
             {{#if postedAsBubble}}
-              on behalf of {{bubbleName}}
+              on behalf of <b>{{bubbleName}}</b>
             {{/if}}
           </div>
         </div>

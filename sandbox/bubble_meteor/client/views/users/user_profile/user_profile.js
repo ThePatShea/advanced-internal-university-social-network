@@ -84,7 +84,11 @@ Template.userProfile.helpers({
 
 //Crop selection
 Template.userProfile.rendered = function() {
-        Meteor.subscribe('singleUser', Session.get('selectedUserId'));
+    Meteor.subscribe('singleUser', Session.get('selectedUserId'));
+    Meteor.subscribe('numPostsByUser', Session.get('selectedUserId'));
+
+    //Using this to get bubbles for the profile
+    Meteor.subscribe('sidebarBubbles', Session.get('selectedUserId'));
 
 	var cropArea;
 	var mainURL;
