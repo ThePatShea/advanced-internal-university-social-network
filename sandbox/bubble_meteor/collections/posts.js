@@ -180,12 +180,12 @@ createPost = function(postAttributes){
         if(typeof postAttributes.bubbleId != 'undefined'){
           //Update: Routing to postPage will make sure that the updated post
           //information is seen immediately, even if we start caching
-
           //Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
           Meteor.Router.to('postPage', post.bubbleId, post._id);
         }
         else{
-          Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+          //Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+          Meteor.Router.to('explorePostPage', post.exploreId, post._id);
         }
     }
   });

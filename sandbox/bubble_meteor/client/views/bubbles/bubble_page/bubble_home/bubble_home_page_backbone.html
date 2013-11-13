@@ -14,7 +14,7 @@
         <div>
           <div class="bubble-list">
             <div class="bubble-list-heading">
-              <h3 class="section-name pull-left">{{pluralize numUpdates 'update' ""}}</h3>
+              <h3 class="section-name pull-left">{{pluralize getUpdateCount 'update' ""}}</h3>
                   <button class="std-btn-light pull-right clear-updates">clear all</button>
                 </div>
                 <div class="dashboard-updates">
@@ -23,8 +23,7 @@
               {{/each}}
 
               {{#if haveMoreUpdates}}
-              <button class="pull-left btn-tiny more-updates" style="margin: 15px 0 0 25px">+ see all</button>
-
+                <button class="pull-left btn-tiny more-updates" style="margin: 15px 0 0 25px">+ see all</button>
               {{/if}}
             </div>
           </div>
