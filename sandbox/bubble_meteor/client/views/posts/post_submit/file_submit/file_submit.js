@@ -9,45 +9,51 @@ Template.fileSubmit.events({
       var reader = new FileReader();
       reader.onload = (function(f){
         return function(e) {
-          console.log(f.type, f.size);
+          console.log("FILE TO UPLOAD...Type: ",f.type, " | Size: ",f.size);
           
-          createPost({
-            name: escape(f.name).replace(/%20/g, '_'),
-            file: e.target.result,
-            fileType: f.type,
-            fileSize: f.size,
-            postType: 'file',
-            numDownloads: 0,
-            lastDownloadTime: new Date().getTime(),
-            bubbleId: Session.get('currentBubbleId')
-          });
+          if(f.size < 775000)
+          {
+            createPost({
+              name: escape(f.name).replace(/%20/g, '_'),
+              file: e.target.result,
+              fileType: f.type,
+              fileSize: f.size,
+              postType: 'file',
+              numDownloads: 0,
+              lastDownloadTime: new Date().getTime(),
+              bubbleId: Session.get('currentBubbleId')
+            });
+
+            //Show Post submitted confirmation message
+            var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+            var displayPostConfirmationMessage = function(postTitle){
+              return function(){
+                //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+                var message = postTitle.slice(0, 7);
+                var message = message + ' ...';
+                $('.info').removeClass('visible-false');
+                $('.message-container .info').text(message);
+                $('.message-container').removeClass('visible-false');
+                $('.message-container').addClass('message-container-active');
+                setTimeout(function(){
+                  $('.message-container').removeClass('message-container-active');
+                  $('.message-container').addClass('visible-false');
+                  clearTimeout();
+                },5000);
+              }        
+            }
+            console.log('Post Title: ', postTitle);
+            setTimeout(displayPostConfirmationMessage('File'), 1000);
+          } else {
+            alert('Files cannot be larger than 775KB, please upload a different file.');
+            return;
+          }
         }
       })(f);
       reader.readAsDataURL(f);
     }
 
     files = [];
-
-    //Show Post submitted confirmation message
-    var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-    var displayPostConfirmationMessage = function(postTitle){
-      return function(){
-        //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-        var message = postTitle.slice(0, 7);
-        var message = message + ' ...';
-        $('.info').removeClass('visible-false');
-        $('.message-container .info').text(message);
-        $('.message-container').removeClass('visible-false');
-        $('.message-container').addClass('message-container-active');
-        setTimeout(function(){
-          $('.message-container').removeClass('message-container-active');
-          $('.message-container').addClass('visible-false');
-          clearTimeout();
-        },5000);
-      }        
-    }
-    console.log('Post Title: ', postTitle);
-    setTimeout(displayPostConfirmationMessage('File'), 2000);
   },
 
   'dragover .cb-fileSubmit-form > .attach-files > .drop-zone': function(evt){
@@ -99,7 +105,10 @@ Template.fileSubmit.rendered = function(){
 
   //Log clicking of uploading button
   $(".file-chooser-invisible").on("click", function() {
-    Meteor.clearTimeout(mto);
+    if(typeof mto !== "undefined")
+    {
+      Meteor.clearTimeout(mto);
+    }
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
       Meteor.call('createLog', 
@@ -113,7 +122,10 @@ Template.fileSubmit.rendered = function(){
 
   //Log clicking of submit button
   $(".file-submit").on("click", function() {
-    Meteor.clearTimeout(mto);
+    if(typeof mto !== "undefined")
+    {
+      Meteor.clearTimeout(mto);
+    }
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
       Meteor.call('createLog', 
