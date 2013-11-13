@@ -20,7 +20,7 @@
     limit: 0,
     model: SidebarExplore,
     url: function() {
-      var url = '/api/v1_0/explores/?fields=' + exploreFields;
+      var url = '/api/v1_0/explores/?fields=' + exploreFields + '&sort=submitted';
 
       if (typeof this.limit != 'undefined')
         url += '&limit=' + this.limit;
