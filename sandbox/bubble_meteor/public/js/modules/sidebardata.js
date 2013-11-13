@@ -22,7 +22,7 @@
     url: function() {
       var url = '/api/v1_0/explores/?fields=' + exploreFields;
 
-      if (this.limit)
+      if (typeof this.limit != 'undefined')
         url += '&limit=' + this.limit;
 
       return url;
@@ -38,7 +38,7 @@
     url: function() {
       var url = '/api/v1_0/users/' + Meteor.userId() + '/bubbles?fields=' + bubbleFields;
 
-      if (this.limit)
+      if (typeof this.limit != 'undefined')
         url += '&limit=' + this.limit;
 
       return url;
@@ -56,6 +56,7 @@
 
     this.getData = function(mode, callback) {
       function fetch(collection) {
+        collection.limit = 0;
         collection.fetch({
           success: function(collection) {
             callback(collection.toJSON());
