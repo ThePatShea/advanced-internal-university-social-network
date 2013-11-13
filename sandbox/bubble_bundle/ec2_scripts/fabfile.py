@@ -147,6 +147,21 @@ def start_bundle_instance(blank_ami_id, new_instance_name, path_to_bundle, secur
 
 
 
+def update_bundle_instance(instance_ip, path_to_bundle, secure_flag, git_login, git_password):
+	"""
+	Copies the bundle to the running instance and updates it.
+	"""
+	if(secure_flag == 'secure'):
+			execute(deploy_bundle_secure, path_to_bundle, git_login, git_password, hosts=['ubuntu@'+instance_ip])
+		elif(secure_flag == 'insecure'):
+			execute(deploy_bundle_insecure, path_to_bundle, git_login, git_password, hosts=['ubuntu@'+instance_ip])
+		else:
+			print(_yellow("Error, secure_flag not recognized ..."))
+			return
+		
+		print(_green("Deployed bundle to %s" % instance_ip))
+
+
 
 
 
@@ -209,3 +224,4 @@ def deploy_bundle_test(path_to_bundle, git_login, git_password):
 		run('./configure_test.sh')
 		run('sudo ./setup_bubble_test.sh')
 		run('sudo ./start_bubble_test.sh')
+
