@@ -87,6 +87,7 @@ this.RestQuery = {
         category: 1,
         title: 1
       };
+      opts.limit = undefined;
       return opts;
     };
   }
