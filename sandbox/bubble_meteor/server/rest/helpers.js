@@ -1,8 +1,5 @@
 var Future = Npm.require('fibers/future');
 
-var DEFAULT_LIMIT = 10;
-var MAX_LIMIT = 50;
-
 this.RestHelpers = {
   Future: Future,
 
@@ -199,10 +196,11 @@ this.RestHelpers = {
         options.sort = apiOptions.sort;
       }
 
-      options.limit = apiOptions.limit || DEFAULT_LIMIT;
+      if (typeof apiOptions.limit !== 'undefined') {
+        options.limit = apiOptions.limit;
 
-      if (options.limit > MAX_LIMIT) {
-        options.limit = MAX_LIMIT;
+        if (options.limit > RestConst.MAX_LIMIT)
+          options.limit = RestConst.MAX_LIMIT;
       }
 
       if (apiOptions.page) {
@@ -213,7 +211,7 @@ this.RestHelpers = {
     }
 
     return {
-      limit: DEFAULT_LIMIT
+      limit: RestConst.DEFAULT_LIMIT
     };
   },
 

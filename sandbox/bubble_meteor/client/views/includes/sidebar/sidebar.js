@@ -238,7 +238,4 @@ Template.sidebar.rendered = function() {
 };
 
 Template.sidebar.destroyed = function() {
-  if(typeof this.watch != 'undefined'){
-    this.watch.stop();
-  }
 };

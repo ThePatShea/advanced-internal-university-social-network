@@ -153,11 +153,21 @@ Handlebars.registerHelper('matchSectionType', function() {
 });
 
 Handlebars.registerHelper('getCurrentBubble', function() {
-  return Bubbles.findOne(Session.get('currentBubbleId'));
+  var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+  if(typeof bubble !== "undefined")
+  {
+    bubble.id = bubble._id;
+  }
+  return bubble;
 });
 
 Handlebars.registerHelper('getCurrentPost', function() {
-  return Posts.findOne(Session.get('currentPostId'));
+  var post = Posts.findOne(Session.get('currentPostId'));
+  if(typeof bubble !== "undefined")
+  {
+    post.id = post._id;
+  }
+  return post;
 });
 
 Handlebars.registerHelper('isAdmin', function() {  

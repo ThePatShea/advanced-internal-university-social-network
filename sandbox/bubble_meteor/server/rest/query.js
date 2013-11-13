@@ -1,4 +1,27 @@
 this.RestQuery = {
+  // Generic helpers
+  excludeFields: function(parser, fields) {
+    return function(ctx) {
+      var opts = parser(ctx);
+
+      for (var n in fields) {
+        var f = fields[n];
+
+        opts.fields[f] = false;
+      }
+
+      return opts;
+    };
+  },
+
+  noLimit: function(parser) {
+    return function(ctx) {
+      var opts = parser(ctx);
+      opts.limit = undefined;
+      return opts;
+    };
+  },
+
   // Explores
   explorePostsFilter: function(ctx, query) {
     query = query || {};
@@ -64,6 +87,7 @@ this.RestQuery = {
         category: 1,
         title: 1
       };
+      opts.limit = undefined;
       return opts;
     };
   }
