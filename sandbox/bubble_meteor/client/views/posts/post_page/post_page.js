@@ -10,6 +10,8 @@ Template.postPage.rendered = function() {
   var currentBubbleId  =  urlArray[2];
   var currentPostId    =  urlArray[4];
   console.log('Updated Post: ', currentBubbleId, currentPostId);
+  Session.set('currentBubbleId',currentBubbleId);
+  Session.set('currentPost',currentPostId);
 
   Meteor.subscribe('singleBubble', currentBubbleId);
   Meteor.subscribe('singlePost', currentPostId, function() {
