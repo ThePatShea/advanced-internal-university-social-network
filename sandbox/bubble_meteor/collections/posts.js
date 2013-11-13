@@ -178,6 +178,8 @@ createPost = function(postAttributes){
       throwError(error.reason);
     } else {
         if(typeof postAttributes.bubbleId != 'undefined'){
+          //Update: Routing to postPage will make sure that the updated post
+          //information is seen immediately, even if we start caching
           //Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
           Meteor.Router.to('postPage', post.bubbleId, post._id);
         }
@@ -250,6 +252,9 @@ createPostWithAttachments = function(postAttributes, fileList){
       }
 
       if(typeof postAttributes.bubbleId != 'undefined'){
+        //Update: Routing to postPage will make sure that the updated post
+        //information is seen immediately, even if we start caching
+
         //Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
         Meteor.Router.to('postPage', post.bubbleId, post._id);
       }

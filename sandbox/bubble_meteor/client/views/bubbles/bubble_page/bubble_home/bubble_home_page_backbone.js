@@ -117,6 +117,39 @@ Template.bubblePageBackbone.helpers({
   },
 
   getUpdates: function() {
+    /*
+    var currentBubbleId = Session.get('currentBubbleId');
+    var updatesToShow = Session.get('bubbleUpdatesToShow');
+
+    var query = {
+      userId: Meteor.userId(),
+      bubbleId: currentBubbleId,
+      read: false
+    };
+
+    var opts = {
+      sort: {date: -1}
+    };
+
+    if (updatesToShow)
+      opts.limit = updatesToShow;
+
+    Session.set('bubbleUpdateCount', Updates.find(query).count());
+    var updateList = Updates.find(query, opts).fetch();
+    */
+    var updateList = Session.get("bubbleUpdates");
+
+    return updateList;
+  },
+
+  haveMoreUpdates: function() {
+    var updateCount = Session.get('bubbleUpdateCount');
+    var toShow = Session.get('bubbleUpdatesToShow');
+    return toShow !== 0 && updateCount > toShow;
+  },
+
+  showUpdates: function() {
+    console.log("Show Updates.");
     var currentBubbleId = Session.get('currentBubbleId');
     var updatesToShow = Session.get('bubbleUpdatesToShow');
 
@@ -136,16 +169,9 @@ Template.bubblePageBackbone.helpers({
     Session.set('bubbleUpdateCount', Updates.find(query).count());
     var updateList = Updates.find(query, opts).fetch();
 
-    return updateList;
-  },
+    Session.set('bubbleUpdates',updateList);
+    console.log("Update List: ", updateList);
 
-  haveMoreUpdates: function() {
-    var updateCount = Session.get('bubbleUpdateCount');
-    var toShow = Session.get('bubbleUpdatesToShow');
-    return toShow !== 0 && updateCount > toShow;
-  },
-
-  showUpdates: function() {
     return Session.get('bubbleUpdateCount') > 0;
   },
 
