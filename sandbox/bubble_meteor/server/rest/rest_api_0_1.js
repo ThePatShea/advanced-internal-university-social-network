@@ -4,7 +4,7 @@ function parseApiOptions(ctx) {
 		fields: RestHelpers.getFieldList(ctx.request.query.fields),
 		sort: ctx.request.query.sort,
 		page: ctx.request.query.page || 0,
-		limit: ctx.request.query.limit
+		limit: ctx.request.query.limit || RestConst.DEFAULT_LIMIT
 	};
 }
 
@@ -19,20 +19,6 @@ function parseBubbleUserOpts(ctx) {
   };
 
   return opts;
-}
-
-function excludeFields(parser, fields) {
-	return function(ctx) {
-		var opts = parseApiOptions(ctx);
-
-		for (var n in fields) {
-			var f = fields[n];
-
-			opts.fields[f] = false;
-		}
-
-		return opts;
-	};
 }
 
 function getFileApiOptions(ctx) {
@@ -70,7 +56,7 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/explores', Explores, {
 		query: {
 			name: 'explores',
-			apiOpts: parseApiOptions
+			apiOpts: RestQuery.noLimit(parseApiOptions)
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
@@ -105,7 +91,7 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles', Bubbles, {
 		query: {
 			name: 'bubbles',
-			apiOpts: parseApiOptions
+			apiOpts: RestQuery.noLimit(parseApiOptions)
 		},
 		queryOne: {
 			apiOpts: parseApiOptions
