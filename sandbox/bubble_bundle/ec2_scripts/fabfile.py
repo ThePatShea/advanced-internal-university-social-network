@@ -12,7 +12,6 @@ import time
 
 
 REPO_URL = 'github.com/campus-bubble/bubble-3.git'
-
 BASE_REPO_PATH = '/home/ubuntu/emory_bubble'
 BASE_BUNDLE_PATH = BASE_REPO_PATH + '/bubble-3/sandbox/bubble_bundle'
 FIBERS_INSTALL_PATH = BASE_BUNDLE_PATH + '/bundle/server'
@@ -182,20 +181,21 @@ def update_test_bundle_instance(instance_ip, path_to_bundle, secure_flag, git_lo
 
 
 def deploy_bundle_secure(path_to_bundle, git_login, git_password):
-	run('rm -rf /home/ubuntu/emory_bubble')
-	run('mkdir /home/ubuntu/emory_bubble')
-	with cd('/home/ubuntu/emory_bubble'):
-		run('git clone https://' + git_login +':' + git_password +'@github.com/campus-bubble/bubble-3.git')
-	with cd('/home/ubuntu/emory_bubble/bubble-3'):
+	with settings(warn_only=True):
+		run('rm -rf ' + BASE_REPO_PATH)
+	run('mkdir ' + BASE_REPO_PATH)
+	with cd(BASE_REPO_PATH):
+		run('git clone https://' + git_login +':' + git_password + '@' + REPO_URL)
+	with cd(BASE_BUNDLE_PATH):
 		run('git checkout submaster')
-	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
+	put(path_to_bundle, BASE_BUNDLE_PATH)
 	run('sudo apt-get update -y')
 	run('sudo apt-get install -y build-essential')
 	run('sudo npm install -g node-gyp')
 	run('sudo npm install -g fibers@1.0.0')
-	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
-		#run('git pull')
-		run('sudo stop bubble')
+	with cd(BASE_BUNDLE_PATH):
+		with settings(warn_only=True):
+			run('sudo stop bubble')
 		run('./configure_secure.sh')
 		run('sudo ./setup_bubble_secure.sh')
 		run('sudo ./start_bubble_secure.sh')
@@ -203,20 +203,21 @@ def deploy_bundle_secure(path_to_bundle, git_login, git_password):
 
 
 def deploy_bundle_insecure(path_to_bundle, git_login, git_password):
-	run('rm -rf /home/ubuntu/emory_bubble')
-	run('mkdir /home/ubuntu/emory_bubble')
-	with cd('/home/ubuntu/emory_bubble'):
-		run('git clone https://' + git_login +':' + git_password +'@github.com/campus-bubble/bubble-3.git')
-	with cd('/home/ubuntu/emory_bubble/bubble-3'):
+	with settings(warn_only=True):
+		run('rm -rf ' + BASE_REPO_PATH)
+	run('mkdir ' + BASE_REPO_PATH)
+	with cd(BASE_REPO_PATH):
+		run('git clone https://' + git_login +':' + git_password + '@' + REPO_URL)
+	with cd(BASE_BUNDLE_PATH):
 		run('git checkout submaster')
-	put(path_to_bundle, '/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle')
+	put(path_to_bundle, BASE_BUNDLE_PATH)
 	run('sudo apt-get update -y')
 	run('sudo apt-get install -y build-essential')
 	run('sudo npm install -g node-gyp')
 	run('sudo npm install -g fibers@1.0.0')
-	with cd('/home/ubuntu/emory_bubble/bubble-3/sandbox/bubble_bundle'):
-		#run('git pull')
-		run('sudo stop bubble')
+	with cd(BASE_BUNDLE_PATH):
+		with settings(warn_only=True):
+			run('sudo stop bubble')
 		run('./configure.sh')
 		run('sudo ./setup_bubble.sh')
 		run('sudo ./start_bubble.sh')
