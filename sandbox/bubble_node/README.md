@@ -2,9 +2,21 @@
 
 ## Getting Started
 
-    brew install node
-    npm install
-    grunt
+Make sure you have Node. I like Homebrew:
+
+    > brew install node
+
+Now install the dependencies via npm:
+
+    > npm install
+
+Now run the server, managed by Grunt:
+
+    > grunt
+
+...or in production:
+
+    > NODE_ENV=production grunt # for production mode
 
 ## File Structure
 
