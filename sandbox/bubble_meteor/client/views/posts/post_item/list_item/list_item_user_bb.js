@@ -56,7 +56,7 @@ Template.listItemUserBB.helpers({
     },
 
     isAdminBB: function(){
-      return BubbleDataNew.Helpers.isAdmin(Session.get('bubbleInfo'));
+      return BubbleDataNew.Helpers.isAdmin(Session.get('bubbleInfo'), Meteor.userId());
     }
 });
 

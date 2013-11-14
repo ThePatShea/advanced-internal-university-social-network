@@ -180,8 +180,11 @@
     function maybeComplete() {
       loading -= 1;
 
-      if (initialized && !loading && properties.callback)
-        properties.callback(that.bubbleJson);
+      if (initialized && !loading && properties.callback) {
+        Meteor.setTimeout(function() {
+          properties.callback(that.bubbleJson);
+        });
+      }
     }
 
     function fetchRelated(pagedData) {
@@ -201,6 +204,15 @@
         maybeComplete();
       }
     });
+
+    this.reloadBubble = function(callback) {
+      this.bubbleInfo.fetch({
+        success: function(model) {
+          that.bubbleJson = model.toJSON();
+          callback(that.bubbleJson);
+        }
+      });
+    };
 
     // Events helper
     var bubbleEvents = new BubbleEvents();

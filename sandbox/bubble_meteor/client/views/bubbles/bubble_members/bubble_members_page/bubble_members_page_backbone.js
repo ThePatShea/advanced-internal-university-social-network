@@ -115,6 +115,11 @@ Template.bubbleMembersPageBackbone.rendered = function() {
       case 'applicants':
         refreshData(state.mybubbles.Applicants);
         break;
+      case 'bubble':
+        state.mybubbles.reloadBubble(function(bubble) {
+          Session.set('bubbleInfo', bubble);
+        });
+        break;
     }
   });
 };
