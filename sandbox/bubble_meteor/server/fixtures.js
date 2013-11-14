@@ -14,7 +14,22 @@ if(!Meteor.users.findOne({username:'emorybubble'})){
 	});
 }
 
+/*
+for (var n = 0; n < 100; ++n) {
+	var name = 'mark' + n;
 
+	if(!Meteor.users.findOne({username:name})){
+		Accounts.createUser({
+			username: name,
+			profile: {
+				name: name,
+			},
+			email:name+'@emorybubble.com',
+			password: '1'
+		});
+	}
+}
+*/
 
 // if (Meteor.isServer) {
 //   Meteor.startup(function () {

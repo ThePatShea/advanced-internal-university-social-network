@@ -159,6 +159,10 @@
       this.collection.limit = limit;
     },
 
+    refresh: function(callback) {
+      this.fetchPage(this.collection.page, callback);
+    },
+
     getJSON: function() {
       return this.collection.toJSON();
     }
@@ -249,6 +253,7 @@
     }
 
     this.Members = new PagedData(bubbleMembers);
+    this.Members.name = 'members';
 
     if (properties.members && properties.members.load)
       fetchRelated(this.Members);
@@ -263,8 +268,9 @@
     }
 
     this.Admins = new PagedData(bubbleAdmins);
+    this.Admins.name = 'admins';
 
-    if (properties.admin && properties.admins.load)
+    if (properties.admins && properties.admins.load)
       fetchRelated(this.Admins);
 
     // Applications
@@ -277,9 +283,10 @@
     }
 
     this.Applicants = new PagedData(bubbleApplicants);
+    this.Applicants.name = 'applicants';
 
     if (properties.applicants && properties.applicants.load)
-      fetchRelated(this.applicants);
+      fetchRelated(this.Applicants);
 
     // Invitees
     var bubbleInvitees = new BubbleInvitees();
@@ -291,36 +298,48 @@
     }
 
     this.Invitees = new PagedData(bubbleInvitees);
+    this.Invitees.name = 'invitees';
 
     if (properties.invitees && properties.invitees.load)
       fetchRelated(this.Invitees);
 
     initialized = true;
+  };
 
-    // API
-    this.isAdmin = function(id) {
-      var users = this.bubbleJson.users.admins;
-      return users.admins.indexOf(id) !== -1;
-    };
+  var Helpers = {
+    isAdmin: function(bubble, id) {
+      if (!bubble)
+        return false;
 
-    this.isMember = function(id) {
-      var users = this.bubbleJson.users.members;
-      return users.admins.indexOf(id) !== -1;
-    };
+      var users = bubble.users.admins;
+      return users.indexOf(id) !== -1;
+    },
+    isMember: function(bubble, id) {
+      if (!bubble)
+        return false;
 
-    this.isApplicant = function(id) {
-      var users = this.bubbleJson.users.applicants;
-      return users.admins.indexOf(id) !== -1;
-    };
+      var users = bubble.users.members;
+      return users.indexOf(id) !== -1;
+    },
+    isApplicant: function(bubble, id) {
+      if (!bubble)
+        return false;
 
-    this.isInvitee = function(id) {
-      var users = this.bubbleJson.users.invitees;
-      return users.admins.indexOf(id) !== -1;
-    };
+      var users = bubble.users.applicants;
+      return users.indexOf(id) !== -1;
+    },
+    isInvitee: function(bubble, id) {
+      if (!bubble)
+        return false;
+
+      var users = bubble.users.invitees;
+      return users.indexOf(id) !== -1;
+    }
   };
 
   var api = {
-    MyBubbles: MyBubbles
+    MyBubbles: MyBubbles,
+    Helpers: Helpers
   };
 
   window.BubbleDataNew = api;

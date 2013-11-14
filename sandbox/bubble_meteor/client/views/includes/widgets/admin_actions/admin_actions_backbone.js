@@ -1,3 +1,4 @@
+// TODO: Rewrite me
 Template.adminActionsBackbone.destroyed = function(){
   getAdminsDep = new Deps.Dependency;
   getMembersDep = new Deps.Dependency;
@@ -67,47 +68,23 @@ Template.adminActionsBackbone.created = function(){
 
 Template.adminActionsBackbone.helpers({
   getAdminStatus: function() {
-    //return Bubbles.find({'users.admins': this._id, '_id': Session.get('currentBubbleId')}).count();
-    getAdminsDep.depend();
-
-    if(typeof this.id == 'undefined'){
-      this.id = this._id;
-    }
-
-    return mybubbles.isAdmin(this.id);
+    var bubbleInfo = Session.get('bubbleInfo');
+    return BubbleDataNew.Helpers.isAdmin(bubbleInfo, this.id);
   },
 
   getApplicantStatus: function() {
-	 //return Bubbles.find({'users.applicants': this._id, '_id': Session.get('currentBubbleId')}).count();
-    getApplicantsDep.depend();
-
-    if(typeof this.id == 'undefined'){
-      this.id = this._id;
-    }
-
-    return mybubbles.isApplicant(this.id);
+    var bubbleInfo = Session.get('bubbleInfo');
+    return BubbleDataNew.Helpers.isApplicant(bubbleInfo, this.id);
   },
 
   getMemberStatus: function() {
-	 //return Bubbles.find({'users.members': this._id, '_id': Session.get('currentBubbleId')}).count();
-    getMembersDep.depend();
-
-    if(typeof this.id == 'undefined'){
-      this.id = this._id;
-    }
-
-    return mybubbles.isMember(this.id);
+    var bubbleInfo = Session.get('bubbleInfo');
+    return BubbleDataNew.Helpers.isMember(bubbleInfo, this.id);
   },
 
   getInviteeStatus: function() {
-   //return Bubbles.find({'users.invitees': this._id, '_id': Session.get('currentBubbleId')}).count();
-    getInviteesDep.depend();
-
-    if(typeof this.id == 'undefined'){
-      this.id = this._id;
-    }
-    
-    return mybubbles.isInvitee(this.id);
+    var bubbleInfo = Session.get('bubbleInfo');
+    return BubbleDataNew.Helpers.isInvitee(bubbleInfo, this.id);
   }
 });
 
@@ -165,7 +142,7 @@ Template.adminActionsBackbone.events({
           console.log('Admin Actions: ', id);
         }
       }*/
-      
+
       //mybubbles.Invitees.refreshCollection();
       //mybubbles.Applicants.refreshCollection(/*reRoute(this.id, currentBubbleId)*/);
       //Meteor.Router.to('/settings/userprofile/' + this.id);

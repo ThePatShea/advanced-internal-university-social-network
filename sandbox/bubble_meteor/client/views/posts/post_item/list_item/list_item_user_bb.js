@@ -1,104 +1,62 @@
 Template.listItemUserBB.helpers({
     getPostAsUser: function() {
-      //return Meteor.users.findOne(this.postAsId);
-      //console.log("ES: ", es.exploreUsers.toJSON());
       return this.user;
     },
-    /*
     getPostAsBubble: function() {
-      var bubble = Bubbles.findOne(this.postAsId);
-      return bubble;
-    },*/
-    getPostAsBubble: function() {
-      //var bubble = new BBubble({_id: this.postAsId}).fetch();
       return this.bubble;
     },
     postedAsUser: function() {
-      if (this.postAsType == "user") {
-        return true;
-      } else {
-        return false;
-      }
+      return this.postAsType === 'user';
     },
     postedAsBubble: function() {
-      if (this.postAsType == "bubble") {
-        return true;
-      } else {
-        return false;
-      }
+      return this.postAsType === 'bubble';
     },
     displayName: function() {
-      if (this.postAsType == "user") {
+      if (this.postAsType === 'user') {
         return this.author;
-      } else if (this.postAsType == "bubble") {
-        //var bubble = Bubbles.findOne(this.postAsId);
-        //var bubble = new BBBubble({id: this.postAsId});
-        return this.bubble.title;
+      } else
+      if (this.postAsType === 'bubble') {
+        if (this.bubble)
+          return this.bubble.title;
+
+        // TODO: Fix me?
+        return this.author;
       }
     },
     isGoing : function() {
       return _.contains(this.attendees, Meteor.userId());
     },
-
     hasChildren : function() {
-      if (this.children != undefined && this.children != "")
-        return true;
-      else
-        return false;
+      return typeof this.children !== 'undefined' && this.children !== '';
     },
-
-    membershipCount: function(){
-      var currentUserId = this._id;
-      if(typeof this.userType != 'undefined'){
+    membershipCount: function() {
+      // TODO: Fix me to use REST
+      var currentUserId = this.id;
+      if (typeof this.userType != 'undefined'){
         return Bubbles.find({$or: [{'users.members': currentUserId}, {'users.admins': currentUserId}]}).count();
-      }
-      else{
+      } else {
         return -1;
       }
     },
-
-    isMe: function(){
-      if(typeof this.id == 'undefined'){
-        this.id = this._id;
-      }
-
-      if(this.id == Meteor.userId()){
-        return true;
-      }
-      else{
-        return false;
-      }
-      //return(this.id == Meteor.userId());
+    isMe: function() {
+      return this.id === Meteor.userId();
     },
-
     inBubble: function(){
-      //return(Meteor.Router.page() == "bubbleMembersPage");
+      // TODO: Fix me
       var sitePath = window.location.pathname.split('/')[1];
-      if(sitePath == 'mybubbles'){
-        return true;
-      }
-      else{
-        return false
-      }
+      return sitePath === 'mybubbles';
     },
 
-    isFile: function(){
-      if(this.postType == 'file'){
-        return true;
-      }
+    isFile: function() {
+      return this.postType === 'file';
     },
 
-    isDiscussion: function(){
-      if(this.postType == 'discussion'){
-        return true;
-      }
+    isDiscussion: function() {
+      return this.postType === 'discussion';
     },
 
     isAdminBB: function(){
-      /*var isadmin = mybubbles.isAdmin(Meteor.userId());
-      console.log('Is Admin: ', isadmin);
-      return isadmin;*/
-      return isAdminOfBubble;
+      return BubbleDataNew.Helpers.isAdmin(Session.get('bubbleInfo'));
     }
 });
 
@@ -143,24 +101,7 @@ Template.listItemUserBB.events({
 
 Template.listItemUserBB.created = function() {
   mto = "";
-  isAdminOfBubble = mybubbles.isAdmin(Meteor.userId());
-}
+};
 
-Template.listItemUserBB.rendered = function(){
-  // console.log("LIBB: ", this);
-  //Log clicking of individual bubble
-  isAdminOfBubble = mybubbles.isAdmin(Meteor.userId());
-  /*$(".post-item").on("click", function() {
-    // Meteor.clearTimeout(mto);
-    // mto = Meteor.setTimeout(function() {
-      //Extract and append the bubble's title to action string
-      var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
-      //Logs the action that user is doing
-      Meteor.call('createLog', 
-        { action: title }, 
-        window.location.pathname, 
-        function(error) { if(error) { throwError(error.reason); }
-      });
-    // }, 500);
-  });*/
-}
+Template.listItemUserBB.destroyed = function() {
+};
