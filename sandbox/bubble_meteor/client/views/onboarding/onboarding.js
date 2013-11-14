@@ -419,6 +419,12 @@ Template.onboarding.rendered = function() {
 }
 
 Template.onboarding.created = function() {
+  Meteor.call('createLog', 
+    { action: 'login' }, 
+    window.location.pathname, 
+    function(error) { if(error) { throwError(error.reason); }
+  });
+
   Meteor.subscribe('nameFromId',Meteor.userId());
 
   uId = Meteor.userId();
