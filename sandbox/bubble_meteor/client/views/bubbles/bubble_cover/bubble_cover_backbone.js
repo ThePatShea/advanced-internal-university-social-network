@@ -1,9 +1,5 @@
 Template.bubbleCoverBackbone.rendered = function(){
   console.log("Cover Rendered");
-  //Log clicking of edit bubble button
-  /*$(".lbl").on("click", function() {
-    Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
-  });*/
 };
 
 Template.bubbleCoverBackbone.created = function() {
@@ -54,11 +50,16 @@ Template.bubbleCoverBackbone.helpers({
 
 Template.bubbleCoverBackbone.events({
   'click #bubble-pic': function() {
-    var imgSrc = $("#bubble-pic").attr('src');
-    if (imgSrc == "/img/Bubble-Profile.jpg" && mybubbles.isAdmin(Meteor.userId()) ) {
-      Meteor.Router.to('bubbleEdit',Session.get('currentBubbleId'));
-    } else if (mybubbles.isMember(Meteor.userId())){
-      Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
+    var bubbleInfo = Session.get('bubbleInfo');
+    var isAdmin = BubbleDataNew.Helpers.isAdmin(bubbleInfo, Meteor.userId());
+    var isMember = BubbleDataNew.Helpers.isMember(bubbleInfo, Meteor.userId());
+
+    var imgSrc = $('#bubble-pic').attr('src');
+    if (imgSrc === '/img/Bubble-Profile.jpg' && isAdmin) {
+      Meteor.Router.to('bubbleEdit', Session.get('currentBubbleId'));
+    } else
+    if (isMember) {
+      Meteor.Router.to('bubblePageBackbone', Session.get('currentBubbleId'));
     }
   },
   'click .invite-accept': function() {

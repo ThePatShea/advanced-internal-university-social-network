@@ -110,9 +110,8 @@ Template.listItemFilePostBB.helpers({
     },
 
     isAdminBB: function(){
-      var isadmin = mybubbles.isAdmin(Meteor.userId());
-      console.log('Is Admin: ', isadmin);
-      return isadmin;
+      var bubbleInfo = Session.get('bubbleInfo');
+      return BubbleDataNew.Helpers.isAdmin(bubbleInfo, Meteor.userId());
     }
 });
 
@@ -168,9 +167,9 @@ Template.listItemFilePostBB.rendered = function(){
       //Extract and append the bubble's title to action string
       var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
       //Logs the action that user is doing
-      Meteor.call('createLog', 
-        { action: title }, 
-        window.location.pathname, 
+      Meteor.call('createLog',
+        { action: title },
+        window.location.pathname,
         function(error) { if(error) { throwError(error.reason); }
       });
     // }, 500);

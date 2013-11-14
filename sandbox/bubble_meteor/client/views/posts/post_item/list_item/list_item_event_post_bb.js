@@ -111,9 +111,8 @@ Template.listItemEventPostBB.helpers({
     },
 
     isAdminBB: function(){
-      var isadmin = mybubbles.isAdmin(Meteor.userId());
-      console.log('Is Admin: ', isadmin);
-      return isadmin;
+      var bubbleInfo = Session.get('bubbleInfo');
+      return BubbleDataNew.Helpers.isAdmin(bubbleInfo, Meteor.userId());
     }
 });
 

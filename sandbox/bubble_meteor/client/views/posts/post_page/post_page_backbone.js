@@ -52,9 +52,10 @@ Template.postPageBackbone.created = function() {
       fields: ['username', 'name', 'profilePicture']
     },
 
-    callback: function(){
+    callback: function() {
       console.log('Bubbledata changed');
       bubbleDep.changed();
+      Session.set('bubbleInfo', mybubbles.bubbleInfo.toJSON());
       Session.set('isLoading', false);
     }
   });
@@ -155,10 +156,10 @@ Template.postPageBackbone.rendered = function() {
     Meteor.clearTimeout(mto);
     mto = Meteor.setTimeout(function() {
       //Logs the action that user is doing
-      Meteor.call('createLog', 
+      Meteor.call('createLog',
         { action: 'click-postEditBtn',
-          overwritePage: page }, 
-        window.location.pathname, 
+          overwritePage: page },
+        window.location.pathname,
         function(error) { if(error) { throwError(error.reason); }
       });
     }, 500);
@@ -303,10 +304,10 @@ Template.postPageBackbone.events({
         //Logs the action that user is doing
         //Meteor.clearTimeout(mto);
         /*mto = Meteor.setTimeout(function() {
-          Meteor.call('createLog', 
+          Meteor.call('createLog',
             { action: 'click-postDeleteBtn',
-              postId: currentPostId}, 
-            window.location.pathname, 
+              postId: currentPostId},
+            window.location.pathname,
             function(error) { if(error) { throwError(error.reason); }
           });
         }, 500);*/
@@ -327,7 +328,7 @@ Template.postPageBackbone.events({
             $('.message-container').addClass('visible-false');
             clearTimeout();
           },5000);
-        }        
+        }
       }
       console.log('Post Title: ', postTitle);
       setTimeout(displayPostConfirmationMessage(postTitle), 2000);
