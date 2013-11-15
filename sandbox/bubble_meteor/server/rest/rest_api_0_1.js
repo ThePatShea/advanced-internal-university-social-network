@@ -15,7 +15,8 @@ function parseBubbleUserOpts(ctx) {
 		emails: true,
 		name: true,
 		userType: true,
-		username: true
+		username: true,
+		profilePicture: true
   };
 
   return opts;
