@@ -3,7 +3,7 @@
   var BubblePost = BubbleRest.Model.extend({
     url: function(){
       // TODO: Use bubble-related post URL
-      return '/api/v1_0/posts/' + this.id;
+      return '/api/v1_0/bubbles/' + this.bubbleId + '/posts/' + this.id;
     }
   });
 
@@ -73,7 +73,7 @@
     });
   }
 
-  var BubblePosts = makeRelatedCollection(BubblePost, 'posts');
+  //var BubblePosts = makeRelatedCollection(BubblePost, 'posts');
   var BubbleEvents = makeRelatedCollection(BubbleEvent, 'events');
   var BubbleDiscussions = makeRelatedCollection(BubbleDiscussion, 'discussions');
   var BubbleFiles = makeRelatedCollection(BubbleFile, 'files');
@@ -319,6 +319,72 @@
     initialized = true;
   };
 
+  var BubblePostPage = function(bubbleId, postId, callback) {
+    var that = this;
+
+    this.bubbleId = bubbleId;
+
+    this.bubbleInfo = new BubbleInfo();
+    this.bubbleInfo.bubbleId = bubbleId;
+
+    this.post = new BubblePost();
+    this.post.bubbleId = bubbleId;
+    this.post.id = postId;
+
+    this.user = new BubbleModels.User();
+
+    var count = 0;
+
+    function maybeComplete() {
+      count -= 1;
+
+      console.log('y', count, that.bubbleInfo.toJSON());
+
+      if (count <= 0 && callback) {
+        Meteor.setTimeout(callback);
+      }
+    }
+
+    count += 1;
+    this.bubbleInfo.fetch({
+      success: maybeComplete
+    });
+
+    count += 1;
+    this.post.fetch({
+      success: function(post) {
+        that.user.id = post.get('userId');
+
+        that.user.fetch({
+          success: maybeComplete
+        });
+      }
+    });
+
+    this.getBubble = function() {
+      return this.bubbleInfo && this.bubbleInfo.toJSON();
+    };
+
+    this.getPost = function() {
+      return this.post && this.post.toJSON();
+    };
+
+    this.getUser = function() {
+      return this.user && this.user.toJSON();
+    };
+
+    this.toggleGoing = function(userId) {
+      var attendees = this.post.get('attendees');
+
+      if (attendees.indexOf(userId) === -1) {
+        attendees.push(userId);
+      } else {
+        attendees = _.without(attendees, userId);
+      }
+      this.post.set('attendees', attendees);
+    };
+  };
+
   var Helpers = {
     isAdmin: function(bubble, id) {
       if (!bubble)
@@ -352,6 +418,7 @@
 
   var api = {
     MyBubbles: MyBubbles,
+    BubblePostPage: BubblePostPage,
     Helpers: Helpers
   };
 

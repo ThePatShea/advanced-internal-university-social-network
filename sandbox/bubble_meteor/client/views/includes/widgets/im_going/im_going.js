@@ -12,7 +12,7 @@ Template.imGoing.events({
     'click .im-going': function(event) {
       // Disable the parent button
       event.stopPropagation();
-      
+
       $('.main-words').html("<img src='/img/message-loader.gif' />")
 
       // Add/remove the user to/from list of attendees
@@ -31,11 +31,8 @@ Template.imGoing.events({
             if(section === "mybubbles")
             {
               console.log("Toggle Going: ",that);
-              if(subsection === "posts")
-              {
-                if(bubbleDep){
-                  bubbleDep.changed();
-                }
+              if (subsection === "posts") {
+                $('.im-going').trigger('postGoing', res);
               }
               else
               {

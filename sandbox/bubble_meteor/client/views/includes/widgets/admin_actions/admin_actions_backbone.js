@@ -101,21 +101,6 @@ Template.adminActionsBackbone.events({
             $pull: {'users.members': members[0]}
           });
 
-          // TODO: Is this really necessary, as user will be redirected to user profile?
-          /*
-          var reRoute = function(id, currentBubbleId){
-            //bubbleDep.changed();
-            return function(){
-              Session.set('currentBubbleId', currentBubbleId);
-              Meteor.Router.to('/settings/userprofile/' + id);
-              console.log('Admin Actions: ', id);
-            }
-          }
-          mybubbles.Admins.refreshCollection();
-          mybubbles.Members.refreshCollection();
-          mybubbles.Invitees.refreshCollection();
-          mybubbles.Applicants.refreshCollection(reRoute(this.id, currentBubbleId));
-          */
           Meteor.Router.to('/settings/userprofile/' + this.id);
         }
       }

@@ -190,7 +190,7 @@
 		this.explorePost = new ExplorePost();
 		this.explorePost.id = postId;
 
-		this.explorebubble = null;
+		this.exploreBubble = null;
 
 		this.exploreInfo.fetch({
 			success: function() {
