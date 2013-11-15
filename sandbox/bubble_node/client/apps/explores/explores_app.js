@@ -9,13 +9,12 @@ App.module('ExploresApp', function(ExploresApp, App, Backbone, Marionette, $, _)
 
   var API = {
     enterExplore: function(){
-      console.log('Explore: ');
+      App.vent.trigger("sidebar:change", "explore")
       App.navigate('explore/1', {trigger: true});
     },
 
     showExplore: function(id){
       new ExploresApp.List.Controller();
-      console.log('Explore: ', id);
     }
   };
 
