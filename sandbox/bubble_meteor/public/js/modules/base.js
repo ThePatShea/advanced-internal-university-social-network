@@ -151,24 +151,27 @@
           return;
         }
 
-        var scope = {
-          count: coll.models.length
-        };
+        var count = 0;
+        var initialized = false;
 
         function maybeContinue() {
-          scope.count -= 1;
+          count -= 1;
 
-          if (scope.count <= 0)
+          if (initialized && count <= 0)
             callback(coll);
         }
 
         for (var m = 0; m < coll.models.length; ++m) {
           var model = coll.models[m];
+
+          count += 1;
           model.fetchRelated.call(model, model, maybeContinue);
         }
 
         // If there are no pending dependencies - continue
-        if (!scope.count)
+        initialized = true;
+
+        if (!count)
           callback(coll);
       }
     });

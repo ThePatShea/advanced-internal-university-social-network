@@ -8,6 +8,8 @@ var state = {
 function fetchData(bubbleId) {
   Session.set('isLoading', true);
 
+  console.log('----- LOADING!')
+
   var mybubbles = state.mybubbles = new BubbleDataNew.MyBubbles({
     bubbleId: bubbleId,
     fields: ['title', 'profilePicture', 'category', 'bubbleType'],
@@ -38,6 +40,8 @@ function fetchData(bubbleId) {
 
     callback: function(bubble) {
       Session.set('isLoading', false);
+
+      console.log('----- LOADED!')
 
       if (mybubbles === state.mybubbles)
         Session.set('bubbleInfo', bubble);

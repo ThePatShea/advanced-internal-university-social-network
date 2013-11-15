@@ -172,6 +172,7 @@
   var MyBubbles = function(properties) {
     var that = this;
     this.bubbleId = properties.bubbleId;
+    that.id = Math.random();
 
     // Loading status
     var loading = 0;

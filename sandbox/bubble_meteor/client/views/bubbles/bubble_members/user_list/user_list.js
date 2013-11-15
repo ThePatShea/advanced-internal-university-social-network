@@ -25,10 +25,8 @@ Template.userList.helpers({
 		return false;
 	},
 	isActivePage: function(type) {
-		if (this.collection) {
-			if (this.getCurrentPage() + 1 === this.page)
-				return 'active';
-		}
+		if (this.data.getCurrentPage() + 1 === this.page)
+			return 'active';
 
 		return '';
 	},
@@ -40,6 +38,7 @@ Template.userList.helpers({
 
 			for (var i = 0; i < this.getNumPages(); i++) {
 				retVal.push({
+					data: this,
 					page: i + 1,
 					currentPage: currentPage,
 					numPages: numPages
@@ -52,10 +51,8 @@ Template.userList.helpers({
 		return [];
 	},
 	showAll: function() {
-		if (this.collection)
-			return this.getNumPages() < 6;
-
-		return false;
+		if (this.data)
+			return this.data.getNumPages() < 6;
 	},
 	show: function() {
 		return (this.page >= this.currentPage && this.page <= this.currentPage + 2) || (this.page === this.numPages);
@@ -68,19 +65,15 @@ Template.userList.helpers({
 // Events
 Template.userList.events({
 	'click .pageitem': function(e) {
-		if (this.collection) {
-			var page = parseInt($(e.target).data('page'));
-			console.log(page);
+		var page = parseInt($(e.target).data('page'));
 
-			Session.set('isLoading', true);
-			this.fetchPage(page - 1, function() {
-				Session.set('isLoading', false);
-			});
-		}
+		Session.set('isLoading', true);
+		this.data.fetchPage(page - 1, function() {
+			Session.set('isLoading', false);
+		});
 	},
 	'click .prev': function() {
-		if(this.getCurrentPage > 0)
-		{
+		if (this.getCurrentPage() > 0) {
 			Session.set("isLoading", true);
 			this.fetchPrevPage(function(res){
 				Session.set("isLoading", false);
@@ -89,8 +82,7 @@ Template.userList.events({
 		}
 	},
 	'click .next': function() {
-		if(this.getCurrentPage < this.getNumPages()-1)
-		{
+		if(this.getCurrentPage() < this.getNumPages() - 1) {
 			Session.set("isLoading", true);
 			this.fetchNextPage(function(res){
 				Session.set("isLoading", false);
