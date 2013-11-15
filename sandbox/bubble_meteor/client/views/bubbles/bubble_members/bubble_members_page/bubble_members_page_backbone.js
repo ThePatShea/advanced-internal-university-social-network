@@ -46,7 +46,6 @@ function fetchData(bubbleId) {
 }
 
 function refreshData(collection) {
-  Session.set('isLoading', true);
   collection.refresh(function() {
     Session.set('isLoading', false);
   });
@@ -100,26 +99,49 @@ Template.bubbleMembersPageBackbone.created = function() {
 };
 
 Template.bubbleMembersPageBackbone.rendered = function() {
-  $('#bubble-members-page').off('bubbleRefresh').on('bubbleRefresh', function(e, section) {
-    console.log('REFRESH!', section);
-    switch (section) {
-      case 'admins':
-        refreshData(state.mybubbles.Admins);
-        break;
-      case 'members':
-        refreshData(state.mybubbles.Members);
-        break;
-      case 'invitees':
-        refreshData(state.mybubbles.Invitees);
-        break;
-      case 'applicants':
-        refreshData(state.mybubbles.Applicants);
-        break;
-      case 'bubble':
-        state.mybubbles.reloadBubble(function(bubble) {
-          Session.set('bubbleInfo', bubble);
-        });
-        break;
+  $('#bubble-members-page').off('bubbleRefresh').on('bubbleRefresh', function(e) {
+    function refresh() {
+      var sections = e.sections;
+
+      if (!sections || !sections.length) {
+        Session.set('isLoading', false);
+        return;
+      }
+
+      console.log('REFRESHING', sections);
+
+      for (var i in sections) {
+        var section = sections[i];
+
+        switch (section) {
+          case 'admins':
+            refreshData(state.mybubbles.Admins);
+            break;
+          case 'members':
+            refreshData(state.mybubbles.Members);
+            break;
+          case 'invitees':
+            refreshData(state.mybubbles.Invitees);
+            break;
+          case 'applicants':
+            refreshData(state.mybubbles.Applicants);
+            break;
+          case 'bubble':
+            state.mybubbles.reloadBubble(function(bubble) {
+              Session.set('bubbleInfo', bubble);
+              Session.set('isLoading', false);
+            });
+            break;
+        }
+      }
+    }
+
+    // TODO: Fix race condition
+    Session.set('isLoading', true);
+    if (e.timeout) {
+      Meteor.setTimeout(refresh, e.timeout);
+    } else {
+      refresh();
     }
   });
 };

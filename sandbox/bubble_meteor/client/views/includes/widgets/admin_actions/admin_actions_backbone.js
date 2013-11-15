@@ -58,12 +58,12 @@ Template.adminActionsBackbone.events({
         $addToSet: {'users.members': this.id},
         $pull: {'users.admins': this.id}
       }, function() {
-        // TODO: Fix me!
-        Meteor.setTimeout(function(){
-          $('#bubble-invitation').trigger('bubbleRefresh', 'bubble');
-          $('#bubble-invitation').trigger('bubbleRefresh', 'admins');
-          $('#bubble-invitation').trigger('bubbleRefresh', 'members');
-        }, 2000);
+        // TODO: Fix me
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'admins', 'members'],
+          timeout: 2000
+        });
       });
       createAdminDemoteUpdate(this.id);
     } else {
@@ -151,11 +151,11 @@ Template.adminActionsBackbone.events({
       $addToSet: {'users.members': this.id},
       $pull: {'users.applicants': this.id}
     }, function() {
-        Meteor.setTimeout(function(){
-          $('#bubble-invitation').trigger('bubbleRefresh', 'bubble');
-          $('#bubble-invitation').trigger('bubbleRefresh', 'members');
-          $('#bubble-invitation').trigger('bubbleRefresh', 'applicants');
-        },2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'members', 'applicants'],
+          timeout: 2000
+        });
       });
 
     //Create update to inform user about accpeted application
@@ -174,11 +174,11 @@ Template.adminActionsBackbone.events({
     {
       $pull: {'users.applicants': this.id}
     }, function(){
-      Session.set("isLoading",true);
-      Meteor.setTimeout(function(){
-        $('#bubble-invitation').trigger('bubbleRefresh', 'bubble');
-        $('#bubble-invitation').trigger('bubbleRefresh', 'applicants');
-      },2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'applicants'],
+          timeout: 2000
+        });
     });
 
     //Create update to inform user about rejected application
@@ -198,12 +198,11 @@ Template.adminActionsBackbone.events({
       $addToSet: {'users.admins': this.id},
       $pull: {'users.members': this.id}
     }, function(){
-      Session.set("isLoading",true);
-      Meteor.setTimeout(function(){
-        $('#bubble-invitation').trigger('bubbleRefresh', 'bubble');
-        $('#bubble-invitation').trigger('bubbleRefresh', 'admins');
-        $('#bubble-invitation').trigger('bubbleRefresh', 'members');
-      },2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'admins', 'members'],
+          timeout: 2000
+        });
     });
 
     //Create update for member who is promoted
@@ -222,10 +221,11 @@ Template.adminActionsBackbone.events({
     {
       $pull: {'users.members': this.id}
     }, function(){
-      Meteor.setTimeout(function(){
-        $('#bubble-invitation').trigger('bubbleRefresh', 'bubble');
-        $('#bubble-invitation').trigger('bubbleRefresh', 'members');
-      },2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'members'],
+          timeout: 2000
+        });
     });
     //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 
@@ -247,10 +247,11 @@ Template.adminActionsBackbone.events({
     {
       $pull: {'users.invitees': this.id}
     }, function(){
-      Meteor.setTimeout(function(){
-        $('#bubble-invitation').trigger('bubbleRefresh', 'bubble');
-        $('#bubble-invitation').trigger('bubbleRefresh', 'invitees');
-      },2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'invitees'],
+          timeout: 2000
+        });
     });
     //Session.set(Session.get('currentBubbleId')+this._id,undefined);
 

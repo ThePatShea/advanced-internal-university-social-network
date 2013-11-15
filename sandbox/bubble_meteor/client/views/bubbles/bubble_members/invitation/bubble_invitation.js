@@ -182,19 +182,22 @@ Template.bubbleInvitation.events({
         $addToSet: {'users.members': {$each: userIdList}}
       }, function(){
         // TODO: Redo me
-        Meteor.setTimeout(function(){
-          $('#bubble-invitation').trigger('bubbleRefresh', 'members');
-        }, 2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'members']
+          //timeout: 2000
+        });
       });
     }else{
       //Add Invitees to the bubble object
       //Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
       Bubbles.update({_id:bubble._id}, {$addToSet: {'users.invitees': {$each: userIdList}}}, function(){
         // TODO: Redo me
-        Meteor.setTimeout(function(){
-          console.log('REFRESHING!')
-          $('#bubble-invitation').trigger('bubbleRefresh', 'invitees');
-        }, 2000);
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'invitees']
+          //timeout: 2000
+        });
       });
     }
 

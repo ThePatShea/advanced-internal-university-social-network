@@ -98,9 +98,12 @@ Template.userActionsBackbone.events({
         $pull: {'users.members': this.id}
       }, function() {
         console.log("THAT: ",that);
-        if (that.id != Meteor.userId())
-        {
-          $('#user-actions').trigger('bubbleRefresh', 'members');
+        if (that.id != Meteor.userId()) {
+          $('#bubble-invitation').trigger({
+            type: 'bubbleRefresh',
+            sections: ['bubble', 'members'],
+            timeout: 2000
+          });
         } else {
           Meteor.Router.to('dashboard');
         }
