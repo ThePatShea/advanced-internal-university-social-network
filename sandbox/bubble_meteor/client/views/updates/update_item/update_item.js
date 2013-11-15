@@ -68,3 +68,8 @@ Template.updateItem.events({
     Meteor.call('setRead', this);
   }
 });
+
+
+Template.updateItem.created = function(){
+  Meteor.subscribe('updatedPosts', Meteor.userId());
+}
