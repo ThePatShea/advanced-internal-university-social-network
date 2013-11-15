@@ -54,7 +54,7 @@ this.RestRelatedCrud = {
 		opts = opts || {};
 
 		var newOpts = RestHelpers.mergeObjects(opts, {
-			check: makeExtendedSecurityCheck(childField, opts.check)
+			check: makeExtendedSecurityCheck(parent, childField, opts.check)
 		});
 
 		return function(parentId, id) {

@@ -208,6 +208,7 @@ Template.bubblePageBackbone.helpers({
 
 Template.bubblePageBackbone.events({
   'click .clear-updates': function() {
+    var currentBubbleId = Session.get('currentBubbleId');
     var updates = Updates.find({bubbleId: currentBubbleId, userId: Meteor.userId(), read:false}).fetch();
     _.each(updates, function(update) {
       Meteor.call('setRead', update);
