@@ -20,7 +20,8 @@ Template.imGoing.events({
       if (typeof this.id !== "undefined") {
         var that = this;
 
-        Meteor.call('attendEvent', this, function(err, res) {
+        //Meteor.call('attendEvent', this, function(err, res) {
+        Meteor.call('toggleAttendingEvent', this.id, function(err, res){
           if (!err) {
             var section = window.location.pathname.split("/")[1];
             var subsection = window.location.pathname.split("/")[3];

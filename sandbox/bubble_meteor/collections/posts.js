@@ -166,6 +166,24 @@ Meteor.methods({
     }
     return postId;
   },
+  toggleAttendingEvent: function(postId, callback){
+    var userId = Meteor.userId();
+    var post = Posts.findOne(postId);
+    if(!_.contains(post.attendees, userId)){
+      Posts.update({_id: postId},
+        {
+          $addToSet: {attendees: userId}
+        });
+      createNewAttendeeUpdate(postId);
+    }
+    else{
+      Posts.update({_id: postId},
+        {
+          $pull: {attendees: userId}
+        });
+    }
+    return postId;
+  },
   getNumOfEvents: function(bubbleId, postType ) {
     return Posts.find({'bubbleId': bubbleId, 'postType': postType}).count();
   }
