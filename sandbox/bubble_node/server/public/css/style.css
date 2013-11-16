@@ -601,13 +601,16 @@ button {
 .sidebar-menu-content .title a svg rect {
   fill: #2f5973;
 }
-.sidebar-menu-content .bubbles {
+.sidebar-menu-content .bubbles,
+.sidebar-menu-content .explores {
   height: auto;
 }
-.sidebar-menu-content .bubbles li {
+.sidebar-menu-content .bubbles li,
+.sidebar-menu-content .explores li {
   list-style-type: none;
 }
-.sidebar-menu-content .bubbles li a {
+.sidebar-menu-content .bubbles li a,
+.sidebar-menu-content .explores li a {
   font-family: 'proxima-nova', Arial, Sans-Serif;
   font-weight: 600;
   font-size: 14px;
@@ -619,7 +622,8 @@ button {
   padding: 18px 16px;
   text-decoration: none;
 }
-.sidebar-menu-content .bubbles li a:hover {
+.sidebar-menu-content .bubbles li a:hover,
+.sidebar-menu-content .explores li a:hover {
   background-color: #98b0c0;
 }
 .menu-pull {

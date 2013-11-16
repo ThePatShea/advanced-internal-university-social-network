@@ -9,8 +9,8 @@ var _          = require("underscore")
 
 
 // Set location of static content, compile Stylus files there
+app.use(stylus.middleware(__dirname + '/server/public'));
 app.use(express.static(__dirname + '/server/public'));
-app.use(stylus.middleware(path.resolve(__dirname, '/server/public')));
 
 // Serve up the backbone app files raw, but only in development
 app.configure('development', function() {
