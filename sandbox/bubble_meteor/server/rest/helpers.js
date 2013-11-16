@@ -335,6 +335,20 @@ this.RestHelpers = {
   },
 
   /**
+   * Search through MongoDB raw API
+   * @param {Collection} collection Meteor collection
+   * @param {string} searchQuery    Search string
+  **/
+  mongoSearch: function(collection, searchQuery){
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var collectionName = rawCollection.collectionName;
+    var future = new Future();
+
+    rawCollection.db.command({ text: collectionName, search: searchQuery }, this.bindFuture(future));
+    return future.wait();
+  },
+
+  /**
    * Create JSON response with proper encoding
    * @param  {int} code    HTTP status code
    * @param  {any} payload Payload to be sent
