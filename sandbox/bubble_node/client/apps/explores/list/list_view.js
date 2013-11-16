@@ -3,8 +3,8 @@ App.module('ExploresApp.List', function(List, App, Backbone, Marionette, $, _){
   List.Layout = Marionette.Layout.extend({
     template: 'explores/list/templates/list_layout',
     regions: {
-      subpanelRegion: '#subpanel',
-      showRegion: '#show_region'
+      subpanelRegion: '#menu-region',
+      showRegion: '#show-region'
     }
   });
 
