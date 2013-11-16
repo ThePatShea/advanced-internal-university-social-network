@@ -24,22 +24,21 @@ App.module("Components.Loading", function(Loading, App, Backbone, Marionette, $,
     },
     
     showRealView: function(realView, config, loadingView){
-      // xhrs = App.request("fetched:entities", config.entities)
       xhrs = _.chain([config.entities]).flatten().pluck("_fetch").value()
 
       _this = this
       $.when.apply($, xhrs).done(function(){
-        // ## ================================================================ ##
-        // ## If the region we are trying to insert is not the loadingView then
-        // ## we know the user has navigated to a different page while the loading
-        // ## view was still open. In that case, we know to manually close the real
-        // ## view so its controller is also closed.  We also prevent showing the real
-        // ## view (which would snap the user back to the old view unexpectedly)
-        // ## ================================================================ ##
+        // ================================================================
+        // If the region we are trying to insert is not the loadingView then
+        // we know the user has navigated to a different page while the loading
+        // view was still open. In that case, we know to manually close the real
+        // view so its controller is also closed.  We also prevent showing the real
+        // view (which would snap the user back to the old view unexpectedly)
+        // ================================================================
         if(loadingView && (_this.region.currentView !== loadingView)){
           return realView.close()
         }
-        // console.log("all of our xhrs are finished!")
+
         if(!config.debug){
           _this.show(realView)
         }

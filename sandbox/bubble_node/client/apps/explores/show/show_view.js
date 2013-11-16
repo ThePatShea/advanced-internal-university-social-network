@@ -1,3 +1,7 @@
 App.module('ExploresApp.Show', function(Show, App, Backbone, Marionette, $, _){
-  //ExploreApp show view code goes here
+  
+  Show.Layout = Marionette.Layout.extend({
+    template: 'explores/show/templates/show_layout',
+  });
+
 });
