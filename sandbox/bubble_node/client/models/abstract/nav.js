@@ -14,7 +14,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _){
     model: Models.Nav,
     chooseBy: function(name){
       _(this.where({chosen: true})).invoke('unchoose');
-      this.findWhere({navName: name}).choose()
+      this.findWhere({navName: name}).choose();
     }
   });
 
