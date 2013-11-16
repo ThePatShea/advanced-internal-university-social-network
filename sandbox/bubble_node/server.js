@@ -53,8 +53,22 @@ app.get('/application.js', function(req, res) {
   res.send(minifiedApp);
 });
 
+// Resources TODO: bring in the real routes
+app.get('/explores', function(req, res) {
+  // Dummy to build out frontend
+  _.delay(function() {
+    res.json([
+      { id: 1, name: "Campus" },
+      { id: 2, name: "Campus2" },
+      { id: 3, name: "Campus3" },
+      { id: 4, name: "Campus4" }
+    ]);
+  }, 2000);
+});
 
+
+// Start it up!
 console.log('Server listening on 3000');
-app.listen(3000);
+app.listen(3000); // TODO: production port management
 
 module.exports = app;
