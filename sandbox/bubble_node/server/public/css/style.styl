@@ -645,12 +645,13 @@ body.push-menu
 
 
 /*---------------------------------------------------------
------------------- MID CONTENT TESTING --------------------
+-------------------- EXPLORE SECTION ----------------------
 ---------------------------------------------------------*/
 
 .content-container
   width auto
-  overflow hidden 
+  overflow hidden
+  background-color #F7F8F8
   h1
     color red
     font-size 50px
@@ -665,18 +666,24 @@ body.push-menu
   padding 0 42px
   height 107px
   overflow hidden
-  max-height 107px
-  background-color rgba(0,0,0, 0.7)
+  max-height 110px
+  border-bottom 3px solid #98B0C0
   position relative
+  background-color black
   @media (max-width: 767px)
     padding 0 21px
   .cover-image
-    z-index -1
-    position absolute
-    left 0
-    top 0
-    width 100%
-    height 100%
+    img
+      background-color #000
+      position absolute
+      left 0
+      top 0
+      width 100%
+      height 100%
+      opacity 0.3
+      -webkit-user-select none
+         -moz-user-select none
+              user-select none
   .cover-content
     .button
       margin-top 35px
@@ -719,7 +726,7 @@ body.push-menu
       margin-top 24px
       position relative
       float left
-      padding-left 50px
+      padding-left 55px
       @media (max-width: 767px)
         padding-left 0
         width 50%
@@ -744,201 +751,204 @@ body.push-menu
         position absolute
         left 0
         top 50%
-        margin-top -18px
+        margin-top -20px
         svg
-          width 36px
-          height 36px
+          width 40px
+          height 40px
           fill light-color
           @media (max-width: 767px)
             display none
+
+
+
+/*---------------------------------------------------------
+---------------------- POSTS SECTION ----------------------
+---------------------------------------------------------*/
+
+.posts
+  li
+    &:nth-child(odd)
+      .anchor-container
+        background-color #EEF0F0
+    &:nth-child(even)
+      .anchor-container
+        background-color #F7F8F8
+  .post
+    width 100%
+    list-style none
+    list-style-type none
+    display list-item
+    .anchor-container
+      position relative
+      padding 20px 35px
+      background-color #EEF0F0
+      width 100%
+      display block
+      text-decoration none
+      &:hover
+        background-color #fff
+        .comments-number
+          svg
+            fill dark-color
+        .event-date
+          color dark-color
+          border-color dark-color
+      @media (max-width: 580px)
+        padding 20px 17px 30px 17px
+
+    .post-title
+      color #333333
+      font-size 16px
+      font-weight 400
+      font-family alt-font
+      float left
+      margin-top 9px
+      @media (max-width: 767px)
+        text-overflow ellipsis
+        overflow hidden
+        max-width 200px
+        white-space nowrap
+    .event-date
+      position absolute
+      left 35px
+      top 50%
+      margin-top -20px
+      padding 4px 0
+      text-align center
+      float left
+      margin-right 27px
+      width 38px
+      height 40px
+      border 1px solid #CCD2D7
+      -webkit-border-radius 8px
+      -moz-border-radius 8px
+      border-radius 8px
+      font-family main-font
+      font-weight 700
+      color #CCD2D7
+      .day
+        display block
+        font-size 23px
+        line-height 20px
+      .month
+        font-size 11px
+        text-transform uppercase
+        line-height 10px
+        display block
+        letter-spacing -1px
+    .comments-number
+      position absolute
+      left 35px
+      top 50%
+      margin-top -11px
+      .icon
+        position relative
+        display block
+        svg
+          width 24px
+          height 23px
+          fill #C3CACF
+        .number
+          font-family main-font
+          position absolute
+          text-align center
+          font-weight 700
+          font-size 12px
+          line-height 1em
+          color #F7F8F8
+          top 5px
+          display block
+          width 24px
+          height 20px
+
+    .post-info
+      float right
+      min-width 165px
+      max-width 165px
+      @media (max-width: 580px)
+        display none
+      img
+        width 35px
+        height 35px
+        display inline-block
+        border 3px solid #C3CACF
+        -webkit-border-radius 50%
+        -moz-border-radius 50%
+        border-radius 50%
+        float left
+        margin-right 12px
+      .user-name
+        margin-top 7px
+        margin-bottom 1px
+        float left
+        display inline-block
+        font-family alt-font
+        color #333333
+        font-size 13px
+        font-weight 400
+      .date
+        display block
+        float left
+        font-family main-font
+        font-size 10px
+        text-transform uppercase
+        font-weight 700
+        color #ACB6BE
+    .event
+      padding-left 90px
+    .anounce
+      padding-left 80px
+
+
+
+.pagination
+  text-align left
+  padding 30px
+  @media (max-width: 480px)
+    padding 30px 0
+    text-align center
+  li
+    display inline-block
+    a.active
+      background-color #A5BBC9
+      color #fff
+    a.next,
+    a.prev
+      font-size 11px
+      padding 8px 16px 6px 16px
+      line-height 14px
+    a 
+      text-align center
+      font-size 14px
+      margin 0 3px
+      text-decoration none
+      text-transform uppercase
+      font-family "brandon-grotesque" sans-serif
+      font-weight 700
+      border 1px solid #BECDD5
+      padding 7px 0 5px 0
+      min-width 30px
+      min-height 30px
+      display inline-block
+      line-height 1em
+      vertical-align middle
+      -webkit-border-radius 32px
+      -moz-border-radius 32px
+      border-radius 32px
+      color #2D5972
+      @media (max-width: 480px)
+        margin 0
+      &:hover
+        background-color    #A5BBC9
+        color #fff
+
+
 /*---------------------------------------------------------
 ----------------------- RESPONSIVE ------------------------
 ---------------------------------------------------------*/
 .side-activator
   display none;
 
-
-/*---------------------------------------------------------
------------------------ BOARDING --------------------------
----------------------------------------------------------*/
-
-.boarding-container
-  position absolute
-  top 60px
-  left 0
-  width 100%
-  .agree-terms
-    display inline-block
-    margin  0 0 21px 0
-    position relative
-    cursor pointer
-    padding-left 70px
-    text-align left
-    border-left none
-    height 54px
-    cursor none
-    .icon
-      z-index 1
-      background-color #001f37
-      position absolute
-      left 0
-      padding 11px
-      border 3px solid #2f5973
-      -webkit-border-radius 50%
-      -moz-border-radius 50%
-      border-radius 50%
-      svg
-        fill #2f5973
-        vertical-align top
-        width 26px
-        height 26px
-    .text
-      font-family: 'proxima-nova',Arial,Sans-Serif;
-      font-weight: 400;
-      color light-color
-      font-size 15px
-      white-space nowrap
-      height 54px
-      display inline-block
-      border 1px solid #2f5973
-      padding-left 35px
-      position absolute
-      left 30px
-      border-left 0
-      padding-top 10px
-      padding-right 30px
-      -webkit-border-radius 0 30px 30px 0
-      -moz-border-radius 0 30px 30px 0
-      border-radius 0 30px 30px 0
-    &:hover
-      .text
-        background-color #2f5973
-        color #001f37
-      .icon
-        background-color #2f5973
-        position absolute
-        left 0
-        padding 11px
-        border 3px solid #001f37
-        -webkit-border-radius 50%
-        -moz-border-radius 50%
-        border-radius 50%
-        svg
-          fill #001f37
-  .cb-submit-container
-    cursor pointer
-    float right
-    height           70px
-    button
-      border: 1px solid #2f5973;
-      color: #f7f8f8;
-      font-weight: 700;
-      font-family: 'brandon-grotesque',Arial,Sans-Serif;
-      text-transform: uppercase;
-      -webkit-border-radius 28px
-      -moz-border-radius 28px
-      border-radius 28px
-      font-size 11px
-    .cb-submit
-      position         relative
-      padding          8px 15px 7px 15px
-      top              10px
-      .words-main
-        display          inline
-      .words-error
-        display          none
-      &.ready-false
-        &:hover
-          word-spacing     2px
-          background       0
-          .words-main
-            display          none
-          .words-error
-            display          inline
-  h1
-    text-align left
-    padding: 30px 30px 25px 42px;
-    font-family: 'proxima-nova',Arial,Sans-Serif;
-    font-weight: 300;
-    text-decoration: auto;
-    letter-spacing: auto;
-    line-height: auto;
-    text-align: auto;
-    font-size: 30px;
-    color: #2f5973;
-    position: relative;
-    display: block;
-    height: 100%;
-  .boarding-form
-    background-color #001f37
-    padding 42px
-    form
-      hr
-        margin 0
-        border none
-        border-bottom 1px solid #2f5973
-        display block
-      label
-        font-family: 'brandon-grotesque',Arial,Sans-Serif;
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-size: 18px;
-        border-bottom 1px solid #2f5973
-        color #2f5973
-        display block
-        padding-bottom 7px
-        margin-bottom 21px
-        cursor pointer
-        a
-          color light-color
-          text-decoration underline
-    .attach-files
-      position relative
-      width 100%
-      .drop-zone
-        height 240px
-        border-bottom 1px solid #2f5973
-        margin 42px 0
-        .dz-subtitle
-          font-family: 'brandon-grotesque',Arial,Sans-Serif;
-          font-weight: 300;
-          text-decoration: blank;
-          letter-spacing: blank;
-          line-height: 1em;
-          text-align: center;
-          text-transform: lowercase;
-          font-size: 21px;
-          background: auto;
-          border: auto;
-          color: #2f5973;
-          fill: auto;
-          stroke: auto;
-          padding-bottom 50px
-        .dz-title
-          padding 50px 0 0 0
-          color: #011126;
-          fill: auto;
-          stroke: auto;
-          line-height: 1em;
-          text-align: center;
-          text-transform: uppercase;
-          font-size: 78px;
-          font-style: italic;
-          font-family: 'brandon-grotesque',Arial,Sans-Serif;
-          font-weight: 700;
-        .file-chooser-invisible
-          position: absolute;
-          bottom: auto;
-          right: 0;
-          left: auto;
-          top: 0;
-          cursor: pointer;
-          height 240px
-          width: 100%;
-          z-index: 20;
-          opacity: 0;
-          zoom: 1;
 
 /***************************************************************************************** 
 *********************** MEDIA QUERIES 
