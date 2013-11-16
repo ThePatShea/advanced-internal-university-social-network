@@ -29,7 +29,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"subpanel\" class=\"sidebar-menu-content menu-pull\"></div>\n\n<div id=\"show_region\"></div>\n";
+  return "<div class=\"sidebar-container\">\n  <div id=\"menu-region\" class=\"sidebar-menu-content menu-pull\"></div>\n</div>\n\n<div id=\"show-region\"></div>\n";
   });
 
 this["Templates"]["./client/apps/bubbles/show/templates/show.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -55,6 +55,20 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<h1 style=\"position: absolute; top: 60px; left: 100px;\">\n  Dashboard!\n</h1>";
   });
 
+this["Templates"]["./client/apps/explores/list/templates/explore.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<a href=\"#\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</a>\n";
+  return buffer;
+  });
+
 this["Templates"]["./client/apps/explores/list/templates/explores.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -70,20 +84,20 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div id=\"subpanel\" class=\"sidebar-menu-content menu-pull\"></div>\n\n<div id=\"show_region\"></div>\n";
+  return "<div class=\"sidebar-container\">\n  <div id=\"menu-region\" class=\"sidebar-menu-content menu-pull\"></div>\n</div>\n\n<div id=\"show-region\"></div>\n";
   });
 
-this["Templates"]["./client/apps/explores/show/templates/explore.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+this["Templates"]["./client/apps/explores/show/templates/show_layout.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<a href=\"#\">";
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += "<div style=\"position: absolute; top: 60px; left: 310px;\">\n  Explore: ";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a>\n";
+    + "\n</div>";
   return buffer;
   });
 
@@ -184,4 +198,13 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 
   return "<ul class=\"sidebar-menu\">\n\n</ul>\n\n<ul class=\"mini-footer hide\">\n	<li><p>licensed by emory university</p></li>\n	<li class=\"info\">\n		<span class=\"icon\">\n			<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"33px\" height=\"33px\" viewBox=\"0 0 33 33\" enable-background=\"new 0 0 33 33\" xml:space=\"preserve\">\n			<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"#95AFBF\" d=\"M0,16.5C0,7.39,7.39,0,16.5,0C25.609,0,33,7.39,33,16.5\n			C33,25.609,25.609,33,16.5,33C7.39,33,0,25.609,0,16.5z\"></path>\n			<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"#011126\" d=\"M4,16.2c0,6.729,5.46,12.19,12.2,12.19\n			c1.909,0,3.72-0.44,5.34-1.23C23.33,28.68,29,29,29,29c-2.82-1.439-3.891-3.2-4.27-4.09c2.26-2.221,3.66-5.301,3.66-8.71\n			C28.391,9.46,22.93,4,16.2,4C9.46,4,4,9.46,4,16.2z\"></path>\n			<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" fill=\"#F7F8F8\" d=\"M5.8,16.09c0,2.51,0.9,4.811,2.4,6.6\n			C8.19,21.391,10.77,7,24.779,10.58C22.95,7.71,19.74,5.8,16.09,5.8C10.41,5.8,5.8,10.41,5.8,16.09z\"></path>\n			</svg>\n		</span>\n		<span class=\"name\">© 2013</span>\n	</li>\n</ul><!-- MINI FOOTER --> ";
+  });
+
+this["Templates"]["./client/components/loading/templates/loading.html.handlebars"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div style=\"position: absolute; top: 60px; left: 310px;\">\n  Loadingggg!!\n</div>";
   });
