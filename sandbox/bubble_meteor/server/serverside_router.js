@@ -173,6 +173,88 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 //**************************Begin REST GET****************************************
 
+
+function getTopTenSearchedUsers(searchResults){
+    var topTenResults = [];
+    var results = searchResults.Results;
+    var max = (results.length > 10) ? 10 : results.length;
+
+    for (var i = 0; i < max; i++){
+        topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
+    }
+
+    return topTenResults;
+};
+
+
+function getTopTenSearchedBubbles(searchResults){
+    var topTenResults = [];
+    var results = searchResults.results;
+    var max = (results.length > 10) ? 10 : results.length;
+
+    for (var i = 0; i < max; i++){
+        topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
+    }
+
+    return topTenResults;
+}
+
+
+function getTopTenSearchedPosts(searchResults, postType){
+    var topTenResults = [];
+    var results = searchResults.results;
+    var max = (results.length > 10) ? 10 : results.length;
+
+    for (var i = 0; i < max; i++){
+        var post = results[i].obj;
+        if (post.postType === postType)
+            topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
+    }
+
+    return topTenResults;
+}
+
+
+Meteor.Router.add('/2013-09-11/users/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Meteor.users, searchText);
+    var topTenResults = getTopTenSearchedUsers(searchResults);
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/events/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Posts, searchText);
+    var topTenResults = getTopTenSearchedPosts(searchResults, 'event');
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/discussions/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Posts, searchText);
+    var topTenResults = getTopTenSearchedPosts(searchResults, 'discussion');
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/files/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Posts, searchText);
+    var topTenResults = getTopTenSearchedPosts(searchResults, 'file');
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/bubbles/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Bubbles, searchText);
+    var topTenResults = getTopTenSearchedBubbles(searchResults);
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
 //Explore Posts for dashboard
 Meteor.Router.add('/2013-09-11/dashboard', 'GET', function(){
     var limit = this.request.query.limit || 5;
