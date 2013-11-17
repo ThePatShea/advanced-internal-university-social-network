@@ -35,8 +35,6 @@ Template.postPageBackbone.helpers({
     var user = Meteor.user();
     var bubble = Session.get('currentBubbleInfo');
 
-    console.log('x', bubble);
-
     if (this.userId === user._id) {
       console.log('Post Page: Post Author');
       return true;
@@ -148,9 +146,6 @@ Template.postPageBackbone.created = function() {
   this.watch = Meteor.autorun(function() {
     refreshData(that, Session.get('currentBubbleId'), Session.get('currentPostId'));
   });
-
-  if(typeof goingDep === "undefined")
-    goingDep = new Deps.Dependency;
 }
 
 Template.postPageBackbone.rendered = function() {
