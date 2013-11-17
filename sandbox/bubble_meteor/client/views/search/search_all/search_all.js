@@ -1,3 +1,77 @@
+Template.searchAll.events({
+  'keyup .search-text': function(evt) {
+    var searchText = $('.search-text').val();
+    console.log('Search All changed: ', searchText);
+    //Session.set('selectedPostIdList', []);
+    if (!DisplayHelpers.isMobile()) {
+      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+        if (!err)
+          Session.set('selectedUserIdList', res);
+      });
+      SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
+        if (!err)
+          Session.set('selectedBubbleIdList', res);
+      });
+      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+        if (!err) {
+          var postIds = Session.get('selectedPostIdList') || [];
+          postIds = postIds.concat(res);
+          Session.set('selectedPostIdList', postIds);
+        }
+      });
+      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+        if (!err) {
+          var postIds = Session.get('selectedPostIdList') || [];
+          postIds = postIds.concat(res);
+          Session.set('selectedPostIdList', postIds);
+        }
+      });
+      SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+        if (!err) {
+          var postIds = Session.get('selectedPostIdList') || [];
+          postIds = postIds.concat(res);
+          Session.set('selectedPostIdList', postIds);
+        }
+      });
+    }
+  },
+
+  'click .search-btn': function(evt) {
+    var searchText = $('.search-text').val();
+    console.log('Search All button Click: ', searchText);
+    SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+      if (!err)
+        Session.set('selectedUserIdList', res);
+    });
+    SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
+      if (!err)
+        Session.set('selectedBubbleIdList', res);
+    });
+    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+      if (!err) {
+        var postIds = Session.get('selectedPostIdList');
+        postIds.concat(res);
+        Session.set('selectedPostIdList', postIds);
+      }
+    });
+    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      if (!err) {
+        var postIds = Session.get('selectedPostIdList');
+        postIds.concat(res);
+        Session.set('selectedPostIdList', postIds);
+      }
+    });
+    SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+      if (!err) {
+        var postIds = Session.get('selectedPostIdList');
+        postIds.concat(res);
+        Session.set('selectedPostIdList', postIds);
+      }
+    });
+  }
+});
+
+
 Template.searchAll.helpers({
   getSearchedFiles: function() {
     return Posts.find({_id: {$in: Session.get('selectedPostIdList')}, postType: "file"},{limit:3});
@@ -15,8 +89,8 @@ Template.searchAll.helpers({
     return Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:3});
   },
 
-  typing: function() {
-    return Session.get("typing");
+  searching: function() {
+    return !!Session.get('searching');
   }
   
 });
@@ -27,7 +101,7 @@ Template.searchAll.rendered = function() {
   Session.set('currentBubbleId','');
 
 
-  if($(window).width() > 768)
+  /*if($(window).width() > 768)
   {
     $(".search-text").bind("keydown", function(evt) {
       Session.set('typing', 'true');
@@ -130,7 +204,7 @@ Template.searchAll.rendered = function() {
           }
         });
       }, 500);
-  });
+  });*/
  
 
 
@@ -140,10 +214,10 @@ Template.searchAll.rendered = function() {
 
 
 Template.searchAll.created = function() {
-  mto = "";
-  Session.set('typing', 'false');
+  //mto = "";
+  //Session.set('typing', 'false');
   Session.set("selectedPostIdList", []);
   Session.set("selectedBubbleIdList", []);
   Session.set("selectedUserIdList", []);
-  var tmp = [];
-}
+  //var tmp = [];
+};

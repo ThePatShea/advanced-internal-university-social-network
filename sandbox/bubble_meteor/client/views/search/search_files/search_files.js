@@ -1,3 +1,32 @@
+Template.searchFiles.events({
+  'keyup .search-text': function(evt) {
+    var searchText = $('.search-text').val();
+    console.log('Search All changed: ', searchText);
+    //Session.set('selectedPostIdList', []);
+    if (!DisplayHelpers.isMobile()) {
+      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+        if (!err) {
+          var postIds = Session.get('selectedPostIdList') || [];
+          postIds = postIds.concat(res);
+          Session.set('selectedPostIdList', postIds);
+        }
+      });
+    }
+  },
+
+  'click .search-btn': function(evt) {
+    var searchText = $('.search-text').val();
+    console.log('Search All button Click: ', searchText);
+    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+      if (!err) {
+        var postIds = Session.get('selectedPostIdList');
+        postIds.concat(res);
+        Session.set('selectedPostIdList', postIds);
+      }
+    });
+  }
+});
+
 Template.searchFiles.helpers({
 
   /*
@@ -32,14 +61,7 @@ Template.searchFiles.rendered = function(){
   //To set header as active
   Session.set('searchCategory', 'files');
 
-  /*$(window).scroll(function(){
-    if ($(window).scrollTop() == $(document).height() - $(window).height()){
-      if(Meteor.Router._page == 'searchFiles'){
-        this.searchFilesHandle.loadNextPage();
-      }
-    }
-  });*/
-  if($(window).width() > 768)
+  /*if($(window).width() > 768)
   {
     $(".search-text").bind("keydown", function(evt) {
       Session.set('typing', 'true');
@@ -70,7 +92,7 @@ Template.searchFiles.rendered = function(){
         }
       });
     }, 500);
-  });
+  });*/
   $(document).attr('title', 'Search Files - Emory Bubble');
 }
 
@@ -79,18 +101,3 @@ Template.searchFiles.created = function() {
   Session.set('typing', 'false');
   Session.set("selectedPostIdList", []);
 }
-
-Template.searchFiles.events({
-  /*
-  "click .search-btn": function(evt){
-    Meteor.call('search_files', $(".search-text").val(), function(err, res) {
-      if(err) {
-        console.log(err);
-      } else {
-        Session.set('typing', 'false');
-        Session.set('selectedPostIdList', res);
-      }
-    });
-  }
-  */
-})

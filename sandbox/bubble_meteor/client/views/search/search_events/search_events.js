@@ -1,3 +1,32 @@
+Template.searchEvents.events({
+  'keyup .search-text': function(evt) {
+    var searchText = $('.search-text').val();
+    console.log('Search All changed: ', searchText);
+    //Session.set('selectedPostIdList', []);
+    if (!DisplayHelpers.isMobile()) {
+      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+        if (!err) {
+          var postIds = Session.get('selectedPostIdList') || [];
+          postIds = postIds.concat(res);
+          Session.set('selectedPostIdList', postIds);
+        }
+      });
+    }
+  },
+
+  'click .search-btn': function(evt) {
+    var searchText = $('.search-text').val();
+    console.log('Search All button Click: ', searchText);
+    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      if (!err) {
+        var postIds = Session.get('selectedPostIdList');
+        postIds.concat(res);
+        Session.set('selectedPostIdList', postIds);
+      }
+    });
+  }
+});
+
 Template.searchEvents.helpers({
   
   /*
@@ -34,7 +63,7 @@ Template.searchEvents.rendered = function(){
     }
   });
   */
-  if($(window).width() > 768)
+  /*if($(window).width() > 768)
   {
     $(".search-text").bind("keydown", function(evt) {
       Session.set('typing', 'true');
@@ -65,7 +94,7 @@ Template.searchEvents.rendered = function(){
         }
       });
     }, 500);
-  });
+  });*/
 
   $(document).attr('title', 'Search Events - Emory Bubble');
 }
