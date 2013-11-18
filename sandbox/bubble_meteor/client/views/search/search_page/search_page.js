@@ -18,15 +18,14 @@ Template.searchPage.helpers({
 
 
 Template.searchPage.rendered = function() {
-  var searchText = $('.searchText').val();
-  !!Session.get('searchText') ? Session.set('searchText', searchText) : Session.set('searchText', '');
-
   Meteor.subscribe('findUsersById', Session.get('selectedUserIdList'));
   Meteor.subscribe('findBubblesById', Session.get('selectedBubbleIdList'));
   Meteor.subscribe('findPostsById', Session.get('selectedDiscussionIdList'));
   Meteor.subscribe('findPostsById', Session.get('selectedEventIdList'));
   Meteor.subscribe('findPostsById', Session.get('selectedFileIdList'));
-  //Meteor.subscribe('findPostsById', Session.get('selectedPostIdList'));
+  
+  var searchText = $('.searchText').val();
+  !!Session.get('searchText') ? Session.set('searchText', searchText) : Session.set('searchText', '');
 
   $(document).attr('title', 'Search - Emory Bubble');
 }
