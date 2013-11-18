@@ -285,15 +285,39 @@ Meteor.Router.filters({
     }
   },
   'belongToBubble': function(page) {
+    console.log("belongToBubble Start");
     if(window.location.pathname.match('mybubbles')) {
+      
+      var xhr_isAdmin = $.ajax({
+        url: "/2013-09-11/isadmin?bubbleid="+Session.get('currentBubbleId')+"&userid="+Meteor.userId(),
+        async: false
+      });
+      var xhr_isMember = $.ajax({
+        url: "/2013-09-11/ismember?bubbleid="+Session.get('currentBubbleId')+"&userid="+Meteor.userId(),
+        async: false
+      });
+
+      console.log("AJAX Responses: ", xhr_isMember, xhr_isAdmin);
+      
+      if(xhr_isMember.responseText == "False"
+        && xhr_isAdmin.responseText == "False"
+        && '3' != Meteor.user().userType)
+      {
+        console.log("RETRUN BUBBLE PUBLIC PAGE");
+        Meteor.Router.to('bubblePublicPage',Session.get('currentBubbleId'));
+        return 'bubblePublicPage';
+      }
+      /*
       if(Meteor.user() && '3' != Meteor.user().userType){
         var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+        console.log("Bubble: ", bubble);
         if(bubble) {
           if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
             return 'bubblePublicPage';
           }
         }
       }
+      */
     }
     return page;
   },
@@ -370,7 +394,8 @@ Meteor.Router.filters({
 });
 
 //Partially filter pages that are not bubble related
-Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents',  'searchFiles', 'bubbleSubmit']});
+// Meteor.Router.filter('belongToBubble', {except: ['bubblePublicPage','searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents',  'searchFiles', 'bubbleSubmit']});
+Meteor.Router.filter('belongToBubble', {only: ['bubblePageBackbone','bubblePage','bubbleMembersPageBackbone','bubbleEventPageBackbone','bubbleDiscussionPageBackbone','bubbleFilePageBackbone']});
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
 Meteor.Router.filter('level4Permissions', {only: ['createUser']});
