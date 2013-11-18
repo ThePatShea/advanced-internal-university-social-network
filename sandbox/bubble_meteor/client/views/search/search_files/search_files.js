@@ -1,14 +1,11 @@
 Template.searchFiles.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
-    console.log('Search All changed: ', searchText);
-    //Session.set('selectedPostIdList', []);
     if (!DisplayHelpers.isMobile()) {
       SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
         if (!err) {
-          var postIds = Session.get('selectedPostIdList') || [];
-          postIds = postIds.concat(res);
-          Session.set('selectedPostIdList', postIds);
+          var fileIds = res;
+          Session.set('selectedFileIdList', fileIds);
         }
       });
     }
@@ -16,37 +13,34 @@ Template.searchFiles.events({
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
-    console.log('Search All button Click: ', searchText);
     SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
       if (!err) {
-        var postIds = Session.get('selectedPostIdList');
-        postIds.concat(res);
-        Session.set('selectedPostIdList', postIds);
+        var fileIds = res;
+        Session.set('selectedFileIdList', fileIds);
       }
     });
   }
 });
 
 Template.searchFiles.helpers({
-
   getSearchedFiles: function() {
-    return Posts.find({_id: {$in: Session.get('selectedPostIdList')}},{limit:10});
+    return Posts.find({_id: {$in: Session.get('selectedFileIdList')}},{limit:10});
   },
-
   typing: function() {
     return Session.get("typing");
   }
 });
 
+
+
+Template.searchFiles.created = function() {
+  Session.set("selectedFileIdList", []);
+}
+
+
+
 Template.searchFiles.rendered = function(){
   //To set header as active
   Session.set('searchCategory', 'files');
-
   $(document).attr('title', 'Search Files - Emory Bubble');
-}
-
-Template.searchFiles.created = function() {
-  mto = "";
-  Session.set('typing', 'false');
-  Session.set("selectedPostIdList", []);
 }

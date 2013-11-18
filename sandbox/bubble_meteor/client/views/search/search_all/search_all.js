@@ -1,8 +1,6 @@
 Template.searchAll.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
-    console.log('Search All changed: ', searchText);
-    //Session.set('selectedPostIdList', []);
     if (!DisplayHelpers.isMobile()) {
       SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
         if (!err)
@@ -14,23 +12,20 @@ Template.searchAll.events({
       });
       SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
         if (!err) {
-          var postIds = Session.get('selectedPostIdList') || [];
-          postIds = postIds.concat(res);
-          Session.set('selectedPostIdList', postIds);
+          var fileIds = res;
+          Session.set('selectedFileIdList', fileIds);
         }
       });
       SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
         if (!err) {
-          var postIds = Session.get('selectedPostIdList') || [];
-          postIds = postIds.concat(res);
-          Session.set('selectedPostIdList', postIds);
+          var eventIds = res;
+          Session.set('selectedEventIdList', eventIds);
         }
       });
       SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
         if (!err) {
-          var postIds = Session.get('selectedPostIdList') || [];
-          postIds = postIds.concat(res);
-          Session.set('selectedPostIdList', postIds);
+          var discussionIds = res;
+          Session.set('selectedDiscussionIdList', discussionIds);
         }
       });
     }
@@ -38,7 +33,6 @@ Template.searchAll.events({
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
-    console.log('Search All button Click: ', searchText);
     SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
       if (!err)
         Session.set('selectedUserIdList', res);
@@ -49,23 +43,20 @@ Template.searchAll.events({
     });
     SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
       if (!err) {
-        var postIds = Session.get('selectedPostIdList');
-        postIds.concat(res);
-        Session.set('selectedPostIdList', postIds);
+        var fileIds = res;
+        Session.set('selectedFileIdList', fileIds);
       }
     });
     SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
       if (!err) {
-        var postIds = Session.get('selectedPostIdList');
-        postIds.concat(res);
-        Session.set('selectedPostIdList', postIds);
+        var eventIds = res;
+        Session.set('selectedEventIdList', eventIds);
       }
     });
     SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
       if (!err) {
-        var postIds = Session.get('selectedPostIdList');
-        postIds.concat(res);
-        Session.set('selectedPostIdList', postIds);
+        var discussionIds = res;
+        Session.set('selectedDiscussionIdList', discussionIds);
       }
     });
   }
@@ -74,13 +65,13 @@ Template.searchAll.events({
 
 Template.searchAll.helpers({
   getSearchedFiles: function() {
-    return Posts.find({_id: {$in: Session.get('selectedPostIdList')}, postType: "file"},{limit:3});
+    return Posts.find({_id: {$in: Session.get('selectedFileIdList')}, postType: "file"},{limit:3});
   },
   getSearchedDiscussions: function() {
-    return Posts.find({_id: {$in: Session.get('selectedPostIdList')}, postType: "discussion"},{limit:3});
+    return Posts.find({_id: {$in: Session.get('selectedDiscussionIdList')}, postType: "discussion"},{limit:3});
   },
   getSearchedEvents: function() {
-    return Posts.find({_id: {$in: Session.get('selectedPostIdList')}, postType: "event"},{limit:3});
+    return Posts.find({_id: {$in: Session.get('selectedEventIdList')}, postType: "event"},{limit:3});
   },
   getSearchedUsers: function() {
     return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}},{limit:3});
@@ -88,12 +79,23 @@ Template.searchAll.helpers({
   getSearchedBubbles: function() {
     return Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:3});
   },
-
   searching: function() {
     return !!Session.get('searching');
   }
-  
 });
+
+
+
+Template.searchAll.created = function() {
+  Session.set('selectedPostIdList', []);
+  Session.set('selectedBubbleIdList', []);
+  Session.set('selectedUserIdList', []);
+  Session.set('selectedEventIdList', []);
+  Session.set('selectedDiscussionIdList', []);
+  Session.set('selectedFileIdList', []);
+};
+
+
 
 Template.searchAll.rendered = function() {
   // To set header as active
@@ -103,13 +105,3 @@ Template.searchAll.rendered = function() {
   $(document).attr('title', 'Search - Emory Bubble');
 };
 
-
-
-Template.searchAll.created = function() {
-  //mto = "";
-  //Session.set('typing', 'false');
-  Session.set("selectedPostIdList", []);
-  Session.set("selectedBubbleIdList", []);
-  Session.set("selectedUserIdList", []);
-  //var tmp = [];
-};
