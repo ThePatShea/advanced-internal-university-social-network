@@ -68,7 +68,7 @@ Template.eventEdit.events({
     else{
       f = files[0];
       //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
+      if (f.type.match('image.*') && (f.size < 775000)) {
         var reader = new FileReader();
 
         // Closure to capture the file information.
@@ -125,10 +125,10 @@ Template.eventEdit.events({
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
 
-      }
-
-      //If the file dropped on the dropzone is not an image then throw an error to the user
-      else{
+      } else if(f.size >= 775000) {
+        alert("Files cannot be larger than 775KB, please upload a different file.");
+        return;
+      } else{
         error = new Meteor.Error(422, 'Please choose a valid image.');
         throwError(error.reason);
       }

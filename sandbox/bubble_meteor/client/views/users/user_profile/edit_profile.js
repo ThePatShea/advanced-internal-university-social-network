@@ -77,7 +77,7 @@ Template.userProfileEdit.events({
     else{
       f = files[0];
       //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
+      if (f.type.match('image.*') && (f.size < 775000)) {
         var reader = new FileReader();
 
         // Closure to capture the file information.
@@ -213,6 +213,9 @@ Template.userProfileEdit.events({
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
 
+      } else if(f.size >= 775000) {
+        alert("Files cannot be larger than 775KB, please upload a different file.");
+        return;
       }
 
       //If the file dropped on the dropzone is not an image then throw an error to the user
@@ -226,6 +229,7 @@ Template.userProfileEdit.events({
 
 
   'change #filesToUpload': function(evt){
+    console.log("CHANGE FILESTOUPLOAD");
     files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -235,7 +239,7 @@ Template.userProfileEdit.events({
     else{
       f = files[0];
       //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
+      if (f.type.match('image.*') && (f.size < 775000)) {
         var reader = new FileReader();
 
         // Closure to capture the file information.
@@ -321,6 +325,9 @@ Template.userProfileEdit.events({
         // Read in the image file as a data URL.
         reader.readAsDataURL(f);
 
+      } else if(f.size >= 775000) {
+        alert("Files cannot be larger than 775KB, please upload a different file.");
+        return;
       }
 
       //If the file dropped on the dropzone is not an image then throw an error to the user
