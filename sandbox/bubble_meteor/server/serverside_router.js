@@ -176,8 +176,12 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 function getTopTenSearchedUsers(searchResults){
     var topTenResults = [];
-    var results = searchResults.Results;
-    var max = (results.length > 10) ? 10 : results.length;
+    var results = searchResults.results;
+    if (results) {
+        var max = (results.length > 10) ? 10 : results.length;
+    } else {
+        var max = 0;
+    }
 
     for (var i = 0; i < max; i++){
         topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
@@ -190,7 +194,11 @@ function getTopTenSearchedUsers(searchResults){
 function getTopTenSearchedBubbles(searchResults){
     var topTenResults = [];
     var results = searchResults.results;
-    var max = (results.length > 10) ? 10 : results.length;
+    if (results){
+        var max = (results.length > 10) ? 10 : results.length;
+    } else {
+        var max = 0
+    }
 
     for (var i = 0; i < max; i++){
         topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
@@ -203,7 +211,11 @@ function getTopTenSearchedBubbles(searchResults){
 function getTopTenSearchedPosts(searchResults, postType){
     var topTenResults = [];
     var results = searchResults.results;
-    var max = (results.length > 10) ? 10 : results.length;
+    if (results) {
+        var max = (results.length > 10) ? 10 : results.length;
+    } else {
+        var max = 0;
+    }
 
     for (var i = 0; i < max; i++){
         var post = results[i].obj;
@@ -219,8 +231,15 @@ Meteor.Router.add('/2013-09-11/users/search?:q', 'GET', function(q){
     var searchText = this.request.query.text;
     var searchResults = RestHelpers.mongoSearch(Meteor.users, searchText);
     var topTenResults = getTopTenSearchedUsers(searchResults);
+    var numResults = topTenResults.length;
+    var results = {
+        'count': numResults,
+        'pages': 1,
+        'page': 0,
+        users: topTenResults
+    }
 
-    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(results)];
 });
 
 Meteor.Router.add('/2013-09-11/events/search?:q', 'GET', function(q){
@@ -251,8 +270,15 @@ Meteor.Router.add('/2013-09-11/bubbles/search?:q', 'GET', function(q){
     var searchText = this.request.query.text;
     var searchResults = RestHelpers.mongoSearch(Bubbles, searchText);
     var topTenResults = getTopTenSearchedBubbles(searchResults);
+    var numResults = topTenResults.length;
+    var results = {
+        'count': numResults,
+        'pages': 1,
+        'page': 0,
+        'bubbles': topTenResults
+    }
 
-    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(results)];
 });
 
 //Explore Posts for dashboard

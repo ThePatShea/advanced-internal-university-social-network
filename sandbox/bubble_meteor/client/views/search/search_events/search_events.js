@@ -2,7 +2,7 @@ Template.searchEvents.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchEventsREST(searchText, function(err, res) {
         if (!err) {
           var eventIds = res;
           Session.set('selectedEventIdList', eventIds);
@@ -13,7 +13,7 @@ Template.searchEvents.events({
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
-    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchEventsREST(searchText, function(err, res) {
       if (!err) {
         var eventIds = res;
         Session.set('selectedEventIdList', eventIds);
@@ -26,7 +26,7 @@ Template.searchEvents.events({
 
 Template.searchEvents.helpers({
   getSearchedEvents: function() {
-    return Posts.find({_id: {$in: Session.get('selectedEventIdList')}},{limit:10});
+    return Session.get('selectedEventIdList');
   },
   typing: function() {
     return Session.get("typing");

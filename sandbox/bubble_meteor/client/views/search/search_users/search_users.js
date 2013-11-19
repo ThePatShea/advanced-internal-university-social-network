@@ -2,7 +2,7 @@ Template.searchUsers.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
     if(!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+      SearchHelpers.searchUsersREST(searchText, function(err, res) {
         if (!err)
           Session.set('selectedUserIdList', res);
       });
@@ -11,7 +11,7 @@ Template.searchUsers.events({
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
-    SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+    SearchHelpers.searchUsersREST(searchText, function(err, res) {
       if (!err)
         Session.set('selectedUserIdList', res);
     });
@@ -22,7 +22,7 @@ Template.searchUsers.events({
 
 Template.searchUsers.helpers({
   getSearchedUsers: function() {
-    return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}},{limit:10});
+    return Session.get('selectedUserIdList');
   },
   typing: function() {
     return Session.get("typing");

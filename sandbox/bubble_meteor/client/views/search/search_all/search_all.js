@@ -2,27 +2,27 @@ Template.searchAll.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+      SearchHelpers.searchUsersREST(searchText, function(err, res) {
         if (!err)
           Session.set('selectedUserIdList', res);
       });
-      SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
+      SearchHelpers.searchBubblesREST(searchText, function(err, res) {
         if (!err)
           Session.set('selectedBubbleIdList', res);
       });
-      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+      SearchHelpers.searchFilesREST(searchText, function(err, res) {
         if (!err) {
           var fileIds = res;
           Session.set('selectedFileIdList', fileIds);
         }
       });
-      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchEventsREST(searchText, function(err, res) {
         if (!err) {
           var eventIds = res;
           Session.set('selectedEventIdList', eventIds);
         }
       });
-      SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
         if (!err) {
           var discussionIds = res;
           Session.set('selectedDiscussionIdList', discussionIds);
@@ -33,27 +33,27 @@ Template.searchAll.events({
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
-    SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+    SearchHelpers.searchUsersREST(searchText, function(err, res) {
       if (!err)
         Session.set('selectedUserIdList', res);
     });
-    SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
+    SearchHelpers.searchBubblesREST(searchText, function(err, res) {
       if (!err)
         Session.set('selectedBubbleIdList', res);
     });
-    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+    SearchHelpers.searchFilesREST(searchText, function(err, res) {
       if (!err) {
         var fileIds = res;
         Session.set('selectedFileIdList', fileIds);
       }
     });
-    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchEventsREST(searchText, function(err, res) {
       if (!err) {
         var eventIds = res;
         Session.set('selectedEventIdList', eventIds);
       }
     });
-    SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
       if (!err) {
         var discussionIds = res;
         Session.set('selectedDiscussionIdList', discussionIds);
@@ -65,19 +65,19 @@ Template.searchAll.events({
 
 Template.searchAll.helpers({
   getSearchedFiles: function() {
-    return Posts.find({_id: {$in: Session.get('selectedFileIdList')}, postType: "file"},{limit:3});
+    return Session.get('selectedFileIdList');
   },
   getSearchedDiscussions: function() {
-    return Posts.find({_id: {$in: Session.get('selectedDiscussionIdList')}, postType: "discussion"},{limit:3});
+    return Session.get('selectedDiscussionIdList');
   },
   getSearchedEvents: function() {
-    return Posts.find({_id: {$in: Session.get('selectedEventIdList')}, postType: "event"},{limit:3});
+    return Session.get('selectedEventIdList');
   },
   getSearchedUsers: function() {
-    return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}},{limit:3});
+    return Session.get('selectedUserIdList');
   },
   getSearchedBubbles: function() {
-    return Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:3});
+    return Session.get('selectedBubbleIdList');
   },
   searching: function() {
     return !!Session.get('searching');

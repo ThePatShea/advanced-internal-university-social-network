@@ -2,7 +2,7 @@ Template.searchBubbles.events({
   'keyup .search-text': function(evt){
     var searchText = $('.search-text').val();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchBubblesMeteor(searchText, function(err, res){
+      SearchHelpers.searchBubblesREST(searchText, function(err, res){
         if (!err)
           Session.set('selectedBubbleIdList', res);
       });
@@ -11,7 +11,7 @@ Template.searchBubbles.events({
 
   'click .search-btn': function(evt){
     var searchText = $('.search-text').val();
-    SearchHelpers.searchBubblesMeteor(searchText, function(err, res){
+    SearchHelpers.searchBubblesREST(searchText, function(err, res){
       if (!err)
         Session.set('selectedBubbleIdList', res);
     });
@@ -22,7 +22,7 @@ Template.searchBubbles.events({
 
 Template.searchBubbles.helpers({
   getSearchedBubbles: function() {
-    return Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:10});
+    return Session.get('selectedBubbleIdList');
   },
   typing: function() {
     return Session.get("typing");
