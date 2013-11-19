@@ -507,7 +507,7 @@ alt-font   =  'proxima-nova', Arial, Sans-Serif
         fill light-color
         rect
           fill medium-color
-  .bubbles, .explores
+  .bubbles
     height auto
     li
       list-style-type none
@@ -1079,11 +1079,6 @@ label
   min-width  210px
   position relative
   .dropdown
-    -webkit-transition: opacity 0.4s ease-in-out;
-       -moz-transition: opacity 0.4s ease-in-out;
-        -ms-transition: opacity 0.4s ease-in-out;
-         -o-transition: opacity 0.4s ease-in-out;
-            transition: opacity 0.4s ease-in-out;
     opacity 0
     min-width 210+17px
     left -15px
@@ -1091,6 +1086,11 @@ label
     position absolute
     z-index 105
     border-radius 10px
+    -webkit-transition all 0.6s ease-in-out
+       -moz-transition all 0.6s ease-in-out
+        -ms-transition all 0.6s ease-in-out
+         -o-transition all 0.6s ease-in-out
+            transition all 0.6s ease-in-out
     &:after
       content               ''
       height                0

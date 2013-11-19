@@ -605,16 +605,13 @@ button {
 .sidebar-menu-content .title a svg rect {
   fill: #2f5973;
 }
-.sidebar-menu-content .bubbles,
-.sidebar-menu-content .explores {
+.sidebar-menu-content .bubbles {
   height: auto;
 }
-.sidebar-menu-content .bubbles li,
-.sidebar-menu-content .explores li {
+.sidebar-menu-content .bubbles li {
   list-style-type: none;
 }
-.sidebar-menu-content .bubbles li a,
-.sidebar-menu-content .explores li a {
+.sidebar-menu-content .bubbles li a {
   font-family: 'proxima-nova', Arial, Sans-Serif;
   font-weight: 600;
   font-size: 14px;
@@ -626,8 +623,7 @@ button {
   padding: 18px 16px;
   text-decoration: none;
 }
-.sidebar-menu-content .bubbles li a:hover,
-.sidebar-menu-content .explores li a:hover {
+.sidebar-menu-content .bubbles li a:hover {
   background-color: #98b0c0;
 }
 .menu-pull {
@@ -1249,9 +1245,6 @@ label {
   min-width: 210px;
   position: relative;
 }
-.picker-dropdown .dropdown::-webkit-scrollbar {
-  display: none;
-}
 .picker-dropdown .dropdown {
   opacity: 0;
   min-width: 227px;
@@ -1261,8 +1254,8 @@ label {
   z-index: 105;
   border-radius: 10px;
 }
-.picker-dropdown .dropdown -webkit-transition: all 0.4sease-in-out -moz-transition: all 0.4sease-in-out -ms-transition: all 0.4sease-in-out -o-transition: all 0.4sease-in-out {
-  transition: all 0.4s ease-in-out;
+.picker-dropdown .dropdown -webkit-transition all 0.6sease-in-out -moz-transition all 0.6sease-in-out -ms-transition all 0.6sease-in-out -o-transition all 0.6sease-in-out {
+  transition: all 0.6s ease-in-out;
 }
 .picker-dropdown .dropdown:after {
   content: '';
