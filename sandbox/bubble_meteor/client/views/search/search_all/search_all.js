@@ -143,7 +143,12 @@ Template.searchAll.helpers({
     return Meteor.users.find({_id: {$in: Session.get('selectedUserIdList')}},{limit:3});
   },
   getSearchedBubbles: function() {
-    return Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:3});
+    var bubbles = Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:3}).fetch();
+    _.each(bubbles,function(bubble){
+      console.log("BUBBLES: ",bubbles, " | BUBBLE: ", bubble);
+      bubble.id = bubble._id;
+    });
+    return bubbles;
   },
 
   typing: function() {

@@ -12,7 +12,12 @@ Template.searchBubbles.helpers({
     }
   }*/
   getSearchedBubbles: function() {
-    return Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:10});
+    var bubbles = Bubbles.find({_id: {$in: Session.get('selectedBubbleIdList')}},{limit:10}).fetch();
+    _.each(bubbles,function(bubble){
+      console.log("BUBBLES: ",bubbles, " | BUBBLE: ", bubble);
+      bubble.id = bubble._id;
+    });
+    return bubbles;
   },
   typing: function() {
     return Session.get("typing");
