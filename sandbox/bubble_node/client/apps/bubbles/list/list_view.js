@@ -3,8 +3,8 @@ App.module("BubblesApp.List", function(List, App, Backbone, Marionette, $, _) {
   List.Layout = Marionette.Layout.extend({
     template: 'bubbles/list/templates/list_layout',
     regions: {
-      subpanelRegion: '#subpanel',
-      showBubbleRegion: '#show_region'
+      subpanelRegion: '#menu-region',
+      showBubbleRegion: '#show-region'
     }
   });
 

@@ -28,7 +28,11 @@ App.module("Controllers", function(Controllers, App, Backbone, Marionette, $, _)
     },
 
     _manageView: function(view, options) {
-      options.region.show(view);
+      if(options.loading){
+        App.execute("show:loading", view, options)
+      } else {
+        options.region.show(view);
+      }
     }
   });
 });

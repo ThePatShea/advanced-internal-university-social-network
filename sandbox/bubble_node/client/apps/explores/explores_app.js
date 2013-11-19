@@ -2,21 +2,31 @@ App.module('ExploresApp', function(ExploresApp, App, Backbone, Marionette, $, _)
 
   ExploresApp.Router = Marionette.AppRouter.extend({
     appRoutes: {
-      'explore': 'enterExplore',
-      'explore/:id': 'showExplore'
+      'explore':      'list',
+      'explore/:id':  'show'
     }
   });
 
   var API = {
-    enterExplore: function(){
+    list: function(id, region){
       App.vent.trigger("sidebar:change", "explore")
-      App.navigate('explore/1', {trigger: true});
+      new ExploresApp.List.Controller({id: id});
     },
 
-    showExplore: function(id){
-      new ExploresApp.List.Controller();
+    show: function(id, region){
+      if(!region) {
+        this.list(id);
+        return;
+      }
+
+      new ExploresApp.Show.Controller({id: id, region: region});
     }
   };
+
+  App.commands.setHandler("show:explore", function(explore, region){
+    App.navigate("explore/" + explore.id)
+    API.show(explore.id, region);
+  });
 
   App.addInitializer(function(){
     router = new ExploresApp.Router({controller: API});

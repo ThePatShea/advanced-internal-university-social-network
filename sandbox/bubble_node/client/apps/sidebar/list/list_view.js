@@ -4,6 +4,9 @@ App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 		id: function() { return this.model.get('cssId'); },
 		template: "sidebar/templates/nav",
 		tagName: "li",
+    ui: {
+      button: "button"
+    },
 		modelEvents: {
 			"change:chosen" : "changeChosen"
 		},
@@ -11,7 +14,7 @@ App.module("SidebarApp.List", function(List, App, Backbone, Marionette, $, _){
 			"click" : "nav:clicked"
 		},
 		changeChosen: function(model, value, options){
-			$('button', this.$el).toggleClass("active", value)
+      this.ui.button.toggleClass("active", value)
 		},
 		templateHelpers: function(){
 			var icon = this.model.get("navName")
