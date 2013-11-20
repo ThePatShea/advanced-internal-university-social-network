@@ -171,9 +171,7 @@ Template.updatesDropdown.helpers({
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
       });
-      pubUpList = updateList;
-      pubGroupList = _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
-      return pubGroupList;
+      return _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
     }
   },
   compressedCount: function(){
