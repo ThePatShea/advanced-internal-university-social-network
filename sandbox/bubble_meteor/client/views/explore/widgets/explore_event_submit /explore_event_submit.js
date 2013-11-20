@@ -93,6 +93,11 @@ Template.exploreEventSubmit.events({
       }        
     }
     setTimeout(displayPostConfirmationMessage(), 1000);
+
+    $('.cb-explore-eventSubmit-form > .cb-form-row > .date').val('');
+    $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val('');
+    $('.cb-explore-eventSubmit-form > .first > .event-name').val('');
+    $('.cb-explore-eventSubmit-form > .event-details').val('');
   },
 
   'dragover .cb-explore-eventSubmit-form .attach-files > .drop-zone': function(evt){

@@ -68,6 +68,12 @@ Template.eventSubmit.events({
     }
     console.log('Post Title: ', postTitle);
     setTimeout(displayPostConfirmationMessage(postTitle), 2000);
+
+    $("#cb-form-container-event-create .date").val('');
+    $("#cb-form-container-event-create .time").val('');
+    $('.cb-eventSubmit-form > .first > .event-location').val('');
+    $('.cb-eventSubmit-form > .first > .event-name').val('');
+    $('.cb-eventSubmit-form > .event-details').val('');
   },
 
   'dragover .cb-eventSubmit-form .attach-files > .drop-zone': function(evt){

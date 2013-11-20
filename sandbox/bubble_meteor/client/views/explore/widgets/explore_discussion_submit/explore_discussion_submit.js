@@ -273,6 +273,9 @@ function makeDiscussionPost(){
   }
   
   createPostWithAttachments(postAttributes, newFiles);
+
+  $('.cb-explore-discussionSubmit-form').find('[name=name]').val('');
+  $('.cb-explore-discussionSubmit-form').find('.wysiwyg').html('');
 }
 
 
