@@ -2,7 +2,6 @@
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.bubblePage.created = function() {
-  Session.set("isLoading", true);
  var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
 
  if(typeof bubble != "undefined" &&
@@ -16,8 +15,10 @@ Template.bubblePage.created = function() {
 Template.bubblePage.rendered = function() {
   //var bubble = Bubbles.findOne( Session.get('currentBubbleId') );
   var bubbleId = window.location.pathname.split('/')[2];
+LoadingHelper.start();
+
   Meteor.subscribe('singleBubble', bubbleId, function() {
-    Session.set("isLoading", false);
+    LoadingHelper.stop();
   });
   var bubble = Bubbles.findOne({_id: bubbleId});
 
@@ -27,18 +28,7 @@ Template.bubblePage.rendered = function() {
   Meteor.subscribe('bubbleHomeUpdates'     , bubbleId);
 }
 
-Template.bubblePage.helpers({ 
-
-  //Get posts assigned to this bubble
-  /*isLoading: function() {
-    var bubbleLoading = Session.get('bubbleLoading');
-
-    if (bubbleLoading == 'true') {
-      return true;
-    } else {
-      return false;
-    }
-  },*/
+Template.bubblePage.helpers({
   eventsCount: function() {
     return Meteor.call('getNumOfEvents','event');
   },
@@ -90,7 +80,7 @@ Template.bubblePage.helpers({
   },
   getNumUpdates: function() {
     return Session.get('numUpdates');
-  }, 
+  },
 
   showMoreUpdates: function(numUpdates) {
     if(Session.get('numUpdates') != 0 && numUpdates > Session.get('numUpdates'))

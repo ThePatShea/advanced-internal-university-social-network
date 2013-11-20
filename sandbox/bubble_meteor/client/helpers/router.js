@@ -21,8 +21,7 @@ Meteor.Router.add({
 
   '/onboarding_walkthrough': {
     to: 'onboardingWalkThrough',
-    and: function(){
-      Session.set('isLoading', true);
+    and: function() {
     }
   },
 

@@ -41,9 +41,11 @@ Template.sidebar.events({
     else
       Session.set('sidebarOpen', false);
   },
+  /*
   'click .set-loading': function() {
     Session.set('isLoading', true);
   }
+  */
 });
 
 // Template helpers

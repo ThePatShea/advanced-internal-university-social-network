@@ -2,7 +2,6 @@
 referenceDateTime = moment().add('hours',-4).valueOf();
 
 Template.explorePage.created = function(){
-  Session.set("isLoading", true);
   max_scrolltop = 100;
   virtualPage = 0;
   var currentExploreId = window.location.pathname.split("/")[2];
@@ -45,13 +44,15 @@ Template.explorePage.rendered = function(){
   //var posts = Posts.find({exploreId: currentExploreId}).fetch();
   //var postIds = _.pluck(posts, "_id");
   //Meteor.subscribe('findExplorePostsById', virtualPagePostIds);
+  LoadingHelper.start();
+
   Meteor.subscribe('currentExplorePostIds', currentExploreId, function(){
     console.log('Explore Page Created: ', currentExploreId, Posts.find({exploreId: currentExploreId}).fetch());
     posts = Posts.find({exploreId: currentExploreId}).fetch()
     postIds = _.pluck(posts, "_id");
     virtualPagePostIds = postIds.slice(0, 10)
     Meteor.subscribe('findExplorePostsById', virtualPagePostIds, function() {
-      Session.set("isLoading", false);
+      LoadingHelper.stop();
       console.log("DONE");
     });
   });
@@ -72,12 +73,12 @@ Template.explorePage.rendered = function(){
         //console.log('Explore post Ids: ', virtualPagePostIds);
         //console.log('End of Page');
       }
-      
+
     });
 
 }
 
-Template.explorePage.helpers({ 
+Template.explorePage.helpers({
   currentExplore: function(){
     var currentExploreId = Session.get('currentExploreId');
     var currentExplore = Explores.findOne({_id: currentExploreId});
@@ -149,7 +150,7 @@ Template.explorePage.helpers({
     var validPostIds = [];
     for(var i=0; i < posts.length; i++) {
       var postAsId = posts[i].postAsId;
-      
+
       if((Bubbles.find({_id: postAsId}).count() > 0) || (Meteor.users.find({_id: postAsId}).count() > 0)){
         validPostIds.push(posts[i]._id);
       }
