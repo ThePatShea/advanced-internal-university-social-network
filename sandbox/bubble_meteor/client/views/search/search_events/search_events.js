@@ -1,6 +1,7 @@
 Template.searchEvents.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
       SearchHelpers.searchEventsREST(searchText, function(err, res) {
         if (!err) {
@@ -9,16 +10,19 @@ Template.searchEvents.events({
         }
       });
     }
+    LoadingHelper.stop();
   },
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     SearchHelpers.searchEventsREST(searchText, function(err, res) {
       if (!err) {
         var eventIds = res;
         Session.set('selectedEventIdList', eventIds);
       }
     });
+    LoadingHelper.stop();
   }
 });
 

@@ -1,6 +1,7 @@
 Template.searchDiscussions.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
       SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
         if (!err) {
@@ -10,16 +11,19 @@ Template.searchDiscussions.events({
         }
       });
     }
+    LoadingHelper.stop();
   },
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
       if (!err) {
         var discussionIds = res;
         Session.set('selectedDiscussionIdList', discussionIds);
       }
     });
+    LoadingHelper.stop();
   }
 });
 

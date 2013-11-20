@@ -1,20 +1,24 @@
 Template.searchBubbles.events({
   'keyup .search-text': function(evt){
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
       SearchHelpers.searchBubblesREST(searchText, function(err, res){
         if (!err)
           Session.set('selectedBubbleIdList', res);
       });
     }
+    LoadingHelper.stop();
   },
 
   'click .search-btn': function(evt){
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     SearchHelpers.searchBubblesREST(searchText, function(err, res){
       if (!err)
         Session.set('selectedBubbleIdList', res);
     });
+    LoadingHelper.stop();
   }
 });
 

@@ -1,20 +1,24 @@
 Template.searchUsers.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     if(!DisplayHelpers.isMobile()) {
       SearchHelpers.searchUsersREST(searchText, function(err, res) {
         if (!err)
           Session.set('selectedUserIdList', res);
       });
     }
+    LoadingHelper.stop();
   },
 
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
+    LoadingHelper.start();
     SearchHelpers.searchUsersREST(searchText, function(err, res) {
       if (!err)
         Session.set('selectedUserIdList', res);
     });
+    LoadingHelper.stop();
   }
 });
 
