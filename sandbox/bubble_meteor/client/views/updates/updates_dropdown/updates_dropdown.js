@@ -371,6 +371,7 @@ Template.update.helpers({
 Template.updateBubble.helpers({
   getBubble: function(obj) {
     if(obj && obj.length > 0){
+      Meteor.subscribe('findBubblesById',[obj[0].bubbleId]);
       var retVal = Bubbles.findOne(obj[0].bubbleId);
       if(typeof retVal === "undefined")
       {
