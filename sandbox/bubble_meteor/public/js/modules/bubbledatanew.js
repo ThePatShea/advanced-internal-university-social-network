@@ -3,7 +3,7 @@
   var BubblePost = BubbleRest.Model.extend({
     url: function(){
       // TODO: Use bubble-related post URL
-      return '/api/v1_0/posts/' + this.id;
+      return '/api/v1_0/bubbles/' + this.bubbleId + '/posts/' + this.id;
     }
   });
 
@@ -73,7 +73,7 @@
     });
   }
 
-  var BubblePosts = makeRelatedCollection(BubblePost, 'posts');
+  //var BubblePosts = makeRelatedCollection(BubblePost, 'posts');
   var BubbleEvents = makeRelatedCollection(BubbleEvent, 'events');
   var BubbleDiscussions = makeRelatedCollection(BubbleDiscussion, 'discussions');
   var BubbleFiles = makeRelatedCollection(BubbleFile, 'files');
@@ -105,7 +105,11 @@
       this.collection.fetch({
         success: function() {
           if (callback)
-            callback(page);
+            callback(null, page);
+        },
+        error: function(error) {
+          if (callback)
+            callback(error);
         }
       });
     },
@@ -118,11 +122,15 @@
         collection.fetch({
           success: function() {
             if (callback)
-              callback(collection.page);
+              callback(null, collection.page);
+          },
+          error: function(error) {
+            if (callback)
+              callback(error);
           }
         });
       } else {
-        callback(collection.page);
+        callback(null, collection.page);
       }
     },
 
@@ -135,11 +143,15 @@
         collection.fetch({
           success: function() {
             if (callback)
-              callback(collection.page);
+              callback(null, collection.page);
+          },
+          error: function(error) {
+            if (callback)
+              callback(error);
           }
         });
       } else {
-        callback(collection.page);
+        callback(null, collection.page);
       }
     },
 
@@ -159,6 +171,10 @@
       this.collection.limit = limit;
     },
 
+    refresh: function(callback) {
+      this.fetchPage(this.collection.page, callback);
+    },
+
     getJSON: function() {
       return this.collection.toJSON();
     }
@@ -168,16 +184,24 @@
   var MyBubbles = function(properties) {
     var that = this;
     this.bubbleId = properties.bubbleId;
+    that.id = Math.random();
 
     // Loading status
     var loading = 0;
     var initialized = false;
 
-    function maybeComplete() {
+    function maybeComplete(error) {
       loading -= 1;
 
-      if (initialized && !loading && properties.callback)
-        properties.callback(that.bubbleJson);
+      if (initialized && !loading && properties.callback) {
+        Meteor.setTimeout(function() {
+          if (error) {
+            properties.callback(error);
+          } else {
+            properties.callback(null, that.bubbleJson);
+          }
+        });
+      }
     }
 
     function fetchRelated(pagedData) {
@@ -195,8 +219,24 @@
       success: function(model) {
         that.bubbleJson = model.toJSON();
         maybeComplete();
+      },
+      error: function(error) {
+        that.bubbleJson = null;
+        maybeComplete(error);
       }
     });
+
+    this.reloadBubble = function(callback) {
+      this.bubbleInfo.fetch({
+        success: function(model) {
+          that.bubbleJson = model.toJSON();
+          callback(null, that.bubbleJson);
+        },
+        error: function(error) {
+          callback(error);
+        }
+      });
+    };
 
     // Events helper
     var bubbleEvents = new BubbleEvents();
@@ -249,6 +289,7 @@
     }
 
     this.Members = new PagedData(bubbleMembers);
+    this.Members.name = 'members';
 
     if (properties.members && properties.members.load)
       fetchRelated(this.Members);
@@ -263,8 +304,9 @@
     }
 
     this.Admins = new PagedData(bubbleAdmins);
+    this.Admins.name = 'admins';
 
-    if (properties.admin && properties.admins.load)
+    if (properties.admins && properties.admins.load)
       fetchRelated(this.Admins);
 
     // Applications
@@ -277,9 +319,10 @@
     }
 
     this.Applicants = new PagedData(bubbleApplicants);
+    this.Applicants.name = 'applicants';
 
     if (properties.applicants && properties.applicants.load)
-      fetchRelated(this.applicants);
+      fetchRelated(this.Applicants);
 
     // Invitees
     var bubbleInvitees = new BubbleInvitees();
@@ -291,36 +334,121 @@
     }
 
     this.Invitees = new PagedData(bubbleInvitees);
+    this.Invitees.name = 'invitees';
 
     if (properties.invitees && properties.invitees.load)
       fetchRelated(this.Invitees);
 
     initialized = true;
+  };
 
-    // API
-    this.isAdmin = function(id) {
-      var users = this.bubbleJson.users.admins;
-      return users.admins.indexOf(id) !== -1;
+  var BubblePostPage = function(bubbleId, postId, callback) {
+    var that = this;
+
+    this.bubbleId = bubbleId;
+
+    this.bubbleInfo = new BubbleInfo();
+    this.bubbleInfo.bubbleId = bubbleId;
+
+    this.post = new BubblePost();
+    this.post.bubbleId = bubbleId;
+    this.post.id = postId;
+
+    this.user = new BubbleModels.User();
+
+    var count = 0;
+
+    function maybeComplete() {
+      count -= 1;
+
+      console.log('count', count);
+
+      if (count <= 0 && callback) {
+        Meteor.setTimeout(callback);
+      }
+    }
+
+    count += 1;
+    this.bubbleInfo.fetch({
+      success: maybeComplete,
+      error: maybeComplete
+    });
+
+    count += 1;
+    this.post.fetch({
+      success: function(post) {
+        that.user.id = post.get('userId');
+
+        that.user.fetch({
+          success: maybeComplete,
+          error: maybeComplete
+        });
+      },
+      error: function() {
+        console.log('Failed, recovered');
+        maybeComplete();
+      }
+    });
+
+    this.getBubble = function() {
+      return this.bubbleInfo && this.bubbleInfo.toJSON();
     };
 
-    this.isMember = function(id) {
-      var users = this.bubbleJson.users.members;
-      return users.admins.indexOf(id) !== -1;
+    this.getPost = function() {
+      return this.post && this.post.toJSON();
     };
 
-    this.isApplicant = function(id) {
-      var users = this.bubbleJson.users.applicants;
-      return users.admins.indexOf(id) !== -1;
+    this.getUser = function() {
+      return this.user && this.user.toJSON();
     };
 
-    this.isInvitee = function(id) {
-      var users = this.bubbleJson.users.invitees;
-      return users.admins.indexOf(id) !== -1;
+    this.toggleGoing = function(userId) {
+      var attendees = this.post.get('attendees');
+
+      if (attendees.indexOf(userId) === -1) {
+        attendees.push(userId);
+      } else {
+        attendees = _.without(attendees, userId);
+      }
+      this.post.set('attendees', attendees);
     };
   };
 
+  var Helpers = {
+    isAdmin: function(bubble, id) {
+      if (!bubble)
+        return false;
+
+      var users = bubble.users.admins;
+      return users.indexOf(id) !== -1;
+    },
+    isMember: function(bubble, id) {
+      if (!bubble)
+        return false;
+
+      var users = bubble.users.members;
+      return users.indexOf(id) !== -1;
+    },
+    isApplicant: function(bubble, id) {
+      if (!bubble)
+        return false;
+
+      var users = bubble.users.applicants;
+      return users.indexOf(id) !== -1;
+    },
+    isInvitee: function(bubble, id) {
+      if (!bubble)
+        return false;
+
+      var users = bubble.users.invitees;
+      return users.indexOf(id) !== -1;
+    }
+  };
+
   var api = {
-    MyBubbles: MyBubbles
+    MyBubbles: MyBubbles,
+    BubblePostPage: BubblePostPage,
+    Helpers: Helpers
   };
 
   window.BubbleDataNew = api;

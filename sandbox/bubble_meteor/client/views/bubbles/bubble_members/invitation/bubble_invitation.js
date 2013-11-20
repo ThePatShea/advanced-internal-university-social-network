@@ -1,42 +1,30 @@
-
+// TODO: This file should be rewritten
 Template.bubbleInvitation.created = function() {
   findResponse = false;
   rejectList = [];
   var currentBubbleId = currentBubbleId = window.location.pathname.split('/')[2];
   mto = [];
   Session.set('potentialUserIdList',[]);
-}
+};
 
 Template.bubbleInvitation.rendered = function() {
-
-  /*$(".search-text").bind("propertychange keyup input paste", function (event) {
-    Session.set('currentlySearching', 'true');  // Keeps the add-members form open, not collapsed
-
-    var searchText = $(".search-text").val();
-    if (searchText == ""){
-      Session.set('selectedUsername',undefined);
-    }else{
-      Session.set('selectedUsername', searchText);
-    }
-  });*/
+  // TODO: Fix subscription leak
   Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
   Session.set('currentlySearching', 'true');
-  $(".search-text").unbind("propertychange keyup input paste")
-  $(".search-text").bind("propertychange keyup input paste", function(evt) {
-      Meteor.clearTimeout(mto);
-      mto = Meteor.setTimeout(function() {
-        Meteor.call('search_users', $(".search-text").val(), function(err, res) {
-          if(err) {
-            console.log(err);
-          } else {
-            console.log("response");
-            Session.set('potentialUserIdList', res);
-          }
-        });
-      }, 500);
-  });
-}
 
+  $('.search-text')
+    .off('propertychange keyup input paste')
+    .on('propertychange keyup input paste', function(evt) {
+      Meteor.call('search_users', $(".search-text").val(), function(err, res) {
+        if(err) {
+          console.log(err);
+        } else {
+          //console.log("response", res);
+          Session.set('potentialUserIdList', res);
+        }
+      });
+    });
+};
 
 Template.bubbleInvitation.helpers({
   findUsers: function() {
@@ -47,11 +35,11 @@ Template.bubbleInvitation.helpers({
       }
     });*/
 
-    //The regular expression is used here again to prevent showing 
+    //The regular expression is used here again to prevent showing
     //users who are removed from bubble but still exists in the local db
     /*return Meteor.users.find(
       {
-        _id: {$nin: rejectList}, 
+        _id: {$nin: rejectList},
         username: new RegExp(Session.get('selectedUsername'),'i')
       }, {limit: 5});*/
     if(Session.get('selectedUsername').length > 3)
@@ -61,6 +49,7 @@ Template.bubbleInvitation.helpers({
         if(err) {
           console.log(err);
         } else {
+          console.log(res);
           //console.log(res[0]);
           Session.set('potentialUserIdList', res);
           findResponse = true;
@@ -69,10 +58,7 @@ Template.bubbleInvitation.helpers({
     }
   },
   getFoundUsers: function() {
-    //findResponse = false;
-    //console.log('hereyago: ' + Session.get('potentialUserIdList')[0]);
     return Meteor.users.find({_id: {$in: Session.get('potentialUserIdList'), $nin: rejectList}},{limit: 6});
-    //return Meteor.users.find(({username: "taggartbg"}));
   },
   hasSearchResponse: function() {
     if(findResponse) {
@@ -132,7 +118,7 @@ Template.bubbleInvitation.helpers({
         return Meteor.users.findOne({username:username})._id;
       }
     });
-    console.log("InviteeIdList: ", inviteeIdList);
+    //console.log("InviteeIdList: ", inviteeIdList);
     return(_.contains(inviteeIdList,this._id) || _.contains(Session.get("selectList"),this._id));
   },
     numPosts: function() {
@@ -195,47 +181,35 @@ Template.bubbleInvitation.events({
       {
         $addToSet: {'users.members': {$each: userIdList}}
       }, function(){
-        //ADD REACTIVE CODE HERE
-        Session.set("isLoading",true);
-        Meteor.setTimeout(function(){
-          mybubbles.Members.refreshCollection(function(){
-            if(typeof bubbleMembersDep !== "undefined")
-            {
-              console.log("Members Refreshed");
-              bubbleMembersDep.changed();
-              Session.set("isLoading",false);
-            }
-          });
-        },2000)
+        // TODO: Redo me
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'members']
+          //timeout: 2000
+        });
       });
-    }else{   
+    }else{
       //Add Invitees to the bubble object
       //Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
       Bubbles.update({_id:bubble._id}, {$addToSet: {'users.invitees': {$each: userIdList}}}, function(){
-        //ADD REACTIVE CODE HERE
-        Session.set("isLoading",true);
-        Meteor.setTimeout(function(){
-          mybubbles.Invitees.refreshCollection(function(){
-            if(typeof bubbleInviteesDep !== "undefined")
-            {
-              console.log("Invitees Refreshed");
-              mybubbles.bubbleInfo.fetch({success: function(){bubbleInviteesDep.changed();}})
-              Session.set("isLoading",false);
-            }
-          });
-        },2000)
+        // TODO: Redo me
+        $('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'invitees']
+          //timeout: 2000
+        });
       });
     }
 
     //Create notifications
-    if(this.bubbleType == 'super') {
+    if (this.bubbleType == 'super') {
       _.each(userIdList, function(userId) {
         createNewMemberUpdate(userId);
       });
     }else{
       createInvitationUpdate(userIdList);
     }
-    
+
     //Reset Session objects
     Session.set('selectedUsername',undefined);
     Session.set('inviteeList'+Session.get('currentBubbleId'),[]);

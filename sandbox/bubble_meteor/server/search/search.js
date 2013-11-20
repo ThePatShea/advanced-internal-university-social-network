@@ -26,7 +26,7 @@ users.forEach(function(user) {
 
 //ADD CURRENT BUBBLES TO INDEX: collections/bubbles.js
 //ADD CURRENT EVENTS,DISCUSSIONS,FILES TO INDEX: collections/posts.js
-	
+
 Meteor.methods({
 	reindex: function() {
 

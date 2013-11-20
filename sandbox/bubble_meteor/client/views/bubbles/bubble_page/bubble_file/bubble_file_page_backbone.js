@@ -7,7 +7,7 @@ var state = {
 
 // Helpers
 function refreshData(bubbleId) {
-  Session.set('isLoading', true);
+  LoadingHelper.start();
 
   var mybubbles = state.mybubbles = new BubbleDataNew.MyBubbles({
     bubbleId: bubbleId,
@@ -19,8 +19,8 @@ function refreshData(bubbleId) {
       load: true
     },
 
-    callback: function(bubble) {
-      Session.set('isLoading', false);
+    callback: function(error, bubble) {
+      LoadingHelper.stop();
 
       // TODO: Security check
 
@@ -34,24 +34,24 @@ function refreshData(bubbleId) {
 // Events
 Template.bubbleFilePageBackbone.events({
   'click .pageitem': function(e) {
-    Session.set('isLoading',true);
+    LoadingHelper.start();
     state.mybubbles.Files.fetchPage(parseInt(e.target.id) - 1, function() {
-      Session.set('isLoading', false);
+      LoadingHelper.stop();
     });
   },
   'click .prev': function() {
     if (state.mybubbles.Files.getCurrentPage() > 0) {
-      Session.set('isLoading', true);
+      LoadingHelper.start();
       state.mybubbles.Files.fetchPrevPage(function() {
-        Session.set('isLoading', false);
+        LoadingHelper.stop();
       });
     }
   },
   'click .next': function() {
     if (state.mybubbles.Files.getCurrentPage() < state.mybubbles.Files.getNumPages() - 1) {
-      Session.set('isLoading', true);
+      LoadingHelper.start();
       state.mybubbles.Files.fetchNextPage(function() {
-        Session.set('isLoading', false);
+        LoadingHelper.stop();
       });
     }
   }

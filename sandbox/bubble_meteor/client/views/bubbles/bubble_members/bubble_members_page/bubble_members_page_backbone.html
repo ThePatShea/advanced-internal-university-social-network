@@ -1,36 +1,36 @@
-
 <template name="bubbleMembersPageBackbone">
+  <div id="bubble-members-page">
+    <div class="visible-{{isLoading}}">
+      {{> gifLoaderToParent}}
+    </div>
 
-  <div class="visible-{{isLoading}}">
-    {{> gifLoaderToParent}}
-  </div>
-  
-  {{#with getCurrentBubbleBackbone}}
-    {{> bubbleCoverBackbone}}
-    {{> bubbleSectionSelectorBackbone}}
-      
-    <div class="bubble-page-content bubble-members">
-      {{> bubbleMembersHeading}}
+    {{#with getCurrentBubbleBackbone}}
+      {{> bubbleCoverBackbone}}
+      {{> bubbleSectionSelectorBackbone}}
 
-  	  {{> bubbleInvitation}}
+      <div class="bubble-page-content bubble-members">
+        {{> bubbleMembersHeading}}
 
-      {{#unless isSuperBubble}}
-        {{#with applicantsObj}}
+    	  {{> bubbleInvitation}}
+
+        {{#unless isSuperBubble}}
+          {{#with applicantsObj}}
+            {{> userList}}
+          {{/with}}
+        {{/unless}}
+
+        {{#with adminsObj}}
           {{> userList}}
         {{/with}}
-      {{/unless}}
 
-      {{#with adminsObj}}
-        {{> userList}}
-      {{/with}}
+        {{#with membersObj}}
+          {{> userList}}
+        {{/with}}
 
-      {{#with membersObj}}
-        {{> userList}}
-      {{/with}}
+        {{#with inviteesObj}}
+          {{> userList}}
+        {{/with}}
 
-      {{#with inviteesObj}}
-        {{> userList}}
-      {{/with}}
-
-  {{/with}}
+    {{/with}}
+  </div>
 </template>

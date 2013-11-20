@@ -110,12 +110,6 @@ Template.listItemExploreEventPostBB.helpers({
       else{
         return false;
       }
-    },
-
-    isAdminBB: function(){
-      var isadmin = mybubbles.isAdmin(Meteor.userId());
-      console.log('Is Admin: ', isadmin);
-      return isadmin;
     }
 });
 

@@ -2,7 +2,7 @@
   <div class="post-item name-{{name}}">
     <div class="visible-true v-middle pull-left profile-pic-container">
       <div class="v-inner">
-        <img class="pic-circle profile-pic" src="{{profilePicture}}"/> 
+        <img class="pic-circle profile-pic" src="{{profilePicture}}"/>
       </div>
     </div>
 
@@ -20,13 +20,17 @@
 
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
-        <div class="v-inner">       
-          <span class="post-actions">    
+        <div class="v-inner">
+          <span class="post-actions">
             {{#if inBubble}}
               <span class="visible-{{matchObjectType 'user'}}">
                 {{#unless isMe}}
-                  <span class="invisible-{{isAdminBB}}">{{> viewProfile}}</span>
-                  <span class="visible-{{isAdminBB}}">{{> adminActionsBackbone}}</span>
+                  {{#unless isAdminBB}}
+                    {{> viewProfile}}
+                  {{/unless}}
+                  {{#if isAdminBB}}
+                    {{> adminActionsBackbone}}
+                  {{/if}}
                 {{/unless}}
                 {{#if isMe}}
                   <span>{{> userActionsBackbone}}</span>

@@ -9,14 +9,6 @@ function updatePostList() {
   Session.set('explorePosts', state.es.explorePosts.toJSON());
 }
 
-function updateLoadingFlag(flag) {
-  var count = Deps.nonreactive(function() {
-    return Session.get('isExploreLoading');
-  });
-
-  Session.set('isExploreLoading', count + flag);
-}
-
 function refreshData(template, exploreId) {
   if (!exploreId)
     return;
@@ -24,29 +16,27 @@ function refreshData(template, exploreId) {
   if (state.es !== null && state.es.exploreId === exploreId)
     return;
 
-  updateLoadingFlag(1);
+  LoadingHelper.start();
 
   var es = state.es = new ExploreData.ExploreSection({
     exploreId: exploreId,
     limit: 10,
     fields: ['name', 'author', 'postAsType', 'postAsId', 'submitted', 'postType', 'exploreId', 'dateTime', 'children','commentsCount','attendees'],
     // Callbacks
-    onInfoLoaded: function(info) {
-      updateLoadingFlag(-1);
+    onInfoLoaded: function(error, info) {
+      LoadingHelper.stop();
 
       if (es === state.es)
         Session.set('exploreInfo', info);
     }
   });
 
-  updateLoadingFlag(1);
+  LoadingHelper.start();
   es.fetchPage(es.getCurrentPage(), function() {
-    updateLoadingFlag(-1);
+    LoadingHelper.stop();
 
-    if (es === state.es) {
+    if (es === state.es)
       updatePostList(es);
-      Session.set('isExploreLoading', false);
-    }
   });
 
   $(document).attr('title', 'Explore - Emory Bubble');
@@ -55,23 +45,23 @@ function refreshData(template, exploreId) {
 // Events
 Template.explorePageBackbone.events({
   'click .pageitem': function(e, template) {
-    Session.set('isExploreLoading', true);
+    LoadingHelper.start();
     state.es.fetchPage(parseInt(e.target.id) - 1, function() {
-      Session.set('isExploreLoading', false);
+      LoadingHelper.stop();
       updatePostList();
     });
   },
   'click .prev': function(e, template) {
-    Session.set('isExploreLoading', true);
+    LoadingHelper.start();
     state.es.fetchPrevPage(function() {
-      Session.set('isExploreLoading', false);
+      LoadingHelper.stop();
       updatePostList();
     });
   },
   'click .next': function(e, template) {
-    Session.set('isExploreLoading', true);
+    LoadingHelper.start();
     state.es.fetchNextPage(function(){
-      Session.set('isExploreLoading', false);
+      LoadingHelper.stop();
       updatePostList();
     });
   }
@@ -121,9 +111,6 @@ Template.explorePageBackbone.helpers({
   },
   isDiscussion: function() {
     return this.postType === 'discussion';
-  },
-  isLoading: function() {
-    return Session.get('isExploreLoading');
   }
 });
 

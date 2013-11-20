@@ -1,222 +1,100 @@
-Template.userList.created = function(){
-	that = this.data;
-};
-
-Template.userList.rendered = function(){
-	that = this.data;
-	console.log("THIS CURRENT PAGE: ", this.data.getCurrentPage())
-};
-
+// Helpers
 Template.userList.helpers({
 	hasUsers: function() {
-		if(this.getNumPages() == 0)
-			return false
-		return true;
+		if (this.collection)
+			return this.getCount() > 0;
+
+		return false;
 	},
 	loading: function() {
-		return Session.get("isLoading");
+		return Session.get('isLoading');
 	},
 	header: function() {
-		if(typeof this.bubbleAdmins !== "undefined")
-			return "admins";
-		if(typeof this.bubbleMembers !== "undefined")
-			return "members";
-		if(typeof this.bubbleInvitees !== "undefined")
-			return "invitees";
-		if(typeof this.bubbleApplicants !== "undefined")
-			return "applicants";
+		return this.name;
 	},
 	users: function() {
-		return this.getJSON();
+		if (this.collection)
+			return this.getJSON();
+
+		return [];
 	},
 	pagination: function() {
-		if(typeof this.bubbleAdmins !== "undefined")
-		{
-		    if(mybubbles.Admins.getNumPages() > 1)
-		    	return true;
-		    return false;
-		}
-		if(typeof this.bubbleMembers !== "undefined")
-		{
-		    if(mybubbles.Members.getNumPages() > 1)
-		    	return true;
-		    return false;
-		}
-		if(typeof this.bubbleApplicants !== "undefined")
-		{
-		    if(mybubbles.Applicants.getNumPages() > 1)
-		    	return true;
-		    return false;
-		}
-		if(typeof this.bubbleInvitees !== "undefined")
-		{
-		    if(mybubbles.Invitees.getNumPages() > 1)
-		    	return true;
-		    return false;
-		}
+		if (this.getNumPages)
+			return this.getNumPages() > 1;
+
+		return false;
 	},
 	isActivePage: function(type) {
-		bubbleDep.depend();
-		if(type == "members")
-		{
-			bubbleMembersDep.depend();
-		  	if(this.page == mybubbles.Members.getCurrentPage()+1)
-		  		return "active";
-		}
-		if(type == "admins")
-		{
-			bubbleAdminsDep.depend();
-		  	if(this.page == mybubbles.Admins.getCurrentPage()+1)
-		  		return "active";
-		}
-		if(type == "invitees")
-		{
-			bubbleInviteesDep.depend();
-		  	if(this.page == mybubbles.Invitees.getCurrentPage()+1)
-		  		return "active";
-		}
-		if(type == "applicants")
-		{
-			bubbleApplicantsDep.depend();
-		  	if(this.page == mybubbles.Applicants.getCurrentPage()+1)
-		  		return "active";
-		}
-	  	return "";
- 	},
-	pages: function() {
-		/*
-	  	var retVal = []
-		for(var i=0; i<this.getNumPages(); i++)
-		{
-			retVal.push(i+1);
-		}
-		*/
-		var type = "";
-		var retVal = [];
-		if(typeof this.bubbleAdmins !== "undefined")
-			type = "admins";
-		if(typeof this.bubbleMembers !== "undefined")
-			type = "members";
-		if(typeof this.bubbleInvitees !== "undefined")
-			type = "invitees";
-		if(typeof this.bubbleApplicants !== "undefined")
-			type = "applicants";
-		for(var i=0; i<this.getNumPages(); i++)
-		{
-			var tmp = {type: type, page: i+1};
-			retVal.push(tmp);
-		}
-		return retVal;
+		if (this.data.getCurrentPage() + 1 === this.page)
+			return 'active';
+
+		return '';
 	},
-	idStringify: function() {
-		return JSON.stringify(this);
+	pages: function() {
+		if (this.collection) {
+			var retVal = [];
+			var currentPage = this.getCurrentPage();
+			var numPages = this.getNumPages();
+
+			for (var i = 0; i < this.getNumPages(); i++) {
+				retVal.push({
+					data: this,
+					page: i + 1,
+					currentPage: currentPage,
+					numPages: numPages
+				});
+			}
+
+			return retVal;
+		}
+
+		return [];
 	},
 	showAll: function() {
-		if(this.getNumPages() < 6)
-			return true;
-		return false;
+		if (this.data)
+			return this.data.getNumPages() < 6;
 	},
 	show: function() {
-		var scope;
-		if(this.type == "members")
-			scope = mybubbles.Members;
-		if(this.type == "admins")
-			scope = mybubbles.Admins;
-		if(this.type == "invitees")
-			scope = mybubbles.Invitees;
-		if(this.type == "applicants")
-			scope = mybubbles.Applicants;
-		if(this.page == 1
-			|| this.page == scope.getCurrentPage()
-			|| this.page == scope.getCurrentPage() + 1
-			|| this.page == scope.getCurrentPage() + 2
-			|| this.page == scope.getNumPages())
-			{
-				return true;
-			}
-		return false;
+		return (this.page >= this.currentPage && this.page <= this.currentPage + 2) || (this.page === this.numPages);
 	},
 	elipses: function() {
-		var scope;
-		if(this.type == "members")
-			scope = mybubbles.Members;
-		if(this.type == "admins")
-			scope = mybubbles.Admins;
-		if(this.type == "invitees")
-			scope = mybubbles.Invitees;
-		if(this.type == "applicants")
-			scope = mybubbles.Applicants;
-		if(this.page == 2 || this.page == scope.getNumPages() - 1)
-		{
-			return true;
-		}
-		return false;
+		return this.page === 2 || this.page === this.numPages - 1;
 	}
 });
 
+// Events
 Template.userList.events({
 	'click .pageitem': function(e) {
-		Session.set("isLoading", true);
-		var pageitem = JSON.parse(e.target.id);
-		//console.log("PAGEITEM: ", pageitem.type);
-		//console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
-		if(pageitem.type == "members")
-		{
-			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
-			mybubbles.Members.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleMembersDep.changed();
-				Session.set("isLoading", false);
-				console.log("CALLED", res);
-			});
-		};
-		if(pageitem.type == "admins")
-		{
-			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
-			mybubbles.Admins.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleAdminsDep.changed();
-				Session.set("isLoading", false);
-				console.log("CALLED", res);
-			});
-		};
-		if(pageitem.type == "invitees")
-		{
-			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
-			mybubbles.Inviteess.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleInviteesDep.changed();
-				Session.set("isLoading", false);
-				console.log("CALLED", res);
-			});
-		};
-		if(pageitem.type == "applicants")
-		{
-			console.log("TYPE: ", pageitem.type, " | PAGE: ", pageitem.page);
-			mybubbles.Applicants.fetchPage(parseInt(pageitem.page)-1, function(res){
-				bubbleApplicantsDep.changed();
-				Session.set("isLoading", false);
-				console.log("CALLED", res);
-			});
-		};
+		var page = parseInt($(e.target).data('page'));
+
+		Session.set('isLoading', true);
+		this.data.fetchPage(page - 1, function() {
+			Session.set('isLoading', false);
+		});
 	},
 	'click .prev': function() {
-		if(this.getCurrentPage > 0)
-		{
+		if (this.getCurrentPage() > 0) {
 			Session.set("isLoading", true);
 			this.fetchPrevPage(function(res){
-				bubbleDep.changed();
 				Session.set("isLoading", false);
 				console.log("CALLED", res);
 			});
 		}
 	},
 	'click .next': function() {
-		if(this.getCurrentPage < this.getNumPages()-1)
-		{
+		if(this.getCurrentPage() < this.getNumPages() - 1) {
 			Session.set("isLoading", true);
 			this.fetchNextPage(function(res){
-				bubbleDep.changed();
 				Session.set("isLoading", false);
 				console.log("CALLED", res);
 			});
 		}
 	}
 });
+
+Template.userList.created = function(){
+};
+
+Template.userList.rendered = function(){
+	console.log("THIS CURRENT PAGE: ", this.data.getCurrentPage())
+};

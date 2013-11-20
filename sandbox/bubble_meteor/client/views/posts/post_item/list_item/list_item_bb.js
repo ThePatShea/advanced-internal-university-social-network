@@ -3,7 +3,6 @@ Template.listItemBB.helpers({
       return this.user;
     },
     getPostAsBubble: function() {
-      //var bubble = new BBubble({_id: this.postAsId}).fetch();
       return this.bubble;
     },
     postedAsUser: function() {
