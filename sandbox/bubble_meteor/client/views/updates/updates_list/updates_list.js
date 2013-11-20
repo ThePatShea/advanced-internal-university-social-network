@@ -1,7 +1,7 @@
 Template.updatesList.helpers({
   getNumUpdates: function() {
     return Session.get('numUpdates');
-  }, 
+  },
 
 //   showMoreUpdates: function(numUpdates) {
 //     if(numUpdates && numUpdates > Session.get('numUpdates'))
@@ -17,9 +17,9 @@ Template.updatesList.helpers({
 //       //To combine updates with same userId, invokerId, updateType and postId
 //       _.each(updateList, function(update){
 //         updateList = _.reject(updateList, function(newUpdate) {
-//           return  update.bubbleId == newUpdate.bubbleId && 
-//                   update.userId == newUpdate.userId && 
-//                   update.invokerId == newUpdate.invokerId && 
+//           return  update.bubbleId == newUpdate.bubbleId &&
+//                   update.userId == newUpdate.userId &&
+//                   update.invokerId == newUpdate.invokerId &&
 //                   update.updateType == newUpdate.updateType &&
 //                   update.postId == newUpdate.postId;
 //         });
@@ -40,7 +40,7 @@ Template.updatesList.helpers({
 //         //Combine and chain the names together
 //         if (commentUpdates.length > 0) {
 //           updateList = _.reject(updateList, function(newUpdate) {
-//             return update.postId == newUpdate.postId && 
+//             return update.postId == newUpdate.postId &&
 //                     update.updateType == newUpdate.updateType &&
 //                     update.updateType == "replied";
 //           });
@@ -111,7 +111,7 @@ Template.updatesList.helpers({
 //                 chainedName = chainedName + " and " + excessCount + " other";
 //               }else{
 //                 chainedName = chainedName + " and " + excessCount + " others";
-//               } 
+//               }
 //             }else{
 //               chainedName = chainedName.replace(/,([^,]*)$/," and $1");
 //             }

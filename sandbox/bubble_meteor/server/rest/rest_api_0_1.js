@@ -40,7 +40,8 @@ Meteor.startup(function() {
 		},
 		queryOne: {
 			apiOpts: parseApiOptions,
-			check: RestSecurity.notBubbleCheck
+			// TODO: Fix me, should not allow reading posts from bubbles and explores
+			//check: RestSecurity.notBubbleCheck
 		},
 		create: {
 			check: RestSecurity.notBubbleCheck
@@ -312,7 +313,6 @@ Meteor.startup(function() {
 		remove: {
 			check: RestSecurity.canChangeComment
 		}
-
 	});
 
 	// Updates
@@ -333,7 +333,13 @@ Meteor.startup(function() {
 			apiOpts: parseUserOpts
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
+			apiOpts: parseUserOpts
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
 		}
 	});
 
