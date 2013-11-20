@@ -17,7 +17,8 @@ Template.updatesDropdown.helpers({
   updateCount: function(){
   	return Updates.find({userId: Meteor.userId(), read: false}).count();
   },
-  getBubble: function(bubbleId) { 
+  getBubble: function(bubbleId) {
+    console.log("BUBBLEID: ", bubbleId);
     return Bubbles.findOne(bubbleId);
   },
   compressUpdates: function(){
@@ -169,8 +170,10 @@ Template.updatesDropdown.helpers({
 
       updateList = _.sortBy(updateList, function(newUpdate) {
         return newUpdate.submitted; 
-      }); 
-      return _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
+      });
+      pubUpList = updateList;
+      pubGroupList = _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
+      return pubGroupList;
     }
   },
   compressedCount: function(){
@@ -370,7 +373,15 @@ Template.update.helpers({
 Template.updateBubble.helpers({
   getBubble: function(obj) {
     if(obj && obj.length > 0){
-      return Bubbles.findOne(obj[0].bubbleId);
+      var retVal = Bubbles.findOne(obj[0].bubbleId);
+      if(typeof retVal === "undefined")
+      {
+        return {title: "INVITATION"}
+      }
+      else
+      {
+        return retVal;
+      }
     }
   }
 });
