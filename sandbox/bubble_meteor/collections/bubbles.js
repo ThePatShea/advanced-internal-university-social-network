@@ -62,11 +62,15 @@ Meteor.methods({
     }
   },
 
-  removeInvitee: function(bubbleId){
+  removeInvitee: function(bubbleId, callback){
     Bubbles.update({_id:bubbleId},
     {
       $pull: {'users.invitees': Meteor.userId()}
     });
+    if(typeof callback === "function")
+    {
+      callback();
+    }
   },
 
   acceptInvitation: function(bubbleId) {

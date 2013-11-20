@@ -35,6 +35,8 @@ Template.commentSubmit.events({
       error && throwError(error.reason);
     });
 
+    $('.comment-form').find('[name=body]').val('');
+
     Meteor.subscribe('comments', template.data._id);
   }
 });
