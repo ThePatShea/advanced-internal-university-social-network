@@ -13,9 +13,6 @@ Template.postPageBackbone.helpers({
     if (user)
       return user.profilePicture;
   },
-  isLoading: function() {
-    return Session.get('isLoadingPost') && Session.get('isLoadingComments');
-  },
   returnFalse: function() {
     return false;
   },
@@ -120,19 +117,22 @@ function refreshData(template, bubbleId, currentPostId) {
     template.commentSub.stop();
 
   // Post data
-  Session.set('isLoadingPost', true);
+  LoadingHelper.start();
   var pageData = template.pageData = new BubbleDataNew.BubblePostPage(bubbleId, currentPostId, function() {
     Session.set('currentBubbleInfo', pageData.getBubble());
     Session.set('currentBubblePost', pageData.getPost());
     Session.set('currentBubbleUser', pageData.getUser());
 
-    Session.set('isLoadingPost', false);
+    LoadingHelper.stop();
   });
 
   // Comments
-  Session.set('isLoadingComments', true);
+  template.waitingForSub = true;
+
+  LoadingHelper.start();
   template.commentSub = Meteor.subscribe('comments', currentPostId, function() {
-    Session.set('isLoadingComments', false);
+    template.waitingForSub = false;
+    LoadingHelper.stop();
   });
 }
 
@@ -146,7 +146,7 @@ Template.postPageBackbone.created = function() {
   this.watch = Meteor.autorun(function() {
     refreshData(that, Session.get('currentBubbleId'), Session.get('currentPostId'));
   });
-}
+};
 
 Template.postPageBackbone.rendered = function() {
   var that = this;
@@ -161,6 +161,9 @@ Template.postPageBackbone.rendered = function() {
 Template.postPageBackbone.destroyed = function() {
   if (this.commentSub)
     this.commentSub.stop();
+
+  if (this.waitingForSub)
+    LoadingHelper.stop();
 
   this.watch.stop();
 };

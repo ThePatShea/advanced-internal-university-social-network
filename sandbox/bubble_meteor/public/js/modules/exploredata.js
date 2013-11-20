@@ -13,7 +13,7 @@
             model.set(field, related);
             callback(model);
           },
-          error: function() {
+          error: function(error) {
             callback(model);
           }
         });
@@ -80,11 +80,10 @@
 						return post.postType === 'file';
 					});
 
-					callback(posts);
+					callback(null, posts);
 				},
-				error: function() {
-					// TODO: Logging
-					callback();
+				error: function(error) {
+					callback(error);
 				}
 			});
 		};
@@ -100,7 +99,11 @@
 		this.exploreInfo.fetch({
 			success: function(model) {
 				if (properties.onInfoLoaded)
-					properties.onInfoLoaded(model.toJSON());
+					properties.onInfoLoaded(null, model.toJSON());
+			},
+			error: function(error) {
+				if (properties.onInfoLoaded)
+					properties.onInfoLoaded(error);
 			}
 		});
 
@@ -123,7 +126,11 @@
 			that.explorePosts.fetch({
 					success: function() {
 						if (callback)
-							callback(page);
+							callback(null, page);
+					},
+					error: function(error) {
+						if (callback)
+							callback(error);
 					}
 				});
 
@@ -136,7 +143,11 @@
 				that.explorePosts.fetch({
 					success: function() {
 						if (callback)
-							callback(that.explorePosts.page);
+							callback(null, that.explorePosts.page);
+					},
+					error: function(error) {
+						if (callback)
+							callback(error);
 					}
 				});
 			}
@@ -148,7 +159,11 @@
 				that.explorePosts.fetch({
 					success: function() {
 						if (callback)
-							callback(that.explorePosts.page);
+							callback(null, that.explorePosts.page);
+					},
+					error: function(error) {
+						if (callback)
+							callback(error);
 					}
 				});
 			}
@@ -201,12 +216,16 @@
 							that.exploreBubble.fetch({
 								success: function() {
 									if (callback)
-										callback(post);
+										callback(null, post);
 								}
 							});
 						} else {
-							callback(post);
+							callback(null, post);
 						}
+					},
+					error: function(error) {
+						if (callback)
+							callback(error);
 					}
 				});
 			}

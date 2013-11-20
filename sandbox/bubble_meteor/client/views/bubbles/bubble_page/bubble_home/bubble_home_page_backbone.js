@@ -6,7 +6,7 @@ var state = {
 };
 
 function refreshData(bubbleId) {
-  Session.set('isLoading', true);
+  LoadingHelper.start();
 
   // TODO: This security check will never work
   var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + bubbleId + '&userid=' + Meteor.userId()});
@@ -60,8 +60,8 @@ function refreshData(bubbleId) {
     },
     */
 
-    callback: function(bubble) {
-      Session.set('isLoading', false);
+    callback: function(error, bubble) {
+      LoadingHelper.stop();
 
       if (mybubbles === state.mybubbles) {
         Session.set('bubbleInfo', bubble);

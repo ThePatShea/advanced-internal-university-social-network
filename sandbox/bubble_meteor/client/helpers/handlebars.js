@@ -48,11 +48,12 @@ Handlebars.registerHelper('siteLoading', function() {
   }
 });
 
+/*
 Handlebars.registerHelper('isLoading', function() {
   if(Session.get('isLoading')) {return true;}
   return false
 });
-
+*/
 
 Handlebars.registerHelper('getUserTypeName', function(userType) {
   return userTypes[userType];
@@ -87,13 +88,13 @@ Handlebars.registerHelper('postProperties', {
   , file       : {
         posts      : function() {
           var posts = getPosts('file');
-          
+
           // Updates missing fields, if necessary
           _.each(posts, function(post) {
             if (!post.numDownloads || !post.lastDownloadTime) {
               if (!post.lastDownloadTime)
                 post.lastDownloadTime = new Date().getTime();
-                
+
               if (!post.numDownloads)
                 post.numDownloads = 0;
 
@@ -102,7 +103,7 @@ Handlebars.registerHelper('postProperties', {
                 , {$set: {
                       lastDownloadTime : post.lastDownloadTime
                     , numDownloads     : post.numDownloads
-                  } 
+                  }
               });
             }
           });
@@ -149,7 +150,7 @@ Handlebars.registerHelper('matchObjectType', function(inputObjectType){
 });
 
 Handlebars.registerHelper('matchSectionType', function() {
-  
+
 });
 
 Handlebars.registerHelper('getCurrentBubble', function() {
@@ -170,7 +171,7 @@ Handlebars.registerHelper('getCurrentPost', function() {
   return post;
 });
 
-Handlebars.registerHelper('isAdmin', function() {  
+Handlebars.registerHelper('isAdmin', function() {
   var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
   if(bubble)
   {
@@ -190,7 +191,7 @@ Handlebars.registerHelper('belongsToBubble', function() {
     }
   }
   return  Meteor.user().userType == '3' || false;
-}); 
+});
 
 
 
@@ -213,7 +214,7 @@ Handlebars.registerHelper('ownsPost', function() {
     userList = bubble.users.admins;
     userList.push(this.userId);
     return (Meteor.user().userType == '3') || _.contains(userList, Meteor.userId())
-  }   
+  }
 });
 
 Handlebars.registerHelper('ownsPostExplore', function() {
@@ -330,7 +331,7 @@ Handlebars.registerHelper('decodeURIComponent',function(uri) {
 
 Handlebars.registerHelper('getTextAfterDot',function(inputText) {
   if (inputText) {
-    return inputText.substr(inputText.lastIndexOf('.') + 1, inputText.length); 
+    return inputText.substr(inputText.lastIndexOf('.') + 1, inputText.length);
   } else {
     return -1;
   }
@@ -429,9 +430,9 @@ Handlebars.registerHelper('compressedUpdates', function(bubbleId, limit) {
     //To combine updates with same userId, invokerId, updateType and postId
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return  update.bubbleId == newUpdate.bubbleId && 
-                update.userId == newUpdate.userId && 
-                update.invokerId == newUpdate.invokerId && 
+        return  update.bubbleId == newUpdate.bubbleId &&
+                update.userId == newUpdate.userId &&
+                update.invokerId == newUpdate.invokerId &&
                 update.updateType == newUpdate.updateType &&
                 update.postId == newUpdate.postId;
       });
@@ -452,7 +453,7 @@ Handlebars.registerHelper('compressedUpdates', function(bubbleId, limit) {
       //Combine and chain the names together
       if (commentUpdates.length > 0) {
         updateList = _.reject(updateList, function(newUpdate) {
-          return update.postId == newUpdate.postId && 
+          return update.postId == newUpdate.postId &&
                   update.updateType == newUpdate.updateType &&
                   update.updateType == "replied";
         });
@@ -523,7 +524,7 @@ Handlebars.registerHelper('compressedUpdates', function(bubbleId, limit) {
               chainedName = chainedName + " and " + excessCount + " other";
             }else{
               chainedName = chainedName + " and " + excessCount + " others";
-            } 
+            }
           }else{
             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
           }
@@ -542,8 +543,8 @@ Handlebars.registerHelper('compressedUpdates', function(bubbleId, limit) {
     });
 
     updateList = _.sortBy(updateList, function(newUpdate) {
-      return newUpdate.submitted; 
-    });  
+      return newUpdate.submitted;
+    });
     if(limit>0){
       return _.first(updateList.reverse(), limit);
     }else{
@@ -565,9 +566,9 @@ Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
     //To combine updates with same userId, invokerId, updateType and postId
     _.each(updateList, function(update){
       updateList = _.reject(updateList, function(newUpdate) {
-        return  update.bubbleId == newUpdate.bubbleId && 
-                update.userId == newUpdate.userId && 
-                update.invokerId == newUpdate.invokerId && 
+        return  update.bubbleId == newUpdate.bubbleId &&
+                update.userId == newUpdate.userId &&
+                update.invokerId == newUpdate.invokerId &&
                 update.updateType == newUpdate.updateType &&
                 update.postId == newUpdate.postId;
       });
@@ -589,7 +590,7 @@ Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
         //Combine and chain the names together
         if (commentUpdates.length > 0) {
           updateList = _.reject(updateList, function(newUpdate) {
-            return update.postId == newUpdate.postId && 
+            return update.postId == newUpdate.postId &&
                     update.updateType == newUpdate.updateType &&
                     update.updateType == "replied";
           });
@@ -661,7 +662,7 @@ Handlebars.registerHelper('compressedUpdatesCount', function(bubbleId) {
               chainedName = chainedName + " and " + excessCount + " other";
             }else{
               chainedName = chainedName + " and " + excessCount + " others";
-            } 
+            }
           }else{
             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
           }

@@ -6,7 +6,7 @@ var state = {
 };
 
 function fetchData(bubbleId) {
-  Session.set('isLoading', true);
+  LoadingHelper.start();
 
   var mybubbles = state.mybubbles = new BubbleDataNew.MyBubbles({
     bubbleId: bubbleId,
@@ -36,8 +36,8 @@ function fetchData(bubbleId) {
       load: true
     },
 
-    callback: function(bubble) {
-      Session.set('isLoading', false);
+    callback: function(error, bubble) {
+      LoadingHelper.stop();
 
       if (mybubbles === state.mybubbles)
         Session.set('bubbleInfo', bubble);
@@ -47,7 +47,7 @@ function fetchData(bubbleId) {
 
 function refreshData(collection) {
   collection.refresh(function() {
-    Session.set('isLoading', false);
+    LoadingHelper.stop();
   });
 }
 
@@ -104,7 +104,7 @@ Template.bubbleMembersPageBackbone.rendered = function() {
       var sections = e.sections;
 
       if (!sections || !sections.length) {
-        Session.set('isLoading', false);
+        LoadingHelper.stop();
         return;
       }
 
@@ -127,7 +127,7 @@ Template.bubbleMembersPageBackbone.rendered = function() {
           case 'bubble':
             state.mybubbles.reloadBubble(function(bubble) {
               Session.set('bubbleInfo', bubble);
-              Session.set('isLoading', false);
+              LoadingHelper.stop();
             });
             break;
         }
@@ -135,7 +135,7 @@ Template.bubbleMembersPageBackbone.rendered = function() {
     }
 
     // TODO: Fix race condition
-    Session.set('isLoading', true);
+    LoadingHelper.start();
     if (e.timeout) {
       Meteor.setTimeout(refresh, e.timeout);
     } else {

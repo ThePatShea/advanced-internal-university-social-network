@@ -3,10 +3,12 @@
       {{> bubbleCover}}
       {{> bubbleSectionSelector}}
 
-      <div class="visible-{{isLoading}}">
+      {{#if isLoading}}
+      <div>
         {{> gifLoaderToParent}}
       </div>
-        
+      {{/if}}
+
       <div class="bubble-page-content bubble-members">
         {{> bubbleMembersHeading}}
 

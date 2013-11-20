@@ -103,7 +103,7 @@ Template.explorePostPageBB.events({
               $('.message-container').addClass('visible-false');
               clearTimeout();
             },10000);
-          }        
+          }
         }
         setTimeout(displayPostConfirmationMessage(), 1000);
         //window.location.href = "/explore/"+Session.get('currentExploreId')+"/home";
@@ -118,17 +118,16 @@ function refreshData(template, exploreId, postId) {
   if (!postId)
     return;
 
-  Session.set('isLoading', true);
+  LoadingHelper.start();
 
   var pageData = template.pageData = new ExploreData.ExplorePostPage(exploreId, postId, function() {
     Session.set('currentExploreInfo', pageData.getExplore());
     Session.set('currentExplorePost', pageData.getPost());
     Session.set('currentExplorePostBubble', pageData.getBubble());
 
-    Session.set('isLoading', false);
+    LoadingHelper.stop();
   });
 
-  // TODO: Fix me
   if (template.commentSub)
     template.commentSub.stop();
 

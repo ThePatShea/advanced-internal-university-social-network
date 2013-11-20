@@ -7,6 +7,8 @@ Template.bubbleMembersPage.created = function() {
 
 Template.bubbleMembersPage.rendered = function () {
 	var currentBubbleId = window.location.pathname.split('/')[2];
+
+	// TODO: Fix me
 	Meteor.subscribe('singleBubble', currentBubbleId, function() {
 		Session.set("isLoading", false);
 	});
@@ -63,7 +65,7 @@ Template.bubbleMembersPage.rendered = function () {
 		    console.log('Paginating: ', (virtualPage)*5, (virtualPage+1)*5);
 		    console.log('End of Page');
 		}
-	    
+
 	  });
 
 };

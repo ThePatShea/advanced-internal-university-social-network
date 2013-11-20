@@ -105,7 +105,11 @@
       this.collection.fetch({
         success: function() {
           if (callback)
-            callback(page);
+            callback(null, page);
+        },
+        error: function(error) {
+          if (callback)
+            callback(error);
         }
       });
     },
@@ -118,11 +122,15 @@
         collection.fetch({
           success: function() {
             if (callback)
-              callback(collection.page);
+              callback(null, collection.page);
+          },
+          error: function(error) {
+            if (callback)
+              callback(error);
           }
         });
       } else {
-        callback(collection.page);
+        callback(null, collection.page);
       }
     },
 
@@ -135,11 +143,15 @@
         collection.fetch({
           success: function() {
             if (callback)
-              callback(collection.page);
+              callback(null, collection.page);
+          },
+          error: function(error) {
+            if (callback)
+              callback(error);
           }
         });
       } else {
-        callback(collection.page);
+        callback(null, collection.page);
       }
     },
 
@@ -178,12 +190,16 @@
     var loading = 0;
     var initialized = false;
 
-    function maybeComplete() {
+    function maybeComplete(error) {
       loading -= 1;
 
       if (initialized && !loading && properties.callback) {
         Meteor.setTimeout(function() {
-          properties.callback(that.bubbleJson);
+          if (error) {
+            properties.callback(error);
+          } else {
+            properties.callback(null, that.bubbleJson);
+          }
         });
       }
     }
@@ -203,6 +219,10 @@
       success: function(model) {
         that.bubbleJson = model.toJSON();
         maybeComplete();
+      },
+      error: function(error) {
+        that.bubbleJson = null;
+        maybeComplete(error);
       }
     });
 
@@ -210,7 +230,10 @@
       this.bubbleInfo.fetch({
         success: function(model) {
           that.bubbleJson = model.toJSON();
-          callback(that.bubbleJson);
+          callback(null, that.bubbleJson);
+        },
+        error: function(error) {
+          callback(error);
         }
       });
     };
@@ -338,7 +361,7 @@
     function maybeComplete() {
       count -= 1;
 
-      console.log('y', count, that.bubbleInfo.toJSON());
+      console.log('count', count);
 
       if (count <= 0 && callback) {
         Meteor.setTimeout(callback);
@@ -347,7 +370,8 @@
 
     count += 1;
     this.bubbleInfo.fetch({
-      success: maybeComplete
+      success: maybeComplete,
+      error: maybeComplete
     });
 
     count += 1;
@@ -356,8 +380,13 @@
         that.user.id = post.get('userId');
 
         that.user.fetch({
-          success: maybeComplete
+          success: maybeComplete,
+          error: maybeComplete
         });
+      },
+      error: function() {
+        console.log('Failed, recovered');
+        maybeComplete();
       }
     });
 

@@ -523,8 +523,6 @@ Template.dashboard.events({
 });
 
 Template.dashboard.rendered = function () {
-	Session.set("isLoading", false);
-
 	//Meteor.subscribe('fiveExplorePosts');
 
 	$('.carousel').carousel();
@@ -541,13 +539,15 @@ Template.dashboard.rendered = function () {
 
 
 Template.dashboard.created = function() {
-	Session.set("isLoading", true);
 	Session.set('updatesToShow',3);
 	dashboardDep = new Deps.Dependency;
 	Meteor.subscribe('updatedPosts', Meteor.userId());
 
+	LoadingHelper.start();
+
 	var dashboardData = new ExploreData.Dashboard();
-	dashboardData.getData(function(data) {
+	dashboardData.getData(function(error, data) {
 		Session.set('dashboardPosts', data);
+		LoadingHelper.stop();
 	});
 }
