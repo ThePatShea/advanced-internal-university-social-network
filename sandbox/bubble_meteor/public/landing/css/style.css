@@ -1,9 +1,6 @@
 @import url(skeleton.css);
-
 @import url(reset.css);
-
 @import url(typography.css);
-
 @import url(js.css);
 /* Bootstrap Gridwork */
 /* Custom CSS reset */
@@ -11,19 +8,22 @@
 /* JS plugins styles */
 /***************************************************************************************** 
 *********************** COLORS 
-*****************************************************************************************//* First Slide Color */
+*****************************************************************************************/
+/* First Slide Color */
 /* Second Slide Color */
 /* Third Slide Color */
 /* Fourth Slide Color */
-/***************************************************************************************** 
+/**************************************************************************************** 
 *********************** LESS MIXINS 
-*****************************************************************************************//* Font Colors */
+*****************************************************************************************/
+/* Font Colors */
 /* LESS MIXINS SHORTCODES */
 /* Border Radius Mixin */
 /* FONTS */
 /***************************************************************************************** 
 *********************** MISC STYLES 
-*****************************************************************************************/.hide-normal {
+*****************************************************************************************/
+.hide-normal {
   display: none !important;
 }
 .pull-right {
@@ -68,45 +68,14 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** GENERAL STYLES 
-*****************************************************************************************/body {
+*****************************************************************************************/
+body {
   background-color: #011126;
-}
-.top-message {
-  display: inline-block;
-  background-color: #B0606D;
-  width: 100%;
-  text-align: center;
-  min-height: 60px;
-  padding: 15px 0;
-}
-.top-message p {
-  font-size: 12px;
-  color: #fff;
-  font-family: 'brandon_grotesquebold';
-  text-transform: uppercase;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  line-height: 1.7em;
-}
-.top-message p a {
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 14px 3px 14px;
-  font-family: 'brandon_grotesque_regularRg';
-  font-weight: 300;
-  background-color: #944955;
-  -webkit-border-radius: 21px;
-  -moz-border-radius: 21px;
-  border-radius: 21px;
-  display: inline-block;
-}
-.top-message p a:hover {
-  background-color: #fff;
-  color: #944955;
 }
 /***************************************************************************************** 
 *********************** ICONS
-*****************************************************************************************/.icon-classifieds,
+*****************************************************************************************/
+.icon-classifieds,
 .icon-professor,
 .icon-deals,
 .icon-events,
@@ -190,20 +159,21 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** SECTION 1 
-*****************************************************************************************/#section-1 {
+*****************************************************************************************/
+#section-1 {
   position: relative;
   padding-top: 40px;
   max-height: 570px;
   overflow: hidden;
-  background: url(../images/bg.png) no-repeat;
+  background: url(../images/bg.jpg) no-repeat;
   background-size: 100% 100%;
 }
 #section-1 .main-logo {
   display: inline-block;
-  background: url(../images/logo.png);
-  background-size: 78px 122px;
+  background: url(../images/logo.png) no-repeat;
+  background-size: 95px 122px;
   height: 122px;
-  width: 78px;
+  width: 96px;
   text-indent: -9999px;
   margin-bottom: 75px;
 }
@@ -228,7 +198,8 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** SECTION 2 
-*****************************************************************************************/#section-2 {
+*****************************************************************************************/
+#section-2 {
   background-color: #a5bbc9;
   padding: 100px 0 0 0;
   overflow: hidden;
@@ -270,7 +241,8 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** SECTION 3 
-*****************************************************************************************/#section-3 {
+*****************************************************************************************/
+#section-3 {
   background-color: #2f5973;
   padding: 150px 0;
   overflow: hidden;
@@ -357,7 +329,8 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** SECTION 4 
-*****************************************************************************************/#section-4 {
+*****************************************************************************************/
+#section-4 {
   background-color: #001f37;
   padding: 120px 0 120px 0;
   overflow: hidden;
@@ -466,7 +439,8 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** SECTION 5 
-*****************************************************************************************/#section-5 {
+*****************************************************************************************/
+#section-5 {
   padding: 150px 0;
   background-color: #011126;
   overflow: hidden;
@@ -505,7 +479,8 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** FOOTER 
-*****************************************************************************************/.main-footer {
+*****************************************************************************************/
+.main-footer {
   background-color: #A5BBC9;
   position: relative;
   padding: 23px 0;
@@ -551,7 +526,8 @@ h5.intro {
 }
 /***************************************************************************************** 
 *********************** BUTTONS 
-*****************************************************************************************/a {
+*****************************************************************************************/
+a {
   -webkit-transition: background-color 0.3s ease-in-out;
   -moz-transition: background-color 0.3s ease-in-out;
   -ms-transition: background-color 0.3s ease-in-out;
@@ -624,9 +600,42 @@ h5.intro {
 .icon:hover .apple-icon {
   background-position: -30px 0;
 }
+.top-message {
+  display: inline-block;
+  background-color: #B0606D;
+  width: 100%;
+  text-align: center;
+  min-height: 60px;
+  padding: 15px 0;
+}
+.top-message p {
+  font-size: 12px;
+  color: #fff;
+  font-family: 'brandon_grotesquebold';
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1.7em;
+}
+.top-message p a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 14px 3px 14px;
+  font-family: 'brandon_grotesque_regularRg';
+  font-weight: 300;
+  background-color: #944955;
+  -webkit-border-radius: 21px;
+  -moz-border-radius: 21px;
+  border-radius: 21px;
+  display: inline-block;
+}
+.top-message p a:hover {
+  background-color: #a5515f;
+}
 /***************************************************************************************** 
 *********************** MEDIA QUERIES 
-*****************************************************************************************//* Huge Screens (devices) */
+*****************************************************************************************/
+/* Huge Screens (devices) */
 @media only screen and (max-width: 1921px) and (min-width: 1441px) {
   body {
     zoom: 1.35;
@@ -651,9 +660,6 @@ h5.intro {
   }
 }
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {
-  
-}
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 1000px) {
   .intro-right {
@@ -717,8 +723,9 @@ h5.intro {
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
   /***************************************************************************************** 
-  	*********************** MISC RESPONSIVE CLASSES 
-  	*****************************************************************************************/.hide-767 {
+	*********************** MISC RESPONSIVE CLASSES 
+	*****************************************************************************************/
+  .hide-767 {
     display: none!important;
   }
   .show-767 {
@@ -745,8 +752,9 @@ h5.intro {
     background-position: -131px -8px;
   }
   /***************************************************************************************** 
-  	*********************** GENERAL STYLES 
-  	*****************************************************************************************/body {
+	*********************** GENERAL STYLES 
+	*****************************************************************************************/
+  body {
     text-align: center;
   }
   a.main-logo {
@@ -757,11 +765,14 @@ h5.intro {
     margin-top: 42px;
   }
   /***************************************************************************************** 
-  	*********************** SECTIONS 
-  	*****************************************************************************************//*-------------- SECTION 1 --------------*/#section-1 {
+	*********************** SECTIONS 
+	*****************************************************************************************/
+  /*-------------- SECTION 1 --------------*/
+  #section-1 {
     padding-bottom: 100px;
   }
-  /*-------------- SECTION 2 --------------*/#section-2 {
+  /*-------------- SECTION 2 --------------*/
+  #section-2 {
     padding: 85px 0 0 0;
   }
   #section-2 .info-container {
@@ -785,7 +796,8 @@ h5.intro {
   #section-2 img.down-button {
     display: none!important;
   }
-  /*-------------- SECTION 3 --------------*/#section-3 {
+  /*-------------- SECTION 3 --------------*/
+  #section-3 {
     padding: 85px 0 0 0;
     max-height: 900px;
   }
@@ -808,7 +820,8 @@ h5.intro {
   #section-3 .features-container a.feature {
     margin: 0 3px 0 3px;
   }
-  /*-------------- SECTION 4 --------------*/#section-4 {
+  /*-------------- SECTION 4 --------------*/
+  #section-4 {
     max-height: 1000px;
     padding: 85px 0;
   }
@@ -854,7 +867,8 @@ h5.intro {
     font-size: 14px;
     padding: 12px 42px 12px 168px !important;
   }
-  /*-------------- SECTION 5 --------------*/#section-5 {
+  /*-------------- SECTION 5 --------------*/
+  #section-5 {
     max-height: 950px;
     padding-bottom: 0;
   }
@@ -884,7 +898,8 @@ h5.intro {
     height: auto;
     margin-top: 50px;
   }
-  /*-------------- FOOTER --------------*/footer.main-footer {
+  /*-------------- FOOTER --------------*/
+  footer.main-footer {
     padding: 0;
   }
   footer.main-footer .logo-bubble-footer {
@@ -906,14 +921,10 @@ h5.intro {
 }
 /* End 767 */
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-  
-}
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) {
-  .top-message p a { margin-top: 10px; }
-  .top-message p a:hover { background-color: #fff; color: #944955; }
-  /*-------------- SECTION 4 --------------*/#section-4 .info-colors {
+  /*-------------- SECTION 4 --------------*/
+  #section-4 .info-colors {
     margin-left: -95px;
     text-align: left!important;
   }
