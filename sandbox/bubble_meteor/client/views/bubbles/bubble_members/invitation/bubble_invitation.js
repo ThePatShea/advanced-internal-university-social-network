@@ -1,169 +1,76 @@
-// TODO: This file should be rewritten
-Template.bubbleInvitation.created = function() {
-  findResponse = false;
-  rejectList = [];
-  var currentBubbleId = currentBubbleId = window.location.pathname.split('/')[2];
-  mto = [];
-  Session.set('potentialUserIdList',[]);
-};
-
-Template.bubbleInvitation.rendered = function() {
-  // TODO: Fix subscription leak
-  Meteor.subscribe('findUsersById', Session.get('potentialUserIdList'));
-  Session.set('currentlySearching', 'true');
-
-  $('.search-text')
-    .off('propertychange keyup input paste')
-    .on('propertychange keyup input paste', function(evt) {
-      Meteor.call('search_users', $(".search-text").val(), function(err, res) {
-        if(err) {
-          console.log(err);
-        } else {
-          //console.log("response", res);
-          Session.set('potentialUserIdList', res);
-        }
-      });
-    });
-};
-
-Template.bubbleInvitation.helpers({
-  findUsers: function() {
-    //Convert username list -> userId list
-    /*inviteeIdList = _.map(Session.get('inviteeList'+Session.get('currentBubbleId')), function(username){
-      if(Meteor.users.findOne({username:username})) {
-        return Meteor.users.findOne({username:username})._id;
-      }
-    });*/
-
-    //The regular expression is used here again to prevent showing
-    //users who are removed from bubble but still exists in the local db
-    /*return Meteor.users.find(
-      {
-        _id: {$nin: rejectList},
-        username: new RegExp(Session.get('selectedUsername'),'i')
-      }, {limit: 5});*/
-    if(Session.get('selectedUsername').length > 3)
-    {
-      console.log('searching users');
-      Meteor.call('search_users', Session.get('selectedUsername'), function(err, res) {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log(res);
-          //console.log(res[0]);
-          Session.set('potentialUserIdList', res);
-          findResponse = true;
-        }
-      });
-    }
-  },
-  getFoundUsers: function() {
-    return Meteor.users.find({_id: {$in: Session.get('potentialUserIdList'), $nin: rejectList}},{limit: 6});
-  },
-  hasSearchResponse: function() {
-    if(findResponse) {
-      console.log("hasSearchResponse: true");
-      return true;
-    } else {
-      console.log("hasSearchResponse: false");
-      return false;
-    }
-  },
-  getInvitees: function() {
-    return this.users.invitees;
-  },
-  potentialInvitees: function() {
-    return Session.get('inviteeList'+Session.get('currentBubbleId'));
-  },
-  nameFromNetID: function(netID) {
-    var user = Meteor.users.findOne({'username': netID}, {'fields': 'name'});
-    return user.name;
-  },
-  hasSearchText: function() {
-    return Session.get('selectedUsername');
-  },
-  inIfSearching: function() {
-    if ( Session.get('currentlySearching') )
-      return 'in';
-    else
-      return '';
-  },
-
-  returnFalse: function() {
-    return false;
-  },
-
-  getProfilePicture: function(){
-    var user = Meteor.users.findOne({_id:Session.get(this._id)});
-    return user.profilePicture;
-  },
-
-  getNumSelected: function(){
-    if(Session.get('inviteeList'+Session.get('currentBubbleId')))
-      return Session.get('inviteeList'+Session.get('currentBubbleId')).length;
-    else
-      return 0;
-  },
-  selected: function(){
-    if(typeof Session.get('recentlyAdded') !== "undefined")
-    {
-      var tmp = Session.get('inviteeList'+Session.get('currentBubbleId')).concat(Session.get('recentlyAdded'));
-    }
-    else
-    {
-      var tmp = Session.get('inviteeList'+Session.get('currentBubbleId'));
-    }
-    var inviteeIdList = _.map(tmp, function(username){
-      if(Meteor.users.findOne({username:username})) {
-        return Meteor.users.findOne({username:username})._id;
-      }
-    });
-    //console.log("InviteeIdList: ", inviteeIdList);
-    return(_.contains(inviteeIdList,this._id) || _.contains(Session.get("selectList"),this._id));
-  },
-    numPosts: function() {
-    var uid = this._id;
-    var numPosts = Posts.find({'userId': uid}).count();
-    return numPosts;
-  },
-  userId: function() {
-    return this._id;
-  }
-});
-
 Template.bubbleInvitation.events({
+
+  'keyup .search-text': function(evt) {
+    var searchText = $('.search-text').val();
+    LoadingHelper.start();
+    if(!DisplayHelpers.isMobile()) {
+      SearchHelpers.searchUsersREST(searchText, function(err, res) {
+        if (!err)
+          Session.set('searchRes', res);
+      });
+    }
+    LoadingHelper.stop();
+  },
 
   'click .shortlist-invitee': function(event){
     event.preventDefault();
-    console.log("SHORTLIST ME: ", this);
-      if(_.contains(Session.get('recentlyAdded'),(this.username)) || _.contains(Session.get('selectList'),this._id))
+
+    var that = this;
+    var shortList = Session.get('shortList') || [];
+    console.log("SHORTLIST ME: ", that);
+    if(_.contains(Session.get('selectList'), that.id))
+    {
+      return
+    }
+    for(i in shortList) {
+      if(that.id === shortList[i].id)
       {
         return;
       }
-    var usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
-    if(!usernameList){
-      usernameList = [];
     }
-    if(!_.contains(usernameList, this.username)) {
-      usernameList.push(this.username);
-      $('#'+this._id).addClass('selected');
-    }
-    Session.set('inviteeList'+Session.get('currentBubbleId'),usernameList);
+    shortList.push(that);
+    Session.set('shortList',shortList);
   },
-  'click .remove-invitee': function(event){
+
+  'click .remove-invitee': function(evt){
     event.preventDefault();
-    var username = this.toString();
-    var usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
-    usernameList = _.reject(usernameList, function(name) {
-      return name == username;
+
+    var that = this;
+    var shortList = Session.get('shortList') || [];
+    shortList = _.reject(shortList,function(user){
+      return user.id === that.id;
     });
-    Session.set('inviteeList'+Session.get('currentBubbleId'),usernameList);
+    Session.set('shortList',shortList);
   },
+
   'click .add-users': function(event){
     event.preventDefault();
 
-    Session.set('currentlySearching', undefined);  // Keeps the add-members form collapsed
+    var shortList = Session.get('shortList');
+    var bubbleInfo = Session.get('bubbleInfo');
 
+    var shortListIds = _.map(shortList, function(user){
+      return user.id;
+    });
+
+    if(bubbleInfo.type === 'super')
+    {
+      Bubbles.update({_id: bubbleInfo.id},
+      {
+        $addToSet: {'users.members': {$each: shortListIds}}
+      }, function(){
+        window.location.href = "/mybubbles/"+bubbleInfo.id+"/members";
+      });
+    } else {
+      Bubbles.update({_id: bubbleInfo.id},
+      {
+        $addToSet: {'users.invitees': {$each: shortListIds}}
+      }, function(){
+        window.location.href = "/mybubbles/"+bubbleInfo.id+"/members";
+      });
+    }
+
+    /*
     //convert usernameList into userIdList
     usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
     userIdList = [];
@@ -209,10 +116,67 @@ Template.bubbleInvitation.events({
     }else{
       createInvitationUpdate(userIdList);
     }
-
-    //Reset Session objects
-    Session.set('selectedUsername',undefined);
-    Session.set('inviteeList'+Session.get('currentBubbleId'),[]);
-    Session.set(Session.get('currentBubbleId')+this.toString(),undefined);
+    */
   }
 });
+
+Template.bubbleInvitation.helpers({
+
+  getSearchResponse: function() {
+    var searchRes = Session.get('searchRes');
+    var bubbleInfo = Session.get('bubbleInfo');
+    var rejectList = bubbleInfo.users.admins.concat(bubbleInfo.users.members);
+    var filteredList = _.reject(searchRes,function(user){
+      if (_.contains(rejectList,user.id)) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    return filteredList;
+  },
+
+  potentialInvitees: function() {
+    return Session.get('shortList');
+  },
+
+  getNumSelected: function() {
+    return (Session.get('shortList') || []).length;
+  },
+
+  selected: function() {
+    var that = this;
+    var shortList = Session.get('shortList') || [];
+    var bubbleInfo = Session.get('bubbleInfo');
+    var selectList = bubbleInfo.users.invitees.concat(bubbleInfo.users.applicants);
+
+    _.each(shortList,function(user){
+      selectList.push(user.id);
+    });
+
+    var retVal = false;
+    _.each(selectList, function(userId) {
+      if(userId === that.id)
+        retVal = true;
+    });
+
+    return retVal;
+  },
+
+  numPosts: function() {
+    //FIX ME!!
+    return 0;
+  }
+});
+
+Template.bubbleInvitation.created = function() {
+  var currentBubbleId = window.location.pathname.split('/')[2];
+};
+
+Template.bubbleInvitation.destroyed = function() {
+  delete Session.keys['searchRes','shortList','selectList'];
+};
+
+Template.bubbleInvitation.rendered = function() {
+
+};

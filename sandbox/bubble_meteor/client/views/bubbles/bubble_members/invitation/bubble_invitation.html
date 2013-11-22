@@ -1,6 +1,6 @@
 <template name="bubbleInvitation">
   <div id="bubble-invitation">
-    <div class="collapse {{inIfSearching}} cb-form-container" id="cb-form-container-add-members">
+    <div class="collapse in cb-form-container" id="cb-form-container-add-members">
       <div class="top-arrow-container">
         <div class="top-arrow">{{> icon-arrow-up}}</div>
       </div>
@@ -11,13 +11,8 @@
           </div>
         </div>
         <div class="searchResults">
-        {{#codeComment}}
-          {{#if hasSearchText}}
-            {{findUsers}}
-          {{/if}}
-        {{/codeComment}}
 
-        {{#each getFoundUsers}}
+        {{#each getSearchResponse}}
           <div class="invitee shortlist-invitee select">
               <span>
                 <div class="invitee-container {{#if selected}}selected{{/if}}">
@@ -53,7 +48,7 @@
             {{#each potentialInvitees}}
                 <div class="cancel-invitee remove-invitee">
                   <span class="cancel-invitee-icon">{{> icon-cancel}}</span>
-                  <span class="cancel-invitee-text">{{nameFromNetID this}}</span>
+                  <span class="cancel-invitee-text">{{this.name}}</span>
                 </div>
             {{/each}}
           </div>
