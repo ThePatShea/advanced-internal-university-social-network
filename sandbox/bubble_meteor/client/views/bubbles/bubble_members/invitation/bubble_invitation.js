@@ -16,20 +16,9 @@ Template.bubbleInvitation.events({
     event.preventDefault();
 
     var that = this;
-    var shortList = Session.get('shortList') || [];
-    console.log("SHORTLIST ME: ", that);
-    if(_.contains(Session.get('selectList'), that.id))
-    {
-      return
-    }
-    for(i in shortList) {
-      if(that.id === shortList[i].id)
-      {
-        return;
-      }
-    }
-    shortList.push(that);
-    Session.set('shortList',shortList);
+
+    if (!(isApplicant(that.id) || isInvitee(that.id) || isShortlisted(that.id)))
+      addToShortlist(that);
   },
 
   'click .remove-invitee': function(evt){
@@ -53,13 +42,18 @@ Template.bubbleInvitation.events({
       return user.id;
     });
 
-    if(bubbleInfo.type === 'super')
-    {
+    if (bubbleInfo.type === 'super') {
       Bubbles.update({_id: bubbleInfo.id},
       {
         $addToSet: {'users.members': {$each: shortListIds}}
       }, function(){
         window.location.href = "/mybubbles/"+bubbleInfo.id+"/members";
+        //REPLACE WITH SOMETHING REACTIVE
+        /*$('#bubble-invitation').trigger({
+          type: 'bubbleRefresh',
+          sections: ['bubble', 'members']
+          //timeout: 2000
+        });*/
       });
     } else {
       Bubbles.update({_id: bubbleInfo.id},
@@ -67,56 +61,23 @@ Template.bubbleInvitation.events({
         $addToSet: {'users.invitees': {$each: shortListIds}}
       }, function(){
         window.location.href = "/mybubbles/"+bubbleInfo.id+"/members";
-      });
-    }
-
-    /*
-    //convert usernameList into userIdList
-    usernameList = Session.get('inviteeList'+Session.get('currentBubbleId'));
-    userIdList = [];
-    _.each(usernameList, function(username) {
-      tmp = Meteor.users.findOne({username:username})._id;
-      userIdList.push(tmp);
-      Meteor.call("sendInvitedEmail", Meteor.userId(), tmp, Session.get('currentBubbleId'));
-    });
-
-    Session.set('recentlyAdded',Session.get('inviteeList'+Session.get('currentBubbleId')));
-
-    var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
-    if(bubble.bubbleType == 'super') {
-      Bubbles.update({_id:bubble._id},
-      {
-        $addToSet: {'users.members': {$each: userIdList}}
-      }, function(){
-        // TODO: Redo me
-        $('#bubble-invitation').trigger({
-          type: 'bubbleRefresh',
-          sections: ['bubble', 'members']
-          //timeout: 2000
-        });
-      });
-    }else{
-      //Add Invitees to the bubble object
-      //Meteor.call('addInvitee', Session.get('currentBubbleId'), userIdList);
-      Bubbles.update({_id:bubble._id}, {$addToSet: {'users.invitees': {$each: userIdList}}}, function(){
-        // TODO: Redo me
-        $('#bubble-invitation').trigger({
+        //REPLACE ME WITH SOMETHING REACTIVE
+        /*$('#bubble-invitation').trigger({
           type: 'bubbleRefresh',
           sections: ['bubble', 'invitees']
           //timeout: 2000
-        });
+        });*/
       });
     }
 
     //Create notifications
-    if (this.bubbleType == 'super') {
-      _.each(userIdList, function(userId) {
+    if (bubbleInfo.bubbleType === 'super') {
+      _.each(shortListIds, function(userId) {
         createNewMemberUpdate(userId);
       });
-    }else{
-      createInvitationUpdate(userIdList);
+    } else {
+      createInvitationUpdate(shortListIds);
     }
-    */
   }
 });
 
@@ -146,21 +107,8 @@ Template.bubbleInvitation.helpers({
 
   selected: function() {
     var that = this;
-    var shortList = Session.get('shortList') || [];
-    var bubbleInfo = Session.get('bubbleInfo');
-    var selectList = bubbleInfo.users.invitees.concat(bubbleInfo.users.applicants);
 
-    _.each(shortList,function(user){
-      selectList.push(user.id);
-    });
-
-    var retVal = false;
-    _.each(selectList, function(userId) {
-      if(userId === that.id)
-        retVal = true;
-    });
-
-    return retVal;
+    return (isApplicant(that.id) || isInvitee(that.id) || isShortlisted(that.id));
   },
 
   numPosts: function() {
@@ -179,4 +127,31 @@ Template.bubbleInvitation.destroyed = function() {
 
 Template.bubbleInvitation.rendered = function() {
 
+};
+
+function isInvitee(userId) {
+  var invitees = Session.get('bubbleInfo').users.invitees || [];
+
+  return _.contains(invitees,userId);
+};
+
+function isApplicant(userId) {
+  var applicants = Session.get('bubbleInfo').users.applicants || [];
+
+  return _.contains(applicants,userId);
+};
+
+function isShortlisted(userId) {
+  var shortList = Session.get('shortList') || [];
+  var shortListIds = _.map(shortList, function(user) {
+    return user.id;
+  });
+
+  return _.contains(shortListIds,userId);
+};
+
+function addToShortlist(user) {
+  var shortList = Session.get('shortList') || [];
+  shortList.push(user);
+  Session.set('shortList',shortList);
 };

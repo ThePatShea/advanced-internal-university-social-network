@@ -229,13 +229,13 @@ createInvitationUpdate = function(userList) {
     });
 
     //Create mobile update
-    if(Meteor.users.findOne(userId).deviceToken){
-      Meteor.call(
-        'getUA',
-        invoker.username + " invited you to " + bubble.title,
-        Meteor.users.findOne(userId).deviceToken
-      );
-    }
+    // if(Meteor.users.findOne(userId).deviceToken){
+    //   Meteor.call(
+    //     'getUA',
+    //     invoker.username + " invited you to " + bubble.title,
+    //     Meteor.users.findOne(userId).deviceToken
+    //   );
+    // }
 
   });
 }
