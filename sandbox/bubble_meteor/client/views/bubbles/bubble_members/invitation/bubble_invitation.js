@@ -4,9 +4,12 @@ Template.bubbleInvitation.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if(!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersREST(searchText, function(err, res) {
-        if (!err)
-          Session.set('searchRes', res);
+      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+        if(!err) {
+          Session.set('searchRes', res.slice(0,6));
+        } else {
+          console.log("Error: ", err);
+        }
       });
     }
     LoadingHelper.stop();
@@ -116,6 +119,9 @@ Template.bubbleInvitation.helpers({
 
 Template.bubbleInvitation.created = function() {
   var currentBubbleId = window.location.pathname.split('/')[2];
+  Session.set('searchRes',[]);
+  Session.set('shortList',[]);
+  Session.set('selectList',[]);
 };
 
 Template.bubbleInvitation.destroyed = function() {

@@ -5,6 +5,11 @@ this.SearchHelpers = {
   'searchDiscussionsQueue': [],
   'searchFilesQueue': [],
 
+  searchSetupMeteor: function() {
+    if(!SearchHelpers.getUserListObject)
+      SearchHelpers.getUserListObject = new SearchData.GetUserList();
+  },
+
   searchBubblesMeteor: function(searchText, callback) {
     if (!Session.get('searchingBubbles')) {
       Session.set('searchingBubbles', true);
@@ -36,7 +41,10 @@ this.SearchHelpers = {
           callback(err, res);
         } else {
           Session.set('searchingUsers', false);
-          callback(err, res);
+          SearchHelpers.getUserListObject.getUserList(res,function(err,res) {
+            callback(err,res);
+          });
+          //callback(err, res);
         }
         SearchHelpers._popQueue(SearchHelpers.searchUsersQueue, SearchHelpers.searchUsersMeteor);
       });
@@ -260,5 +268,6 @@ this.SearchHelpers = {
 
 
 Meteor.startup(function() {
+  SearchHelpers.searchSetupMeteor();
   SearchHelpers.searchSetupREST();
 });

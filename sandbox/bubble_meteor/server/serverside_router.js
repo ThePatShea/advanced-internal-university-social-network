@@ -281,6 +281,18 @@ Meteor.Router.add('/2013-09-11/bubbles/search?:q', 'GET', function(q){
     return [200, {'Content-type': 'application/json'}, JSON.stringify(results)];
 });
 
+Meteor.Router.add('/2013-09-11/userList?:q', 'GET', function(q) {
+    var idList = this.request.query.idList.split(',');
+    var limit = this.request.query.limit;
+    console.log("LIMIT: ", limit);
+    var retVal = [];
+    retVal = Meteor.users.find({_id: {$in: idList}},{fields: {services: 0}, limit: limit}).fetch();
+    _.each(retVal,function(user){
+        user.id = user._id;
+    })
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
+});
+
 //Explore Posts for dashboard
 Meteor.Router.add('/2013-09-11/dashboard', 'GET', function(){
     var limit = this.request.query.limit || 5;

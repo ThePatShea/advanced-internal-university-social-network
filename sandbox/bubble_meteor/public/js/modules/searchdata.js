@@ -75,6 +75,31 @@
     }
   });
 
+  var UserList = BubbleRest.Collection.extend({
+    limit: 10,
+    model: FoundUser,
+    url: function() {
+      return '/2013-09-11/userList?idList=' + this.idList.toString() + '&limit=' + this.limit;
+    }
+  });
+
+  var GetUserList = function() {
+    var that = this;
+    that.userList = new UserList();
+
+    this.getUserList = function(idList, callback) {
+      that.userList.idList = idList;
+      that.userList.fetch({
+        success: function(collection) {
+          callback(undefined, collection.toJSON());
+        },
+        error: function(error) {
+          callback(error, undefined);
+        }
+      })
+    };
+  };
+
   var SearchBubbles = function() {
     var that = this;
     this.foundCollection = new FoundBubbles();
@@ -165,7 +190,8 @@
     SearchUsers: SearchUsers,
     SearchEvents: SearchEvents,
     SearchDiscussions: SearchDiscussions,
-    SearchFiles: SearchFiles
+    SearchFiles: SearchFiles,
+    GetUserList: GetUserList
   };
 
   window.SearchData = api;
