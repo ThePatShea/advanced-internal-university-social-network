@@ -25,11 +25,8 @@ Template.bubbleInvitation.events({
     event.preventDefault();
 
     var that = this;
-    var shortList = Session.get('shortList') || [];
-    shortList = _.reject(shortList,function(user){
-      return user.id === that.id;
-    });
-    Session.set('shortList',shortList);
+
+    removeFromShortlist(that);
   },
 
   'click .add-users': function(event){
@@ -153,5 +150,13 @@ function isShortlisted(userId) {
 function addToShortlist(user) {
   var shortList = Session.get('shortList') || [];
   shortList.push(user);
+  Session.set('shortList',shortList);
+};
+
+function removeFromShortlist(user) {
+  var shortList = Session.get('shortList') || [];
+  shortList = _.reject(shortList,function(shortlistedUser){
+    return shortlistedUser.id === user.id;
+  });
   Session.set('shortList',shortList);
 };
