@@ -6,7 +6,8 @@ Template.bubbleInvitation.events({
     if(!DisplayHelpers.isMobile()) {
       SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
         if(!err) {
-          Session.set('searchRes', res.slice(0,6));
+          var firstSixUsers = res.slice(0,6);
+          Session.set('searchRes', firstSixUsers);
         } else {
           console.log("Error: ", err);
         }
