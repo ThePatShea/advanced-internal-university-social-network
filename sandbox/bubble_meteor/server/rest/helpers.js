@@ -196,7 +196,7 @@ this.RestHelpers = {
         options.sort = apiOptions.sort;
       }
 
-      if (typeof apiOptions.limit !== 'undefined') {
+      if (apiOptions.limit && !apiOptions.noLimit) {
         options.limit = apiOptions.limit;
 
         if (options.limit > RestConst.MAX_LIMIT)
