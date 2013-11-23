@@ -1,29 +1,51 @@
+function stopSubs(template) {
+  if (template.singleBubbleSub)
+    template.singleBubbleSub.stop();
+
+  if (template.singlePostSub)
+    template.singlePostSub.stop();
+
+  if (template.commentsSub)
+    template.commentsSub.stop();
+}
+
+function refreshData(template, bubbleId, postId) {
+  stopSubs(template);
+
+  template.singleBubbleSub = Meteor.subscribe('singleBubble', bubbleId);
+
+  LoadingHelper.start();
+  template.subLoading += 1;
+  template.singlePostSub = Meteor.subscribe('singlePost', postId, function() {
+    LoadingHelper.stop();
+    template.subLoading -= 1;
+  });
+
+  LoadingHelper.start();
+  template.subLoading += 1;
+  template.commentsSub = Meteor.subscribe('comments', postId, function() {
+    LoadingHelper.stop();
+    template.subLoading -= 1;
+  });
+}
+
 Template.postPage.created = function() {
-}
+  this.subLoading = 0;
+  var that = this;
 
-Template.postPage.rendered = function() {
-  var currentUrl     =  window.location.pathname;
-  var urlArray       =  currentUrl.split("/");
-
-  var currentBubbleId  =  urlArray[2];
-  var currentPostId    =  urlArray[4];
-  console.log('Updated Post: ', currentBubbleId, currentPostId);
-  Session.set('currentBubbleId',currentBubbleId);
-  Session.set('currentPost',currentPostId);
-
-  Meteor.subscribe('singleBubble', currentBubbleId);
-
-  LoadingHelper.start();
-  Meteor.subscribe('singlePost', currentPostId, function() {
-    LoadingHelper.stop();
+  this.watch = Meteor.autorun(function() {
+    refreshData(that, Session.get('currentBubbleId'), Session.get('currentPostId'));
   });
+};
 
-  LoadingHelper.start();
-  Meteor.subscribe('comments', currentPostId, function() {
+Template.postPage.destroyed = function() {
+  stopSubs(this);
+
+  for (var i = 0; i < this.subLoading; ++i)
     LoadingHelper.stop();
-  });
-}
 
+  this.watch.stop();
+};
 
 Template.postPage.helpers({
     isFlagged: function() {

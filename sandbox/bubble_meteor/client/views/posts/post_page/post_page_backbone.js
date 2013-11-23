@@ -107,7 +107,7 @@ Template.postPageBackbone.events({
       console.log('Post Title: ', postTitle);
       setTimeout(displayPostConfirmationMessage(postTitle), 2000);
 
-      Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
+      Meteor.Router.to('bubblePageBackbone', Session.get('currentBubbleId'));
     }
   }
 });

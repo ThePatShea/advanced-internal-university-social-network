@@ -8,7 +8,7 @@ Template.download.events({
           this.id = this._id;
         }
 
-        currentPostObject = new mybubbles.BubblePost({id: this.id});
+        currentPostObject = new BubbleData.BubblePost({id: this.id});
         currentPostObject.fetch({async: false});
         currentPost = currentPostObject.toJSON();
         $("#" + this.id).attr('href', currentPost.file);

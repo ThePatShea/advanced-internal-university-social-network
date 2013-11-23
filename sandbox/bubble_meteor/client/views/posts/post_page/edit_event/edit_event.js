@@ -129,7 +129,7 @@ Template.editEvent.events({
           $('.message-container').addClass('visible-false');
           clearTimeout();
         },5000);
-      }        
+      }
     }
     console.log('Post Title: ', postTitle);
     setTimeout(displayPostConfirmationMessage(postTitle), 2000);
@@ -140,7 +140,7 @@ Template.editEvent.events({
         throwError(error.reason);
       } else {
         createEditEventUpdate(Meteor.userId(), currentPostId);
-        Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+        Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
       }
     });
   },

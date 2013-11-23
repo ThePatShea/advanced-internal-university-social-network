@@ -934,6 +934,7 @@
 	BubbleData.ExploreSection = ExploreSection;
 	BubbleData.ExploreUsers = ExploreUsers;
 	BubbleData.ExploreBubbles = ExploreBubbles;
+	BubbleData.BubblePost = BubblePost;
 	BubbleData.MyBubbles = MyBubbles;
 
 	var testHelper = function(scope) {return function(){console.log("test", scope.toJSON())}};
