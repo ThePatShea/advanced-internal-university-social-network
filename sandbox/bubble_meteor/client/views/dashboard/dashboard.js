@@ -26,7 +26,10 @@ Template.dashboard.helpers({
 	},
 	getUpdates: function() {
 		return Session.get('dashboardUpdates');
-	}
+	},
+  isEvent: function() {
+    return this.postType === "event";
+  }
 });
 
 Template.dashboard.events({

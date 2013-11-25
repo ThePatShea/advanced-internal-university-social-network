@@ -105,7 +105,11 @@
             <div></div>
 
             {{#each getFiveExplorePostsBB}}
-           		{{> listItemBB}}
+            	{{#if isEvent}}
+	           		{{> listItemExploreEventPostBB}}
+	           	{{else}}
+	           		{{> listItemExploreDiscussionPostBB}}
+           		{{/if}}
             {{else}}
             	{{> gifLoaderToParent}}
         	{{/each}}

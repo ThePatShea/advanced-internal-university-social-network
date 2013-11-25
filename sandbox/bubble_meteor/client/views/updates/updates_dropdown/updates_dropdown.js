@@ -168,11 +168,7 @@ Template.updatesDropdown.helpers({
       });
 
       updateList = _.sortBy(updateList, function(newUpdate) {
-<<<<<<< HEAD
         return newUpdate.submitted;
-=======
-        return newUpdate.submitted; 
->>>>>>> submaster
       });
       return _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
     }
