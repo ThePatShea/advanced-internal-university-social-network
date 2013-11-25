@@ -1,7 +1,6 @@
 Template.bubbleMembersPage.created = function() {
 	virtualPage = 0;
 	max_scrolltop = 200;
-	Session.set("isLoading", true);
 }
 
 
@@ -9,8 +8,9 @@ Template.bubbleMembersPage.rendered = function () {
 	var currentBubbleId = window.location.pathname.split('/')[2];
 
 	// TODO: Fix me
+	LoadingHelper.start();
 	Meteor.subscribe('singleBubble', currentBubbleId, function() {
-		Session.set("isLoading", false);
+		LoadingHelper.stop();
 	});
 	console.log(currentBubbleId);
 	var currentBubble = Bubbles.findOne({_id: currentBubbleId});

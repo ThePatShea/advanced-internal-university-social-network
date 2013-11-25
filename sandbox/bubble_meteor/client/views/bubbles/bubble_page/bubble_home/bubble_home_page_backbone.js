@@ -70,6 +70,24 @@ function refreshData(bubbleId) {
   });
 }
 
+function refreshUpdates(bubbleId) {
+  LoadingHelper.start();
+
+  var opts = {
+    limit: Session.get('bubbleUpdatesToShow'),
+    query: {
+      bubbleId: bubbleId
+    }
+  };
+
+  UpdatesHelper.getUpdates(opts, function(result) {
+    Session.set('bubbleUpdateCount', result.count);
+    Session.set('bubbleUpdates', result.updates);
+
+    LoadingHelper.stop();
+  });
+}
+
 // Helpers
 Template.bubblePageBackbone.helpers({
   // Bubble info
@@ -117,29 +135,7 @@ Template.bubblePageBackbone.helpers({
   },
 
   getUpdates: function() {
-    /*
-    var currentBubbleId = Session.get('currentBubbleId');
-    var updatesToShow = Session.get('bubbleUpdatesToShow');
-
-    var query = {
-      userId: Meteor.userId(),
-      bubbleId: currentBubbleId,
-      read: false
-    };
-
-    var opts = {
-      sort: {date: -1}
-    };
-
-    if (updatesToShow)
-      opts.limit = updatesToShow;
-
-    Session.set('bubbleUpdateCount', Updates.find(query).count());
-    var updateList = Updates.find(query, opts).fetch();
-    */
-    var updateList = Session.get("bubbleUpdates");
-
-    return updateList;
+    return Session.get("bubbleUpdates");
   },
 
   haveMoreUpdates: function() {
@@ -149,29 +145,6 @@ Template.bubblePageBackbone.helpers({
   },
 
   showUpdates: function() {
-    console.log("Show Updates.");
-    var currentBubbleId = Session.get('currentBubbleId');
-    var updatesToShow = Session.get('bubbleUpdatesToShow');
-
-    var query = {
-      userId: Meteor.userId(),
-      bubbleId: currentBubbleId,
-      read: false
-    };
-
-    var opts = {
-      sort: {date: -1}
-    };
-
-    if (updatesToShow)
-      opts.limit = updatesToShow;
-
-    Session.set('bubbleUpdateCount', Updates.find(query).count());
-    var updateList = Updates.find(query, opts).fetch();
-
-    Session.set('bubbleUpdates',updateList);
-    console.log("Update List: ", updateList);
-
     return Session.get('bubbleUpdateCount') > 0;
   },
 
@@ -212,7 +185,6 @@ Template.bubblePageBackbone.events({
     var updates = Updates.find({bubbleId: currentBubbleId, userId: Meteor.userId(), read:false}).fetch();
     _.each(updates, function(update) {
       Meteor.call('setRead', update);
-      Session.set(currentBubbleId+'testbubbleUpdateCount',0);
     });
   },
 
@@ -229,13 +201,16 @@ Template.bubblePageBackbone.created = function() {
 
   this.updatedPosts = Meteor.subscribe('updatedPosts', Meteor.userId());
 
-
   // TODO: Fix me
   if (typeof goingDep === "undefined")
     goingDep = new Deps.Dependency;
 
   this.watch = Meteor.autorun(function() {
     refreshData(Session.get('currentBubbleId'));
+  });
+
+  this.updatesWatch = Meteor.autorun(function() {
+    refreshUpdates(Session.get('currentBubbleId'));
   });
 };
 
@@ -245,5 +220,6 @@ Template.bubblePageBackbone.rendered = function() {
 
 Template.bubblePageBackbone.destroyed = function() {
   this.watch.stop();
+  this.updatesWatch.stop();
   this.updatedPosts.stop();
 };

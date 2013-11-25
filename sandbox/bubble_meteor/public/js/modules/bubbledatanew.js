@@ -360,9 +360,6 @@
 
     function maybeComplete() {
       count -= 1;
-
-      console.log('count', count);
-
       if (count <= 0 && callback) {
         Meteor.setTimeout(callback);
       }
@@ -385,7 +382,6 @@
         });
       },
       error: function() {
-        console.log('Failed, recovered');
         maybeComplete();
       }
     });
@@ -448,7 +444,11 @@
   var api = {
     MyBubbles: MyBubbles,
     BubblePostPage: BubblePostPage,
-    Helpers: Helpers
+    Helpers: Helpers,
+
+    Models: {
+      BubblePost: BubblePost
+    }
   };
 
   window.BubbleDataNew = api;

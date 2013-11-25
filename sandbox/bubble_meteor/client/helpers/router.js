@@ -21,8 +21,7 @@ Meteor.Router.add({
 
   '/onboarding_walkthrough': {
     to: 'onboardingWalkThrough',
-    and: function(){
-      Session.set('isLoading', true);
+    and: function() {
     }
   },
 
@@ -316,7 +315,7 @@ Meteor.Router.filters({
       if(Meteor.user() && ('2' == Meteor.user().userType || '3' == Meteor.user().userType)){
         return page;
       }else{
-        Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+        Meteor.Router.to('bubblePageBackbone', Session.get('currentBubbleId'));
         return 'bubblePage';
       }
     }else{

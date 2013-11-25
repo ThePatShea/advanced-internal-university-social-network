@@ -7,12 +7,6 @@ this.UserType = {
 
 this.RestSecurity = {
   // Posts
-  filterBubblePosts: function(ctx) {
-    return {
-      bubbleId: {$exists: false}
-    };
-  },
-
   notBubbleCheck: function(ctx, obj) {
     if (obj && obj.bubbleId)
       return RestHelpers.jsonResponse(401, 'Bubble posts are disallowed');
@@ -97,6 +91,7 @@ this.RestSecurity = {
   },
 
   ownsExplore: function(ctx, obj) {
+    // TODO: Fixed
   },
 
   isExploreAdmin: function(ctx, obj) {
@@ -147,13 +142,6 @@ this.RestSecurity = {
   },
 
   // Bubble posts
-  makeBubblePostFilter: function(name) {
-    return function(ctx, query) {
-      query['postType'] = name;
-      return query;
-    };
-  },
-
   makeBubblePostCheck: function(name) {
     return function(ctx, obj) {
       if (obj && obj.postType != name)

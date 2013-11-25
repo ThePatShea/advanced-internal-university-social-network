@@ -6,9 +6,6 @@ Template.userList.helpers({
 
 		return false;
 	},
-	loading: function() {
-		return Session.get('isLoading');
-	},
 	header: function() {
 		return this.name;
 	},
@@ -67,25 +64,25 @@ Template.userList.events({
 	'click .pageitem': function(e) {
 		var page = parseInt($(e.target).data('page'));
 
-		Session.set('isLoading', true);
+		LoadingHelper.start();
 		this.data.fetchPage(page - 1, function() {
-			Session.set('isLoading', false);
+			LoadingHelper.stop();
 		});
 	},
 	'click .prev': function() {
 		if (this.getCurrentPage() > 0) {
-			Session.set("isLoading", true);
+			LoadingHelper.start();
 			this.fetchPrevPage(function(res){
-				Session.set("isLoading", false);
+				LoadingHelper.stop();
 				console.log("CALLED", res);
 			});
 		}
 	},
 	'click .next': function() {
 		if(this.getCurrentPage() < this.getNumPages() - 1) {
-			Session.set("isLoading", true);
+			LoadingHelper.start();
 			this.fetchNextPage(function(res){
-				Session.set("isLoading", false);
+				LoadingHelper.stop();
 				console.log("CALLED", res);
 			});
 		}

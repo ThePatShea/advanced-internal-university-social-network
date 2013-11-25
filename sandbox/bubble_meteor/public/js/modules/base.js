@@ -43,7 +43,7 @@
   }
 
   function resetToken(callback) {
-    authToken = null;
+    privData.authToken = null;
     getToken(callback);
   }
 

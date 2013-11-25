@@ -1,25 +1,15 @@
 this.RestQuery = {
-  // Generic helpers
-  excludeFields: function(parser, fields) {
-    return function(ctx) {
-      var opts = parser(ctx);
-
-      for (var n in fields) {
-        var f = fields[n];
-
-        opts.fields[f] = false;
-      }
-
-      return opts;
-    };
+  // Remove limit from the query
+  noLimit: function(ctx, opts) {
+    opts.noLimit = true;
+    return opts;
   },
 
-  noLimit: function(parser) {
-    return function(ctx) {
-      var opts = parser(ctx);
-      opts.limit = undefined;
-      return opts;
-    };
+  // Posts
+  filterBubblePosts: function(ctx, query) {
+    query = query || {};
+    query.bubbleId = {$exists: false};
+    return query;
   },
 
   // Explores
@@ -35,22 +25,26 @@ this.RestQuery = {
     return query;
   },
 
-  explorePostsOrder: function(apiOpts) {
-    return function(ctx) {
-      var opts = apiOpts(ctx);
+  explorePostsOrder: function(ctx, opts) {
+    // TODO: Do not override?
+    if (ctx.parentDoc.exploreType === 'discussion') {
+      opts.sort = {submitted: -1};
+    } else {
+      opts.sort = {dateTime: 1};
+    }
 
-      // TODO: Do not override?
-      if (ctx.parentDoc.exploreType === 'discussion') {
-        opts.sort = {submitted: -1};
-      } else {
-        opts.sort = {dateTime: 1};
-      }
-
-      return opts;
-    };
+    return opts;
   },
 
   // Bubbles
+  buildBubblePostFilter: function(name) {
+    return function(ctx, query) {
+      query = query || {};
+      query.postType = name;
+      return query;
+    };
+  },
+
   buildBubbleUserQuery: function(name) {
     return function(ctx) {
       var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.parentId);
@@ -65,30 +59,74 @@ this.RestQuery = {
     };
   },
 
-  // Users
-  buildUserBubbleQuery: function() {
-    return function(ctx) {
-      return {
-        $or: [
-          {'users.members': ctx.userId},
-          {'users.admins': ctx.userId}
-        ]
-      };
-    };
+  bubbleEventFilter: function(ctx, query) {
+    query = query || {};
+    return _.extend(query, {
+      postType: 'event',
+      dateTime: {
+        $gte: new Date().getTime()
+      }
+    });
   },
 
-  bubbleUserOrder: function(apiOpts) {
-    return function(ctx) {
-      var opts = apiOpts(ctx);
-      opts.sort = {
-        'submitted': -1
-      };
-      opts.fields = {
-        category: 1,
-        title: 1
-      };
-      opts.limit = undefined;
-      return opts;
+  bubbleEventOrder: function(ctx, opts) {
+    opts.sort = {dateTime: 1};
+    return opts;
+  },
+
+  bubbleDiscussionOrder: function(ctx, opts) {
+    opts.sort = {submitted: -1};
+    return opts;
+  },
+
+  buildBubbleFileOrder: function(ctx, opts) {
+    opts.sort = {submitted: -1};
+    return opts;
+  },
+
+  // Users
+  userFieldFilter: function(ctx, opts) {
+    opts.fields = {
+      createdAt: true,
+      emails: true,
+      name: true,
+      userType: true,
+      username: true,
+      profilePicture: true
     };
+    return opts;
+  },
+
+  userBubbleQuery: function(ctx, query) {
+    query = query || {};
+    query['$or'] = [
+      {'users.members': ctx.userId},
+      {'users.admins': ctx.userId}
+    ];
+    return query;
+  },
+
+  bubbleUserOrder: function(ctx, opts) {
+    opts.sort = {
+      'submitted': -1
+    };
+    opts.fields = {
+      category: 1,
+      title: 1
+    };
+    opts.limit = undefined;
+    return opts;
+  },
+
+  // Files
+  fileFieldFilter: function(ctx, opts) {
+    opts.fields = {
+      name: true,
+      type: true,
+      userId: true,
+      size: true,
+      url: true
+    };
+    return opts;
   }
 };

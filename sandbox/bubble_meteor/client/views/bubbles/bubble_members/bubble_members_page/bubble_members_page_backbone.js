@@ -46,6 +46,7 @@ function fetchData(bubbleId) {
 }
 
 function refreshData(collection) {
+  LoadingHelper.start();
   collection.refresh(function() {
     LoadingHelper.stop();
   });
@@ -103,7 +104,7 @@ Template.bubbleMembersPageBackbone.rendered = function() {
     function refresh() {
       var sections = e.sections;
 
-      if (!sections || !sections.length) {
+      if (!sections) {
         LoadingHelper.stop();
         return;
       }
@@ -125,13 +126,16 @@ Template.bubbleMembersPageBackbone.rendered = function() {
             refreshData(state.mybubbles.Applicants);
             break;
           case 'bubble':
-            state.mybubbles.reloadBubble(function(bubble) {
-              Session.set('bubbleInfo', bubble);
+            LoadingHelper.start();
+            state.mybubbles.reloadBubble(function(error, bubble) {
               LoadingHelper.stop();
+              Session.set('bubbleInfo', bubble);
             });
             break;
         }
       }
+
+      LoadingHelper.stop();
     }
 
     // TODO: Fix race condition

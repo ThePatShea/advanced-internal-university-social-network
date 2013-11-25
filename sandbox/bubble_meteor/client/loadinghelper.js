@@ -6,6 +6,8 @@
 
     Session.set('loadingStatus', count + flag);
 
+    //console.log('x', count + flag);
+
     return count + flag;
   }
 

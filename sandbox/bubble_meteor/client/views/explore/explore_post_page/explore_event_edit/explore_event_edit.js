@@ -171,9 +171,9 @@ Template.exploreEditEvent.events({
 
     var dateTime = $('.cb-explore-edit-event-form > .cb-form-row > .date').val() + " " + $('.cb-explore-edit-event-form > .cb-form-row > .time').val();
 
-  
 
-    var eventAttributes = { 
+
+    var eventAttributes = {
       //author: Meteor.userId(),
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-edit-event-form > .first > .location').val(),
@@ -205,7 +205,7 @@ Template.exploreEditEvent.events({
 
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
-    
+
     var currentPostId = Session.get('currentPostId');
     var currentExploreId = Session.get('currentExploreId');
     Posts.update(currentPostId, {$set: eventAttributes}, function(error) {
@@ -214,7 +214,7 @@ Template.exploreEditEvent.events({
         throwError(error.reason);
       } else {
         createEditEventUpdate(Meteor.userId(), currentPostId);
-        Meteor.Router.to('explorePostPage', currentExploreId, currentPostId);
+        Meteor.Router.to('explorePostPageBB', currentExploreId, currentPostId);
       }
     });
 
@@ -228,7 +228,7 @@ Template.exploreEditEvent.events({
           $('.message-container').addClass('visible-false');
           clearTimeout();
         },10000);
-      }        
+      }
     }
     setTimeout(displayPostConfirmationMessage(), 1000);
   },

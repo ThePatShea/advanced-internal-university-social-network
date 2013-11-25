@@ -11,6 +11,11 @@
       return '/api/v1_0/users/' + this.id;
     }
   });
+  var Post = BubbleRest.Model.extend({
+    url: function(){
+      return '/api/v1_0/posts/' + this.id;
+    }
+  });
 
   // Helpers
   function parsePagedData(collection, response, field) {
@@ -27,6 +32,7 @@
   var api = {
     Bubble: Bubble,
     User: User,
+    Post: Post,
 
     parsePagedData: parsePagedData
   };

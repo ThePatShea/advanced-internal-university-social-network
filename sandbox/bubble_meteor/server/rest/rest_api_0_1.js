@@ -1,46 +1,15 @@
-// Generic CRUD helpers
-function parseApiOptions(ctx) {
-	return {
-		fields: RestHelpers.getFieldList(ctx.request.query.fields),
-		sort: ctx.request.query.sort,
-		page: ctx.request.query.page || 0,
-		limit: ctx.request.query.limit || RestConst.DEFAULT_LIMIT
-	};
-}
-
-function parseUserOpts(ctx) {
-	var opts = parseApiOptions(ctx);
-	opts.fields = {
-		createdAt: true,
-		emails: true,
-		name: true,
-		userType: true,
-		username: true,
-		profilePicture: true
-  };
-
-  return opts;
-}
-
-function getFileApiOptions(ctx) {
-	return {
-		fields: RestHelpers.getFieldList('name,type,userId,size,url')
-	};
-}
-
 // Endpoints
 Meteor.startup(function() {
 	// Posts
 	RestCrud.makeGenericApi('/api/v1_0/posts', Posts, {
 		query: {
 			name: 'posts',
-			apiOpts: parseApiOptions,
 			// TODO: Fix me, should not allow reading posts from bubbles and explores
 			//query: RestSecurity.filterBubblePosts
 		},
 		queryOne: {
-			apiOpts: parseApiOptions,
-			check: RestSecurity.notBubbleCheck
+			// TODO: Fix me, should not allow reading posts from bubbles and explores
+			//check: RestSecurity.notBubbleCheck
 		},
 		create: {
 			check: RestSecurity.notBubbleCheck
@@ -57,10 +26,9 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/explores', Explores, {
 		query: {
 			name: 'explores',
-			apiOpts: RestQuery.noLimit(parseApiOptions)
+			queryOpts: RestQuery.noLimit
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		},
 		create: {
 			check: RestSecurity.isUniqueExplore,
@@ -77,11 +45,10 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/explores/:parentId/posts', Explores, Posts, 'exploreId', {
 		query: {
 			name: 'posts',
-			apiOpts: RestQuery.explorePostsOrder(parseApiOptions),
-			query: RestQuery.explorePostsFilter
+			query: RestQuery.explorePostsFilter,
+			queryOpts: RestQuery.explorePostsOrder
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		},
 		create: {
 			check: RestSecurity.canMakePost('exploreId')
@@ -92,10 +59,9 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles', Bubbles, {
 		query: {
 			name: 'bubbles',
-			apiOpts: RestQuery.noLimit(parseApiOptions)
+			queryOpts: RestQuery.noLimit
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		},
 		create: {
 			check: RestSecurity.isUniqueBubble,
@@ -112,10 +78,8 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/posts', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'posts',
-			apiOpts: parseApiOptions
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		},
 		create: {
 			check: RestSecurity.canMakePost('bubbleId'),
@@ -136,11 +100,10 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/events', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'events',
-			apiOpts: parseApiOptions,
-			query: RestSecurity.makeBubblePostFilter('event')
+			query: RestQuery.bubbleEventFilter,
+			queryOpts: RestQuery.bubbleEventOrder
 		},
 		queryOne: {
-			apiOpts: parseApiOptions,
 			check: RestSecurity.makeBubblePostCheck('event')
 		},
 		create: {
@@ -161,11 +124,10 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/discussions', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'discussions',
-			apiOpts: parseApiOptions,
-			query: RestSecurity.makeBubblePostFilter('discussion')
+			query: RestQuery.buildBubblePostFilter('discussion'),
+			queryOpts: RestQuery.bubbleDiscussionOrder,
 		},
 		queryOne: {
-			apiOpts: parseApiOptions,
 			check: RestSecurity.makeBubblePostCheck('discussion')
 		},
 		create: {
@@ -186,11 +148,10 @@ Meteor.startup(function() {
 	RestRelatedCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/files', Bubbles, Posts, 'bubbleId', {
 		query: {
 			name: 'files',
-			apiOpts: parseApiOptions,
-			query: RestSecurity.makeBubblePostFilter('file')
+			query: RestQuery.buildBubblePostFilter('file'),
+			queryOpts: RestQuery.bubbleFileOrder
 		},
 		queryOne: {
-			apiOpts: parseApiOptions,
 			check: RestSecurity.makeBubblePostCheck('file')
 		},
 		create: {
@@ -211,9 +172,9 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/members', Meteor.users, {
 		query: {
 			name: 'members',
-			apiOpts: parseUserOpts,
 			check: RestSecurity.relatedBubbleExists,
-			query: RestQuery.buildBubbleUserQuery('members')
+			query: RestQuery.buildBubbleUserQuery('members'),
+			queryOpts: RestQuery.userFieldFilter
 		},
 		queryOne: {
 			check: RestSecurity.deny
@@ -232,9 +193,9 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/admins', Meteor.users, {
 		query: {
 			name: 'admins',
-			apiOpts: parseUserOpts,
 			check: RestSecurity.relatedBubbleExists,
-			query: RestQuery.buildBubbleUserQuery('admins')
+			query: RestQuery.buildBubbleUserQuery('admins'),
+			queryOpts: RestQuery.userFieldFilter
 		},
 		queryOne: {
 			check: RestSecurity.deny
@@ -253,9 +214,9 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/applicants', Meteor.users, {
 		query: {
 			name: 'applicants',
-			apiOpts: parseUserOpts,
 			check: RestSecurity.relatedBubbleExists,
-			query: RestQuery.buildBubbleUserQuery('applicants')
+			query: RestQuery.buildBubbleUserQuery('applicants'),
+			queryOpts: RestQuery.userFieldFilter
 		},
 		queryOne: {
 			check: RestSecurity.deny
@@ -274,9 +235,9 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/bubbles/:parentId/invitees', Meteor.users, {
 		query: {
 			name: 'invitees',
-			apiOpts: parseUserOpts,
 			check: RestSecurity.relatedBubbleExists,
-			query: RestQuery.buildBubbleUserQuery('invitees')
+			query: RestQuery.buildBubbleUserQuery('invitees'),
+			queryOpts: RestQuery.userFieldFilter
 		},
 		queryOne: {
 			check: RestSecurity.deny
@@ -296,10 +257,8 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/comments', Comments, {
 		query: {
 			name: 'comments',
-			apiOpts: parseApiOptions
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		},
 		create: {
 			check: RestSecurity.canCreateComment,
@@ -312,17 +271,14 @@ Meteor.startup(function() {
 		remove: {
 			check: RestSecurity.canChangeComment
 		}
-
 	});
 
 	// Updates
 	RestCrud.makeGenericApi('/api/v1_0/updates', Updates, {
 		query: {
 			name: 'updates',
-			apiOpts: parseApiOptions
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		}
 	});
 
@@ -330,19 +286,25 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/users', Meteor.users, {
 		query: {
 			name: 'users',
-			apiOpts: parseUserOpts
+			queryOpts: RestQuery.userFieldFilter
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
+			queryOpts: RestQuery.userFieldFilter
+		},
+		update: {
+			check: RestSecurity.deny
+		},
+		remove: {
+			check: RestSecurity.deny
 		}
 	});
 
 	RestCrud.makeGenericApi('/api/v1_0/users/:parentId/bubbles', Bubbles, {
 		query: {
 			name: 'bubbles',
-			apiOpts: RestQuery.bubbleUserOrder(parseApiOptions),
 			check: RestSecurity.relatedUserExists,
-			query: RestQuery.buildUserBubbleQuery()
+			query: RestQuery.userBubbleQuery,
+			queryOpts: RestQuery.bubbleUserOrder
 		},
 		queryOne: {
 			check: RestSecurity.deny
@@ -362,10 +324,8 @@ Meteor.startup(function() {
 	RestCrud.makeGenericApi('/api/v1_0/userlogs', Userlogs, {
 		query: {
 			name: 'userlogs',
-			apiOpts: parseApiOptions
 		},
 		queryOne: {
-			apiOpts: parseApiOptions
 		}
 	});
 
@@ -375,7 +335,7 @@ Meteor.startup(function() {
 			check: RestSecurity.deny
 		},
 		queryOne: {
-			apiOpts: getFileApiOptions
+			queryOpts: RestQuery.fileFieldFilter
 		},
 		create: {
 			handler: RestHandlers.handleFileUpload

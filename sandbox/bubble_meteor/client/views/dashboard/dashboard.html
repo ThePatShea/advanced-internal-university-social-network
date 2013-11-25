@@ -1,6 +1,6 @@
 <template name="dashboard">
 
-	<div class="dashboard-cover">		
+	<div class="dashboard-cover">
 		<div id="carousel-dashboard" class="carousel slide">
 		  <!-- Indicators -->
 		  <ol class="carousel-indicators">
@@ -83,28 +83,27 @@
 		</div>
 	</div>
 
-    	<div class="visible-{{testNumUpdates}}">
-    		<div class="dashboard-section-header">
-    			{{pluralize testNumUpdates 'update' ""}}
-          		<button class="std-btn-light pull-right clear-updates">clear all</button> 
-          		{{#if greaterThan testNumUpdates 3}}
-          			<button class="std-btn-light pull-right dashboard-more-updates">see all</button>
-      			{{/if}}
-          	</div>
-          	<div class="dashboard-updates">
-    			{{#each testGetUpdates}}
-    				{{>updateItem}}
-    			{{/each}}
-    		</div>
+  {{#if haveUpdates}}
+	<div class="dashboard-section-header">
+		{{pluralize getNumUpdates 'update' ""}}
+    		<button class="std-btn-light pull-right clear-updates">clear all</button>
+    		{{#if greaterThan getNumUpdates 3}}
+    			<button class="std-btn-light pull-right dashboard-more-updates">see all</button>
+			{{/if}}
     	</div>
-
+    	<div class="dashboard-updates">
+		{{#each getUpdates}}
+			{{> updateItem}}
+		{{/each}}
+	</div>
+  {{/if}}
 
           <div class="dashboard-section-header">
             latest posts from explore
           </div>
           <div>
             <div></div>
-			
+
             {{#each getFiveExplorePostsBB}}
            		{{> listItemBB}}
             {{else}}

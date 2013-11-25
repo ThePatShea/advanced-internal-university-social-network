@@ -40,7 +40,7 @@ Template.eventEdit.events({
         throwError(error.reason);
       } else {
         createEditEventUpdate(Meteor.userId(), currentPostId);
-        Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+        Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
       }
     });
 
