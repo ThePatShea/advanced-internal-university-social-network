@@ -3,10 +3,10 @@ Template.searchEvents.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchEventsREST(searchText, function(err, res) {
+      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
         if (!err) {
-          var eventIds = res;
-          Session.set('selectedEventIdList', eventIds);
+          var events = res;
+          Session.set('selectedEventList', events);
         }
       });
     }
@@ -16,10 +16,10 @@ Template.searchEvents.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchEventsREST(searchText, function(err, res) {
+    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
       if (!err) {
-        var eventIds = res;
-        Session.set('selectedEventIdList', eventIds);
+        var events = res;
+        Session.set('selectedEventList', events);
       }
     });
     LoadingHelper.stop();
@@ -30,7 +30,7 @@ Template.searchEvents.events({
 
 Template.searchEvents.helpers({
   getSearchedEvents: function() {
-    return Session.get('selectedEventIdList');
+    return Session.get('selectedEventList');
   },
   typing: function() {
     return Session.get("typing");
@@ -40,7 +40,7 @@ Template.searchEvents.helpers({
 
 
 Template.searchEvents.created = function() {
-  Session.set("selectedEventIdList", []);
+  Session.set("selectedEventList", []);
 }
 
 

@@ -83,6 +83,23 @@
     }
   });
 
+  var BubbleList = BubbleRest.Collection.extend({
+    limit: 10,
+    model: FoundBubble,
+    url: function() {
+      return '/2013-09-11/bubbleList?idList=' + this.idList.toString() + '&limit=' + this.limit;
+    }
+  });
+
+  //Does this need to be broken up per model?
+  var PostList = BubbleRest.Collection.extend({
+    limit: 10,
+    model: FoundDiscussion,
+    url: function() {
+      return '/2013-09-11/postList?idList=' + this.idList.toString() + '&limit=' + this.limit;
+    }
+  });
+
   var GetUserList = function() {
     var that = this;
     that.userList = new UserList();
@@ -90,6 +107,40 @@
     this.getUserList = function(idList, callback) {
       that.userList.idList = idList;
       that.userList.fetch({
+        success: function(collection) {
+          callback(undefined, collection.toJSON());
+        },
+        error: function(error) {
+          callback(error, undefined);
+        }
+      })
+    };
+  };
+
+  var GetBubbleList = function() {
+    var that = this;
+    that.bubbleList = new BubbleList();
+
+    this.getBubbleList = function(idList, callback) {
+      that.bubbleList.idList = idList;
+      that.bubbleList.fetch({
+        success: function(collection) {
+          callback(undefined, collection.toJSON());
+        },
+        error: function(error) {
+          callback(error, undefined);
+        }
+      })
+    };
+  };
+
+  var GetPostList = function() {
+    var that = this;
+    that.postList = new PostList();
+
+    this.getPostList = function(idList, callback) {
+      that.postList.idList = idList;
+      that.postList.fetch({
         success: function(collection) {
           callback(undefined, collection.toJSON());
         },
@@ -191,7 +242,9 @@
     SearchEvents: SearchEvents,
     SearchDiscussions: SearchDiscussions,
     SearchFiles: SearchFiles,
-    GetUserList: GetUserList
+    GetUserList: GetUserList,
+    GetBubbleList: GetBubbleList,
+    GetPostList: GetPostList
   };
 
   window.SearchData = api;

@@ -3,11 +3,11 @@ Template.searchDiscussions.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
+      SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
         if (!err) {
           console.log('Search DiscussionsREST: ', res);
-          var discussionIds = res;
-          Session.set('selectedDiscussionIdList', discussionIds);
+          var discussions = res;
+          Session.set('selectedDiscussionList', discussions);
         }
       });
     }
@@ -17,10 +17,10 @@ Template.searchDiscussions.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
+    SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
       if (!err) {
-        var discussionIds = res;
-        Session.set('selectedDiscussionIdList', discussionIds);
+        var discussions = res;
+        Session.set('selectedDiscussionList', discussions);
       }
     });
     LoadingHelper.stop();
@@ -31,7 +31,7 @@ Template.searchDiscussions.events({
 
 Template.searchDiscussions.helpers({
   getSearchedDiscussions: function() {
-    return Session.get('selectedDiscussionIdList');
+    return Session.get('selectedDiscussionList');
   },
   typing: function() {
     return Session.get("typing");
@@ -41,7 +41,7 @@ Template.searchDiscussions.helpers({
 
 
 Template.searchDiscussions.created = function() {
-  Session.set("selectedDiscussionIdList", []);
+  Session.set("selectedDiscussionList", []);
 }
 
 

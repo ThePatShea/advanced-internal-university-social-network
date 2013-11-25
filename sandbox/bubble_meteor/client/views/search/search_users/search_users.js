@@ -3,9 +3,9 @@ Template.searchUsers.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if(!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersREST(searchText, function(err, res) {
+      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
         if (!err)
-          Session.set('selectedUserIdList', res);
+          Session.set('selectedUserList', res);
       });
     }
     LoadingHelper.stop();
@@ -14,9 +14,9 @@ Template.searchUsers.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchUsersREST(searchText, function(err, res) {
+    SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
       if (!err)
-        Session.set('selectedUserIdList', res);
+        Session.set('selectedUserList', res);
     });
     LoadingHelper.stop();
   }
@@ -26,7 +26,7 @@ Template.searchUsers.events({
 
 Template.searchUsers.helpers({
   getSearchedUsers: function() {
-    return Session.get('selectedUserIdList');
+    return Session.get('selectedUserList');
   },
   typing: function() {
     return Session.get("typing");
@@ -36,7 +36,7 @@ Template.searchUsers.helpers({
 
 
 Template.searchUsers.created = function() {
-  Session.set("selectedUserIdList", []);
+  Session.set("selectedUserList", []);
 }
 
 

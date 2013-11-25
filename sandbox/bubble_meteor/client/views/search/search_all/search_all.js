@@ -3,30 +3,34 @@ Template.searchAll.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersREST(searchText, function(err, res) {
-        if (!err)
-          Session.set('selectedUserIdList', res);
-      });
-      SearchHelpers.searchBubblesREST(searchText, function(err, res) {
-        if (!err)
-          Session.set('selectedBubbleIdList', res);
-      });
-      SearchHelpers.searchFilesREST(searchText, function(err, res) {
+      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
         if (!err) {
-          var fileIds = res;
-          Session.set('selectedFileIdList', fileIds);
+          var threeUsers = res.slice(0,3);
+          Session.set('selectedUserList', threeUsers);
         }
       });
-      SearchHelpers.searchEventsREST(searchText, function(err, res) {
+      SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
         if (!err) {
-          var eventIds = res;
-          Session.set('selectedEventIdList', eventIds);
+          var threeBubbles = res.slice(0,3);
+          Session.set('selectedBubbleList', threeBubbles);
         }
       });
-      SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
+      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
         if (!err) {
-          var discussionIds = res;
-          Session.set('selectedDiscussionIdList', discussionIds);
+          var threeFiles = res.slice(0,3);
+          Session.set('selectedFileList', threeFiles);
+        }
+      });
+      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+        if (!err) {
+          var threeEvents = res.slice(0,3);
+          Session.set('selectedEventList', threeEvents);
+        }
+      });
+      SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+        if (!err) {
+          var threeDiscussions = res.slice(0,3);
+          Session.set('selectedDiscussionList', threeDiscussions);
         }
       });
     }
@@ -36,30 +40,34 @@ Template.searchAll.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchUsersREST(searchText, function(err, res) {
-      if (!err)
-        Session.set('selectedUserIdList', res);
-    });
-    SearchHelpers.searchBubblesREST(searchText, function(err, res) {
-      if (!err)
-        Session.set('selectedBubbleIdList', res);
-    });
-    SearchHelpers.searchFilesREST(searchText, function(err, res) {
+    SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
       if (!err) {
-        var fileIds = res;
-        Session.set('selectedFileIdList', fileIds);
+        var threeUsers = res.slice(0,3);
+        Session.set('selectedUserList', threeUsers);
       }
     });
-    SearchHelpers.searchEventsREST(searchText, function(err, res) {
+    SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
       if (!err) {
-        var eventIds = res;
-        Session.set('selectedEventIdList', eventIds);
+        var threeBubbles = res.slice(0,3);
+        Session.set('selectedBubbleList', threeBubbles);
       }
     });
-    SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
+    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
       if (!err) {
-        var discussionIds = res;
-        Session.set('selectedDiscussionIdList', discussionIds);
+        var threeFiles = res.slice(0,3);
+        Session.set('selectedFileList', threeFiles);
+      }
+    });
+    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      if (!err) {
+        var threeEvents = res.slice(0,3);
+        Session.set('selectedEventList', threeEvents);
+      }
+    });
+    SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+      if (!err) {
+        var threeDiscussions = res.slice(0,3);
+        Session.set('selectedDiscussionList', threeDiscussions);
       }
     });
     LoadingHelper.stop();
@@ -69,19 +77,19 @@ Template.searchAll.events({
 
 Template.searchAll.helpers({
   getSearchedFiles: function() {
-    return Session.get('selectedFileIdList');
+    return Session.get('selectedFileList');
   },
   getSearchedDiscussions: function() {
-    return Session.get('selectedDiscussionIdList');
+    return Session.get('selectedDiscussionList');
   },
   getSearchedEvents: function() {
-    return Session.get('selectedEventIdList');
+    return Session.get('selectedEventList');
   },
   getSearchedUsers: function() {
-    return Session.get('selectedUserIdList');
+    return Session.get('selectedUserList');
   },
   getSearchedBubbles: function() {
-    return Session.get('selectedBubbleIdList');
+    return Session.get('selectedBubbleList');
   },
   searching: function() {
     return !!Session.get('searching');
@@ -91,12 +99,12 @@ Template.searchAll.helpers({
 
 
 Template.searchAll.created = function() {
-  Session.set('selectedPostIdList', []);
-  Session.set('selectedBubbleIdList', []);
-  Session.set('selectedUserIdList', []);
-  Session.set('selectedEventIdList', []);
-  Session.set('selectedDiscussionIdList', []);
-  Session.set('selectedFileIdList', []);
+  Session.set('selectedPostList', []);
+  Session.set('selectedBubbleList', []);
+  Session.set('selectedUserList', []);
+  Session.set('selectedEventList', []);
+  Session.set('selectedDiscussionList', []);
+  Session.set('selectedFileList', []);
 };
 
 

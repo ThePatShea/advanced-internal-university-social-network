@@ -7,19 +7,27 @@
   </div>
 
     {{#each getSearchedBubbles}}
-      {{> listItem}}
+      {{> listItemBB}}
     {{/each}}
     {{#each getSearchedUsers}}
-      {{> listItem}}
+      {{> listItemUserBB}}
     {{/each}}
     {{#each getSearchedEvents}}
-      {{> listItem}}
+      {{#if exploreId}}
+        {{> listItemExploreEventPostBB}}
+      {{else}}
+        {{> listItemEventPostBB}}
+      {{/if}}
     {{/each}}
     {{#each getSearchedDiscussions}}
-      {{> listItem}}
+      {{#if exploreId}}
+        {{> listItemDiscussionPostBB}}
+      {{else}}
+        {{> listItemDiscussionPostBB}}
+      {{/if}}
     {{/each}}
     {{#each getSearchedFiles}}
-      {{> listItem}}
+      {{> listItemFilePostBB}}
     {{/each}}
   </div>
 </template>

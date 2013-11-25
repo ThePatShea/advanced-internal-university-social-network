@@ -3,9 +3,9 @@ Template.searchBubbles.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchBubblesREST(searchText, function(err, res){
+      SearchHelpers.searchBubblesMeteor(searchText, function(err, res){
         if (!err)
-          Session.set('selectedBubbleIdList', res);
+          Session.set('selectedBubbleList', res);
       });
     }
     LoadingHelper.stop();
@@ -14,9 +14,9 @@ Template.searchBubbles.events({
   'click .search-btn': function(evt){
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchBubblesREST(searchText, function(err, res){
+    SearchHelpers.searchBubblesMeteor(searchText, function(err, res){
       if (!err)
-        Session.set('selectedBubbleIdList', res);
+        Session.set('selectedBubbleList', res);
     });
     LoadingHelper.stop();
   }
@@ -26,7 +26,7 @@ Template.searchBubbles.events({
 
 Template.searchBubbles.helpers({
   getSearchedBubbles: function() {
-    return Session.get('selectedBubbleIdList');
+    return Session.get('selectedBubbleList');
   },
   typing: function() {
     return Session.get("typing");
@@ -36,7 +36,7 @@ Template.searchBubbles.helpers({
 
 
 Template.searchBubbles.created = function() {
-  Session.set("selectedBubbleIdList", []);
+  Session.set("selectedBubbleList", []);
 }
 
 

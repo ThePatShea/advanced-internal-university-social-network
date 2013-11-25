@@ -8,6 +8,10 @@ this.SearchHelpers = {
   searchSetupMeteor: function() {
     if(!SearchHelpers.getUserListObject)
       SearchHelpers.getUserListObject = new SearchData.GetUserList();
+    if(!SearchHelpers.getBubbleListObject)
+      SearchHelpers.getBubbleListObject = new SearchData.GetBubbleList();
+    if(!SearchHelpers.getPostListObject)
+      SearchHelpers.getPostListObject = new SearchData.GetPostList();
   },
 
   searchBubblesMeteor: function(searchText, callback) {
@@ -19,7 +23,10 @@ this.SearchHelpers = {
           callback(err, res);
         } else {
           Session.set('searchingBubbles', false);
-          callback(err, res);
+          SearchHelpers.getBubbleListObject.getBubbleList(res,function(err,res) {
+            callback(err,res);
+          });
+          //callback(err, res);
         }
         SearchHelpers._popQueue(SearchHelpers.searchBubblesQueue, SearchHelpers.searchBubblesMeteor);
       });
@@ -66,7 +73,10 @@ this.SearchHelpers = {
           callback(err, res);
         } else {
           Session.set('searchingEvents', false);
-          callback(err, res);
+          SearchHelpers.getPostListObject.getPostList(res,function(err,res) {
+            console.log("EVENTS: ", res);
+            callback(err,res);
+          });
         }
         SearchHelpers._popQueue(SearchHelpers.searchEventsQueue, SearchHelpers.searchEventsMeteor);
       });
@@ -88,7 +98,10 @@ this.SearchHelpers = {
           callback(err, res);
         } else {
           Session.set('searchingDiscussions', false);
-          callback(err, res);
+          SearchHelpers.getPostListObject.getPostList(res,function(err,res) {
+            callback(err,res);
+          });
+          //callback(err, res);
         }
         SearchHelpers._popQueue(SearchHelpers.searchDiscussionsQueue, SearchHelpers.searchDiscussionsMeteor);
       });
@@ -110,7 +123,10 @@ this.SearchHelpers = {
           callback(err, res);
         } else {
           Session.set('searchingFiles', false);
-          callback(err, res);
+          SearchHelpers.getPostListObject.getPostList(res,function(err,res) {
+            callback(err,res);
+          });
+          //callback(err, res);
         }
         SearchHelpers._popQueue(SearchHelpers.searchFilesQueue, SearchHelpers.searchFilesMeteor);
       });

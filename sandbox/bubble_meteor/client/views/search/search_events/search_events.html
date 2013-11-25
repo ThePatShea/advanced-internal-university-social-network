@@ -7,7 +7,11 @@
 	</div>
 
     {{#each getSearchedEvents}}
-      {{> listItem}}
+      {{#if exploreId}}
+        {{> listItemExploreEventPostBB}}
+      {{else}}
+        {{> listItemEventPostBB}}
+      {{/if}}
     {{/each}}
   </div>
 </template>

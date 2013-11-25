@@ -284,11 +284,32 @@ Meteor.Router.add('/2013-09-11/bubbles/search?:q', 'GET', function(q){
 Meteor.Router.add('/2013-09-11/userList?:q', 'GET', function(q) {
     var idList = this.request.query.idList.split(',');
     var limit = this.request.query.limit;
-    console.log("LIMIT: ", limit);
     var retVal = [];
     retVal = Meteor.users.find({_id: {$in: idList}},{fields: {services: 0}, limit: limit}).fetch();
     _.each(retVal,function(user){
         user.id = user._id;
+    })
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
+});
+
+Meteor.Router.add('/2013-09-11/bubbleList?:q', 'GET', function(q) {
+    var idList = this.request.query.idList.split(',');
+    var limit = this.request.query.limit;
+    var retVal = [];
+    retVal = Bubbles.find({_id: {$in: idList}},{limit: limit}).fetch();
+    _.each(retVal,function(bubble){
+        bubble.id = bubble._id;
+    })
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
+});
+
+Meteor.Router.add('/2013-09-11/postList?:q', 'GET', function(q) {
+    var idList = this.request.query.idList.split(',');
+    var limit = this.request.query.limit;
+    var retVal = [];
+    retVal = Posts.find({_id: {$in: idList}},{limit: limit}).fetch();
+    _.each(retVal,function(post){
+        post.id = post._id;
     })
     return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
 });

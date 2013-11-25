@@ -3,10 +3,10 @@ Template.searchFiles.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchFilesREST(searchText, function(err, res) {
+      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
         if (!err) {
-          var fileIds = res;
-          Session.set('selectedFileIdList', fileIds);
+          var files = res;
+          Session.set('selectedFileList', files);
         }
       });
     }
@@ -16,10 +16,10 @@ Template.searchFiles.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchFilesREST(searchText, function(err, res) {
+    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
       if (!err) {
-        var fileIds = res;
-        Session.set('selectedFileIdList', fileIds);
+        var files = res;
+        Session.set('selectedFileList', files);
       }
     });
     LoadingHelper.stop();
@@ -28,7 +28,7 @@ Template.searchFiles.events({
 
 Template.searchFiles.helpers({
   getSearchedFiles: function() {
-    return Session.get('selectedFileIdList');
+    return Session.get('selectedFileList');
   },
   typing: function() {
     return Session.get("typing");
@@ -38,7 +38,7 @@ Template.searchFiles.helpers({
 
 
 Template.searchFiles.created = function() {
-  Session.set("selectedFileIdList", []);
+  Session.set("selectedFileList", []);
 }
 
 
