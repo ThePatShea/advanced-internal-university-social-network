@@ -93,7 +93,7 @@ Template.bubbleEdit.events({
       else{
         f = files[0];
         //If the file dropped on the dropzone is an image then start processing it
-        if (f.type.match('image.*')) {
+        if (f.type.match('image.*') && (f.size < 775000)) {
             var reader = new FileReader();
 
             var profileMainCanvas = document.getElementById('profile-main-canvas');
@@ -188,6 +188,9 @@ Template.bubbleEdit.events({
               };
             })(f);
             reader.readAsDataURL(f);
+        } else if(f.size >= 775000) {
+          alert("Files cannot be larger than 775KB, please upload a different file.");
+          return;
         }
       }
   },

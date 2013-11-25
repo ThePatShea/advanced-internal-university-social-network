@@ -239,6 +239,9 @@ function makeDiscussionPost(){
   }
   console.log('Post Title: ', postTitle);
   setTimeout(displayPostConfirmationMessage(postTitle), 2000);
+
+  $('.cb-discussionSubmit-form').find('[name=name]').val('');
+  $('.cb-discussionSubmit-form').find('.wysiwyg').html('');
 }
 
 

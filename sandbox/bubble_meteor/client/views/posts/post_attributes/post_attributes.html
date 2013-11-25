@@ -44,7 +44,7 @@
 
     {{#if isFile}}
       <div class="visible-{{matchPostType 'file'}}">
-        <a href="{{this.file}}" download="{{decodeURI name}}" class="file-download">
+        <a href="{{this.file}}" download="{{decodeURIComponent name}}" class="file-download">
           <div class="attachment">
             <div class="pull-left v-middle">
               <div class="v-inner">
@@ -54,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <span class="attachment-name">{{decodeURI this.name}}</span>
+            <span class="attachment-name">{{decodeURIComponent this.name}}</span>
             <span class="attachment-size">{{fileSizeWords}}</span>
             <button class="std-btn-xdark post-action">download</button>
           </div>

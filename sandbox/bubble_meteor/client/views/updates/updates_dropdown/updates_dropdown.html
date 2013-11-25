@@ -32,9 +32,15 @@
 <template name="updateBubble">
   <li>    
     {{#with getBubble this}}
-      <a href="{{bubblePagePath this}}">
-        {{title}}
-      </a>
+      {{#if _id}}
+        <a href="/mybubbles/{{_id}}/home">
+          {{title}}
+        </a>
+      {{else}}
+        <a href="/settings/invites">
+          {{title}}
+        </a>
+      {{/if}}
     {{/with}}
     {{#each this}}
       {{>update}}

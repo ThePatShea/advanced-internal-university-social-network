@@ -1,0 +1,11 @@
+<template name="bubblePublicPage">
+  {{#with getCurrentBubble}}
+    {{> bubbleCoverBackbone}}
+
+    <div class="bubble-page-content bubble-page-content-search">
+      <div class="profile-content about-content">
+        {{{description}}}
+      </div>
+    </div>
+  {{/with}}
+</template>

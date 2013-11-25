@@ -68,6 +68,12 @@ Template.eventSubmit.events({
     }
     console.log('Post Title: ', postTitle);
     setTimeout(displayPostConfirmationMessage(postTitle), 2000);
+
+    $("#cb-form-container-event-create .date").val('');
+    $("#cb-form-container-event-create .time").val('');
+    $('.cb-eventSubmit-form > .first > .event-location').val('');
+    $('.cb-eventSubmit-form > .first > .event-name').val('');
+    $('.cb-eventSubmit-form > .event-details').val('');
   },
 
   'dragover .cb-eventSubmit-form .attach-files > .drop-zone': function(evt){
@@ -88,7 +94,9 @@ Template.eventSubmit.events({
     else{
       f = files[0];
       //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
+
+      console.log("INIT SIZE: ",f.size);
+      if (f.type.match('image.*') && (f.size < 775000)) {
         var reader = new FileReader();
         var eventMainCanvas = document.getElementById('event-main-canvas');
         var eventRetinaCanvas = document.getElementById('event-retina-canvas');
@@ -183,6 +191,9 @@ Template.eventSubmit.events({
           };
         })(f);
         reader.readAsDataURL(f);
+      } else if(f.size >= 775000) {
+        alert("Files cannot be larger than 775KB, please upload a different file.");
+        return;
       }
       else{
         error = new Meteor.Error(422, 'Please choose a valid image.');

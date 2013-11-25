@@ -27,7 +27,14 @@ Template.explorePostPage.helpers({
         return this.author;
       } else if (this.postAsType == "bubble") {
         var bubble = Bubbles.findOne(this.postAsId);
-        return bubble.title;
+        if(typeof bubble != "undefined")
+        {
+          return bubble.title;
+        }
+        else
+        {
+          return this.author;
+        }
       }
     },
     isFlagged: function() {

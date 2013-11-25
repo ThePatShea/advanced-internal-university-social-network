@@ -168,7 +168,11 @@ Template.updatesDropdown.helpers({
       });
 
       updateList = _.sortBy(updateList, function(newUpdate) {
+<<<<<<< HEAD
         return newUpdate.submitted;
+=======
+        return newUpdate.submitted; 
+>>>>>>> submaster
       });
       return _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
     }
@@ -372,7 +376,16 @@ Template.update.helpers({
 Template.updateBubble.helpers({
   getBubble: function(obj) {
     if(obj && obj.length > 0){
-      return Bubbles.findOne(obj[0].bubbleId);
+      Meteor.subscribe('findBubblesById',[obj[0].bubbleId]);
+      var retVal = Bubbles.findOne(obj[0].bubbleId);
+      if(typeof retVal === "undefined")
+      {
+        return {title: "INVITATION"}
+      }
+      else
+      {
+        return retVal;
+      }
     }
   }
 });

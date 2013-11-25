@@ -117,6 +117,9 @@ Template.exploreEditEvent.events({
   'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
       tmpl.validateForm();
   },
+  'click .drop-zone':function(evt,tmpl){
+    tmpl.validateForm();
+  },
   'click .post-as-button.bubble': function(){
     if($(".post-as-bubble-dropdown").css('display') == 'none')
     {
@@ -181,8 +184,8 @@ Template.exploreEditEvent.events({
       body: $('.cb-explore-edit-event-form > .body').val(),
       //postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
       //postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
-   //   eventPhoto: editEventMainURL,
-   //   retinaEventPhoto: editEventRetinaURL
+      eventPhoto: editEventMainURL,
+      retinaEventPhoto: editEventRetinaURL
     };
 
     //WORK AROUND FOR POSTASTYPE = 'POSTASTYPE' BUG
@@ -250,7 +253,7 @@ Template.exploreEditEvent.events({
       else{
         f = files[0];
         //If the file dropped on the dropzone is an image then start processing it
-        if (f.type.match('image.*')) {
+        if (f.type.match('image.*') && (f.size < 775000)) {
           var reader = new FileReader();
           var editEventMainCanvas = document.getElementById('edit-event-main-canvas');
           var editEventRetinaCanvas = document.getElementById('edit-event-retina-canvas');
@@ -345,6 +348,9 @@ Template.exploreEditEvent.events({
             };
           })(f);
           reader.readAsDataURL(f);
+        } else if(f.size >= 775000) {
+          alert("Files cannot be larger than 775KB, please upload a different file.");
+          return;
         }
         else{
           error = new Meteor.Error(422, 'Please choose a valid image.');

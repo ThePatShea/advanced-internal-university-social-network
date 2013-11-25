@@ -63,10 +63,14 @@ Template.bubbleCoverBackbone.events({
     }
   },
   'click .invite-accept': function() {
-    Meteor.call('acceptInvitation', this._id);
+    Meteor.call('acceptInvitation', this.id);
+    Meteor.Router.to('/mybubbles/'+this.id+'/home');
   },
   'click .invite-deny': function() {
-    Meteor.call('removeInvitee', this._id);
+    var id = this.id;
+    Meteor.call('removeInvitee', this.id, function(){
+      window.location.href = '/mybubbles/'+id+'/public';
+    });
   },
   'click .join-apply': function() {
     //Google Analytics
