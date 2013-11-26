@@ -64,11 +64,15 @@ Meteor.startup(function() {
 		queryOne: {
 		},
 		create: {
-			check: RestSecurity.isUniqueBubble,
+			//check: RestSecurity.isUniqueBubble,
+			check: RestSecurity.deny,
 			preprocess: RestPost.createBubble
 		},
 		update: {
-			check: RestSecurity.isConnectedToBubble
+			check: RestSecurity.ownsBubble,
+		},
+		patch: {
+			check: RestSecurity.canUpdateBubble,
 		},
 		remove: {
 			check: RestSecurity.ownsBubble

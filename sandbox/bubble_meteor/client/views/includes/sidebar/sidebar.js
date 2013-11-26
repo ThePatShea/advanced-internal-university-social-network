@@ -12,11 +12,18 @@ function refreshData() {
   var name = getSubsectionName();
 
   // No need to refresh data if current page is not mybubbles or explores
-  if (name !== 'mybubbles' && name !== 'explore')
+  if (name !== 'mybubbles' && name !== 'explore') {
+    SidebarHelper.resetBubbleList();
     return;
+  }
+
+  // Get current list
+  var oldData = Deps.nonreactive(function() {
+    return Session.get('sidebarCollection-' + name);
+  });
 
   // No need to get data if we did not navigate from same subsection
-  if (state.data !== null && state.data.name === name)
+  if (oldData && state.data !== null && state.data.name === name)
     return;
 
   var data = state.data = new SidebarData.Sidebar(name);
@@ -240,4 +247,11 @@ Template.sidebar.rendered = function() {
 };
 
 Template.sidebar.destroyed = function() {
+};
+
+// Just a quick helper
+window.SidebarHelper = {
+  resetBubbleList: function() {
+    Session.set('sidebarCollection-mybubbles', null);
+  }
 };

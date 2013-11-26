@@ -112,9 +112,9 @@ this.RestSecurity = {
     if (ctx.user.userType == UserType.ADMIN)
       return;
 
-    var bubble = RestHelpers.mongoFindOne(Bubbles, obj.id)
+    var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.id);
 
-    if (bubble.users) {
+    if (bubble && bubble.users) {
       if (_.contains(bubble.users.applicants, ctx.userId) ||
           _.contains(bubble.users.invitees, ctx.userId) ||
           _.contains(bubble.users.members, ctx.userId) ||
@@ -126,13 +126,34 @@ this.RestSecurity = {
   },
 
   ownsBubble: function(ctx, obj) {
-    if (ctx.user.userType == UserType.ADMIN)
+    if (ctx.user.userType === UserType.ADMIN)
       return;
 
-    if (obj.users && obj.users.admins && _.contains(obj.users.admins, ctx.userId))
+    var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.id);
+    if (bubble && bubble.users && bubble.users.admins && _.contains(bubble.users.admins, ctx.userId))
       return;
 
     return RestHelpers.jsonResponse(401, 'Not bubble owner');
+  },
+
+  canUpdateBubble: function(ctx, obj) {
+    if (ctx.user.userType === UserType.ADMIN)
+      return;
+
+    var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.id);
+    if (bubble && bubble.users && bubble.users.admins && _.contains(bubble.users.admins, ctx.userId))
+      return;
+
+    if (!_.contains(bubble.users.members, ctx.userId))
+      return RestHelpers.jsonResponse(401, 'Not bubble member');
+
+    // Figure out if user attempts to remove himself
+    var copy = {
+      'users.members': _.without(bubble.users.members, ctx.userId)
+    };
+
+    if (!_.isEqual(copy, obj))
+      return RestHelpers.jsonResponse(401, 'Not allowed');
   },
 
   relatedBubbleExists: function(ctx) {

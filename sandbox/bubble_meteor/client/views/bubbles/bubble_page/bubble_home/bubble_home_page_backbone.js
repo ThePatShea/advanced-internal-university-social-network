@@ -9,11 +9,13 @@ function refreshData(bubbleId) {
   LoadingHelper.start();
 
   // TODO: This security check will never work
+  /*
   var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + bubbleId + '&userid=' + Meteor.userId()});
   var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + bubbleId + '&userid=' + Meteor.userId()});
   if (isMemberAjax.responseText == 'False' && isAdminAjax.responseText == 'False'){
     Meteor.Router.to('bubblePublicPage', bubble._id);
   }
+  */
 
   var mybubbles = state.mybubbles = new BubbleDataNew.MyBubbles({
     bubbleId: bubbleId,

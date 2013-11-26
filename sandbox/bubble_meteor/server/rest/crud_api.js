@@ -46,7 +46,14 @@ this.RestCrud = {
 		if (opts.query)
 			query = opts.query(ctx, query);
 
-		var data = RestHelpers.mongoFind(collection, query, apiOptions.fields, queryOptions);
+		var data;
+
+		try {
+			data = RestHelpers.mongoFind(collection, query, apiOptions.fields, queryOptions);
+		} catch (e) {
+			console.log('Error', e);
+			return RestHelpers.jsonResponse(500, 'Failed to make MongoDB query: ' + e.toString());
+		}
 
 		// Generate result
 		return RestHelpers.makeQueryResponse(apiOptions, queryOptions, data, opts);
@@ -75,7 +82,15 @@ this.RestCrud = {
 			apiOptions = opts.queryOpts(ctx, apiOptions);
 
 		// Run query
-		var obj = RestHelpers.mongoFindOne(collection, id, apiOptions.fields);
+		var obj;
+
+		try {
+			obj = RestHelpers.mongoFindOne(collection, id, apiOptions.fields);
+		} catch(e) {
+			console.log('Error', e);
+			return RestHelpers.jsonResponse(500, 'Failed to make MongoDB query: ' + e.toString());
+		}
+
 		if (!obj) {
 			// TODO: Better error logging/reporting
 			return RestHelpers.jsonResponse(404, 'Not found');
@@ -124,7 +139,14 @@ this.RestCrud = {
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
 
-		var results = RestHelpers.mongoInsert(collection, obj);
+		var results;
+
+		try {
+			results = RestHelpers.mongoInsert(collection, obj);
+		} catch(e) {
+			console.log('Error', e);
+			return RestHelpers.jsonResponse(500, 'Failed to make MongoDB query: ' + e.toString());
+		}
 
 		if (results.length == 0)
 			return RestHelpers.jsonResponse(500, 'Failed to create model');
@@ -170,13 +192,74 @@ this.RestCrud = {
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
 
-		var result = RestHelpers.mongoUpdate(collection, id, obj);
+		var result;
+
+		try {
+			result = RestHelpers.mongoUpdate(collection, id, obj);
+		} catch(e) {
+			console.log('Error', e);
+			return RestHelpers.jsonResponse(500, 'Failed to make MongoDB query: ' + e.toString());
+		}
 
 		if (result) {
 			if (opts.afterUpdate)
 				opts.afterUpdate(ctx, obj);
 
 			return RestHelpers.jsonResponse(200, 'Successfully updated');
+		}
+
+		return RestHelpers.jsonResponse(404, 'Model not found');
+	},
+
+	/**
+	 * Patch record
+	 * @param  {object} ctx        			context
+	 * @param  {string} id         			record id
+	 * @param  {Collection} collection 	Meteor collection
+	 * @param  {object} opts       			options
+	 * @param  {function} opts.check       permission check callback
+	 * @param  {function} opts.preprocess  record preprocessing function, called before comitting to database
+	 * @param  {function} opts.afterUpdate record post-processing function, called after comitting to database
+	 * @return {object}            			response
+	 */
+	apiPatch: function(ctx, id, collection, opts) {
+		// Safety checks
+		var obj = ctx.request.body;
+
+		if (obj.id && obj.id != id) {
+			// TODO: Better error logging/reporting
+			return RestHelpers.jsonResponse(401, 'Mismatched id or cannot update document id');
+		}
+
+		if (opts.check) {
+			var response = opts.check(ctx, obj);
+			if (response)
+				return response;
+		}
+
+		if (opts.preprocess)
+			obj = opts.preprocess(ctx, obj);
+
+		var query = {
+			$set: obj
+		};
+
+		var result;
+
+		try {
+			result = RestHelpers.mongoUpdate(collection, id, query);
+		} catch(e) {
+			console.log('Error', e);
+			return RestHelpers.jsonResponse(500, 'Failed to make MongoDB query: ' + e.toString());
+		}
+
+		console.log(RestHelpers.mongoFindOne(collection, id));
+
+		if (result) {
+			if (opts.afterUpdate)
+				opts.afterUpdate(ctx, obj);
+
+			return RestHelpers.jsonResponse(200, 'Successfully patched');
 		}
 
 		return RestHelpers.jsonResponse(404, 'Model not found');
@@ -204,7 +287,15 @@ this.RestCrud = {
 				return response;
 		}
 
-		var result = RestHelpers.mongoDelete(collection, id);
+		var result;
+
+		try {
+			result = RestHelpers.mongoDelete(collection, id);
+		} catch(e) {
+			console.log('Error', e);
+			return RestHelpers.jsonResponse(500, 'Failed to make MongoDB query: ' + e.toString());
+		}
+
 		if (result) {
 			if (opts.afterDelete)
 				opts.afterDelete(ctx, obj);
@@ -292,6 +383,25 @@ this.RestCrud = {
 	},
 
 	/**
+	 * Patch record factory method.
+	 * Accepts collection and options and returns meteor-router view function.
+	 * @param  {Collection} collection Meteor collection
+	 * @param  {object} opts       		 options
+	 * @return {function} 	           view functions
+	 */
+	makePatch: function(collection, opts) {
+		var self = this;
+		opts = opts || {};
+
+		return function(id) {
+			if (!RestHelpers.authUser(this, opts))
+				return RestHelpers.jsonResponse(403, 'Not authenticated');
+
+			return self.apiPatch(this, id, collection, opts);
+		};
+	},
+
+	/**
 	 * Delete record factory method.
 	 * Accepts collection and options and returns meteor-router view function.
 	 * @param  {Collection} collection Meteor collection
@@ -334,6 +444,9 @@ this.RestCrud = {
 
 		handler = (opts.update && opts.update.handler) || this.makeUpdate(collection, opts.update || null);
 		Meteor.Router.add(baseUrl + '/:id', 'PUT', handler);
+
+		handler = (opts.patch && opts.patch.handler) || this.makePatch(collection, opts.patch || opts.update || null);
+		Meteor.Router.add(baseUrl + '/:id', 'PATCH', handler);
 
 		handler = (opts.remove && opts.remove.handler) || this.makeDelete(collection, opts.remove || null);
 		Meteor.Router.add(baseUrl + '/:id', 'DELETE', handler);

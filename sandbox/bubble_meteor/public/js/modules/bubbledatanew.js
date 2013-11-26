@@ -438,6 +438,20 @@
 
       var users = bubble.users.invitees;
       return users.indexOf(id) !== -1;
+    },
+    updateBubble: function(bubbleId, bubble, callback) {
+      var model = new BubbleInfo({id: bubbleId});
+      model.bubbleId = bubbleId;
+
+      model.save(bubble, {
+        patch: true,
+        success: function(model) {
+          callback(null, model);
+        },
+        error: function(error) {
+          callback(error);
+        }
+      });
     }
   };
 

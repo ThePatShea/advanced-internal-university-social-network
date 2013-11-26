@@ -15,6 +15,11 @@ this.RestPost = {
     });
   },
 
+  validateBubble: function(ctx, obj) {
+    // TODO:
+    return obj;
+  },
+
   // Explores
   createExplore: function(ctx, obj) {
     return _.extend(

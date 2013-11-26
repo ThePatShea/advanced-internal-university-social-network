@@ -73,6 +73,8 @@
 
       if (beforeSend)
         beforeSend.call(instance, xhr);
+
+      //console.log(xhr);
     };
 
     parent.sync.call(instance, method, model, opts);
@@ -104,10 +106,7 @@
         options = processOpts(this, options);
         return parent.fetch.call(this, options);
       },
-      save: function(key, val, options) {
-        if (key === null || typeof key === 'object')
-          options = val;
-
+      save: function(attrs, options) {
         options = processOpts(this, options);
         return parent.save.call(this, key, val, options);
       },
@@ -132,7 +131,6 @@
         if (this.excludeFields)
           attrs = _.omit(attrs, this.excludeFields);
 
-        options.data = JSON.stringify(attrs);
         return Backbone.Model.prototype.save.call(this, attrs, options);
       }
     });
