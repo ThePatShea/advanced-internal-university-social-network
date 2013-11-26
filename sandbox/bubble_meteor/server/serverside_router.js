@@ -173,6 +173,147 @@ Meteor.Router.add('/2013-09-09/explores/:exploreId/posts/:params', 'GET', functi
 
 //**************************Begin REST GET****************************************
 
+
+function getTopTenSearchedUsers(searchResults){
+    var topTenResults = [];
+    var results = searchResults.results;
+    if (results) {
+        var max = (results.length > 10) ? 10 : results.length;
+    } else {
+        var max = 0;
+    }
+
+    for (var i = 0; i < max; i++){
+        topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
+    }
+
+    return topTenResults;
+};
+
+
+function getTopTenSearchedBubbles(searchResults){
+    var topTenResults = [];
+    var results = searchResults.results;
+    if (results){
+        var max = (results.length > 10) ? 10 : results.length;
+    } else {
+        var max = 0
+    }
+
+    for (var i = 0; i < max; i++){
+        topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
+    }
+
+    return topTenResults;
+}
+
+
+function getTopTenSearchedPosts(searchResults, postType){
+    var topTenResults = [];
+    var results = searchResults.results;
+    if (results) {
+        var max = (results.length > 10) ? 10 : results.length;
+    } else {
+        var max = 0;
+    }
+
+    for (var i = 0; i < max; i++){
+        var post = results[i].obj;
+        if (post.postType === postType)
+            topTenResults.push(RestHelpers.fromMongoModel(results[i].obj));
+    }
+
+    return topTenResults;
+}
+
+
+Meteor.Router.add('/2013-09-11/users/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Meteor.users, searchText);
+    var topTenResults = getTopTenSearchedUsers(searchResults);
+    var numResults = topTenResults.length;
+    var results = {
+        'count': numResults,
+        'pages': 1,
+        'page': 0,
+        users: topTenResults
+    }
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(results)];
+});
+
+Meteor.Router.add('/2013-09-11/events/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Posts, searchText);
+    var topTenResults = getTopTenSearchedPosts(searchResults, 'event');
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/discussions/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Posts, searchText);
+    var topTenResults = getTopTenSearchedPosts(searchResults, 'discussion');
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/files/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Posts, searchText);
+    var topTenResults = getTopTenSearchedPosts(searchResults, 'file');
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(topTenResults)];
+});
+
+Meteor.Router.add('/2013-09-11/bubbles/search?:q', 'GET', function(q){
+    var searchText = this.request.query.text;
+    var searchResults = RestHelpers.mongoSearch(Bubbles, searchText);
+    var topTenResults = getTopTenSearchedBubbles(searchResults);
+    var numResults = topTenResults.length;
+    var results = {
+        'count': numResults,
+        'pages': 1,
+        'page': 0,
+        'bubbles': topTenResults
+    }
+
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(results)];
+});
+
+Meteor.Router.add('/2013-09-11/userList?:q', 'GET', function(q) {
+    var idList = this.request.query.idList.split(',');
+    var limit = this.request.query.limit;
+    var retVal = [];
+    retVal = Meteor.users.find({_id: {$in: idList}},{fields: {services: 0}, limit: limit}).fetch();
+    _.each(retVal,function(user){
+        user.id = user._id;
+    })
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
+});
+
+Meteor.Router.add('/2013-09-11/bubbleList?:q', 'GET', function(q) {
+    var idList = this.request.query.idList.split(',');
+    var limit = this.request.query.limit;
+    var retVal = [];
+    retVal = Bubbles.find({_id: {$in: idList}},{limit: limit}).fetch();
+    _.each(retVal,function(bubble){
+        bubble.id = bubble._id;
+    })
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
+});
+
+Meteor.Router.add('/2013-09-11/postList?:q', 'GET', function(q) {
+    var idList = this.request.query.idList.split(',');
+    var limit = this.request.query.limit;
+    var retVal = [];
+    retVal = Posts.find({_id: {$in: idList}},{limit: limit}).fetch();
+    _.each(retVal,function(post){
+        post.id = post._id;
+    })
+    return [200, {'Content-type': 'application/json'}, JSON.stringify(retVal)];
+});
+
 //Explore Posts for dashboard
 Meteor.Router.add('/2013-09-11/dashboard', 'GET', function(){
     var limit = this.request.query.limit || 5;
@@ -355,6 +496,21 @@ Meteor.Router.add('/2013-09-11/posts/:id', 'GET', function(id){
             return [200, {'Content-type': 'application/json'}, stringifiedResponse];
         }
     }
+});
+
+Meteor.Router.add('/2013-09-11/userBubbles/:id', 'GET', function(id){
+    console.log("USERBUBBLES: ", id);
+    var retVal = Bubbles.find({
+        $or: [{'users.members': id}, {'users.admins': id}]},
+        {sort: {'submitted': -1}, fields: {category: 1, title: 1}
+    }).fetch();
+    return JSON.stringify(retVal);
+});
+
+Meteor.Router.add('/2013-09-11/allExplores/:id', 'GET', function(id){
+    console.log("All Explores", id);
+    var retVal = Explores.find({}, {sort: {'submitted': 1}}).fetch();
+    return JSON.stringify(retVal);
 });
 
 
@@ -1110,7 +1266,7 @@ function getBubbleDiscussions(limit, offset, fields, bubbleId){
         pages = pages + 1;
     }
     if(fields.length == 0){
-        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}).fetch();
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'},{sort: {submitted: -1}}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset, 'posts': posts};
@@ -1123,7 +1279,7 @@ function getBubbleDiscussions(limit, offset, fields, bubbleId){
         }
         fieldString = fieldString.slice(0, fieldString.length-1);
         fieldString = fieldString + '}';
-        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}, {fields: JSON.parse(fieldString)}).fetch();
+        var allPosts = Posts.find({'bubbleId': bubbleId, 'postType': 'discussion'}, {sort: {submitted: -1},fields: JSON.parse(fieldString)}).fetch();
         var posts = allPosts.slice(offset*limit, (offset+1)*limit);
         renameIdAttribute(posts);
         var response = {'count': postCount, 'pages': pages, 'page': offset,  'posts': posts};

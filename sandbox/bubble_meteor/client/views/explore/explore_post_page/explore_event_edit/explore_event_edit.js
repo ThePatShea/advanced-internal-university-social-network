@@ -16,6 +16,7 @@ Template.exploreEditEvent.helpers({
 
 
 Template.exploreEditEvent.created = function(){
+  console.log("EXPLORE EDIT EVENT!!!!!!!!!!!!!!!!!!!!!!!", this);
   this.validateForm = function() {
     var count = 0;
 
@@ -41,21 +42,14 @@ Template.exploreEditEvent.created = function(){
 
 
 Template.exploreEditEvent.rendered = function(){
-
-  if($(window).width() < 768)
-  {
-    Session.set("DisableCrop","1");
-  } else {
-    Session.set("DisableCrop","");
-  }
-
   this.validateForm();
 
 	var event = this.data;
+  console.log("event: ",event);
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
 	var date = (currentDatetime.getMonth()+1)+"/"+currentDatetime.getDate()+"/"+currentDatetime.getFullYear();
-	$('.cb-explore-edit-event-form > .first > .title').val(event.name);
+	$('.cb-explore-edit-event-form > .first > .title').val(decodeURIComponent(event.name));
 	$('.cb-explore-edit-event-form > .first > .location').val(event.location);
 	$('.cb-explore-edit-event-form > .cb-form-row > .date').val(date);
 	$('.cb-explore-edit-event-form > .body').val(event.body);
@@ -63,16 +57,31 @@ Template.exploreEditEvent.rendered = function(){
 	$("eventRetinaPhoto").attr("src",this.eventRetinaPhoto);
   editEventMainURL = this.eventPhoto;
   editEventRetinaURL = this.eventRetinaPhoto;
-    if (time) {
-      var firstAlphabet  = parseInt(time[0]);
+  if (time) {
+    var firstAlphabet  = parseInt(time[0]);
 
-      if (time.length > 9 || (!firstAlphabet)){
-        $('.cb-explore-edit-event-form > .cb-form-row > .time').val("");
-      }else{
-        formatedTime = moment(time,"h:mm a").format("h:mm a");
-        $('.cb-explore-edit-event-form > .cb-form-row > .time').val(formatedTime);
-      }
+    if (time.length > 9 || (!firstAlphabet)){
+      $('.cb-explore-edit-event-form > .cb-form-row > .time').val("");
+    }else{
+      formatedTime = moment(time,"h:mm a").format("h:mm a");
+      $('.cb-explore-edit-event-form > .cb-form-row > .time').val(formatedTime);
     }
+  }
+  if(event.postAsType == "user")
+  {
+    $("[name=post-as-id]").val(event.postAsId);
+    $("[name=post-as-type]").val("user");
+    $(".post-as-button.me").addClass("active-true");
+  }
+  else if(event.postAsType == "bubble")
+  {
+    $("[name=post-as-id").val(event.postAsId);
+    $("[name=post-as-type").val("bubble")
+    $(".post-as-button.bubble").addClass("active-true");
+    $(".selected-bubble-post-as").html($("[name="+event.postAsId+"] > .bubble-title").attr("name"));
+  }
+
+
 
 	$(".date-picker").glDatePicker(
     {
@@ -107,30 +116,76 @@ Template.exploreEditEvent.events({
   },
   'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
       tmpl.validateForm();
-  }
-});
+  },
+  'click .drop-zone':function(evt,tmpl){
+    tmpl.validateForm();
+  },
+  'click .post-as-button.bubble': function(){
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(evt,tmpl){
+    //var postAsId = $(this).attr("title");
+    var postAsId = this._id;
+    console.log("(EDIT)Post As Id: ", this);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
 
 
-Template.exploreEditEvent.events({
+
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+    tmpl.validateForm();
+  },
+  'click .post-as-button.me': function(evt,tmpl){
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+    tmpl.validateForm();
+  },
   'click .cb-explore-edit-event-form > .cb-submit-container > .cb-submit': function(event) {
     event.preventDefault();
     //Google Analytics
-    _gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
+    //_gaq.push(['_trackEvent', 'Post', 'Create Event', $(event.target).find('[name=name]').val()]);
 
     var dateTime = $('.cb-explore-edit-event-form > .cb-form-row > .date').val() + " " + $('.cb-explore-edit-event-form > .cb-form-row > .time').val();
 
-  
 
-    var eventAttributes = { 
+
+    var eventAttributes = {
       //author: Meteor.userId(),
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-edit-event-form > .first > .location').val(),
-      name: $('.cb-explore-edit-event-form > .first > .title').val(),
+      name: encodeURIComponent($('.cb-explore-edit-event-form > .first > .title').val()),
       body: $('.cb-explore-edit-event-form > .body').val(),
       //postAsType: $('.cb-explore-edit-event-form .post-as-type').val(),
       //postAsId:   $('.cb-explore-edit-event-form .post-as-id').val(),
-   //   eventPhoto: editEventMainURL,
-   //   retinaEventPhoto: editEventRetinaURL
+      eventPhoto: editEventMainURL,
+      retinaEventPhoto: editEventRetinaURL
     };
 
     //WORK AROUND FOR POSTASTYPE = 'POSTASTYPE' BUG
@@ -153,7 +208,7 @@ Template.exploreEditEvent.events({
 
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
-    
+
     var currentPostId = Session.get('currentPostId');
     var currentExploreId = Session.get('currentExploreId');
     Posts.update(currentPostId, {$set: eventAttributes}, function(error) {
@@ -161,10 +216,25 @@ Template.exploreEditEvent.events({
         // display the error to the user
         throwError(error.reason);
       } else {
+        Session.set('currentPostId', '');
         createEditEventUpdate(Meteor.userId(), currentPostId);
-        Meteor.Router.to('explorePostPage', currentExploreId, currentPostId);
+        Meteor.Router.to('explorePostPageBB', currentExploreId, currentPostId);
       }
     });
+
+    var displayPostConfirmationMessage = function(){
+      return function(){
+        $('.job-type').text("These edits will be applied shortly!");
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('message-container-active');
+        setTimeout(function(){
+          $('.message-container').removeClass('message-container-active');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },10000);
+      }
+    }
+    setTimeout(displayPostConfirmationMessage(), 1000);
   },
 
   'dragover .cb-explore-edit-event-form > .attach-files > .drop-zone': function(evt){
@@ -184,7 +254,7 @@ Template.exploreEditEvent.events({
       else{
         f = files[0];
         //If the file dropped on the dropzone is an image then start processing it
-        if (f.type.match('image.*')) {
+        if (f.type.match('image.*') && (f.size < 775000)) {
           var reader = new FileReader();
           var editEventMainCanvas = document.getElementById('edit-event-main-canvas');
           var editEventRetinaCanvas = document.getElementById('edit-event-retina-canvas');
@@ -279,6 +349,9 @@ Template.exploreEditEvent.events({
             };
           })(f);
           reader.readAsDataURL(f);
+        } else if(f.size >= 775000) {
+          alert("Files cannot be larger than 775KB, please upload a different file.");
+          return;
         }
         else{
           error = new Meteor.Error(422, 'Please choose a valid image.');

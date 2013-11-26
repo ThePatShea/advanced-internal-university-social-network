@@ -2,24 +2,32 @@
   <div class="bubble-page-content bubble-page-content-search">
     {{> searchPage}}
 
-  <div class="visible-{{typing}}" style="margin-top: -6px">
+  <div class="visible-{{isLoading}}" style="margin-top: -6px">
       {{> gifLoaderToParent}}
   </div>
 
     {{#each getSearchedBubbles}}
-      {{> listItem}}
+      {{> listItemBB}}
     {{/each}}
     {{#each getSearchedUsers}}
-      {{> listItem}}
+      {{> listItemUserBB}}
     {{/each}}
     {{#each getSearchedEvents}}
-      {{> listItem}}
+      {{#if exploreId}}
+        {{> listItemExploreEventPostBB}}
+      {{else}}
+        {{> listItemEventPostBB}}
+      {{/if}}
     {{/each}}
     {{#each getSearchedDiscussions}}
-      {{> listItem}}
+      {{#if exploreId}}
+        {{> listItemDiscussionPostBB}}
+      {{else}}
+        {{> listItemDiscussionPostBB}}
+      {{/if}}
     {{/each}}
     {{#each getSearchedFiles}}
-      {{> listItem}}
+      {{> listItemFilePostBB}}
     {{/each}}
   </div>
 </template>

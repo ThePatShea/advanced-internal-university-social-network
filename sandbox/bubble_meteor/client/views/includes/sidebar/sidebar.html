@@ -76,8 +76,10 @@
         </div>
       </div>
     </div>
+    {{#if subsectionPaneVisible}}
     <div class="pane subsection visible-{{subsectionPaneVisible}}">
-      <div class="visible-{{selectedSection 'mybubbles'}}">
+      {{#if selectedSection 'mybubbles'}}
+      <div>
         <div class="heading">
           <div class="pull-left section-name">my bubbles</div><!-- start --> 
           <div class="pull-right v-middle">
@@ -93,11 +95,11 @@
         </div>
         {{#each userBubbles}}
           <a href="{{bubblePageBackbonePath this}}" class="set-loading">
-            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedSubsection}} mybubble title-{{title}}">
-              {{#if compressedUpdatesCount this._id}}
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedBubbleSubsection}} mybubble title-{{title}}">
+              {{#if compressedUpdatesCount this.id}}
                 <div class="pull-left num-in-bubble updates-count">
                   <span class="cb-icon cb-icon-bubble">{{> icon-bubble}}</span>
-                  <span class="num">{{compressedUpdatesCount this._id}}</span>
+                  <span class="num">{{compressedUpdatesCount this.id}}</span>
                 </div>
               {{/if}}
               <div class="lbl">{{title}}</div>
@@ -108,7 +110,9 @@
           </a>
         {{/each}}
       </div>
-      <div class="visible-{{selectedSection 'explore'}}">
+      {{/if}}
+      {{#if selectedSection 'explore'}}
+      <div>
         <div class="heading">
           <div class="pull-left v-middle">
             <div class="v-inner">
@@ -130,8 +134,8 @@
           {{/if}}
         </div>
         {{#each publicExplores}}
-          <a href="/explore/{{this._id}}/home" class="set-loading">
-            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this._id}}">
+          <a href="/explore/{{this.id}}/home" class="set-loading">
+            <button class="btn-nav btn-nav-subsection category-{{category}}-border-right-3 active-{{selectedExploreSubsection this.id}}">
 
             <span class="cb-icon cb-icon-other {{getExploreIconName this}}">
               {{{getExploreIcon this}}}
@@ -145,7 +149,9 @@
           </a>
         {{/each}}
       </div>
-      <div class="visible-{{selectedSection 'settings'}}">
+      {{/if}}
+      {{#if selectedSection 'settings'}}
+      <div>
         <div class="heading">
           <div class="pull-left section-name">
             <span class="cb-icon-settings">{{> icon-settings-big}}</span>
@@ -188,6 +194,8 @@
           </button>
         </a>
       </div>
-    </div> <!-- end --> 
+      {{/if}}
+    </div>
+    {{/if}}
   </div>
 </template>

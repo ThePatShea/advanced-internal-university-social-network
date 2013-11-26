@@ -1,7 +1,7 @@
 <template name="updateItem">
   <div class="post-item update-item">
     <div class="pull-left profile-pic-container">
-      <img class="pic-circle profile-pic" src="{{getProfilePicture}}"/> 
+      <img class="pic-circle profile-pic" src="{{getProfilePicture}}"/>
     </div>
     <div class="pull-left v-middle update-time">
       <div class="v-inner">
@@ -14,17 +14,17 @@
       <div class="v-inner">
         {{#with getDisplayInfo}}
           <span class="visible-{{matchPostType 'discussion'}} cb-icon-discussion">{{> icon-discussion}}</span>
-          <span class="visible-{{matchPostType 'member'}} cb-icon-member">{{> icon-member}}</span>      
+          <span class="visible-{{matchPostType 'member'}} cb-icon-member">{{> icon-member}}</span>
           <span class="visible-{{matchPostType 'event'}} cb-icon-event">{{> icon-event}}</span>
-          <span class="visible-{{matchPostType 'file'}} cb-icon-file">{{> icon-file}}</span>      
+          <span class="visible-{{matchPostType 'file'}} cb-icon-file">{{> icon-file}}</span>
         {{/with}}
       </div>
     </div>
 
     <h4 class="post-name update-name">
-      <span class="name-text">{{decodeURI getDisplayInfo.name}}</span>
+      <span class="name-text">{{decodeURIComponent getDisplayInfo.name}}</span>
     </h4>
-    
+
     <div class="post-item-attributes updates-comments">
       <div class="v-middle">
         <div class="v-inner">

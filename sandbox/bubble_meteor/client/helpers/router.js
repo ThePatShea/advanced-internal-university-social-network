@@ -4,7 +4,7 @@ Meteor.Router.add({
   //Login from authentication system
   '/siteAccessDenied': 'siteAccessDenied',
   '/bbexplore': 'bbExplorePage',
-  '/backboneexplore': 'explorePageBackbone',
+  //'/backboneexplore': 'explorePageBackbone',
   '/login': 'loginPage',
   '/welcome': 'welcomePage',
   '/loggedOut': 'loggedOut',
@@ -21,8 +21,7 @@ Meteor.Router.add({
 
   '/onboarding_walkthrough': {
     to: 'onboardingWalkThrough',
-    and: function(){
-      Session.set('isLoading', true);
+    and: function() {
     }
   },
 
@@ -34,11 +33,11 @@ Meteor.Router.add({
 
   // Bubbles Related Routes
     '/oldmybubbles/:_id/home': {
-      //to: 'bubblePage', 
+      //to: 'bubblePage',
       to: 'bubblePage',
       and: function(id) {
         var prevBubble  =  Session.get('currentBubbleId');
-        Session.set('currentBubbleId', id); 
+        Session.set('currentBubbleId', id);
         var currBubble  =  Session.get('currentBubbleId');
 
         if (currBubble != prevBubble) {
@@ -46,22 +45,32 @@ Meteor.Router.add({
         }
       }
     },
-    '/mybubbles/:_id/home': {
-      //to: 'bubblePage', 
+    '/mybubbles/': function() {
+      // TODO: Loading flag
+      var data = new SidebarData.Sidebar();
+      data.getFirstBubbleId(function(bubbleId) {
+        if (bubbleId) {
+          Meteor.Router.to('bubblePageBackbone', bubbleId);
+        } else {
+          Meteor.Router.to('bubbleSubmit');
+        }
+      });
+    },
+    '/mybubbles/:id/home': {
+      //to: 'bubblePage',
       to: 'bubblePageBackbone',
       and: function(id) {
         var prevBubble  =  Session.get('currentBubbleId');
-        Session.set('currentBubbleId', id); 
-        var currBubble  =  Session.get('currentBubbleId');
 
-        if (currBubble != prevBubble) {
+        if (prevBubble != id) {
+          Session.set('currentBubbleId', id);
           Session.set('bubbleLoading', 'true');  // Handles loading graphic
         }
       }
     },
     '/mybubbles/:_id/event': {
       //to: 'bubbleEventPage',
-      to: 'bubbleEventPageBackbone', 
+      to: 'bubbleEventPageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/discussion': {
@@ -70,18 +79,18 @@ Meteor.Router.add({
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/file': {
-      //to: 'bubbleFilePage', 
+      //to: 'bubbleFilePage',
       to: 'bubbleFilePageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/public': {
-      to: 'bubblePublicPage', 
+      to: 'bubblePublicPage',
       and: function(id) { Session.set('currentBubbleId', id); }
     },
     '/mybubbles/:_id/edit': {
       to: 'bubbleEdit',
       and: function(id) { Session.set('currentBubbleId', id); }
-    }, 
+    },
     '/mybubbles/:_id/members': {
       to: 'bubbleMembersPageBackbone',
       and: function(id) { Session.set('currentBubbleId', id); }
@@ -90,24 +99,24 @@ Meteor.Router.add({
 
   // Posts Related Routes
     '/mybubbles/:_bId/posts/:_pId': {
-      //to: 'postPage', 
+      //to: 'postPage',
       to: 'postPageBackbone',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/discussion': {
-      to: 'discussionEdit', 
+      to: 'discussionEdit',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/event': {
-      to: 'eventEdit', 
-      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}  
+      to: 'eventEdit',
+      and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/edit/file': {
       to: 'fileobjectEdit',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
     '/mybubbles/:_bId/posts/:_pId/updated': {
-      to: 'postPage', 
+      to: 'postPage',
       and: function(bId, pId) { Session.set('currentBubbleId', bId); Session.set('currentPostId', pId); Meteor.subscribe('singlePost', pId);}
     },
 
@@ -119,7 +128,7 @@ Meteor.Router.add({
     '/mybubbles/:_id/create/event': {
       to: 'eventSubmit',
       and: function(id) { Session.set('currentBubbleId', id); }
-    }, 
+    },
     '/mybubbles/:_id/create/file': {
       to: 'fileSubmit',
       and: function(id) { Session.set('currentBubbleId', id); }
@@ -146,7 +155,7 @@ Meteor.Router.add({
       to: 'loginPage',
       and: function(secret) { Session.set('secret', secret)}
     },
- 
+
 
   // Search Related Routes
     '/search/all': 'searchAll',
@@ -159,9 +168,22 @@ Meteor.Router.add({
 
   //Explore Related Routes
     '/explore/create': 'exploreSubmit',
+    '/explore/': function() {
+      // TODO: Loading flag
+      var data = new SidebarData.Sidebar();
+      data.getFirstExploreId(function(exploreId) {
+        if (exploreId) {
+          Meteor.Router.to('explorePageBackbone', exploreId);
+        } else {
+          Meteor.Router.to('exploreSubmit');
+        }
+      });
+    },
     '/explore/:id/home': {
       to: 'explorePageBackbone',
-      and: function(id){Session.set('currentExploreId', id);}
+      and: function(id) {
+        Session.set('currentExploreId', id);
+      }
     },
     '/explore/:_expId/posts/:_pId': {
       to: 'explorePostPageBB',
@@ -183,13 +205,14 @@ Meteor.Router.add({
         Meteor.subscribe('singlePost', pId);
       }
     },
+    /*
     '/explore': {
       to: 'exploreAll',
       and: function(){
         var user = Meteor.users.findOne({_id: Meteor.userId()});
         Session.set('selectedUsername', user.username);
       }
-    },
+    },*/
 
 
   // Flags Related Routes
@@ -199,9 +222,12 @@ Meteor.Router.add({
   // Analytics Related Routes
     '/analytics': 'userlog',
 
+  // UserLevel 4's "Create User" page
+    '/createUser': 'createUser',
+
   // Dashboard
     '/dashboard': 'dashboard',
-  
+
 
   // Etc Routes
     //Capturing rogue urls, hopefully this will be a 404 page in the future
@@ -258,15 +284,39 @@ Meteor.Router.filters({
     }
   },
   'belongToBubble': function(page) {
+    console.log("belongToBubble Start");
     if(window.location.pathname.match('mybubbles')) {
+      
+      var xhr_isAdmin = $.ajax({
+        url: "/2013-09-11/isadmin?bubbleid="+Session.get('currentBubbleId')+"&userid="+Meteor.userId(),
+        async: false
+      });
+      var xhr_isMember = $.ajax({
+        url: "/2013-09-11/ismember?bubbleid="+Session.get('currentBubbleId')+"&userid="+Meteor.userId(),
+        async: false
+      });
+
+      console.log("AJAX Responses: ", xhr_isMember, xhr_isAdmin);
+      
+      if(xhr_isMember.responseText == "False"
+        && xhr_isAdmin.responseText == "False"
+        && '3' != Meteor.user().userType)
+      {
+        console.log("RETRUN BUBBLE PUBLIC PAGE");
+        Meteor.Router.to('bubblePublicPage',Session.get('currentBubbleId'));
+        return 'bubblePublicPage';
+      }
+      /*
       if(Meteor.user() && '3' != Meteor.user().userType){
         var bubble = Bubbles.findOne(Session.get('currentBubbleId'));
+        console.log("Bubble: ", bubble);
         if(bubble) {
           if(!_.contains(bubble.users.admins, Meteor.userId()) && !_.contains(bubble.users.members, Meteor.userId())) {
             return 'bubblePublicPage';
           }
         }
       }
+      */
     }
     return page;
   },
@@ -289,7 +339,7 @@ Meteor.Router.filters({
       if(Meteor.user() && ('2' == Meteor.user().userType || '3' == Meteor.user().userType)){
         return page;
       }else{
-        Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+        Meteor.Router.to('bubblePageBackbone', Session.get('currentBubbleId'));
         return 'bubblePage';
       }
     }else{
@@ -302,6 +352,12 @@ Meteor.Router.filters({
   },
   'level3Permissions': function(page){
     if(Meteor.user() && '3' == Meteor.user().userType) {
+      return page;
+    }
+    return '/';
+  },
+  'level4Permissions': function(page){
+    if(Meteor.user() && '4' == Meteor.user().userType) {
       return page;
     }
     return '/';
@@ -337,15 +393,17 @@ Meteor.Router.filters({
 });
 
 //Partially filter pages that are not bubble related
-Meteor.Router.filter('belongToBubble', {except: ['searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents',  'searchFiles', 'bubbleSubmit']});
+// Meteor.Router.filter('belongToBubble', {except: ['bubblePublicPage','searchAll', 'searchUsers', 'searchBubbles', 'searchDiscussions', 'searchEvents',  'searchFiles', 'bubbleSubmit']});
+Meteor.Router.filter('belongToBubble', {only: ['bubblePageBackbone','bubblePage','bubbleMembersPageBackbone','bubbleEventPageBackbone','bubbleDiscussionPageBackbone','bubbleFilePageBackbone']});
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
+Meteor.Router.filter('level4Permissions', {only: ['createUser']});
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('logCurrentPage', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported', '404NotFound']});
 Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});
 //Ensures that user is routed to either the mybubbles page or search bubbles page
 Meteor.Router.filter('routeWhenLogin', {only: ['/']});
-//Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser 
+//Ensures that user is not allowed to edit or create a post if bubble type is super and user type is not superuser
 Meteor.Router.filter('hasSuperBubblePermissions', {only: ['discussionSubmit', 'eventSubmit', 'fileSubmit', 'discussionEdit', 'eventEdit', 'fileobjectEdit']})
 //Checks if page has a potential increase in view count
 Meteor.Router.filter('increaseViewCount', {only: ['postPage', 'discussionEdit', 'eventEdit', 'fileobjectEdit']});

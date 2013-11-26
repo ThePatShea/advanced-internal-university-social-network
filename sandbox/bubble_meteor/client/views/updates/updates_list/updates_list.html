@@ -1,5 +1,5 @@
 <template name="updatesList">
-  {{#each compressedUpdates this._id getNumUpdates}}
+  {{#each getUpdates getNumUpdates}}
     {{>updateItem}}
   {{/each}}
 </template>

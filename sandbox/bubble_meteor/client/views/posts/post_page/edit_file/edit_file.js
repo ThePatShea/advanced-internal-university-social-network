@@ -8,13 +8,13 @@ Template.editFile.events({
     e.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create File', $(event.target).find('[name=name]').val()]);
-    
+
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
       reader.onload = (function(f){
         return function(e) {
           console.log(f.type, f.size);
-          
+
           /*createPost({
             name: escape(f.name),
             file: e.target.result,
@@ -37,15 +37,33 @@ Template.editFile.events({
             var currentPostId = Session.get('currentPostId');
             var currentBubbleId = Session.get('currentBubbleId');
 
+            var displayPostConfirmationMessage = function(postTitle){
+              return function(){
+                //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+                var message = postTitle.slice(0, 7);
+                var message = message + ' ...';
+                $('.info').removeClass('visible-false');
+                $('.message-container .info').text(message);
+                $('.message-container').removeClass('visible-false');
+                $('.message-container').addClass('message-container-active');
+                setTimeout(function(){
+                  $('.message-container').removeClass('message-container-active');
+                  $('.message-container').addClass('visible-false');
+                  clearTimeout();
+                },5000);
+              }
+            };
+            setTimeout(displayPostConfirmationMessage('File'), 2000);
+
             Posts.update(currentPostId, {$set: fileAttributes}, function(error) {
               if (error) {
                 // display the error to the user
                 throwError(error.reason);
               } else {
                 createEditEventUpdate(Meteor.userId(), currentPostId);
-                Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+                Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
               }
-            }); 
+            });
         }
       })(f);
       reader.readAsDataURL(f);
@@ -65,7 +83,7 @@ Template.editFile.events({
     evt.preventDefault();
 
     files = evt.dataTransfer.files;
-    
+
     for (var i = 0, f; f = files[i]; i++) {
 
 

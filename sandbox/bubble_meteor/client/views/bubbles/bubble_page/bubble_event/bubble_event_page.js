@@ -7,27 +7,17 @@ Template.bubbleEventPage.helpers({
 
     return Posts.find({bubbleId: currentBubbleId, postType: 'event', dateTime: {$gt: moment().add('hours',-4).valueOf()}}, {/*limit: eventsHandle.limit(),*/ sort: {dateTime: 1} });
   }
-  
+
 });
 
 
 Template.bubbleEventPage.rendered = function(){
-var currentUrl  =  window.location.pathname;
-var urlArray    =  currentUrl.split("/");
-var currentBubbleId  =  urlArray[2];
-eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
-    Session.set("isLoading", false);
-  });
+  var currentUrl  =  window.location.pathname;
+  var urlArray    =  currentUrl.split("/");
+  var currentBubbleId  =  urlArray[2];
 
-/*
-  $("#main").scroll(function(){
-    if ( ($("#main").scrollTop() >= $("#main")[0].scrollHeight - $("#main").height()) ) {
-      eventsHandle.loadNextPage();
-    }
+  LoadingHelper.start();
+  eventsHandle = Meteor.subscribe('events', currentBubbleId, function() {
+    LoadingHelper.stop();
   });
-*/
-}
-
-Template.bubbleEventPage.created = function(){
-  Session.set("isLoading", true);
-}
+};

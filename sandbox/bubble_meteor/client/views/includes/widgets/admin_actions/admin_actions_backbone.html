@@ -1,27 +1,30 @@
 <template name="adminActionsBackbone">
+  <div id="admin-actions">
+    <button class="visible-{{getApplicantStatus}} pull-right post-action deny">
+      <span>deny</span>
+    </button>
+    <button class="visible-{{getApplicantStatus}} pull-right post-action left-action accept">
+      <span>accept</span>
+    </button>
 
-  <button class="visible-{{getApplicantStatus}} pull-right post-action deny">
-    <span>deny</span>
-  </button>
-  <button class="visible-{{getApplicantStatus}} pull-right post-action left-action accept">
-    <span>accept</span>
-  </button>
+    {{#codeComment}}
+    <button class="visible-{{getAdminStatus}} pull-right post-action remove-admin">
+      <span>remove</span>
+    </button>
+    {{/codeComment}}
+    <button class="visible-{{getAdminStatus}} pull-right post-action left-action demote-admin">
+      <span>demote</span>
+    </button>
 
-  <button class="visible-{{getAdminStatus}} pull-right post-action remove-admin">
-    <span>remove</span>
-  </button>
-  <button class="visible-{{getAdminStatus}} pull-right post-action left-action demote-admin">
-    <span>demote</span>
-  </button>
+    <button class="visible-{{getMemberStatus}} pull-right post-action remove-member">
+      <span>remove</span>
+    </button>
+    <button class="visible-{{getMemberStatus}} pull-right post-action left-action promote-member">
+      <span>promote</span>
+    </button>
 
-  <button class="visible-{{getMemberStatus}} pull-right post-action remove-member">
-    <span>remove</span>
-  </button>
-  <button class="visible-{{getMemberStatus}} pull-right post-action left-action promote-member">
-    <span>promote</span>
-  </button>
-
-  <button class="visible-{{getInviteeStatus}} pull-right post-action uninvite">
-    <span>uninvite</span>
-  </button>
+    <button class="visible-{{getInviteeStatus}} pull-right post-action uninvite">
+      <span>uninvite</span>
+    </button>
+  </div>
 </template>

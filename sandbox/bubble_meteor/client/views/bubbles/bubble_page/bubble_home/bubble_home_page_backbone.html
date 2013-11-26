@@ -3,51 +3,33 @@
   <div class="visible-{{isLoading}}">
     {{> gifLoaderToParent}}
   </div>
-    
+
   {{#with getCurrentBubbleBackbone}}
 
     {{> bubbleCoverBackbone}}
     {{> bubbleSectionSelectorBackbone}}
 
     <div class="bubble-page-content">
-
-        {{#codeComment}}
-          {{#if compressedUpdates id '1'}}
-            <div class="bubble-list">
-              <div class="bubble-list-heading">
-                <h3 class="section-name pull-left">{{compressedUpdatesCount this.id}} updates</h3>
-
-                <button class="std-btn-light pull-right clear-updates">clear all</button> 
-                
-                {{#if showMoreUpdates compressedUpdatesCount}}
-                  <button class="std-btn-light pull-right more-updates">see all</button>
-                {{/if}}
-                
-              </div>
-              {{> updatesList}}
-            </div>
-          {{/if}}
-        {{/codeComment}}
-        <div class="visible-false">
-          {{testGetUpdates}}
-        </div>
         {{#if showUpdates}}
-        <div class="visible-{{testNumUpdates}}">
+        <div>
           <div class="bubble-list">
             <div class="bubble-list-heading">
-              <h3 class="section-name pull-left">{{pluralize testNumUpdates 'update' ""}}</h3>
-                  <button class="std-btn-light pull-right clear-updates">clear all</button> 
+              <h3 class="section-name pull-left">{{pluralize getUpdateCount 'update' ""}}</h3>
+                  <button class="std-btn-light pull-right clear-updates">clear all</button>
                 </div>
                 <div class="dashboard-updates">
-              {{#each testGetUpdates}}
+              {{#each getUpdates}}
                 {{>updateItem}}
               {{/each}}
-              <button class="pull-left btn-tiny more-updates" style="margin: 15px 0 0 25px">+ see all</button>
+
+              {{#if haveMoreUpdates}}
+                <button class="pull-left btn-tiny more-updates" style="margin: 15px 0 0 25px">+ see all</button>
+              {{/if}}
             </div>
           </div>
         </div>
         {{/if}}
-  
+
         <div class="bubble-list">
           {{#with postPropertiesBackboneEvent}}
             <div></div>
@@ -63,9 +45,13 @@
                 </div>
               </div>
             {{/each}}
+
+            {{#if hasMoreEvents}}
             <a class="visible" href="{{bubbleEventPageBackbonePath getCurrentBubbleBackbone.id}}">
               <button class="pull-left btn-tiny more-posts">+ view more events</button>
             </a>
+            {{/if}}
+
           {{/with}}
         </div>
 
@@ -84,12 +70,16 @@
                 </div>
               </div>
             {{/each}}
+
+            {{#if hasMoreDiscussions}}
             <a class="visible" href="{{bubbleDiscussionPageBackbonePath getCurrentBubbleBackbone.id}}">
               <button class="pull-left btn-tiny more-posts">+ view more discussions</button>
             </a>
+
+            {{/if}}
           {{/with}}
         </div>
-  
+
         <div class="bubble-list">
           {{#with postPropertiesBackboneFile}}
             <div></div>
@@ -105,9 +95,13 @@
                 </div>
               </div>
             {{/each}}
+
+            {{#if hasMoreFiles}}
             <a class="visible" href="{{bubbleFilePageBackbonePath getCurrentBubbleBackbone.id}}">
               <button class="pull-left btn-tiny more-posts">+ view more files</button>
             </a>
+
+            {{/if}}
           {{/with}}
         </div>
     </div>

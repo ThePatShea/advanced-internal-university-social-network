@@ -37,7 +37,7 @@ Template.editEvent.rendered = function(){
 	var currentDatetime = new Date(event.dateTime);
 	var time = currentDatetime.getHours()+":"+currentDatetime.getMinutes();
 	var date = (currentDatetime.getMonth()+1)+"/"+currentDatetime.getDate()+"/"+currentDatetime.getFullYear();
-	$("input[name='name']").val(event.name);
+	$("input[name='name']").val(decodeURIComponent(event.name));
 	$("input[name='location']").val(event.location);
 	$("input[name='date']").val(date);
 	$("input[name='body']").val(event.body);
@@ -96,10 +96,10 @@ Template.editEvent.events({
 
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
 
-    var eventAttributes = { 
+    var eventAttributes = {
       dateTime: moment(dateTime).valueOf(),
       location: $(event.target).find('[name=location]').val(),
-      name: $(event.target).find('[name=name]').val(),
+      name: encodeURIComponent($(event.target).find('[name=name]').val()),
       body: $(event.target).find('[name=body]').val()
     };
 
@@ -109,16 +109,40 @@ Template.editEvent.events({
       eventAttributes.retinaEventPhoto = eventRetinaURL;
 
     console.log("event attributes: " + JSON.stringify(eventAttributes) );
-    
+
     var currentPostId = Session.get('currentPostId');
     var currentBubbleId = Session.get('currentBubbleId');
+
+    var postTitle = $('#cb-form-container-edit-event').find('[name=name]').val();
+    var displayPostConfirmationMessage = function(postTitle){
+      return function(){
+        //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+        var message = postTitle.slice(0, 7);
+        var message = message + ' ...';
+        $('.info').removeClass('visible-false');
+        $('.info').text(message);
+        $('.job-type').text("editing");
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('message-container-active');
+        setTimeout(function(){
+          $('.message-container').removeClass('message-container-active');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },5000);
+      }
+    }
+    console.log('Post Title: ', postTitle);
+    setTimeout(displayPostConfirmationMessage(postTitle), 2000);
+
     Posts.update(currentPostId, {$set: eventAttributes}, function(error) {
       if (error) {
         // display the error to the user
         throwError(error.reason);
       } else {
         createEditEventUpdate(Meteor.userId(), currentPostId);
-        Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+        Session.set('currentPostId', '');
+        //Session.set('currentPostId', currentPostId);
+        Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
       }
     });
   },
@@ -140,7 +164,7 @@ Template.editEvent.events({
       else{
         f = files[0];
         //If the file dropped on the dropzone is an image then start processing it
-        if (f.type.match('image.*')) {
+        if (f.type.match('image.*') && (f.size < 775000)) {
           var reader = new FileReader();
           var eventMainCanvas = document.getElementById('event-main-canvas');
           var eventRetinaCanvas = document.getElementById('event-retina-canvas');
@@ -236,6 +260,9 @@ Template.editEvent.events({
               };
           })(f);
           reader.readAsDataURL(f);
+        } else if(f.size >= 775000) {
+          alert("Files cannot be larger than 775KB, please upload a different file.");
+          return;
         }
         else{
           error = new Meteor.Error(422, 'Please choose a valid image.');

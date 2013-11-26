@@ -26,56 +26,15 @@ Template.exploreDiscussionSubmit.rendered = function () {
   var postAsType = $("[name=post-as-type]").val();
   //$(".postAsButton." + postAsType).addClass("active-true");
 
-  $(".post-as-button.bubble").mouseover(function() {
+  $(".post-as-bubble-dropdown").hide();//Hide bubble dropdown on render
+
+  /*$(".post-as-button.bubble").mouseover(function() {
     $(".post-as-bubble-dropdown").show();
   });
 
   $(".post-as-button.bubble").mouseout(function() {
     $(".post-as-bubble-dropdown").hide();
-  });
-
-  $(".btn-select-post-as-bubble").click(function() {
-    var postAsId = $(this).attr("name");
-    $("[name=post-as-id]").val(postAsId);
-    $("[name=post-as-type]").val("bubble");
-
-
-
-    var bubbleTitle = $(this).children(".bubble-title").attr("name");
-    $(".selected-bubble-post-as").html(bubbleTitle);
-
-    $(".post-as-button.bubble").removeClass("active-false");
-    $(".post-as-button.bubble").addClass("active-true");
-
-    $(".post-as-button.me").removeClass("active-true");
-    $(".post-as-button.me").addClass("active-false");
-
-    $(".post-as-bubble-dropdown").hide();
-  });
-
-
-  $(".post-as-button.me").click(function() {
-    $("[name=post-as-id]").val( Meteor.userId() );
-    $("[name=post-as-type]").val("user");
-
-
-
-    $(".post-as-button.bubble").removeClass("active-true");
-    $(".post-as-button.bubble").addClass("active-false");
-
-    $(".post-as-button.me").removeClass("active-false");
-    $(".post-as-button.me").addClass("active-true");
-
-    $(".selected-bubble-post-as").html("Select a bubble");
-  });
-
-
-
-
-
-
-
-
+  });*/
 
   this.validateForm();
 }
@@ -99,6 +58,51 @@ Template.exploreDiscussionSubmit.helpers({
 
 
 Template.exploreDiscussionSubmit.events({
+  'click .post-as-button.me': function(evt,tmpl) {
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+
+    tmpl.validateForm();
+  },
+  'click .post-as-button.bubble': function() {
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(evt,tmpl) {
+    //var postAsId = $(this).attr("name");
+    var postAsId = this._id;
+    console.log("Post As Id: ", postAsId);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+
+    tmpl.validateForm();
+  },
   'click .post-as-button': function(event) {
     event.preventDefault();
   },
@@ -119,27 +123,37 @@ Template.exploreDiscussionSubmit.events({
         children: []
       }, files);*/
 
+      var bodySelector = $('.cb-explore-discussionSubmit-form').find('.wysiwyg');
+      var postBody = bodySelector.html();
+      var rmIndex = postBody.indexOf('<span class="wysiwyg-placeholder">Type here...</span>');
+      if(rmIndex != -1)
+      {
+        bodySelector.html(postBody.slice(0,rmIndex));
+      }
+
       makeDiscussionPost();
 
       //Show Post submitted confirmation message
-      var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-      var displayPostConfirmationMessage = function(postTitle){
+      //var postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+      var displayPostConfirmationMessage = function(){
         return function(){
           //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-          var message = postTitle.slice(0, 7);
-          var message = message + ' ...';
-          $('.message-container .info').text(message);
+          //var message = postTitle.slice(0, 7);
+          //var message = message + ' ...';
+          //var message = "This will be posted in just a few minutes!";
+          //$('.message-container .info').text(message);
+          $('.job-type').text("This post will be available shortly!");
           $('.message-container').removeClass('visible-false');
           $('.message-container').addClass('message-container-active');
           setTimeout(function(){
             $('.message-container').removeClass('message-container-active');
             $('.message-container').addClass('visible-false');
             clearTimeout();
-          },5000);
+          },10000);
         }        
       }
-      console.log('Post Title: ', postTitle);
-      setTimeout(displayPostConfirmationMessage(postTitle), 1000);
+      //console.log('Post Title: ', postTitle);
+      setTimeout(displayPostConfirmationMessage(), 1000);
       
     },
 
@@ -166,10 +180,12 @@ function processAttachmentSelections(fileAttachments){
 
     discussionFiles = fileAttachments;
     if(discussionFiles.length > 0){
+      /*
       $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-paperclip-lbl').hide();
       $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-icon-attachment').hide();
       $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible').width(1);
       $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible').height(1);
+      */
     }
     
     for (var i = 0, f; f = discussionFiles[i]; i++) {
@@ -184,12 +200,23 @@ function processAttachmentSelections(fileAttachments){
         // Closure to capture the file information.
         reader.onload = (function(theFile, discussionFiles, i) {
         return function(e) {
-          $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list').append('<li><span class="attachment-cancel-icon" id="file-' + i + '"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><circle fill-rule="evenodd" clip-rule="evenodd" cx="8" cy="8" r="8"/><g><rect x="7.001" y="4" transform="matrix(-0.7151 -0.699 0.699 -0.7151 8.1297 19.3133)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" width="2" height="8"/><rect x="7" y="4" transform="matrix(-0.6989 0.7152 -0.7152 -0.6989 19.3134 7.869)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" width="2" height="8"/></g></span><span class="attachment-list-filename">' + escape(theFile.name).replace(/%20/g, '_') +'</span></li>');
-          $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list > li > #file-'+i).click(function(){
-            var index = this.id.split('-');
-            discussionDeletedFileIndices.push(parseInt(index[1]));
-            $(this).parent().remove();
-          });
+          if(theFile.size < 775000)
+          {
+            $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-paperclip-lbl').hide();
+            $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .cb-icon-attachment').hide();
+            $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible').width(1);
+            $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .file-chooser-invisible').height(1);
+
+            $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list').append('<li><span class="attachment-cancel-icon" id="file-' + i + '"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve"><circle fill-rule="evenodd" clip-rule="evenodd" cx="8" cy="8" r="8"/><g><rect x="7.001" y="4" transform="matrix(-0.7151 -0.699 0.699 -0.7151 8.1297 19.3133)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" width="2" height="8"/><rect x="7" y="4" transform="matrix(-0.6989 0.7152 -0.7152 -0.6989 19.3134 7.869)" fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" width="2" height="8"/></g></span><span class="attachment-list-filename">' + escape(theFile.name).replace(/%20/g, '_') +'</span></li>');
+            $('.cb-explore-discussionSubmit-form > .paperclip-attach-files > .paperclip-attach > .attachments-list > li > #file-'+i).click(function(){
+              var index = this.id.split('-');
+              discussionDeletedFileIndices.push(parseInt(index[1]));
+              $(this).parent().remove();
+            });
+          } else {
+            alert('Files cannot be larger than 775KB, please upload a different file.');
+            return;
+          }
         };
         })(f, discussionFiles, i);
 
@@ -213,6 +240,7 @@ function processAttachmentSelections(fileAttachments){
 
 
 function makeDiscussionPost(){
+
   var postAttributes = {
     name: encodeURIComponent($('.cb-explore-discussionSubmit-form').find('[name=name]').val()),
     body: $('.cb-explore-discussionSubmit-form').find('.wysiwyg').html(),
@@ -245,6 +273,9 @@ function makeDiscussionPost(){
   }
   
   createPostWithAttachments(postAttributes, newFiles);
+
+  $('.cb-explore-discussionSubmit-form').find('[name=name]').val('');
+  $('.cb-explore-discussionSubmit-form').find('.wysiwyg').html('');
 }
 
 

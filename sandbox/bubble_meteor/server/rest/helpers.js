@@ -1,8 +1,5 @@
 var Future = Npm.require('fibers/future');
 
-var DEFAULT_LIMIT = 10;
-var MAX_LIMIT = 50;
-
 this.RestHelpers = {
   Future: Future,
 
@@ -195,10 +192,15 @@ this.RestHelpers = {
     if (apiOptions) {
       var options = {};
 
-      options.limit = apiOptions.limit || DEFAULT_LIMIT;
+      if (apiOptions.sort) {
+        options.sort = apiOptions.sort;
+      }
 
-      if (options.limit > MAX_LIMIT) {
-        options.limit = MAX_LIMIT;
+      if (apiOptions.limit && !apiOptions.noLimit) {
+        options.limit = apiOptions.limit;
+
+        if (options.limit > RestConst.MAX_LIMIT)
+          options.limit = RestConst.MAX_LIMIT;
       }
 
       if (apiOptions.page) {
@@ -209,7 +211,7 @@ this.RestHelpers = {
     }
 
     return {
-      limit: DEFAULT_LIMIT
+      limit: RestConst.DEFAULT_LIMIT
     };
   },
 
@@ -272,7 +274,7 @@ this.RestHelpers = {
       query = {_id: query};
 
     rawCollection.findOne(query, this.bindFuture(future));
-    var obj = future.wait()
+    var obj = future.wait();
 
     // MongoDB does not support field filtering with findOne
     if (fields) {
@@ -333,6 +335,20 @@ this.RestHelpers = {
   },
 
   /**
+   * Search through MongoDB raw API
+   * @param {Collection} collection Meteor collection
+   * @param {string} searchQuery    Search string
+  **/
+  mongoSearch: function(collection, searchQuery){
+    var rawCollection = MongoHelper.getRawCollection(collection);
+    var collectionName = rawCollection.collectionName;
+    var future = new Future();
+
+    rawCollection.db.command({ text: collectionName, search: searchQuery }, this.bindFuture(future));
+    return future.wait();
+  },
+
+  /**
    * Create JSON response with proper encoding
    * @param  {int} code    HTTP status code
    * @param  {any} payload Payload to be sent
@@ -341,6 +357,9 @@ this.RestHelpers = {
   jsonResponse: function(code, payload, headers) {
     headers = headers || {};
     headers['Content-Type'] = 'application/json';
+    //headers['Pragma'] = 'no-cache';
+    //headers['Expires'] = '0';
+    //headers['Cache-Conrol'] = 'no-cache, no-store, must-revalidate';
     return [code, headers, JSON.stringify(payload)];
   },
 

@@ -3,7 +3,7 @@ Template.fileobjectEdit.events({
     e.preventDefault();
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Edit File', this.name]);
-    
+
     var currentPostId = Session.get('currentPostId');
     var currentBubbleId = Session.get('currentBubbleId');
     var dateTime = $(event.target).find('[name=date]').val() + " " + $(event.target).find('[name=time]').val();
@@ -26,7 +26,7 @@ Template.fileobjectEdit.events({
               // display the error to the user
               throwError(error.reason);
             } else {
-              Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+              Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
             }
           });
         }
@@ -38,16 +38,16 @@ Template.fileobjectEdit.events({
         // display the error to the user
         throwError(error.reason);
       } else {
-        Meteor.Router.to('postPage', currentBubbleId, currentPostId);
+        Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
       }
     });
   },
-  
+
   'click #delete_post': function(e) {
     e.preventDefault();
     if (confirm("Delete this post?")) {
       Meteor.call('deletePost', Session.get('currentPostId'));
-      Meteor.Router.to('bubblePage',Session.get('currentBubbleId'));
+      Meteor.Router.to('bubblePageBackbone', Session.get('currentBubbleId'));
     }
   },
 

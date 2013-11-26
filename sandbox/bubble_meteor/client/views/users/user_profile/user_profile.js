@@ -12,11 +12,19 @@ Template.userProfile.helpers({
   	},
 
 	getBubblesAdminList: function() {
-		return Bubbles.find({'users.admins':this._id});
+		var adminBubbles = Bubbles.find({'users.admins':this._id}).fetch();
+		_.each(adminBubbles, function(bubble){
+			bubble.id = bubble._id;
+		});
+		return adminBubbles;
 	},
 
 	getBubblesMemberList: function() {
-		return Bubbles.find({'users.members':this._id});
+		var memberBubbles = Bubbles.find({'users.members':this._id}).fetch();
+		_.each(memberBubbles, function(bubble){
+			bubble.id = bubble._id;
+		});
+		return memberBubbles;
 	},
 
 	getBubbleAdminsCount: function() {
@@ -76,7 +84,11 @@ Template.userProfile.helpers({
 
 //Crop selection
 Template.userProfile.rendered = function() {
-        Meteor.subscribe('singleUser', Session.get('selectedUserId'));
+    Meteor.subscribe('singleUser', Session.get('selectedUserId'));
+    Meteor.subscribe('numPostsByUser', Session.get('selectedUserId'));
+
+    //Using this to get bubbles for the profile
+    Meteor.subscribe('sidebarBubbles', Session.get('selectedUserId'));
 
 	var cropArea;
 	var mainURL;
@@ -90,9 +102,6 @@ Template.userProfile.rendered = function() {
 	}
 
 	$(document).attr('title', 'Settings - Emory Bubble');
-
-    //This line NEEDS to be removed later!!!!!!!!!!!
-	goingDep = new Deps.Dependency;
 };
 
 Template.userProfile.events({
@@ -168,7 +177,7 @@ Template.userProfile.events({
     	else{
 	    	f = files[0];
 	    	//If the file dropped on the dropzone is an image then start processing it
-	    	if (f.type.match('image.*')) {
+	    	if (f.type.match('image.*') && (f.size < 775000)) {
 		        var reader = new FileReader();
 
 				var mainCanvas = document.getElementById('main-canvas');
@@ -263,6 +272,9 @@ Template.userProfile.events({
 		        	};
 		        })(f);
 		        reader.readAsDataURL(f);
+		    } else if(f.size >= 775000) {
+		        alert("Files cannot be larger than 775KB, please upload a different file.");
+		        return;
 		    }
     	}
 	}

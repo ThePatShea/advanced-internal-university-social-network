@@ -1,39 +1,33 @@
 Template.listItemBB.helpers({
     getPostAsUser: function() {
-      //return Meteor.users.findOne(this.postAsId);
-      //console.log("ES: ", es.exploreUsers.toJSON());
       return this.user;
     },
-    /*
     getPostAsBubble: function() {
-      var bubble = Bubbles.findOne(this.postAsId);
-      return bubble;
-    },*/
-    getPostAsBubble: function() {
-      //var bubble = new BBubble({_id: this.postAsId}).fetch();
       return this.bubble;
     },
     postedAsUser: function() {
-      if (this.postAsType == "user") {
+      if (this.postAsType === 'user') {
         return true;
       } else {
         return false;
       }
     },
     postedAsBubble: function() {
-      if (this.postAsType == "bubble") {
+      if (this.postAsType === 'bubble') {
         return true;
       } else {
         return false;
       }
     },
     displayName: function() {
-      if (this.postAsType == "user") {
+      if (this.postAsType === 'user') {
         return this.author;
-      } else if (this.postAsType == "bubble") {
-        //var bubble = Bubbles.findOne(this.postAsId);
-        //var bubble = new BBBubble({id: this.postAsId});
-        return this.bubble.title;
+      } else if (this.postAsType === 'bubble') {
+        if (this.bubble)
+          return this.bubble.title;
+
+        // TODO: Error logging?
+        return '';
       }
     },
     isGoing : function() {
@@ -41,63 +35,44 @@ Template.listItemBB.helpers({
     },
 
     hasChildren : function() {
-      if (this.children != undefined && this.children != "")
+      if (this.children != undefined && this.children !== '')
         return true;
       else
         return false;
     },
 
     membershipCount: function(){
-      var currentUserId = this._id;
-      if(typeof this.userType != 'undefined'){
-        return Bubbles.find({$or: [{'users.members': currentUserId}, {'users.admins': currentUserId}]}).count();
-      }
-      else{
-        return -1;
-      }
+      if (this.bubble)
+        return this.bubble.users.admins.length + this.bubble.users.members.length;
+
+      return -1;
     },
 
-    isMe: function(){
-      if(typeof this.id == 'undefined'){
-        this.id = this._id;
-      }
-
-      if(this.id == Meteor.userId()){
-        return true;
-      }
-      else{
-        return false;
-      }
-      //return(this.id == Meteor.userId());
+    isMe: function() {
+      return Meteor.userId() == this.id;
     },
 
     inBubble: function(){
+      // TODO: Use Meteor.Router.page()
       //return(Meteor.Router.page() == "bubbleMembersPage");
+
       var sitePath = window.location.pathname.split('/')[1];
-      if(sitePath == 'mybubbles'){
-        return true;
-      }
-      else{
-        return false
-      }
+      return sitePath === 'mybubbles';
     },
 
-    isFile: function(){
-      if(this.postType == 'file'){
-        return true;
-      }
+    isFile: function() {
+      return this.postType === 'file';
     },
 
-    isDiscussion: function(){
-      if(this.postType == 'discussion'){
-        return true;
-      }
+    isDiscussion: function() {
+      return this.postType === 'discussion';
     },
 
-    isAdminBB: function(){
-      var isadmin = mybubbles.isAdmin(Meteor.userId());
-      console.log('Is Admin: ', isadmin);
-      return isadmin;
+    isAdminBB: function() {
+      if (this.bubble)
+        return _.contains(this.bubble.users.admins, Meteor.userId());
+
+      return false;
     }
 });
 
@@ -132,7 +107,7 @@ Template.listItemBB.events({
         Meteor.Router.to('userProfile', this.id);
       }
       else if(typeof this.category != 'undefined'){
-        Meteor.Router.to('bubblePage', this.id);
+        Meteor.Router.to('bubblePageBackbone', this.id);
       }
       else{
         Meteor.Router.to('404NotFoundPage');
@@ -153,9 +128,9 @@ Template.listItemBB.rendered = function(){
       //Extract and append the bubble's title to action string
       var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
       //Logs the action that user is doing
-      Meteor.call('createLog', 
-        { action: title }, 
-        window.location.pathname, 
+      Meteor.call('createLog',
+        { action: title },
+        window.location.pathname,
         function(error) { if(error) { throwError(error.reason); }
       });
     // }, 500);

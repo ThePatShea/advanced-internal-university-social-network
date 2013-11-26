@@ -36,7 +36,9 @@ Meteor.Router.add('/authenticateduser', 'POST', function(){
 
 Meteor.Router.add('/resetpass/:username', 'GET', function(username){
 	var user = Meteor.users.findOne({'username': username});
-	Accounts.setPassword(user._id, 'F302pinpulse');
+	//Accounts.setPassword(user._id, 'F302pinpulse');
+	var randString = randomString(20);
+	Accounts.setPassword(user._id, randString);
 	return [200, ' '];
 });
 
@@ -142,6 +144,68 @@ Meteor.Router.add('/','GET', function(){
 	return [307, {'Location': 'http://main.campusbubble.jit.su'}, 'null'];
 });
 */
+
+Meteor.Router.add('/newUser', 'POST', function(){
+	var username = this.request.body.username;
+	var password = this.request.body.password;
+	var email = this.request.body.email;
+	var name = this.request.body.name;
+	var secret = this.request.body.secret;
+
+	console.log("Username: ", username);
+	console.log("Password: ", password);
+	console.log("Email: ", email);
+	console.log("Name: ", name);
+	console.log("Secret: ", secret);
+
+	var uid = "";
+
+	if(secret !== "superSecret")
+	{
+		return ['403', "FORBIDDEN"];
+	}
+
+	if(Meteor.users.findOne({username: username}) != undefined)
+	{
+		return ['500', "User Exists"];
+	}
+
+	if((typeof username !== "undefined") && (typeof password !== "undefined") && (typeof name !== "undefined"))
+	{
+		if(typeof email !== "undefined")
+		{
+			var uid = Accounts.createUser({
+				username: username,
+				email: email,
+				password: password
+			});
+		}
+		else
+		{
+			var uid = Accounts.createUser({
+				username: username,
+				password: password
+			});
+		}
+
+		Meteor.users.update({_id: uid},{
+			$set:
+			{
+				name: name,
+				userType: '1',
+				profilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',
+				retinaProfilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',			
+			}
+		});
+	}
+
+	console.log("UID: ", uid);
+
+
+    Meteor.call("addToIndex", uid, name);
+
+	return ['200',uid];
+});
 
 Meteor.Router.add('/pushUser', 'POST', function() {
 	var email = this.request.body.email;
@@ -638,3 +702,16 @@ Meteor.Router.add('/mybubbles/:id/emails','GET', function(id) {
 	}
 	return(200, "Members: " + members.toString() + "\nInvitees: " + invitees.toString());
 });
+
+
+
+function randomString(stringLength){
+	var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+	var numCharacters = characters.length;
+	var randString = '';
+	for(var i=0; i < stringLength; i++){
+		randString = randString + characters[Math.round(Math.random()*(characters.length-1))];
+	}
+
+	return randString;
+}

@@ -166,6 +166,24 @@ Meteor.methods({
     }
     return postId;
   },
+  toggleAttendingEvent: function(postId, callback){
+    var userId = Meteor.userId();
+    var post = Posts.findOne(postId);
+    if(!_.contains(post.attendees, userId)){
+      Posts.update({_id: postId},
+        {
+          $addToSet: {attendees: userId}
+        });
+      createNewAttendeeUpdate(postId);
+    }
+    else{
+      Posts.update({_id: postId},
+        {
+          $pull: {attendees: userId}
+        });
+    }
+    return postId;
+  },
   getNumOfEvents: function(bubbleId, postType ) {
     return Posts.find({'bubbleId': bubbleId, 'postType': postType}).count();
   }
@@ -178,10 +196,14 @@ createPost = function(postAttributes){
       throwError(error.reason);
     } else {
         if(typeof postAttributes.bubbleId != 'undefined'){
-          Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
+          //Update: Routing to postPage will make sure that the updated post
+          //information is seen immediately, even if we start caching
+          //Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
+          Meteor.Router.to('postPage', post.bubbleId, post._id);
         }
         else{
-          Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+          //Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+          Meteor.Router.to('explorePostPage', post.exploreId, post._id);
         }
     }
   });
@@ -248,10 +270,15 @@ createPostWithAttachments = function(postAttributes, fileList){
       }
 
       if(typeof postAttributes.bubbleId != 'undefined'){
-        Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
+        //Update: Routing to postPage will make sure that the updated post
+        //information is seen immediately, even if we start caching
+
+        //Meteor.Router.to('postPageBackbone', post.bubbleId, post._id);
+        Meteor.Router.to('postPage', post.bubbleId, post._id);
       }
       else{
-        Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+        //Meteor.Router.to('explorePostPageBB', post.exploreId, post._id);
+        Meteor.Router.to('explorePostPage', post.exploreId, post._id);
       }
 
     }

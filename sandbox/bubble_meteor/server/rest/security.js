@@ -7,12 +7,6 @@ this.UserType = {
 
 this.RestSecurity = {
   // Posts
-  filterBubblePosts: function(ctx) {
-    return {
-      bubbleId: {$exists: false}
-    };
-  },
-
   notBubbleCheck: function(ctx, obj) {
     if (obj && obj.bubbleId)
       return RestHelpers.jsonResponse(401, 'Bubble posts are disallowed');
@@ -97,6 +91,7 @@ this.RestSecurity = {
   },
 
   ownsExplore: function(ctx, obj) {
+    // TODO: Fixed
   },
 
   isExploreAdmin: function(ctx, obj) {
@@ -140,14 +135,13 @@ this.RestSecurity = {
     return RestHelpers.jsonResponse(401, 'Not bubble owner');
   },
 
-  // Bubble posts
-  makeBubblePostFilter: function(name) {
-    return function(ctx, query) {
-      query['postType'] = name;
-      return query;
-    };
+  relatedBubbleExists: function(ctx) {
+    var bubble = RestHelpers.mongoFindOne(Bubbles, ctx.params.parentId);
+    if (!bubble)
+      return RestHelpers.jsonResponse(404, 'Bubble does not exist');
   },
 
+  // Bubble posts
   makeBubblePostCheck: function(name) {
     return function(ctx, obj) {
       if (obj && obj.postType != name)
@@ -187,12 +181,22 @@ this.RestSecurity = {
     if (post.userId == ctx.userId)
       return;
 
-    return RestHelpers.jsonResponse(401, 'Can not edit others comment')
+    return RestHelpers.jsonResponse(401, 'Can not edit others comment');
   },
 
   // Files
   canChangeFile: function(ctx, obj) {
     if (ctx.user.userType != UserType.ADMIN && obj.userId != ctx.userId)
+      return RestHelpers.jsonResponse(403, 'Access denied.');
+  },
+
+  // Users
+  relatedUserExists: function(ctx) {
+    var user = RestHelpers.mongoFindOne(Meteor.users, ctx.params.parentId);
+    if (!user)
+      return RestHelpers.jsonResponse(404, 'User does not exist');
+
+    if (user._id != ctx.userId)
       return RestHelpers.jsonResponse(403, 'Access denied.');
   },
 

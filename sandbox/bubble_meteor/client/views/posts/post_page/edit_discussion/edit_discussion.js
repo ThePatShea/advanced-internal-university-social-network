@@ -75,6 +75,27 @@ Template.editDiscussion.events({
     //Google Analytics
     _gaq.push(['_trackEvent', 'Post', 'Create Discussion', $(event.target).find('[name=name]').val()]);
 
+    var postTitle = $('.cb-editDiscussion-form').find('[name=name]').val();
+    var displayPostConfirmationMessage = function(postTitle){
+      return function(){
+        //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
+        var message = postTitle.slice(0, 7);
+        var message = message + ' ...';
+        $('.info').removeClass('visible-false');
+        $('.info').text(message);
+        $('.job-type').text("editing");
+        $('.message-container').removeClass('visible-false');
+        $('.message-container').addClass('message-container-active');
+        setTimeout(function(){
+          $('.message-container').removeClass('message-container-active');
+          $('.message-container').addClass('visible-false');
+          clearTimeout();
+        },5000);
+      }        
+    }
+    console.log('Post Title: ', postTitle);
+    setTimeout(displayPostConfirmationMessage(postTitle), 2000);
+
     updateDiscussionPost();
   },
 
@@ -219,7 +240,7 @@ function updateDiscussionPost(){
     var currentBubbleId = Session.get('currentBubbleId');
 
     var discussionAttributes = {
-      name: $('.cb-editDiscussion-form > .discussionTitle').val(),
+      name: encodeURIComponent($('.cb-editDiscussion-form > .discussionTitle').val()),
       body: $.trim( $('.cb-editDiscussion-form > .wysiwyg_group').find('.wysiwyg').html() ),
       //bubbleId: currentBubbleId,
       //children: newChildren

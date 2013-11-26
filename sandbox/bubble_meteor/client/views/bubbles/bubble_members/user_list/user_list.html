@@ -1,11 +1,6 @@
 <template name="userList">
   {{#if hasUsers}}
     <div class="bubble-users-list">
-
-      {{#if loading}}
-        {{> gifLoaderToParent}}
-      {{/if}}
-
       <div class="heading-container">
         <div class="small-heading member-list-heading">
           {{header}}
@@ -23,12 +18,12 @@
         <li><a href="#" class="prev">prev</a></li>
         {{#if showAll}}
           {{#each pages}}
-            <li><a href="#" class="pageitem {{isActivePage this.type}}" id='{{idStringify}}'>{{this.page}}</a></li>
+            <li><a href="#" class="pageitem {{isActivePage this.type}}" data-page='{{page}}'>{{this.page}}</a></li>
           {{/each}}
         {{else}}
           {{#each pages}}
             {{#if show}}
-              <li><a href="#" class="pageitem {{isActivePage this.type}}" id='{{idStringify}}'>{{this.page}}</a></li>
+              <li><a href="#" class="pageitem {{isActivePage this.type}}" data-page='{{page}}'>{{this.page}}</a></li>
             {{else}}
               {{#if elipses}}
                 ...

@@ -33,7 +33,10 @@ Template.listItemExploreEventPostBB.helpers({
       } else if (this.postAsType == "bubble") {
         //var bubble = Bubbles.findOne(this.postAsId);
         //var bubble = new BBBubble({id: this.postAsId});
-        return this.bubble.title;
+        if (this.bubble)
+          return this.bubble.title;
+
+        return '';
       }
     },
     isGoing : function() {
@@ -107,12 +110,6 @@ Template.listItemExploreEventPostBB.helpers({
       else{
         return false;
       }
-    },
-
-    isAdminBB: function(){
-      var isadmin = mybubbles.isAdmin(Meteor.userId());
-      console.log('Is Admin: ', isadmin);
-      return isadmin;
     }
 });
 
@@ -168,9 +165,9 @@ Template.listItemExploreEventPostBB.rendered = function(){
       //Extract and append the bubble's title to action string
       var title = 'click-post_'+$(".post-item").attr('class').split('name-')[1];
       //Logs the action that user is doing
-      Meteor.call('createLog', 
-        { action: title }, 
-        window.location.pathname, 
+      Meteor.call('createLog',
+        { action: title },
+        window.location.pathname,
         function(error) { if(error) { throwError(error.reason); }
       });
     // }, 500);

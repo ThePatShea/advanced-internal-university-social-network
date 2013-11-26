@@ -25,20 +25,6 @@
           </div>
         </div>
       </div>
-      <div name="body" class="required wysiwyg">
-        {{#if isBubble}}
-          {{{description}}}
-        {{else}}
-          {{#if isPost}}
-            {{#if body}}
-              {{{body}}}
-            {{else}}
-              <span class="wysiwyg-placeholder">Type here...</span>
-            {{/if}}
-          {{else}}
-            <span class="wysiwyg-placeholder">Type here...</span>
-          {{/if}}
-        {{/if}}
-      </div>
+      <div name="body" class="required wysiwyg">{{#if isBubble}}{{{description}}}{{else}}{{#if isPost}}{{#if body}}{{{body}}}{{else}}<span class="wysiwyg-placeholder">Type here...</span>{{/if}}{{else}}<span class="wysiwyg-placeholder">Type here...</span>{{/if}}{{/if}}</div>
   </div>
 </template>

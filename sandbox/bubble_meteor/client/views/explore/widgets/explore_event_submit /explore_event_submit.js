@@ -1,3 +1,4 @@
+
 Template.exploreEventSubmit.created = function(){
   eventMainURL = "/img/Event.jpg";
   eventRetinaURL = "/img/Event.jpg";
@@ -25,13 +26,6 @@ Template.exploreEventSubmit.created = function(){
 }
 
 
-Template.exploreEventSubmit.events({
-  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
-      tmpl.validateForm();
-  }
-});
-
-
 
 Template.exploreEventSubmit.helpers({
   getCurrentUserId: function() {
@@ -40,18 +34,22 @@ Template.exploreEventSubmit.helpers({
   getAdminBubbles: function() {
     adminBubblesCount  =  Bubbles.find({"users.admins": Meteor.userId()}).count();
     adminBubbles       =  Bubbles.find({"users.admins": Meteor.userId()});
-   
+
     if (adminBubblesCount > 0) {
       return adminBubbles;
     } else {
       return false;
-    } 
+    }
   }
 });
 
 
 
 Template.exploreEventSubmit.events({
+  'keyup .required, propertychange .required, input .required, paste .required, click button': function(evt, tmpl) {
+      tmpl.validateForm();
+      console.log("validated");
+  },
   'click .post-as-button': function(event) {
     event.preventDefault();
   },
@@ -63,7 +61,7 @@ Template.exploreEventSubmit.events({
     var dateTime = $('.cb-explore-eventSubmit-form > .cb-form-row > .date').val() + " " + $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val();
     //console.log('Event photo: ', $("#eventPhoto").attr("src"));
 
-    var eventAttributes = { 
+    var eventAttributes = {
       dateTime: moment(dateTime).valueOf(),
       location: $('.cb-explore-eventSubmit-form > .first > .event-location').val(),
       name: encodeURIComponent($('.cb-explore-eventSubmit-form > .first > .event-name').val()),
@@ -82,26 +80,24 @@ Template.exploreEventSubmit.events({
     createPost(eventAttributes);
 
     //Show Post submitted confirmation message
-    var postTitle = encodeURIComponent($('.cb-eventSubmit-form > .first > .event-name').val());
-    var displayPostConfirmationMessage = function(postTitle){
+    var displayPostConfirmationMessage = function(){
       return function(){
-        //postTitle = encodeURIComponent($('.cb-discussionSubmit-form').find('[name=name]').val());
-        var message = postTitle.slice(0, 7);
-        var message = message + ' ...';
-        $('.message-container .info').text(message);
+        $('.job-type').text("This post will be available shortly!");
         $('.message-container').removeClass('visible-false');
         $('.message-container').addClass('message-container-active');
         setTimeout(function(){
           $('.message-container').removeClass('message-container-active');
           $('.message-container').addClass('visible-false');
           clearTimeout();
-        },5000);
+        },10000);
       }        
     }
-    console.log('Post Title: ', postTitle);
-    setTimeout(displayPostConfirmationMessage(postTitle), 1000);
-    
+    setTimeout(displayPostConfirmationMessage(), 1000);
 
+    $('.cb-explore-eventSubmit-form > .cb-form-row > .date').val('');
+    $('.cb-explore-eventSubmit-form > .cb-form-row > .time').val('');
+    $('.cb-explore-eventSubmit-form > .first > .event-name').val('');
+    $('.cb-explore-eventSubmit-form > .event-details').val('');
   },
 
   'dragover .cb-explore-eventSubmit-form .attach-files > .drop-zone': function(evt){
@@ -122,7 +118,7 @@ Template.exploreEventSubmit.events({
       else{
         f = files[0];
         //If the file dropped on the dropzone is an image then start processing it
-        if (f.type.match('image.*')) {
+        if (f.type.match('image.*') && (f.size < 775000)) {
           var reader = new FileReader();
           var eventMainCanvas = document.getElementById('event-main-canvas');
           var eventRetinaCanvas = document.getElementById('event-retina-canvas');
@@ -217,12 +213,63 @@ Template.exploreEventSubmit.events({
             };
           })(f);
           reader.readAsDataURL(f);
+        } else if(f.size >= 775000) {
+          alert("Files cannot be larger than 775KB, please upload a different file.");
+          return;
         }
         else{
           error = new Meteor.Error(422, 'Please choose a valid image.');
           throwError(error.reason);
         }
       }
+  },
+  'click .post-as-button.bubble': function(){
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
+  },
+  'click .btn-select-post-as-bubble': function(evt,tmpl){
+    //tmpl.validateForm();
+    //var postAsId = $(this).attr("name");
+    var postAsId = this._id;
+    console.log("Post As Id: ", postAsId);
+    $("[name=post-as-id]").val(postAsId);
+    $("[name=post-as-type]").val("bubble");
+
+
+
+    //var bubbleTitle = $(this).children(".bubble-title").attr("name");
+    var bubbleTitle = this.title;
+    $(".selected-bubble-post-as").html(bubbleTitle);
+
+    $(".post-as-button.bubble").removeClass("active-false");
+    $(".post-as-button.bubble").addClass("active-true");
+
+    $(".post-as-button.me").removeClass("active-true");
+    $(".post-as-button.me").addClass("active-false");
+
+    $(".post-as-bubble-dropdown").hide();
+    tmpl.validateForm();
+  },
+  'click .post-as-button.me': function(evt, tmpl){
+    $("[name=post-as-id]").val( Meteor.userId() );
+    $("[name=post-as-type]").val("user");
+
+
+
+    $(".post-as-button.bubble").removeClass("active-true");
+    $(".post-as-button.bubble").addClass("active-false");
+
+    $(".post-as-button.me").removeClass("active-false");
+    $(".post-as-button.me").addClass("active-true");
+
+    $(".selected-bubble-post-as").html("Select a bubble");
+    tmpl.validateForm();
   }
 
 });
@@ -239,16 +286,31 @@ Template.exploreEventSubmit.rendered = function() {
   var postAsType = $("[name=post-as-type]").val();
   //$(".postAsButton." + postAsType).addClass("active-true");
 
-  $(".post-as-button.bubble").mouseover(function() {
+  $(".post-as-bubble-dropdown").hide();//Hide bubble dropdown on render
+
+  /*$(".post-as-button.bubble").mouseover(function() {
     $(".post-as-bubble-dropdown").show();
   });
 
   $(".post-as-button.bubble").mouseout(function() {
     $(".post-as-bubble-dropdown").hide();
+  });*/
+
+  /*
+  $(".post-as-button.bubble").click(function() {
+    if($(".post-as-bubble-dropdown").css('display') == 'none')
+    {
+      $(".post-as-bubble-dropdown").show();
+    }
+    else
+    {
+      $(".post-as-bubble-dropdown").hide();
+    }
   });
 
   $(".btn-select-post-as-bubble").click(function() {
     var postAsId = $(this).attr("name");
+    console.log("Post As Id: ", postAsId);
     $("[name=post-as-id]").val(postAsId);
     $("[name=post-as-type]").val("bubble");
 
@@ -281,20 +343,13 @@ Template.exploreEventSubmit.rendered = function() {
 
     $(".selected-bubble-post-as").html("Select a bubble");
   });
+*/
 
 
 
 
 
   this.validateForm();
-
-  $(".date-picker").glDatePicker(
-    {
-      cssName: 'flatwhite',
-      allowMonthSelect: false,
-      allowYearSelect: false
-    }
-  );
 
   //Format the time when the textbox is changed
   $('.cb-explore-eventSubmit-form > .cb-form-row > .time').change(function(){

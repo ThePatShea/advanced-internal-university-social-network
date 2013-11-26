@@ -1,5 +1,17 @@
 this.RestCrud = {
 	/**
+	 * Default options parser.
+	 */
+	parseOptions: function(ctx) {
+		return {
+			fields: RestHelpers.getFieldList(ctx.request.query.fields),
+			sort: ctx.request.query.sort,
+			page: ctx.request.query.page || 0,
+			limit: ctx.request.query.limit || RestConst.DEFAULT_LIMIT
+		};
+	},
+
+	/**
 	 * Run query over collection
 	 * @param  {object} ctx        			request context
 	 * @param  {Collection} collection 	Meteor collection
@@ -20,8 +32,14 @@ this.RestCrud = {
 
 		if (opts.apiOpts)
 			apiOptions = opts.apiOpts(ctx);
+		else
+			apiOptions = this.parseOptions(ctx);
 
-		// Make query
+		// Preprocess query options
+		if (opts.queryOpts)
+			apiOptions = opts.queryOpts(ctx, apiOptions);
+
+		// Make query and options
 		var queryOptions = RestHelpers.buildOptions(apiOptions);
 
 		var query = null;
@@ -50,6 +68,11 @@ this.RestCrud = {
 
 		if (opts.apiOpts)
 			apiOptions = opts.apiOpts(ctx);
+		else
+			apiOptions = this.parseOptions(ctx);
+
+		if (opts.queryOpts)
+			apiOptions = opts.queryOpts(ctx, apiOptions);
 
 		// Run query
 		var obj = RestHelpers.mongoFindOne(collection, id, apiOptions.fields);
@@ -147,7 +170,7 @@ this.RestCrud = {
 		if (opts.preprocess)
 			obj = opts.preprocess(ctx, obj);
 
-		var result = RestHelpers.mongoUpdate(collection, id, obj)
+		var result = RestHelpers.mongoUpdate(collection, id, obj);
 
 		if (result) {
 			if (opts.afterUpdate)

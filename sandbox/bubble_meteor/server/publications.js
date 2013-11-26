@@ -127,6 +127,10 @@ getBubbleId =  function(userId) {
     }
   });
 
+  Meteor.publish('numPostsByUser', function(uid) {
+    return Posts.find({userId: uid}, {fields: {_id: 1, userId: 1}});
+  });
+
   Meteor.publish('discussions', function(bubbleId, limit){
     return Posts.find({bubbleId: bubbleId, postType: 'discussion'}, {
       //sort: {submitted: -1},
@@ -346,7 +350,11 @@ getBubbleId =  function(userId) {
       var comments2  =  comments.fetch();
       var commentIds =  _.pluck(comments2, "userId");
 
-      var users    =  Meteor.users.find({_id: {$in: commentIds} });
+      var users    =  Meteor.users.find({_id: {$in: commentIds}}, {fields: {
+          'name': 1,
+          'username': 1,
+          'profilePicture': 1
+      }});
 
       return [comments, users];
   });
@@ -420,10 +428,10 @@ Meteor.publish('sidebarBubbles', function(userId) {
       ]
     }, { 
          fields: {
-          'coverPhoto': 0,
-          'retinaCoverPhoto': 0,
-          'profilePicture': 0,
-          'retinaProfilePicture': 0,
+          'category': 1,
+          'title': 1,
+          '_id': 1,
+          'users': 1
          },
     //sort: {submitted: -1}, 
   });
@@ -649,6 +657,14 @@ Meteor.publish('sidebarBubbles', function(userId) {
       });
     }
   });
+
+  Meteor.publish('getProfilePictureFromId', function(id) {
+    return Meteor.users.find({_id: id}, {fields: {'profilePicture': 1, 'retinaProfilePicture': 1}});
+  });
+
+  Meteor.publish('nameFromId', function(userId) {
+    return Meteor.users.find({_id: userId}, {fields: {'name': 1}})
+  })
 
   Meteor.publish('singleUser', function(userId) { 
     return Meteor.users.find({_id: userId}, {

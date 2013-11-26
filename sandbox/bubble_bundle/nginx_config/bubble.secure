@@ -1,0 +1,29 @@
+proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=microcache:5m max_size=1000m;
+
+server {
+    listen      80;
+    server_name www.emorybubble.com;
+    rewrite ^ https://$server_name$request_uri? permanent;
+}
+
+
+server {
+    listen      8000;
+
+    location /2013-09-11/ {
+        ModSecurityEnabled on;
+        ModSecurityConfig modsecurity.conf;
+        proxy_pass http://localhost:3000;
+        proxy_cache microcache;
+        proxy_cache_key "$request_uri";
+        proxy_cache_valid 300s;
+
+        access_log  /opt/nginx/logs/microcache.log;
+    }
+
+    location / {
+        ModSecurityEnabled on;
+        ModSecurityConfig modsecurity.conf;
+        proxy_pass http://localhost:3000;
+    }
+}

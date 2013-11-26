@@ -8,6 +8,12 @@ Template.logoutDropdown.helpers({
 
 Template.logoutDropdown.events({
   'click .signout': function() {
+      Meteor.call('createLog', 
+        { action: 'logout' }, 
+        window.location.pathname, 
+        function(error) { if(error) { throwError(error.reason); }
+      });
+
       Meteor.logout(function(){
         Meteor.Router.to('loggedOut');
       })

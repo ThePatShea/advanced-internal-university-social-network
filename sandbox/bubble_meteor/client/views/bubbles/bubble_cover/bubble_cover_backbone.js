@@ -1,9 +1,5 @@
 Template.bubbleCoverBackbone.rendered = function(){
   console.log("Cover Rendered");
-  //Log clicking of edit bubble button
-  /*$(".lbl").on("click", function() {
-    Meteor.call('createLog',  "mybubble", 'editBubble', 'clickEditBubbleButton', false);
-  });*/
 };
 
 Template.bubbleCoverBackbone.created = function() {
@@ -13,67 +9,68 @@ Template.bubbleCoverBackbone.created = function() {
 
 Template.bubbleCoverBackbone.helpers({
   hasBeenInvited: function() {
-    //return _.contains(this.users.invitees, Meteor.userId());
-    var inviteePages = mybubbles.Invitees.getNumPages();
+    if (this.users)
+      return _.contains(this.users.invitees, Meteor.userId());
+
+    return false;
   },
 
 	hasApplied: function() {
-		// var users = Bubbles.findOne(Session.get('currentBubbleId')).users;
-    var isApplicantAjax = $.ajax({url: '/2013-09-11/isapplicant?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    if(isApplicantAjax.responseText == 'True'){
-      return true;
-    }
-    else{
-      return false;
-    }
+    if (this.users)
+      return _.contains(this.users.applicants, Meteor.userId());
+
+    return false;
 	},
 
 	hasJoinedBubble: function() {
-    var isMemberAjax = $.ajax({url: '/2013-09-11/ismember?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    if(isMemberAjax.responseText == 'True' || isAdminAjax.responseText == 'True'){
-      return true;
+    if (this.users) {
+      var userId = Meteor.userId();
+      return _.contains(this.users.members, userId) || _.contains(this.users.admins, userId);
     }
-    else{
-      return false;
-    }
+
+    return false;
 	},
 
-  isAdminBackbone: function(){
-    var isAdminAjax = $.ajax({url: '/2013-09-11/isadmin?bubbleid=' + currentBubbleId + '&userid=' + Meteor.userId(),async:false});
-    if(isAdminAjax.responseText == 'True'){
-      return true;
-    }
-    else{
-      return false;
-    }
+  isAdminBackbone: function() {
+    if (this.users)
+      return _.contains(this.users.admins, Meteor.userId());
   },
 
   isSuperBubbleBackbone: function(){
-    var bubbleInfo = mybubbles.bubbleInfo.toJSON();
-    return 'super' == bubbleInfo.bubbleType;
+    return this.bubbleType === 'super';
   },
 
   getBubbleUsersCountBackbone: function(){
-    var userCount = mybubbles.Members.bubbleMembers.count + mybubbles.Admins.bubbleAdmins.count;
-    return userCount;
+    if (this.users)
+      return this.users.admins.length + this.users.members.length;
+
+    return 0;
   }
 });
 
 Template.bubbleCoverBackbone.events({
   'click #bubble-pic': function() {
-    var imgSrc = $("#bubble-pic").attr('src');
-    if (imgSrc == "/img/Bubble-Profile.jpg" && mybubbles.isAdmin(Meteor.userId()) ) {
-      Meteor.Router.to('bubbleEdit',Session.get('currentBubbleId'));
-    } else if (mybubbles.isMember(Meteor.userId())){
-      Meteor.Router.to('bubblePageBackbone',Session.get('currentBubbleId'));
+    var bubbleInfo = Session.get('bubbleInfo');
+    var isAdmin = BubbleDataNew.Helpers.isAdmin(bubbleInfo, Meteor.userId());
+    var isMember = BubbleDataNew.Helpers.isMember(bubbleInfo, Meteor.userId());
+
+    var imgSrc = $('#bubble-pic').attr('src');
+    if (imgSrc === '/img/Bubble-Profile.jpg' && isAdmin) {
+      Meteor.Router.to('bubbleEdit', Session.get('currentBubbleId'));
+    } else
+    if (isMember) {
+      Meteor.Router.to('bubblePageBackbone', Session.get('currentBubbleId'));
     }
   },
   'click .invite-accept': function() {
-    Meteor.call('acceptInvitation', this._id);
+    Meteor.call('acceptInvitation', this.id);
+    Meteor.Router.to('/mybubbles/'+this.id+'/home');
   },
   'click .invite-deny': function() {
-    Meteor.call('removeInvitee', this._id);
+    var id = this.id;
+    Meteor.call('removeInvitee', this.id, function(){
+      window.location.href = '/mybubbles/'+id+'/public';
+    });
   },
   'click .join-apply': function() {
     //Google Analytics

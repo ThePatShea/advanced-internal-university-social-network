@@ -30,7 +30,7 @@
 
 
     <h4 class="post-name visible-{{matchObjectType 'post'}}">
-      <span class="name-text">{{decodeURI name}}</span>
+      <span class="name-text">{{decodeURIComponent name}}</span>
       <span class="visible-{{hasChildren}} cb-icon-attachment">{{> icon-attachment}}</span>
     </h4>
 
@@ -49,10 +49,23 @@
               <img class="pic-circle profile-pic" src="{{profilePicture}}"/>
             </div>
           {{/with}}
-          <div style="position: relative; top: 2px;" class="pull-left">
-            <div class="list-item-post-as">{{displayName}}</div>
-            <div style="width: auto" class="update-time">{{submittedText submitted}}</div>
-          </div>
+          <span class="visible-{{matchPostType 'file'}} attribute-items">
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon">{{> icon-time}}</span>
+                {{timestampToFromNow lastCommentTime}}
+              </div>
+            </span>
+            <span class="attribute">
+              <div class="pull-right post-item-lbl">
+                <span class="post-item-icon">{{> icon-download}}</span>
+                {{numDownloads}}
+              </div>
+            </span>
+          </span>
+          <span class="post-actions">
+            <span class="visible-{{matchPostType 'file'}}">{{> download}}</span>
+          </span>
         </div>
         {{else}}
           <span class="visible-{{matchObjectType 'bubble'}} attribute-items">

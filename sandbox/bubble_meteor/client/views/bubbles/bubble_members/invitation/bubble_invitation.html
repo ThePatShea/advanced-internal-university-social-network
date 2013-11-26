@@ -1,78 +1,73 @@
 <template name="bubbleInvitation">
-  <div class="collapse {{inIfSearching}} cb-form-container" id="cb-form-container-add-members">
-    <div class="top-arrow-container">
-      <div class="top-arrow">{{> icon-arrow-up}}</div>
-    </div>
-    <div class="cb-form cb-form-add-members">
-      <div class="control-group">
-        <div class="controls">
-            <input class="search-text" name="searchText" type="text" placeholder="Type anyone's name to invite..."/>
-        </div>
+  <div id="bubble-invitation">
+    <div class="collapse in cb-form-container" id="cb-form-container-add-members">
+      <div class="top-arrow-container">
+        <div class="top-arrow">{{> icon-arrow-up}}</div>
       </div>
-      <div class="searchResults">
-      {{#codeComment}}
-        {{#if hasSearchText}}
-          {{findUsers}}
-        {{/if}}
-      {{/codeComment}}
+      <div class="cb-form cb-form-add-members">
+        <div class="control-group">
+          <div class="controls">
+              <input class="search-text" name="searchText" type="text" placeholder="Type anyone's name to invite..."/>
+          </div>
+        </div>
+        <div class="searchResults">
 
-      {{#each getFoundUsers}}
-        <div class="invitee shortlist-invitee select">
-            <span>
-              <div class="invitee-container {{#if selected}}selected{{/if}}">
-                <div class="invitee-pic-container">
-                  <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
-                  <div class="pic-preview-wrapper-outer">
-                    <div class="pic-preview-wrapper-middle">
-                      <div class="pic-preview-wrapper-inner-invitee">
-                        <span class="visible-{{selected}} cb-icon-check">{{> icon-check}}</span>
-                        <span class="invisible-{{selected}}"><img src="{{profilePicture}}"></span>
+        {{#each getSearchResponse}}
+          <div class="invitee shortlist-invitee select">
+              <span>
+                <div class="invitee-container {{#if selected}}selected{{/if}}">
+                  <div class="invitee-pic-container">
+                    <span class="fill cb-icon-bubble-big">{{> icon-bubble-big}}</span>
+                    <div class="pic-preview-wrapper-outer">
+                      <div class="pic-preview-wrapper-middle">
+                        <div class="pic-preview-wrapper-inner-invitee">
+                          <span class="visible-{{selected}} cb-icon-check">{{> icon-check}}</span>
+                          <span class="invisible-{{selected}}"><img src="{{profilePicture}}"></span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="v-middle">
-                  <div class="v-inner">
-                    <span class="pull-left invitee-text">
-                      {{name}}
-                    </span><br>
-                    <span class="num-posts">
-                      {{pluralize numPosts "post" ""}}
-                    </span>
+                  <div class="v-middle">
+                    <div class="v-inner">
+                      <span class="pull-left invitee-text">
+                        {{name}}
+                      </span><br>
+                      <span class="num-posts">
+                        {{pluralize numPosts "post" ""}}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </span>
-        </div>
-      {{/each}}
+              </span>
+          </div>
+        {{/each}}
 
-      </div>
-      {{#if potentialInvitees}}
-        <div class="cancel-invitee-container">
-          {{#each potentialInvitees}}
-              <div class="cancel-invitee remove-invitee">
-                <span class="cancel-invitee-icon">{{> icon-cancel}}</span>
-                <span class="cancel-invitee-text">{{nameFromNetID this}}</span>
-              </div>
-          {{/each}}
         </div>
-      {{/if}}
-      <div class="add-invitees">
-        <span class="add-invitees-btn">
-          {{#if getNumSelected}}
-            <button class="std-btn-form pull-right add-users" type="button">
-              invite
-            </button>
-          {{else}}
-            <button class="std-btn-form pull-right" type="button">
-              search for and select at least 1 user to invite
-            </button>
-          {{/if}}
-        </span>
-        <span class="pull-right add-invitees-text">{{pluralize getNumSelected "person" ""}} selected</span>
+        {{#if potentialInvitees}}
+          <div class="cancel-invitee-container">
+            {{#each potentialInvitees}}
+                <div class="cancel-invitee remove-invitee">
+                  <span class="cancel-invitee-icon">{{> icon-cancel}}</span>
+                  <span class="cancel-invitee-text">{{this.name}}</span>
+                </div>
+            {{/each}}
+          </div>
+        {{/if}}
+        <div class="add-invitees">
+          <span class="add-invitees-btn">
+            {{#if getNumSelected}}
+              <button class="std-btn-form pull-right add-users" type="button">
+                invite
+              </button>
+            {{else}}
+              <button class="std-btn-form pull-right" type="button">
+                search for and select at least 1 user to invite
+              </button>
+            {{/if}}
+          </span>
+          <span class="pull-right add-invitees-text">{{pluralize getNumSelected "person" ""}} selected</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
-

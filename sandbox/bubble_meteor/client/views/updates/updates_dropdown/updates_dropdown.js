@@ -17,7 +17,7 @@ Template.updatesDropdown.helpers({
   updateCount: function(){
   	return Updates.find({userId: Meteor.userId(), read: false}).count();
   },
-  getBubble: function(bubbleId) { 
+  getBubble: function(bubbleId) {
     return Bubbles.findOne(bubbleId);
   },
   compressUpdates: function(){
@@ -44,9 +44,9 @@ Template.updatesDropdown.helpers({
       //To combine updates with same userId, invokerId, updateType and postId
       _.each(updateList, function(update){
         updateList = _.reject(updateList, function(newUpdate) {
-          return  update.bubbleId == newUpdate.bubbleId && 
-                  update.userId == newUpdate.userId && 
-                  update.invokerId == newUpdate.invokerId && 
+          return  update.bubbleId == newUpdate.bubbleId &&
+                  update.userId == newUpdate.userId &&
+                  update.invokerId == newUpdate.invokerId &&
                   update.updateType == newUpdate.updateType &&
                   update.postId == newUpdate.postId;
         });
@@ -67,7 +67,7 @@ Template.updatesDropdown.helpers({
         //Combine and chain the names together
         if (commentUpdates.length > 0) {
           updateList = _.reject(updateList, function(newUpdate) {
-            return update.postId == newUpdate.postId && 
+            return update.postId == newUpdate.postId &&
                     update.updateType == newUpdate.updateType &&
                     update.updateType == "replied";
           });
@@ -111,10 +111,10 @@ Template.updatesDropdown.helpers({
       });
 
       //Declaring the types that needs collapsing of names
-      var bubbleUpdateList = 
-      [ 
+      var bubbleUpdateList =
+      [
         "new applicant",
-        "new attendee",        
+        "new attendee",
         "member promoted",
         "member demoted",
         "joined bubble"
@@ -146,7 +146,7 @@ Template.updatesDropdown.helpers({
               chainedName = chainedName + " and " + excessCount + " other";
             }else{
               chainedName = chainedName + " and " + excessCount + " others";
-            } 
+            }
           }else{
             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
           }
@@ -168,9 +168,9 @@ Template.updatesDropdown.helpers({
       });
 
       updateList = _.sortBy(updateList, function(newUpdate) {
-        return newUpdate.submitted; 
-      }); 
-      return _.toArray(_.groupBy(updateList,'bubbleId'));
+        return newUpdate.submitted;
+      });
+      return _.toArray(_.groupBy(updateList.slice(0,6),'bubbleId'));
     }
   },
   compressedCount: function(){
@@ -181,9 +181,9 @@ Template.updatesDropdown.helpers({
       //To combine updates with same userId, invokerId, updateType and postId
       _.each(updateList, function(update){
         updateList = _.reject(updateList, function(newUpdate) {
-          return  update.bubbleId == newUpdate.bubbleId && 
-                  update.userId == newUpdate.userId && 
-                  update.invokerId == newUpdate.invokerId && 
+          return  update.bubbleId == newUpdate.bubbleId &&
+                  update.userId == newUpdate.userId &&
+                  update.invokerId == newUpdate.invokerId &&
                   update.updateType == newUpdate.updateType &&
                   update.postId == newUpdate.postId;
         });
@@ -204,7 +204,7 @@ Template.updatesDropdown.helpers({
         //Combine and chain the names together
         if (commentUpdates.length > 0) {
           updateList = _.reject(updateList, function(newUpdate) {
-            return update.postId == newUpdate.postId && 
+            return update.postId == newUpdate.postId &&
                     update.updateType == newUpdate.updateType &&
                     update.updateType == "replied";
           });
@@ -248,10 +248,10 @@ Template.updatesDropdown.helpers({
       });
 
       //Declaring the types that needs collapsing of names
-      var bubbleUpdateList = 
-      [ 
+      var bubbleUpdateList =
+      [
         "new applicant",
-        "new attendee",        
+        "new attendee",
         "member promoted",
         "member demoted",
         "joined bubble"
@@ -283,7 +283,7 @@ Template.updatesDropdown.helpers({
               chainedName = chainedName + " and " + excessCount + " other";
             }else{
               chainedName = chainedName + " and " + excessCount + " others";
-            } 
+            }
           }else{
             chainedName = chainedName.replace(/,([^,]*)$/," and $1");
           }
@@ -305,19 +305,22 @@ Template.updatesDropdown.helpers({
       });
 
       updateList = _.sortBy(updateList, function(newUpdate) {
-        return newUpdate.submitted; 
-      }); 
+        return newUpdate.submitted;
+      });
       return updateList.length;
     }
   },
+  /*
   'click .set-loading' : function() {
     console.log("SET LOADING");
     Session.set("isLoading", true);
   }
+  */
 });
 
 Template.updatesDropdown.events({
   'click #seeall': function() {
+    setTimeout(function(){Session.set('updatesToShow',0);},1000);
     Meteor.Router.to('dashboard');
   },
   'click #clearall': function() {
@@ -353,7 +356,7 @@ Template.update.helpers({
       if(nameList.length > 1){
         content = content.replace('is', 'are');
       };
-      
+
       this.user = Meteor.users.findOne({'username': this.invokerName},{fields: {'name': 1}});
       console.log("USER: ", this.user);
       if(typeof this.user !== "undefined")
@@ -369,7 +372,16 @@ Template.update.helpers({
 Template.updateBubble.helpers({
   getBubble: function(obj) {
     if(obj && obj.length > 0){
-      return Bubbles.findOne(obj[0].bubbleId);
+      Meteor.subscribe('findBubblesById',[obj[0].bubbleId]);
+      var retVal = Bubbles.findOne(obj[0].bubbleId);
+      if(typeof retVal === "undefined")
+      {
+        return {title: "INVITATION"}
+      }
+      else
+      {
+        return retVal;
+      }
     }
   }
 });

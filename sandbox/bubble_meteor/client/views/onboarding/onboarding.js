@@ -1,16 +1,16 @@
 Template.onboarding.helpers({
   getCurrentName: function() {
-    var user = Meteor.users.findOne(Meteor.userId());
-    return user.name;
+    //var user = Meteor.users.findOne(Meteor.userId());
+    return Meteor.user().name;
   },
 });
 
 
 Template.onboarding.events({
   'click #accept-terms': function() {
-    $('#cb-form-container-onboarding .cb-submit').removeClass('ready-false');
-    $('#cb-form-container-onboarding .cb-submit').prop('disabled', false);
-    $('#accept-terms').addClass('selected');
+    $('.cb-submit').removeClass('ready-false');
+    $('.cb-submit').prop('disabled', false);
+    $('.agree-terms').addClass('selected');
 
     Session.set("termsAccepted", "true");
   },
@@ -69,7 +69,7 @@ Template.onboarding.events({
   evt.dataTransfer.dropEffect = 'copy';
   },
 
-  'change #filesToUpload': function(evt){
+  'change #onboardingFilesToUpload': function(evt){
     files = evt.target.files;
     //If more than one file dropped on the dropzone then throw an error to the user.
     if(files.length > 1){
@@ -78,7 +78,7 @@ Template.onboarding.events({
     } else {
       f = files[0];
       //If the file dropped on the dropzone is an image then start processing it
-      if (f.type.match('image.*')) {
+      if (f.type.match('image.*') && (f.size < 775000)) {
         var reader = new FileReader();
 
         var mainCanvas = document.getElementById('main-canvas');
@@ -93,10 +93,11 @@ Template.onboarding.events({
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
           return function(e) {
-              $("#drop_zone").hide();
+              console.log("FILE!");
+              $("#onboarding_drop_zone").hide();
               $(".crop").attr("src", e.target.result).load(function() {
               profileImage.src = e.target.result;
-              cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form-container", handles: true, onInit: function(img, selection) {
+              cropArea = $('.crop').imgAreaSelect({instance: true, aspectRatio: '1:1', imageHeight: profileImage.height, imageWidth: profileImage.width, x1: '10', y1: '10', x2: (10+minX), y2: (10+minY), parent: ".cb-form > .attach-files", handles: true, onInit: function(img, selection) {
                 mainContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 160, 160);
                 retinaContext.drawImage(profileImage, selection.x1, selection.y1, selection.width, selection.height, 0, 0, 320, 320);
                 mainURL = mainCanvas.toDataURL();
@@ -172,6 +173,9 @@ Template.onboarding.events({
           };
         })(f);
         reader.readAsDataURL(f);
+      } else if(f.size >= 775000) {
+        alert("Files cannot be larger than 775KB, please upload a different file.");
+        return;
       }
     }
   }
@@ -418,6 +422,13 @@ Template.onboarding.rendered = function() {
 }
 
 Template.onboarding.created = function() {
+  Meteor.call('createLog', 
+    { action: 'login' }, 
+    window.location.pathname, 
+    function(error) { if(error) { throwError(error.reason); }
+  });
+
+  Meteor.subscribe('nameFromId',Meteor.userId());
 
   uId = Meteor.userId();
 
