@@ -2,7 +2,7 @@
   "dependencies": {
     "webkit-devtools-agent": {
       "version": "0.2.1",
-      "from": "webkit-devtools-agent@0.2.1",
+      "from": "https://registry.npmjs.org/webkit-devtools-agent/-/webkit-devtools-agent-0.2.1.tgz",
       "resolved": "https://registry.npmjs.org/webkit-devtools-agent/-/webkit-devtools-agent-0.2.1.tgz",
       "dependencies": {
         "ws": {
@@ -11,19 +11,19 @@
           "dependencies": {
             "commander": {
               "version": "0.6.1",
-              "from": "commander@~0.6.1"
+              "from": "commander@0.6.1"
             },
             "nan": {
               "version": "0.3.2",
-              "from": "nan@~0.3.0"
+              "from": "nan@0.3.2"
             },
             "tinycolor": {
               "version": "0.0.1",
-              "from": "tinycolor@0.x"
+              "from": "tinycolor@0.0.1"
             },
             "options": {
               "version": "0.0.5",
-              "from": "options@>=0.0.5"
+              "from": "options@0.0.5"
             }
           }
         },

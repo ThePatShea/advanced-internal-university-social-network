@@ -29,6 +29,32 @@
     }
   });
 
+  var FoundPost = BubbleRest.Model.extend({
+    url: function() {
+      return '/api/v1_0/' + this.bubbleId + '/posts/' + this.id;
+    },
+    fetchRelated: function(model, callback) {
+      function fetch(field, item) {
+        item.fetch({
+          success: function(related) {
+            model.set(field, related);
+            callback(model);
+          },
+          error: function(error) {
+            callback(model);
+          }
+        });
+      }
+
+      if (model.get('postAsType') === 'bubble') {
+        var bubble = new FoundBubble({id: model.get('postAsId')});
+        fetch('bubble', bubble);
+      } else {
+        callback(model);
+      }
+    }
+  })
+
   var FoundBubbles = BubbleRest.Collection.extend({
     limit: 10,
     model: FoundBubble,
@@ -94,7 +120,7 @@
   //Does this need to be broken up per model?
   var PostList = BubbleRest.Collection.extend({
     limit: 10,
-    model: FoundDiscussion,
+    model: FoundPost,
     url: function() {
       return '/2013-09-11/postList?idList=' + this.idList.toString() + '&limit=' + this.limit;
     }
@@ -142,6 +168,10 @@
       that.postList.idList = idList;
       that.postList.fetch({
         success: function(collection) {
+          /*_.each(collection.models, function(model){
+            console.log("MODEL: ", model);
+            model.fetchRelated(model);
+          });*/
           callback(undefined, collection.toJSON());
         },
         error: function(error) {
