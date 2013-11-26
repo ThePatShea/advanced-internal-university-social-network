@@ -216,6 +216,7 @@ Template.exploreEditEvent.events({
         // display the error to the user
         throwError(error.reason);
       } else {
+        Session.set('currentPostId', '');
         createEditEventUpdate(Meteor.userId(), currentPostId);
         Meteor.Router.to('explorePostPageBB', currentExploreId, currentPostId);
       }

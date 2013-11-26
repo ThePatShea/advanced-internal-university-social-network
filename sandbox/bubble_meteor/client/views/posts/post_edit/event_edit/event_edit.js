@@ -1,4 +1,4 @@
-Template.eventEdit.helpers({
+/*Template.eventEdit.helpers({
   getDate: function(){
     return moment(this.dateTime).format("M/DD/YYYY");
   },
@@ -285,4 +285,4 @@ Template.eventEdit.rendered = function() {
     $(".dropzone").hide();
   }
 
-}
+}*/

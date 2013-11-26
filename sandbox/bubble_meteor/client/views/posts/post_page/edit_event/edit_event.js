@@ -140,6 +140,8 @@ Template.editEvent.events({
         throwError(error.reason);
       } else {
         createEditEventUpdate(Meteor.userId(), currentPostId);
+        Session.set('currentPostId', '');
+        //Session.set('currentPostId', currentPostId);
         Meteor.Router.to('postPageBackbone', currentBubbleId, currentPostId);
       }
     });
