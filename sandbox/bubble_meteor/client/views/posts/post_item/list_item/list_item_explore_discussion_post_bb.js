@@ -33,7 +33,7 @@ Template.listItemExploreDiscussionPostBB.helpers({
       } else if (this.postAsType == "bubble") {
         //var bubble = Bubbles.findOne(this.postAsId);
         //var bubble = new BBBubble({id: this.postAsId});
-        return this.bubble.title;
+        //return this.bubble.title;
       }
     },
     isGoing : function() {

@@ -35,7 +35,7 @@ Template.listItemDiscussionPostBB.helpers({
         //var bubble = new BBBubble({id: this.postAsId});
         //return this.bubble.title;
         //CHANGE ME
-        return "";
+        return "TEST";
       }
     },
     isGoing : function() {
@@ -160,6 +160,7 @@ Template.listItemDiscussionPostBB.created = function() {
 }
 
 Template.listItemDiscussionPostBB.rendered = function(){
+  console.log("THIS: ", this);
   // console.log("LIBB: ", this);
   //Log clicking of individual bubble
   /*$(".post-item").on("click", function() {

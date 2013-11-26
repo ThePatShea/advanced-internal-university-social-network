@@ -15,24 +15,6 @@
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
         <div class="v-inner">
-        {{#if exploreId}}
-        <div style="width: 165px">
-          {{#with getPostAsBubble}}
-            <div class="pull-left category-{{category}}-fill post-as-bubble-list">
-              {{> icon-bubble}}
-            </div>
-          {{/with}}
-          {{#with getPostAsUser}}
-            <div class="pull-left profile-pic-container">
-              <img class="pic-circle profile-pic" src="{{profilePicture}}"/>
-            </div>
-          {{/with}}
-          <div style="position: relative; top: 2px;" class="pull-left">
-            <div class="list-item-post-as">{{displayName}}</div>
-            <div style="width: auto" class="update-time">{{submittedText submitted}}</div>
-          </div>
-        </div>
-        {{else}}
           <span class="visible-{{matchPostType 'discussion'}} attribute-items">
             <span class="attribute">
               <div class="pull-right post-item-lbl">
@@ -50,7 +32,6 @@
           <span class="post-actions">
             <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
           </span>
-        {{/if}}
         </div>
       </div>
     </div>

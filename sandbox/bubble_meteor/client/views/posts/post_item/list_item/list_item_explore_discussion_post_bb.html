@@ -15,7 +15,6 @@
     <div class="post-item-attributes">
       <div class="v-middle pull-right">
         <div class="v-inner">
-        {{#if exploreId}}
           {{#with getPostAsBubble}}
             <div class="pull-left category-{{category}}-fill post-as-bubble-list">
               {{> icon-bubble}}
@@ -30,25 +29,6 @@
             <div class="list-item-post-as">{{displayName}}</div>
             <div style="width: auto" class="update-time">{{submittedText submitted}}</div>
           </div>
-        {{else}}
-          <span class="visible-{{matchPostType 'discussion'}} attribute-items">
-            <span class="attribute">
-              <div class="pull-right post-item-lbl">
-                <span class="post-item-icon">{{> icon-time}}</span>
-                {{timestampToFromNow lastCommentTime}}
-              </div>
-            </span>
-            <span class="attribute">
-              <div class="pull-right post-item-lbl">
-                <span class="post-item-icon icon-views">{{> icon-views}}</span>
-                {{viewCount}}
-              </div>
-            </span>
-          </span>
-          <span class="post-actions">
-            <span class="visible-{{matchPostType 'discussion'}}">{{> reply}}</span>
-          </span>
-        {{/if}}
         </div>
       </div>
     </div>
