@@ -9,7 +9,7 @@ Template.postPageBackbone.helpers({
     return this.flagged;
   },
   getAuthorProfilePicture: function() {
-    var user = Session.get('currentbubbleUser');
+    var user = Session.get('currentBubbleUser');
     if (user)
       return user.profilePicture;
   },
