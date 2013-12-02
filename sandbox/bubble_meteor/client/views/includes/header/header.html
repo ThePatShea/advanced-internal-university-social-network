@@ -5,6 +5,7 @@
         <span class="logo-main">{{> icon-logo-main}}</span>
         <span class="logo-words">
           <span class="left">emory</span><span class="right">bubble</span>
+          <span class="beta-tag">{{> icon-betatag}}</span>
         </span>
       </a>
       <ul class="nav visible-all pull-right user-dropdown">
@@ -14,9 +15,6 @@
       </ul>
       <ul class="nav pull-right">
         {{#if currentUser}}
-          <li class="visible-{{checkUserType '4'}}">
-            <a href="/createUser">Create User</a>
-          </li>
           <li class="{{activeRouteClass 'analytics'}} visible-{{checkUserType '3'}}">
             <a href="{{userlogPath}}" class="my-bubble">Analytics</a>
           </li>

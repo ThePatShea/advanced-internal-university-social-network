@@ -1,7 +1,7 @@
 /***************         CSS Reset         ***************/
 .gldp-flatwhite
   .dow
-    cursor               default !important  // Overrides the datepicker framework's 'wait' cursor
+    cursor               default !important  /*Overrides the datepicker framework's 'wait' cursor*/
 
 button
   line-height            normal
@@ -650,7 +650,7 @@ positionize(val-height = auto, val-width = auto, val-padding = auto, val-margin 
   border-radius     val-border-radius
   overflow          val-overflow
   padding           val-padding
-  display         bord  val-display
+  display           val-display
   margin            val-margin
   height            val-height
   width             val-width
@@ -720,13 +720,6 @@ border-radius(n)
   -ms-border-radius      n
   -o-border-radius       n
   border-radius          n
-
-border-radius-args(args...)
-  -webkit-border-radius  args
-  -moz-border-radius     args
-  -ms-border-radius      args
-  -o-border-radius       args
-  border-radius          args
 
 opacity(n)
   filter                 unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
@@ -1010,7 +1003,7 @@ wysiwyg-image(n)
       positionize(6px, 12px, blank, 0 0 0 30px)
       fill        main-dark
   .cb-form
-    colorize(white-light, main-dark)
+    colorize(white-light, main-xdark)
     position       relative
     padding        0 30px
     margin         0
@@ -1300,7 +1293,7 @@ wysiwyg-image(n)
         .dz-title
           fontize(main, bold, uppercase, 78px, 1em, blank, blank, center)
           font-style        italic
-          colorize(main-xdark)
+          colorize(main-dark)
         .dz-subtitle
           fontize(main, light, lowercase, 21px, 1em, blank, blank, center)
           colorize(main-light)
@@ -1506,7 +1499,7 @@ wysiwyg-image(n)
         border-bottom  0px
         padding-bottom 8px
     input
-      colorize(white-light, main-dark)
+      colorize(white-light, main-xdark)
       fontize(alt, thin, auto, 23px)
       &:hover,
       &:focus
@@ -1703,7 +1696,7 @@ ul.pagination
    font-family "brandon-grotesque" sans-serif
    font-weight 700
    border 1px solid #BECDD5
-   padding 10px 0 8px 0
+   padding 9px 0 6px 0
    min-width 30px
    display inline-block
    line-height 1em
@@ -1769,210 +1762,6 @@ body
     position relative
     display block
     height 100%
-    
-/****************    NEW   ****************/
-.onboarding-section-container
-  display block
-  position absolute
-  height 100%
-  width 100%
-  top 65px
-  z-index -1
-  overflow-y auto
-  .boarding-container
-    position absolute
-    left 0
-    width 100%
-    .agree-terms
-      display inline-block
-      margin  0 0 21px 0
-      position relative
-      cursor pointer
-      padding-left 70px
-      text-align left
-      border-left none
-      height 54px
-      cursor none
-      .icon
-        z-index 1
-        background-color #001f37
-        position absolute
-        left 0
-        padding 11px
-        border 3px solid #2f5973
-        border-radius 50%
-        svg
-          fill #2f5973
-          vertical-align top
-          width 26px
-          height 26px
-      .text
-        font-family: 'proxima-nova',Arial,Sans-Serif;
-        font-weight: 400;
-        color main-xlight
-        font-size 15px
-        white-space nowrap
-        height 42px
-        display inline-block
-        border 1px solid #2f5973
-        padding-left 35px
-        position absolute
-        left 30px
-        border-left 0
-        padding-top 10px
-        padding-right 30px
-        border-radius-args 0 30px 30px 0
-        width 225px
-        .text-inner-container
-          height 54px
-          position absolute
-          top 0
-      &:hover
-        .text
-          background-color #2f5973
-          color #001f37
-        .icon
-          background-color #2f5973
-          position absolute
-          left 0
-          padding 11px
-          border 3px solid #001f37
-          -webkit-border-radius 50%
-          -moz-border-radius 50%
-          border-radius 50%
-          svg
-            fill #001f37
-      &.selected
-        .text
-          background-color #2f5973
-          color #001f37
-        .icon
-          background-color #2f5973
-          position absolute
-          left 0
-          padding 11px
-          border 3px solid #001f37
-          -webkit-border-radius 50%
-          -moz-border-radius 50%
-          border-radius 50%
-          svg
-            fill #001f37
-    .cb-submit-container
-      cursor pointer
-      float right
-      height           70px
-      button
-        border: 1px solid #2f5973;
-        color: #f7f8f8;
-        font-weight: 700;
-        font-family: 'brandon-grotesque',Arial,Sans-Serif;
-        text-transform: uppercase;
-        -webkit-border-radius 28px
-        -moz-border-radius 28px
-        border-radius 28px
-        font-size 11px
-      .cb-submit
-        position         relative
-        padding          8px 15px 7px 15px
-        top              10px
-        .words-main
-          display          inline
-        .words-error
-          display          none
-        &.ready-false
-          &:hover
-            word-spacing     2px
-            background       0
-            .words-main
-              display          none
-            .words-error
-              display          inline
-    h1
-      text-align left
-      padding: 30px 30px 25px 42px;
-      font-family: 'proxima-nova',Arial,Sans-Serif;
-      font-weight: 300;
-      text-decoration: auto;
-      letter-spacing: auto;
-      line-height: auto;
-      text-align: auto;
-      font-size: 30px;
-      color: #2f5973;
-      position: relative;
-      display: block;
-      height: 100%;
-    .boarding-form
-      background-color #001f37
-      padding 42px
-
-      form
-        hr
-          margin 0
-          border none
-          border-bottom 1px solid #2f5973
-          display block
-        label
-          font-family: 'brandon-grotesque',Arial,Sans-Serif;
-          font-weight: 700;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          font-size: 18px;
-          border-bottom 1px solid #2f5973
-          color #2f5973
-          display block
-          padding-bottom 7px
-          margin-bottom 21px
-          cursor pointer
-          a
-            color main-xlight
-            text-decoration underline
-      .attach-files
-        position relative
-        width 100%
-        .drop-zone
-          height 240px
-          border-bottom 1px solid #2f5973
-          margin 42px 0
-          .dz-subtitle
-            font-family: 'brandon-grotesque',Arial,Sans-Serif;
-            font-weight: 300;
-            text-decoration: blank;
-            letter-spacing: blank;
-            line-height: 1em;
-            text-align: center;
-            text-transform: lowercase;
-            font-size: 21px;
-            background: auto;
-            border: auto;
-            color: #2f5973;
-            fill: auto;
-            stroke: auto;
-            padding-bottom 50px
-          .dz-title
-            padding 50px 0 0 0
-            color: #011126;
-            fill: auto;
-            stroke: auto;
-            line-height: 1em;
-            text-align: center;
-            text-transform: uppercase;
-            font-size: 78px;
-            font-style: italic;
-            font-family: 'brandon-grotesque',Arial,Sans-Serif;
-            font-weight: 700;
-          .file-chooser-invisible
-            position: absolute;
-            bottom: auto;
-            right: 0;
-            left: auto;
-            top: 0;
-            cursor: pointer;
-            height 240px
-            width: 100%;
-            z-index: 20;
-            opacity: 0;
-            zoom: 1;
-/****************    NEW   ****************/
 /**********      onboarding      **********/
 
 
@@ -1996,7 +1785,8 @@ align-with-post-item(n)
     cursor                 pointer
     background             white
     .profile-pic-container
-      position: relative;
+      cursor    pointer
+      position  relative 
       .profile-pic
         border-color           main-light
     .update-icon-container
@@ -2253,6 +2043,10 @@ navbar-height        =  60px
       .right
         main-xlight-color          0
         font-main-medium           0
+      .beta-tag
+        top 0
+        position absolute
+        right -53px
     .nav
       @media (min-width: 768px)
         display                    block
@@ -2492,15 +2286,10 @@ navbar-height        =  60px
     &.subsection
       background         main-xlight
       position           relative
-      //overflow           visible!important // Joe
-      overflow           scroll
+      overflow           visible!important // Joe
       width              210px
       height             100%
       z-index            20
-      box-sizing         border-box
-      -webkit-box-sizing border-box
-      -moz-box-sizing    border-box
-      padding-bottom     60px
       &::-webkit-scrollbar
         display            none
       .heading,
@@ -2564,7 +2353,7 @@ navbar-height        =  60px
           svg
             vertical-align     middle
           &.section-mybubbles
-            right              -8px
+            right              0
         .cb-icon-other
           position           relative
           top                -2px
@@ -3024,11 +2813,12 @@ attachment-height  =  75px
       positionize(auto, auto, auto, 0 10px 0 0)
       fill                  main-light
       position              relative
-      top                   -2px
+      top                   4px
       left                  2px
       svg
         vertical-align        middle
         width                 12px
+        height                20px
       &.cb-icon-member
         left                  0
         svg
@@ -3689,7 +3479,19 @@ cover-btns-width-small  =  130px
     width               100%
     margin-bottom       50px
   .dashboard-more-updates
-    margin              0 15px 0 0
+    padding             2px 10px
+    color               main-xlight
+    fontize(alt,light,uppercase,1em)
+    border              1px main-xlight solid
+    border-radius       20px
+    width               200px
+    text-align          center
+    margin              10px 30px
+    &:hover
+      color             white
+      border            1px white solid
+      background-color  main-light
+      cursor            pointer
 
 .form-loader
   display             none
@@ -3701,7 +3503,7 @@ cover-btns-width-small  =  130px
 
 /********************************************Added by Joe ***********************************************************/
 
-// New Message Iinfo
+// New Message info
 .message-container
   position relative
   top -60px
@@ -3713,44 +3515,44 @@ cover-btns-width-small  =  130px
   -o-transition  all 1s ease-in-out
   transition  all 1s ease-in-out
 .message
-  position relative
-  width 360px
-  margin 0 auto
   background-color          #B0606D
-  display                   block
-  color                     #F7F8F8
+  position                  relative
   padding                   11px 21px 16px 21px
+  display                   block
+  margin                    0 auto
+  color                     #F7F8F8
+  width                     320px
   border-radius(0 0 10px 10px)
   
   .loading-gif-container
-    opacity 0.9
-    position absolute
-    right 20px
-    top 15px
+    opacity              0.9
+    position             absolute
+    right                20px
+    top                  15px
     .loading-gif
-      display               block
-      width                 44px
-      height                13px
-      background            url('/img/message-loader.gif') no-repeat
-      background-position   center center
+      display                 block
+      width                   44px
+      height                  13px
+      background              url('/img/message-loader.gif') no-repeat
+      background-position     center center
   li
-    display          inline-block
-    font-size        13px
+    display                inline-block
+    font-size              13px
     .job-type
-      text-transform uppercase
-      font-weight 700
+      text-transform       uppercase
+      font-weight          700
     .info
-      margin 0
-      padding 0 4px
+      margin              0
+      padding             0 4px
       &:before
       &:after
-        content         '"'
-        padding         0 3px
+        content           '"'
+        padding           0 3px
     .icon
-      padding-right       14px
+      padding-right          14px
       svg
-        fill            #F7F8F8
-        vertical-align  middle
+        fill                  #F7F8F8
+        vertical-align        middle
 
 .message-container-active
   top 60px
