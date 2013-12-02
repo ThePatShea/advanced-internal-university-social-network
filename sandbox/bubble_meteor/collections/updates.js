@@ -7,7 +7,6 @@ Updates.allow({
 
 Meteor.methods({
   update: function(updateAttributes){
-    console.log("this ran");
     var user = Meteor.users.findOne(Meteor.userId());
 
     var update = _.extend(_.pick(updateAttributes,
