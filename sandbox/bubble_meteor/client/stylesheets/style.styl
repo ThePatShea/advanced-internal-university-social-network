@@ -2015,7 +2015,7 @@ navbar-height        =  60px
       z-index                  100
     .cb-logo-main,
     .brand
-      line-height              navbar-height 
+      line-height              55px 
       height                   navbar-height
       font-size                14px
       @media (min-width: 768px)
@@ -2286,7 +2286,6 @@ navbar-height        =  60px
     &.subsection
       background         main-xlight
       position           relative
-      overflow           visible!important // Joe
       width              210px
       height             100%
       z-index            20
@@ -3471,6 +3470,8 @@ cover-btns-width-small  =  130px
     fill              main-light
     height            25px
     width             25px
+  button
+    margin 0 2px
   @media (min-width: 768px)
     margin               50px 30px 20px 30px
   @media (max-width: 767px)
@@ -3478,20 +3479,6 @@ cover-btns-width-small  =  130px
   .dashboard-updates
     width               100%
     margin-bottom       50px
-  .dashboard-more-updates
-    padding             2px 10px
-    color               main-xlight
-    fontize(alt,light,uppercase,1em)
-    border              1px main-xlight solid
-    border-radius       20px
-    width               200px
-    text-align          center
-    margin              10px 30px
-    &:hover
-      color             white
-      border            1px white solid
-      background-color  main-light
-      cursor            pointer
 
 .form-loader
   display             none
