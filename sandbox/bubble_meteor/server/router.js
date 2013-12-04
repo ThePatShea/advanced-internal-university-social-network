@@ -160,7 +160,7 @@ Meteor.Router.add('/newLogin/newUser', 'POST', function(){
 	7) return 200
 	*/
 
-	var domains = ['thecampusbubble.com','emorybubble.com'];
+	//var domains = ['thecampusbubble.com','emorybubble.com'];
 
 	var email = this.request.body.email;
 	var type = this.request.body.type;
@@ -168,7 +168,6 @@ Meteor.Router.add('/newLogin/newUser', 'POST', function(){
 	var pass2 = this.request.body.pass2;
 	var name = this.request.body.name;
 
-	var username = email.split('@')[0];
 	var domain = email.split('@')[1];
 
 	var hash = crypto.createHash('md5');
@@ -183,8 +182,11 @@ Meteor.Router.add('/newLogin/newUser', 'POST', function(){
 	console.log("name: ", name);
 	console.log("vToken: ", vToken);
 
-	if(_.contains(domains,domain)) {
-		var user = Meteor.users.findOne({username: username});
+	var foundDomain = Domains.findOne({domain: domain});
+
+	//if(_.contains(domains,domain)) {
+	if(typeof foundDomain !== "undefined") {
+		var user = Meteor.users.findOne({username: email});
 
 		console.log("USER: ", user);
 
@@ -192,7 +194,7 @@ Meteor.Router.add('/newLogin/newUser', 'POST', function(){
 			if(pass1 === pass2) {
 				if((typeof email !== "undefined") && (typeof pass1 !== "undefined") && (typeof name !== "undefined")) {
 					var uid = Accounts.createUser({
-						username: username,
+						username: email,
 						email: email,
 						password: pass1
 					});
@@ -225,7 +227,7 @@ Meteor.Router.add('/newLogin/newUser', 'POST', function(){
 
     Meteor.call("addToIndex", uid, name);
 
-    //TODO: send verification email
+    Meteor.call("sendBetaVerify",email,vToken,name,"GT");
 
 	return ['200',vToken];
 
@@ -239,18 +241,22 @@ Meteor.Router.add('/newLogin/checkVerified/:email','GET', function(email) {
 	4) return 500 if false
 	*/
 
-	var username = email.split('@')[0];
+	var user = Meteor.users.findOne({username:email});
 
-	var user = Meteor.users.findOne({username:username});
+	if(user) {
+		for(i in user.emails) {
+			userEmail = user.emails[i];
 
-	for(i in user.emails) {
-		userEmail = user.emails[i];
-
-		if(userEmail.address === email) {
-			if(userEmail.verified === true) {
-				return ['200',"True"];
+			if(userEmail.address === email) {
+				if(userEmail.verified === true) {
+					return ['200',"True"];
+				} else {
+					return ['500', "Email address is not verified, please check your email for verification link"];
+				}
 			}
 		}
+	} else {
+		return ['500', "Could not find user in database"];
 	}
 	
 	return ['500',"False"];
@@ -264,18 +270,29 @@ Meteor.Router.add('/newLogin/verifyEmail','POST', function() {
 	4) return 200
 	*/
 
-	var email = this.request.query.email;
-	var vToken = this.request.query.vToken;
+	var email = this.request.body.email;
+	var vToken = this.request.body.vToken;
 
-	var user = Meteor.users.findOne({vToken: vToken});
+	console.log('vToken: ', vToken);
 
-	for(i in user.emails) {
-		userEmail = user.emails[i];
+	if(vToken) {
+		var user = Meteor.users.findOne({vToken: vToken});
+	}
 
-		if(userEmail.address === email) {
-			Meteor.users.update({'vToken':vToken,'emails.address': email},{$set: {'emails.$.verified': true}});
-			return ['200',"Verified"];
+	console.log("user", user);
+
+	if(user) {
+		for(i in user.emails) {
+			userEmail = user.emails[i];
+
+			if(userEmail.address === email) {
+				Meteor.users.update({'vToken':vToken,'emails.address': email},{$set: {'emails.$.verified': true}});
+				return ['200',"Verified"];
+			}
 		}
+		return ['500', "This email address does not match this verification code, please check your inbox for a verification link"];
+	} else {
+		return ['500', "This verification code is not valid"];
 	}
 
 	return ['500',"Not verified"];
@@ -288,16 +305,28 @@ Meteor.Router.add('/newLogin/inviteMembers','POST', function() {
 	3) send emails with /signUp?email=:email
 	*/
 
-	var domains = ['thecampusbubble.com','emorybubble.com'];
+	var emails = this.request.body.emailString.split(',') || [];
+	var fromName = this.request.body.fromName || "A Campus Bubble user";
 
-	var emails = this.request.body.emailString.split(',');
+	var rejectedEmails = [];
 
 	for(i in emails) {
 		var domain = emails[i].split('@')[1];
-		if(_.contains(domains,domain)) {
-			//TODO: send invite email
+		var foundDomain = Domains.findOne({domain: domain});
+
+		if(typeof foundDomain !== "undefined") {
+			Meteor.call('sendBetaInvite',emails[i],fromName,'GT');
+		} else {
+			rejectedEmails.push(emails[i]);
 		}
 	};
+
+	if(rejectedEmails.length == 0)
+		return ['200','Success'];
+	else if(rejectedEmails.length < emails.length)
+		return ['207',"Rejected: " + rejectedEmails.toString()]
+	
+	return ['500','Unsuccessful']
 });
 
 Meteor.Router.add('/newLogin/addDomains','POST',function() {
@@ -307,6 +336,22 @@ Meteor.Router.add('/newLogin/addDomains','POST',function() {
 	3) check to see if posted domains are in colleciton already
 	4) $addToSet new domains
 	*/
+
+	var domainString = this.request.body.domainString;
+	var domainArray = domainString.split(',');
+
+	var foundDomain = Domains.findOne({domain: {$in: domainArray}});
+
+	if(typeof foundDomain === "undefined") {
+		for(i in domainArray) {
+			Domains.insert({domain: domainArray[i]});
+		}
+		return ['200',domainString];
+	} else {
+		return ['500',JSON.stringify(foundDomain.domain) + " is already in the system"];
+	}
+
+	return ['500',"Unsuccessful"];
 });
 
 Meteor.Router.add('/newUser', 'POST', function(){
@@ -438,7 +483,9 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 Meteor.Router.add('/dailyDigest', 'POST', function(){
   if(this.request.body.secret == "dailyPass")
   {
-    users = Meteor.users.find().fetch();
+    //users = Meteor.users.find().fetch();
+    users = Meteor.users.findOne({username: "GHOBBIN"});
+    console.log("GIO: ", users);
     _.each(users, function(user) {
       var retVal = "<ul>";
       var count = 0;

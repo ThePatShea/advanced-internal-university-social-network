@@ -357,7 +357,7 @@ Handlebars.registerHelper('isLoggedIn', function() {
 
 Handlebars.registerHelper('isLoggedIn2', function() {
   var currentPage = window.location.pathname.split("/")[1];
-  if(Meteor.user() || currentPage == "login" || currentPage == "loggedOut" || currentPage == "siteAccessDenied" || currentPage == "browser_unsupported") {
+  if(Meteor.user() || currentPage == "login" || currentPage == "loggedOut" || currentPage == "siteAccessDenied" || currentPage == "browser_unsupported" || currentPage == "newLogin" || currentPage == "signUp") {
     return true;
   }
 });
