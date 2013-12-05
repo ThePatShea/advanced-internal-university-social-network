@@ -52,18 +52,22 @@ Template.explorePageBackbone.events({
     });
   },
   'click .prev': function(e, template) {
-    LoadingHelper.start();
-    state.es.fetchPrevPage(function() {
-      LoadingHelper.stop();
-      updatePostList();
-    });
+    if(state.es.getCurrentPage() > 0) {
+      LoadingHelper.start();
+      state.es.fetchPrevPage(function() {
+        LoadingHelper.stop();
+        updatePostList();
+      });
+    }
   },
   'click .next': function(e, template) {
-    LoadingHelper.start();
-    state.es.fetchNextPage(function(){
-      LoadingHelper.stop();
-      updatePostList();
-    });
+    if(state.es.getCurrentPage() < state.es.getNumPages() - 1) {
+      LoadingHelper.start();
+      state.es.fetchNextPage(function(){
+        LoadingHelper.stop();
+        updatePostList();
+      });
+    }
   }
 });
 
