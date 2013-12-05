@@ -222,8 +222,9 @@ Meteor.Router.add({
   // Analytics Related Routes
     '/analytics': 'userlog',
 
-  // UserLevel 4's "Create User" page
+  // UserLevel 4's admin pages
     '/createUser': 'createUser',
+    '/addDomains': 'addDomains',
 
   //Sign Up with Email Verification
     '/signUp': 'signUp',
@@ -242,6 +243,9 @@ Meteor.Router.add({
         Session.set('vToken',vToken);
       }
     },
+
+    //Invite to beta
+      '/betaInvite': 'betaInvite',
 
   // Dashboard
     '/dashboard': 'dashboard',
@@ -415,7 +419,7 @@ Meteor.Router.filters({
 Meteor.Router.filter('belongToBubble', {only: ['bubblePageBackbone','bubblePage','bubbleMembersPageBackbone','bubbleEventPageBackbone','bubbleDiscussionPageBackbone','bubbleFilePageBackbone']});
 //Add Lvl 3 pages here
 Meteor.Router.filter('level3Permissions', {only: ['flagsList', 'userlog']});
-Meteor.Router.filter('level4Permissions', {only: ['createUser']});
+Meteor.Router.filter('level4Permissions', {only: ['createUser','addDomains']});
 Meteor.Router.filter('clearErrors');
 Meteor.Router.filter('logCurrentPage', {except: ['secretLogin', 'loggedOut', 'siteAccessDenied', 'loginPage', 'welcomePage', 'browserCheck', 'browserUnsupported', '404NotFound','signUp','newLogin']});
 Meteor.Router.filter('browserSupported', {except: ['browserUnsupported']});

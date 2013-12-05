@@ -207,7 +207,9 @@ Meteor.Router.add('/newLogin/newUser', 'POST', function(){
 							profilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',
 							retinaProfilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',
 							vToken: vToken,
-							type: type	
+							type: type,
+							neverLoggedIn: true,
+							neverOnboarded: true
 						}
 					});
 				} else {
@@ -324,7 +326,7 @@ Meteor.Router.add('/newLogin/inviteMembers','POST', function() {
 	if(rejectedEmails.length == 0)
 		return ['200','Success'];
 	else if(rejectedEmails.length < emails.length)
-		return ['207',"Rejected: " + rejectedEmails.toString()]
+		return ['207',"Invites sent to all users except for the following - these email addresses do not meet the criteria for this beta: " + rejectedEmails.toString()]
 	
 	return ['500','Unsuccessful']
 });
