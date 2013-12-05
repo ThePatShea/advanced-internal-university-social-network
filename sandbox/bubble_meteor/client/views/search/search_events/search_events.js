@@ -3,7 +3,7 @@ Template.searchEvents.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchEventsREST(searchText, function(err, res) {
         if (!err) {
           var events = res;
           Session.set('selectedEventList', events);
@@ -16,7 +16,7 @@ Template.searchEvents.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchEventsREST(searchText, function(err, res) {
       if (!err) {
         var events = res;
         Session.set('selectedEventList', events);

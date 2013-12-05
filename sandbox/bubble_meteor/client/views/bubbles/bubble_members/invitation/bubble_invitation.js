@@ -4,7 +4,7 @@ Template.bubbleInvitation.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if(!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+      SearchHelpers.searchUsersREST(searchText, function(err, res) {
         if(!err) {
           var firstSixUsers = res.slice(0,6);
           Session.set('searchRes', firstSixUsers);

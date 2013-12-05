@@ -3,7 +3,7 @@ Template.searchFiles.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+      SearchHelpers.searchFilesREST(searchText, function(err, res) {
         if (!err) {
           var files = res;
           Session.set('selectedFileList', files);
@@ -16,7 +16,7 @@ Template.searchFiles.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+    SearchHelpers.searchFilesREST(searchText, function(err, res) {
       if (!err) {
         var files = res;
         Session.set('selectedFileList', files);

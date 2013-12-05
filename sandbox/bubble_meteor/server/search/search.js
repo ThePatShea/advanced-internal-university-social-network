@@ -1,3 +1,4 @@
+/*
 var bubble_idx = lunr(function() {
 	this.field('title');
 });
@@ -164,5 +165,45 @@ Meteor.methods({
 		};
 		file_idx.add(tmp);
 		console.log("ADDED TO FILE INDEX: " + name);
+	}
+});
+*/
+
+Meteor.methods({
+	reindex: function() {
+		return;
+	},
+	search_users: function(q) {
+		return;
+	},
+	search_bubbles: function(q) {
+		return;
+	},
+	search_events: function(q) {
+		return;
+	},
+	search_discussions: function(q) {
+		return;
+	},
+	search_files: function(q) {
+		return;
+	},
+	addToIndex: function(id, name) {
+		return;
+	},
+	addUserToIndex: function(id, name) {
+		return;
+	},
+	addBubbleToIndex: function(id, title) {
+		return;
+	},
+	addEventToIndex: function(id, name) {
+		return;
+	},
+	addDiscussionToIndex: function(id, name) {
+		return;
+	},
+	addFileToIndex: function(id, name) {
+		return;
 	}
 });

@@ -3,7 +3,7 @@ Template.searchDiscussions.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
         if (!err) {
           console.log('Search DiscussionsREST: ', res);
           var discussions = res;
@@ -17,7 +17,7 @@ Template.searchDiscussions.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
       if (!err) {
         var discussions = res;
         Session.set('selectedDiscussionList', discussions);

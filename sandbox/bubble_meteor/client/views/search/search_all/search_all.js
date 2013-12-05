@@ -3,31 +3,31 @@ Template.searchAll.events({
     var searchText = $('.search-text').val();
     LoadingHelper.start();
     if (!DisplayHelpers.isMobile()) {
-      SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+      SearchHelpers.searchUsersREST(searchText, function(err, res) {
         if (!err) {
           var threeUsers = res.slice(0,3);
           Session.set('selectedUserList', threeUsers);
         }
       });
-      SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
+      SearchHelpers.searchBubblesREST(searchText, function(err, res) {
         if (!err) {
           var threeBubbles = res.slice(0,3);
           Session.set('selectedBubbleList', threeBubbles);
         }
       });
-      SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+      SearchHelpers.searchFilesREST(searchText, function(err, res) {
         if (!err) {
           var threeFiles = res.slice(0,3);
           Session.set('selectedFileList', threeFiles);
         }
       });
-      SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchEventsREST(searchText, function(err, res) {
         if (!err) {
           var threeEvents = res.slice(0,3);
           Session.set('selectedEventList', threeEvents);
         }
       });
-      SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+      SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
         if (!err) {
           var threeDiscussions = res.slice(0,3);
           Session.set('selectedDiscussionList', threeDiscussions);
@@ -40,31 +40,31 @@ Template.searchAll.events({
   'click .search-btn': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    SearchHelpers.searchUsersMeteor(searchText, function(err, res) {
+    SearchHelpers.searchUsersREST(searchText, function(err, res) {
       if (!err) {
         var threeUsers = res.slice(0,3);
         Session.set('selectedUserList', threeUsers);
       }
     });
-    SearchHelpers.searchBubblesMeteor(searchText, function(err, res) {
+    SearchHelpers.searchBubblesREST(searchText, function(err, res) {
       if (!err) {
         var threeBubbles = res.slice(0,3);
         Session.set('selectedBubbleList', threeBubbles);
       }
     });
-    SearchHelpers.searchFilesMeteor(searchText, function(err, res) {
+    SearchHelpers.searchFilesREST(searchText, function(err, res) {
       if (!err) {
         var threeFiles = res.slice(0,3);
         Session.set('selectedFileList', threeFiles);
       }
     });
-    SearchHelpers.searchEventsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchEventsREST(searchText, function(err, res) {
       if (!err) {
         var threeEvents = res.slice(0,3);
         Session.set('selectedEventList', threeEvents);
       }
     });
-    SearchHelpers.searchDiscussionsMeteor(searchText, function(err, res) {
+    SearchHelpers.searchDiscussionsREST(searchText, function(err, res) {
       if (!err) {
         var threeDiscussions = res.slice(0,3);
         Session.set('selectedDiscussionList', threeDiscussions);
