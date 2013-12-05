@@ -1,3 +1,5 @@
+var crypto = Npm.require('crypto');
+
 //Exposes APIs for authentication server to check if user exists
 Meteor.Router.add('/usersecret','PUT',function(){
 	console.log(this.request.body);
@@ -145,6 +147,215 @@ Meteor.Router.add('/','GET', function(){
 });
 */
 
+Meteor.Router.add('/newLogin/newUser', 'POST', function(){
+	/*
+	0) save all this.request.body params into vars
+	1) check email domain against var array
+	1.5) TODO: check against mongo collection
+	2) check that passwords match
+	3) create vToken
+	4) create user
+	5) update user (including vToken attr)
+	6) send verification email
+	7) return 200
+	*/
+
+	//var domains = ['thecampusbubble.com','emorybubble.com'];
+
+	var email = this.request.body.email;
+	var type = this.request.body.type;
+	var pass1 = this.request.body.pass1;
+	var pass2 = this.request.body.pass2;
+	var name = this.request.body.name;
+
+	var domain = email.split('@')[1];
+
+	var hash = crypto.createHash('md5');
+	var hashData = JSON.stringify(this.request.body);
+	hash.update(hashData);
+	var vToken = hash.digest('hex');
+
+	console.log("email: ", email);
+	console.log("type: ", type);
+	console.log("pass1: ", pass1);
+	console.log("pass2: ", pass2);
+	console.log("name: ", name);
+	console.log("vToken: ", vToken);
+
+	var foundDomain = Domains.findOne({domain: domain});
+
+	//if(_.contains(domains,domain)) {
+	if(typeof foundDomain !== "undefined") {
+		var user = Meteor.users.findOne({username: email});
+
+		console.log("USER: ", user);
+
+		if(typeof user === "undefined") {
+			if(pass1 === pass2) {
+				if((typeof email !== "undefined") && (typeof pass1 !== "undefined") && (typeof name !== "undefined")) {
+					var uid = Accounts.createUser({
+						username: email,
+						email: email,
+						password: pass1
+					});
+
+					Meteor.users.update({_id: uid},{
+						$set:
+						{
+							name: name,
+							userType: '1',
+							profilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',
+							retinaProfilePicture: '/img/letterprofiles/'+name.substring(0,1).toLowerCase()+'.jpg',
+							vToken: vToken,
+							type: type,
+							neverLoggedIn: true,
+							neverOnboarded: true
+						}
+					});
+				} else {
+					return ['500', "All required fields were not present"];
+				}
+			} else {
+				return ['500',"Password fields did not match"];
+			}
+		} else {
+			return ['500',"This user already exists"];
+		}
+	} else {
+		return ['500',"This Email Domain is not on the approved list"];
+	}
+
+	console.log("UID: ", uid);
+
+    Meteor.call("addToIndex", uid, name);
+
+    Meteor.call("sendBetaVerify",email,vToken,name,"GT");
+
+	return ['200',vToken];
+
+});
+
+Meteor.Router.add('/newLogin/checkVerified/:email','GET', function(email) {
+	/*
+	1) find user
+	2) loop through email addresses
+	3) return 200 if true
+	4) return 500 if false
+	*/
+
+	var user = Meteor.users.findOne({username:email});
+
+	if(user) {
+		for(i in user.emails) {
+			userEmail = user.emails[i];
+
+			if(userEmail.address === email) {
+				if(userEmail.verified === true) {
+					return ['200',"True"];
+				} else {
+					return ['500', "Email address is not verified, please check your email for verification link"];
+				}
+			}
+		}
+	} else {
+		return ['500', "Could not find user in database"];
+	}
+	
+	return ['500',"False"];
+});
+
+Meteor.Router.add('/newLogin/verifyEmail','POST', function() {
+	/*
+	1) find user where vToken === vToken
+	2) find email where address === email
+	3) verified = true
+	4) return 200
+	*/
+
+	var email = this.request.body.email;
+	var vToken = this.request.body.vToken;
+
+	console.log('vToken: ', vToken);
+
+	if(vToken) {
+		var user = Meteor.users.findOne({vToken: vToken});
+	}
+
+	console.log("user", user);
+
+	if(user) {
+		for(i in user.emails) {
+			userEmail = user.emails[i];
+
+			if(userEmail.address === email) {
+				Meteor.users.update({'vToken':vToken,'emails.address': email},{$set: {'emails.$.verified': true}});
+				return ['200',"Verified"];
+			}
+		}
+		return ['500', "This email address does not match this verification code, please check your inbox for a verification link"];
+	} else {
+		return ['500', "This verification code is not valid"];
+	}
+
+	return ['500',"Not verified"];
+});
+
+Meteor.Router.add('/newLogin/inviteMembers','POST', function() {
+	/*
+	1) split this.request.body.emailString
+	2) check all endings against collection of accepted domains
+	3) send emails with /signUp?email=:email
+	*/
+
+	var emails = this.request.body.emailString.split(',') || [];
+	var fromName = this.request.body.fromName || "A Campus Bubble user";
+
+	var rejectedEmails = [];
+
+	for(i in emails) {
+		var domain = emails[i].split('@')[1];
+		var foundDomain = Domains.findOne({domain: domain});
+
+		if(typeof foundDomain !== "undefined") {
+			Meteor.call('sendBetaInvite',emails[i],fromName,'GT');
+		} else {
+			rejectedEmails.push(emails[i]);
+		}
+	};
+
+	if(rejectedEmails.length == 0)
+		return ['200','Success'];
+	else if(rejectedEmails.length < emails.length)
+		return ['207',"Invites sent to all users except for the following - these email addresses do not meet the criteria for this beta: " + rejectedEmails.toString()]
+	
+	return ['500','Unsuccessful']
+});
+
+Meteor.Router.add('/newLogin/addDomains','POST',function() {
+	/*
+	1) split this.request.body.domainString
+	2) pull array from Domains collection?
+	3) check to see if posted domains are in colleciton already
+	4) $addToSet new domains
+	*/
+
+	var domainString = this.request.body.domainString;
+	var domainArray = domainString.split(',');
+
+	var foundDomain = Domains.findOne({domain: {$in: domainArray}});
+
+	if(typeof foundDomain === "undefined") {
+		for(i in domainArray) {
+			Domains.insert({domain: domainArray[i]});
+		}
+		return ['200',domainString];
+	} else {
+		return ['500',JSON.stringify(foundDomain.domain) + " is already in the system"];
+	}
+
+	return ['500',"Unsuccessful"];
+});
+
 Meteor.Router.add('/newUser', 'POST', function(){
 	var username = this.request.body.username;
 	var password = this.request.body.password;
@@ -274,7 +485,9 @@ Meteor.Router.add('/pushUser', 'POST', function() {
 Meteor.Router.add('/dailyDigest', 'POST', function(){
   if(this.request.body.secret == "dailyPass")
   {
-    users = Meteor.users.find().fetch();
+    //users = Meteor.users.find().fetch();
+    users = Meteor.users.findOne({username: "GHOBBIN"});
+    console.log("GIO: ", users);
     _.each(users, function(user) {
       var retVal = "<ul>";
       var count = 0;

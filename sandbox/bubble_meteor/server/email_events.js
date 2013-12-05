@@ -260,7 +260,7 @@ Meteor.methods({
 			{
 			    "to": [
 			        {
-			          "email": "taggart@thecampusbubble.com",
+			          "email": to,
 			          "name": name
 			        }
 			    ],
@@ -292,6 +292,109 @@ Meteor.methods({
 
 		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
 			{"data": retVal},
+			function(err, res) {
+				console.log(res);
+			}
+		);
+	},
+	sendBetaInvite: function(emailAddress,fromName,school) {
+		var fromName = fromName;
+		var to = emailAddress;
+		var school = school;
+		//console.log("SENT TO: " + to + " | NAME: " + name + " | USERID: " + userId);
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "beta-invite",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": [
+			        {
+			          "email": to,
+			          "name": to
+			        }
+			    ],
+			     "global_merge_vars": [
+			       	{
+			        	"name": "FROMNAME",
+			        	"content": fromName
+			       	},
+			       	{
+			        	"name": "EMAIL",
+			        	"content": emailAddress
+			       	},
+			       	{
+			        	"name": "SCHOOL",
+			        	"content": school
+			       	}
+			    ],
+			    tags: ["beta-invite"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
+			{data: retVal},
+			function(err, res) {
+				console.log(res);
+			}
+		);
+	},
+	sendBetaVerify: function(emailAddress,vToken,name,school) {
+		var to = emailAddress;
+		var vToken = vToken;
+		var name = name;
+		var school = school;
+
+		var retVal = {
+			"key": "LiWfSyjL9OhYPdAdA28I7A",
+			"template_name": "beta-verify",
+			"template_content": [],
+			"headers": {
+            	"Content-Type": "application/json"
+        	},
+			"message":
+			{
+			    "to": [
+			        {
+			          "email": to,
+			          "name": name
+			        }
+			    ],
+			     "global_merge_vars": [
+			       	{
+			        	"name": "NAME",
+			        	"content": name
+			       	},
+			       	{
+			       		"name": "VTOKEN",
+			       		"content": vToken
+			       	},
+			       	{
+			        	"name": "EMAIL",
+			        	"content": emailAddress
+			       	},
+			       	{
+			        	"name": "SCHOOL",
+			        	"content": school
+			       	}
+			    ],
+			    tags: ["beta-verify"],
+			    track_opens: true,
+			    track_clicks: true
+			}
+		};
+
+		console.log(JSON.stringify(retVal));
+
+		Meteor.http.post("https://mandrillapp.com/api/1.0/messages/send-template.json",//http://httpbin.org/post",
+			{data: retVal},
 			function(err, res) {
 				console.log(res);
 			}

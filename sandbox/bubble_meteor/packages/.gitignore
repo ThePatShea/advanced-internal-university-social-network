@@ -14,3 +14,15 @@ page-js-ie-support
 deps-extensions
 cron-tick
 HTML5-History-API
+/router
+/spin
+/paginated-subscription
+/pagination
+/jquery-ui
+/jquery-ui-bootstrap
+/glDatePicker
+/moment
+/bootstrap-wysiwyg
+/jquery-jcrop
+/page-js-ie-support
+/HTML5-History-API
