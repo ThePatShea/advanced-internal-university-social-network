@@ -3,7 +3,7 @@ Template.bubbleInvitation.events({
   'keyup .search-text': function(evt) {
     var searchText = $('.search-text').val();
     LoadingHelper.start();
-    if(!DisplayHelpers.isMobile()) {
+    if(!DisplayHelpers.isMobile()) {  
       SearchHelpers.searchUsersREST(searchText, function(err, res) {
         if(!err) {
           var firstSixUsers = res.slice(0,6);
