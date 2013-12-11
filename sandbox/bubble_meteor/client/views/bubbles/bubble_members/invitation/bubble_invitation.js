@@ -57,6 +57,12 @@ Template.bubbleInvitation.events({
         });*/
       });
     } else {
+      //Send Emails
+      console.log("SENDING EMAILS!: ", shortListIds);
+      _.each(shortListIds, function(id){
+        Meteor.call("sendInvitedEmail",Meteor.userId(),id,window.location.pathname.split('/')[2]);
+      });
+      
       Bubbles.update({_id: bubbleInfo.id},
       {
         $addToSet: {'users.invitees': {$each: shortListIds}}
