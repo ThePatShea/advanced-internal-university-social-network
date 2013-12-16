@@ -75,13 +75,20 @@ Template.bubbleCoverBackbone.events({
   'click .join-apply': function() {
     //Google Analytics
     _gaq.push(['_trackEvent', 'Bubble', 'Join Bubble', this.title]);
-    Meteor.call('sendApplicantEmail', Meteor.userId(), this._id);
-    Meteor.call('joinBubble', Session.get('currentBubbleId'));
+    console.log("THIS: ", this);
+    Meteor.call('sendApplicantEmail', Meteor.userId(), this.id);
+    Meteor.call('joinBubble', Session.get('currentBubbleId'), function() {
+      //force refresh
+      window.location.href = window.location.pathname;
+    });
   },
   'click .cancel-apply': function() {
     //Google Analytics
     _gaq.push(['_trackEvent', 'Bubble', 'Cancel Application', this.title]);
-    Meteor.call('cancelJoinBubble', Session.get('currentBubbleId'));
+    Meteor.call('cancelJoinBubble', Session.get('currentBubbleId'), function() {
+      //force refresh
+      window.location.href = window.location.pathname;
+    });
   }
 });
 
