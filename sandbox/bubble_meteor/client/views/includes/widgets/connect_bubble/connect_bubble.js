@@ -25,6 +25,8 @@ Template.connectBubble.events({
         evt.stopPropagation();
         evt.preventDefault();
 
+        var that = this;
+
       // Add/remove the user to/from list of attendees
         //Meteor.call('attendEvent',this._id,Meteor.user().username);
 
@@ -45,7 +47,9 @@ Template.connectBubble.events({
       else{
         console.log('Join Bubble: ', this._id);
         Meteor.call('sendApplicantEmail', Meteor.userId(), this._id);
-        Meteor.call('joinBubble', this._id);
+        Meteor.call('joinBubble', this._id, function() {
+          Meteor.Router.to('bubblePublicPage',that._id);
+        });
       }
       
     
@@ -65,6 +69,8 @@ Template.connectBubble.events({
         this._id = this.id;
 
       var userId = Meteor.userId();
-      Meteor.call('removeInvitee', this._id, userId);
+      Meteor.call('removeInvitee', this._id, userId, function() {
+        window.location.href = window.location.pathname;
+      });
     }
 });
