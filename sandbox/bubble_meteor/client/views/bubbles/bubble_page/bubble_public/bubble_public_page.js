@@ -7,7 +7,7 @@ Template.bubblePublicPage.rendered = function(){
 	    bubbleId: currentBubbleId,
 	    limit: 1,
 	    fields: ['title', 'profilePicture', 'category', 'bubbleType','description'],
-	    callback: function(bubble) {
+	    callback: function(error, bubble) {
 	    	console.log("BUBBLE: ", bubble);
 		    Session.set('isLoading', false);
 	        Session.set('bubbleInfo', bubble);

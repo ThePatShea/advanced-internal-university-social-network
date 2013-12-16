@@ -28,6 +28,9 @@ Template.connectBubble.events({
       // Add/remove the user to/from list of attendees
         //Meteor.call('attendEvent',this._id,Meteor.user().username);
 
+      if(typeof this._id == 'undefined')
+        this._id = this.id;
+
       if(_.contains(this.users.admins, Meteor.userId()) || _.contains(this.users.members, Meteor.userId())){
         Meteor.Router.to('/mybubbles/'+this._id+'/home');
       }
@@ -40,6 +43,7 @@ Template.connectBubble.events({
         Meteor.call('acceptInvitation', this._id);
       }
       else{
+        console.log('Join Bubble: ', this._id);
         Meteor.call('sendApplicantEmail', Meteor.userId(), this._id);
         Meteor.call('joinBubble', this._id);
       }
