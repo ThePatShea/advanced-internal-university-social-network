@@ -60,6 +60,10 @@ Template.connectBubble.events({
 
     'click .deny-invite': function(evt){
       evt.stopPropagation();
+
+      if(typeof this._id == 'undefined')
+        this._id = this.id;
+
       var userId = Meteor.userId();
       Meteor.call('removeInvitee', this._id, userId);
     }
