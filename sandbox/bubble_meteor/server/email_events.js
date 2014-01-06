@@ -4,8 +4,21 @@ Meteor.methods({
 		var post = Posts.findOne({_id: flag.postId});
 		var moderatorList = Meteor.users.find({'userType': '3'}).fetch();
 		var to = [];
-		_.each(moderatorList, function(i) {
-			to.push({"email": i.emails[0].adddress, "name": "Bubble Moderator"});
+		_.each(moderatorList, function(tmp) {
+			if (tmp.emails[0].address) {
+				var tmpEmail = tmp.emails[0].address;
+			} else if (tmp.altEmails[0].address) {
+				var tmpEmail = tmp.altEmails[0].address;
+			} else if (tmp.altEmail) {
+				var tmpEmail = tmp.altEmail;
+			} else if (tmp.altMail) {
+				var tmpEmail = tmp.altMail;
+			} else if (tmp.emoryEmail) {
+				var tmpEmail = tmp.emoryEmail;
+			} else {
+				var tmpEmail = tmp.username.concat('@emory.edu');
+			}
+			to.push({"email": tmpEmail, "name": "Bubble Moderator"});
 		});
 		//var retVal = {'invokerId': flag.invokerId, 'invokerName': flag.invokerName, 'bubbleId': flag.bubbleId, 'bubbleName': bubble.name, 'postId': flag.postId, 'to': to.toString()};
 		var invokerId = flag.invokerId;
@@ -69,8 +82,20 @@ Meteor.methods({
 		var user = Meteor.users.findOne({_id: userId});
 		var name = user.name;
 		var fname = user.name.substring(0,user.name.indexOf(' '));
-		var to = user.emails[0].address;
-		//console.log("SENT TO: " + to + " | NAME: " + name + " | USERID: " + userId);
+		//var to = user.emails[0].address;
+		if (user.emails[0].address) {
+			var to = user.emails[0].address;
+		} else if (user.altEmails[0].address) {
+			var to = user.altEmails[0].address;
+		} else if (user.altEmail) {
+			var to = user.altEmail;
+		} else if (user.altMail) {
+			var to = user.altMail;
+		} else if (user.emoryEmail) {
+			var to = user.emoryEmail;
+		} else {
+			var to = user.username.concat('@emory.edu');
+		}
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",
 			"template_name": "cb-welcome-email",
@@ -123,7 +148,20 @@ Meteor.methods({
 		var name = user.name;
 		var fname = user.name.substring(0,user.name.indexOf(' '));
 		var bubbleName = bubble.title;
-		var to = user.emails[0].address;
+		//var to = user.emails[0].address;
+		if (user.emails[0].address) {
+			var to = user.emails[0].address;
+		} else if (user.altEmails[0].address) {
+			var to = user.altEmails[0].address;
+		} else if (user.altEmail) {
+			var to = user.altEmail;
+		} else if (user.altMail) {
+			var to = user.altMail;
+		} else if (user.emoryEmail) {
+			var to = user.emoryEmail;
+		} else {
+			var to = user.username.concat('@emory.edu');
+		}
 		if(typeof to == undefined)
 		{
 			return "No Email Address for invited user";
@@ -199,7 +237,20 @@ Meteor.methods({
 
 		_.each(adminIds, function(i) {
 			tmp = Meteor.users.findOne({_id: i});
-			to.push({"email": tmp.emails[0].address, "name": "Bubble Admin"});
+			if (tmp.emails[0].address) {
+				var tmpEmail = tmp.emails[0].address;
+			} else if (tmp.altEmails[0].address) {
+				var tmpEmail = tmp.altEmails[0].address;
+			} else if (tmp.altEmail) {
+				var tmpEmail = tmp.altEmail;
+			} else if (tmp.altMail) {
+				var tmpEmail = tmp.altMail;
+			} else if (tmp.emoryEmail) {
+				var tmpEmail = tmp.emoryEmail;
+			} else {
+				var tmpEmail = tmp.username.concat('@emory.edu');
+			}
+			to.push({"email": tmpEmail, "name": "Bubble Admin"});
 		});
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",
@@ -247,7 +298,20 @@ Meteor.methods({
 	sendDailyDigest: function(userId, numUpdates, content) {
 		console.log("Daily Digest");
 		var user = Meteor.users.findOne({_id: userId});
-		var to = user.emails[0].address;
+		//var to = user.emails[0].address;
+		if (user.emails[0].address) {
+			var to = user.emails[0].address;
+		} else if (user.altEmails[0].address) {
+			var to = user.altEmails[0].address;
+		} else if (user.altEmail) {
+			var to = user.altEmail;
+		} else if (user.altMail) {
+			var to = user.altMail;
+		} else if (user.emoryEmail) {
+			var to = user.emoryEmail;
+		} else {
+			var to = user.username.concat('@emory.edu');
+		}
 		var name = user.name;//.substring(0,user.name.indexOf(" "));
 		var retVal = {
 			"key": "LiWfSyjL9OhYPdAdA28I7A",
