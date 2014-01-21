@@ -17,7 +17,8 @@ Template.secretLogin.rendered = function(){
       if(typeof user.neverLoggedIn != 'undefined'){
         if(user.neverLoggedIn == true){
           console.log('User has never logged in before.');
-          Meteor.Router.to('/onboarding');
+          //Meteor.Router.to('/onboarding');
+          Meteor.Router.to('/dashboard');
         }
         else{
           console.log('Seen this user before.');
