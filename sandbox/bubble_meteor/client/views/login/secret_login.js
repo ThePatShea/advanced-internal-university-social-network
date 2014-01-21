@@ -27,7 +27,7 @@ Template.secretLogin.rendered = function(){
       }
       else{
         console.log('Neverlogged in not defined ... User has never logged in before.');
-        Meteor.Router.to('/onboarding');
+        Meteor.Router.to('/dashboard');
       }
     }
   });
