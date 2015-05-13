@@ -3,9 +3,9 @@ Campus Bubble Product 4: Advanced Internal University Social Network
 ## Directory structure
 ```
 -app/
-  |_client/
-    |_helpers/
-    |_views/
-  |_collections/
-  |_server/
+  |__client/
+    |__helpers/
+    |__views/
+  |__collections/
+  |__server/
 ```
