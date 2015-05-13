@@ -1,6 +1,0 @@
-form(method="post", action="/bubbles/#{bubble._id}/#{bubble_section}/comment/#{post._id}")
-  input(type='hidden', name='bubble_section', value='#{bubble_section}')
-  input.requiredInput.leave_a_comment.gradient_gray#comment(type='text', rows="6", name="body", placeholder='Leave a comment...')
-  button#submitBtn(class='action_button submit_comment colorize_texture_#{bubble_section}', type='submit') submit
-  div.pic_current_user.face_circle_container
-    img.face_circle(src='http://graph.facebook.com/'+req.user.facebook.id+'/picture?type=square')
