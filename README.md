@@ -1,4 +1,4 @@
-Campus Bubble Product 4: Advanced Internal University Social Network
+Campus Bubble - Product 4: Advanced Internal University Social Network
 
 ## Directory structure
 ```
