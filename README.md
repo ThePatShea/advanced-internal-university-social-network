@@ -1,4 +1,4 @@
-# Advanced Internal University Social Network
+## Advanced Internal University Social Network
 
 #### Product Description
 This web app is an internal social network for university organizations to collaborate on projects. Any club, dorm, fraternity/sorority, or sports team could create a group to discuss projects, post events, and upload/share files.
