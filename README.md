@@ -9,6 +9,7 @@ Additionally, it contains a section for school administrators to view statistics
 
 Furthermore, the product integrates with universities’ official .edu sign-in systems, ensuring security and simplicity. 
 
+---
 
 
 
