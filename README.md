@@ -7,7 +7,12 @@ I built an extensive permissions system for this product. Students can make thei
 
 Additionally, it contains a section for school administrators to view statistics on how users/organizations are using the app. It also includes a purely public section for organizations to post events and discussions for the whole university to participate in.
 
-Furthermore, the product integrates with universities’ official .edu sign-in systems, ensuring security and simplicity. 
+Furthermore, the product integrates with universities’ official .edu sign-in systems, ensuring security and simplicity.
+
+---
+
+### See the Published Web App Online
+This specific version of the product is no longer published online, but the latest version of Campus Bubble, which is available online, is built on top of what I created in this repo and looks very similar to this version. If you'd like to get the gist of what this web app looks like, please visit the [live demo of Campus Bubble](https://demo.campusbubble.com/explore)
 
 ---
 
@@ -33,7 +38,6 @@ I hired 4 full-time developers and led the team to build this product in 3 month
 
 #### Instructions
 I built this product using an MV* node.js framework called Meteor. If you are unfamiliar with Meteor's directory structure, every view gets its own folder with an HTML file and corresponding Javascript file that manages all the Javascript functions relating to that view.
-
 
 [Click here to navigate directly to the "views" directory](https://github.com/ThePatShea/advanced-internal-university-social-network/tree/master/main/bubble_meteor/client/views)
 
