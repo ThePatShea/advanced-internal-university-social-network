@@ -36,7 +36,7 @@ I hired 4 full-time developers and led the team to build this product in 3 month
 
 ---
 
-#### Instructions
+#### Directory Navigation Instructions
 I built this product using an MV* node.js framework called Meteor. If you are unfamiliar with Meteor's directory structure, every view gets its own folder with an HTML file and corresponding Javascript file that manages all the Javascript functions relating to that view.
 
 [Click here to navigate directly to the "views" directory](https://github.com/ThePatShea/advanced-internal-university-social-network/tree/master/main/bubble_meteor/client/views)
