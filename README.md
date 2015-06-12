@@ -22,7 +22,7 @@ I made most of my commits on this repo using another Github account called "camp
 ---
 
 #### Technologies Utilized
-- Meteor stack including MongoDB/handlebars/stylus/nib
+- Meteor stack including MongoDB/handlebars/stylus
 - Several back-end node modules and meteor modules
 - Several front-end Javascript libraries
 - Integration with universities’ proprietary sign-in systems
