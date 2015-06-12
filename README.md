@@ -12,7 +12,7 @@ Furthermore, the product integrates with universities’ official .edu sign-in s
 ---
 
 #### See the Published Web App Online
-This specific version of the product is no longer published online, but the latest version of Campus Bubble, which is available online, is built on top of what I created in this repo and looks very similar to this version. If you'd like to get the gist of what this web app looks like, please visit the [live demo of Campus Bubble](https://demo.campusbubble.com/explore)
+This specific version of the product is no longer published online, but the latest version of Campus Bubble, which is available online, is built on top of what I created in this repo and still looks very similar to this. If you'd like to get the gist of what this web app looks like, please visit the [live demo of Campus Bubble](https://demo.campusbubble.com/explore)
 
 ---
 
