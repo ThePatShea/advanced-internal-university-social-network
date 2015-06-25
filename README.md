@@ -11,8 +11,19 @@ Furthermore, the product integrates with universities’ official .edu sign-in s
 
 ---
 
-#### See the Published Web App Online
-This specific version of the product is no longer published online, but the latest version of Campus Bubble, which is available online, is built on top of what I created in this repo and still looks very similar to this. If you'd like to get the gist of what this web app looks like, please visit the [live demo of Campus Bubble](https://demo.campusbubble.com/explore)
+#### See the Web App
+This web app is no longer online, but you can still view some images of it. These are mockups, but screenshots would look identical, because I'm awesome at front end.
+
+**View the images:**
+- The [Home](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63037/pictures/1435074608/original.jpg) page. Here, students would see the latest posts from their clubs, along with the hottest topics being discussed on campus.
+- The [Announcements](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63039/pictures/1435074907/original.png) page. Here, students could post public announcements about any topic.
+- The [Add Event](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63093/pictures/1435088936/original.jpg) submission form. A student would select the date/time, add an image, and attach relevant files to the event.
+- The [View Event](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63097/pictures/1435089423/original.png) page. Here, students would view the date/time, location, and other relevant details about upcoming events and meetings for their clubs.
+- The [Group Dashboard](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63107/pictures/1435090254/original.png) page. For each of their clubs, students would go to this page to get an overview of the latest discussions, events, and files posted by their group.
+- The [Invite Members](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63118/pictures/1435091554/original.png) form. A group admin could search through all students at their school, then invite any of them to join their group.
+- The [Search](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63114/pictures/1435090718/original.jpg) page. Students could search for any type of content from their school: groups, people, events, discussions, files, and more.
+- The [Create Group](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63043/pictures/1435075387/original.png) page. Here, a student would add a new group to the web app. They could write the group's name/description, select a category, upload a profile picture, and add a cover photo.
+- The [Edit Group](https://dmdf3fr77elxm.cloudfront.net/portfolio_assets/63106/pictures/1435089854/original.png) form. A student would use this to edit the name, description, category, tags, profile photo, and cover photo of their group.
 
 ---
 
